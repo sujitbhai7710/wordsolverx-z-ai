@@ -1,6 +1,5 @@
 <script lang="ts">
     import { encodeWord } from '$lib/wordle/challengeUtils';
-    import { isValidGuess, getRandomWord } from '$lib/wordle/words_processing';
     import ClipboardIcon from '$lib/components/icons/ClipboardIcon.svelte';
     import CheckIcon from '$lib/components/icons/CheckIcon.svelte';
     import FiChevronDown from '$lib/components/icons/FiChevronDown.svelte';
@@ -41,6 +40,17 @@
     let isLoading = $state(false);
     let openFaq = $state<number | null>(null);
     let canWebShare = $state(false);
+    let validationRequestId = $state(0);
+
+    type WordProcessingModule = typeof import('$lib/wordle/words_processing');
+    let wordProcessingModulePromise: Promise<WordProcessingModule> | null = null;
+
+    function getWordProcessingModule() {
+        if (!wordProcessingModulePromise) {
+            wordProcessingModulePromise = import('$lib/wordle/words_processing');
+        }
+        return wordProcessingModulePromise;
+    }
 
     $effect(() => {
         canWebShare = typeof navigator !== 'undefined' && !!navigator.share;
@@ -54,18 +64,31 @@
         error = null;
         isCopied = false;
 
-        if (word.length >= 4 && word.length <= 12) {
-            isValidWord = isValidGuess(word, word.length);
-        } else {
+        validateCurrentWord();
+    }
+
+    async function validateCurrentWord() {
+        if (word.length < 4 || word.length > 12) {
             isValidWord = null;
+            return;
+        }
+
+        const requestId = ++validationRequestId;
+        const currentWord = word;
+        const module = await getWordProcessingModule();
+        const valid = module.isValidGuess(currentWord, currentWord.length);
+
+        if (requestId === validationRequestId && word === currentWord) {
+            isValidWord = valid;
         }
     }
 
-    function generateRandomWord() {
+    async function generateRandomWord() {
         // More heavily weight 5-7 letter words to match typical difficulty
         const lengths = [4, 5, 5, 6, 6, 7, 8];
         const rt = lengths[Math.floor(Math.random() * lengths.length)];
-        const rd = getRandomWord(rt);
+        const module = await getWordProcessingModule();
+        const rd = module.getRandomWord(rt);
         if (rd) {
             word = rd;
             isValidWord = true;
@@ -93,7 +116,8 @@
         isLoading = true;
         error = null;
         try {
-            const valid = await isValidGuess(word, word.length);
+            const module = await getWordProcessingModule();
+            const valid = module.isValidGuess(word, word.length);
             if (!valid) {
                 error = `"${word}" is not in our dictionary. Please enter a real word.`;
                 isLoading = false;
