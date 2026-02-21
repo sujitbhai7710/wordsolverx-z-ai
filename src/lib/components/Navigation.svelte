@@ -1,10 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
-  import ThemeToggle from './ThemeToggle.svelte';
   
   let isOpen = $state(false);
-  let showAdmin = $state(false);
   let scrolled = $state(false);
 
   // navLinks are constant
@@ -26,10 +24,6 @@
     return () => window.removeEventListener('scroll', handleScroll);
   });
 
-  const handleLogoDoubleClick = () => {
-    showAdmin = true;
-    setTimeout(() => showAdmin = false, 5000);
-  };
 </script>
 
 <nav class={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50' : 'bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800'}`}>
@@ -40,7 +34,6 @@
         <a
           href="/"
           class="flex items-center gap-2.5 group"
-          ondblclick={handleLogoDoubleClick}
         >
           <div class="w-9 h-9 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-md shadow-green-500/20 group-hover:shadow-green-500/40 transition-shadow">
             <span class="text-white font-extrabold text-lg leading-none">W</span>
@@ -69,24 +62,10 @@
             {/if}
           </a>
         {/each}
-        {#if showAdmin}
-          <a
-            href="/admin/update"
-            class="px-3 py-2 rounded-lg text-sm font-medium text-amber-600 bg-amber-50 animate-pulse"
-          >
-            Admin
-          </a>
-        {/if}
-        <!-- Theme Toggle -->
-        <div class="ml-2">
-          <ThemeToggle />
-        </div>
       </div>
 
       <!-- Mobile toggle -->
       <div class="flex items-center gap-2 lg:hidden">
-        <!-- Theme Toggle for Mobile -->
-        <ThemeToggle />
         <button
           type="button"
           class="p-2.5 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 transition-colors"
@@ -126,15 +105,6 @@
           {link.name}
         </a>
       {/each}
-      {#if showAdmin}
-        <a
-          href="/admin/update"
-          class="flex items-center px-4 py-3 rounded-xl text-sm font-medium text-amber-600 bg-amber-50 animate-pulse"
-          onclick={() => isOpen = false}
-        >
-          Admin
-        </a>
-      {/if}
     </div>
   </div>
 </nav>
