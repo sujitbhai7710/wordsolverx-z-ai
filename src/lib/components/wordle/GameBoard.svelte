@@ -92,7 +92,7 @@
 		<div
 			role="row"
 			aria-label="Row {rowIndex + 1}"
-			class="flex justify-center gap-1.5 p-1 rounded-lg transition-all duration-200 {isCurrentRow ? 'bg-[#e0f7fa] dark:bg-cyan-900/30 ring-2 ring-[#00bcd4] shadow-md' : ''} {invalidGuess && rowIndex === currentRowIndex ? 'animate-shake' : ''}"
+			class="flex justify-center gap-1.5 transition-all duration-200 {invalidGuess && rowIndex === currentRowIndex ? 'animate-shake' : ''}"
 		>
 			{#each row as tile}
 				<GameTile

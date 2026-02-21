@@ -29,8 +29,8 @@
         if (state === 'present') return 'bg-[#c9b458] border-[#c9b458] text-white shadow-md transform-gpu';
         if (state === 'absent') return 'bg-[#787c7e] border-[#787c7e] text-white shadow-inner transform-gpu';
         if (isActiveRow) {
-            if (isActiveTile) return 'bg-white dark:bg-slate-800 border-indigo-400 dark:border-indigo-500 text-slate-800 dark:text-white shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)] scale-[1.08] -translate-y-0.5 transform-gpu';
-            return 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-500 text-slate-800 dark:text-white shadow-sm transform-gpu';
+            if (isActiveTile) return 'bg-white dark:bg-slate-800 border-cyan-500 border-b-4 dark:border-cyan-400 text-slate-800 dark:text-white shadow-sm transform-gpu';
+            return 'bg-white dark:bg-slate-800 border-cyan-300 dark:border-cyan-700 text-slate-800 dark:text-white shadow-sm transform-gpu';
         }
         return 'bg-slate-50 border-slate-200 text-slate-800 dark:bg-slate-900 border-dashed dark:border-slate-700 dark:text-gray-100 opacity-70 transform-gpu';
     };
@@ -51,7 +51,7 @@
 	aria-roledescription="game tile"
 	aria-live={isActiveTile ? "polite" : "off"}
 	tabindex={-1}
-	class="{sizeClasses[size]} flex items-center justify-center font-black uppercase rounded-xl border-2 transition-all duration-300 ease-out {getTileStyle()} {letter ? (isActiveTile ? 'scale-[1.08]' : 'scale-100') : 'scale-[0.97]'}"
+	class="{sizeClasses[size]} flex items-center justify-center font-black uppercase rounded-xl border-2 transition-all duration-300 ease-out {getTileStyle()} {letter ? 'scale-100' : 'scale-[0.98]'}"
 >
 	{letter}
 </div>
