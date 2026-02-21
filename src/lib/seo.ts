@@ -1,0 +1,429 @@
+// SEO Utilities for WordSolverX Website
+
+export interface SchemaOrganization {
+    '@context': string;
+    '@type': 'Organization';
+    name: string;
+    url: string;
+    logo?: string;
+    sameAs?: string[];
+}
+
+export interface SchemaWebPage {
+    '@context': string;
+    '@type': 'WebPage';
+    name: string;
+    description: string;
+    url: string;
+}
+
+export interface SchemaFAQ {
+    '@context': string;
+    '@type': 'FAQPage';
+    mainEntity: Array<{
+        '@type': 'Question';
+        name: string;
+        acceptedAnswer: {
+            '@type': 'Answer';
+            text: string;
+        };
+    }>;
+}
+
+export interface SchemaBreadcrumb {
+    '@context': string;
+    '@type': 'BreadcrumbList';
+    itemListElement: Array<{
+        '@type': 'ListItem';
+        position: number;
+        name: string;
+        item?: string;
+    }>;
+}
+
+export interface SchemaWebApplication {
+    '@context': string;
+    '@type': 'WebApplication';
+    name: string;
+    description: string;
+    applicationCategory: string;
+    operatingSystem: string;
+    offers?: {
+        '@type': 'Offer';
+        price: string;
+        priceCurrency: string;
+    };
+}
+
+export interface SchemaCollectionPage {
+    '@context': string;
+    '@type': 'CollectionPage';
+    name: string;
+    description: string;
+    url: string;
+    mainEntity: SchemaItemList;
+}
+
+export interface SchemaItemList {
+    '@type': 'ItemList';
+    itemListElement: Array<{
+        '@type': 'ListItem';
+        position: number;
+        url: string;
+        name: string;
+    }>;
+}
+
+export interface SchemaHowTo {
+    '@context': string;
+    '@type': 'HowTo';
+    name: string;
+    step: Array<{
+        '@type': 'HowToStep';
+        name: string;
+        text: string;
+        position: number;
+    }>;
+}
+
+export interface SchemaSoftwareApplication {
+    '@context': string;
+    '@type': 'SoftwareApplication';
+    name: string;
+    applicationCategory: string;
+    operatingSystem: string;
+    offers: {
+        '@type': 'Offer';
+        price: string;
+        priceCurrency: string;
+    };
+}
+
+export interface SchemaSearchAction {
+    '@context': string;
+    '@type': 'WebSite';
+    url: string;
+    potentialAction: {
+        '@type': 'SearchAction';
+        target: {
+            '@type': 'EntryPoint';
+            urlTemplate: string;
+        };
+        'query-input': string;
+    };
+}
+
+export interface SchemaPerson {
+    '@context': string;
+    '@type': 'Person';
+    name: string;
+    url?: string;
+}
+
+// Generate Organization Schema
+export function generateOrganizationSchema(): SchemaOrganization {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'WordSolverX',
+        url: 'https://wordsolverx.com',
+        sameAs: [
+            // Add your social media URLs here
+        ],
+    };
+}
+
+// Generate WebPage Schema
+export function generateWebPageSchema(
+    name: string,
+    description: string,
+    url: string
+): SchemaWebPage {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name,
+        description,
+        url,
+    };
+}
+
+// Generate FAQ Schema
+export function generateFAQSchema(
+    faqs: Array<{ question: string; answer: string }>
+): SchemaFAQ {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer,
+            },
+        })),
+    };
+}
+
+// Generate Breadcrumb Schema
+export function generateBreadcrumbSchema(
+    items: Array<{ name: string; url?: string }>
+): SchemaBreadcrumb {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: item.name,
+            ...(item.url && { item: item.url }),
+        })),
+    };
+}
+
+// Generate Web Application Schema
+export function generateWebApplicationSchema(
+    name: string,
+    description: string
+): SchemaWebApplication {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name,
+        description,
+        applicationCategory: 'Game',
+        operatingSystem: 'Any',
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+        },
+    };
+}
+
+// Generate Collection Page Schema
+export function generateCollectionPageSchema(
+    name: string,
+    description: string,
+    url: string,
+    items: Array<{ name: string; url: string }>
+): SchemaCollectionPage {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name,
+        description,
+        url,
+        mainEntity: generateItemListSchema(items),
+    };
+}
+
+// Generate ItemList Schema
+export function generateItemListSchema(
+    items: Array<{ name: string; url: string }>
+): SchemaItemList {
+    return {
+        '@type': 'ItemList',
+        itemListElement: items.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: item.url,
+            name: item.name,
+        })),
+    };
+}
+
+// Generate HowTo Schema
+export function generateHowToSchema(
+    name: string,
+    steps: Array<{ name: string; text: string }>
+): SchemaHowTo {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name,
+        step: steps.map((step, index) => ({
+            '@type': 'HowToStep',
+            name: step.name,
+            text: step.text,
+            position: index + 1,
+        })),
+    };
+}
+
+// Generate SoftwareApplication Schema
+export function generateSoftwareApplicationSchema(
+    name: string,
+    applicationCategory: string = 'GameApplication',
+    operatingSystem: string = 'Any'
+): SchemaSoftwareApplication {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name,
+        applicationCategory,
+        operatingSystem,
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+        },
+    };
+}
+
+// Generate SearchAction Schema (for WebSite)
+export function generateSearchActionSchema(
+    url: string,
+    searchTemplate: string
+): SchemaSearchAction {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        url,
+        potentialAction: {
+            '@type': 'SearchAction',
+            target: {
+                '@type': 'EntryPoint',
+                urlTemplate: searchTemplate,
+            },
+            'query-input': 'required name=search_term_string',
+        },
+    };
+}
+
+// Generate Person Schema
+export function generatePersonAuthorSchema(
+    name: string,
+    url?: string
+): SchemaPerson {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name,
+        ...(url && { url }),
+    };
+}
+
+// Keyword sets for different pages
+export const SEO_KEYWORDS = {
+    homepage: [
+        'wordle helper',
+        'wordle solver',
+        'wordle answers',
+        'daily wordle',
+        'wordle hints',
+        'wordle today',
+        'wordle game solver',
+        'word puzzle solver',
+        'five letter word finder',
+        'wordle answer today',
+        'wordle solver online',
+        'free wordle helper',
+    ],
+    solver: [
+        'wordle solver',
+        'wordle solver tool',
+        'wordle answer finder',
+        'wordle cheat',
+        'wordle helper tool',
+        'solve wordle puzzle',
+        'wordle word finder',
+        'best wordle solver',
+        'wordle solver free',
+        'all wordle solver',
+    ],
+    allWordleSolver: [
+        'all wordle solver',
+        'solve any letter wordle within seconds',
+        'multi-length wordle solver',
+        'wordle variations solver',
+        'quordle solver',
+        'octordle solver',
+        'custom length wordle',
+        'wordle hard mode solver',
+        '4-12 letter wordle solver',
+    ],
+    binanceWOTD: [
+        'binance word of the day solver',
+        'binance wotd solver',
+        'binance word of the day answer',
+        'solve binance word of the day',
+        'binance daily word game',
+        'binance wotd cheat',
+        'binance word game solver',
+        'how to solve binance word of the day',
+        'what is binance word of the day',
+        'binance word puzzle',
+        'binance crypto word game',
+        'binance wotd helper',
+        'binance word of the day tips',
+        'binance word game answer',
+        'binance wotd strategy',
+    ],
+    today: [
+        'wordle today',
+        'today wordle answer',
+        'wordle answer today',
+        'daily wordle answer',
+        'wordle solution today',
+        'todays wordle',
+        'wordle answer for today',
+        'wordle #',
+        'wordle hints today',
+    ],
+    yesterday: [
+        'yesterday wordle',
+        'wordle yesterday',
+        'wordle answer yesterday',
+        'yesterday wordle answer',
+        'previous wordle answer',
+        'last wordle answer',
+    ],
+    archive: [
+        'wordle archive',
+        'past wordle answers',
+        'wordle answer history',
+        'all wordle answers',
+        'wordle answers list',
+        'previous wordle solutions',
+        'wordle database',
+        'historical wordle answers',
+    ],
+};
+
+// Generate comprehensive meta tags
+export interface MetaTagsConfig {
+    title: string;
+    description: string;
+    keywords?: string[];
+    canonicalUrl?: string;
+    ogImage?: string;
+    twitterCard?: 'summary' | 'summary_large_image';
+}
+
+export function generateMetaTags(config: MetaTagsConfig): Record<string, string> {
+    const {
+        title,
+        description,
+        keywords = [],
+        canonicalUrl,
+        ogImage = '/og-image.png',
+        twitterCard = 'summary_large_image',
+    } = config;
+
+    return {
+        title,
+        description,
+        keywords: keywords.join(', '),
+        'og:title': title,
+        'og:description': description,
+        'og:image': ogImage,
+        'og:type': 'website',
+        ...(canonicalUrl && { 'og:url': canonicalUrl }),
+        'twitter:card': twitterCard,
+        'twitter:title': title,
+        'twitter:description': description,
+        'twitter:image': ogImage,
+    };
+}
