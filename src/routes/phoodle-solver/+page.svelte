@@ -240,7 +240,7 @@
   <meta property="og:url" content="https://wordsolverx.com/phoodle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/phoodle solver.webp" />
+  <meta property="og:image" content="/phoodle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Phoodle Solver Today" />
   <meta name="twitter:description" content="Get instant help with Phoodle puzzles." />
@@ -254,7 +254,7 @@
     <div class="text-center mb-8">
       <div class="flex justify-center mb-6">
         <img
-          src="/phoodle solver.webp"
+          src="/phoodle-solver.webp"
           alt="Phoodle Solver Featured"
           width="600"
           height="300"
@@ -473,4 +473,93 @@
   <div class="mt-8">
     <FAQSection title="Phoodle Solver - Frequently Asked Questions" {faqs} />
   </div>
+
+  <!-- SEO Content Section -->
+  <section class="mt-12 space-y-12">
+    <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Use a Phoodle Solver?</h2>
+      <div class="prose prose-lg max-w-none text-gray-600">
+        <p class="mb-6 leading-relaxed">
+          Phoodle combines the addictive gameplay of Wordle with culinary knowledge. But food words can be surprisingly tricky — from obscure ingredients to international dishes, the vocabulary is vast and specific. A Phoodle solver helps you navigate this specialized word list when you're stuck, turning frustration into learning opportunities.
+        </p>
+        <p class="mb-6 leading-relaxed">
+          Unlike general word games, Phoodle requires thinking in food terms. A letter pattern that would suggest common words in regular Wordle might point to completely different answers in Phoodle. Our solver is specifically calibrated with food-related vocabulary, filtering through thousands of culinary terms to find matches for your clues.
+        </p>
+        <p class="leading-relaxed">
+          The solver is also educational. As you use it, you'll discover new food words, ingredients, and culinary terms you might not have known. Many players find that their Phoodle performance improves naturally over time as they build their food vocabulary through the solver's suggestions.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">How Our Phoodle Solver Works</h2>
+      <div class="prose prose-lg max-w-none text-gray-600">
+        <p class="mb-6 leading-relaxed">
+          The solver uses a curated database of food-related words. When you enter your clues — green letters in correct positions, yellow letters that are misplaced, and gray letters that are excluded — the solver filters through this database to find all matching words.
+        </p>
+        <p class="mb-6 leading-relaxed">
+          The word list includes ingredients (ONION, BASIL, CREAM), cooking methods (GRILL, ROAST, SAUTE), dishes (PASTA, PIZZA, CURRY), kitchen tools (WHISK, BLEND, SIEVE), and culinary terms from around the world. This specialized vocabulary is what makes Phoodle unique — and what makes a dedicated solver so valuable.
+        </p>
+        <p class="leading-relaxed">
+          Results are displayed instantly as you type, showing all words that match your criteria. The more specific your clues, the narrower the results. This real-time feedback helps you refine your strategy and learn which letter combinations are most common in food words.
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-3xl p-8 md:p-12 border border-orange-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Getting Better at Phoodle</h2>
+      <div class="space-y-6 text-lg text-gray-600">
+        <p class="leading-relaxed">
+          Phoodle rewards food knowledge, but strategy matters too. Here are tips to improve your game:
+        </p>
+        <ul class="space-y-4 ml-4">
+          <li class="leading-relaxed">
+            <strong class="text-gray-900">Start with common food letters</strong> — Letters like A, E, R, S, T appear frequently in food words. Starting words like "TASTE" or "PASTA" can reveal useful information quickly.
+          </li>
+          <li class="leading-relaxed">
+            <strong class="text-gray-900">Think in food categories</strong> — Phoodle answers fall into categories: ingredients, dishes, cooking methods, kitchen items. If you have a few letters, consider which category might fit.
+          </li>
+          <li class="leading-relaxed">
+            <strong class="text-gray-900">Know your cuisines</strong> — Phoodle includes words from many cuisines: Italian (PASTA, RISOTTO), French (SOUFFLE, BAGUETTE), Asian (STIRFRY, DUMPLING), and more. Broad culinary knowledge helps.
+          </li>
+          <li class="leading-relaxed">
+            <strong class="text-gray-900">Watch for double letters</strong> — Food words often have double letters: CHEESE, COFFEE, DINNER. Keep this in mind when patterns suggest it.
+          </li>
+          <li class="leading-relaxed">
+            <strong class="text-gray-900">Use the solver to learn</strong> — When stuck, use the solver to see possible words. You'll expand your food vocabulary for future games.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Common Phoodle Word Patterns</h2>
+      <div class="prose prose-lg max-w-none text-gray-600">
+        <p class="mb-6 leading-relaxed">
+          Food words have distinctive patterns. Understanding these can give you an edge:
+        </p>
+        <div class="grid md:grid-cols-2 gap-6 not-prose mb-6">
+          <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-2">Common Endings</h3>
+            <p class="text-gray-600 text-sm">Food words often end in -ER (BUTTER, DINNER), -A (PASTA, PIZZA), -O (TACO, MISO), or -S (BEANS, GREENS).</p>
+          </div>
+          <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-2">Double Letters</h3>
+            <p class="text-gray-600 text-sm">Common double letters in food words: EE (CHEESE, BEEF), TT (BUTTER, BOTTLE), SS (SAUCE, DRESSING), RR (CURRY, BERRY).</p>
+          </div>
+          <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-2">Starting Letters</h3>
+            <p class="text-gray-600 text-sm">Common starting letters: B (BAKE, BREAD, BEANS), C (CAKE, CHEESE, CREAM), S (SOUP, SAUCE, SALAD).</p>
+          </div>
+          <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-2">Vowel Patterns</h3>
+            <p class="text-gray-600 text-sm">Food words often have two vowels together: EA (BREAD, MEAT), OO (SPOON, FOOD), OU (SOUP, FLOUR).</p>
+          </div>
+        </div>
+        <p class="leading-relaxed">
+          These patterns aren't rules, but they're helpful guidelines. When you have partial information, considering these tendencies can guide your guesses toward more likely answers.
+        </p>
+      </div>
+    </div>
+  </section>
 </div>

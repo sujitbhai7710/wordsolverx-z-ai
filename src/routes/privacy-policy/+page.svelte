@@ -1,6 +1,7 @@
 <svelte:head>
   <title>Privacy Policy - WordSolverX</title>
   <meta name="description" content="Learn about WordSolverX's privacy policy." />
+  <link rel="canonical" href="https://wordsolverx.com/privacy-policy" />
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

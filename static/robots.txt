@@ -1,5 +1,18 @@
 # allow crawling everything by default
 User-agent: *
-Disallow:
+Allow: /
 
-Sitemap: https://wordsolverx.com/sitemap.xml
+# Private paths to save crawl budget
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_app/
+
+# All dynamically generated sitemaps
+Sitemap: https://wordsolverx.com/sitemap-index.xml
+Sitemap: https://wordsolverx.com/sitemap-today.xml
+Sitemap: https://wordsolverx.com/sitemap-yesterday.xml
+Sitemap: https://wordsolverx.com/sitemap-solvers.xml
+Sitemap: https://wordsolverx.com/sitemap-games.xml
+Sitemap: https://wordsolverx.com/sitemap-archive.xml
+Sitemap: https://wordsolverx.com/newssitemap.xml

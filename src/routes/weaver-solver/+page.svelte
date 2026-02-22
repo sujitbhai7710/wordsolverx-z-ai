@@ -535,6 +535,80 @@
           </div>
         </div>
       </section>
+
+      <!-- SEO Content Section -->
+      <section class="space-y-8 mt-8">
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-8 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Why Use a Weaver Solver?</h2>
+          <div class="prose prose-lg max-w-none text-gray-600 dark:text-gray-300">
+            <p class="mb-6 leading-relaxed">
+              Weaver puzzles can be deceptively difficult. While the concept is simple — change one letter at a time to transform one word into another — finding the optimal path requires exploring many possibilities. Some word pairs have obvious connections, while others require circuitous routes through unexpected intermediate words.
+            </p>
+            <p class="mb-6 leading-relaxed">
+              A Weaver solver eliminates the frustration of dead ends. Instead of manually trying different letter changes and hoping each result is a real word, the solver maps out all possible paths and shows you the shortest one. This is especially valuable for the daily puzzle, where you might encounter unfamiliar word pairs.
+            </p>
+            <p class="leading-relaxed">
+              Beyond just finding answers, the solver helps you understand word relationships. By seeing which words connect to which, you develop intuition about letter patterns and word families. This knowledge improves your performance in all word games, not just Weaver.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-8 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">How the Word Ladder Algorithm Works</h2>
+          <div class="prose prose-lg max-w-none text-gray-600 dark:text-gray-300">
+            <p class="mb-6 leading-relaxed">
+              The solver uses a bidirectional breadth-first search (BFS) algorithm. This means it explores from both the start word and end word simultaneously, meeting in the middle. This approach is significantly faster than searching from one direction only.
+            </p>
+            <p class="mb-6 leading-relaxed">
+              Here's how it works: First, the solver builds a graph where each word is a node, and edges connect words that differ by exactly one letter. When you enter a start and end word, the algorithm explores this graph to find the shortest path between them.
+            </p>
+            <p class="leading-relaxed">
+              The algorithm guarantees finding the shortest path because BFS explores all paths of length N before any paths of length N+1. When the two search fronts meet, we know we've found the optimal solution. The solver displays up to 5 different paths, all of the same minimum length, giving you options for how to approach the puzzle.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-indigo-900/20 p-8 rounded-xl border border-blue-100 dark:border-gray-700">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Tips for Getting Better at Weaver</h2>
+          <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300">
+            <p class="leading-relaxed">
+              Weaver rewards vocabulary and pattern recognition. Here are strategies to improve your game:
+            </p>
+            <ul class="space-y-4 ml-4">
+              <li class="leading-relaxed">
+                <strong class="text-gray-900 dark:text-white">Look for common letter patterns</strong> — Words often connect through common patterns. If you need to change 'A' to 'E', look for words where that position commonly has either letter.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900 dark:text-white">Work from both ends</strong> — Just like our algorithm, you can think about what words might connect to both the start and end. Meeting in the middle often reveals the path.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900 dark:text-white">Know your word families</strong> — Words that rhyme or share common endings often connect. CAT → BAT → BAG → TAG is a simple example of following a word family.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900 dark:text-white">Avoid dead ends</strong> — Some words have few connections. If you find yourself stuck, backtrack and try a different intermediate word with more connections.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900 dark:text-white">Use the solver to learn</strong> — After solving (or when stuck), use the solver to see the optimal path. Analyze why certain words were chosen and apply that knowledge to future puzzles.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-8 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Understanding Word Ladder History</h2>
+          <div class="prose prose-lg max-w-none text-gray-600 dark:text-gray-300">
+            <p class="mb-6 leading-relaxed">
+              Word ladders have a rich history dating back to 1879, when Lewis Carroll (author of Alice in Wonderland) invented them. He called them "Doublets" and published them in Vanity Fair magazine. The concept was simple: transform one word into another by changing one letter at a time, with each intermediate step being a valid word.
+            </p>
+            <p class="mb-6 leading-relaxed">
+              Carroll's original example was transforming "HEAD" into "TAIL": HEAD → HEAL → TEAL → TELL → TALL → TAIL. This six-step transformation demonstrates the elegant simplicity of the puzzle — each step changes exactly one letter, and every intermediate word is meaningful.
+            </p>
+            <p class="leading-relaxed">
+              Modern Weaver games follow the same principle but add daily puzzle elements. Each day brings a new word pair to connect, and players compete to find the shortest path. Our solver helps you discover these optimal paths, whether you're stuck on today's puzzle or exploring the fascinating world of word transformations.
+            </p>
+          </div>
+        </div>
+      </section>
     </footer>
   </div>
 {/if}

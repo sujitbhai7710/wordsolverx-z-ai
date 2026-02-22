@@ -388,5 +388,96 @@
     <section class="w-full max-w-4xl py-12">
       <FAQSection {faqs} />
     </section>
+
+    <!-- SEO Content Section -->
+    <section class="w-full max-w-4xl pb-20">
+      <article class="space-y-12">
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Use a Quordle Solver?</h2>
+          <div class="prose prose-lg max-w-none text-gray-600">
+            <p class="mb-6 leading-relaxed">
+              Quordle takes the Wordle concept and multiplies the challenge by four. Instead of guessing one word, you're solving four puzzles simultaneously — all with just nine total guesses. This creates a unique strategic challenge that requires thinking across multiple boards at once. A Quordle solver helps you navigate this complexity by suggesting words that maximize information across all four boards.
+            </p>
+            <p class="mb-6 leading-relaxed">
+              Unlike single-board Wordle where you can focus entirely on one puzzle, Quordle demands that you balance progress across all four boards. Sometimes the best move isn't the word that solves one board fastest, but the word that gives you useful information everywhere. Our solver analyzes this multi-dimensional problem and suggests words that optimize your overall chances of success.
+            </p>
+            <p class="leading-relaxed">
+              The solver is particularly valuable when you're stuck. Maybe three boards are nearly solved but the fourth is a mystery. Or perhaps you've used seven guesses and need to make every remaining guess count. In these high-pressure moments, the solver's suggestions can mean the difference between victory and defeat.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">How Our Quordle Solver Algorithm Works</h2>
+          <div class="prose prose-lg max-w-none text-gray-600">
+            <p class="mb-6 leading-relaxed">
+              The Quordle solver uses information theory to find optimal guesses. When you enter your guesses and mark the tile colors, the solver processes feedback from all four boards simultaneously. It then filters the word list based on what each board has revealed, creating four separate sets of candidate words.
+            </p>
+            <p class="mb-6 leading-relaxed">
+              The key insight is that a single guess affects all four boards. A word that might be perfect for one board could be useless for the others. The solver evaluates each possible guess by calculating how much information it provides across all unsolved boards. Words that eliminate many possibilities on multiple boards rank higher than words that only help with one.
+            </p>
+            <p class="leading-relaxed">
+              For the first guess, the solver recommends "SALET" — a word optimized through computer analysis to provide maximum information in Wordle-style games. From there, each subsequent suggestion adapts to your specific game state, considering which boards are solved, which letters are confirmed, and what possibilities remain.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-3xl p-8 md:p-12 border border-green-100">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Getting Better at Quordle</h2>
+          <div class="space-y-6 text-lg text-gray-600">
+            <p class="leading-relaxed">
+              Quordle requires a different approach than Wordle. Here are strategies that will improve your game:
+            </p>
+            <ul class="space-y-4 ml-4">
+              <li class="leading-relaxed">
+                <strong class="text-gray-900">Start with information-gathering words</strong> — Your first 2-3 guesses should focus on revealing letters across all boards. Words like SALET, CRANE, or TRACE help you identify common letters quickly.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900">Don't chase one board</strong> — It's tempting to focus on solving one puzzle completely, but this often backfires. Spread your attention across all four boards to maintain flexibility.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900">Use confirmed letters strategically</strong> — Once you know a letter is green on one board, try using it in different positions on other boards. This gives you free information.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900">Save guesses for the endgame</strong> — With only nine guesses, you need 2-3 guesses remaining when you're down to the final unsolved board. Budget your guesses accordingly.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-gray-900">Practice with our solver</strong> — Use the solver to understand optimal play patterns. Over time, you'll internalize the strategies and improve naturally.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Quordle vs Wordle: Key Differences</h2>
+          <div class="prose prose-lg max-w-none text-gray-600">
+            <p class="mb-6 leading-relaxed">
+              While Quordle builds on Wordle's foundation, the four-board format creates fundamentally different gameplay. Understanding these differences helps you adapt your strategy.
+            </p>
+            <div class="grid md:grid-cols-2 gap-6 not-prose mb-6">
+              <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h3 class="font-bold text-gray-900 mb-2">Guess Budget</h3>
+                <p class="text-gray-600 text-sm">Wordle gives 6 guesses for 1 word. Quordle gives 9 guesses for 4 words. That's 2.25 guesses per word on average — much tighter margins.</p>
+              </div>
+              <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h3 class="font-bold text-gray-900 mb-2">Information Sharing</h3>
+                <p class="text-gray-600 text-sm">In Quordle, every guess provides information for all four boards. A letter that's gray on one board might be green on another.</p>
+              </div>
+              <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h3 class="font-bold text-gray-900 mb-2">Solving Order</h3>
+                <p class="text-gray-600 text-sm">Boards solve at different rates. You might solve two boards quickly and spend your remaining guesses on the other two. Plan for asymmetric progress.</p>
+              </div>
+              <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h3 class="font-bold text-gray-900 mb-2">Endgame Strategy</h3>
+                <p class="text-gray-600 text-sm">When three boards are solved, you can focus entirely on the fourth. But you need enough guesses remaining. Always keep 2-3 guesses in reserve.</p>
+              </div>
+            </div>
+            <p class="leading-relaxed">
+              These differences make Quordle both more challenging and more strategic than Wordle. The solver helps you navigate these complexities by suggesting words that account for all four boards simultaneously.
+            </p>
+          </div>
+        </div>
+      </article>
+    </section>
   </div>
 </div>

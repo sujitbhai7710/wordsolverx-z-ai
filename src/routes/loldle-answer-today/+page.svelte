@@ -1,6 +1,8 @@
 <script lang="ts">
   import GameDleAnswerPage from '$lib/components/GameDleAnswerPage.svelte';
 
+  let { data }: { data: { answers: any[]; dateStr: string; error: string | null; } } = $props();
+
   const modeConfig = {
     classic: { name: 'LoLdle Classic Answer', icon: '👑', color: 'border-yellow-400', bg: 'bg-yellow-50' },
     splash: { name: 'LoLdle Splash Art Answer', icon: '🎨', color: 'border-pink-400', bg: 'bg-pink-50' },
@@ -28,25 +30,82 @@
   ]};
 </script>
 
-<GameDleAnswerPage gameKey="loldle" gameTitle="LoLdle" apiGame="loldle" {modes} {modeConfig} {regions} {crossLinks} {schemas}>
+<GameDleAnswerPage gameKey="loldle" gameTitle="LoLdle" apiGame="loldle" {modes} {modeConfig} {regions} {crossLinks} {schemas} {data}>
   {#snippet seoContent()}
-    <h2 class="text-3xl font-bold text-gray-900 mb-6">LoLdle Answers Today: Your Daily League Assistant</h2>
-    <div class="prose prose-blue max-w-none text-gray-600">
-      <p class="mb-4">Stuck on today's <strong>LoLdle</strong>? We've got you covered with solutions for all game modes.</p>
-      <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Mastering the Modes</h3>
-      <ul class="grid md:grid-cols-2 gap-4 list-none pl-0">
-        <li class="bg-yellow-50 p-4 rounded-xl border border-yellow-100"><strong class="text-yellow-700 block mb-1">👑 Classic</strong>Uses clues like Gender, Position, Species, Resource, Range type, and Release year.</li>
-        <li class="bg-green-50 p-4 rounded-xl border border-green-100"><strong class="text-green-700 block mb-1">💬 Quote</strong>A random voice line from a champion.</li>
-        <li class="bg-blue-50 p-4 rounded-xl border border-blue-100"><strong class="text-blue-700 block mb-1">⚡ Ability</strong>Identifies a champion by one of their spell icons.</li>
-        <li class="bg-pink-50 p-4 rounded-xl border border-pink-100"><strong class="text-pink-700 block mb-1">🎨 Splash</strong>Shows a zoomed-in section of a champion's skin splash art.</li>
-      </ul>
-      <div class="border-t border-gray-100 mt-8 pt-8">
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">Common Questions</h3>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div><h4 class="font-bold text-gray-900 mb-2">Can I play previous days?</h4><p class="text-sm">Yes, LoLdle has an archive feature, but our page focuses on today's solutions.</p></div>
-          <div><h4 class="font-bold text-gray-900 mb-2">Why are there regions?</h4><p class="text-sm">The puzzle resets based on timezone, which can lead to different answers for US and EU players.</p></div>
+    <article class="space-y-8">
+      <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">What is LoLdle?</h2>
+        <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+          LoLdle is a daily guessing game for League of Legends players. If you've played Wordle, you'll recognize the concept — but instead of guessing words, you're guessing champions from Riot Games' popular MOBA. Each day brings a new mystery champion, and you use clues to narrow down who it might be.
+        </p>
+        <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+          The game taps into your League knowledge in a way that feels rewarding. Every match you've played, every champion you've tried, every ability you've seen — all of that experience becomes useful. Whether you're a seasoned veteran or a relatively new player, LoLdle gives you a daily reason to think about the game's massive roster.
+        </p>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          What makes LoLdle particularly engaging is how it tests different kinds of knowledge. Some modes reward game mechanics knowledge, others test your familiarity with champion lore, and some challenge your visual memory of splash arts and ability icons. It's a comprehensive test of your League expertise.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">LoLdle Game Modes Explained</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
+            <h3 class="text-xl font-bold text-yellow-700 mb-3 flex items-center gap-2">👑 Classic Mode</h3>
+            <p class="text-gray-600">
+              The traditional guessing experience. You get clues about the champion's gender, position (top, jungle, mid, bot, support), species (human, yordle, vastaya, etc.), resource (mana, energy, fury, etc.), range type, and release year. Use these to narrow down possibilities.
+            </p>
+          </div>
+          <div class="bg-green-50 p-6 rounded-2xl border border-green-100">
+            <h3 class="text-xl font-bold text-green-700 mb-3 flex items-center gap-2">💬 Quote Mode</h3>
+            <p class="text-gray-600">
+              Read a voice line from a champion and guess who said it. This tests your familiarity with champion personalities and memorable quotes. Some are iconic lines everyone knows, others are obscure enough to challenge even dedicated players.
+            </p>
+          </div>
+          <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+            <h3 class="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">⚡ Ability Mode</h3>
+            <p class="text-gray-600">
+              You're shown an ability icon (Q, W, E, or R) and need to identify which champion it belongs to. This rewards players who pay attention to ability visuals and have experience playing against many different champions.
+            </p>
+          </div>
+          <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100">
+            <h3 class="text-xl font-bold text-pink-700 mb-3 flex items-center gap-2">🎨 Splash Mode</h3>
+            <p class="text-gray-600">
+              A zoomed-in section of a champion's splash art is shown, and you need to identify which champion (and sometimes which skin) it belongs to. This tests your visual memory of the game's artwork.
+            </p>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Getting Better at LoLdle</h2>
+        <div class="space-y-4 text-lg text-gray-600">
+          <p class="leading-relaxed">
+            Want to improve your LoLdle game? Here are strategies that actually help:
+          </p>
+          <ul class="list-disc list-inside space-y-3 ml-4">
+            <li><strong class="text-gray-900">Know your positions</strong> — Understanding which champions typically play which roles is fundamental. Most marksmen are bot lane, most tanks are top or support, assassins tend to be mid or jungle.</li>
+            <li><strong class="text-gray-900">Learn champion resources</strong> — Most champions use mana, but some use energy (Shen, Zed, Kennen), fury (Renekton, Tryndamere), or nothing at all (Riven, Katarina). This clue alone can eliminate many options.</li>
+            <li><strong class="text-gray-900">Remember release years</strong> — Older champions (2009-2011) are the originals. Newer champions (2020+) have more modern designs. This helps narrow down by era.</li>
+            <li><strong class="text-gray-900">Study splash arts</strong> — For Splash mode, pay attention to color palettes and art styles. Each champion has distinctive visual elements that show even in zoomed-in sections.</li>
+            <li><strong class="text-gray-900">Play different champions</strong> — The more champions you've played, the more familiar you'll be with their abilities, quotes, and splash arts. Variety in your gameplay helps in LoLdle.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 border border-blue-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Why League Players Love LoLdle</h2>
+        <div class="space-y-4 text-lg text-gray-600">
+          <p class="leading-relaxed">
+            LoLdle connects with League players because it rewards the knowledge you've built through playing. Every game you've played, every champion you've faced, every ability you've dodged — it all contributes to your LoLdle skills.
+          </p>
+          <p class="leading-relaxed">
+            The game also keeps players engaged with League even when they're not in a match. It's a quick daily activity that takes just a few minutes but keeps you thinking about the game. Many players make it part of their daily routine, checking LoLdle before or after their gaming sessions.
+          </p>
+          <p class="leading-relaxed">
+            Plus, with over 160 champions in the game, there's always more to learn. Even veteran players encounter champions they're less familiar with, making every day's puzzle a genuine challenge. The game grows with the roster, staying fresh as new champions are released.
+          </p>
+        </div>
+      </section>
+    </article>
   {/snippet}
 </GameDleAnswerPage>

@@ -404,7 +404,7 @@
   <!-- Featured Image -->
   <div class="flex justify-center px-4 py-8">
     <img
-      src="/colordle solver.webp"
+      src="/colordle-solver.webp"
       alt="Colordle Solver in Action showing color matching interface"
       width="800"
       height="450"
@@ -486,5 +486,102 @@
 
     <!-- FAQ Section -->
     <FAQSection title="Colordle Solver FAQ" {faqs} />
+
+    <!-- SEO Content Section -->
+    <section class="space-y-12">
+      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">How Color Distance Calculation Works</h2>
+        <div class="prose prose-lg max-w-none text-gray-600">
+          <p class="mb-6 leading-relaxed">
+            Color perception is surprisingly complex. Two colors might look identical to one person but different to another. That's why Colordle and our solver use the Delta E (CIE2000) algorithm — a sophisticated formula that measures how different two colors appear to the human eye.
+          </p>
+          <p class="mb-6 leading-relaxed">
+            The calculation happens in the LAB color space, which was designed to be perceptually uniform. This means that a Delta E of 2.0 represents the same visual difference regardless of which colors you're comparing. The RGB and HEX color spaces we use on screens don't have this property — a small RGB change might be very visible in one color but invisible in another.
+          </p>
+          <p class="leading-relaxed">
+            When you enter a percentage score from Colordle, our solver converts it to a Delta E value and filters the color database to find colors that would produce similar scores. This mathematical approach is far more accurate than guessing based on color names or categories alone.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Getting Better at Colordle</h2>
+        <div class="space-y-6 text-lg text-gray-600">
+          <p class="leading-relaxed">
+            Colordle rewards color knowledge and strategic guessing. Here are tips to improve your game:
+          </p>
+          <ul class="space-y-4 ml-4">
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Start with primary and secondary colors</strong> — Colors like Red, Blue, Yellow, Green, Orange, and Purple are good starting points. They're evenly distributed around the color wheel and give you broad information.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Pay attention to saturation and brightness</strong> — A 50% match might mean you have the right hue but wrong saturation. Try brighter and darker versions of similar colors.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Learn color families</strong> — Colors cluster into families: warm (reds, oranges, yellows), cool (blues, greens, purples), neutrals (grays, browns, whites). Identify the family first, then narrow down.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Use the percentage strategically</strong> — A score above 70% means you're very close. A score below 30% means you're far away. Use this to decide whether to refine your current guess or try a completely different color.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Learn color names</strong> — The more color names you know, the better. Colors like "Cerulean", "Chartreuse", "Burgundy", and "Teal" are common in Colordle and have specific hex values.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-3xl p-8 md:p-12 border border-pink-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding Hex Color Codes</h2>
+        <div class="prose prose-lg max-w-none text-gray-600">
+          <p class="mb-6 leading-relaxed">
+            Every color in Colordle is represented by a hex code — a 6-character string like #FF5733 that defines the exact color. Understanding hex codes can help you make better guesses.
+          </p>
+          <div class="grid md:grid-cols-3 gap-6 not-prose mb-6">
+            <div class="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">First 2 Characters (Red)</h3>
+              <p class="text-gray-600 text-sm">The first two characters control the red component. 00 is no red, FF is maximum red. Higher values mean more red in the color.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">Middle 2 Characters (Green)</h3>
+              <p class="text-gray-600 text-sm">The middle two characters control green. 00 is no green, FF is maximum green. This affects how "warm" or "cool" a color appears.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">Last 2 Characters (Blue)</h3>
+              <p class="text-gray-600 text-sm">The last two characters control blue. 00 is no blue, FF is maximum blue. Blue values strongly affect whether a color feels "warm" or "cool".</p>
+            </div>
+          </div>
+          <p class="leading-relaxed">
+            For example, #FF0000 is pure red, #00FF00 is pure green, #0000FF is pure blue, #FFFFFF is white, and #000000 is black. Colors like #FF5733 (a reddish-orange) have high red, moderate green, and low blue values.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Common Colordle Color Categories</h2>
+        <div class="prose prose-lg max-w-none text-gray-600">
+          <p class="mb-6 leading-relaxed">
+            Colordle answers tend to fall into several categories. Knowing these can help you make educated guesses:
+          </p>
+          <div class="grid md:grid-cols-2 gap-6 not-prose">
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">🎨 Named Colors</h3>
+              <p class="text-gray-600 text-sm">Common color names like Crimson, Navy, Teal, Coral, Olive. These are everyday colors most people recognize.</p>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">🌸 Nature Colors</h3>
+              <p class="text-gray-600 text-sm">Colors named after natural things: Sky Blue, Forest Green, Sunset, Ocean, Sand. These often have specific, recognizable shades.</p>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">🍇 Food Colors</h3>
+              <p class="text-gray-600 text-sm">Colors named after foods: Cherry, Lemon, Lime, Chocolate, Coffee. These evoke specific visual associations.</p>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">💎 Gem Colors</h3>
+              <p class="text-gray-600 text-sm">Colors named after gems and minerals: Ruby, Sapphire, Emerald, Amber, Jade. These tend to be rich, saturated colors.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>

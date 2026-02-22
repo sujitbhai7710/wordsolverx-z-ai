@@ -9,6 +9,8 @@
 <svelte:head>
   <title>{data.meta?.title ?? 'Semantle Answer Today'}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
+  <meta name="news_keywords" content="semantle, semantle answer, semantle today, word similarity game, semantic puzzle" />
+  <link rel="canonical" href="https://wordsolverx.com/semantle-answer-today" />
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
   {/if}
@@ -80,6 +82,107 @@
             {/if}
           {/each}
         </div>
+      </article>
+
+      <!-- SEO Content Section -->
+      <article class="mt-12 space-y-8">
+        <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            What is Semantle?
+          </h2>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            Semantle is a word game with a twist — it's not about spelling, it's about meaning. Instead of guessing letters, you're trying to find a secret word based on how semantically similar your guesses are. The game uses word embeddings, which is a fancy way of saying it understands how words relate to each other conceptually.
+          </p>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            Here's how it works: you type a word, any word, and the game gives you a similarity score. A score of 100 means you've found the exact word. Lower scores mean you're getting warmer or colder, but not in a letter-by-letter way — in a meaning-by-meaning way. It's like playing a game of "hot or cold" with concepts instead of hidden objects.
+          </p>
+          <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            What makes Semantle unique is that there's no limit on guesses. You can try hundreds of words if you need to. The challenge isn't about running out of tries — it's about figuring out what direction to explore. If "dog" scores 15 and "cat" scores 20, you know you're heading toward animals. But if "philosophy" scores 35, suddenly you're in a completely different territory.
+          </p>
+        </section>
+
+        <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            How Semantle Scoring Works
+          </h2>
+          <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300">
+            <p class="leading-relaxed">
+              Understanding the scoring system is key to playing Semantle well:
+            </p>
+            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Similarity Scores</h3>
+              <p class="text-gray-600 dark:text-gray-300">
+                Every guess gets a score from -100 to 100. A score of 100 means you've found the exact word. Scores above 70 are very close — you're in the right conceptual neighborhood. Scores between 30-70 suggest moderate similarity. Below 30, and you're pretty far off.
+              </p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">The "Getting Warm" Feeling</h3>
+              <p class="text-gray-600 dark:text-gray-300">
+                Unlike Wordle where you get immediate visual feedback, Semantle requires you to track patterns mentally. If your scores are trending upward, you're moving in the right direction conceptually. Pay attention to which types of words give higher scores.
+              </p>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Word Relationships</h3>
+              <p class="text-gray-600 dark:text-gray-300">
+                The game understands synonyms, antonyms, categories, and associations. If the secret word is "happy," words like "joy," "smile," and "pleased" will score highly. But so might "emotion" or "feeling" because they're conceptually related.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            Tips for Solving Semantle
+          </h2>
+          <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300">
+            <p class="leading-relaxed">
+              Semantle requires a different kind of thinking than other word games. Here are strategies that actually help:
+            </p>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-purple-100 dark:border-purple-800/30">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Start Broad</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                  Begin with general categories: "thing," "person," "place," "action," "feeling." See which direction scores highest, then narrow down from there.
+                </p>
+              </div>
+              <div class="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-purple-100 dark:border-purple-800/30">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Follow the Trail</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                  When a word scores well, explore related concepts. If "music" scores 40, try "song," "instrument," "melody," "rhythm" — follow the semantic path.
+                </p>
+              </div>
+              <div class="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-purple-100 dark:border-purple-800/30">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Think Abstractly</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                  Semantle answers can be abstract concepts, not just concrete objects. Words like "freedom," "memory," or "possibility" are fair game.
+                </p>
+              </div>
+              <div class="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-purple-100 dark:border-purple-800/30">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Use a Thesaurus Mindset</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                  Think about synonyms, related fields, and word associations. If you're stuck, mentally flip through a thesaurus and try different angles.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-3xl p-8 border border-purple-100 dark:border-purple-800/30">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            Why Semantle is Different
+          </h2>
+          <div class="space-y-4 text-lg text-gray-600 dark:text-gray-300">
+            <p class="leading-relaxed">
+              Most word games test your vocabulary or spelling. Semantle tests your understanding of how concepts relate to each other. It's less about knowing words and more about understanding meaning.
+            </p>
+            <p class="leading-relaxed">
+              This makes Semantle both frustrating and fascinating. You might know the word but not realize it's the answer because you're thinking about it wrong. Or you might stumble onto the answer by accident while exploring a completely different direction.
+            </p>
+            <p class="leading-relaxed">
+              The unlimited guesses also change the dynamic. There's no pressure, no ticking clock. You can spend hours exploring the semantic space, learning about word relationships you never considered. It's as much a learning experience as it is a game.
+            </p>
+          </div>
+        </section>
       </article>
 
       <div class="mt-16">

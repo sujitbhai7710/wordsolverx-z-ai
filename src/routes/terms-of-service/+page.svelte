@@ -1,6 +1,7 @@
 <svelte:head>
   <title>Terms of Service - WordSolverX</title>
   <meta name="description" content="Terms of Service for WordSolverX.com" />
+  <link rel="canonical" href="https://wordsolverx.com/terms-of-service" />
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

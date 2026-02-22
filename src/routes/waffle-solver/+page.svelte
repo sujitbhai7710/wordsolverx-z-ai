@@ -243,7 +243,7 @@
     <div class="text-center space-y-6">
       <div class="flex justify-center mb-6">
         <img
-          src="/waffle solver.webp"
+          src="/waffle-solver.webp"
           alt="Waffle Solver Featured"
           width="150"
           height="150"
@@ -458,7 +458,7 @@
 
     <div class="mt-8">
       <img
-        src="/waffle solver7.webp"
+        src="/waffle-solver7.webp"
         alt="How to use Waffle Solver"
         width="600"
         height="400"
@@ -468,6 +468,95 @@
     </div>
 
     <FAQSection title="Waffle Solver FAQ" {faqs} />
+
+    <!-- SEO Content Section -->
+    <section class="mt-12 space-y-12">
+      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Use a Waffle Solver?</h2>
+        <div class="prose prose-lg max-w-none text-gray-600">
+          <p class="mb-6 leading-relaxed">
+            Waffle is one of the most challenging word puzzles because it combines word knowledge with spatial reasoning. Unlike Wordle where you guess sequentially, Waffle requires you to rearrange letters across multiple intersecting words simultaneously. A solver helps you navigate this complexity by finding all valid arrangements that satisfy the puzzle constraints.
+          </p>
+          <p class="mb-6 leading-relaxed">
+            The game's unique mechanic — swapping letters anywhere on the board — creates thousands of possible arrangements. Most are invalid (they don't form real words), but many are valid. Our WASM-powered solver evaluates every possibility in milliseconds, showing you all solutions so you can choose the one that requires the fewest swaps.
+          </p>
+          <p class="leading-relaxed">
+            Beyond just finding answers, the solver helps you understand the puzzle's structure. By seeing all valid solutions, you learn which letter patterns are common and develop intuition for future puzzles. Many players use the solver as a learning tool, not just a shortcut.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">How Our Waffle Solver Works</h2>
+        <div class="prose prose-lg max-w-none text-gray-600">
+          <p class="mb-6 leading-relaxed">
+            The solver uses WebAssembly (WASM) for near-native performance. When you enter your puzzle state — the letters and their color hints — the solver generates all possible arrangements that match your constraints. Each arrangement is then validated against a comprehensive word dictionary.
+          </p>
+          <p class="mb-6 leading-relaxed">
+            The validation process checks all six words: three across and three down. Every word must be a valid English word from our dictionary. The solver also ensures that the letter counts match — if the puzzle has two 'E's, the solution must use exactly two 'E's in the same positions.
+          </p>
+          <p class="leading-relaxed">
+            What makes this solver special is its speed. The WASM engine can evaluate thousands of arrangements per second, delivering results almost instantly. This means you spend less time waiting and more time solving. The "Auto Fill Today" feature even fetches the current puzzle directly from the Waffle API, eliminating manual entry.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-3xl p-8 md:p-12 border border-amber-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Getting Better at Waffle</h2>
+        <div class="space-y-6 text-lg text-gray-600">
+          <p class="leading-relaxed">
+            Waffle rewards both vocabulary and strategy. Here are tips to improve your game:
+          </p>
+          <ul class="space-y-4 ml-4">
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Start with green letters</strong> — Green letters are already in the correct position. Build your strategy around these anchors, as they won't need to move.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Identify word patterns</strong> — Look at the green and yellow letters together. Often, you can identify which words they belong to based on common patterns.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Count letter frequencies</strong> — If you see two 'S's in the puzzle, they might both go at the ends of words. Letter frequency patterns can guide your swaps.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Work on one word at a time</strong> — Once you've identified a likely word, focus on getting its letters in place. This creates a ripple effect that helps solve adjacent words.
+            </li>
+            <li class="leading-relaxed">
+              <strong class="text-gray-900">Use the solver to learn</strong> — After solving (or when stuck), use the solver to see the target arrangement. Compare it to your thought process and identify where you went wrong.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding Waffle Scoring</h2>
+        <div class="prose prose-lg max-w-none text-gray-600">
+          <p class="mb-6 leading-relaxed">
+            Waffle uses a clever scoring system based on the number of swaps you make. Every puzzle is designed to be solvable in exactly 10 swaps, which earns you 5 stars (a perfect score). Each additional swap costs you half a star.
+          </p>
+          <div class="grid md:grid-cols-2 gap-6 not-prose mb-6">
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">⭐⭐⭐⭐⭐ 5 Stars</h3>
+              <p class="text-gray-600 text-sm">Solved in 10 swaps or fewer. This is the target for every puzzle and shows mastery.</p>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">⭐⭐⭐⭐ 4 Stars</h3>
+              <p class="text-gray-600 text-sm">Solved in 11-12 swaps. Very good, but there was a more efficient path.</p>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">⭐⭐⭐ 3 Stars</h3>
+              <p class="text-gray-600 text-sm">Solved in 13-14 swaps. Average performance. Review your swaps for inefficiencies.</p>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">⭐⭐ or less</h3>
+              <p class="text-gray-600 text-sm">15+ swaps. Consider using the solver to understand the optimal path.</p>
+            </div>
+          </div>
+          <p class="leading-relaxed">
+            The solver helps you achieve perfect scores by showing you the target arrangement. Once you know where each letter should go, you can plan your swaps to reach the solution in exactly 10 moves.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <!-- Internal Links Section -->
     <div class="bg-gray-100 dark:bg-gray-800/50 p-8 sm:p-12 rounded-[40px] text-center space-y-8">

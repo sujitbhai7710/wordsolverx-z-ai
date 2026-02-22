@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
 
   interface ModeConfig { name: string; icon: string; color: string; bg: string; }
   interface GameAnswer { game: string; date: string; mode: string; region: string; game_id: number; json_content: string; }
@@ -10,6 +10,7 @@
     regions = [{ key: 'america', label: 'America', flag: '🇺🇸', accent: 'bg-emerald-500' }, { key: 'europe', label: 'Europe', flag: '🇪🇺', accent: 'bg-teal-500' }],
     gridCols = 'grid-cols-1 md:grid-cols-2',
     seoContent, crossLinks, schemas,
+    data,
   }: {
     gameKey: string;
     gameTitle: string;
@@ -21,22 +22,18 @@
     seoContent: Snippet;
     crossLinks: { href: string; icon: string; label: string; }[];
     schemas: object;
+    data?: { answers: GameAnswer[]; dateStr: string; error: string | null; };
   } = $props();
 
-  let answers = $state<GameAnswer[]>([]);
-  let loading = $state(true);
-  let error = $state<string | null>(null);
+  // Use server-side data if available, otherwise fall back to empty state
+  let answers = $state<GameAnswer[]>(data?.answers ?? []);
+  let loading = $state(!data?.answers?.length);
+  let error = $state<string | null>(data?.error ?? null);
   let copiedKey = $state<string | null>(null);
-  let dateStr = $state('');
+  let dateStr = $state(data?.dateStr ?? new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
 
-  onMount(() => {
-    dateStr = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    fetch(`https://narutodle-worker.narutodle.workers.dev/today?game=${apiGame}`)
-      .then(r => { if (!r.ok) throw new Error('Failed to fetch'); return r.json(); })
-      .then((data: GameAnswer[]) => { answers = data; })
-      .catch(err => { error = err instanceof Error ? err.message : 'Failed to load'; })
-      .finally(() => { loading = false; });
-  });
+  // Generate canonical URL based on gameKey
+  const canonicalUrl = `https://wordsolverx.com/${gameKey}-answer-today`;
 
   function parseContent(jsonContent: string): ParsedContent {
     try { return JSON.parse(jsonContent); } catch { return { champion_name: 'Unknown' }; }
@@ -56,6 +53,8 @@
 <svelte:head>
   <title>{gameTitle} Answer for Today | WordSolverX</title>
   <meta name="description" content="Get the confirmed {gameTitle} answer for today. Solutions for all game modes." />
+  <meta name="news_keywords" content="{gameKey}, {gameKey} answer, {gameKey} today, anime guessing game, daily puzzle" />
+  <link rel="canonical" href={canonicalUrl} />
   {@html `<script type="application/ld+json">${JSON.stringify(schemas)}</script>`}
 </svelte:head>
 

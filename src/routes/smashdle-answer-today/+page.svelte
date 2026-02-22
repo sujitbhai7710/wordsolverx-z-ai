@@ -1,6 +1,8 @@
 <script lang="ts">
   import GameDleAnswerPage from '$lib/components/GameDleAnswerPage.svelte';
 
+  let { data }: { data: { answers: any[]; dateStr: string; error: string | null; } } = $props();
+
   const modeConfig = {
     classic: { name: 'Smashdle Classic Answer', icon: '👑', color: 'border-yellow-400', bg: 'bg-yellow-50' },
     emoji: { name: 'Smashdle Emoji Answer', icon: '😀', color: 'border-pink-400', bg: 'bg-pink-50' },
@@ -29,19 +31,88 @@
   ]};
 </script>
 
-<GameDleAnswerPage gameKey="smashdle" gameTitle="Smashdle" apiGame="smashdle" {modes} {modeConfig} {gridCols} {regions} {crossLinks} {schemas}>
+<GameDleAnswerPage gameKey="smashdle" gameTitle="Smashdle" apiGame="smashdle" {modes} {modeConfig} {gridCols} {regions} {crossLinks} {schemas} {data}>
   {#snippet seoContent()}
-    <h2 class="text-3xl font-bold text-gray-900 mb-6">Smashdle Solutions: Daily Smash Bros Trivia</h2>
-    <div class="prose prose-red max-w-none text-gray-600">
-      <p class="mb-4">Welcome to the arena! Find all <strong>Smashdle answers today</strong> right here.</p>
-      <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Fighter Modes Breakdown</h3>
-      <ul class="grid md:grid-cols-2 gap-4 list-none pl-0">
-        <li class="bg-red-50 p-4 rounded-xl border border-red-100"><strong class="text-red-700 block mb-1">👑 Classic</strong>Guess the fighter by Series, Release date, Weight, Speed.</li>
-        <li class="bg-pink-50 p-4 rounded-xl border border-pink-100"><strong class="text-pink-700 block mb-1">😀 Emoji</strong>Decipher the character from representative emojis.</li>
-        <li class="bg-purple-50 p-4 rounded-xl border border-purple-100"><strong class="text-purple-700 block mb-1">👤 Silhouette</strong>Identify the character from their shadow.</li>
-        <li class="bg-red-50 p-4 rounded-xl border border-red-100"><strong class="text-red-700 block mb-1">💥 Final Smash</strong>Recognize the character's ultimate move.</li>
-        <li class="bg-pink-50 p-4 rounded-xl border border-pink-100"><strong class="text-pink-700 block mb-1">🩷 Kirby Copy</strong>Guess which fighter Kirby inhaled!</li>
-      </ul>
-    </div>
+    <article class="space-y-8">
+      <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">What is Smashdle?</h2>
+        <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+          Smashdle is a daily guessing game for Super Smash Bros fans. If you've played Wordle, you'll recognize the concept — but instead of guessing words, you're guessing fighters from Nintendo's legendary crossover fighting game. Each day brings a new mystery character, and you use clues to narrow down who it might be.
+        </p>
+        <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+          The game taps into your Smash knowledge in a way that feels rewarding. Every match you've played, every fighter you've tried, every Final Smash you've seen — all of that experience becomes useful. Whether you're a competitive player who mains a specific character or a casual fan who enjoys the chaos, Smashdle gives you a daily reason to think about the massive roster.
+        </p>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          What makes Smashdle particularly engaging is how it tests different kinds of knowledge. Some modes reward game mechanics knowledge, others test your familiarity with character designs and abilities, and some challenge your visual memory. It's a comprehensive test of your Smash expertise.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Smashdle Game Modes Explained</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
+            <h3 class="text-xl font-bold text-yellow-700 mb-3 flex items-center gap-2">👑 Classic Mode</h3>
+            <p class="text-gray-600">
+              The traditional guessing experience. You get clues about the fighter's game series, release date, weight class, and speed. Use these to narrow down possibilities from the 80+ fighter roster.
+            </p>
+          </div>
+          <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100">
+            <h3 class="text-xl font-bold text-pink-700 mb-3 flex items-center gap-2">😀 Emoji Mode</h3>
+            <p class="text-gray-600">
+              A set of emojis represents the fighter. Maybe a crown for Princess Peach, a mushroom for Mario, or a sword for Link. Decipher the emoji puzzle to identify the character.
+            </p>
+          </div>
+          <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100">
+            <h3 class="text-xl font-bold text-purple-700 mb-3 flex items-center gap-2">👤 Silhouette Mode</h3>
+            <p class="text-gray-600">
+              A black silhouette of the fighter is shown. Some characters have instantly recognizable shapes, while others are surprisingly tricky. Test your visual memory of the roster.
+            </p>
+          </div>
+          <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
+            <h3 class="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">💥 Final Smash Mode</h3>
+            <p class="text-gray-600">
+              You're shown a Final Smash attack and need to identify which fighter it belongs to. This rewards players who have seen (or been defeated by) many different Final Smashes.
+            </p>
+          </div>
+          <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100">
+            <h3 class="text-xl font-bold text-pink-700 mb-3 flex items-center gap-2">🩷 Kirby Copy Mode</h3>
+            <p class="text-gray-600">
+              Kirby has inhaled a fighter and copied their ability. Look at the copy ability hat and guess which fighter Kirby absorbed. A fun twist for Kirby fans.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Getting Better at Smashdle</h2>
+        <div class="space-y-4 text-lg text-gray-600">
+          <p class="leading-relaxed">
+            Want to improve your Smashdle game? Here are strategies that actually help:
+          </p>
+          <ul class="list-disc list-inside space-y-3 ml-4">
+            <li><strong class="text-gray-900">Know your series</strong> — Understanding which franchise each fighter comes from is fundamental. Mario, Zelda, Pokémon, Fire Emblem — knowing the series helps eliminate options quickly.</li>
+            <li><strong class="text-gray-900">Learn weight classes</strong> — Light fighters like Pichu and Jigglypuff get knocked far. Heavy fighters like Bowser and Ganondorf are harder to launch. This clue narrows down significantly.</li>
+            <li><strong class="text-gray-900">Remember release order</strong> — The original 12 from Smash 64, the Melee newcomers, Brawl additions, and Ultimate's massive roster. Knowing when fighters joined helps with the release date clue.</li>
+            <li><strong class="text-gray-900">Study Final Smashes</strong> — For Final Smash mode, pay attention to the visual style and effects. Each character's ultimate move has distinctive elements.</li>
+            <li><strong class="text-gray-900">Play different fighters</strong> — The more fighters you've played, the more familiar you'll be with their abilities, designs, and Kirby hats. Variety in your gameplay helps in Smashdle.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-gradient-to-r from-red-50 to-orange-50 rounded-3xl p-8 border border-red-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Smash Fans Love Smashdle</h2>
+        <div class="space-y-4 text-lg text-gray-600">
+          <p class="leading-relaxed">
+            Smashdle connects with Smash players because it rewards the knowledge you've built through playing. Every match you've played, every fighter you've tried, every Final Smash you've witnessed — it all contributes to your Smashdle skills.
+          </p>
+          <p class="leading-relaxed">
+            The game also keeps players engaged with Smash even when they're not in a match. It's a quick daily activity that takes just a few minutes but keeps you thinking about the roster. Many players make it part of their daily routine, checking Smashdle before or after their gaming sessions.
+          </p>
+          <p class="leading-relaxed">
+            Plus, with over 80 fighters spanning decades of gaming history, there's always more to learn. Even veteran players encounter fighters they're less familiar with, making every day's puzzle a genuine challenge. The game celebrates the incredible diversity of the Smash roster.
+          </p>
+        </div>
+      </section>
+    </article>
   {/snippet}
 </GameDleAnswerPage>

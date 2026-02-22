@@ -16,6 +16,7 @@
 <svelte:head>
   <title>Contact Us - WordSolverX</title>
   <meta name="description" content="Get in touch with WordSolverX. Send us questions, feedback, or partnership inquiries." />
+  <link rel="canonical" href="https://wordsolverx.com/contact" />
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

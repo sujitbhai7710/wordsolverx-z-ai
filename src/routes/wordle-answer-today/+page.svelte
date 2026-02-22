@@ -15,6 +15,8 @@
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
   <meta name="keywords" content="Wordle Answer Today, NYT Wordle, Wordle Hints, Today's Wordle Answer, Wordle Solution" />
+  <meta name="news_keywords" content="wordle, wordle answer, wordle today, nyt wordle, daily word puzzle" />
+  <link rel="canonical" href="https://wordsolverx.com/wordle-answer-today" />
   <meta property="og:title" content={data.meta.title} />
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:image" content={data.meta.socialImage} />

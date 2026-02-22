@@ -1,6 +1,7 @@
 <svelte:head>
   <title>About WordSolverX - Your Daily Wordle Resource</title>
   <meta name="description" content="Learn about WordSolverX, your daily resource for Wordle answers and strategies." />
+  <link rel="canonical" href="https://wordsolverx.com/about" />
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
