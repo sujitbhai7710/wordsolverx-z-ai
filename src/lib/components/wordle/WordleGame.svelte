@@ -25,7 +25,6 @@
         getGameEpoch,
         getGameNumber
     } from '$lib/wordle/helpers';
-    import { getSolution, isValidGuess as isValidGuessForLength } from '$lib/wordle/words_processing';
     import { startOfWeek, format, isValid as isValidDate } from 'date-fns';
     import { decodeWord, encodeWord } from '$lib/wordle/challengeUtils';
     import ChartBarIcon from '$lib/components/icons/ChartBarIcon.svelte';
@@ -40,6 +39,7 @@
     import WordleHints from '$lib/components/WordleHints.svelte';
     import type { LetterEvaluation } from './GameBoard.types';
     import type { LetterState as KeyboardLetterState } from './Keyboard.types';
+    type WordProcessingModule = typeof import('$lib/wordle/words_processing');
 
     let { wordLength = 5, maxGuesses = 6, customTitle = '' } = $props<{
         wordLength: number;
@@ -67,6 +67,14 @@
     let challengeLinkCopied = $state(false);
     let challengeParam = $state<string | null>(null);
     let challengeHint = $state<string | null>(null);
+    let wordProcessingPromise = $state<Promise<WordProcessingModule> | null>(null);
+
+    function loadWordProcessingModule(): Promise<WordProcessingModule> {
+        if (!wordProcessingPromise) {
+            wordProcessingPromise = import('$lib/wordle/words_processing');
+        }
+        return wordProcessingPromise;
+    }
 
     const KeyboardLayout = [
         ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -211,7 +219,8 @@
             return;
         }
 
-        const isValid = await isValidGuessForLength(guessStr, wordLength);
+        const wordProcessing = await loadWordProcessingModule();
+        const isValid = await wordProcessing.isValidGuess(guessStr, wordLength);
         if (!isValid) {
             shakeRowIndex = gameState.currentRowIndex;
             showToast('Not in word list');
@@ -273,7 +282,8 @@
         archiveDate = date;
     }
 
-    function initializeRegularGame(loadedSettings: Settings, gameWordLength: number) {
+    async function initializeRegularGame(loadedSettings: Settings, gameWordLength: number) {
+        const wordProcessing = await loadWordProcessingModule();
         const currentStats = loadStats(gameWordLength, loadedSettings.gameMode);
         stats = currentStats;
         const today = new Date();
@@ -310,7 +320,7 @@
         switch (loadedSettings.gameMode) {
             case 'infinity':
                 gameDateForSolution = new Date(Math.random() * Date.now());
-                solutionToInitialize = getSolution(gameDateForSolution, gameWordLength, 'infinity');
+                solutionToInitialize = await wordProcessing.getSolution(gameDateForSolution, gameWordLength, 'infinity');
                 if (solutionToInitialize === 'ERROR') { showToast('Error', 5000); gameState = null; return; }
                 gameStateToSet = initializeNewGameState(solutionToInitialize, gameWordLength);
                 gameStateToSet.solutionDate = gameDateForSolution.toISOString();
@@ -319,7 +329,7 @@
                 if (archiveDate && isValidDate(archiveDate)) {
                     gameDateForSolution = archiveDate;
                     effectiveDateStringForState = archiveDate.toDateString();
-                    solutionToInitialize = getSolution(gameDateForSolution, gameWordLength, 'archive');
+                    solutionToInitialize = await wordProcessing.getSolution(gameDateForSolution, gameWordLength, 'archive');
                     if (solutionToInitialize === 'ERROR') { showToast('Error', 5000); gameState = null; return; }
                     gameStateToSet = loadGameState(gameWordLength, 'archive', effectiveDateStringForState);
                     if (!gameStateToSet || gameStateToSet.solution !== solutionToInitialize) {
@@ -336,7 +346,7 @@
             case 'weekly':
                 gameDateForSolution = startOfWeek(today, { weekStartsOn: 1 });
                 effectiveDateStringForState = format(gameDateForSolution, 'yyyy-MM-dd');
-                solutionToInitialize = getSolution(gameDateForSolution, gameWordLength, 'weekly');
+                solutionToInitialize = await wordProcessing.getSolution(gameDateForSolution, gameWordLength, 'weekly');
                 if (solutionToInitialize === 'ERROR') { showToast('Error', 5000); gameState = null; return; }
                 gameStateToSet = loadGameState(gameWordLength, 'weekly', effectiveDateStringForState);
                 if (!gameStateToSet || gameStateToSet.solution !== solutionToInitialize) {
@@ -346,7 +356,7 @@
                 }
                 break;
             default:
-                solutionToInitialize = getSolution(today, gameWordLength, 'daily');
+                solutionToInitialize = await wordProcessing.getSolution(today, gameWordLength, 'daily');
                 if (solutionToInitialize === 'ERROR') { showToast('Error', 5000); gameState = null; return; }
                 gameStateToSet = loadGameState(gameWordLength, 'daily', effectiveDateStringForState);
                 if (!gameStateToSet || gameStateToSet.solution !== solutionToInitialize) {
@@ -365,10 +375,10 @@
         }
     }
 
-    function initializeGame() {
+    async function initializeGame() {
         const loadedSettings = loadSettings();
         settings = loadedSettings;
-        initializeRegularGame(loadedSettings, wordLength);
+        await initializeRegularGame(loadedSettings, wordLength);
     }
 
     function copyChallengeLink() {

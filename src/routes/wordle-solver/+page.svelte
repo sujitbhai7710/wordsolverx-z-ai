@@ -90,7 +90,7 @@
 		name="twitter:description"
 		content="Solve Wordle variants of any length (4-12 letters) instantly with our super-fast solver."
 	/>
-	<link rel="canonical" href="https://wordsolverx.com/all-wordle-solver" />
+	<link rel="canonical" href="https://wordsolverx.com/wordle-solver" />
 	{@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}

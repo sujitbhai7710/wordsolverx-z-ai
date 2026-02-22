@@ -4,7 +4,7 @@
 
   const solvers = [
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Advanced 5-letter word solver with smart filtering.', color: 'from-green-500 to-emerald-600', icon: 'W', isPopular: true },
-    { name: 'All Wordle Solver', href: '/all-wordle-solver', description: 'Solver for 4–11 letter Wordle variants.', color: 'from-teal-500 to-cyan-600', icon: '🔤', isPopular: true },
+    { name: 'All Wordle Solver', href: '/wordle-solver', description: 'Solver for 4–11 letter Wordle variants.', color: 'from-teal-500 to-cyan-600', icon: '🔤', isPopular: true },
     { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Food-themed word solver for Phoodle.', color: 'from-orange-500 to-red-500', icon: '🍕' },
     { name: 'Quordle Solver', href: '/quordle-solver', description: 'Solve all four Quordle words at once.', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
     { name: 'Colordle Solver', href: '/colordle-solver', description: 'Find the hex color with visual clues.', color: 'from-pink-500 to-purple-600', icon: '🎨' },

@@ -23,6 +23,32 @@ const _G = (seed: number, wb: string[], bl: Set<string>) => {
     return r;
 };
 
+interface DecodedQuordleData {
+    wd: string[];
+    wc: string[];
+    we: string[];
+    bl: Set<string>;
+    wl: string[][];
+}
+
+let decodedDataCache: DecodedQuordleData | null = null;
+
+const getDecodedData = (): DecodedQuordleData => {
+    if (decodedDataCache) {
+        return decodedDataCache;
+    }
+
+    decodedDataCache = {
+        wd: atob(Q_DAT_D).split(' '),
+        wc: atob(Q_DAT_C).split(' '),
+        we: atob(Q_DAT_E).split(' '),
+        bl: new Set(atob(Q_DAT_B).split(' ')),
+        wl: JSON.parse(atob(Q_DAT_W))
+    };
+
+    return decodedDataCache;
+};
+
 export interface QuordleData {
     d: string[]; // Daily Classic
     c: string[]; // Chill
@@ -41,11 +67,7 @@ export interface QuordleData {
 
 export function getQuordleDataForDate(date: Date): QuordleData | null {
     try {
-        const _wd = atob(Q_DAT_D).split(' ');
-        const _wc = atob(Q_DAT_C).split(' ');
-        const _we = atob(Q_DAT_E).split(' ');
-        const _bl = new Set(atob(Q_DAT_B).split(' '));
-        const _wl = JSON.parse(atob(Q_DAT_W));
+        const { wd, wc, we, bl, wl } = getDecodedData();
 
 
         const e_d = new Date(2022, 0, 24, 12, 0, 0); // Daily & Sequence
@@ -62,19 +84,19 @@ export function getQuordleDataForDate(date: Date): QuordleData | null {
         const wN = Math.ceil((1 + wDays) / 7);
 
         // Sequence uses Daily index but reversed word bank
-        const _ws = [..._wd].reverse();
+        const _ws = [...wd].reverse();
 
         // Weekly logic
         let weeklyAns: string[] = [];
-        if (wN >= 0 && wN < _wl.length) weeklyAns = _wl[wN];
-        else if (wN >= 0) { const rng = new _M(wN); weeklyAns = _wl[rng.r31() % _wl.length]; }
+        if (wN >= 0 && wN < wl.length) weeklyAns = wl[wN];
+        else if (wN >= 0) { const rng = new _M(wN); weeklyAns = wl[rng.r31() % wl.length]; }
 
         return {
-            d: dN >= 0 ? _G(dN, _wd, _bl) : [],
-            s: dN >= 0 ? _G(dN, _ws, _bl) : [],
-            c: cN >= 0 ? _G(cN, _wc, _bl) : [],
-            e: cN >= 0 ? _G(cN, _we, _bl) : [],
-            r: rN >= 0 ? _G(rN, _wd, _bl) : [],
+            d: dN >= 0 ? _G(dN, wd, bl) : [],
+            s: dN >= 0 ? _G(dN, _ws, bl) : [],
+            c: cN >= 0 ? _G(cN, wc, bl) : [],
+            e: cN >= 0 ? _G(cN, we, bl) : [],
+            r: rN >= 0 ? _G(rN, wd, bl) : [],
             w: weeklyAns,
             dN,
             cN,

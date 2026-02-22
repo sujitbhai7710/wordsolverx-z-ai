@@ -76,7 +76,7 @@
         const requestId = ++validationRequestId;
         const currentWord = word;
         const module = await getWordProcessingModule();
-        const valid = module.isValidGuess(currentWord, currentWord.length);
+        const valid = await module.isValidGuess(currentWord, currentWord.length);
 
         if (requestId === validationRequestId && word === currentWord) {
             isValidWord = valid;
@@ -88,7 +88,7 @@
         const lengths = [4, 5, 5, 6, 6, 7, 8];
         const rt = lengths[Math.floor(Math.random() * lengths.length)];
         const module = await getWordProcessingModule();
-        const rd = module.getRandomWord(rt);
+        const rd = await module.getRandomWord(rt);
         if (rd) {
             word = rd;
             isValidWord = true;
@@ -117,7 +117,7 @@
         error = null;
         try {
             const module = await getWordProcessingModule();
-            const valid = module.isValidGuess(word, word.length);
+            const valid = await module.isValidGuess(word, word.length);
             if (!valid) {
                 error = `"${word}" is not in our dictionary. Please enter a real word.`;
                 isLoading = false;

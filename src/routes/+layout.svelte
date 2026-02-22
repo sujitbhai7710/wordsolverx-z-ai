@@ -3,8 +3,6 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { themeStore } from '$lib/theme';
-	import { getThemeInitScript } from '$lib/theme/init';
 	import { onMount } from 'svelte';
 	import ErrorBoundary from '$lib/components/ErrorBoundary.svelte';
 	import { PerformanceMonitor, AnalyticsTracker } from '$lib/utils/performance';
@@ -12,10 +10,9 @@
 
 	let { children } = $props();
 
-	// Initialize theme store and performance tracking on mount
+	// Initialize performance tracking on mount
 	onMount(() => {
         PerformanceMonitor.init();
-		return themeStore.init();
 	});
 
     // Track page views when the route changes
@@ -28,11 +25,11 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<!-- Initialize theme before render to prevent FOUC -->
-	{@html `<script>${getThemeInitScript()}</script>`}
+	<title>WordSolverX | Wordle & Puzzle Solvers</title>
+	<meta name="description" content="Play Wordle variants, get daily answers, and solve puzzle games with fast, accurate tools on WordSolverX." />
 </svelte:head>
 
-<div class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+<div class="min-h-screen flex flex-col bg-white">
     <ErrorBoundary>
         <Navigation />
         <main class="flex-grow">

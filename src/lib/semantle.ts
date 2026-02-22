@@ -1,7 +1,7 @@
 // Semantle Library - Date calculations and answer lookup
 // Epoch: January 29, 2022 (Puzzle #1)
 
-import { format, differenceInDays, parse, subDays } from 'date-fns';
+import { format, differenceInDays, subDays } from 'date-fns';
 import { getJSTToday } from '$lib/utils';
 
 // Import the secret words list

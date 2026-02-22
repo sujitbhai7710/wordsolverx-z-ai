@@ -70,7 +70,7 @@
   <div class="mt-12 text-center p-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/10 dark:to-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
     <p class="text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
       Stuck on a tricky puzzle?
-      <a href="/all-wordle-solver" class="text-blue-600 dark:text-blue-400 hover:underline mx-1 font-bold">Try our All Wordle Solver</a>
+      <a href="/wordle-solver" class="text-blue-600 dark:text-blue-400 hover:underline mx-1 font-bold">Try our All Wordle Solver</a>
       to solve any letter wordle within seconds. Supports 4 to 12 letter words!
     </p>
   </div>

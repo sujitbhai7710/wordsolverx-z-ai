@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
-  import { QUORDLE_WORDS_BASE64 } from '$lib/data/quordle-words-encoded';
   import { solveQuordle, type Guess } from '$lib/quordle-logic';
 
   type TileState = 'I' | 'M' | 'C'; // Incorrect (Gray), Misplaced (Yellow), Correct (Green)
@@ -29,6 +28,7 @@
   onMount(async () => {
     loading = true;
     try {
+      const { QUORDLE_WORDS_BASE64 } = await import('$lib/data/quordle-words-encoded');
       const decoded = atob(QUORDLE_WORDS_BASE64);
       const data = JSON.parse(decoded);
       if (data && Array.isArray(data.master) && Array.isArray(data.rest)) {

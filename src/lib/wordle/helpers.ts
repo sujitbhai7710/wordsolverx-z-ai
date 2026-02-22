@@ -1,4 +1,4 @@
-import { DEFAULT_WORD_LENGTH, MAX_GUESSES } from './config'; // DEFAULT_WORD_LENGTH will be used less directly
+import { MAX_GUESSES } from './config';
 import type { GameState, LetterState, GuessRow, GameStatus, Stats, Settings, GameMode } from './types';
 import { DEFAULT_STATS, DEFAULT_SETTINGS } from './config';
 import { getWeek, getYear, startOfWeek, format, differenceInDays, differenceInCalendarWeeks } from 'date-fns'; // For weekly key generation and new date-fns functions
@@ -301,8 +301,6 @@ export const updateStatsOnGameEnd = (currentStats: Stats, gameStatus: GameStatus
   saveStats(newStats, wordLength, gameMode);
   return newStats;
 };
-
-const EPOCH_STORAGE_KEY = 'wordleGameEpoch';
 
 export const getGameEpoch = (): Date => {
   // Set a fixed epoch date that won't change even when localStorage is cleared
