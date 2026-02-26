@@ -6,7 +6,6 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
-Disallow: /_app/
 
 # All dynamically generated sitemaps
 Sitemap: https://wordsolverx.com/sitemap-index.xml
