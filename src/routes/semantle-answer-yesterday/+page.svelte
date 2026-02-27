@@ -8,11 +8,13 @@
 <svelte:head>
   <title>{data.meta?.title ?? "Semantle Answer Yesterday"}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
+  <link rel="canonical" href="https://wordsolverx.com/semantle-answer-yesterday" />
+  <meta name="robots" content="noindex, follow" />
   {#if data.schemas}{@html `<script type="application/ld+json">${data.schemas}</script>`}{/if}
 </svelte:head>
 
 {#if data.error || !data.word || !data.puzzleNumber}
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"><div class="text-center"><h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Semantle Answer Not Available</h2><p class="text-gray-500">Unable to load yesterday's puzzle.</p></div></div>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center"><div class="text-center"><h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Semantle Answer Not Available</h1><p class="text-gray-500">Unable to load yesterday's puzzle.</p></div></div>
 {:else}
   <div class="bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-screen font-sans">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

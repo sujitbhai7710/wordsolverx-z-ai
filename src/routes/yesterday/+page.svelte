@@ -42,6 +42,7 @@
   <title>Yesterday's Puzzle Answers ({yesterdayStr}) - WordSolverX</title>
   <meta name="description" content="All of yesterday's puzzle answers — Wordle, Phoodle, Semantle, Colordle for {yesterdayStr}. Missed a day? Catch up on past solutions here." />
   <link rel="canonical" href="https://wordsolverx.com/yesterday" />
+  <meta name="robots" content="noindex, follow" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',

@@ -19,6 +19,8 @@
 <svelte:head>
   <title>{data.meta?.title ?? 'WordSolverX'}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
+  {#if data.canonicalUrl}<link rel="canonical" href={data.canonicalUrl} />{/if}
+  {#if data.noindex}<meta name="robots" content="noindex, follow" />{/if}
   {#if data.schemas}{@html `<script type="application/ld+json">${data.schemas}</script>`}{/if}
 </svelte:head>
 

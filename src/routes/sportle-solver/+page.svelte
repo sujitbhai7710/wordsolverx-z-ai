@@ -231,11 +231,11 @@
 </script>
 
 <svelte:head>
-  <title>Sportle Solver - Music Artist Puzzle Helper | WordSolverX</title>
+  <title>Sportle Solver - Music Artist Helper</title>
   <meta name="description" content="Solve the daily Sportle puzzle with our free solver. Enter artist guesses, set feedback, and filter candidates." />
   <meta name="keywords" content="Sportle Solver, Sportle Answer, Music Game Solver, Sportle Help" />
   <link rel="canonical" href="https://wordsolverx.com/sportle-solver" />
-  <meta property="og:title" content="Sportle Solver - Music Artist Puzzle Helper" />
+  <meta property="og:title" content="Sportle Solver - Music Artist Helper" />
   <meta property="og:description" content="Find today's Sportle answer with our free solver." />
   <meta property="og:url" content="https://wordsolverx.com/sportle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
@@ -247,9 +247,15 @@
 </svelte:head>
 
 {#if isLoading}
-  <div class="text-center p-8">Loading artist data...</div>
+  <div class="text-center p-8">
+    <h1 class="text-4xl font-bold text-green-600 mb-3">Sportle Solver</h1>
+    Loading artist data...
+  </div>
 {:else if error}
-  <div class="text-center p-8 text-red-500">{error}</div>
+  <div class="text-center p-8 text-red-500">
+    <h1 class="text-4xl font-bold text-green-600 mb-3">Sportle Solver</h1>
+    {error}
+  </div>
 {:else}
   <div class="bg-gray-100 text-gray-800 min-h-screen flex flex-col items-center p-4">
     <Breadcrumbs />

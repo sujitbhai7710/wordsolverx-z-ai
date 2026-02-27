@@ -199,11 +199,11 @@
 </script>
 
 <svelte:head>
-  <title>Leddle Solver - LoL Champion Puzzle Helper | WordSolverX</title>
+  <title>Leddle Solver - LoL Champion Helper</title>
   <meta name="description" content="Solve the daily Leddle puzzle with our free solver. Enter champion guesses, set feedback, and filter candidates by attributes." />
   <meta name="keywords" content="Leddle Solver, LoL Wordle, League of Legends Puzzle, Leddle Answer, Champion Guessing Game" />
   <link rel="canonical" href="https://wordsolverx.com/leddle-solver" />
-  <meta property="og:title" content="Leddle Solver - LoL Champion Puzzle Helper" />
+  <meta property="og:title" content="Leddle Solver - LoL Champion Helper" />
   <meta property="og:description" content="Find today's Leddle answer with our free solver." />
   <meta property="og:url" content="https://wordsolverx.com/leddle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
@@ -215,9 +215,15 @@
 </svelte:head>
 
 {#if isLoading}
-  <div class="text-center p-8">Loading champion data...</div>
+  <div class="text-center p-8">
+    <h1 class="text-4xl font-bold text-blue-600 mb-3">Leddle Solver</h1>
+    Loading champion data...
+  </div>
 {:else if error}
-  <div class="text-center p-8 text-red-500">{error}</div>
+  <div class="text-center p-8 text-red-500">
+    <h1 class="text-4xl font-bold text-blue-600 mb-3">Leddle Solver</h1>
+    {error}
+  </div>
 {:else}
   <div class="bg-gray-100 text-gray-800 min-h-screen flex flex-col items-center p-4">
     <Breadcrumbs />

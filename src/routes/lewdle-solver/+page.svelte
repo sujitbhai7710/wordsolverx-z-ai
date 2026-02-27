@@ -245,7 +245,7 @@
 </script>
 
 <svelte:head>
-  <title>Lewdle Solver Today - Lewdle Answer & Hints | WordSolverX</title>
+  <title>Lewdle Solver Today - Answers & Hints</title>
   <meta name="description" content="Stuck on today's Lewdle? Use our free Lewdle Solver to find the answer. Supports 5 and 6-letter lewd word puzzles." />
   <meta name="keywords" content="Lewdle Solver, Lewdle Answer, Lewdle Hints, Lewdle Help, Adult Word Game Solver" />
   <link rel="canonical" href="https://wordsolverx.com/lewdle-solver" />
@@ -263,6 +263,7 @@
 {#if isLoadingWords && allWords.length === 0}
   <div class="min-h-screen bg-gray-50 text-gray-900 flex justify-center items-center">
     <div class="text-center p-6">
+      <h1 class="text-4xl font-extrabold text-pink-600 mb-3">Lewdle Solver</h1>
       <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-gray-600 mx-auto mb-4"></div>
       <p class="text-xl font-medium">Loading resources...</p>
     </div>

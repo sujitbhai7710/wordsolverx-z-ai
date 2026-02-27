@@ -8,6 +8,8 @@
 <svelte:head>
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
+  <link rel="canonical" href="https://wordsolverx.com/wordle-answer-yesterday" />
+  <meta name="robots" content="noindex, follow" />
   <meta property="og:title" content={data.meta.title} />
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:image" content={data.meta.socialImage} />

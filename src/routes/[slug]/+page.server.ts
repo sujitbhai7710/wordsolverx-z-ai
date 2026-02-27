@@ -7,8 +7,8 @@ import { getGlobleDataForDate, parseGlobleSlugDate, formatGlobleDateForSlug } fr
 import { getWaffleDataForDate, parseWaffleSlugDate, formatWaffleDateForSlug } from '$lib/waffle';
 import { getQuordleDataForDate } from '$lib/quordle';
 import { getWordleByDate } from '$lib/api';
-import { formatDate, getWordleNumber, getJSTToday } from '$lib/utils';
-import { addDays, subDays, format, startOfDay, isBefore } from 'date-fns';
+import { formatDate, getWordleNumber } from '$lib/utils';
+import { addDays, subDays, format, startOfDay, isBefore, differenceInCalendarDays } from 'date-fns';
 
 const COLORDLE_PREFIX = 'colordle-answer-for-';
 const SEMANTLE_PREFIX = 'semantle-answer-for-';
@@ -17,6 +17,27 @@ const QUORDLE_PREFIX = 'quordle-answer-for-';
 const WORDLE_PREFIX = 'wordle-answer-for-';
 const GLOBLE_PREFIX = 'globle-answer-for-';
 const WAFFLE_PREFIX = 'waffle-answer-for-';
+const NOINDEX_AFTER_DAYS = 5;
+
+const LIVE_PAGE_CANONICALS = {
+    colordle: 'https://wordsolverx.com/colordle-answer-today',
+    semantle: 'https://wordsolverx.com/semantle-answer-today',
+    phoodle: 'https://wordsolverx.com/phoodle-answer-today',
+    quordle: 'https://wordsolverx.com/quordle-answer-today',
+    wordle: 'https://wordsolverx.com/wordle-answer-today',
+    globle: 'https://wordsolverx.com/globle-answer-today',
+    waffle: 'https://wordsolverx.com/waffle-answer-today',
+} as const;
+
+type ArchiveGame = keyof typeof LIVE_PAGE_CANONICALS;
+
+function getArchiveSeo(game: ArchiveGame, answerDate: Date) {
+    const daysOld = differenceInCalendarDays(startOfDay(new Date()), startOfDay(answerDate));
+    return {
+        canonicalUrl: LIVE_PAGE_CANONICALS[game],
+        noindex: daysOld > NOINDEX_AFTER_DAYS,
+    };
+}
 
 export const load: PageServerLoad = async ({ params }) => {
     const slug = params.slug;
@@ -30,6 +51,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
         const prevSlug = `/colordle-answer-for-${formatDateForSlug(subDays(data.date, 1))}`;
         const nextSlug = `/colordle-answer-for-${formatDateForSlug(addDays(data.date, 1))}`;
+        const seo = getArchiveSeo('colordle', data.date);
 
         const last5Days = Array.from({ length: 5 }, (_, i) => getColordleDataForDate(subDays(data.date, i + 1))).filter(Boolean);
 
@@ -46,7 +68,7 @@ export const load: PageServerLoad = async ({ params }) => {
         return {
             gameType: 'colordle' as const, slug,
             color: data.color, dayNum: data.dayNum, formattedDate: data.formattedDate,
-            prevSlug, nextSlug, last5Days, schemas,
+            prevSlug, nextSlug, last5Days, schemas, canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
             meta: { title: `Colordle Answer for ${data.formattedDate} - Solution #${data.dayNum}`, description: `The correct Colordle answer for ${data.formattedDate} is ${data.color.name} (${data.color.hex}).` },
         };
     }
@@ -60,6 +82,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
         const prevSlug = `/semantle-answer-for-${formatSemantleDateForSlug(subDays(data.date, 1))}`;
         const nextSlug = `/semantle-answer-for-${formatSemantleDateForSlug(addDays(data.date, 1))}`;
+        const seo = getArchiveSeo('semantle', data.date);
 
         const last5Days = Array.from({ length: 5 }, (_, i) => getSemantleDataForDate(subDays(data.date, i + 1))).filter(Boolean);
 
@@ -73,7 +96,7 @@ export const load: PageServerLoad = async ({ params }) => {
         return {
             gameType: 'semantle' as const, slug,
             word: data.word, puzzleNumber: data.puzzleNumber, formattedDate: data.formattedDate,
-            prevSlug, nextSlug, last5Days, schemas,
+            prevSlug, nextSlug, last5Days, schemas, canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
             meta: { title: `Semantle Answer for ${data.formattedDate} - Puzzle #${data.puzzleNumber}`, description: `The Semantle answer for ${data.formattedDate} was "${data.word}". Puzzle #${data.puzzleNumber}.` },
         };
     }
@@ -88,6 +111,7 @@ export const load: PageServerLoad = async ({ params }) => {
         const upperWord = data.word.toUpperCase();
         const prevSlug = `/phoodle-answer-for-${formatPhoodleDateForSlug(subDays(data.date, 1))}`;
         const nextSlug = `/phoodle-answer-for-${formatPhoodleDateForSlug(addDays(data.date, 1))}`;
+        const seo = getArchiveSeo('phoodle', data.date);
 
         const schemas = JSON.stringify({
             '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
@@ -99,7 +123,7 @@ export const load: PageServerLoad = async ({ params }) => {
             gameType: 'phoodle' as const, slug,
             word: data.word, upperWord, formattedDate: data.formattedDate,
             description: data.description, recipe_name: data.recipe_name,
-            prevSlug, nextSlug, schemas,
+            prevSlug, nextSlug, schemas, canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
             meta: { title: `Phoodle Answer for ${data.formattedDate} - ${upperWord}`, description: `The Phoodle answer for ${data.formattedDate} was ${upperWord}.` },
         };
     }
@@ -114,6 +138,7 @@ export const load: PageServerLoad = async ({ params }) => {
         const prevSlug = `/quordle-answer-for-${formatDateForSlug(subDays(date, 1))}`;
         const nextSlug = `/quordle-answer-for-${formatDateForSlug(addDays(date, 1))}`;
         const showNext = addDays(date, 1) <= new Date();
+        const seo = getArchiveSeo('quordle', date);
 
         const quordleData = getQuordleDataForDate(date);
         const todayWords = quordleData ? quordleData.d.join(', ').replace(/, ([^,]*)$/, ', and $1') : '';
@@ -130,7 +155,7 @@ export const load: PageServerLoad = async ({ params }) => {
         return {
             gameType: 'quordle' as const, slug,
             quordleData, formattedDate, todayWords, showNext,
-            prevSlug, nextSlug, last5Days, schemas, date: date.toISOString(),
+            prevSlug, nextSlug, last5Days, schemas, date: date.toISOString(), canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
             meta: { title: `Quordle Answer for ${formattedDate} - Solutions & Hints`, description: `Check the Quordle answer for ${formattedDate}. Full solutions and helpful hints.` },
         };
     }
@@ -140,6 +165,7 @@ export const load: PageServerLoad = async ({ params }) => {
         const dateSlug = slug.replace(WORDLE_PREFIX, '');
         const date = parseSlugDate(dateSlug);
         if (!date) error(404, 'Wordle Answer Not Found');
+        const seo = getArchiveSeo('wordle', date);
 
         const formattedDateForApi = format(date, 'yyyy-MM-dd');
         const wordleData = await getWordleByDate(formattedDateForApi).catch(() => null);
@@ -149,6 +175,7 @@ export const load: PageServerLoad = async ({ params }) => {
             return {
                 gameType: 'wordle' as const, slug,
                 wordleError: true, formattedDate: formattedDisplayDate,
+                canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
                 meta: { title: `Wordle Answer for ${formattedDisplayDate}`, description: `The Wordle answer for ${formattedDisplayDate} is being processed.` },
             };
         }
@@ -178,7 +205,7 @@ export const load: PageServerLoad = async ({ params }) => {
         return {
             gameType: 'wordle' as const, slug,
             wordleData, wordleWord, wordleNumber, formattedDate: formattedDisplayDate,
-            pageContext, schemas,
+            pageContext, schemas, canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
             contentGuide: wordleData?.content_guide, socialImage: wordleData?.social_image, youtubeVideoUrl: wordleData?.youtube_video_url,
             meta: {
                 title: isToday ? `NYT Wordle Answer Today (${formattedDisplayDate})` : `Wordle Answer for ${formattedDisplayDate} - Solutions & Hints`,
@@ -196,6 +223,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
         const prevSlug = `/globle-answer-for-${formatGlobleDateForSlug(subDays(data.date, 1))}`;
         const nextSlug = `/globle-answer-for-${formatGlobleDateForSlug(addDays(data.date, 1))}`;
+        const seo = getArchiveSeo('globle', data.date);
 
         const schemas = JSON.stringify({
             '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
@@ -206,7 +234,7 @@ export const load: PageServerLoad = async ({ params }) => {
         return {
             gameType: 'globle' as const, slug,
             country: data.country, formattedDate: data.formattedDate,
-            prevSlug, nextSlug, schemas,
+            prevSlug, nextSlug, schemas, canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
             meta: { title: `Globle Answer for ${data.formattedDate} - Daily Country Solution`, description: `The Globle answer for ${data.formattedDate} was ${data.country.name}.` },
         };
     }
@@ -221,12 +249,13 @@ export const load: PageServerLoad = async ({ params }) => {
         const prevSlug = `/waffle-answer-for-${formatWaffleDateForSlug(subDays(data.date, 1))}`;
         const nextSlug = `/waffle-answer-for-${formatWaffleDateForSlug(addDays(data.date, 1))}`;
         const showNext = isBefore(startOfDay(addDays(data.date, 1)), addDays(startOfDay(new Date()), 1));
+        const seo = getArchiveSeo('waffle', data.date);
 
         return {
             gameType: 'waffle' as const, slug,
             formattedDate: data.formattedDate, puzzle: data.puzzle, solution: data.solution,
             words: data.words, definitions: data.definitions, number: data.number,
-            date: data.date.toISOString(), prevSlug, nextSlug, showNext,
+            date: data.date.toISOString(), prevSlug, nextSlug, showNext, canonicalUrl: seo.canonicalUrl, noindex: seo.noindex,
             meta: { title: `Waffle Answer for ${data.formattedDate} - Daily Puzzle Solution`, description: `Check the Waffle answer for ${data.formattedDate}. View the solved grid and word definitions.` },
         };
     }

@@ -40,7 +40,7 @@ export const load: PageServerLoad = async () => {
         last10Days,
         schemas: JSON.stringify([faqSchema]),
         meta: {
-            title: `Phoodle Answer Today (${formattedDate}) - ${upperWord} | WordSolverX`,
+            title: `Phoodle Answer Today: ${upperWord} (${formattedDate})`,
             description: `Today's Phoodle answer is ${upperWord}. Get the daily food-themed word puzzle solution for ${formattedDate}.`,
         },
     };

@@ -328,11 +328,11 @@
 </script>
 
 <svelte:head>
-  <title>Weaver Solver - Word Ladder Puzzle Helper | WordSolverX</title>
+  <title>Weaver Solver - Word Ladder Helper</title>
   <meta name="description" content="Solve any Weaver word ladder puzzle with our free solver. Find the shortest path between two words by changing one letter at a time." />
   <meta name="keywords" content="Weaver Solver, Word Ladder, Weaver Game, Weaver Answer, Word Puzzle Solver" />
   <link rel="canonical" href="https://wordsolverx.com/weaver-solver" />
-  <meta property="og:title" content="Weaver Solver - Word Ladder Puzzle Helper" />
+  <meta property="og:title" content="Weaver Solver - Word Ladder Helper" />
   <meta property="og:description" content="Find the shortest word ladder path between any two words." />
   <meta property="og:url" content="https://wordsolverx.com/weaver-solver" />
   <meta property="og:site_name" content="WordSolverX" />
@@ -345,17 +345,20 @@
 
 {#if error}
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
+    <h1 class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">Weaver Solver</h1>
     <h2 class="text-4xl font-bold text-red-600 dark:text-red-400 mb-4">Error</h2>
     <p class="text-xl text-gray-700 dark:text-gray-300">{error}</p>
     <p class="mt-4 text-gray-500 dark:text-gray-400">Please try refreshing the page or check if the word files are available.</p>
   </div>
 {:else if isLoading && !graphInstance}
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
+    <h1 class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">Weaver Solver</h1>
     <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mb-4"></div>
     <p class="text-2xl text-gray-700 dark:text-gray-300">Loading Weaver Solver...</p>
   </div>
 {:else if !isLoading && wordSet.size === 0 && !error}
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
+    <h1 class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">Weaver Solver</h1>
     <h2 class="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mb-4">No Words Loaded</h2>
     <p class="text-xl text-gray-700 dark:text-gray-300">The word list could not be processed correctly.</p>
     <p class="mt-2 text-gray-500 dark:text-gray-400">Please ensure the file is correctly placed and contains valid data.</p>

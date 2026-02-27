@@ -70,7 +70,7 @@ export const load: PageServerLoad = async () => {
         hintFaqs,
         schemas: JSON.stringify([faqSchema, articleSchema]),
         meta: {
-            title: `NYT Wordle Answer Today (${formattedDate})`,
+            title: `Wordle Answer Today: ${formattedDate}`,
             description: `Check the NYT Wordle answer for today, ${formattedDate}. Get hints, clues, and the full solution for Wordle #${wordleNumber}.`,
             socialImage: socialImageUrl,
         },

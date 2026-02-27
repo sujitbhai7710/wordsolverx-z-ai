@@ -23,7 +23,7 @@
 {#if data.error || !data.word}
   <div class="min-h-screen bg-white flex items-center justify-center">
     <div class="text-center p-8">
-      <h2 class="text-3xl font-bold mb-4 text-gray-900">Phoodle Answer Not Available</h2>
+      <h1 class="text-3xl font-bold mb-4 text-gray-900">Phoodle Answer Not Available</h1>
       <p class="text-gray-600">Unable to load today's puzzle. Please try again later.</p>
       <a href="/today" class="mt-6 inline-block px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-all font-medium">
         ← Back to Today's Hub
