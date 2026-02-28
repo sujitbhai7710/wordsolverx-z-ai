@@ -19,14 +19,17 @@
   ];
 
   onMount(() => {
-    const handleScroll = () => scrolled = window.scrollY > 10;
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      if (isOpen) return;
+      scrolled = window.scrollY > 10;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   });
 
 </script>
 
-<nav class={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50' : 'bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800'}`}>
+<nav class={`sticky top-0 z-50 relative transition-colors duration-300 ${scrolled ? 'bg-white/90 dark:bg-gray-900/90 border-b border-gray-200/50 dark:border-gray-700/50 shadow-sm lg:shadow-lg lg:backdrop-blur-xl' : 'bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800'}`}>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
       <!-- Logo -->
@@ -88,10 +91,10 @@
 
   <!-- Mobile menu -->
   <div
-    class={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+    class={`lg:hidden absolute top-full left-0 right-0 origin-top transform-gpu transition-[transform,opacity] duration-200 ease-out will-change-transform ${isOpen ? 'scale-y-100 opacity-100 pointer-events-auto' : 'scale-y-95 opacity-0 pointer-events-none'}`}
     id="mobile-menu"
   >
-    <div class="px-4 pt-2 pb-4 space-y-1 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
+    <div class="px-4 pt-3 pb-4 space-y-1 bg-white/95 dark:bg-gray-900/95 border-t border-gray-100 dark:border-gray-800 shadow-sm lg:shadow-lg">
       {#each navLinks as link}
         {@const isActive = $page.url.pathname === link.href || (link.href !== '/' && $page.url.pathname?.startsWith(link.href))}
         <a
