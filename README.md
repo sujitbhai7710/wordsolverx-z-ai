@@ -23,8 +23,6 @@ Tools to help you solve specific game puzzles interactively.
 | **[Quordle Solver](/quordle-solver)** | 4-board simultaneous | WASM-powered multi-board logic |
 | **[Waffle Solver](/waffle-solver)** | Grid-based word swap | Rust/WASM engine, 5x5 grid support |
 | **[Weaver Solver](/weaver-solver)** | Word ladder connector | Graph BFS shortest path finder |
-| **[Sportle Solver](/sportle-solver)** | Athlete guessing | CSV data, multi-attribute filtering |
-| **[Leddle Solver](/leddle-solver)** | LoL Champion guessing | Multi-select attributes, directional hints |
 
 ### 📅 Answer Pages (Today & Yesterday)
 Static pages providing the solutions for daily puzzles.
@@ -74,6 +72,11 @@ Static pages providing the solutions for daily puzzles.
 ## ☁️ Deployment to Cloudflare
 
 This project uses `@sveltejs/adapter-cloudflare` and is optimized for **Cloudflare Pages**.
+
+### GitHub-Only Folders (Not Deployed)
+- You can commit helper folders (for example: `wordle-answers-worker/`, `waffle-worker/`, `phoodle-worker/`, `naruto-worker/`, `semantle/`, `Waffle-Solver/`, `Spotleleddlesolver/`) to GitHub.
+- Cloudflare deploy does not publish those folders directly.
+- Deploy artifacts are restricted to `.svelte-kit/cloudflare` by `wrangler.jsonc`, and `npm run deploy` now always builds before deploy.
 
 ### **Option 1: Deploy with Wrangler (Terminal)**
 This is the most direct method to deploy from your CLI.

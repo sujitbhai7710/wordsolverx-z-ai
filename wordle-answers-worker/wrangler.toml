@@ -1,0 +1,26 @@
+name = "api"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "wordle_answers"
+database_id = "cfacd6fc-3f5c-4d2d-8244-23bd73cc1823"
+
+# Cron triggers
+# - 18:30 UTC = 12:00 AM IST: Fetch NYT answer (uses JST to get future date) + generate content
+# - 18:50 UTC = 12:20 AM IST: Fetch YouTube video URL (uses IST for current date)
+# - 15:02 UTC = 12:02 AM JST: Purge Cloudflare cache for wordle-answer-today
+[triggers]
+crons = ["30 18 * * *", "50 18 * * *", "2 15 * * *"]
+
+# Queue for background AI content generation
+# [[queues.producers]]
+# queue = "content-generation-queue"
+# binding = "CONTENT_QUEUE"
+
+# [[queues.consumers]]
+# queue = "content-generation-queue"
+# max_batch_size = 1
+# max_batch_timeout = 30

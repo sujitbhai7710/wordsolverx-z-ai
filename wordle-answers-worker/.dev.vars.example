@@ -1,0 +1,10 @@
+# Local development environment variables
+# Copy this file to .dev.vars and add your actual secret key
+
+# Secret key for updating the database
+# Set this in production using: wrangler secret put UPDATE_KEY_SECRET
+UPDATE_KEY_SECRET=your-secret-key-here
+
+# YouTube RSS feed URL for fetching Wordle video URLs (optional)
+# Default: https://www.youtube.com/feeds/videos.xml?channel_id=UC5fgkyGR7Ti6hArR5NjaCSA
+YOUTUBE_RSS_URL=https://www.youtube.com/feeds/videos.xml?channel_id=UC5fgkyGR7Ti6hArR5NjaCSA

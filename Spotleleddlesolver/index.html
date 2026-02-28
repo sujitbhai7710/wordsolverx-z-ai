@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leddle Solver</title>
+    <!-- Link to Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; /* gray-200 */ }
+        ::-webkit-scrollbar-thumb { background: #a0aec0; /* gray-400 */ border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #718096; /* gray-500 */ }
+
+        /* Feedback Button Styles */
+        .feedback-btn { border: 1px solid #a0aec0; /* gray-400 */ }
+        .feedback-btn.status-unknown { background-color: #cbd5e0; /* gray-300 */ color: #2d3748; /* gray-700 */ }
+        .feedback-btn.status-green { background-color: #48bb78; /* green-500 */ color: white; border-color: #38a169; }
+        .feedback-btn.status-orange { background-color: #f6ad55; /* orange-400 */ color: #2d3748; /* gray-700 */ border-color: #ed8936; }
+        .feedback-btn.status-red { background-color: #f56565; /* red-500 */ color: white; border-color: #e53e3e; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col items-center p-4">
+
+    <h1 class="text-4xl font-bold text-blue-600 mb-8">Leddle Solver</h1>
+
+    <div id="solverContainer" class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Left Column: Current Guess & Controls -->
+        <div class="md:col-span-1 bg-white p-6 rounded-lg shadow-lg flex flex-col space-y-4">
+            <div>
+                <label for="championSearch" class="block text-sm font-medium text-gray-700 mb-1">Search Champion to Guess:</label>
+                <div class="flex space-x-2">
+                    <input type="text" id="championSearch" placeholder="Type champion name..." class="flex-grow bg-white text-gray-900 border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <button id="clearSearchBtn" class="p-2 bg-gray-200 hover:bg-gray-300 text-gray-600 rounded-md" title="Clear Search">X</button>
+                </div>
+                <div id="championSuggestions" class="mt-2 bg-white border border-gray-300 rounded-md max-h-48 overflow-y-auto shadow-sm"></div>
+            </div>
+
+            <div id="currentGuessArea" class="space-y-3 hidden">
+                <h2 class="text-xl font-semibold text-blue-500 border-b border-gray-300 pb-2">Current Guess Details</h2>
+                <div id="currentChampionDisplay" class="flex items-center space-x-3 p-3 bg-gray-50 rounded-md border border-gray-200">
+                    <div>
+                        <p id="currentChampionName" class="text-lg font-bold text-gray-900"></p>
+                    </div>
+                </div>
+                <div id="feedbackAttributes" class="grid grid-cols-2 gap-3">
+                    <!-- Attributes will be populated here by JS -->
+                </div>
+                <button id="addGuessBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-150">
+                    Add Guess to History & Filter
+                </button>
+            </div>
+             <div id="initialSearchPrompt" class="text-gray-500 py-10">
+                <h3 class="font-semibold text-lg text-gray-700 mb-3">How to Use the Solver</h3>
+                <ol class="list-decimal list-inside text-left space-y-2 text-sm">
+                    <li>Search for a champion and select them to make a guess.</li>
+                    <li>The champion's properties will appear. Click on each property to cycle through feedback colors based on what the game shows you:
+                        <ul class="list-disc list-inside pl-4 mt-1">
+                            <li><span class="font-bold text-green-500">Green</span>: Correct match.</li>
+                            <li><span class="font-bold" style="color: #f6ad55;">Orange</span>: Partial match.</li>
+                            <li><span class="font-bold text-red-500">Red</span>: Incorrect.</li>
+                            <li>For Release Year, red also indicates direction (⬆️ newer / ⬇️ older).</li>
+                        </ul>
+                    </li>
+                    <li>Once feedback is set, click "Add Guess to History & Filter".</li>
+                    <li>The list of "Possible Champions" will update based on your feedback.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Middle Column: Possible Champions -->
+        <div class="md:col-span-1 bg-white p-6 rounded-lg shadow-lg flex flex-col">
+            <h2 class="text-xl font-semibold text-blue-500 mb-3 border-b border-gray-300 pb-2">Possible Champions (<span id="possibleCount">0</span>)</h2>
+            <div id="possibleChampionsList" class="space-y-2 overflow-y-auto flex-grow max-h-[70vh]">
+                <p class="text-gray-500 italic">Make a guess and apply feedback to see suggestions.</p>
+            </div>
+        </div>
+
+        <!-- Right Column: Guess History -->
+        <div class="md:col-span-1 bg-white p-6 rounded-lg shadow-lg flex flex-col">
+            <div class="flex justify-between items-center mb-3 border-b border-gray-300 pb-2">
+                <h2 class="text-xl font-semibold text-blue-500">Guess History</h2>
+                <button id="resetAllBtn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded-md text-sm transition duration-150">
+                    Reset All
+                </button>
+            </div>
+            <div id="guessHistory" class="space-y-3 overflow-y-auto flex-grow max-h-[70vh]">
+                <p class="text-gray-500 italic">No guesses made yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ATTRIBUTES_CONFIG = {
+            gender:       { label: 'Gender', type: 'categorical', feedbackTypes: ['unknown', 'green', 'red'] },
+            positions:    { label: 'Position(s)', type: 'multi-select', feedbackTypes: ['unknown', 'green', 'orange', 'red'] },
+            species:      { label: 'Species', type: 'multi-select', feedbackTypes: ['unknown', 'green', 'orange', 'red'] },
+            resource:     { label: 'Resource', type: 'categorical', feedbackTypes: ['unknown', 'green', 'red'] },
+            range_type:   { label: 'Range Type', type: 'multi-select', feedbackTypes: ['unknown', 'green', 'orange', 'red'] },
+            regions:      { label: 'Region(s)', type: 'multi-select', feedbackTypes: ['unknown', 'green', 'orange', 'red'] },
+            release_year: { label: 'Release Year', type: 'numerical_directional', feedbackTypes: ['unknown', 'green', 'red-down', 'red-up'] }
+        };
+
+        const FEEDBACK_CLASSES = {
+            unknown: 'status-unknown',
+            green: 'status-green',
+            orange: 'status-orange',
+            red: 'status-red',
+            'red-down': 'status-red',
+            'red-up': 'status-red'
+        };
+
+        const FEEDBACK_SYMBOLS = {
+            unknown: '?',
+            green: '✓',
+            orange: '≈',
+            red: '✗',
+            'red-down': '⬇️',
+            'red-up': '⬆️'
+        };
+
+        let allChampions = [];
+        let possibleChampions = [];
+        let guesses = [];
+        let currentActiveGuess = null; 
+        let currentFeedback = {};
+
+        // DOM Elements
+        const championSearchInput = document.getElementById('championSearch');
+        const championSuggestionsDiv = document.getElementById('championSuggestions');
+        const currentGuessAreaDiv = document.getElementById('currentGuessArea');
+        const initialSearchPromptDiv = document.getElementById('initialSearchPrompt');
+        const currentChampionNameEl = document.getElementById('currentChampionName');
+        const feedbackAttributesDiv = document.getElementById('feedbackAttributes');
+        const addGuessBtn = document.getElementById('addGuessBtn');
+        const guessHistoryDiv = document.getElementById('guessHistory');
+        const possibleChampionsListDiv = document.getElementById('possibleChampionsList');
+        const possibleCountSpan = document.getElementById('possibleCount');
+        const resetAllBtn = document.getElementById('resetAllBtn');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+        function safeJsonParse(str) {
+            try {
+                // Replace single quotes for valid JSON and parse
+                return JSON.parse(str.replace(/'/g, '"'));
+            } catch (e) {
+                // Return as is or an empty array if it's not a parsable array string
+                return [str];
+            }
+        }
+        
+        async function loadCSV() {
+            try {
+                const response = await fetch('champions_detailed.csv');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const csvText = await response.text();
+                const lines = csvText.split('\n').filter(line => line.trim() !== '');
+                const headers = lines[0].split(',').map(h => h.trim());
+
+                allChampions = lines.slice(1).map(line => {
+                    // Robust CSV line parsing to handle commas within quoted fields
+                    const values = [];
+                    let inQuotes = false;
+                    let currentValue = '';
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            values.push(currentValue.trim());
+                            currentValue = '';
+                        } else {
+                            currentValue += char;
+                        }
+                    }
+                    values.push(currentValue.trim());
+
+                    const champion = {};
+                    headers.forEach((header, i) => {
+                        let val = values[i] || '';
+                         if (val.startsWith('"') && val.endsWith('"')) {
+                           val = val.substring(1, val.length - 1);
+                        }
+                        champion[header] = val;
+                    });
+                    
+                    if (!champion.championName || champion.championName.trim() === '') return null;
+
+                    // Post-processing and type conversion
+                    champion.release_year = parseInt(champion.release_date.split('-')[0]) || 0;
+                    
+                    // Parse array-like strings
+                    ['positions', 'regions', 'species', 'range_type'].forEach(key => {
+                        champion[key] = safeJsonParse(champion[key] || '[]');
+                    });
+
+                    return champion;
+                }).filter(Boolean); // Filter out null entries (e.g., rows with no name)
+                
+                possibleChampions = [...allChampions];
+                updatePossibleChampionsDisplay();
+                console.log(`Loaded ${allChampions.length} champions.`);
+            } catch (error) {
+                console.error('Error loading or parsing CSV:', error);
+                possibleChampionsListDiv.innerHTML = '<p class="text-red-500">Error loading champion data. Please check console.</p>';
+            }
+        }
+
+        function displayChampionSuggestions(query) {
+            championSuggestionsDiv.innerHTML = '';
+            if (!query) return;
+
+            const suggestions = allChampions
+                .filter(c => c.championName.toLowerCase().includes(query.toLowerCase()))
+                .slice(0, 5);
+
+            if (suggestions.length > 0) {
+                suggestions.forEach(champion => {
+                    const div = document.createElement('div');
+                    div.className = 'p-2 hover:bg-gray-200 cursor-pointer text-sm';
+                    div.textContent = champion.championName;
+                    div.onclick = () => selectChampionForGuess(champion);
+                    championSuggestionsDiv.appendChild(div);
+                });
+            } else {
+                 championSuggestionsDiv.innerHTML = '<p class="p-2 text-xs text-gray-500">No matches found.</p>';
+            }
+        }
+        
+        function selectChampionForGuess(champion) {
+            currentActiveGuess = champion;
+            championSearchInput.value = champion.championName;
+            championSuggestionsDiv.innerHTML = '';
+            currentGuessAreaDiv.classList.remove('hidden');
+            initialSearchPromptDiv.classList.add('hidden');
+
+            currentChampionNameEl.textContent = champion.championName;
+            
+            currentFeedback = {};
+            Object.keys(ATTRIBUTES_CONFIG).forEach(attrKey => {
+                currentFeedback[attrKey] = 'unknown';
+            });
+            renderFeedbackAttributes();
+        }
+
+        function renderFeedbackAttributes() {
+            feedbackAttributesDiv.innerHTML = '';
+            Object.entries(ATTRIBUTES_CONFIG).forEach(([attrKey, config]) => {
+                const attrVal = currentActiveGuess[attrKey];
+                let displayVal = Array.isArray(attrVal) ? attrVal.join(', ') : attrVal;
+                
+                if (!displayVal && attrKey !== 'release_year') displayVal = 'N/A';
+                if (attrKey === 'release_year' && !attrVal) displayVal = 'N/A';
+
+                const div = document.createElement('div');
+                div.className = 'flex flex-col';
+                
+                const label = document.createElement('span');
+                label.className = 'text-xs text-gray-500 mb-1';
+                label.textContent = config.label;
+                div.appendChild(label);
+
+                const btn = document.createElement('button');
+                const feedbackStatus = currentFeedback[attrKey];
+                btn.className = `feedback-btn p-2 rounded-md text-sm font-medium w-full text-left truncate ${FEEDBACK_CLASSES[feedbackStatus]}`;
+                btn.innerHTML = `<span class="mr-2">${FEEDBACK_SYMBOLS[feedbackStatus]}</span>${displayVal}`;
+                btn.dataset.attribute = attrKey;
+                btn.onclick = () => toggleFeedback(attrKey, btn, displayVal);
+                div.appendChild(btn);
+                feedbackAttributesDiv.appendChild(div);
+            });
+        }
+
+        function toggleFeedback(attrKey, btn, displayVal) {
+            const feedbackTypes = ATTRIBUTES_CONFIG[attrKey].feedbackTypes;
+            let currentIndex = feedbackTypes.indexOf(currentFeedback[attrKey]);
+            currentIndex = (currentIndex + 1) % feedbackTypes.length;
+            currentFeedback[attrKey] = feedbackTypes[currentIndex];
+            const newStatus = currentFeedback[attrKey];
+
+            Object.values(FEEDBACK_CLASSES).forEach(cls => btn.classList.remove(cls));
+            btn.classList.add(FEEDBACK_CLASSES[newStatus]);
+            btn.innerHTML = `<span class="mr-2">${FEEDBACK_SYMBOLS[newStatus]}</span>${displayVal}`;
+        }
+
+        function handleAddGuess() {
+            if (!currentActiveGuess) return;
+            guesses.push({
+                guessedChampion: { ...currentActiveGuess },
+                feedback: { ...currentFeedback }
+            });
+
+            filterPossibleChampions();
+            renderGuessHistory();
+            
+            currentActiveGuess = null;
+            currentFeedback = {};
+            championSearchInput.value = '';
+            feedbackAttributesDiv.innerHTML = '<p class="text-gray-500 text-sm col-span-2">Search or select a new champion for your next guess.</p>';
+            currentChampionNameEl.textContent = 'N/A';
+        }
+
+        function filterPossibleChampions() {
+            possibleChampions = allChampions.filter(potentialChampion => {
+                // Never include champions already guessed and confirmed green on all fields
+                if (guesses.some(g => g.guessedChampion.championName === potentialChampion.championName && Object.values(g.feedback).every(f => f === 'green'))) {
+                    return false;
+                }
+                for (const guess of guesses) {
+                    if (!checkMatch(potentialChampion, guess.guessedChampion, guess.feedback)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+            updatePossibleChampionsDisplay();
+        }
+        
+        function checkMatch(potential, guessed, feedback) {
+            for (const attrKey of Object.keys(ATTRIBUTES_CONFIG)) {
+                const color = feedback[attrKey];
+                if (color === 'unknown') continue;
+
+                const potentialVal = potential[attrKey];
+                const guessedVal = guessed[attrKey];
+
+                if (ATTRIBUTES_CONFIG[attrKey].type === 'multi-select') {
+                    const intersection = potentialVal.filter(v => guessedVal.includes(v));
+                    const isExactMatch = potentialVal.length === guessedVal.length && intersection.length === potentialVal.length;
+
+                    if (color === 'green') { if (!isExactMatch) return false; }
+                    else if (color === 'orange') { if (isExactMatch || intersection.length === 0) return false; }
+                    else if (color === 'red') { if (intersection.length > 0) return false; }
+                }
+                else if (ATTRIBUTES_CONFIG[attrKey].type === 'categorical') {
+                    if (color === 'green') { if (potentialVal !== guessedVal) return false; }
+                    else if (color === 'red') { if (potentialVal === guessedVal) return false; }
+                }
+                else if (attrKey === 'release_year') {
+                    if (color === 'green') { if (potentialVal !== guessedVal) return false; }
+                    else if (color === 'red-down') { if (potentialVal >= guessedVal) return false; } // Answer is older
+                    else if (color === 'red-up') { if (potentialVal <= guessedVal) return false; } // Answer is newer
+                }
+            }
+            return true;
+        }
+
+        function renderGuessHistory() {
+            guessHistoryDiv.innerHTML = '';
+            if (guesses.length === 0) {
+                guessHistoryDiv.innerHTML = '<p class="text-gray-500 italic">No guesses made yet.</p>';
+                return;
+            }
+            guesses.forEach((guess, index) => {
+                const guessDiv = document.createElement('div');
+                guessDiv.className = 'p-3 bg-gray-50 border border-gray-200 rounded-md shadow relative';
+                
+                let content = `<h4 class="text-md font-semibold text-blue-600 mb-2">Guess #${index + 1}: ${guess.guessedChampion.championName}</h4>`;
+                content += '<div class="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">';
+
+                Object.entries(ATTRIBUTES_CONFIG).forEach(([attrKey, config]) => {
+                    const feedbackStatus = guess.feedback[attrKey];
+                    let displayVal = guess.guessedChampion[attrKey];
+                    if (Array.isArray(displayVal)) displayVal = displayVal.join(', ');
+
+                    content += `
+                        <div class="flex items-center p-1 rounded-sm ${FEEDBACK_CLASSES[feedbackStatus]}">
+                            <span class="font-semibold mr-1 text-gray-700">${config.label}:</span>
+                            <span class="truncate">${displayVal || 'N/A'}</span>
+                            <span class="ml-auto font-bold text-sm">${FEEDBACK_SYMBOLS[feedbackStatus]}</span>
+                        </div>
+                    `;
+                });
+                content += '</div>';
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '🗑️';
+                deleteBtn.className = 'absolute top-2 right-2 p-1 text-xs bg-red-500 hover:bg-red-600 text-white rounded';
+                deleteBtn.title = 'Delete this guess';
+                deleteBtn.onclick = () => deleteGuess(index);
+                
+                guessDiv.innerHTML = content;
+                guessDiv.appendChild(deleteBtn);
+                guessHistoryDiv.appendChild(guessDiv);
+            });
+        }
+
+        function deleteGuess(guessIndex) {
+            if (confirm('Are you sure you want to delete this guess?')) {
+                guesses.splice(guessIndex, 1);
+                filterPossibleChampions();
+                renderGuessHistory();
+            }
+        }
+
+        function updatePossibleChampionsDisplay() {
+            possibleCountSpan.textContent = possibleChampions.length;
+            possibleChampionsListDiv.innerHTML = '';
+
+            if (possibleChampions.length === 0 && guesses.length > 0) {
+                possibleChampionsListDiv.innerHTML = '<p class="text-yellow-500 italic">No champions match all feedback. Try deleting your last guess.</p>';
+                return;
+            }
+             if (possibleChampions.length === 0 && guesses.length === 0) {
+                possibleChampionsListDiv.innerHTML = '<p class="text-gray-500 italic">Make a guess to see suggestions.</p>';
+                 return;
+            }
+
+            const championsToDisplay = possibleChampions.slice(0, 100);
+
+            championsToDisplay.forEach(champion => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center p-2 bg-white hover:bg-gray-50 border border-gray-200 rounded-md cursor-pointer transition duration-150 space-x-3';
+                div.onclick = () => selectChampionForGuess(champion);
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'flex-grow min-w-0';
+                const nameP = document.createElement('p');
+                nameP.className = 'font-semibold text-sm text-gray-700 truncate';
+                nameP.textContent = champion.championName;
+                infoDiv.appendChild(nameP);
+
+                const detailsP = document.createElement('p');
+                detailsP.className = 'text-xs text-gray-500 truncate';
+                detailsP.textContent = `${champion.regions.join(', ')} | ${champion.release_year}`;
+                infoDiv.appendChild(detailsP);
+                
+                div.appendChild(infoDiv);
+                possibleChampionsListDiv.appendChild(div);
+            });
+        }
+
+        function resetAll() {
+            guesses = [];
+            possibleChampions = [...allChampions];
+            currentActiveGuess = null;
+            currentFeedback = {};
+            
+            championSearchInput.value = '';
+            championSuggestionsDiv.innerHTML = '';
+            currentGuessAreaDiv.classList.add('hidden');
+            initialSearchPromptDiv.classList.remove('hidden');
+            feedbackAttributesDiv.innerHTML = '';
+            currentChampionNameEl.textContent = 'N/A';
+
+            renderGuessHistory();
+            updatePossibleChampionsDisplay();
+        }
+
+        // Event Listeners
+        championSearchInput.addEventListener('input', (e) => displayChampionSuggestions(e.target.value));
+        clearSearchBtn.addEventListener('click', () => {
+            championSearchInput.value = '';
+            championSuggestionsDiv.innerHTML = '';
+        });
+        addGuessBtn.addEventListener('click', handleAddGuess);
+        resetAllBtn.addEventListener('click', resetAll);
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', loadCSV);
+    </script>
+</body>
+</html> 

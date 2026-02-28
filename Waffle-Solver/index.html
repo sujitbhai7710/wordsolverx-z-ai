@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waffle Solver</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="main.js"></script>
+</head>
+
+<body>
+    <h1>Welcome to the Waffle Solver!</h1>
+    <h3>Please enter the puzzle you wish to solve below and I'll show you the shortest solution</h3>
+
+    <div class="grid" id="waffle-grid">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-0">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-1">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-2">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-3">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-4">
+
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-5">
+        <div class="cell empty-cell"></div>
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-7">
+        <div class="cell empty-cell"></div>
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-9">
+
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-10">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-11">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-12">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-13">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-14">
+
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-15">
+        <div class="cell empty-cell"></div>
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-17">
+        <div class="cell empty-cell"></div>
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-19">
+
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-20">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-21">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-22">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-23">
+        <input type="text" maxlength="1" class="cell input-cell" id="cell-24">
+    </div>
+    <div class="controls">
+        <button onclick="autoFillToday(event)">Auto Fill Today</button>
+        <span class="separator">or</span>
+        <input type="date" id="puzzle-date">
+        <button onclick="loadPuzzleByDate()">Load Date</button>
+    </div>
+    <div id="solution-status" style="display: none; margin-top: 15px;">
+        <button id="prev-btn" onclick="switchSolution(-1)" style="padding: 5px 15px;">&larr; Prev</button>
+        <span id="solution-index" style="margin: 0 15px; font-weight: bold;">Solution 1 of 1</span>
+        <button id="next-btn" onclick="switchSolution(1)" style="padding: 5px 15px;">Next &rarr;</button>
+    </div>
+    <button onclick="solveWaffle(event)">Solve</button>
+    <button onclick="clearGrid()">Clear</button>
+</body>
+
+</html>

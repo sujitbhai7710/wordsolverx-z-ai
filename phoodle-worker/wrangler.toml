@@ -1,0 +1,17 @@
+name = "phoodle-worker"
+main = "src/index.js"
+compatibility_date = "2023-12-01"
+
+# D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "wordle_challenge_db"
+database_id = "54d23327-c6ae-4fe9-ba33-a417e976ec92"
+
+# Environment variables
+[vars]
+ENVIRONMENT = "production"
+
+# Cron trigger
+[triggers]
+crons = ["0 5 * * *"]

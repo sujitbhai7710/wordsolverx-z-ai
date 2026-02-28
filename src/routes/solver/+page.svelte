@@ -12,8 +12,6 @@
     { name: 'Waffle Solver', href: '/waffle-solver', description: 'Crack waffle grid puzzles.', color: 'from-amber-500 to-yellow-600', icon: '🧇' },
     { name: 'Weaver Solver', href: '/weaver-solver', description: 'Find the shortest word ladder path.', color: 'from-violet-500 to-fuchsia-600', icon: '🔗' },
     { name: 'Lewdle Solver', href: '/lewdle-solver', description: 'Solver for the NSFW word game.', color: 'from-rose-500 to-red-600', icon: '🔞' },
-    { name: 'Leddle Solver', href: '/leddle-solver', description: 'LED-themed word puzzle solver.', color: 'from-lime-500 to-green-600', icon: '💡' },
-    { name: 'Sportle Solver', href: '/sportle-solver', description: 'Sports-themed word solver.', color: 'from-sky-500 to-blue-600', icon: '⚽' },
     { name: 'Binance WOTD', href: '/binance-wotd-solver', description: 'Binance Word of the Day solver.', color: 'from-yellow-400 to-amber-500', icon: '₿' },
   ];
 
