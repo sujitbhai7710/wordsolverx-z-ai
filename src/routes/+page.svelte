@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
   import GameCard from '$lib/components/GameCard.svelte';
   import { getJSTToday } from '$lib/utils';
   import { format } from 'date-fns';
@@ -15,7 +15,7 @@
     { name: 'Globle', href: '/globle-answer-today', description: 'Guess the mystery country on the globe.', color: 'from-sky-500 to-blue-600', icon: 'G' },
     { name: 'Dotadle', href: '/dotadle-answer-today', description: 'Guess the Dota 2 hero of the day.', color: 'from-red-600 to-rose-700', icon: 'D' },
     { name: 'LoLdle', href: '/loldle-answer-today', description: 'Guess the League of Legends champion.', color: 'from-violet-500 to-purple-700', icon: 'L' },
-    { name: 'Pokedle', href: '/pokedle-answer-today', description: 'Guess the Pokémon of the day.', color: 'from-yellow-400 to-amber-500', icon: 'P' },
+    { name: 'Pokedle', href: '/pokedle-answer-today', description: 'Guess the PokÃ©mon of the day.', color: 'from-yellow-400 to-amber-500', icon: 'P' },
     { name: 'Narutodle', href: '/narutodle-answer-today', description: 'Guess the Naruto character daily.', color: 'from-orange-600 to-red-600', icon: 'N' },
     { name: 'Smashdle', href: '/smashdle-answer-today', description: 'Guess the Smash Bros fighter.', color: 'from-red-500 to-pink-600', icon: 'S' },
     { name: 'One Piecedle', href: '/onepiecedle-answer-today', description: 'Guess the One Piece character.', color: 'from-blue-600 to-cyan-600', icon: 'O' },
@@ -23,11 +23,18 @@
 
   const solverTools = [
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Filter words by green, yellow, and gray letters.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
-    { name: 'Play Multidle', href: '/multidle', description: 'Play unlimited Wordle — 4 to 12 letter words.', color: 'from-violet-500 to-purple-600', icon: 'M', isPopular: true },
+    { name: 'Play Multidle', href: '/multidle', description: 'Play unlimited Wordle â€” 4 to 12 letter words.', color: 'from-violet-500 to-purple-600', icon: 'M', isPopular: true },
     { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Solve the food-themed word puzzle.', color: 'from-orange-500 to-red-500', icon: 'P' },
     { name: 'Quordle Solver', href: '/quordle-solver', description: 'Crack all four words at once.', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
     { name: 'Colordle Solver', href: '/colordle-solver', description: 'Find the hex color code answer.', color: 'from-pink-500 to-purple-600', icon: 'C' },
     { name: 'Waffle Solver', href: '/waffle-solver', description: 'Solve the waffle grid puzzle.', color: 'from-amber-500 to-yellow-600', icon: 'W' },
+    { name: 'LoLdle Solver', href: '/loldle-solver', description: 'League of Legends champion solver.', color: 'from-violet-500 to-purple-700', icon: 'L' },
+    { name: 'Dotadle Solver', href: '/dotadle-solver', description: 'Dota 2 hero solver with clue filtering.', color: 'from-red-600 to-rose-700', icon: 'D' },
+    { name: 'Pokedle Solver', href: '/pokedle-solver', description: 'Pokemon mystery answer solver.', color: 'from-yellow-400 to-amber-500', icon: 'P' },
+    { name: 'Smashdle Solver', href: '/smashdle-solver', description: 'Super Smash Bros fighter solver.', color: 'from-rose-500 to-pink-600', icon: 'S' },
+    { name: 'Narutodle Solver', href: '/narutodle-solver', description: 'Naruto character daily solver.', color: 'from-orange-500 to-red-600', icon: 'N' },
+    { name: 'Onepiecedle Solver', href: '/onepiecedle-solver', description: 'One Piece character solver.', color: 'from-blue-500 to-cyan-600', icon: 'O' },
+    { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'S' },
   ];
 
   const jsonLd = JSON.stringify([
@@ -74,7 +81,7 @@
 
       <div class="flex flex-col sm:flex-row justify-center gap-4">
         <a href="/wordle-answer-today" class="group px-8 py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold text-lg shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:-translate-y-0.5 transition-all">
-          Today's Answers <span class="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+          Today's Answers <span class="inline-block ml-2 group-hover:translate-x-1 transition-transform">â†’</span>
         </a>
         <a href="/archive" class="px-8 py-4 rounded-xl bg-white/10 text-white font-bold text-lg border border-white/20 hover:bg-white/20 hover:-translate-y-0.5 transition-all backdrop-blur-sm">
           Browse Archive
@@ -100,7 +107,7 @@
         Updated for {todayStr}
       </div>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mb-3 tracking-tight">Answer Today</h2>
-      <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Get the latest answers for all your favorite daily word puzzles — updated every midnight.</p>
+      <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Get the latest answers for all your favorite daily word puzzles â€” updated every midnight.</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
       {#each answerTodayGames as game}
@@ -159,3 +166,5 @@
     </div>
   </section>
 </div>
+
+

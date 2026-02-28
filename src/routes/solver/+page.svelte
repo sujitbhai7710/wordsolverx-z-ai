@@ -1,18 +1,25 @@
-<script lang="ts">
+﻿<script lang="ts">
   import GameCard from '$lib/components/GameCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
 
   const solvers = [
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Advanced 5-letter word solver with smart filtering.', color: 'from-green-500 to-emerald-600', icon: 'W', isPopular: true },
-    { name: 'All Wordle Solver', href: '/wordle-solver', description: 'Solver for 4–11 letter Wordle variants.', color: 'from-teal-500 to-cyan-600', icon: '🔤', isPopular: true },
-    { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Food-themed word solver for Phoodle.', color: 'from-orange-500 to-red-500', icon: '🍕' },
+    { name: 'All Wordle Solver', href: '/wordle-solver', description: 'Solver for 4â€“11 letter Wordle variants.', color: 'from-teal-500 to-cyan-600', icon: 'ðŸ”¤', isPopular: true },
+    { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Food-themed word solver for Phoodle.', color: 'from-orange-500 to-red-500', icon: 'ðŸ•' },
     { name: 'Quordle Solver', href: '/quordle-solver', description: 'Solve all four Quordle words at once.', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
-    { name: 'Colordle Solver', href: '/colordle-solver', description: 'Find the hex color with visual clues.', color: 'from-pink-500 to-purple-600', icon: '🎨' },
-    { name: 'Waffle Solver', href: '/waffle-solver', description: 'Crack waffle grid puzzles.', color: 'from-amber-500 to-yellow-600', icon: '🧇' },
-    { name: 'Weaver Solver', href: '/weaver-solver', description: 'Find the shortest word ladder path.', color: 'from-violet-500 to-fuchsia-600', icon: '🔗' },
-    { name: 'Lewdle Solver', href: '/lewdle-solver', description: 'Solver for the NSFW word game.', color: 'from-rose-500 to-red-600', icon: '🔞' },
-    { name: 'Binance WOTD', href: '/binance-wotd-solver', description: 'Binance Word of the Day solver.', color: 'from-yellow-400 to-amber-500', icon: '₿' },
+    { name: 'Colordle Solver', href: '/colordle-solver', description: 'Find the hex color with visual clues.', color: 'from-pink-500 to-purple-600', icon: 'ðŸŽ¨' },
+    { name: 'Waffle Solver', href: '/waffle-solver', description: 'Crack waffle grid puzzles.', color: 'from-amber-500 to-yellow-600', icon: 'ðŸ§‡' },
+    { name: 'LoLdle Solver', href: '/loldle-solver', description: 'Filter League of Legends champions by full clue data.', color: 'from-violet-500 to-purple-700', icon: 'L' },
+    { name: 'Dotadle Solver', href: '/dotadle-solver', description: 'Solve Dotadle with accurate Dota 2 hero attributes.', color: 'from-red-600 to-rose-700', icon: 'D' },
+    { name: 'Pokedle Solver', href: '/pokedle-solver', description: 'Narrow Pokemon answers with type, habitat, and stats.', color: 'from-yellow-400 to-amber-500', icon: 'P' },
+    { name: 'Smashdle Solver', href: '/smashdle-solver', description: 'Find the Smash fighter by universe, weight, and more.', color: 'from-rose-500 to-pink-600', icon: 'S' },
+    { name: 'Narutodle Solver', href: '/narutodle-solver', description: 'Use rank, village, nature type clues to solve faster.', color: 'from-orange-500 to-red-600', icon: 'N' },
+    { name: 'Onepiecedle Solver', href: '/onepiecedle-solver', description: 'Solve One Piece daily character puzzles with precision.', color: 'from-blue-500 to-cyan-600', icon: 'O' },
+    { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'S' },
+    { name: 'Weaver Solver', href: '/weaver-solver', description: 'Find the shortest word ladder path.', color: 'from-violet-500 to-fuchsia-600', icon: 'ðŸ”—' },
+    { name: 'Lewdle Solver', href: '/lewdle-solver', description: 'Solver for the NSFW word game.', color: 'from-rose-500 to-red-600', icon: 'ðŸ”ž' },
+    { name: 'Binance WOTD', href: '/binance-wotd-solver', description: 'Binance Word of the Day solver.', color: 'from-yellow-400 to-amber-500', icon: 'â‚¿' },
   ];
 
   const faqs = [
@@ -127,7 +134,7 @@
         <div class="grid md:grid-cols-2 gap-6">
           <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-              <span class="text-2xl">🎯</span> Start Strong
+              <span class="text-2xl">ðŸŽ¯</span> Start Strong
             </h3>
             <p class="text-gray-600 dark:text-gray-300">
               Use a good starting word like "CRANE" or "SLATE" before turning to the solver. This gives you more information to work with and makes the solver's job easier.
@@ -135,7 +142,7 @@
           </div>
           <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-              <span class="text-2xl">📝</span> Enter Clues Carefully
+              <span class="text-2xl">ðŸ“</span> Enter Clues Carefully
             </h3>
             <p class="text-gray-600 dark:text-gray-300">
               Double-check that you're entering the right colors for each letter. One wrong input can throw off the entire result. Take your time getting it right.
@@ -143,7 +150,7 @@
           </div>
           <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-              <span class="text-2xl">🧠</span> Learn From Results
+              <span class="text-2xl">ðŸ§ </span> Learn From Results
             </h3>
             <p class="text-gray-600 dark:text-gray-300">
               Don't just copy the answer. Look at the other words the solver suggests. You might discover new words that could help you in future puzzles.
@@ -151,7 +158,7 @@
           </div>
           <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-              <span class="text-2xl">⏰</span> Use as a Last Resort
+              <span class="text-2xl">â°</span> Use as a Last Resort
             </h3>
             <p class="text-gray-600 dark:text-gray-300">
               Try to solve the puzzle yourself first. Use the solver when you're truly stuck or want to understand why a certain word was the answer.
@@ -169,11 +176,11 @@
             There are plenty of solver tools out there, but here's what makes WordSolverX different:
           </p>
           <ul class="list-disc list-inside space-y-3 ml-4">
-            <li><strong class="text-gray-900 dark:text-white">No ads cluttering your screen</strong> — just clean, fast tools that work</li>
-            <li><strong class="text-gray-900 dark:text-white">Mobile-friendly design</strong> — works perfectly on your phone while you play</li>
-            <li><strong class="text-gray-900 dark:text-white">Multiple games covered</strong> — one site for all your puzzle-solving needs</li>
-            <li><strong class="text-gray-900 dark:text-white">Fast and accurate</strong> — results update instantly as you type</li>
-            <li><strong class="text-gray-900 dark:text-white">No sign-up required</strong> — just open and use, no barriers</li>
+            <li><strong class="text-gray-900 dark:text-white">No ads cluttering your screen</strong> â€” just clean, fast tools that work</li>
+            <li><strong class="text-gray-900 dark:text-white">Mobile-friendly design</strong> â€” works perfectly on your phone while you play</li>
+            <li><strong class="text-gray-900 dark:text-white">Multiple games covered</strong> â€” one site for all your puzzle-solving needs</li>
+            <li><strong class="text-gray-900 dark:text-white">Fast and accurate</strong> â€” results update instantly as you type</li>
+            <li><strong class="text-gray-900 dark:text-white">No sign-up required</strong> â€” just open and use, no barriers</li>
           </ul>
           <p class="leading-relaxed mt-6">
             We built these tools because we love word games ourselves. Every solver here was created to solve a real problem we faced while playing. We hope they help you as much as they've helped us.
@@ -187,3 +194,5 @@
     </article>
   </div>
 </div>
+
+

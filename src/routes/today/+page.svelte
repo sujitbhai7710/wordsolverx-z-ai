@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
   import GameCard from '$lib/components/GameCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import { getJSTToday } from '$lib/utils';
@@ -8,24 +8,25 @@
 
   const games = [
     { name: 'Wordle', href: '/wordle-answer-today', description: "Today's Wordle answer and hints.", color: 'from-green-500 to-emerald-600', icon: 'W' },
-    { name: 'Phoodle', href: '/phoodle-answer-today', description: "Today's food-themed puzzle answer.", color: 'from-orange-500 to-red-500', icon: '🍕' },
+    { name: 'Phoodle', href: '/phoodle-answer-today', description: "Today's food-themed puzzle answer.", color: 'from-orange-500 to-red-500', icon: 'ðŸ•' },
     { name: 'Quordle', href: '/quordle-answer-today', description: "All four Quordle answers today.", color: 'from-blue-500 to-indigo-600', icon: 'Q' },
-    { name: 'Colordle', href: '/colordle-answer-today', description: "Today's hex color answer.", color: 'from-pink-500 to-purple-600', icon: '🎨' },
-    { name: 'Semantle', href: '/semantle-answer-today', description: "Today's Semantle secret word.", color: 'from-cyan-500 to-teal-600', icon: '🧠' },
-    { name: 'Waffle', href: '/waffle-answer-today', description: "Today's Waffle grid solution.", color: 'from-amber-500 to-yellow-600', icon: '🧇' },
-    { name: 'Globle', href: '/globle-answer-today', description: "Today's mystery country.", color: 'from-sky-500 to-blue-600', icon: '🌍' },
-    { name: 'Narutodle', href: '/narutodle-answer-today', description: "Today's Naruto character.", color: 'from-orange-600 to-red-600', icon: '🍥' },
-    { name: 'Dotadle', href: '/dotadle-answer-today', description: "Today's Dota 2 hero.", color: 'from-red-600 to-rose-700', icon: '⚔️' },
-    { name: 'LoLdle', href: '/loldle-answer-today', description: "Today's League champion.", color: 'from-violet-500 to-purple-700', icon: '🏆' },
-    { name: 'Pokédle', href: '/pokedle-answer-today', description: "Today's Pokémon answer.", color: 'from-yellow-400 to-amber-500', icon: '⚡' },
-    { name: 'Smashdle', href: '/smashdle-answer-today', description: "Today's Smash fighter.", color: 'from-red-500 to-pink-600', icon: '💥' },
-    { name: 'OnePiecedle', href: '/onepiecedle-answer-today', description: "Today's One Piece character.", color: 'from-blue-600 to-cyan-600', icon: '🏴‍☠️' },
+    { name: 'Colordle', href: '/colordle-answer-today', description: "Today's hex color answer.", color: 'from-pink-500 to-purple-600', icon: 'ðŸŽ¨' },
+    { name: 'Semantle', href: '/semantle-answer-today', description: "Today's Semantle secret word.", color: 'from-cyan-500 to-teal-600', icon: 'ðŸ§ ' },
+    { name: 'Waffle', href: '/waffle-answer-today', description: "Today's Waffle grid solution.", color: 'from-amber-500 to-yellow-600', icon: 'ðŸ§‡' },
+    { name: 'Globle', href: '/globle-answer-today', description: "Today's mystery country.", color: 'from-sky-500 to-blue-600', icon: 'ðŸŒ' },
+    { name: 'Narutodle', href: '/narutodle-answer-today', description: "Today's Naruto character.", color: 'from-orange-600 to-red-600', icon: 'ðŸ¥' },
+    { name: 'Dotadle', href: '/dotadle-answer-today', description: "Today's Dota 2 hero.", color: 'from-red-600 to-rose-700', icon: 'âš”ï¸' },
+    { name: 'LoLdle', href: '/loldle-answer-today', description: "Today's League champion.", color: 'from-violet-500 to-purple-700', icon: 'ðŸ†' },
+    { name: 'PokÃ©dle', href: '/pokedle-answer-today', description: "Today's PokÃ©mon answer.", color: 'from-yellow-400 to-amber-500', icon: 'âš¡' },
+    { name: 'Smashdle', href: '/smashdle-answer-today', description: "Today's Smash fighter.", color: 'from-red-500 to-pink-600', icon: 'ðŸ’¥' },
+    { name: 'OnePiecedle', href: '/onepiecedle-answer-today', description: "Today's One Piece character.", color: 'from-blue-600 to-cyan-600', icon: 'ðŸ´â€â˜ ï¸' },
+    { name: 'Spotle', href: '/spotle-answer-today', description: "Today's Spotify artist answer.", color: 'from-emerald-500 to-teal-600', icon: '🎵' },
   ];
 </script>
 
 <svelte:head>
   <title>Today's Puzzle Answers ({todayStr}) - WordSolverX</title>
-  <meta name="description" content="All of today's puzzle answers in one place — Wordle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
+  <meta name="description" content="All of today's puzzle answers in one place â€” Wordle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -44,7 +45,7 @@
         Today's Answers
       </h1>
       <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300">
-        {todayStr} — Every daily puzzle answer in one place
+        {todayStr} â€” Every daily puzzle answer in one place
       </p>
     </div>
 
