@@ -7,5 +7,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 		redirect(301, '/');
 	}
 
-	return resolve(event);
+	const response = await resolve(event);
+	const contentType = response.headers.get('content-type') ?? '';
+
+	// Always revalidate HTML so clients/CDN edges do not keep stale documents that point
+	// at removed hashed assets after a new deploy.
+	if (contentType.includes('text/html')) {
+		response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+	}
+
+	return response;
 };

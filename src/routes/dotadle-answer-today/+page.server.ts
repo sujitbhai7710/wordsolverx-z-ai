@@ -1,4 +1,5 @@
 import type { PageServerLoad } from './$types';
+import { formatAnswerDate } from '$lib/game-dle/answer-date';
 
 interface GameAnswer {
     game: string;
@@ -11,7 +12,7 @@ interface GameAnswer {
 
 export const load: PageServerLoad = async ({ fetch }) => {
     try {
-        const response = await fetch('https://narutodle-worker.narutodle.workers.dev/today?game=dotadle');
+        const response = await fetch('https://narutodle-worker.narutodle.workers.dev/latest?game=dotadle');
 
         if (!response.ok) {
             throw new Error('Failed to fetch Dotadle data');
@@ -21,24 +22,14 @@ export const load: PageServerLoad = async ({ fetch }) => {
 
         return {
             answers,
-            dateStr: new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }),
+            dateStr: formatAnswerDate(answers) ?? '',
             error: null
         };
     } catch (err) {
         console.error('Error fetching Dotadle data:', err);
         return {
             answers: [],
-            dateStr: new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }),
+            dateStr: '',
             error: err instanceof Error ? err.message : 'Failed to load Dotadle answers'
         };
     }

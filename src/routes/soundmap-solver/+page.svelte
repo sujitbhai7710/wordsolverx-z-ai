@@ -1,0 +1,771 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	import FAQSection from '$lib/components/FAQSection.svelte';
+	import artistsData from '$lib/data/soundmap-artists.json';
+	import {
+		filterCandidates,
+		findBestGuess,
+		getRecommendedFirstGuesses,
+		type Artist,
+		type AttributeFeedback,
+		type FeedbackType,
+		type Guess
+	} from '$lib/soundmap/algorithm';
+	import {
+		generateFAQSchema,
+		generateHowToSchema,
+		generateWebApplicationSchema,
+		generateWebPageSchema,
+		generateSoftwareApplicationSchema
+	} from '$lib/seo';
+
+	const artists = artistsData as Artist[];
+
+	const defaultFeedback: AttributeFeedback = {
+		debut: 'wrong',
+		popularity: 'wrong',
+		members: 'wrong',
+		genre: 'wrong',
+		country: 'wrong',
+		gender: 'wrong'
+	};
+
+	let searchQuery = $state('');
+	let showDropdown = $state(false);
+	let selectedArtist = $state<Artist | null>(null);
+	let guesses = $state<Guess[]>([]);
+	let currentFeedback = $state<AttributeFeedback>({ ...defaultFeedback });
+	let darkMode = $state(true);
+	let showBestGuess = $state(true);
+	let showHelp = $state(false);
+	let showCandidates = $state(true);
+	let notice = $state<string | null>(null);
+	let searchRef: HTMLDivElement | null = null;
+	let guideFeedback = $state({
+		debut: 'wrong' as FeedbackType,
+		popularity: 'wrong' as FeedbackType,
+		country: 'wrong' as FeedbackType
+	});
+	let guideActive = $state<'debut' | 'popularity' | 'country'>('debut');
+
+	const filteredArtists = $derived.by(() => {
+		const query = searchQuery.trim().toLowerCase();
+		if (!query) return [];
+		return artists.filter((artist) => artist.name.toLowerCase().includes(query)).slice(0, 8);
+	});
+
+	const candidates = $derived(filterCandidates(artists, guesses));
+
+	const bestGuess = $derived.by(() => {
+		if (!showBestGuess || guesses.length === 0) return null;
+		const previous = guesses.map((guess) => guess.artist.name);
+		return findBestGuess(artists, candidates, previous);
+	});
+
+	const recommendedGuesses = getRecommendedFirstGuesses(artists);
+
+	const hasWon = $derived(candidates.length === 1 && guesses.length > 0);
+
+	const feedbackMeta: Record<
+		FeedbackType,
+		{ label: string; className: string; icon: string }
+	> = {
+		correct: { label: 'Correct', className: 'bg-green-500 text-white', icon: 'OK' },
+		close: { label: 'Close', className: 'bg-amber-500 text-white', icon: '~' },
+		earlier: { label: 'Earlier', className: 'bg-blue-500 text-white', icon: 'v' },
+		later: { label: 'Later', className: 'bg-blue-500 text-white', icon: '^' },
+		higher: { label: 'Higher', className: 'bg-purple-500 text-white', icon: '^' },
+		lower: { label: 'Lower', className: 'bg-purple-500 text-white', icon: 'v' },
+		wrong: { label: 'Wrong', className: 'bg-gray-400 text-white', icon: 'X' }
+	};
+
+	function getCycleOrder(field: keyof AttributeFeedback): FeedbackType[] {
+		if (field === 'debut') return ['wrong', 'correct', 'close', 'earlier', 'later'];
+		if (field === 'popularity') return ['wrong', 'correct', 'close', 'higher', 'lower'];
+		if (field === 'country') return ['wrong', 'correct', 'close'];
+		return ['wrong', 'correct'];
+	}
+
+	function cycleFeedback(field: keyof AttributeFeedback) {
+		const order = getCycleOrder(field);
+		const current = currentFeedback[field];
+		const index = order.indexOf(current);
+		const nextValue = order[(index + 1) % order.length];
+		currentFeedback = { ...currentFeedback, [field]: nextValue };
+	}
+
+	function cycleGuide(field: keyof typeof guideFeedback) {
+		const order = getCycleOrder(field);
+		const current = guideFeedback[field];
+		const index = order.indexOf(current);
+		const nextValue = order[(index + 1) % order.length];
+		guideFeedback = { ...guideFeedback, [field]: nextValue };
+	}
+
+	function runGuideStep(field: 'debut' | 'popularity' | 'country') {
+		guideActive = field;
+		cycleGuide(field);
+	}
+
+	function setNotice(message: string) {
+		notice = message;
+		setTimeout(() => {
+			notice = null;
+		}, 2000);
+	}
+
+	function selectArtist(artist: Artist) {
+		selectedArtist = artist;
+		searchQuery = artist.name;
+		showDropdown = false;
+		currentFeedback = { ...defaultFeedback };
+	}
+
+	function addGuess() {
+		const artist = selectedArtist;
+		if (!artist) return;
+		if (guesses.some((guess) => guess.artist.name === artist.name)) {
+			setNotice('Already guessed this artist.');
+			return;
+		}
+		guesses = [...guesses, { artist, feedback: { ...currentFeedback } }];
+		selectedArtist = null;
+		searchQuery = '';
+		showDropdown = false;
+		currentFeedback = { ...defaultFeedback };
+	}
+
+	function resetGame() {
+		guesses = [];
+		selectedArtist = null;
+		searchQuery = '';
+		showDropdown = false;
+		currentFeedback = { ...defaultFeedback };
+	}
+
+	function useBestGuess() {
+		if (bestGuess) {
+			selectArtist(bestGuess);
+		}
+	}
+
+	function buildGuessSummary(guess: Guess) {
+		return [
+			{ label: 'Debut', value: guess.artist.debut, feedback: guess.feedback.debut },
+			{ label: 'Pop', value: `#${guess.artist.popularity}`, feedback: guess.feedback.popularity },
+			{ label: 'Members', value: guess.artist.members, feedback: guess.feedback.members },
+			{ label: 'Genre', value: guess.artist.genre, feedback: guess.feedback.genre },
+			{ label: 'Country', value: guess.artist.country, feedback: guess.feedback.country },
+			{ label: 'Gender', value: guess.artist.gender, feedback: guess.feedback.gender }
+		];
+	}
+
+	onMount(() => {
+		if (browser) {
+			const saved = localStorage.getItem('soundmap-dark-mode');
+			if (saved !== null) darkMode = saved === 'true';
+		}
+
+		const guideSequence: Array<'debut' | 'popularity' | 'country'> = [
+			'debut',
+			'popularity',
+			'country'
+		];
+		let guideIndex = 0;
+		const guideInterval = window.setInterval(() => {
+			const field = guideSequence[guideIndex % guideSequence.length];
+			runGuideStep(field);
+			guideIndex += 1;
+		}, 900);
+
+		const handleClickOutside = (event: MouseEvent) => {
+			if (searchRef && !searchRef.contains(event.target as Node)) {
+				showDropdown = false;
+			}
+		};
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			window.clearInterval(guideInterval);
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	});
+
+	$effect(() => {
+		if (browser) {
+			localStorage.setItem('soundmap-dark-mode', String(darkMode));
+		}
+	});
+
+	const faqs = [
+		{
+			question: 'What is the Soundmap Solver?',
+			answer:
+				'Soundmap Solver is a free tool that helps you solve the Soundmap Artist Guesser game by filtering candidates based on game feedback.'
+		},
+		{
+			question: 'How does the feedback system work?',
+			answer:
+				'Mark each category as Correct, Close, Higher/Lower, or Earlier/Later based on the in-game clues. The solver instantly narrows the list.'
+		},
+		{
+			question: 'Does the solver work for every artist?',
+			answer:
+				'Yes. The solver includes a complete artist database and recalculates the best possible guesses every time you add feedback.'
+		},
+		{
+			question: 'Is this tool free to use?',
+			answer: 'Yes, the Soundmap Solver is 100% free with no login required.'
+		}
+	];
+
+	const howToSchema = generateHowToSchema('How to use the Soundmap Solver', [
+		{ name: 'Search an artist', text: 'Find and select your guessed artist from the search list.' },
+		{
+			name: 'Match the feedback',
+			text: 'Tap each feedback button to match the colors/arrows shown in Soundmap.'
+		},
+		{
+			name: 'Add the guess',
+			text: 'Submit the guess to instantly filter the remaining candidates.'
+		},
+		{
+			name: 'Use the best guess',
+			text: 'Take the next recommendation to solve in fewer attempts.'
+		}
+	]);
+
+	const faqSchema = generateFAQSchema(faqs);
+	const webAppSchema = generateWebApplicationSchema(
+		'Soundmap Solver',
+		'Solve the Soundmap Artist Guesser with smart filtering, best-guess suggestions, and fast feedback matching.'
+	);
+	const webPageSchema = generateWebPageSchema(
+		'Soundmap Solver',
+		'Free Soundmap Artist Guesser solver with advanced feedback filters and best-guess recommendations.',
+		'https://wordsolverx.com/soundmap-solver'
+	);
+
+	const softwareAppSchema = {
+		...generateSoftwareApplicationSchema('Soundmap Solver', 'GameApplication', 'Any'),
+		aggregateRating: {
+			'@type': 'AggregateRating',
+			ratingValue: '5',
+			bestRating: '5',
+			worstRating: '1',
+			ratingCount: '1387'
+		}
+	};
+</script>
+
+<svelte:head>
+	<title>Soundmap Solver - Artist Guesser Helper | WordSolverX</title>
+	<meta
+		name="description"
+		content="Solve Soundmap Artist Guesser faster with the Soundmap Solver. Filter artists by debut year, popularity, genre, country, and more."
+	/>
+	<meta
+		name="keywords"
+		content="soundmap solver, soundmap artist guesser, soundmap helper, artist guesser solver, music guessing game"
+	/>
+	<meta property="og:title" content="Soundmap Solver - Artist Guesser Helper" />
+	<meta
+		property="og:description"
+		content="Use smart feedback filters to narrow Soundmap answers and get the best next guess instantly."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://wordsolverx.com/soundmap-solver" />
+	<meta property="og:site_name" content="WordSolverX" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta
+		name="twitter:title"
+		content="Soundmap Solver - Artist Guesser Helper"
+	/>
+	<meta
+		name="twitter:description"
+		content="Free Soundmap solver with best-guess recommendations and instant candidate filtering."
+	/>
+	<link rel="canonical" href="https://wordsolverx.com/soundmap-solver" />
+	{@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(softwareAppSchema)}</script>`}
+</svelte:head>
+
+<div class="soundmap-solver" class:dark={darkMode}>
+	<div class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white transition-colors duration-300">
+		<header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-gray-950/80 border-b dark:border-gray-800">
+			<div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+				<div class="flex items-center gap-2">
+					<span class="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center">SM</span>
+					<h1 class="text-xl font-bold">Soundmap Solver</h1>
+				</div>
+				<div class="flex items-center gap-3">
+					<button
+						type="button"
+						onclick={() => (showHelp = true)}
+						class="px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-800 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
+					>
+						Help
+					</button>
+					<label class="flex items-center gap-2 text-sm">
+						<span>Dark</span>
+						<input
+							type="checkbox"
+							checked={darkMode}
+							onchange={(event) => (darkMode = (event.currentTarget as HTMLInputElement).checked)}
+							class="h-4 w-4 accent-green-500"
+						/>
+					</label>
+				</div>
+			</div>
+		</header>
+
+		<main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+			{#if notice}
+				<div class="rounded-xl border border-amber-200 bg-amber-50 text-amber-900 px-4 py-2 text-sm">
+					{notice}
+				</div>
+			{/if}
+
+			<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 text-center">
+					<p class="text-2xl font-bold text-green-500">{candidates.length}</p>
+					<p class="text-xs text-gray-500 dark:text-gray-400">Candidates</p>
+				</div>
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 text-center">
+					<p class="text-2xl font-bold text-blue-500">{guesses.length}</p>
+					<p class="text-xs text-gray-500 dark:text-gray-400">Guesses</p>
+				</div>
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 text-center">
+					<p class="text-2xl font-bold text-purple-500">{artists.length}</p>
+					<p class="text-xs text-gray-500 dark:text-gray-400">Total Artists</p>
+				</div>
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 text-center">
+					<p class="text-2xl font-bold text-amber-500">{hasWon ? 'WIN' : '...'}</p>
+					<p class="text-xs text-gray-500 dark:text-gray-400">{hasWon ? 'Solved!' : 'In Progress'}</p>
+				</div>
+			</div>
+
+			<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
+				<div class="flex items-start justify-between gap-4 flex-wrap">
+					<div>
+						<h2 class="text-sm font-semibold">How to Match Feedback</h2>
+						<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+							Tap the sample chips to preview the color cycle, then use the same logic in the solver below.
+						</p>
+					</div>
+					<div class="text-[11px] text-gray-500 dark:text-gray-400">
+						Wrong -> Correct -> Close -> Arrow hint
+					</div>
+				</div>
+
+				<div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+					<div class="relative rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 p-3">
+						{#if guideActive === 'debut'}
+							<div class="absolute -top-2 right-3 flex items-center gap-1">
+								<span class="inline-flex h-5 px-2 rounded-full bg-gray-900 text-white text-[10px] items-center shadow-lg animate-pulse">
+									Click
+								</span>
+								<span class="relative flex h-3 w-3">
+									<span class="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-70 animate-ping"></span>
+									<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+								</span>
+							</div>
+						{/if}
+						<div class="flex items-center justify-between mb-2">
+							<p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Year</p>
+							<p class="text-[11px] text-gray-500 dark:text-gray-400">Earlier / Later</p>
+						</div>
+						<div class="flex items-center gap-3">
+							<div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+							<button
+								type="button"
+								onclick={() => cycleGuide('debut')}
+								class={`min-w-[110px] h-10 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${feedbackMeta[guideFeedback.debut].className} ${guideActive === 'debut' ? 'scale-105 ring-2 ring-green-300 dark:ring-green-700' : ''}`}
+							>
+								<span>{feedbackMeta[guideFeedback.debut].icon}</span>
+								<span>{feedbackMeta[guideFeedback.debut].label}</span>
+							</button>
+							<div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+						</div>
+					</div>
+
+					<div class="relative rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 p-3">
+						{#if guideActive === 'popularity'}
+							<div class="absolute -top-2 right-3 flex items-center gap-1">
+								<span class="inline-flex h-5 px-2 rounded-full bg-gray-900 text-white text-[10px] items-center shadow-lg animate-pulse">
+									Click
+								</span>
+								<span class="relative flex h-3 w-3">
+									<span class="absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-70 animate-ping"></span>
+									<span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+								</span>
+							</div>
+						{/if}
+						<div class="flex items-center justify-between mb-2">
+							<p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Popularity</p>
+							<p class="text-[11px] text-gray-500 dark:text-gray-400">Higher / Lower</p>
+						</div>
+						<div class="flex items-center gap-3">
+							<div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+							<button
+								type="button"
+								onclick={() => cycleGuide('popularity')}
+								class={`min-w-[110px] h-10 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${feedbackMeta[guideFeedback.popularity].className} ${guideActive === 'popularity' ? 'scale-105 ring-2 ring-purple-300 dark:ring-purple-700' : ''}`}
+							>
+								<span>{feedbackMeta[guideFeedback.popularity].icon}</span>
+								<span>{feedbackMeta[guideFeedback.popularity].label}</span>
+							</button>
+							<div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+						</div>
+					</div>
+
+					<div class="relative rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 p-3">
+						{#if guideActive === 'country'}
+							<div class="absolute -top-2 right-3 flex items-center gap-1">
+								<span class="inline-flex h-5 px-2 rounded-full bg-gray-900 text-white text-[10px] items-center shadow-lg animate-pulse">
+									Click
+								</span>
+								<span class="relative flex h-3 w-3">
+									<span class="absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-70 animate-ping"></span>
+									<span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+								</span>
+							</div>
+						{/if}
+						<div class="flex items-center justify-between mb-2">
+							<p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Country</p>
+							<p class="text-[11px] text-gray-500 dark:text-gray-400">Close = same region</p>
+						</div>
+						<div class="flex items-center gap-3">
+							<div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+							<button
+								type="button"
+								onclick={() => cycleGuide('country')}
+								class={`min-w-[110px] h-10 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all ${feedbackMeta[guideFeedback.country].className} ${guideActive === 'country' ? 'scale-105 ring-2 ring-amber-300 dark:ring-amber-700' : ''}`}
+							>
+								<span>{feedbackMeta[guideFeedback.country].icon}</span>
+								<span>{feedbackMeta[guideFeedback.country].label}</span>
+							</button>
+							<div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-[11px]">
+					<div class="rounded-lg border border-gray-200 dark:border-gray-800 px-2 py-1.5 text-center">1. Pick artist</div>
+					<div class="rounded-lg border border-gray-200 dark:border-gray-800 px-2 py-1.5 text-center">2. Match colors</div>
+					<div class="rounded-lg border border-gray-200 dark:border-gray-800 px-2 py-1.5 text-center">3. Add guess</div>
+					<div class="rounded-lg border border-gray-200 dark:border-gray-800 px-2 py-1.5 text-center">4. Use next best</div>
+				</div>
+			</div>
+
+			{#if hasWon}
+				<div class="rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 text-center">
+					<h2 class="text-2xl font-bold">Congratulations!</h2>
+					<p class="text-lg mt-1">
+						The answer is <strong>{candidates[0].name}</strong>
+					</p>
+					<p class="text-sm opacity-90 mt-1">Solved in {guesses.length} guesses</p>
+				</div>
+			{/if}
+
+			{#if showBestGuess && bestGuess && guesses.length > 0 && !hasWon}
+				<div class="rounded-2xl border-2 border-green-200 dark:border-green-800 bg-white dark:bg-gray-900 p-4">
+					<div class="flex items-center justify-between flex-wrap gap-3">
+						<div>
+							<p class="text-xs text-gray-500 dark:text-gray-400">Best Next Guess</p>
+							<p class="text-lg font-semibold">{bestGuess.name}</p>
+						</div>
+						<button
+							type="button"
+							onclick={useBestGuess}
+							class="rounded-xl bg-green-500 text-white px-4 py-2 text-sm font-semibold hover:bg-green-600"
+						>
+							Use Guess
+						</button>
+					</div>
+				</div>
+			{/if}
+
+			{#if guesses.length === 0}
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
+					<h2 class="text-lg font-semibold mb-3">Recommended First Guesses</h2>
+					<div class="flex flex-wrap gap-2">
+						{#each recommendedGuesses as recommendation}
+							<button
+								type="button"
+								onclick={() => selectArtist(recommendation.artist)}
+								class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="font-medium">{recommendation.artist.name}</span>
+								<span class="ml-2 text-xs text-gray-500 dark:text-gray-400">{recommendation.artist.genre}</span>
+								<span class="mt-1 block text-[11px] text-gray-500 dark:text-gray-400">
+									2 guess avg: {recommendation.twoGuesses?.toFixed(2) ?? '--'} | 3 guess avg:
+									{recommendation.threeGuesses?.toFixed(2) ?? '--'}
+								</span>
+							</button>
+						{/each}
+					</div>
+				</div>
+			{/if}
+
+			<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
+				<div class="space-y-4">
+					<div class="relative" bind:this={searchRef}>
+						<input
+							type="text"
+							placeholder="Search for an artist..."
+							value={searchQuery}
+							oninput={(event) => {
+								searchQuery = (event.currentTarget as HTMLInputElement).value;
+								showDropdown = true;
+							}}
+							onfocus={() => (showDropdown = true)}
+							class="w-full h-11 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+						/>
+						{#if showDropdown && filteredArtists.length > 0}
+							<div class="absolute z-20 w-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl overflow-hidden">
+								{#each filteredArtists as artist}
+									<button
+										type="button"
+										onmousedown={(event) => {
+											event.preventDefault();
+											selectArtist(artist);
+										}}
+										class="w-full px-4 py-3 text-left hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
+									>
+										<span class="font-medium">{artist.name}</span>
+										<span class="text-xs text-gray-500 dark:text-gray-400">{artist.genre}</span>
+									</button>
+								{/each}
+							</div>
+						{/if}
+					</div>
+
+					{#if selectedArtist}
+						<div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
+							<div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+								<div>
+									<h3 class="font-semibold text-lg">{selectedArtist.name}</h3>
+									<p class="text-xs text-gray-500 dark:text-gray-400">
+										Tap each box to cycle feedback
+									</p>
+								</div>
+								<button
+									type="button"
+									onclick={addGuess}
+									class="rounded-xl bg-green-500 text-white px-4 py-2 text-sm font-semibold hover:bg-green-600"
+								>
+									Add Guess
+								</button>
+							</div>
+
+							<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+								<div class="space-y-1">
+									<p class="text-xs text-gray-500 dark:text-gray-400">Debut Year</p>
+									<p class="text-sm font-semibold">{selectedArtist.debut}</p>
+									<button
+										type="button"
+										onclick={() => cycleFeedback('debut')}
+										class={`w-full h-11 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${feedbackMeta[currentFeedback.debut].className}`}
+									>
+										<span>{feedbackMeta[currentFeedback.debut].icon}</span>
+										<span>{feedbackMeta[currentFeedback.debut].label}</span>
+									</button>
+								</div>
+								<div class="space-y-1">
+									<p class="text-xs text-gray-500 dark:text-gray-400">Popularity</p>
+									<p class="text-sm font-semibold">#{selectedArtist.popularity}</p>
+									<button
+										type="button"
+										onclick={() => cycleFeedback('popularity')}
+										class={`w-full h-11 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${feedbackMeta[currentFeedback.popularity].className}`}
+									>
+										<span>{feedbackMeta[currentFeedback.popularity].icon}</span>
+										<span>{feedbackMeta[currentFeedback.popularity].label}</span>
+									</button>
+								</div>
+								<div class="space-y-1">
+									<p class="text-xs text-gray-500 dark:text-gray-400">Members</p>
+									<p class="text-sm font-semibold">{selectedArtist.members}</p>
+									<button
+										type="button"
+										onclick={() => cycleFeedback('members')}
+										class={`w-full h-11 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${feedbackMeta[currentFeedback.members].className}`}
+									>
+										<span>{feedbackMeta[currentFeedback.members].icon}</span>
+										<span>{feedbackMeta[currentFeedback.members].label}</span>
+									</button>
+								</div>
+								<div class="space-y-1">
+									<p class="text-xs text-gray-500 dark:text-gray-400">Genre</p>
+									<p class="text-sm font-semibold">{selectedArtist.genre}</p>
+									<button
+										type="button"
+										onclick={() => cycleFeedback('genre')}
+										class={`w-full h-11 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${feedbackMeta[currentFeedback.genre].className}`}
+									>
+										<span>{feedbackMeta[currentFeedback.genre].icon}</span>
+										<span>{feedbackMeta[currentFeedback.genre].label}</span>
+									</button>
+								</div>
+								<div class="space-y-1">
+									<p class="text-xs text-gray-500 dark:text-gray-400">Country</p>
+									<p class="text-sm font-semibold">{selectedArtist.country}</p>
+									<button
+										type="button"
+										onclick={() => cycleFeedback('country')}
+										class={`w-full h-11 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${feedbackMeta[currentFeedback.country].className}`}
+									>
+										<span>{feedbackMeta[currentFeedback.country].icon}</span>
+										<span>{feedbackMeta[currentFeedback.country].label}</span>
+									</button>
+								</div>
+								<div class="space-y-1">
+									<p class="text-xs text-gray-500 dark:text-gray-400">Gender</p>
+									<p class="text-sm font-semibold">{selectedArtist.gender}</p>
+									<button
+										type="button"
+										onclick={() => cycleFeedback('gender')}
+										class={`w-full h-11 rounded-lg text-sm font-medium flex items-center justify-center gap-2 ${feedbackMeta[currentFeedback.gender].className}`}
+									>
+										<span>{feedbackMeta[currentFeedback.gender].icon}</span>
+										<span>{feedbackMeta[currentFeedback.gender].label}</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					{/if}
+				</div>
+			</div>
+
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
+					<div class="flex items-center justify-between mb-4">
+						<h2 class="text-lg font-semibold">Previous Guesses</h2>
+						{#if guesses.length > 0}
+							<button
+								type="button"
+								onclick={resetGame}
+								class="text-xs text-red-500 hover:text-red-400"
+							>
+								Reset
+							</button>
+						{/if}
+					</div>
+					{#if guesses.length === 0}
+						<p class="text-sm text-gray-500 dark:text-gray-400">Add guesses to start filtering.</p>
+					{:else}
+						<div class="space-y-3">
+							{#each guesses as guess, index}
+								<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 p-3">
+									<div class="flex items-center justify-between mb-2">
+										<p class="font-semibold">
+											Guess #{index + 1}: {guess.artist.name}
+										</p>
+										<button
+											type="button"
+											onclick={() => (guesses = guesses.filter((_, i) => i !== index))}
+											class="text-xs text-red-500 hover:text-red-400"
+										>
+											Remove
+										</button>
+									</div>
+									<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+										{#each buildGuessSummary(guess) as item}
+											<div class={`rounded-lg p-2 text-center ${feedbackMeta[item.feedback].className}`}>
+												<p class="text-[10px] uppercase tracking-wide">{item.label}</p>
+												<p class="font-semibold">{item.value}</p>
+											</div>
+										{/each}
+									</div>
+								</div>
+							{/each}
+						</div>
+					{/if}
+				</div>
+
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
+					<div class="flex items-center justify-between mb-4">
+						<h2 class="text-lg font-semibold">Possible Artists ({candidates.length})</h2>
+						<button
+							type="button"
+							onclick={() => (showCandidates = !showCandidates)}
+							class="text-xs text-gray-500 dark:text-gray-400"
+						>
+							{showCandidates ? 'Hide' : 'Show'}
+						</button>
+					</div>
+					{#if showCandidates}
+						<div class="space-y-2 max-h-96 overflow-y-auto pr-1">
+							{#each candidates.slice(0, 120) as artist}
+								<button
+									type="button"
+									onclick={() => selectArtist(artist)}
+									class="w-full flex items-center justify-between rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700"
+								>
+									<span class="font-medium">{artist.name}</span>
+									<span class="text-xs text-gray-500 dark:text-gray-400">
+										{artist.genre}
+									</span>
+								</button>
+							{/each}
+							{#if candidates.length > 120}
+								<p class="text-xs text-gray-500 dark:text-gray-400 text-center">
+									And {candidates.length - 120} more...
+								</p>
+							{/if}
+						</div>
+					{/if}
+				</div>
+			</div>
+
+			<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 flex items-center justify-between">
+				<div>
+					<h3 class="font-semibold">Settings</h3>
+					<p class="text-xs text-gray-500 dark:text-gray-400">
+						Toggle best-guess recommendations on or off.
+					</p>
+				</div>
+				<label class="flex items-center gap-2 text-sm">
+					<span>Best Guess</span>
+					<input
+						type="checkbox"
+						checked={showBestGuess}
+						onchange={(event) =>
+							(showBestGuess = (event.currentTarget as HTMLInputElement).checked)}
+						class="h-4 w-4 accent-green-500"
+					/>
+				</label>
+			</div>
+		</main>
+
+		<FAQSection {faqs} />
+
+		{#if showHelp}
+			<div class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+				<div class="max-w-2xl w-full bg-white dark:bg-gray-900 rounded-2xl p-6 relative">
+					<button
+						type="button"
+						onclick={() => (showHelp = false)}
+						class="absolute top-4 right-4 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+					>
+						X
+					</button>
+					<h2 class="text-2xl font-bold mb-2">How to Use Soundmap Solver</h2>
+					<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+						Match each feedback color from the game and let the solver narrow the list.
+					</p>
+					<ol class="list-decimal list-inside space-y-2 text-sm text-gray-700 dark:text-gray-300">
+						<li>Search and select an artist you guessed in Soundmap.</li>
+						<li>Tap each feedback box to match the game&apos;s hints.</li>
+						<li>Add the guess to filter the candidate list instantly.</li>
+						<li>Use the best-guess recommendation to solve faster.</li>
+					</ol>
+				</div>
+			</div>
+		{/if}
+	</div>
+</div>

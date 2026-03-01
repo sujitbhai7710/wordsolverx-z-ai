@@ -1564,13 +1564,17 @@ const MAIN_STATIC_PAGES = [
     "https://wordsolverx.com/all-wordle-solver",
     "https://wordsolverx.com/quordle-solver",
     "https://wordsolverx.com/phoodle-solver",
-    "https://wordsolverx.com/waffle-solver",
-    "https://wordsolverx.com/colordle-solver",
-    "https://wordsolverx.com/lewdle-solver",
-    "https://wordsolverx.com/weaver-solver",
+      "https://wordsolverx.com/waffle-solver",
+      "https://wordsolverx.com/colordle-solver",
+      "https://wordsolverx.com/lewdle-solver",
+      "https://wordsolverx.com/searchle-solver",
+      "https://wordsolverx.com/soundmap-solver",
+      "https://wordsolverx.com/spotle-solver",
+      "https://wordsolverx.com/weaver-solver",
     "https://wordsolverx.com/wordle-answer-today",
     "https://wordsolverx.com/quordle-answer-today",
     "https://wordsolverx.com/phoodle-answer-today",
+    "https://wordsolverx.com/phrazle-answer-today",
     "https://wordsolverx.com/semantle-answer-today",
     "https://wordsolverx.com/colordle-answer-today",
     "https://wordsolverx.com/waffle-answer-today",
@@ -1578,9 +1582,12 @@ const MAIN_STATIC_PAGES = [
     "https://wordsolverx.com/dotadle-answer-today",
     "https://wordsolverx.com/loldle-answer-today",
     "https://wordsolverx.com/narutodle-answer-today",
-    "https://wordsolverx.com/onepiecedle-answer-today",
-    "https://wordsolverx.com/pokedle-answer-today",
-    "https://wordsolverx.com/smashdle-answer-today",
+      "https://wordsolverx.com/onepiecedle-answer-today",
+      "https://wordsolverx.com/pokedle-answer-today",
+      "https://wordsolverx.com/smashdle-answer-today",
+      "https://wordsolverx.com/contexto-answer-today",
+      "https://wordsolverx.com/searchle-answer-today",
+      "https://wordsolverx.com/spotle-answer-today",
     "https://wordsolverx.com/wordle-answer-archive",
     "https://wordsolverx.com/quordle-archive",
     "https://wordsolverx.com/phoodle-archive",
@@ -1659,17 +1666,21 @@ function generateSitemapToday() {
         "https://wordsolverx.com/wordle-answer-today",
         "https://wordsolverx.com/quordle-answer-today",
         "https://wordsolverx.com/phoodle-answer-today",
+        "https://wordsolverx.com/phrazle-answer-today",
         "https://wordsolverx.com/semantle-answer-today",
         "https://wordsolverx.com/colordle-answer-today",
         "https://wordsolverx.com/dotadle-answer-today",
         "https://wordsolverx.com/loldle-answer-today",
         "https://wordsolverx.com/narutodle-answer-today",
-        "https://wordsolverx.com/onepiecedle-answer-today",
-        "https://wordsolverx.com/pokedle-answer-today",
-        "https://wordsolverx.com/smashdle-answer-today",
-        "https://wordsolverx.com/waffle-answer-today",
-        "https://wordsolverx.com/globle-answer-today"
-    ];
+          "https://wordsolverx.com/onepiecedle-answer-today",
+          "https://wordsolverx.com/pokedle-answer-today",
+          "https://wordsolverx.com/smashdle-answer-today",
+          "https://wordsolverx.com/contexto-answer-today",
+          "https://wordsolverx.com/searchle-answer-today",
+          "https://wordsolverx.com/spotle-answer-today",
+          "https://wordsolverx.com/waffle-answer-today",
+          "https://wordsolverx.com/globle-answer-today"
+      ];
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
@@ -1694,17 +1705,20 @@ __name(generateSitemapYesterday, "generateSitemapYesterday");
 function generateSitemapSolvers() {
     // Solvers are important tools, effectively static but high value
     const todayDate = getFormattedDate(getJstDate());
-    const pages = [
-        "https://wordsolverx.com/solver",
-        "https://wordsolverx.com/colordle-solver",
-        "https://wordsolverx.com/all-wordle-solver",
-        "https://wordsolverx.com/lewdle-solver",
-        "https://wordsolverx.com/phoodle-solver",
-        "https://wordsolverx.com/quordle-solver",
-        "https://wordsolverx.com/weaver-solver",
-        "https://wordsolverx.com/wordle-solver",
-        "https://wordsolverx.com/waffle-solver"
-    ];
+      const pages = [
+          "https://wordsolverx.com/solver",
+          "https://wordsolverx.com/colordle-solver",
+          "https://wordsolverx.com/all-wordle-solver",
+          "https://wordsolverx.com/lewdle-solver",
+          "https://wordsolverx.com/phoodle-solver",
+            "https://wordsolverx.com/quordle-solver",
+            "https://wordsolverx.com/soundmap-solver",
+            "https://wordsolverx.com/searchle-solver",
+            "https://wordsolverx.com/spotle-solver",
+            "https://wordsolverx.com/weaver-solver",
+          "https://wordsolverx.com/wordle-solver",
+          "https://wordsolverx.com/waffle-solver"
+      ];
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 

@@ -20,6 +20,9 @@
     { name: 'PokÃ©dle', href: '/pokedle-answer-today', description: "Today's PokÃ©mon answer.", color: 'from-yellow-400 to-amber-500', icon: 'âš¡' },
     { name: 'Smashdle', href: '/smashdle-answer-today', description: "Today's Smash fighter.", color: 'from-red-500 to-pink-600', icon: 'ðŸ’¥' },
     { name: 'OnePiecedle', href: '/onepiecedle-answer-today', description: "Today's One Piece character.", color: 'from-blue-600 to-cyan-600', icon: 'ðŸ´â€â˜ ï¸' },
+    { name: 'Contexto', href: '/contexto-answer-today', description: "Today's Contexto answer.", color: 'from-violet-500 to-fuchsia-600', icon: 'Cx' },
+    { name: 'Searchle', href: '/searchle-answer-today', description: "Today's Searchle answer.", color: 'from-purple-500 to-pink-600', icon: 'Se' },
+    { name: 'Phrazle', href: '/phrazle-answer-today', description: "Today's morning and afternoon phrases.", color: 'from-emerald-500 to-lime-600', icon: 'Ph' },
     { name: 'Spotle', href: '/spotle-answer-today', description: "Today's Spotify artist answer.", color: 'from-emerald-500 to-teal-600', icon: '🎵' },
   ];
 </script>

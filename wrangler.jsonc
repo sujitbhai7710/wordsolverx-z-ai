@@ -3,10 +3,10 @@
   "name": "wordsolverx-svelte",
   "compatibility_date": "2026-02-22",
   "compatibility_flags": ["nodejs_compat"],
-  // Deploy only the generated SvelteKit Cloudflare output.
-  "main": ".svelte-kit/cloudflare/_worker.js",
+  // Keep deploy artifacts out of .svelte-kit so local builds on Windows don't fail on locked temp dirs.
+  "main": "build/cloudflare/_worker.js",
   "assets": {
-    "directory": ".svelte-kit/cloudflare",
+    "directory": "build/cloudflare",
     "binding": "ASSETS"
   }
 }

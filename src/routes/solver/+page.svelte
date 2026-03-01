@@ -16,6 +16,8 @@
     { name: 'Smashdle Solver', href: '/smashdle-solver', description: 'Find the Smash fighter by universe, weight, and more.', color: 'from-rose-500 to-pink-600', icon: 'S' },
     { name: 'Narutodle Solver', href: '/narutodle-solver', description: 'Use rank, village, nature type clues to solve faster.', color: 'from-orange-500 to-red-600', icon: 'N' },
     { name: 'Onepiecedle Solver', href: '/onepiecedle-solver', description: 'Solve One Piece daily character puzzles with precision.', color: 'from-blue-500 to-cyan-600', icon: 'O' },
+    { name: 'Soundmap Solver', href: '/soundmap-solver', description: 'Solve the Soundmap Artist Guesser with smart feedback filters.', color: 'from-green-500 to-emerald-600', icon: 'SM' },
+    { name: 'Searchle Solver', href: '/searchle-solver', description: 'Autocomplete puzzle solver for Searchle.', color: 'from-purple-500 to-pink-600', icon: 'Se' },
     { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'S' },
     { name: 'Weaver Solver', href: '/weaver-solver', description: 'Find the shortest word ladder path.', color: 'from-violet-500 to-fuchsia-600', icon: 'ðŸ”—' },
     { name: 'Lewdle Solver', href: '/lewdle-solver', description: 'Solver for the NSFW word game.', color: 'from-rose-500 to-red-600', icon: 'ðŸ”ž' },

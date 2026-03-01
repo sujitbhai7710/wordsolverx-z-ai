@@ -30,7 +30,7 @@
   let loading = $state(!data?.answers?.length);
   let error = $state<string | null>(data?.error ?? null);
   let copiedKey = $state<string | null>(null);
-  let dateStr = $state(data?.dateStr ?? new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+  let dateStr = $state(data?.dateStr ?? '');
 
   // Generate canonical URL based on gameKey
   const canonicalUrl = `https://wordsolverx.com/${gameKey}-answer-today`;

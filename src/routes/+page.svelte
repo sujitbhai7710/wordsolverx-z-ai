@@ -19,6 +19,10 @@
     { name: 'Narutodle', href: '/narutodle-answer-today', description: 'Guess the Naruto character daily.', color: 'from-orange-600 to-red-600', icon: 'N' },
     { name: 'Smashdle', href: '/smashdle-answer-today', description: 'Guess the Smash Bros fighter.', color: 'from-red-500 to-pink-600', icon: 'S' },
     { name: 'One Piecedle', href: '/onepiecedle-answer-today', description: 'Guess the One Piece character.', color: 'from-blue-600 to-cyan-600', icon: 'O' },
+    { name: 'Contexto', href: '/contexto-answer-today', description: 'Today\'s Contexto answer and archive.', color: 'from-violet-500 to-fuchsia-600', icon: 'Cx' },
+    { name: 'Searchle', href: '/searchle-answer-today', description: 'Today\'s Searchle answer and history.', color: 'from-purple-500 to-pink-600', icon: 'Se' },
+    { name: 'Phrazle', href: '/phrazle-answer-today', description: 'Morning and afternoon Phrazle answers.', color: 'from-emerald-500 to-lime-600', icon: 'Ph' },
+    { name: 'Spotle', href: '/spotle-answer-today', description: 'Today\'s Spotify artist answer.', color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
   ];
 
   const solverTools = [
@@ -34,6 +38,8 @@
     { name: 'Smashdle Solver', href: '/smashdle-solver', description: 'Super Smash Bros fighter solver.', color: 'from-rose-500 to-pink-600', icon: 'S' },
     { name: 'Narutodle Solver', href: '/narutodle-solver', description: 'Naruto character daily solver.', color: 'from-orange-500 to-red-600', icon: 'N' },
     { name: 'Onepiecedle Solver', href: '/onepiecedle-solver', description: 'One Piece character solver.', color: 'from-blue-500 to-cyan-600', icon: 'O' },
+    { name: 'Soundmap Solver', href: '/soundmap-solver', description: 'Artist guess solver for Soundmap.', color: 'from-green-500 to-emerald-600', icon: 'SM' },
+    { name: 'Searchle Solver', href: '/searchle-solver', description: 'Autocomplete puzzle solver for Searchle.', color: 'from-purple-500 to-pink-600', icon: 'Se' },
     { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'S' },
   ];
 
