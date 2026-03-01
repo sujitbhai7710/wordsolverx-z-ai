@@ -1,13 +1,11 @@
 <script lang="ts">
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
-  import { formatDateForSlug } from '$lib/colordle-date';
+  import { formatPhoodleDateForSlug, parseApiDate, PHOODLE_START_DATE } from '$lib/phoodle';
 
-  const startDate = new Date(2022, 4, 9); // May 9, 2022
+  let { data } = $props();
 
-  // Phoodle uses same slug format as colordle (MMMM-dd-yyyy lowercase)
-  function formatPhoodleSlug(date: Date): string {
-    return formatDateForSlug(date);
-  }
+  const availableDates = (data?.availableDateStrings ?? []).map(parseApiDate);
+  const startDate = availableDates.at(-1) ?? PHOODLE_START_DATE;
 </script>
 
 <svelte:head>
@@ -31,9 +29,10 @@
 <ArchiveCalendar
   gameName="Phoodle"
   gameColor="orange"
-  gameIcon="🍽️"
+  gameIcon="Ph"
   {startDate}
+  {availableDates}
   slugPrefix="phoodle-answer-for-"
-  formatSlug={formatPhoodleSlug}
+  formatSlug={formatPhoodleDateForSlug}
   description="Every Phoodle food word answer. Browse the complete daily food puzzle history."
 />

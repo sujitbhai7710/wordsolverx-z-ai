@@ -6,6 +6,7 @@
     gameColor = 'emerald',
     gameIcon = '📅',
     startDate,
+    availableDates = [],
     slugPrefix,
     formatSlug,
     description = '',
@@ -14,6 +15,7 @@
     gameColor?: string;
     gameIcon?: string;
     startDate: Date;
+    availableDates?: Date[];
     slugPrefix: string;
     formatSlug: (date: Date) => string;
     description?: string;
@@ -27,18 +29,35 @@
   // All puzzles from start to today
   let allPuzzles = $derived.by(() => {
     const result: { date: Date; dayNum: number; slug: string; formatted: string }[] = [];
-    let d = new Date(startDate);
-    let num = 1;
-    while (d <= today) {
-      result.push({
-        date: new Date(d),
-        dayNum: num,
-        slug: `/${slugPrefix}${formatSlug(d)}`,
-        formatted: format(d, 'MMMM d, yyyy'),
+
+    if (availableDates.length > 0) {
+      const sortedDates = [...availableDates]
+        .filter((date) => !isAfter(date, today))
+        .sort((a, b) => a.getTime() - b.getTime());
+
+      sortedDates.forEach((date, index) => {
+        result.push({
+          date: new Date(date),
+          dayNum: index + 1,
+          slug: `/${slugPrefix}${formatSlug(date)}`,
+          formatted: format(date, 'MMMM d, yyyy'),
+        });
       });
-      d = addDays(d, 1);
-      num++;
+    } else {
+      let d = new Date(startDate);
+      let num = 1;
+      while (d <= today) {
+        result.push({
+          date: new Date(d),
+          dayNum: num,
+          slug: `/${slugPrefix}${formatSlug(d)}`,
+          formatted: format(d, 'MMMM d, yyyy'),
+        });
+        d = addDays(d, 1);
+        num++;
+      }
     }
+
     return result.reverse();
   });
 

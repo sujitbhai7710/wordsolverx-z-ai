@@ -1,6 +1,6 @@
 import { getJSTToday } from '$lib/utils';
-import { getPhoodleToday, getPhoodleDataForDate } from '$lib/phoodle';
-import { subDays, format } from 'date-fns';
+import { getPhoodleToday, getRecentPhoodleHistory } from '$lib/phoodle';
+import { format } from 'date-fns';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
@@ -14,11 +14,8 @@ export const load: PageServerLoad = async () => {
     const { word, description, recipe_name, formattedDate } = data;
     const upperWord = word.toUpperCase();
 
-    // Fetch last 10 days for FAQs
-    const last10DaysDates = Array.from({ length: 10 }, (_, i) => subDays(today, i + 1));
-    const last10DaysPromises = last10DaysDates.map((date) => getPhoodleDataForDate(date));
-    const last10DaysResults = await Promise.all(last10DaysPromises);
-    const last10Days = last10DaysResults.filter(Boolean);
+    // Fetch last 10 available days for FAQs (Phoodle can have gaps in dates)
+    const last10Days = await getRecentPhoodleHistory(data.date, 10);
 
     const faqSchema = {
         '@context': 'https://schema.org',

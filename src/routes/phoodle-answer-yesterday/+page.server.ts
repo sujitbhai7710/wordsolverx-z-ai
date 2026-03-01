@@ -1,29 +1,11 @@
 import type { PageServerLoad } from './$types';
-
-const PHOODLE_API = 'https://phoodle-worker.pinpoints.workers.dev';
-
-async function getPhoodleData(endpoint: string) {
-    try {
-        const res = await fetch(`${PHOODLE_API}/${endpoint}`);
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.success ? data.data : null;
-    } catch {
-        return null;
-    }
-}
-
-function formatDate(dateStr: string): string {
-    const date = new Date(dateStr + 'T00:00:00Z');
-    return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
-}
+import { getPhoodleYesterday } from '$lib/phoodle';
 
 export const load: PageServerLoad = async () => {
-    const data = await getPhoodleData('yesterday');
+    const data = await getPhoodleYesterday();
     if (!data) return { error: true };
 
-    const { id: dateId, word, description, recipe_name } = data;
-    const formattedDate = formatDate(dateId);
+    const { id: dateId, word, description, recipe_name, formattedDate } = data;
     const upperWord = word.toUpperCase();
 
     const schemas = JSON.stringify([

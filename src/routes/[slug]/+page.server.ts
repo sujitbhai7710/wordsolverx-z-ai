@@ -1,8 +1,8 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { getColordleDataForDate, parseSlugDate, formatDateForSlug } from '$lib/colordle-date';
 import { getSemantleDataForDate, parseSemantleSlugDate, formatSemantleDateForSlug } from '$lib/semantle';
-import { getPhoodleDataForDate, parsePhoodleSlugDate, formatPhoodleDateForSlug } from '$lib/phoodle';
+import { getPhoodleAdjacentDates, getPhoodleDataForDate, getNearestPhoodleDate, parsePhoodleSlugDate, formatPhoodleDateForSlug } from '$lib/phoodle';
 import { getGlobleDataForDate, parseGlobleSlugDate, formatGlobleDateForSlug } from '$lib/globle-date';
 import { getWaffleDataForDate, parseWaffleSlugDate, formatWaffleDateForSlug } from '$lib/waffle';
 import { getQuordleDataForDate } from '$lib/quordle';
@@ -106,11 +106,24 @@ export const load: PageServerLoad = async ({ params }) => {
         const dateSlug = slug.replace(PHOODLE_PREFIX, '');
         const date = parsePhoodleSlugDate(dateSlug);
         const data = date ? await getPhoodleDataForDate(date) : null;
-        if (!data) error(404, 'Phoodle Answer Not Found');
+        if (!data) {
+            if (date) {
+                const fallbackDate = await getNearestPhoodleDate(date, 'on-or-before');
+                if (fallbackDate) {
+                    redirect(302, `/phoodle-answer-for-${formatPhoodleDateForSlug(fallbackDate)}`);
+                }
+            }
+            error(404, 'Phoodle Answer Not Found');
+        }
 
         const upperWord = data.word.toUpperCase();
-        const prevSlug = `/phoodle-answer-for-${formatPhoodleDateForSlug(subDays(data.date, 1))}`;
-        const nextSlug = `/phoodle-answer-for-${formatPhoodleDateForSlug(addDays(data.date, 1))}`;
+        const adjacentDates = await getPhoodleAdjacentDates(data.date);
+        const prevSlug = adjacentDates.previous
+            ? `/phoodle-answer-for-${formatPhoodleDateForSlug(adjacentDates.previous)}`
+            : `/phoodle-answer-today`;
+        const nextSlug = adjacentDates.next
+            ? `/phoodle-answer-for-${formatPhoodleDateForSlug(adjacentDates.next)}`
+            : `/phoodle-answer-today`;
         const seo = getArchiveSeo('phoodle', data.date);
 
         const schemas = JSON.stringify({

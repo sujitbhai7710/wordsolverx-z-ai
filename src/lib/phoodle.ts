@@ -1,7 +1,9 @@
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
 import { getJSTToday } from '$lib/utils';
 
 const PHOODLE_API = 'https://phoodle-worker.pinpoints.workers.dev';
+const PHOODLE_PAGE_SIZE = 20;
+const PHOODLE_DATES_TTL_MS = 60 * 60 * 1000;
 
 // Start date for Phoodle (earliest available data)
 export const PHOODLE_START_DATE = new Date(2023, 1, 1); // Feb 1, 2023
@@ -15,65 +17,152 @@ export interface PhoodleDayData {
     date: Date;
 }
 
+let cachedPhoodleDates: { fetchedAt: number; dates: string[] } | null = null;
+let pendingPhoodleDates: Promise<string[]> | null = null;
+
+async function fetchPhoodleJson(endpoint: string): Promise<any | null> {
+    try {
+        const res = await fetch(`${PHOODLE_API}/${endpoint}`);
+        if (!res.ok) return null;
+        return await res.json();
+    } catch {
+        return null;
+    }
+}
+
+async function getPhoodleDataForDateString(dateStr: string): Promise<PhoodleDayData | null> {
+    const data = await fetchPhoodleJson(`show/date/${dateStr}`);
+    if (!data?.success || !data.data) return null;
+
+    const actualDate = parseApiDate(data.data.id);
+
+    return {
+        id: data.data.id,
+        word: data.data.word,
+        description: data.data.description,
+        recipe_name: data.data.recipe_name,
+        formattedDate: format(actualDate, 'MMMM d, yyyy'),
+        date: actualDate
+    };
+}
+
 /**
  * Fetch Phoodle data for a specific date from the API.
  */
 export async function getPhoodleDataForDate(date: Date): Promise<PhoodleDayData | null> {
-    try {
-        const dateStr = format(date, 'yyyy-MM-dd');
-        const res = await fetch(`${PHOODLE_API}/show/date/${dateStr}`, {
-            cache: 'force-cache'
-        });
-        if (!res.ok) return null;
-        const data = await res.json();
-        if (!data.success || !data.data) return null;
+    return getPhoodleDataForDateString(format(date, 'yyyy-MM-dd'));
+}
 
-        return {
-            id: data.data.id,
-            word: data.data.word,
-            description: data.data.description,
-            recipe_name: data.data.recipe_name,
-            formattedDate: format(date, 'MMMM d, yyyy'),
-            date: date
-        };
-    } catch {
-        return null;
+export async function getAllPhoodleDates(): Promise<string[]> {
+    if (cachedPhoodleDates && Date.now() - cachedPhoodleDates.fetchedAt < PHOODLE_DATES_TTL_MS) {
+        return cachedPhoodleDates.dates;
     }
+
+    if (pendingPhoodleDates) {
+        return pendingPhoodleDates;
+    }
+
+    pendingPhoodleDates = (async () => {
+        const dates: string[] = [];
+        let page = 1;
+
+        while (true) {
+            const pageDates = await getPhoodleDatesPage(page);
+            if (!pageDates.length) break;
+
+            dates.push(...pageDates);
+
+            if (pageDates.length < PHOODLE_PAGE_SIZE) break;
+            page += 1;
+        }
+
+        const uniqueDates = Array.from(new Set(dates)).sort((a, b) => b.localeCompare(a));
+        cachedPhoodleDates = { fetchedAt: Date.now(), dates: uniqueDates };
+        pendingPhoodleDates = null;
+        return uniqueDates;
+    })().catch((error) => {
+        pendingPhoodleDates = null;
+        throw error;
+    });
+
+    return pendingPhoodleDates;
+}
+
+export async function getNearestPhoodleDate(
+    targetDate: Date,
+    direction: 'on-or-before' | 'before' | 'on-or-after' | 'after' = 'on-or-before'
+): Promise<Date | null> {
+    const targetKey = format(targetDate, 'yyyy-MM-dd');
+    const dates = await getAllPhoodleDates();
+
+    if (direction === 'on-or-before') {
+        const match = dates.find((dateStr) => dateStr <= targetKey);
+        return match ? parseApiDate(match) : null;
+    }
+
+    if (direction === 'before') {
+        const match = dates.find((dateStr) => dateStr < targetKey);
+        return match ? parseApiDate(match) : null;
+    }
+
+    const ascending = [...dates].reverse();
+
+    if (direction === 'on-or-after') {
+        const match = ascending.find((dateStr) => dateStr >= targetKey);
+        return match ? parseApiDate(match) : null;
+    }
+
+    const match = ascending.find((dateStr) => dateStr > targetKey);
+    return match ? parseApiDate(match) : null;
+}
+
+export async function getPhoodleAdjacentDates(currentDate: Date): Promise<{ previous: Date | null; next: Date | null }> {
+    const targetKey = format(currentDate, 'yyyy-MM-dd');
+    const dates = await getAllPhoodleDates();
+    const index = dates.findIndex((dateStr) => dateStr === targetKey);
+
+    if (index === -1) {
+        return { previous: null, next: null };
+    }
+
+    return {
+        previous: dates[index + 1] ? parseApiDate(dates[index + 1]) : null,
+        next: dates[index - 1] ? parseApiDate(dates[index - 1]) : null
+    };
+}
+
+export async function getRecentPhoodleHistory(beforeDate: Date, count: number): Promise<PhoodleDayData[]> {
+    const targetKey = format(beforeDate, 'yyyy-MM-dd');
+    const dates = await getAllPhoodleDates();
+    const priorDates = dates.filter((dateStr) => dateStr < targetKey).slice(0, count);
+    const results = await Promise.all(priorDates.map((dateStr) => getPhoodleDataForDateString(dateStr)));
+    return results.filter((result): result is PhoodleDayData => result !== null);
 }
 
 /**
  * Get today's Phoodle data in JST
  */
 export async function getPhoodleToday(): Promise<PhoodleDayData | null> {
-    return getPhoodleDataForDate(getJSTToday());
+    const closestDate = await getNearestPhoodleDate(getJSTToday(), 'on-or-before');
+    if (!closestDate) return null;
+    return getPhoodleDataForDate(closestDate);
 }
 
 /**
  * Get yesterday's Phoodle data in JST
  */
 export async function getPhoodleYesterday(): Promise<PhoodleDayData | null> {
-    return getPhoodleDataForDate(subDays(getJSTToday(), 1));
+    const previousDate = await getNearestPhoodleDate(getJSTToday(), 'before');
+    if (!previousDate) return null;
+    return getPhoodleDataForDate(previousDate);
 }
 
 /**
  * Fetch paginated list of available dates from the API.
  */
 export async function getPhoodleDatesPage(page: number): Promise<string[]> {
-    try {
-        const response = await fetch(`${PHOODLE_API}/list/page/${page}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // next: { revalidate: 3600 } // Removed for SvelteKit
-            cache: 'force-cache'
-        });
-        if (!response.ok) return [];
-        const data = await response.json();
-        return data.success ? data.data : [];
-    } catch {
-        return [];
-    }
+    const data = await fetchPhoodleJson(`list/page/${page}`);
+    return data?.success && Array.isArray(data.data) ? data.data : [];
 }
 
 /**
