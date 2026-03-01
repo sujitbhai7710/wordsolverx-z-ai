@@ -8,28 +8,28 @@
 
   const games = [
     { name: 'Wordle', href: '/wordle-answer-today', description: "Today's Wordle answer and hints.", color: 'from-green-500 to-emerald-600', icon: 'W' },
-    { name: 'Phoodle', href: '/phoodle-answer-today', description: "Today's food-themed puzzle answer.", color: 'from-orange-500 to-red-500', icon: 'ðŸ•' },
+    { name: 'Phoodle', href: '/phoodle-answer-today', description: "Today's food-themed puzzle answer.", color: 'from-orange-500 to-red-500', icon: 'Ph' },
     { name: 'Quordle', href: '/quordle-answer-today', description: "All four Quordle answers today.", color: 'from-blue-500 to-indigo-600', icon: 'Q' },
-    { name: 'Colordle', href: '/colordle-answer-today', description: "Today's hex color answer.", color: 'from-pink-500 to-purple-600', icon: 'ðŸŽ¨' },
-    { name: 'Semantle', href: '/semantle-answer-today', description: "Today's Semantle secret word.", color: 'from-cyan-500 to-teal-600', icon: 'ðŸ§ ' },
-    { name: 'Waffle', href: '/waffle-answer-today', description: "Today's Waffle grid solution.", color: 'from-amber-500 to-yellow-600', icon: 'ðŸ§‡' },
-    { name: 'Globle', href: '/globle-answer-today', description: "Today's mystery country.", color: 'from-sky-500 to-blue-600', icon: 'ðŸŒ' },
-    { name: 'Narutodle', href: '/narutodle-answer-today', description: "Today's Naruto character.", color: 'from-orange-600 to-red-600', icon: 'ðŸ¥' },
-    { name: 'Dotadle', href: '/dotadle-answer-today', description: "Today's Dota 2 hero.", color: 'from-red-600 to-rose-700', icon: 'âš”ï¸' },
-    { name: 'LoLdle', href: '/loldle-answer-today', description: "Today's League champion.", color: 'from-violet-500 to-purple-700', icon: 'ðŸ†' },
-    { name: 'PokÃ©dle', href: '/pokedle-answer-today', description: "Today's PokÃ©mon answer.", color: 'from-yellow-400 to-amber-500', icon: 'âš¡' },
-    { name: 'Smashdle', href: '/smashdle-answer-today', description: "Today's Smash fighter.", color: 'from-red-500 to-pink-600', icon: 'ðŸ’¥' },
-    { name: 'OnePiecedle', href: '/onepiecedle-answer-today', description: "Today's One Piece character.", color: 'from-blue-600 to-cyan-600', icon: 'ðŸ´â€â˜ ï¸' },
+    { name: 'Colordle', href: '/colordle-answer-today', description: "Today's hex color answer.", color: 'from-pink-500 to-purple-600', icon: 'Cd' },
+    { name: 'Semantle', href: '/semantle-answer-today', description: "Today's Semantle secret word.", color: 'from-cyan-500 to-teal-600', icon: 'Se' },
+    { name: 'Waffle', href: '/waffle-answer-today', description: "Today's Waffle grid solution.", color: 'from-amber-500 to-yellow-600', icon: 'Wf' },
+    { name: 'Globle', href: '/globle-answer-today', description: "Today's mystery country.", color: 'from-sky-500 to-blue-600', icon: 'Gb' },
+    { name: 'Narutodle', href: '/narutodle-answer-today', description: "Today's Naruto character.", color: 'from-orange-600 to-red-600', icon: 'Na' },
+    { name: 'Dotadle', href: '/dotadle-answer-today', description: "Today's Dota 2 hero.", color: 'from-red-600 to-rose-700', icon: 'Do' },
+    { name: 'LoLdle', href: '/loldle-answer-today', description: "Today's League champion.", color: 'from-violet-500 to-purple-700', icon: 'Lo' },
+    { name: 'Pokedle', href: '/pokedle-answer-today', description: "Today's Pokemon answer.", color: 'from-yellow-400 to-amber-500', icon: 'Pk' },
+    { name: 'Smashdle', href: '/smashdle-answer-today', description: "Today's Smash fighter.", color: 'from-red-500 to-pink-600', icon: 'Sm' },
+    { name: 'OnePiecedle', href: '/onepiecedle-answer-today', description: "Today's One Piece character.", color: 'from-blue-600 to-cyan-600', icon: 'Op' },
     { name: 'Contexto', href: '/contexto-answer-today', description: "Today's Contexto answer.", color: 'from-violet-500 to-fuchsia-600', icon: 'Cx' },
-    { name: 'Searchle', href: '/searchle-answer-today', description: "Today's Searchle answer.", color: 'from-purple-500 to-pink-600', icon: 'Se' },
-    { name: 'Phrazle', href: '/phrazle-answer-today', description: "Today's morning and afternoon phrases.", color: 'from-emerald-500 to-lime-600', icon: 'Ph' },
-    { name: 'Spotle', href: '/spotle-answer-today', description: "Today's Spotify artist answer.", color: 'from-emerald-500 to-teal-600', icon: '🎵' },
+    { name: 'Searchle', href: '/searchle-answer-today', description: "Today's Searchle answer.", color: 'from-purple-500 to-pink-600', icon: 'Sr' },
+    { name: 'Phrazle', href: '/phrazle-answer-today', description: "Today's morning and afternoon phrases.", color: 'from-emerald-500 to-lime-600', icon: 'Pz' },
+    { name: 'Spotle', href: '/spotle-answer-today', description: "Today's Spotify artist answer.", color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
   ];
 </script>
 
 <svelte:head>
   <title>Today's Puzzle Answers ({todayStr}) - WordSolverX</title>
-  <meta name="description" content="All of today's puzzle answers in one place â€” Wordle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
+  <meta name="description" content="All of today's puzzle answers in one place - Wordle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -48,7 +48,7 @@
         Today's Answers
       </h1>
       <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300">
-        {todayStr} â€” Every daily puzzle answer in one place
+        {todayStr} - Every daily puzzle answer in one place
       </p>
     </div>
 

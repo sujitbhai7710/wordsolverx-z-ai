@@ -6,8 +6,9 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"build:pages": "node scripts/build-pages.mjs",
 		"deploy": "npm run build && wrangler deploy --config wrangler.jsonc",
-		"deploy:pages": "npm run build && wrangler pages deploy build/cloudflare --project-name wordsolverx-svelte",
+		"deploy:pages": "npm run build:pages && wrangler pages deploy build/pages --project-name wordsolverx-svelte",
 		"preview": "vite preview",
 		"preview:cf": "npm run build && wrangler dev --config wrangler.jsonc",
 		"prepare": "svelte-kit sync || echo ''",
