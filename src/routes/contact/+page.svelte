@@ -15,8 +15,24 @@
 
 <svelte:head>
   <title>Contact Us - WordSolverX</title>
-  <meta name="description" content="Get in touch with WordSolverX. Send us questions, feedback, or partnership inquiries." />
+  <meta name="description" content="Contact WordSolverX for support, feedback, content suggestions, partnerships, or technical questions about our puzzle answers and solver tools." />
   <link rel="canonical" href="https://wordsolverx.com/contact" />
+  <meta property="og:title" content="Contact Us - WordSolverX" />
+  <meta property="og:description" content="Reach the WordSolverX team for support, feedback, partnerships, and puzzle tool questions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/contact" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact Us - WordSolverX" />
+  <meta name="twitter:description" content="Send a message to the WordSolverX team and get help with site questions or feedback." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact WordSolverX',
+    description: 'Contact page for WordSolverX support, feedback, and business inquiries.',
+    url: 'https://wordsolverx.com/contact'
+  })}</script>`}
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -83,5 +99,12 @@
         {/if}
       </div>
     </div>
+  </div>
+
+  <div class="mt-10 bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700 p-6">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Why Contact WordSolverX?</h2>
+    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+      We use feedback from players to improve page accuracy, add new puzzle tools, and fix issues quickly. If a daily answer page looks wrong, a solver needs an update, or you want a new game added, this is the fastest way to reach the team.
+    </p>
   </div>
 </div>

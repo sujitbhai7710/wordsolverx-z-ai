@@ -99,6 +99,20 @@
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'WebPage',
+        name: 'Colordle Solver - Daily Color Puzzle Helper | WordSolverX',
+        description: 'Interactive Colordle solver with similarity percentage filtering and color database matching.',
+        url: 'https://wordsolverx.com/colordle-solver'
+      },
+      {
+        '@type': 'WebApplication',
+        name: 'Colordle Solver',
+        description: 'Filter Colordle candidates by named color and similarity percentage.',
+        applicationCategory: 'Game',
+        operatingSystem: 'Any',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+      },
+      {
         '@type': 'ProfessionalService',
         name: 'Colordle Solver',
         description: 'Professional solver for the Colordle color-guessing game.',
@@ -142,17 +156,18 @@
 
 <svelte:head>
   <title>Colordle Solver - Daily Color Puzzle Helper | WordSolverX</title>
-  <meta name="description" content="Crack the daily Colordle puzzle with our free solver. Enter guesses, input similarity percentages, and find the exact color match." />
+  <meta name="description" content="Crack the daily Colordle puzzle with our free Colordle solver. Enter color guesses, add similarity percentages, and narrow the exact hex match in seconds." />
   <meta name="keywords" content="Colordle Solver, Colordle Answer, Color Puzzle, Colordle Help, Colordle Cheat" />
   <link rel="canonical" href="https://wordsolverx.com/colordle-solver" />
   <meta property="og:title" content="Colordle Solver - Daily Color Puzzle Helper" />
-  <meta property="og:description" content="Solve the daily Colordle puzzle instantly using our color solver." />
+  <meta property="og:description" content="Use our Colordle solver to filter named colors by similarity percentage and find the exact daily answer faster." />
   <meta property="og:url" content="https://wordsolverx.com/colordle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Colordle Solver" />
-  <meta name="twitter:description" content="Find today's Colordle answer with pinpoint accuracy." />
+  <meta name="twitter:description" content="Filter Colordle guesses by percentage similarity and find the exact color match with WordSolverX." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${jsonLdSchema}</script>`}
 </svelte:head>
 

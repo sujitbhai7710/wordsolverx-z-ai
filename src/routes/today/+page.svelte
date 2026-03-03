@@ -8,6 +8,8 @@
 
   const games = [
     { name: 'Wordle', href: '/wordle-answer-today', description: "Today's Wordle answer and hints.", color: 'from-green-500 to-emerald-600', icon: 'W' },
+    { name: 'Worldle', href: '/worldle-answer-today', description: "Today's Worldle country plus archive date lookup.", color: 'from-sky-500 to-blue-700', icon: 'Wr' },
+    { name: 'Betweenle', href: '/betweenle-answer-today', description: "Today's Betweenle answer with calendar archive lookup.", color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt' },
     { name: 'Phoodle', href: '/phoodle-answer-today', description: "Today's food-themed puzzle answer.", color: 'from-orange-500 to-red-500', icon: 'Ph' },
     { name: 'Quordle', href: '/quordle-answer-today', description: "All four Quordle answers today.", color: 'from-blue-500 to-indigo-600', icon: 'Q' },
     { name: 'Colordle', href: '/colordle-answer-today', description: "Today's hex color answer.", color: 'from-pink-500 to-purple-600', icon: 'Cd' },
@@ -29,13 +31,33 @@
 
 <svelte:head>
   <title>Today's Puzzle Answers ({todayStr}) - WordSolverX</title>
-  <meta name="description" content="All of today's puzzle answers in one place - Wordle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
+  <meta name="description" content="All of today's puzzle answers in one place - Wordle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
+  <link rel="canonical" href="https://wordsolverx.com/today" />
+  <meta property="og:title" content={"Today's Puzzle Answers (" + todayStr + ") - WordSolverX"} />
+  <meta property="og:description" content="See today's verified puzzle answers, daily solution links, and quick access to all supported games in one place." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/today" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={"Today's Puzzle Answers (" + todayStr + ") - WordSolverX"} />
+  <meta name="twitter:description" content="Daily answers for Wordle, Worldle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, and more." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    'name': "Today's Puzzle Answers",
-    'description': "All of today's puzzle answers for " + todayStr,
-    'url': 'https://wordsolverx.com/today'
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        'name': "Today's Puzzle Answers",
+        'description': "All of today's puzzle answers for " + todayStr,
+        'url': 'https://wordsolverx.com/today'
+      },
+      {
+        '@type': 'WebPage',
+        'name': "Today's Puzzle Answers",
+        'description': "Hub page for all of today's verified puzzle answers.",
+        'url': 'https://wordsolverx.com/today'
+      }
+    ]
   })}</script>`}
 </svelte:head>
 
@@ -57,5 +79,20 @@
         <GameCard name={game.name} href={game.href} description={game.description} color={game.color} icon={game.icon} actionText="View Answer" />
       {/each}
     </div>
+
+    <article class="mt-16 max-w-4xl mx-auto space-y-8">
+      <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm">
+        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">Daily Answers in One Place</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          This page gathers the latest puzzle answers across WordSolverX so you do not need to check each game individually. Pick any card above to open the current answer page, see hints, and browse that game's archive if you need an older result.
+        </p>
+      </section>
+      <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm">
+        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">What You Can Do Next</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          If you want to solve first and verify later, open the related solver from our tools hub. If you missed a day, check the archive pages for full history, answer calendars, and recent puzzle results.
+        </p>
+      </section>
+    </article>
   </div>
 </div>

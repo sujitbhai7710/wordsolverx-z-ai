@@ -6,6 +6,10 @@
   const solvers = [
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Advanced 5-letter word solver with smart filtering.', color: 'from-green-500 to-emerald-600', icon: 'W', isPopular: true },
     { name: 'All Wordle Solver', href: '/wordle-solver', description: 'Solver for 4-11 letter Wordle variants.', color: 'from-teal-500 to-cyan-600', icon: 'AW', isPopular: true },
+    { name: 'Worldle Solver', href: '/worldle-solver', description: 'Geography solver for Worldle using distance and direction clues.', color: 'from-sky-500 to-blue-700', icon: 'Wr', isPopular: true },
+    { name: 'Betweenle Solver', href: '/betweenle-solver', description: 'Solve Betweenle faster with top and bottom bounds plus distance percentages.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
+    { name: 'Kanoodle Solver', href: '/kanoodle-solver', description: 'Online Kanoodle solver and noodle solver with hints, solution counting, and challenge mode.', color: 'from-emerald-500 via-sky-500 to-fuchsia-600', icon: 'K', isPopular: true },
+    { name: 'Minesweeper Solver', href: '/minesweeper-solver', description: 'Online Minesweeper solver with board editing, safe move detection, and mine probability hints.', color: 'from-indigo-500 to-violet-700', icon: 'Ms', isPopular: true },
     { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Food-themed word solver for Phoodle.', color: 'from-orange-500 to-red-500', icon: 'Ph' },
     { name: 'Quordle Solver', href: '/quordle-solver', description: 'Solve all four Quordle words at once.', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
     { name: 'Colordle Solver', href: '/colordle-solver', description: 'Find the hex color with visual clues.', color: 'from-pink-500 to-purple-600', icon: 'Cd' },
@@ -49,15 +53,42 @@
 </script>
 
 <svelte:head>
-  <title>Puzzle Solver Tools - Wordle, Quordle, Waffle & More | WordSolverX</title>
-  <meta name="description" content="Free solver tools for Wordle, Quordle, Phoodle, Waffle, Colordle and more. Get unstuck with smart word filtering and elimination. No sign-up required." />
+  <title>Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX</title>
+  <meta name="description" content="Free solver tools for Wordle, Betweenle, Quordle, Phoodle, Waffle, Colordle and more. Get unstuck with smart filtering and clue-based solving. No sign-up required." />
   <link rel="canonical" href="https://wordsolverx.com/solver" />
+  <meta property="og:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
+  <meta property="og:description" content="Use free solver tools for Wordle, Betweenle, Worldle, Quordle, Phoodle, Waffle, Colordle, and more daily puzzle games." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/solver" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
+  <meta name="twitter:description" content="Find the right puzzle solver fast with WordSolverX's full collection of free clue-based tools." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    'name': 'Puzzle Solver Tools',
-    'description': 'Advanced solver tools for word puzzles',
-    'url': 'https://wordsolverx.com/solver'
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        'name': 'Puzzle Solver Tools',
+        'description': 'Advanced solver tools for word puzzles',
+        'url': 'https://wordsolverx.com/solver'
+      },
+      {
+        '@type': 'WebPage',
+        'name': 'Puzzle Solver Tools',
+        'description': 'Directory of solver tools for word and puzzle games.',
+        'url': 'https://wordsolverx.com/solver'
+      },
+      {
+        '@type': 'FAQPage',
+        'mainEntity': faqs.map((faq) => ({
+          '@type': 'Question',
+          'name': faq.question,
+          'acceptedAnswer': { '@type': 'Answer', 'text': faq.answer }
+        }))
+      }
+    ]
   })}</script>`}
 </svelte:head>
 

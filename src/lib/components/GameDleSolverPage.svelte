@@ -14,7 +14,8 @@
 		generateFAQSchema,
 		generateHowToSchema,
 		generateSoftwareApplicationSchema,
-		generateWebApplicationSchema
+		generateWebApplicationSchema,
+		generateWebPageSchema
 	} from '$lib/seo';
 
 	let { gameKey }: { gameKey: SolverGameKey } = $props();
@@ -71,6 +72,7 @@
 	const softwareSchema = $derived(
 		generateSoftwareApplicationSchema(`${config.name} Solver`, 'GameApplication', 'Any')
 	);
+	const webPageSchema = $derived(generateWebPageSchema(pageTitle, pageDescription, pageUrl));
 
 	$effect(() => {
 		void loadCharacters(config.dataFile);
@@ -486,6 +488,8 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={pageTitle} />
 	<meta name="twitter:description" content={pageDescription} />
+	<meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(webApplicationSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(softwareSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`}

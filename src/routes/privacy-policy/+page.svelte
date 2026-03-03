@@ -1,7 +1,23 @@
 <svelte:head>
   <title>Privacy Policy - WordSolverX</title>
-  <meta name="description" content="Learn about WordSolverX's privacy policy." />
+  <meta name="description" content="Read the WordSolverX privacy policy to understand what data we collect, how analytics and cookies work, and how to contact us about privacy requests." />
   <link rel="canonical" href="https://wordsolverx.com/privacy-policy" />
+  <meta property="og:title" content="Privacy Policy - WordSolverX" />
+  <meta property="og:description" content="Review how WordSolverX handles privacy, cookies, analytics, and user data requests." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/privacy-policy" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Privacy Policy - WordSolverX" />
+  <meta name="twitter:description" content="See the current privacy policy for WordSolverX, including cookies, analytics, and contact information." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Privacy Policy - WordSolverX',
+    description: 'Privacy policy and data handling information for WordSolverX.',
+    url: 'https://wordsolverx.com/privacy-policy'
+  })}</script>`}
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

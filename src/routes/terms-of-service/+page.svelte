@@ -1,7 +1,23 @@
 <svelte:head>
   <title>Terms of Service - WordSolverX</title>
-  <meta name="description" content="Terms of Service for WordSolverX.com" />
+  <meta name="description" content="Review the WordSolverX terms of service covering acceptable use, content limitations, disclaimers, and legal conditions for using our website and tools." />
   <link rel="canonical" href="https://wordsolverx.com/terms-of-service" />
+  <meta property="og:title" content="Terms of Service - WordSolverX" />
+  <meta property="og:description" content="Read the current terms of service for WordSolverX, including site usage rules and legal conditions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/terms-of-service" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Terms of Service - WordSolverX" />
+  <meta name="twitter:description" content="Review the rules, disclaimers, and conditions for using WordSolverX." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Terms of Service - WordSolverX',
+    description: 'Terms of service and legal information for WordSolverX.',
+    url: 'https://wordsolverx.com/terms-of-service'
+  })}</script>`}
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

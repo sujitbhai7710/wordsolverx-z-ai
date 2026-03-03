@@ -7,6 +7,7 @@
 
   const answerTodayGames = [
     { name: 'Wordle', href: '/wordle-answer-today', description: 'The classic 5-letter word game by NYT.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
+    { name: 'Betweenle', href: '/betweenle-answer-today', description: 'Today\'s Betweenle answer plus archive calendar.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Phoodle', href: '/phoodle-answer-today', description: 'Food-themed Wordle with culinary words.', color: 'from-orange-500 to-red-500', icon: 'P' },
     { name: 'Quordle', href: '/quordle-answer-today', description: 'Solve four Wordles simultaneously.', color: 'from-blue-500 to-indigo-600', icon: 'Q', isPopular: true },
     { name: 'Colordle', href: '/colordle-answer-today', description: 'Guess the daily color hex code.', color: 'from-pink-500 to-purple-600', icon: 'C' },
@@ -27,6 +28,7 @@
 
   const solverTools = [
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Filter words by green, yellow, and gray letters.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
+    { name: 'Betweenle Solver', href: '/betweenle-solver', description: 'Use bounds and distance percentages to solve Betweenle faster.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Play Multidle', href: '/multidle', description: 'Play unlimited Wordle - 4 to 12 letter words.', color: 'from-violet-500 to-purple-600', icon: 'M', isPopular: true },
     { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Solve the food-themed word puzzle.', color: 'from-orange-500 to-red-500', icon: 'P' },
     { name: 'Quordle Solver', href: '/quordle-solver', description: 'Crack all four words at once.', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
@@ -45,6 +47,7 @@
 
   const jsonLd = JSON.stringify([
     { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolverx.com', potentialAction: { '@type': 'SearchAction', target: { '@type': 'EntryPoint', urlTemplate: 'https://wordsolverx.com/archive?q={search_term_string}' }, 'query-input': 'required name=search_term_string' } },
+    { '@context': 'https://schema.org', '@type': 'WebPage', name: 'WordSolverX Homepage', description: 'Daily puzzle answers, solver tools, and Wordle resources for popular word and trivia games.', url: 'https://wordsolverx.com' },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
       { '@type': 'Question', name: 'What is WordSolverX?', acceptedAnswer: { '@type': 'Answer', text: 'WordSolverX is your ultimate companion for word puzzle games like Wordle, Quordle, Phoodle, and more.' } },
       { '@type': 'Question', name: 'When are the answers updated?', acceptedAnswer: { '@type': 'Answer', text: 'All game answers are updated daily at midnight.' } },
@@ -54,8 +57,18 @@
 </script>
 
 <svelte:head>
-  <title>WordSolverX - Daily Answers & Solvers for Wordle, Quordle, Phoodle & More</title>
-  <meta name="description" content="Get daily answers, advanced solvers, and unlimited practice for Wordle, Quordle, Phoodle, and 10+ more puzzle games. 100% free." />
+  <title>WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools</title>
+  <meta name="description" content="Get daily puzzle answers, smart solver tools, archives, and practice modes for Wordle, Betweenle, Worldle, Quordle, Phoodle, Colordle, and more on WordSolverX." />
+  <link rel="canonical" href="https://wordsolverx.com/" />
+  <meta property="og:title" content="WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools" />
+  <meta property="og:description" content="Find daily answers, puzzle solvers, archives, and free practice tools for Wordle and dozens of popular daily games." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools" />
+  <meta name="twitter:description" content="Daily answers, archives, and free solver tools for Wordle, Betweenle, Quordle, Phoodle, and more." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 

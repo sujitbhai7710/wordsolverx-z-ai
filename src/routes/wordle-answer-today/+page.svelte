@@ -21,10 +21,19 @@
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:image" content={data.meta.socialImage} />
   <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://wordsolverx.com/wordle-answer-today" />
+  <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
   <meta name="twitter:image" content={data.meta.socialImage} />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: data.meta.title,
+    description: data.meta.description,
+    url: 'https://wordsolverx.com/wordle-answer-today'
+  })}</script>`}
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 

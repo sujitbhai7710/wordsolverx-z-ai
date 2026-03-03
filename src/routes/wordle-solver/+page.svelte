@@ -6,6 +6,7 @@
 		generateHowToSchema,
 		generateSoftwareApplicationSchema,
 		generateWebApplicationSchema,
+		generateWebPageSchema,
 		SEO_KEYWORDS
 	} from '$lib/seo';
 
@@ -61,6 +62,11 @@
 		'GameApplication',
 		'Any'
 	);
+	const webPageSchema = generateWebPageSchema(
+		'Multi Wordle Solver - Solve Any Letter Wordle Within Seconds (4-12 Letters)',
+		'Solve Wordle variants from 4 to 12 letters with smart filtering, fast suggestions, and free clue-based help on WordSolverX.',
+		'https://wordsolverx.com/wordle-solver'
+	);
 </script>
 
 <svelte:head>
@@ -90,7 +96,9 @@
 		name="twitter:description"
 		content="Solve Wordle variants of any length (4-12 letters) instantly with our super-fast solver."
 	/>
+	<meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
 	<link rel="canonical" href="https://wordsolverx.com/wordle-solver" />
+	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}

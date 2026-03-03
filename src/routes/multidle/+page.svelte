@@ -72,7 +72,36 @@
 
 <svelte:head>
     <title>Multidle - Play 4 to 12 Letter Wordle Puzzles | WordSolverX</title>
-    <meta name="description" content="Play Multidle - the ultimate Wordle hub with word puzzles from 4 to 12 letters. Daily challenges, weekly puzzles, and unlimited play!" />
+    <meta name="description" content="Play Multidle, the free Wordle hub for 4 to 12 letter puzzles with daily games, weekly challenges, unlimited practice, and custom word creation on WordSolverX." />
+    <link rel="canonical" href="https://wordsolverx.com/multidle" />
+    <meta property="og:title" content="Multidle - Play 4 to 12 Letter Wordle Puzzles | WordSolverX" />
+    <meta property="og:description" content="Play free 4 to 12 letter Wordle-style puzzles with daily, weekly, and unlimited modes in one hub." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wordsolverx.com/multidle" />
+    <meta property="og:site_name" content="WordSolverX" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Multidle - Play 4 to 12 Letter Wordle Puzzles | WordSolverX" />
+    <meta name="twitter:description" content="Play Wordle variants from 4 to 12 letters with daily, weekly, and unlimited puzzle modes." />
+    <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+    {@html `<script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          name: 'Multidle',
+          description: 'Wordle hub for 4 to 12 letter daily, weekly, and unlimited puzzle play.',
+          url: 'https://wordsolverx.com/multidle'
+        },
+        {
+          '@type': 'WebApplication',
+          name: 'Multidle',
+          description: 'Play multiple Wordle variants with different word lengths.',
+          applicationCategory: 'Game',
+          operatingSystem: 'Any',
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+        }
+      ]
+    })}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -101,6 +130,7 @@
 
     <!-- Aggregate Stats Dashboard -->
     <section class="max-w-4xl mx-auto px-4 mt-6 mb-4">
+        <h2 class="sr-only">Multidle Stats Overview</h2>
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 flex flex-wrap items-center justify-around gap-6">
             <div class="text-center">
                 <p class="text-3xl font-black text-indigo-600 dark:text-indigo-400">{totalPlayed}</p>

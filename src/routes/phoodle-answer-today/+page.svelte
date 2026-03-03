@@ -2,19 +2,35 @@
   import PhoodleAnswerCard from '$lib/components/PhoodleAnswerCard.svelte';
 
   let { data } = $props();
+  let pageTitle = $derived(data.meta?.title ?? "Phoodle Answer Today | WordSolverX");
+  let pageDescription = $derived(
+    data.meta?.description ??
+      "Get today's Phoodle answer, food-themed hints, recent solutions, and the latest verified daily update from WordSolverX."
+  );
+  let pageSchema = $derived(JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: pageTitle,
+    description: pageDescription,
+    url: 'https://wordsolverx.com/phoodle-answer-today'
+  }));
 </script>
 
 <svelte:head>
-  <title>{data.meta?.title}</title>
-  <meta name="description" content={data.meta?.description} />
-  <meta property="og:title" content={data.meta?.title} />
-  <meta property="og:description" content={data.meta?.description} />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://wordsolverx.com/phoodle-answer-today" />
+  <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={data.meta?.title} />
-  <meta name="twitter:description" content={data.meta?.description} />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   <meta name="news_keywords" content="phoodle, phoodle answer, phoodle today, food word game, phoodle hint" />
   <link rel="canonical" href="https://wordsolverx.com/phoodle-answer-today" />
+  {@html `<script type="application/ld+json">${pageSchema}</script>`}
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
   {/if}

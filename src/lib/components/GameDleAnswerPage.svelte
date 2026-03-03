@@ -33,7 +33,31 @@
   let dateStr = $state(data?.dateStr ?? '');
 
   // Generate canonical URL based on gameKey
-  const canonicalUrl = `https://wordsolverx.com/${gameKey}-answer-today`;
+  let canonicalUrl = $derived(`https://wordsolverx.com/${gameKey}-answer-today`);
+  let pageTitle = $derived(`${gameTitle} Answer for Today | WordSolverX`);
+  let pageDescription = $derived(`Get the confirmed ${gameTitle} answer for today, plus verified solutions for every available mode, quick copy tools, and recent clues in one place.`);
+  let webPageSchema = $derived({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: pageTitle,
+    description: pageDescription,
+    url: canonicalUrl
+  });
+  let articleSchema = $derived({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: pageTitle,
+    description: pageDescription,
+    mainEntityOfPage: canonicalUrl,
+    author: {
+      '@type': 'Organization',
+      name: 'WordSolverX'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'WordSolverX'
+    }
+  });
 
   function parseContent(jsonContent: string): ParsedContent {
     try { return JSON.parse(jsonContent); } catch { return { champion_name: 'Unknown' }; }
@@ -51,10 +75,21 @@
 </script>
 
 <svelte:head>
-  <title>{gameTitle} Answer for Today | WordSolverX</title>
-  <meta name="description" content="Get the confirmed {gameTitle} answer for today. Solutions for all game modes." />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
   <meta name="news_keywords" content="{gameKey}, {gameKey} answer, {gameKey} today, anime guessing game, daily puzzle" />
   <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
+  {@html `<script type="application/ld+json">${JSON.stringify(articleSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(schemas)}</script>`}
 </svelte:head>
 

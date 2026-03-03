@@ -15,16 +15,31 @@
   <meta name="description" content="Browse the complete answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, and Waffle puzzles. Calendar views, search, and direct links to every past solution." />
   <link rel="canonical" href="https://wordsolverx.com/archive" />
   <meta property="og:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
-  <meta property="og:description" content="Complete answer history for 7 popular daily puzzle games." />
+  <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, and Waffle." />
   <meta property="og:url" content="https://wordsolverx.com/archive" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
+  <meta name="twitter:description" content="Explore complete answer archives and calendar lookups for the most popular daily puzzle games." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Puzzle Answer Archive",
-    "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, and Waffle.",
-    "url": "https://wordsolverx.com/archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "Puzzle Answer Archive",
+        "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, and Waffle.",
+        "url": "https://wordsolverx.com/archive",
+        "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+      },
+      {
+        "@type": "WebPage",
+        "name": "Puzzle Answer Archive",
+        "description": "Archive hub for past puzzle answers, history pages, and answer calendars.",
+        "url": "https://wordsolverx.com/archive"
+      }
+    ]
   })}</script>`}
 </svelte:head>
 
@@ -88,6 +103,16 @@
         </a>
       {/each}
     </div>
+
+    <section class="mt-14 bg-white dark:bg-gray-800/80 rounded-3xl border border-gray-200 dark:border-gray-700 p-8 shadow-sm">
+      <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">Why Use the Archive?</h2>
+      <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+        WordSolverX archives make it easy to verify missed puzzles, compare old answers, and spot repeat patterns across different games. Each archive links to the full history page for that puzzle so you can jump straight to the exact day you want.
+      </p>
+      <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+        If you are researching puzzle trends, checking a streak, or just catching up after missing a day, this archive hub gives you one central place to reach every supported answer history quickly.
+      </p>
+    </section>
 
     <!-- Footer CTA -->
     <div class="mt-14 text-center">

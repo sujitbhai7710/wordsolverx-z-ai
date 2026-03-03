@@ -155,7 +155,36 @@
 
 <svelte:head>
     <title>Create Custom Wordle - Free Wordle Generator | WordSolverX</title>
-    <meta name="description" content="Create your own custom Wordle puzzle with any word from 4-12 letters. Generate a unique link and challenge your friends to guess your secret word!" />
+    <meta name="description" content="Create your own custom Wordle puzzle with any word from 4 to 12 letters, generate a private challenge link, add an optional hint, and share it instantly with friends." />
+    <link rel="canonical" href="https://wordsolverx.com/create-custom-wordle" />
+    <meta property="og:title" content="Create Custom Wordle - Free Wordle Generator | WordSolverX" />
+    <meta property="og:description" content="Build a custom Wordle challenge, generate a shareable link, and send a private puzzle to your friends in seconds." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wordsolverx.com/create-custom-wordle" />
+    <meta property="og:site_name" content="WordSolverX" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Create Custom Wordle - Free Wordle Generator | WordSolverX" />
+    <meta name="twitter:description" content="Create and share your own custom Wordle puzzles with optional hints and secure challenge links." />
+    <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+    {@html `<script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          name: 'Create Custom Wordle',
+          description: 'Custom Wordle generator for building private shareable puzzle links.',
+          url: 'https://wordsolverx.com/create-custom-wordle'
+        },
+        {
+          '@type': 'WebApplication',
+          name: 'Create Custom Wordle',
+          description: 'Generate a custom Wordle puzzle from any supported word length.',
+          applicationCategory: 'Game',
+          operatingSystem: 'Any',
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+        }
+      ]
+    })}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">

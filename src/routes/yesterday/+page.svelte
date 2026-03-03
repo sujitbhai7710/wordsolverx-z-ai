@@ -43,12 +43,31 @@
   <meta name="description" content="All of yesterday's puzzle answers — Wordle, Phoodle, Semantle, Colordle for {yesterdayStr}. Missed a day? Catch up on past solutions here." />
   <link rel="canonical" href="https://wordsolverx.com/yesterday" />
   <meta name="robots" content="noindex, follow" />
+  <meta property="og:title" content={"Yesterday's Puzzle Answers (" + yesterdayStr + ") - WordSolverX"} />
+  <meta property="og:description" content="Catch up on yesterday's verified puzzle answers, missed solutions, and quick links to supported answer pages." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/yesterday" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={"Yesterday's Puzzle Answers (" + yesterdayStr + ") - WordSolverX"} />
+  <meta name="twitter:description" content="Missed a day? Review yesterday's answers for Wordle, Phoodle, Semantle, and Colordle." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    'name': "Yesterday's Puzzle Answers",
-    'description': "All puzzle answers from " + yesterdayStr,
-    'url': 'https://wordsolverx.com/yesterday'
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        'name': "Yesterday's Puzzle Answers",
+        'description': "All puzzle answers from " + yesterdayStr,
+        'url': 'https://wordsolverx.com/yesterday'
+      },
+      {
+        '@type': 'WebPage',
+        'name': "Yesterday's Puzzle Answers",
+        'description': 'Hub page for yesterday puzzle answer lookups.',
+        'url': 'https://wordsolverx.com/yesterday'
+      }
+    ]
   })}</script>`}
 </svelte:head>
 

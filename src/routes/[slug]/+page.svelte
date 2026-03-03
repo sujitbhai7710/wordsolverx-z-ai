@@ -14,13 +14,34 @@
   import FiArrowLeft from '$lib/components/icons/FiArrowLeft.svelte';
 
   let { data } = $props();
+  let pageTitle = $derived(data.meta?.title ?? 'WordSolverX');
+  let pageDescription = $derived(data.meta?.description ?? 'Browse verified WordSolverX puzzle answers, hints, and archives.');
+  let canonicalUrl = $derived(data.canonicalUrl ?? `https://wordsolverx.com/${data.slug}`);
+  let pageType = $derived(data.noindex ? 'article' : 'website');
+  let webPageSchema = $derived(JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: pageTitle,
+    description: pageDescription,
+    url: canonicalUrl
+  }));
 </script>
 
 <svelte:head>
-  <title>{data.meta?.title ?? 'WordSolverX'}</title>
-  <meta name="description" content={data.meta?.description ?? ''} />
-  {#if data.canonicalUrl}<link rel="canonical" href={data.canonicalUrl} />{/if}
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content={pageType} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {#if data.noindex}<meta name="robots" content="noindex, follow" />{/if}
+  {@html `<script type="application/ld+json">${webPageSchema}</script>`}
   {#if data.schemas}{@html `<script type="application/ld+json">${data.schemas}</script>`}{/if}
 </svelte:head>
 

@@ -1,7 +1,23 @@
 <svelte:head>
   <title>About WordSolverX - Your Daily Wordle Resource</title>
-  <meta name="description" content="Learn about WordSolverX, your daily resource for Wordle answers and strategies." />
+  <meta name="description" content="Learn about WordSolverX, the team behind our daily puzzle answers, solver tools, archives, and strategy guides for Wordle and other popular games." />
   <link rel="canonical" href="https://wordsolverx.com/about" />
+  <meta property="og:title" content="About WordSolverX - Your Daily Wordle Resource" />
+  <meta property="og:description" content="Meet the mission behind WordSolverX and learn how we build daily answer pages, solver tools, and puzzle resources." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/about" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About WordSolverX - Your Daily Wordle Resource" />
+  <meta name="twitter:description" content="Learn what WordSolverX offers and how we help puzzle players every day." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'About WordSolverX',
+    description: 'About page for WordSolverX, including mission, team, and site purpose.',
+    url: 'https://wordsolverx.com/about'
+  })}</script>`}
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

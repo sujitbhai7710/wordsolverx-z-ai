@@ -14,10 +14,19 @@
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:image" content={data.meta.socialImage} />
   <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://wordsolverx.com/wordle-answer-yesterday" />
+  <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
   <meta name="twitter:image" content={data.meta.socialImage} />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: data.meta.title,
+    description: data.meta.description,
+    url: 'https://wordsolverx.com/wordle-answer-yesterday'
+  })}</script>`}
 </svelte:head>
 
 <main class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-900 dark:to-emerald-950 font-sans">

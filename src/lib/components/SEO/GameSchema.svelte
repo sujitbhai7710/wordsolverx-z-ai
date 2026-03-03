@@ -19,7 +19,7 @@
 
   let schemaJson = $derived(JSON.stringify({
     "@context": "https://schema.org",
-    "@type": ["VideoGame", "SoftwareApplication"],
+    "@type": ["Game", "WebApplication", "SoftwareApplication"],
     "name": name,
     "description": description,
     "url": url,

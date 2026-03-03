@@ -81,12 +81,31 @@
   <title>Guides & Strategies - Expert Tips for Word Puzzles | WordSolverX</title>
   <meta name="description" content="Expert guides and strategies for Wordle, Quordle, Phoodle, Waffle, Colordle, and Semantle. Learn the best techniques to improve your puzzle-solving skills." />
   <link rel="canonical" href="https://wordsolverx.com/guides" />
+  <meta property="og:title" content="Guides & Strategies - Expert Tips for Word Puzzles | WordSolverX" />
+  <meta property="og:description" content="Read practical puzzle guides, strategy tips, and improvement advice for Wordle, Quordle, Phoodle, Waffle, Colordle, and Semantle." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wordsolverx.com/guides" />
+  <meta property="og:site_name" content="WordSolverX" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Guides & Strategies - Expert Tips for Word Puzzles | WordSolverX" />
+  <meta name="twitter:description" content="Improve your puzzle solving with practical guides and strategy breakdowns from WordSolverX." />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    'name': 'Puzzle Guides & Strategies',
-    'description': 'Expert guides for word puzzle games',
-    'url': 'https://wordsolverx.com/guides'
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        'name': 'Puzzle Guides & Strategies',
+        'description': 'Expert guides for word puzzle games',
+        'url': 'https://wordsolverx.com/guides'
+      },
+      {
+        '@type': 'WebPage',
+        'name': 'Puzzle Guides & Strategies',
+        'description': 'Strategy articles and learning content for daily puzzle fans.',
+        'url': 'https://wordsolverx.com/guides'
+      }
+    ]
   })}</script>`}
 </svelte:head>
 

@@ -30,7 +30,6 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 	<title>WordSolverX | Wordle & Puzzle Solvers</title>
-	<meta name="description" content="Play Wordle variants, get daily answers, and solve puzzle games with fast, accurate tools on WordSolverX." />
 	<!-- Theme color for mobile browsers -->
 	<meta name="theme-color" content="#10b981" />
 	<!-- Default Open Graph tags -->
