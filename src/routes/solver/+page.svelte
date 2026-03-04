@@ -5,7 +5,6 @@
 
   const solvers = [
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Advanced 5-letter word solver with smart filtering.', color: 'from-green-500 to-emerald-600', icon: 'W', isPopular: true },
-    { name: 'All Wordle Solver', href: '/wordle-solver', description: 'Solver for 4-11 letter Wordle variants.', color: 'from-teal-500 to-cyan-600', icon: 'AW', isPopular: true },
     { name: 'Worldle Solver', href: '/worldle-solver', description: 'Geography solver for Worldle using distance and direction clues.', color: 'from-sky-500 to-blue-700', icon: 'Wr', isPopular: true },
     { name: 'Betweenle Solver', href: '/betweenle-solver', description: 'Solve Betweenle faster with top and bottom bounds plus distance percentages.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Kanoodle Solver', href: '/kanoodle-solver', description: 'Online Kanoodle solver and noodle solver with hints, solution counting, and challenge mode.', color: 'from-emerald-500 via-sky-500 to-fuchsia-600', icon: 'K', isPopular: true },
@@ -39,7 +38,7 @@
     },
     {
       question: 'Which solver should I use for regular Wordle?',
-      answer: 'The Wordle Solver is designed specifically for the standard 5-letter game. If you\'re playing a variant with different word lengths (4 letters, 6 letters, etc.), use the All Wordle Solver which handles 4-11 letter words.'
+      answer: 'Use the Wordle Solver. It now covers both the standard 5-letter game and multi-length Wordle variants from the same page, so there is no separate tool you need to open.'
     },
     {
       question: 'Can I use these solvers on my phone?',

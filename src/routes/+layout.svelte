@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
 	import Navigation from '$lib/components/Navigation.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { onMount } from 'svelte';
@@ -28,7 +27,7 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" type="image/webp" href="/wordsolverx-favicon.webp" />
 	<title>WordSolverX | Wordle & Puzzle Solvers</title>
 	<!-- Theme color for mobile browsers -->
 	<meta name="theme-color" content="#10b981" />
@@ -36,9 +35,10 @@
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+	<meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
 	<meta name="robots" content="index, follow" />
 	<!-- Apple touch icon -->
-	<link rel="apple-touch-icon" href="/wordsolverx.webp" />
+	<link rel="apple-touch-icon" href="/wordsolverx-favicon.webp" />
 	<!-- Organization Schema -->
 	{@html `<script type="application/ld+json">${JSON.stringify(organizationSchema)}</script>`}
 </svelte:head>

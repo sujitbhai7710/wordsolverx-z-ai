@@ -127,6 +127,7 @@ export function generateOrganizationSchema(): SchemaOrganization {
         '@type': 'Organization',
         name: 'WordSolverX',
         url: 'https://wordsolverx.com',
+        logo: 'https://wordsolverx.com/wordsolverx.webp',
         sameAs: [
             // Add your social media URLs here
         ],
@@ -408,7 +409,7 @@ export function generateMetaTags(config: MetaTagsConfig): Record<string, string>
         description,
         keywords = [],
         canonicalUrl,
-        ogImage = '/og-image.png',
+        ogImage = 'https://wordsolverx.com/wordsolverx.webp',
         twitterCard = 'summary_large_image',
     } = config;
 

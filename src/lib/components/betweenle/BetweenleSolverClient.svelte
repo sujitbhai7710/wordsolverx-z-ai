@@ -123,41 +123,6 @@
     </div>
   </section>
 
-  <section id="betweenle-how-it-works" class="border-b border-slate-200 px-6 py-12 dark:border-slate-700 sm:px-8">
-    <div class="mx-auto max-w-5xl">
-      <div class="text-center">
-        <h3 class="text-3xl font-black text-slate-900 dark:text-white">How it works</h3>
-        <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">
-          Betweenle tells you whether the answer sits alphabetically above or below your guesses. Add those bounds and percentages here, and the solver calculates the strongest next move.
-        </p>
-      </div>
-
-      <div class="mt-8 grid gap-5 md:grid-cols-3">
-        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-800/60">
-          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-sm font-black text-white">1</div>
-          <h4 class="text-lg font-bold text-slate-900 dark:text-white">Enter your bounds</h4>
-          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-            Use the top and bottom words shown in your current Betweenle game. Leave either field blank if you only have one confirmed bound.
-          </p>
-        </div>
-        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-800/60">
-          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-sm font-black text-white">2</div>
-          <h4 class="text-lg font-bold text-slate-900 dark:text-white">Add the percentages</h4>
-          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-            Distance percentages help the solver estimate where the answer sits inside the remaining alphabetical range.
-          </p>
-        </div>
-        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-800/60">
-          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-sm font-black text-white">3</div>
-          <h4 class="text-lg font-bold text-slate-900 dark:text-white">Copy the next guess</h4>
-          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-            Hit solve, copy the suggested word, and repeat with your new bounds until the answer is locked in.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="betweenle-solver-panel" class="px-6 py-12 sm:px-8">
     <div class="mx-auto max-w-2xl">
       <div class="mb-8 text-center">
@@ -174,18 +139,21 @@
 
         <div class="space-y-5 px-6 py-6">
           <div class="space-y-2">
-            <label class="text-sm font-semibold text-slate-900 dark:text-white">Top Bound</label>
-            <div class="flex gap-2">
+            <label for="betweenle-top-word" class="text-sm font-semibold text-slate-900 dark:text-white">Top Bound</label>
+            <div class="flex flex-col gap-2 sm:flex-row">
               <input
-                class="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-mono uppercase outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                id="betweenle-top-word"
+                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 font-mono uppercase outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:flex-1"
                 maxlength="5"
                 placeholder="Top word from game"
                 value={topWord}
                 oninput={handleTopWordInput}
               />
               <input
-                class="w-24 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-                placeholder="%"
+                id="betweenle-top-distance"
+                aria-label="Top bound percentage"
+                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:w-24 sm:flex-none"
+                placeholder="Top %"
                 type="number"
                 min="0"
                 max="100"
@@ -198,18 +166,21 @@
           </div>
 
           <div class="space-y-2">
-            <label class="text-sm font-semibold text-slate-900 dark:text-white">Bottom Bound</label>
-            <div class="flex gap-2">
+            <label for="betweenle-bottom-word" class="text-sm font-semibold text-slate-900 dark:text-white">Bottom Bound</label>
+            <div class="flex flex-col gap-2 sm:flex-row">
               <input
-                class="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-mono uppercase outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                id="betweenle-bottom-word"
+                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 font-mono uppercase outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:flex-1"
                 maxlength="5"
                 placeholder="Bottom word from game"
                 value={bottomWord}
                 oninput={handleBottomWordInput}
               />
               <input
-                class="w-24 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
-                placeholder="%"
+                id="betweenle-bottom-distance"
+                aria-label="Bottom bound percentage"
+                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-950 dark:text-white sm:w-24 sm:flex-none"
+                placeholder="Bottom %"
                 type="number"
                 min="0"
                 max="100"
@@ -302,6 +273,41 @@
               Reset
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="betweenle-how-it-works" class="border-t border-slate-200 px-6 py-12 dark:border-slate-700 sm:px-8">
+    <div class="mx-auto max-w-5xl">
+      <div class="text-center">
+        <h3 class="text-3xl font-black text-slate-900 dark:text-white">How it works</h3>
+        <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">
+          Betweenle tells you whether the answer sits alphabetically above or below your guesses. Add those bounds and percentages here, and the solver calculates the strongest next move.
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-800/60">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-sm font-black text-white">1</div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white">Enter your bounds</h4>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+            Use the top and bottom words shown in your current Betweenle game. Leave either field blank if you only have one confirmed bound.
+          </p>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-800/60">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-sm font-black text-white">2</div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white">Add the percentages</h4>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+            Distance percentages help the solver estimate where the answer sits inside the remaining alphabetical range.
+          </p>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-700 dark:bg-slate-800/60">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-sm font-black text-white">3</div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white">Copy the next guess</h4>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+            Hit solve, copy the suggested word, and repeat with your new bounds until the answer is locked in.
+          </p>
         </div>
       </div>
     </div>
