@@ -57,8 +57,9 @@ export const load: PageServerLoad = async ({ url }) => {
     answer: `The Worldle answer on ${getDisplayDateLabel(answer.date)} was ${answer.country.name}. That puzzle was Worldle #${answer.worldleNumber}.`,
   }));
 
-  const pageTitle = `Worldle Answer Today: ${todayAnswer.country.name} for ${formattedTodayDate} | WordSolverX`;
-  const pageDescription = `Get the Worldle answer for ${formattedTodayDate}. See today's country, review the last 10 Worldle answers, and use the built-in date calendar to check any past answer.`;
+  const pageTitle = `Worldle Hints and Answer for Today (${formattedTodayDate})`;
+  const pageDescription = `Get Worldle hints and the confirmed Worldle answer for today, ${formattedTodayDate}. Today's country is ${todayAnswer.country.name}, with recent answers and the built-in date calendar for past puzzles.`;
+  const pageKeywords = `worldle answer today, worldle answer, worldle hint, worldle hint today, worldle answer for ${formattedTodayDate}`;
 
   const pageUrl = 'https://wordsolverx.com/worldle-answer-today';
 
@@ -127,6 +128,7 @@ export const load: PageServerLoad = async ({ url }) => {
     meta: {
       title: pageTitle,
       description: pageDescription,
+      keywords: pageKeywords,
       canonical: pageUrl,
     },
   };

@@ -7,15 +7,25 @@
 <svelte:head>
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
-  <meta name="news_keywords" content="globle, globle answer, globle today, geography game, country guessing game" />
+  <meta name="news_keywords" content={data.meta.keywords ?? 'globle answer today, globle answer, globle hint, globle hint today'} />
   <link rel="canonical" href="https://wordsolverx.com/globle-answer-today" />
+  <meta property="og:title" content={data.meta.title} />
+  <meta property="og:description" content={data.meta.description} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://wordsolverx.com/globle-answer-today" />
+  <meta property="og:image" content={data.meta.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp'} />
+  <meta property="og:image:alt" content={`Globle hints and answer for ${data.formattedDate}`} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={data.meta.title} />
+  <meta name="twitter:description" content={data.meta.description} />
+  <meta name="twitter:image" content={data.meta.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp'} />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8 max-w-4xl">
   <div class="text-center mb-12">
-    <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">Globle Answer Today</h1>
-    <p class="text-lg text-slate-600 dark:text-slate-300">The solution for {data.formattedDate}</p>
+    <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">Globle Hints and Answer for Today ({data.formattedDate})</h1>
+    <p class="text-lg text-slate-600 dark:text-slate-300">Verified Globle hints and the solution for {data.formattedDate}</p>
   </div>
 
   <GlobleCluesSection country={data.country} date={data.formattedDate}>

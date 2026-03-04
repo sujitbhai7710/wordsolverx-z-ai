@@ -11,6 +11,7 @@
     generateHowToSchema,
     generateWebPageSchema
   } from '$lib/seo';
+  import { getUTCToday } from '$lib/utils';
 
   interface ContextoAnswer {
     success: boolean;
@@ -20,10 +21,16 @@
     error?: string;
   }
 
-  let { data }: { data: { initialAnswer: ContextoAnswer | null; error: string | null } } = $props();
+  let { data }: { data: { initialAnswer: ContextoAnswer | null; latestDate: string | null; error: string | null } } = $props();
 
-  let selectedDate = $state(new Date());
-  let currentMonth = $state(new Date());
+  function parseDateKey(dateKey: string): Date {
+    const [year, month, day] = dateKey.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  const latestAvailableDate = data?.latestDate ? parseDateKey(data.latestDate) : getUTCToday();
+  let selectedDate = $state(new Date(latestAvailableDate.getFullYear(), latestAvailableDate.getMonth(), latestAvailableDate.getDate()));
+  let currentMonth = $state(new Date(latestAvailableDate.getFullYear(), latestAvailableDate.getMonth(), 1));
   let answer = $state<ContextoAnswer | null>(data?.initialAnswer ?? null);
   let isLoading = $state(false);
   let showAnswer = $state(false);
@@ -45,9 +52,11 @@
     try {
       const response = await fetch(`/api/contexto/daily?date=${dateStr}`);
       const payload: ContextoAnswer = await response.json();
-      answer = payload;
       if (!payload.success) {
+        answer = null;
         error = payload.error || 'Failed to fetch answer';
+      } else {
+        answer = payload;
       }
     } catch (err) {
       error = 'Failed to fetch answer. Please try again.';
@@ -71,13 +80,14 @@
     try {
       const response = await fetch(`/api/contexto/daily?game=${gameNum}`);
       const payload: ContextoAnswer = await response.json();
-      answer = payload;
 
       if (payload.success) {
+        answer = payload;
         const date = getContextoDateFromGameNumber(gameNum);
         selectedDate = date;
         currentMonth = new Date(date.getFullYear(), date.getMonth(), 1);
       } else {
+        answer = null;
         error = payload.error || 'Game not found';
       }
     } catch (err) {
@@ -121,8 +131,7 @@
   }
 
   function isToday(date: Date) {
-    const today = new Date();
-    return date.toDateString() === today.toDateString();
+    return date.toDateString() === latestAvailableDate.toDateString();
   }
 
   function isSelected(date: Date) {
@@ -130,9 +139,7 @@
   }
 
   function isFuture(date: Date) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date > today;
+    return date > latestAvailableDate;
   }
 
   function handleDateClick(date: Date) {
@@ -142,10 +149,9 @@
   }
 
   function goToToday() {
-    const today = new Date();
-    selectedDate = today;
-    currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    void fetchAnswer(today);
+    selectedDate = new Date(latestAvailableDate.getFullYear(), latestAvailableDate.getMonth(), latestAvailableDate.getDate());
+    currentMonth = new Date(latestAvailableDate.getFullYear(), latestAvailableDate.getMonth(), 1);
+    void fetchAnswer(latestAvailableDate);
   }
 
   function calendarButtonClass(date: Date) {
@@ -164,6 +170,17 @@
 
   const calendarDays = $derived(generateCalendarDays());
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  function formatDisplayDate(dateKey: string): string {
+    return new Date(`${dateKey}T12:00:00`).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+  let metaDateLabel = $derived(answer?.date ? formatDisplayDate(answer.date) : formatDisplayDate(formatContextoDate(selectedDate)));
+  let pageTitle = $derived(`Contexto Hints and Answer for Today (${metaDateLabel})`);
+  let pageDescription = $derived(`Get Contexto hints and the confirmed Contexto answer for today, ${metaDateLabel}. Use the game-number lookup and calendar to browse past Contexto answers too.`);
+  let pageKeywords = $derived(`contexto answer today, contexto answer, contexto hint, contexto hint today, contexto answer for ${metaDateLabel}`);
 
   const faqs = [
     {
@@ -194,37 +211,21 @@
     { name: 'Reveal the answer', text: 'Tap reveal to show the Contexto answer.' },
     { name: 'Search by game number', text: 'Enter a game number to jump to that exact date.' }
   ]);
-  const webPageSchema = generateWebPageSchema(
-    'Contexto Answer Today',
-    'Daily Contexto answers with a calendar for past puzzles and game number lookup.',
-    'https://wordsolverx.com/contexto-answer-today'
-  );
+  let webPageSchema = $derived(generateWebPageSchema(pageTitle, pageDescription, 'https://wordsolverx.com/contexto-answer-today'));
 </script>
 
 <svelte:head>
-  <title>Contexto Answer Today - Daily Contexto Solutions | WordSolverX</title>
-  <meta
-    name="description"
-    content="Find the Contexto answer for today and browse past puzzles with our interactive calendar and game number lookup."
-  />
-  <meta
-    name="keywords"
-    content="contexto answer today, contexto answers, contexto daily, contexto game number, contexto archive"
-  />
-  <meta property="og:title" content="Contexto Answer Today - Daily Contexto Solutions" />
-  <meta
-    property="og:description"
-    content="Browse today's Contexto answer and past solutions using the interactive calendar."
-  />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="keywords" content={pageKeywords} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolverx.com/contexto-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Contexto Answer Today - Daily Contexto Solutions" />
-  <meta
-    name="twitter:description"
-    content="Find today's Contexto answer, jump by game number, and browse older answers with the archive calendar."
-  />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
   <link rel="canonical" href="https://wordsolverx.com/contexto-answer-today" />
   {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
@@ -238,7 +239,7 @@
         <span>Daily Contexto Answers</span>
       </div>
       <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-        Contexto Answers
+        Contexto Hints and Answer for Today ({metaDateLabel})
       </h1>
       <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
         A cleaner daily answer page with quick lookup first and archive browsing second.
@@ -379,7 +380,7 @@
             type="button"
             on:click={nextMonth}
             class="h-9 w-9 rounded-full border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
-            disabled={currentMonth.getMonth() === new Date().getMonth() && currentMonth.getFullYear() === new Date().getFullYear()}
+            disabled={currentMonth.getMonth() === latestAvailableDate.getMonth() && currentMonth.getFullYear() === latestAvailableDate.getFullYear()}
           >
             &gt;
           </button>

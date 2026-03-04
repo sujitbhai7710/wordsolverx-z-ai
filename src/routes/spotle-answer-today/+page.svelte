@@ -11,7 +11,7 @@
 		artist: SpotleArtist | null;
 	};
 
-	const props = $props() as {
+	let { data }: {
 		data: {
 			todayStr: string;
 			todayFormatted: string;
@@ -22,26 +22,24 @@
 			last30Days: SpotleDay[];
 			faqItems: { question: string; answer: string }[];
 			schemaJson: string;
-			meta: { title: string; description: string };
+			meta: { title: string; description: string; keywords?: string };
 			labels: { countryNames: Record<string, string>; genderNames: Record<string, string> };
 		};
-	};
+	} = $props();
 
-	const pageData = $derived(props.data);
-	const todayStr = $derived(pageData.todayStr);
-	const todayFormatted = $derived(pageData.todayFormatted);
-	const todayAnswer = $derived(pageData.todayAnswer);
-	const todayArtist = $derived(pageData.todayArtist);
-	const artists = $derived(pageData.artists);
-	const answers = $derived(pageData.answers);
-	const faqItems = $derived(pageData.faqItems);
-	const schemaJson = $derived(pageData.schemaJson);
-	const meta = $derived(pageData.meta);
-	const labels = $derived(pageData.labels);
+	const todayStr = $derived(data.todayStr);
+	const todayFormatted = $derived(data.todayFormatted);
+	const todayAnswer = $derived(data.todayAnswer);
+	const todayArtist = $derived(data.todayArtist);
+	const artists = $derived(data.artists);
+	const answers = $derived(data.answers);
+	const faqItems = $derived(data.faqItems);
+	const schemaJson = $derived(data.schemaJson);
+	const meta = $derived(data.meta);
+	const labels = $derived(data.labels);
 
-	const todayDate = new Date();
-	todayDate.setHours(0, 0, 0, 0);
-	let selectedMonth = $state(new Date());
+	const todayDate = new Date(`${todayStr}T12:00:00`);
+	let selectedMonth = $state(new Date(todayDate.getFullYear(), todayDate.getMonth(), 1));
 	let selectedDay = $state<SpotleDay | null>(null);
 
 	const calendarDays = $derived.by(() => {
@@ -91,6 +89,7 @@
 <svelte:head>
 	<title>{meta.title}</title>
 	<meta name="description" content={meta.description} />
+	<meta name="keywords" content={meta.keywords ?? 'spotle answer today, spotle answer, spotle hint, spotle hint today'} />
 	<link rel="canonical" href="https://wordsolverx.com/spotle-answer-today" />
 	<meta property="og:title" content={meta.title} />
 	<meta property="og:description" content={meta.description} />
@@ -110,7 +109,7 @@
 		<header class="text-center mb-10">
 			<p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">Spotle Answer</p>
 			<h1 class="text-4xl sm:text-5xl font-black text-gray-900 mt-3">
-				Spotle Answer Today
+				Spotle Hints and Answer for Today ({todayFormatted})
 			</h1>
 			<p class="text-lg text-gray-500 mt-3">{todayFormatted}</p>
 		</header>

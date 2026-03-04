@@ -29,6 +29,25 @@ export function getJSTToday(): Date {
 }
 
 /**
+ * Get today's date using the UTC calendar day
+ */
+export function getUTCToday(): Date {
+  const now = new Date();
+  return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+}
+
+/**
+ * Get today's date in India Standard Time (UTC+5:30)
+ */
+export function getISTToday(): Date {
+  const now = new Date();
+  const istOffset = 5.5 * 60; // IST is UTC+5:30
+  const istTime = new Date(now.getTime() + (istOffset + now.getTimezoneOffset()) * 60000);
+  istTime.setHours(0, 0, 0, 0);
+  return istTime;
+}
+
+/**
  * Get today's date in user's local timezone
  * Each user gets their own puzzle that resets at their local midnight
  */

@@ -16,6 +16,9 @@ export const load: PageServerLoad = async () => {
 
     // Fetch last 10 available days for FAQs (Phoodle can have gaps in dates)
     const last10Days = await getRecentPhoodleHistory(data.date, 10);
+    const pageTitle = `Phoodle Hints and Answer for Today (${formattedDate})`;
+    const pageDescription = `Get Phoodle hints and the confirmed Phoodle answer for today, ${formattedDate}. Today's food word is ${upperWord}, with recent answers and recipe context.`;
+    const pageKeywords = `phoodle answer today, phoodle answer, phoodle hint, phoodle hint today, phoodle answer for ${formattedDate}`;
 
     const faqSchema = {
         '@context': 'https://schema.org',
@@ -37,8 +40,9 @@ export const load: PageServerLoad = async () => {
         last10Days,
         schemas: JSON.stringify([faqSchema]),
         meta: {
-            title: `Phoodle Answer Today: ${upperWord} (${formattedDate})`,
-            description: `Today's Phoodle answer is ${upperWord}. Get the daily food-themed word puzzle solution for ${formattedDate}.`,
+            title: pageTitle,
+            description: pageDescription,
+            keywords: pageKeywords,
         },
     };
 };

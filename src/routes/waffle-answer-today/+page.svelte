@@ -10,7 +10,7 @@
 <svelte:head>
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
-  <meta name="news_keywords" content="waffle, waffle answer, waffle game, waffle puzzle, word grid puzzle" />
+  <meta name="news_keywords" content={data.meta.keywords ?? 'waffle answer today, waffle answer, waffle hint, waffle hint today'} />
   <link rel="canonical" href="https://wordsolverx.com/waffle-answer-today" />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="flex items-center gap-3 mb-2">
-      <h1 class="text-4xl font-bold text-gray-900">Waffle Answer Today</h1>
+      <h1 class="text-4xl font-bold text-gray-900">Waffle Hints and Answer for Today ({data.formattedDate})</h1>
       <div class="flex items-center gap-1.5 px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 rounded-lg font-bold text-sm">
         <FiHash class="w-3.5 h-3.5" />
         <span>#{data.number}</span>

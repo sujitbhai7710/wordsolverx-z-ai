@@ -9,8 +9,18 @@
 <svelte:head>
   <title>{data.meta?.title ?? 'Colordle Answer Today'}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
-  <meta name="news_keywords" content="colordle, colordle answer, colordle today, color guessing game, hex color puzzle" />
+  <meta name="news_keywords" content={data.meta?.keywords ?? 'colordle answer today, colordle answer, colordle hint, colordle hint today'} />
   <link rel="canonical" href="https://wordsolverx.com/colordle-answer-today" />
+  <meta property="og:title" content={data.meta?.title ?? 'Colordle Answer Today'} />
+  <meta property="og:description" content={data.meta?.description ?? ''} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://wordsolverx.com/colordle-answer-today" />
+  <meta property="og:image" content={data.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp'} />
+  <meta property="og:image:alt" content={`Colordle hints and answer for ${data.formattedDate ?? 'today'}`} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={data.meta?.title ?? 'Colordle Answer Today'} />
+  <meta name="twitter:description" content={data.meta?.description ?? ''} />
+  <meta name="twitter:image" content={data.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp'} />
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
   {/if}
@@ -28,10 +38,10 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <header class="text-center mb-12">
         <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 bg-clip-text text-transparent mb-4">
-          Colordle Answer Today
+          Colordle Hints and Answer for Today ({data.formattedDate})
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
-          The official solution for <span class="font-semibold text-indigo-600 dark:text-indigo-400">{data.formattedDate}</span>
+          Verified Colordle hints and the official solution for <span class="font-semibold text-indigo-600 dark:text-indigo-400">{data.formattedDate}</span>
         </p>
       </header>
 
@@ -53,7 +63,7 @@
               <FiChevronDown class="text-purple-600 dark:text-purple-400 group-open:rotate-180 transition-transform" />
             </summary>
             <div class="p-5 pt-0 text-gray-600 dark:text-gray-300">
-              The Colordle answer for today is <span class="font-bold text-gray-900 dark:text-white">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">{data.color.hex}</span>.
+              The Colordle answer for today, {data.formattedDate}, is <span class="font-bold text-gray-900 dark:text-white">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">{data.color.hex}</span>.
             </div>
           </details>
 

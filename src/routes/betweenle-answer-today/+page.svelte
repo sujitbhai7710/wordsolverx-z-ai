@@ -54,7 +54,7 @@
     {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
-      headline: 'Betweenle Answer Today',
+      headline: data.meta.title,
       description: data.meta.description,
       mainEntityOfPage: data.meta.canonical,
       datePublished: `${data.todayAnswer.date}T00:00:00Z`,
@@ -73,7 +73,7 @@
       { name: 'Today', url: 'https://wordsolverx.com/today' },
       { name: 'Betweenle Answer Today', url: data.meta.canonical },
     ]),
-    generateWebPageSchema('Betweenle Answer Today', data.meta.description, data.meta.canonical),
+    generateWebPageSchema(data.meta.title, data.meta.description, data.meta.canonical),
   ]);
 
   let selectedDate = $state<string | null>(null);
@@ -160,7 +160,7 @@
   <meta name="description" content={data.meta.description} />
   <meta
     name="keywords"
-    content="betweenle answer today, betweenle today answer, betweenle archive, betweenle calendar answer, betweenle daily answer"
+    content={data.meta.keywords ?? 'betweenle answer today, betweenle answer, betweenle hint, betweenle hint today'}
   />
   <link rel="canonical" href={data.meta.canonical} />
   <meta property="og:title" content={data.meta.title} />
@@ -185,7 +185,8 @@
         <span class="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]">
           Betweenle Answer Today
         </span>
-        <h1 class="mt-5 text-4xl font-black tracking-tight sm:text-5xl">{data.todayAnswer.word.toUpperCase()}</h1>
+        <h1 class="mt-5 text-4xl font-black tracking-tight sm:text-5xl">{data.meta.title}</h1>
+        <p class="mt-4 text-4xl font-black tracking-tight text-white/95 sm:text-5xl">{data.todayAnswer.word.toUpperCase()}</p>
         <p class="mt-4 text-sm leading-7 text-slate-200 sm:text-base">
           {data.todayLabel} • Puzzle #{data.todayAnswer.puzzleNumber}
         </p>

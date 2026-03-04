@@ -9,7 +9,7 @@
 <svelte:head>
   <title>{data.meta?.title ?? 'Semantle Answer Today'}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
-  <meta name="news_keywords" content="semantle, semantle answer, semantle today, word similarity game, semantic puzzle" />
+  <meta name="news_keywords" content={data.meta?.keywords ?? 'semantle answer today, semantle answer, semantle hint, semantle hint today'} />
   <link rel="canonical" href="https://wordsolverx.com/semantle-answer-today" />
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
@@ -28,7 +28,7 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <header class="text-center mb-12">
         <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent mb-4">
-          Semantle Answer Today
+          Semantle Hints and Answer for Today ({data.formattedDate})
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
           {data.formattedDate} • Puzzle <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400">#{data.puzzleNumber}</span>

@@ -1,22 +1,45 @@
 import type { PageServerLoad } from './$types';
-import { formatContextoDate } from '$lib/contexto';
+import { getContextoGameNumber } from '$lib/contexto';
+
+interface ContextoAnswerResponse {
+  success: boolean;
+  gameNumber: number;
+  date: string;
+  answer?: string;
+  error?: string;
+}
 
 export const load: PageServerLoad = async ({ fetch }) => {
-  const today = new Date();
-  const dateStr = formatContextoDate(today);
-
   try {
-    const response = await fetch(`/api/contexto/daily?date=${dateStr}`);
-    if (!response.ok) {
-      return { initialAnswer: null, error: 'Failed to load Contexto answer' };
+    const seedGameNumber = getContextoGameNumber(new Date()) + 2;
+    let latestAnswer: ContextoAnswerResponse | null = null;
+    let lastError = 'Failed to load Contexto answer';
+
+    for (let offset = 0; offset < 5; offset += 1) {
+      const response = await fetch(`/api/contexto/daily?game=${seedGameNumber - offset}`);
+      const payload = (await response.json()) as ContextoAnswerResponse;
+
+      if (response.ok && payload?.success) {
+        latestAnswer = payload;
+        break;
+      }
+
+      if (payload?.error) {
+        lastError = payload.error;
+      }
     }
-    const data = await response.json();
+
+    if (!latestAnswer) {
+      return { initialAnswer: null, latestDate: null, error: lastError };
+    }
+
     return {
-      initialAnswer: data?.success ? data : null,
-      error: data?.success ? null : data?.error ?? 'Failed to load Contexto answer'
+      initialAnswer: latestAnswer,
+      latestDate: latestAnswer.date,
+      error: null
     };
   } catch (error) {
     console.error('Contexto load error:', error);
-    return { initialAnswer: null, error: 'Failed to load Contexto answer' };
+    return { initialAnswer: null, latestDate: null, error: 'Failed to load Contexto answer' };
   }
 };

@@ -47,7 +47,7 @@
   }
 
   let pageTitle = $derived.by(() => {
-    if (pageContext === 'today') return `Wordle Answer Today: ${formattedDate}`;
+    if (pageContext === 'today') return `Wordle Hints and Answer for Today (${formattedDate})`;
     if (pageContext === 'yesterday') return `Wordle Answer Yesterday: ${formattedDate}`;
     return `Wordle Answer for ${formattedDate}`;
   });

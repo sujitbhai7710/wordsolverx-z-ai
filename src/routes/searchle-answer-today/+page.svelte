@@ -11,6 +11,7 @@
     generateHowToSchema,
     generateWebPageSchema
   } from '$lib/seo';
+  import { getISTToday } from '$lib/utils';
 
   interface DailyPuzzle {
     date: string;
@@ -18,9 +19,9 @@
     answer: string;
   }
 
-  const today = new Date();
+  const today = getISTToday();
   const totalPuzzles = SEARCHLE_PUZZLES.length;
-  let currentDate = $state(new Date());
+  let currentDate = $state(new Date(today.getFullYear(), today.getMonth(), 1));
   let revealedAnswers = $state<Set<string>>(new Set());
   let copiedWord = $state<string | null>(null);
 
@@ -90,7 +91,19 @@
     }, 2000);
   }
 
+  function formatDisplayDate(dateKey: string): string {
+    return new Date(`${dateKey}T12:00:00`).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
   const todayKey = formatDateKey(today.getFullYear(), today.getMonth(), today.getDate());
+  const todayLabel = $derived(formatDisplayDate(todayPuzzle.date));
+  const pageTitle = $derived(`Searchle Hints and Answer for Today (${todayLabel})`);
+  const pageDescription = $derived(`Get Searchle hints and the confirmed Searchle answer for today, ${todayLabel}. Browse past Searchle puzzles with the calendar and copy answers instantly.`);
+  const pageKeywords = $derived(`searchle answer today, searchle answer, searchle hint, searchle hint today, searchle answer for ${todayLabel}`);
 
   const calendarDays = $derived.by(() => {
     const daysInMonth = getDaysInMonth(currentYear, currentMonth);
@@ -134,28 +147,17 @@
     { name: 'Select a day', text: 'Click a date to reveal the answer for that day.' },
     { name: 'Copy the answer', text: 'Use the copy button for quick sharing.' }
   ]);
-  const webPageSchema = generateWebPageSchema(
-    'Searchle Answer Today',
-    'Daily Searchle answers with calendar navigation for previous puzzles.',
-    'https://wordsolverx.com/searchle-answer-today'
+  const webPageSchema = $derived(
+    generateWebPageSchema(pageTitle, pageDescription, 'https://wordsolverx.com/searchle-answer-today')
   );
 </script>
 
 <svelte:head>
-  <title>Searchle Answer Today - Daily Searchle Solutions | WordSolverX</title>
-  <meta
-    name="description"
-    content="Get today&apos;s Searchle answer and browse past puzzles with the Searchle calendar. Copy answers and open the solver instantly."
-  />
-  <meta
-    name="keywords"
-    content="searchle answer today, searchle answers, searchle daily, searchle calendar, searchle archive"
-  />
-  <meta property="og:title" content="Searchle Answer Today - Daily Searchle Solutions" />
-  <meta
-    property="og:description"
-    content="View today&apos;s Searchle answer and browse past solutions with the interactive calendar."
-  />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="keywords" content={pageKeywords} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolverx.com/searchle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
@@ -173,7 +175,7 @@
         <span>{totalPuzzles.toLocaleString('en-US')} Real Puzzles from Searchle</span>
       </div>
       <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-        Daily Searchle Answers
+        Searchle Hints and Answer for Today ({todayLabel})
       </h1>
       <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
         Today&apos;s answer and past puzzles with calendar navigation.

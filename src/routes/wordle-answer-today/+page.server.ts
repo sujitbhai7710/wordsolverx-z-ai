@@ -50,16 +50,19 @@ export const load: PageServerLoad = async () => {
     const articleSchema = {
         '@context': 'https://schema.org',
         '@type': 'NewsArticle',
-        headline: `NYT Wordle Answer Today - ${formattedDate}`,
+        headline: `Wordle Hints and Answer for Today (${formattedDate})`,
         datePublished: new Date(wordleData?.date || today).toISOString(),
         dateModified: new Date(wordleData?.date || today).toISOString(),
         author: generatePersonAuthorSchema(getAuthorForGame('Wordle'), getAuthorProfileUrl(getAuthorForGame('Wordle'))),
         publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/logo.png' } },
-        description: `Get the NYT Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
+        description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/wordle-answer-today' },
     };
 
     const socialImageUrl = wordleData?.social_image || 'https://wordsolverx.com/logo.png';
+    const pageTitle = `Wordle Hints and Answer for Today (${formattedDate})`;
+    const pageDescription = `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. See the full solution for Wordle #${wordleNumber}, plus clue details and recent answers.`;
+    const pageKeywords = `wordle answer today, wordle answer, wordle hint, wordle hint today, wordle answer for ${formattedDate}`;
 
     return {
         wordleData,
@@ -70,8 +73,9 @@ export const load: PageServerLoad = async () => {
         hintFaqs,
         schemas: JSON.stringify([faqSchema, articleSchema]),
         meta: {
-            title: `Wordle Answer Today: ${formattedDate}`,
-            description: `Check the NYT Wordle answer for today, ${formattedDate}. Get hints, clues, and the full solution for Wordle #${wordleNumber}.`,
+            title: pageTitle,
+            description: pageDescription,
+            keywords: pageKeywords,
             socialImage: socialImageUrl,
         },
     };

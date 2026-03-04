@@ -17,6 +17,9 @@ export const load: PageServerLoad = async () => {
         const date = subDays(today, i + 1);
         return getSemantleDataForDate(date);
     }).filter(Boolean);
+    const pageTitle = `Semantle Hints and Answer for Today (${formattedDate})`;
+    const pageDescription = `Get Semantle hints and the confirmed Semantle answer for today, ${formattedDate}. Today's secret word is ${word} and this is puzzle #${puzzleNumber}.`;
+    const pageKeywords = `semantle answer today, semantle answer, semantle hint, semantle hint today, semantle answer for ${formattedDate}`;
 
     const faqItems = [
         { '@type': 'Question', name: `What is the Semantle answer for today, ${formattedDate}?`, acceptedAnswer: { '@type': 'Answer', text: `The Semantle answer for today, ${formattedDate}, is "${word}". Puzzle #${puzzleNumber}.` } },
@@ -24,7 +27,7 @@ export const load: PageServerLoad = async () => {
         ...last10Days.map(d => ({ '@type': 'Question', name: `What was the Semantle answer for ${d!.formattedDate}?`, acceptedAnswer: { '@type': 'Answer', text: `The answer was "${d!.word}" (Puzzle #${d!.puzzleNumber}).` } })),
     ];
 
-    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'FAQPage', mainEntity: faqItems }, { '@type': 'Article', headline: `Semantle Answer Today - ${word}`, datePublished: new Date(formattedDate).toISOString(), author: { '@type': 'Organization', name: 'WordSolverX' } }] });
+    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'FAQPage', mainEntity: faqItems }, { '@type': 'Article', headline: pageTitle, description: pageDescription, datePublished: new Date(formattedDate).toISOString(), author: { '@type': 'Organization', name: 'WordSolverX' } }] });
 
-    return { word, puzzleNumber, formattedDate, last10Days, schemas: jsonLd, meta: { title: "Today's Semantle Answer - Daily Secret Word Solution", description: `Today's Semantle answer is ${word}. Puzzle #${puzzleNumber}.` } };
+    return { word, puzzleNumber, formattedDate, last10Days, schemas: jsonLd, meta: { title: pageTitle, description: pageDescription, keywords: pageKeywords } };
 };

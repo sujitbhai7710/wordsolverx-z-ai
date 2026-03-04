@@ -15,6 +15,9 @@ export const load: PageServerLoad = async () => {
         const date = subDays(today, i + 1);
         return getQuordleDataForDate(date);
     }).filter(Boolean);
+    const pageTitle = `Quordle Hints and Answer for Today (${formattedDate})`;
+    const pageDescription = `Get Quordle hints and the confirmed Quordle answers for today, ${formattedDate}. Check Classic, Chill, Extreme, Sequence, Rescue, and Weekly solutions in one place.`;
+    const pageKeywords = `quordle answer today, quordle answer, quordle hint, quordle hint today, quordle answer for ${formattedDate}`;
 
     const faqItems = [
         { '@type': 'Question', name: `What is the Quordle answer for today, ${formattedDate}?`, acceptedAnswer: { '@type': 'Answer', text: `The Quordle answer for today, ${formattedDate}, is ${todayWords}.` } },
@@ -29,12 +32,12 @@ export const load: PageServerLoad = async () => {
             { '@type': 'FAQPage', mainEntity: faqItems },
             {
                 '@type': 'Article',
-                headline: `Quordle Answer Today - ${formattedDate}`,
+                headline: pageTitle,
                 datePublished: new Date(today).toISOString(),
                 dateModified: new Date(today).toISOString(),
                 author: generatePersonAuthorSchema(getAuthorForGame('Quordle'), getAuthorProfileUrl(getAuthorForGame('Quordle'))),
                 publisher: { '@type': 'Organization', name: 'WordSolverX' },
-                description: `The Quordle answers for ${formattedDate} are ${todayWords}.`,
+                description: pageDescription,
                 mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/quordle-answer-today' },
             },
         ],
@@ -48,8 +51,9 @@ export const load: PageServerLoad = async () => {
         last10Days,
         schemas: JSON.stringify(jsonLd),
         meta: {
-            title: `Quordle Answer for ${formattedDate} - Solutions & Hints for All Modes`,
-            description: `Struggling with the Quordle for ${formattedDate}? Get instant answers and helpful hints for Daily Quordle Classic, Chill, Extreme, Sequence, Rescue, and Weekly modes.`,
+            title: pageTitle,
+            description: pageDescription,
+            keywords: pageKeywords,
         },
     };
 };

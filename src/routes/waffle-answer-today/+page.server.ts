@@ -19,17 +19,21 @@ export const load: PageServerLoad = async () => {
     const formatSlug = (d: Date) => format(d, 'MMMM-dd-yyyy').toLowerCase();
     const prevSlug = `/waffle-answer-for-${formatSlug(prevDate)}`;
     const nextSlug = `/waffle-answer-for-${formatSlug(nextDate)}`;
-    const showNext = isBefore(startOfDay(nextDate), addDays(startOfDay(new Date()), 1));
+    const showNext = isBefore(startOfDay(nextDate), addDays(startOfDay(today), 1));
 
-    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'NewsArticle', headline: `Waffle Answer Today - ${formattedDate}`, datePublished: new Date(today).toISOString(), author: { '@type': 'Organization', name: 'WordSolverX' } });
+    const pageTitle = `Waffle Hints and Answer for Today (${formattedDate})`;
+    const pageDescription = `Get Waffle hints and the confirmed Waffle answer for today, ${formattedDate}. View the solved grid, complete word list, and definitions for puzzle #${number}.`;
+    const pageKeywords = `waffle answer today, waffle answer, waffle hint, waffle hint today, waffle answer for ${formattedDate}`;
+    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'NewsArticle', headline: pageTitle, description: pageDescription, datePublished: new Date(today).toISOString(), author: { '@type': 'Organization', name: 'WordSolverX' } });
 
     return {
         formattedDate, puzzle, solution, words, definitions, number,
         prevSlug, nextSlug, showNext, date: data.date,
         schemas: jsonLd,
         meta: {
-            title: `Waffle Answer Today (${formattedDate}) - Daily Puzzle Solution`,
-            description: `Check the Waffle answer for today, ${formattedDate}. View the solved grid and word definitions.`,
+            title: pageTitle,
+            description: pageDescription,
+            keywords: pageKeywords,
         },
     };
 };

@@ -28,7 +28,7 @@
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
   <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
-  <meta name="news_keywords" content="phoodle, phoodle answer, phoodle today, food word game, phoodle hint" />
+  <meta name="news_keywords" content={data.meta?.keywords ?? 'phoodle answer today, phoodle answer, phoodle hint, phoodle hint today'} />
   <link rel="canonical" href="https://wordsolverx.com/phoodle-answer-today" />
   {@html `<script type="application/ld+json">${pageSchema}</script>`}
   {#if data.schemas}
@@ -55,7 +55,7 @@
           <span class="text-4xl">🍽️</span>
         </div>
         <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
-          Today's Phoodle Answer
+          Phoodle Hints and Answer for Today ({data.formattedDate})
         </h1>
         <p class="text-lg text-gray-600 font-medium">{data.formattedDate}</p>
       </header>

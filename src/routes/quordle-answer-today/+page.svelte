@@ -10,7 +10,7 @@
 <svelte:head>
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
-  <meta name="news_keywords" content="quordle, quordle answer, quordle today, quordle hints, four wordles, daily puzzle" />
+  <meta name="news_keywords" content={data.meta.keywords ?? 'quordle answer today, quordle answer, quordle hint, quordle hint today'} />
   <link rel="canonical" href="https://wordsolverx.com/quordle-answer-today" />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
@@ -23,7 +23,7 @@
         Updated Daily
       </div>
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
-        Quordle Answer Today
+        Quordle Hints and Answer for Today ({data.formattedDate})
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
         <span class="font-semibold text-gray-900 dark:text-white">{data.formattedDate}</span> — Get hints and solutions for

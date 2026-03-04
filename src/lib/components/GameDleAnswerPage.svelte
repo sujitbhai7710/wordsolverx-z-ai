@@ -4,6 +4,13 @@
   interface ModeConfig { name: string; icon: string; color: string; bg: string; }
   interface GameAnswer { game: string; date: string; mode: string; region: string; game_id: number; json_content: string; }
   interface ParsedContent { champion_name: string; yesterday?: string; }
+  interface PageMeta {
+    title?: string;
+    heading?: string;
+    description?: string;
+    keywords?: string;
+    featuredImage?: string;
+  }
 
   let {
     gameKey, gameTitle, apiGame, modes, modeConfig,
@@ -22,7 +29,13 @@
     seoContent: Snippet;
     crossLinks: { href: string; icon: string; label: string; }[];
     schemas: object;
-    data?: { answers: GameAnswer[]; dateStr: string; error: string | null; };
+    data?: {
+      answers: GameAnswer[];
+      dateStr: string;
+      error: string | null;
+      meta?: PageMeta;
+      schemas?: object | string;
+    };
   } = $props();
 
   // Use server-side data if available, otherwise fall back to empty state
@@ -34,14 +47,72 @@
 
   // Generate canonical URL based on gameKey
   let canonicalUrl = $derived(`https://wordsolverx.com/${gameKey}-answer-today`);
-  let pageTitle = $derived(`${gameTitle} Answer for Today | WordSolverX`);
-  let pageDescription = $derived(`Get the confirmed ${gameTitle} answer for today, plus verified solutions for every available mode, quick copy tools, and recent clues in one place.`);
+  let seoDate = $derived(dateStr ? dateStr.replace(/^[^,]+,\s*/, '') : '');
+  let pageTitle = $derived(data?.meta?.title ?? `${gameTitle} Hints and Answers for Today${seoDate ? ` (${seoDate})` : ''}`);
+  let pageHeading = $derived(data?.meta?.heading ?? `${gameTitle} Hints and Answers for Today${seoDate ? ` (${seoDate})` : ''}`);
+  let pageDescription = $derived(
+    data?.meta?.description ??
+      `Get ${gameTitle} hints and the confirmed ${gameTitle} answers for today${seoDate ? `, ${seoDate}` : ''}. Check every available mode and region in one place.`
+  );
+  let pageKeywords = $derived(
+    data?.meta?.keywords ??
+      `${gameKey} answer today, ${gameKey} answer, ${gameKey} hint, ${gameKey} hint today${seoDate ? `, ${gameKey} answer for ${seoDate}` : ''}`
+  );
+  let pageImage = $derived(data?.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp');
+  function normalizeStructuredData(input: unknown): unknown {
+    if (typeof input === 'string' || input == null) {
+      return input;
+    }
+
+    if (Array.isArray(input)) {
+      return input.map((item) => normalizeStructuredData(item));
+    }
+
+    if (typeof input !== 'object') {
+      return input;
+    }
+
+    const normalized: Record<string, unknown> = {};
+
+    for (const [key, value] of Object.entries(input as Record<string, unknown>)) {
+      normalized[key] = normalizeStructuredData(value);
+    }
+
+    const type = normalized['@type'];
+
+    if (type === 'NewsArticle' || type === 'Article') {
+      normalized.headline = pageTitle;
+      normalized.description = pageDescription;
+      normalized.mainEntityOfPage = {
+        '@type': 'WebPage',
+        '@id': canonicalUrl
+      };
+      normalized.image = pageImage;
+    }
+
+    if (type === 'WebPage') {
+      normalized.name = pageTitle;
+      normalized.headline = pageTitle;
+      normalized.description = pageDescription;
+      normalized.url = canonicalUrl;
+
+      if (normalized['@id']) {
+        normalized['@id'] = canonicalUrl;
+      }
+    }
+
+    return normalized;
+  }
+
+  let resolvedSchemas = $derived(normalizeStructuredData(data?.schemas ?? schemas));
+  let resolvedSchemaJson = $derived(typeof resolvedSchemas === 'string' ? resolvedSchemas : JSON.stringify(resolvedSchemas));
   let webPageSchema = $derived({
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: pageTitle,
     description: pageDescription,
-    url: canonicalUrl
+    url: canonicalUrl,
+    image: pageImage
   });
   let articleSchema = $derived({
     '@context': 'https://schema.org',
@@ -56,7 +127,8 @@
     publisher: {
       '@type': 'Organization',
       name: 'WordSolverX'
-    }
+    },
+    image: pageImage
   });
 
   function parseContent(jsonContent: string): ParsedContent {
@@ -77,26 +149,29 @@
 <svelte:head>
   <title>{pageTitle}</title>
   <meta name="description" content={pageDescription} />
-  <meta name="news_keywords" content="{gameKey}, {gameKey} answer, {gameKey} today, anime guessing game, daily puzzle" />
+  <meta name="keywords" content={pageKeywords} />
+  <meta name="news_keywords" content={pageKeywords} />
   <link rel="canonical" href={canonicalUrl} />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content="WordSolverX" />
+  <meta property="og:image" content={pageImage} />
+  <meta property="og:image:alt" content={`${gameTitle} hints and answers for today`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content={pageImage} />
   {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(articleSchema)}</script>`}
-  {@html `<script type="application/ld+json">${JSON.stringify(schemas)}</script>`}
+  {@html `<script type="application/ld+json">${resolvedSchemaJson}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-gray-100">
   <div class="bg-white shadow-sm">
     <div class="max-w-6xl mx-auto px-4 py-10">
-      <h1 class="text-4xl font-extrabold text-gray-900">{gameTitle} Answer for Today</h1>
+      <h1 class="text-4xl font-extrabold text-gray-900">{pageHeading}</h1>
       {#if dateStr}<p class="text-lg text-gray-500 mt-2">{dateStr}</p>{/if}
     </div>
   </div>

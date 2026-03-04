@@ -53,7 +53,7 @@
   <meta name="description" content={data.meta.description} />
   <meta
     name="keywords"
-    content="worldle answer today, worldle today answer, worldle answer, worldle archive answers, worldle calendar answer, worldle country today"
+    content={data.meta.keywords ?? 'worldle answer today, worldle answer, worldle hint, worldle hint today'}
   />
   <link rel="canonical" href={data.meta.canonical} />
   <meta property="og:title" content={data.meta.title} />
@@ -78,7 +78,7 @@
           Server-rendered Worldle answer page
         </p>
         <h1 class="mt-5 text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-          Worldle Answer Today
+          Worldle Hints and Answer for Today ({data.formattedTodayDate})
         </h1>
         <p class="mt-4 max-w-3xl text-base leading-7 text-sky-50/90 sm:text-lg">
           Check the verified Worldle country for {data.formattedTodayDate}, review the last 10 answers, and use the archive calendar below to load any past Worldle date on the server.

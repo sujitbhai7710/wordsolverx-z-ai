@@ -32,12 +32,15 @@ export const load: PageServerLoad = async ({ fetch }) => {
 
 	const artists = data?.artists ?? [];
 	const answers = data?.answers ?? [];
-
-	const today = new Date();
-	today.setHours(0, 0, 0, 0);
-	const todayStr = formatSpotleDate(today);
-
-	const todayAnswer = answers.find((answer) => answer.date === todayStr) ?? null;
+	const latestAnswer =
+		answers.reduce<SpotleAnswer | null>(
+			(currentLatest, entry) =>
+				!currentLatest || entry.date > currentLatest.date ? entry : currentLatest,
+			null
+		) ?? null;
+	const todayStr = latestAnswer?.date ?? formatSpotleDate(new Date());
+	const activeDate = new Date(`${todayStr}T12:00:00`);
+	const todayAnswer = latestAnswer;
 	const todayArtist =
 		todayAnswer?.artist
 			? artists.find((artist) => artist.artist.toLowerCase() === todayAnswer.artist.toLowerCase()) ??
@@ -46,7 +49,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 
 	const last30Days: SpotleDay[] = [];
 	for (let i = 0; i < 30; i += 1) {
-		const date = subDays(today, i);
+		const date = subDays(activeDate, i);
 		const dateStr = formatSpotleDate(date);
 		const answer = answers.find((entry) => entry.date === dateStr);
 		if (!answer) {
@@ -80,10 +83,11 @@ export const load: PageServerLoad = async ({ fetch }) => {
 		}))
 	};
 
-	const todayFormatted = format(today, 'MMMM d, yyyy');
-	const metaTitle = `Spotle Answer Today (${todayFormatted}) | WordSolverX`;
+	const todayFormatted = format(activeDate, 'MMMM d, yyyy');
+	const metaTitle = `Spotle Hints and Answer for Today (${todayFormatted})`;
 	const metaDescription =
-		"Today's Spotle answer, plus the last 30 days of answers with a calendar archive.";
+		`Get Spotle hints and the confirmed Spotle answer for today, ${todayFormatted}${todayArtist ? `. Today's artist is ${todayArtist.artist}` : ''}. Browse the last 30 days with the calendar archive.`;
+	const metaKeywords = `spotle answer today, spotle answer, spotle hint, spotle hint today, spotle answer for ${todayFormatted}`;
 
 	const breadcrumbSchema = {
 		'@context': 'https://schema.org',
@@ -136,7 +140,8 @@ export const load: PageServerLoad = async ({ fetch }) => {
 		schemaJson: JSON.stringify([webPageSchema, breadcrumbSchema, faqSchema]),
 		meta: {
 			title: metaTitle,
-			description: metaDescription
+			description: metaDescription,
+			keywords: metaKeywords
 		},
 		labels: {
 			countryNames: COUNTRY_NAMES,

@@ -1,7 +1,8 @@
-<script lang="ts">
+  <script lang="ts">
   import FAQSection from '$lib/components/FAQSection.svelte';
   import { REFERENCE_DATE, TOTAL_PHRASES, getAnswerForDate } from '$lib/phrazle/phrases';
   import { generateFAQSchema, generateHowToSchema, generateWebPageSchema } from '$lib/seo';
+  import { getISTToday } from '$lib/utils';
 
   interface PhrazleAnswer {
     phrase: string;
@@ -15,7 +16,7 @@
     afternoon: PhrazleAnswer;
   }
 
-  const today = new Date();
+  const today = getISTToday();
   const referenceDate = REFERENCE_DATE;
 
   let selectedDate = $state(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
@@ -147,6 +148,17 @@
   ];
 
   const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  function formatDisplayDate(dateKey: string): string {
+    return new Date(`${dateKey}T12:00:00`).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+  const todayLabel = $derived(formatDisplayDate(todayAnswers.date));
+  const pageTitle = $derived(`Phrazle Hints and Answers for Today (${todayLabel})`);
+  const pageDescription = $derived(`Get Phrazle hints and the confirmed morning and afternoon Phrazle answers for today, ${todayLabel}. Browse older phrase answers with the built-in calendar archive.`);
+  const pageKeywords = $derived(`phrazle answer today, phrazle answer, phrazle hint, phrazle hint today, phrazle answer for ${todayLabel}`);
 
   const faqs = [
     {
@@ -177,37 +189,23 @@
     { name: 'View the answers', text: 'See both the morning and afternoon phrases for that day.' },
     { name: 'Copy an answer', text: 'Use the copy button to save a phrase.' }
   ]);
-  const webPageSchema = generateWebPageSchema(
-    'Phrazle Answer Today',
-    'Today\'s Phrazle answers plus an archive calendar for previous morning and afternoon puzzles.',
-    'https://wordsolverx.com/phrazle-answer-today'
+  const webPageSchema = $derived(
+    generateWebPageSchema(pageTitle, pageDescription, 'https://wordsolverx.com/phrazle-answer-today')
   );
 </script>
 
 <svelte:head>
-  <title>Phrazle Answer Today - Daily Phrazle Phrases | WordSolverX</title>
-  <meta
-    name="description"
-    content="Get today's Phrazle answers for both morning and afternoon puzzles, plus browse past phrases with the Phrazle calendar."
-  />
-  <meta
-    name="keywords"
-    content="phrazle answer today, phrazle answers, phrazle daily, phrazle archive, phrazle calendar"
-  />
-  <meta property="og:title" content="Phrazle Answer Today - Daily Phrazle Phrases" />
-  <meta
-    property="og:description"
-    content="View today's Phrazle answers and browse previous phrases using the calendar."
-  />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="keywords" content={pageKeywords} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolverx.com/phrazle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Phrazle Answer Today - Daily Phrazle Phrases" />
-  <meta
-    name="twitter:description"
-    content="See both Phrazle answers for today and browse older phrase answers with the compact archive calendar."
-  />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
   <link rel="canonical" href="https://wordsolverx.com/phrazle-answer-today" />
   {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
@@ -221,7 +219,7 @@
         <span>{TOTAL_PHRASES.toLocaleString('en-US')} Phrase Library</span>
       </div>
       <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-        Phrazle Answers Today
+        Phrazle Hints and Answers for Today ({todayLabel})
       </h1>
       <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
         Two puzzles every day. Morning and afternoon answers with a full archive calendar.
