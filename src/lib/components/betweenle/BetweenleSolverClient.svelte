@@ -119,6 +119,12 @@
         >
           How It Works
         </button>
+        <a
+          class="rounded-xl border border-white/15 bg-white/10 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
+          href="/betweenle-unlimited"
+        >
+          Play Betweenle Unlimited
+        </a>
       </div>
     </div>
   </section>

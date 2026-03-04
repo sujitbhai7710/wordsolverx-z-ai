@@ -115,6 +115,9 @@
         <p class="mt-4 text-sm leading-8 text-slate-600 dark:text-slate-300">
           Use it as a quick assistant, or use it as a way to learn the optimal search pattern so you can get better at solving Betweenle on your own.
         </p>
+        <p class="mt-4 text-sm leading-8 text-slate-600 dark:text-slate-300">
+          If you want to practice the same logic directly, try the <a class="font-semibold text-indigo-600 dark:text-indigo-300" href="/betweenle-unlimited">Betweenle Unlimited game</a> and switch between unlimited, archive, and custom Betweenle modes.
+        </p>
       </article>
     </div>
 

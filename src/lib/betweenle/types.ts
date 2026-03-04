@@ -18,3 +18,22 @@ export interface BetweenleSolverResult {
   topDist: number;
   bottomDist: number;
 }
+
+export type BetweenleGameMode = 'daily' | 'unlimited' | 'custom';
+
+export type BetweenleGuessDirection = 'after' | 'before' | 'match';
+
+export interface BetweenleGuess {
+  word: string;
+  position: number;
+  direction: BetweenleGuessDirection;
+  closerTo: 'top' | 'bottom';
+}
+
+export interface BetweenleGameSetup {
+  mode: BetweenleGameMode;
+  word: string;
+  secretPosition: number;
+  puzzleNumber: number | null;
+  date: string | null;
+}

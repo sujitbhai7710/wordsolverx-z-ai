@@ -1,5 +1,10 @@
 import { BETWEENLE_DAILY_WORDS, BETWEENLE_WORDS } from './data';
-import type { BetweenleDailyAnswer, BetweenleSolverResult } from './types';
+import type {
+  BetweenleDailyAnswer,
+  BetweenleGameMode,
+  BetweenleGameSetup,
+  BetweenleSolverResult,
+} from './types';
 
 export const BETWEENLE_START_DATE = new Date('2023-03-17T00:00:00');
 export const BETWEENLE_FIRST_WORD = 'aaaaa';
@@ -15,6 +20,49 @@ export function parseDistance(distance: string): number {
 export function getWordIndex(word: string): number {
   if (!word || word.trim() === '') return -1;
   return BETWEENLE_WORD_INDEX.get(word.trim().toLowerCase()) ?? -1;
+}
+
+export function sanitizeBetweenleWord(word: string): string {
+  return word.toLowerCase().replace(/[^a-z]/g, '').slice(0, 5);
+}
+
+export function isBetweenleWord(word: string): boolean {
+  return getWordIndex(word) >= 0;
+}
+
+export function getBetweenleWordPosition(word: string): number {
+  const normalizedWord = sanitizeBetweenleWord(word);
+  if (!normalizedWord) return 0;
+
+  const exactIndex = BETWEENLE_WORD_INDEX.get(normalizedWord);
+  if (exactIndex !== undefined) {
+    return exactIndex;
+  }
+
+  let low = 0;
+  let high = BETWEENLE_WORDS.length;
+
+  while (low < high) {
+    const mid = Math.floor((low + high) / 2);
+    if (BETWEENLE_WORDS[mid] < normalizedWord) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+
+  return Math.max(0, low);
+}
+
+export function formatBetweenleDistance(wordDistance: number, totalWords: number): string {
+  if (wordDistance === 0) return '0.0';
+
+  const rawPercent = (wordDistance / totalWords) * 100;
+  if (rawPercent < 0.1) {
+    return rawPercent.toFixed(2);
+  }
+
+  return (Math.round(rawPercent * 10) / 10).toFixed(1);
 }
 
 export function computeBetweenleSuggestion(
@@ -159,6 +207,48 @@ export function getBetweenleAnswerForDate(date: Date): BetweenleDailyAnswer {
     date: toDateKey(date),
     word: BETWEENLE_DAILY_WORDS[wordIndex] ?? '',
     puzzleNumber,
+  };
+}
+
+export function getRandomBetweenleWord(randomFn: () => number = Math.random): string {
+  const source = BETWEENLE_DAILY_WORDS.length > 0 ? BETWEENLE_DAILY_WORDS : BETWEENLE_WORDS;
+  const index = Math.floor(randomFn() * source.length);
+  return source[index] ?? source[0] ?? '';
+}
+
+export function createBetweenleGameSetup(
+  mode: BetweenleGameMode,
+  options: { date?: Date; customWord?: string; randomFn?: () => number } = {}
+): BetweenleGameSetup {
+  if (mode === 'daily') {
+    const answer = getBetweenleAnswerForDate(options.date ?? new Date());
+    return {
+      mode,
+      word: answer.word,
+      secretPosition: getBetweenleWordPosition(answer.word),
+      puzzleNumber: answer.puzzleNumber,
+      date: answer.date,
+    };
+  }
+
+  if (mode === 'custom') {
+    const word = sanitizeBetweenleWord(options.customWord ?? '');
+    return {
+      mode,
+      word,
+      secretPosition: getBetweenleWordPosition(word),
+      puzzleNumber: null,
+      date: null,
+    };
+  }
+
+  const word = getRandomBetweenleWord(options.randomFn);
+  return {
+    mode,
+    word,
+    secretPosition: getBetweenleWordPosition(word),
+    puzzleNumber: null,
+    date: null,
   };
 }
 
