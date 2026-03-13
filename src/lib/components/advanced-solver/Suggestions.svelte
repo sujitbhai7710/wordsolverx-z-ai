@@ -49,7 +49,7 @@
 			<p class="text-sm text-gray-500">
 				Top {Math.min(visibleCount, suggestions.length)} suggestions by {possibilities === 1
 					? 'score'
-					: 'entropy'}
+					: 'expected turns'}
 			</p>
 		</div>
 

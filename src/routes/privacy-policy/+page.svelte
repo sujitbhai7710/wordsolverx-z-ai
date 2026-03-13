@@ -1,15 +1,24 @@
 <svelte:head>
   <title>Privacy Policy - WordSolverX</title>
-  <meta name="description" content="Read the WordSolverX privacy policy to understand what data we collect, how analytics and cookies work, and how to contact us about privacy requests." />
+  <meta
+    name="description"
+    content="Read the WordSolverX privacy policy to understand what information may be collected, how site preferences are stored, and how to contact us about privacy questions."
+  />
   <link rel="canonical" href="https://wordsolverx.com/privacy-policy" />
   <meta property="og:title" content="Privacy Policy - WordSolverX" />
-  <meta property="og:description" content="Review how WordSolverX handles privacy, cookies, analytics, and user data requests." />
+  <meta
+    property="og:description"
+    content="Review the current privacy policy for WordSolverX, including browser storage, technical logs, and contact information."
+  />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolverx.com/privacy-policy" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Privacy Policy - WordSolverX" />
-  <meta name="twitter:description" content="See the current privacy policy for WordSolverX, including cookies, analytics, and contact information." />
+  <meta
+    name="twitter:description"
+    content="See how WordSolverX handles privacy, browser preferences, and contact requests."
+  />
   <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
@@ -20,102 +29,111 @@
   })}</script>`}
 </svelte:head>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="text-center mb-12">
     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
       Privacy Policy
     </h1>
     <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 mx-auto">
-      Last updated: January 22, 2026
+      Last updated: March 14, 2026
     </p>
   </div>
 
-  <div class="mt-8 bg-white dark:bg-gray-800 shadow overflow-hidden rounded-lg">
-    <div class="px-4 py-5 sm:p-6">
+  <div class="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+    <div class="px-6 py-8 sm:p-10">
       <div class="prose prose-green dark:prose-invert max-w-none">
         <p class="lead">
-          At WordSolverX, accessible from https://wordsolverx.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by WordSolverX and how we use it.
+          This Privacy Policy explains how WordSolverX may collect, use, and store information when
+          you visit https://wordsolverx.com, use our puzzle pages, or contact us directly.
         </p>
 
-        <h2>1. Information We Collect</h2>
+        <h2>1. Information You Provide Voluntarily</h2>
         <p>
-          The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.
-        </p>
-        <p>
-          If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.
-        </p>
-
-        <h3>1.1 Log Files</h3>
-        <p>
-          WordSolverX follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this as a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.
+          If you email WordSolverX, we may receive the information you include in that message, such
+          as your name, email address, the content of your message, and any other details you choose
+          to send.
         </p>
 
-        <h3>1.2 Cookies and Web Beacons</h3>
+        <h2>2. Technical Data and Hosting Logs</h2>
         <p>
-          Like any other website, WordSolverX uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
+          Like most websites, WordSolverX and its hosting providers may automatically record basic
+          technical information such as IP address, browser type, device type, referring page,
+          timestamps, and requested pages. This information is used for site operations, security,
+          troubleshooting, and general performance review.
         </p>
 
-        <h2>2. Google AdSense &amp; DoubleClick DART Cookie</h2>
+        <h2>3. Browser Storage and Site Preferences</h2>
         <p>
-          Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to www.website.com and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">https://policies.google.com/technologies/ads</a>
+          Some tools on WordSolverX store preferences directly in your browser so the experience
+          works smoothly the next time you visit. For example, solver tools may save preferences such
+          as selected modes, answer set settings, or word length choices using browser storage.
         </p>
         <p>
-          Some of advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has their own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below:
+          These settings stay in your browser unless you clear them yourself through your browser
+          settings.
         </p>
+
+        <h2>4. Cookies and Embedded Content</h2>
+        <p>
+          WordSolverX may use basic browser storage and may include embedded content from third-party
+          services, such as video embeds. If you interact with embedded third-party content, those
+          services may collect data according to their own privacy policies.
+        </p>
+
+        <h2>5. How We Use Information</h2>
+        <p>We may use information described in this policy to:</p>
         <ul>
-          <li>
-            Google: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">https://policies.google.com/technologies/ads</a>
-          </li>
+          <li>Operate, maintain, and improve WordSolverX</li>
+          <li>Remember simple tool preferences inside your browser</li>
+          <li>Respond to support, correction, or business inquiries</li>
+          <li>Review technical issues, abuse, and security events</li>
         </ul>
 
-        <h2>3. Advertising Partners Privacy Policies</h2>
+        <h2>6. Data Sharing</h2>
         <p>
-          You may consult this list to find the Privacy Policy for each of the advertising partners of WordSolverX.
-        </p>
-        <p>
-          Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on WordSolverX, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.
-        </p>
-        <p>
-          Note that WordSolverX has no access to or control over these cookies that are used by third-party advertisers.
+          WordSolverX does not sell your personal information. Information may be processed by
+          hosting, infrastructure, or embedded service providers only as needed to operate the site.
         </p>
 
-        <h2>4. CCPA Privacy Rights (Do Not Sell My Personal Information)</h2>
-        <p>Under the CCPA, among other rights, California consumers have the right to:</p>
-        <ul>
-          <li>Request that a business that collects a consumer's personal data disclose the categories and specific pieces of personal data that a business has collected about consumers.</li>
-          <li>Request that a business delete any personal data about the consumer that a business has collected.</li>
-          <li>Request that a business that sells a consumer's personal data, not sell the consumer's personal data.</li>
-        </ul>
-        <p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p>
-
-        <h2>5. GDPR Data Protection Rights</h2>
-        <p>We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:</p>
-        <ul>
-          <li><strong>The right to access</strong> – You have the right to request copies of your personal data. We may charge you a small fee for this service.</li>
-          <li><strong>The right to rectification</strong> – You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete the information you believe is incomplete.</li>
-          <li><strong>The right to erasure</strong> – You have the right to request that we erase your personal data, under certain conditions.</li>
-          <li><strong>The right to restrict processing</strong> – You have the right to request that we restrict the processing of your personal data, under certain conditions.</li>
-          <li><strong>The right to object to processing</strong> – You have the right to object to our processing of your personal data, under certain conditions.</li>
-          <li><strong>The right to data portability</strong> – You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.</li>
-        </ul>
-        <p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p>
-
-        <h2>6. Children's Information</h2>
+        <h2>7. Data Retention</h2>
         <p>
-          Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.
-        </p>
-        <p>
-          WordSolverX does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.
+          Email messages and related correspondence may be kept for as long as reasonably necessary to
+          respond, maintain records, or follow up on a site issue. Browser-stored preferences remain
+          on your device until you clear them.
         </p>
 
-        <h2>7. Contact Us</h2>
+        <h2>8. Your Rights and Choices</h2>
         <p>
-          If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.
+          Depending on where you live, you may have rights related to access, correction, or deletion
+          of personal information you have provided to us. To make a request, email
+          <a
+            href="mailto:wordsolverx@gmail.com"
+            class="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
+            >wordsolverx@gmail.com</a
+          >.
         </p>
-        <ul>
-          <li>By visiting our contact page: <a href="/contact" class="text-green-600 hover:text-green-500 dark:text-green-500 dark:hover:text-green-400">Contact Us</a></li>
-          <li>By email: privacy@wordsolverx.com</li>
-        </ul>
+
+        <h2>9. Children's Privacy</h2>
+        <p>
+          WordSolverX is not directed specifically to children under 13, and we do not knowingly
+          collect personal information from children through this website.
+        </p>
+
+        <h2>10. Changes to This Policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time as the site changes. Any updates will be
+          posted on this page with a revised last updated date.
+        </p>
+
+        <h2>11. Contact</h2>
+        <p>
+          If you have questions about this Privacy Policy, contact us at
+          <a
+            href="mailto:wordsolverx@gmail.com"
+            class="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
+            >wordsolverx@gmail.com</a
+          >.
+        </p>
       </div>
     </div>
   </div>

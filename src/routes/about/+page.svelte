@@ -1,80 +1,94 @@
 <svelte:head>
-  <title>About WordSolverX - Your Daily Wordle Resource</title>
-  <meta name="description" content="Learn about WordSolverX, the team behind our daily puzzle answers, solver tools, archives, and strategy guides for Wordle and other popular games." />
+  <title>About WordSolverX | Puzzle Answers, Archives, and Solver Tools</title>
+  <meta
+    name="description"
+    content="Learn about WordSolverX and how we publish daily puzzle answers, archives, Wordle solver tools, and guides for popular word games."
+  />
   <link rel="canonical" href="https://wordsolverx.com/about" />
-  <meta property="og:title" content="About WordSolverX - Your Daily Wordle Resource" />
-  <meta property="og:description" content="Meet the mission behind WordSolverX and learn how we build daily answer pages, solver tools, and puzzle resources." />
+  <meta property="og:title" content="About WordSolverX | Puzzle Answers, Archives, and Solver Tools" />
+  <meta
+    property="og:description"
+    content="See what WordSolverX offers, which puzzle tools we cover, and how we keep the site updated."
+  />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolverx.com/about" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="About WordSolverX - Your Daily Wordle Resource" />
-  <meta name="twitter:description" content="Learn what WordSolverX offers and how we help puzzle players every day." />
+  <meta name="twitter:title" content="About WordSolverX | Puzzle Answers, Archives, and Solver Tools" />
+  <meta
+    name="twitter:description"
+    content="Learn about WordSolverX, our puzzle resources, and how the site helps players every day."
+  />
   <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': 'AboutPage',
     name: 'About WordSolverX',
-    description: 'About page for WordSolverX, including mission, team, and site purpose.',
+    description: 'About page for WordSolverX and its puzzle answer, archive, and solver content.',
     url: 'https://wordsolverx.com/about'
   })}</script>`}
 </svelte:head>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="text-center mb-12">
     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
       About WordSolverX
     </h1>
-    <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 mx-auto">
-      Your daily resource for Wordle answers and strategies
+    <p class="mt-4 max-w-3xl text-xl text-gray-500 dark:text-gray-300 mx-auto">
+      WordSolverX is an independent puzzle resource built to make daily answers, archives, guides,
+      and solver tools easier to find and easier to use.
     </p>
   </div>
 
-  <div class="mt-8 bg-white dark:bg-gray-800 shadow overflow-hidden rounded-lg">
-    <div class="px-4 py-5 sm:p-6">
+  <div class="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+    <div class="px-6 py-8 sm:p-10">
       <div class="prose prose-green dark:prose-invert max-w-none">
-        <h2>Our Mission</h2>
+        <h2>What WordSolverX Covers</h2>
         <p>
-          At WordSolverX, our mission is to enhance your Wordle experience by providing reliable answers,
-          useful tools, and expert strategies for players of all skill levels. We believe in making the game
-          more accessible and enjoyable for everyone.
+          We publish a growing collection of daily puzzle answer pages, answer archives, and solver
+          tools for Wordle and other popular word and trivia games. The goal is simple: help players
+          quickly find accurate information, learn better solving strategies, and get back to the
+          games they enjoy.
         </p>
 
-        <h2 class="mt-8">What We Offer</h2>
-        <p>
-          We provide a comprehensive Wordle resource including:
-        </p>
+        <h2 class="mt-8">What You Will Find Here</h2>
         <ul>
-          <li>Daily updated Wordle answers</li>
-          <li>Archive of all past Wordle solutions</li>
-          <li>Intelligent Wordle solver tool</li>
-          <li>Expert guides and strategies</li>
-          <li>Community tips and discussions</li>
+          <li>Daily answer pages for puzzle games we track across the site</li>
+          <li>Archive pages to help players look up past answers and puzzle history</li>
+          <li>Wordle solver tools, including all wordle solver resources for different word lengths</li>
+          <li>Game-specific solver pages for supported puzzles</li>
+          <li>Guides, tips, and strategy content for improving puzzle play</li>
         </ul>
 
-        <h2 class="mt-8">About Wordle</h2>
+        <h2 class="mt-8">How We Update the Site</h2>
         <p>
-          Wordle is a daily word puzzle game created by Josh Wardle and now owned by The New York Times.
-          The game gives players six attempts to guess a five-letter word, with feedback given for each guess
-          in the form of colored tiles indicating when letters match or occupy the correct position.
+          WordSolverX is updated as new tools, games, and content are added across the site. We
+          refresh pages when puzzle formats change, when solver tools improve, and when players flag
+          corrections or outdated information.
         </p>
         <p>
-          Since its launch in October 2021, Wordle has become a cultural phenomenon, with millions of players
-          around the world sharing their results and competing to solve the daily puzzle.
-        </p>
-
-        <h2 class="mt-8">Our Team</h2>
-        <p>
-          WordSolverX was created by a team of word game enthusiasts and puzzle solvers who wanted to create
-          a comprehensive resource for the Wordle community. Our team includes statisticians who analyze letter
-          frequencies, developers who build solver algorithms, and writers who create strategy guides.
+          If you spot an error, want a new puzzle added, or have feedback about how a page works,
+          you can reach us at
+          <a
+            href="mailto:wordsolverx@gmail.com"
+            class="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
+            >wordsolverx@gmail.com</a
+          >.
         </p>
 
-        <h2 class="mt-8">Disclaimer</h2>
+        <h2 class="mt-8">Independent Site Notice</h2>
         <p>
-          WordSolverX is not affiliated with The New York Times Company or the official Wordle game. We are
-          an independent fan site providing resources for Wordle players. Wordle is a trademark of The New York
-          Times Company.
+          WordSolverX is an independent website. We are not affiliated with The New York Times or
+          with the official publishers of the puzzle games covered on this site unless a page clearly
+          states otherwise. Wordle and other game names, logos, and trademarks belong to their
+          respective owners.
+        </p>
+
+        <h2 class="mt-8">Why WordSolverX Exists</h2>
+        <p>
+          Puzzle players often need one place for quick answers, archives, and tools without jumping
+          through multiple websites. WordSolverX is designed to be that single resource - fast,
+          readable, and focused on useful puzzle help.
         </p>
       </div>
     </div>

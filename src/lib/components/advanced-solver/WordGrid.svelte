@@ -27,6 +27,7 @@
 	}
 
 	function handleCellClick(index: number) {
+		onTap(index);
 		const currentState = correctness[index];
 		let nextState = 3;
 
@@ -64,4 +65,3 @@
 		</button>
 	{/each}
 </div>
-

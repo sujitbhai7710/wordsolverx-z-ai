@@ -1,75 +1,119 @@
 <svelte:head>
-  <title>Terms of Service - WordSolverX</title>
-  <meta name="description" content="Review the WordSolverX terms of service covering acceptable use, content limitations, disclaimers, and legal conditions for using our website and tools." />
+  <title>Terms and Conditions - WordSolverX</title>
+  <meta
+    name="description"
+    content="Review the WordSolverX terms and conditions for using our puzzle answer pages, archives, guides, and solver tools."
+  />
   <link rel="canonical" href="https://wordsolverx.com/terms-of-service" />
-  <meta property="og:title" content="Terms of Service - WordSolverX" />
-  <meta property="og:description" content="Read the current terms of service for WordSolverX, including site usage rules and legal conditions." />
+  <meta property="og:title" content="Terms and Conditions - WordSolverX" />
+  <meta
+    property="og:description"
+    content="Read the current terms and conditions for using WordSolverX and its puzzle tools."
+  />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolverx.com/terms-of-service" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Terms of Service - WordSolverX" />
-  <meta name="twitter:description" content="Review the rules, disclaimers, and conditions for using WordSolverX." />
+  <meta name="twitter:title" content="Terms and Conditions - WordSolverX" />
+  <meta
+    name="twitter:description"
+    content="Review the rules, site usage terms, and limitations for WordSolverX."
+  />
   <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Terms of Service - WordSolverX',
-    description: 'Terms of service and legal information for WordSolverX.',
+    name: 'Terms and Conditions - WordSolverX',
+    description: 'Terms and conditions and legal information for WordSolverX.',
     url: 'https://wordsolverx.com/terms-of-service'
   })}</script>`}
 </svelte:head>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="text-center mb-12">
-    <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Terms of Service</h1>
-    <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 mx-auto">Last updated: January 22, 2026</p>
+    <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+      Terms and Conditions
+    </h1>
+    <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 mx-auto">
+      Last updated: March 14, 2026
+    </p>
   </div>
 
-  <div class="mt-8 bg-white dark:bg-gray-800 shadow overflow-hidden rounded-lg">
-    <div class="px-4 py-5 sm:p-6">
+  <div class="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+    <div class="px-6 py-8 sm:p-10">
       <div class="prose prose-green dark:prose-invert max-w-none">
-        <h2>1. Terms</h2>
-        <p>By accessing this Website, accessible from https://wordsolverx.com, you are agreeing to be bound by these Website Terms and Conditions of Use and agree that you are responsible for the agreement with any applicable local laws. If you disagree with any of these terms, you are prohibited from accessing this site. The materials contained in this Website are protected by copyright and trade mark law.</p>
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+          By accessing or using https://wordsolverx.com, you agree to these Terms and Conditions. If
+          you do not agree, please do not use the site.
+        </p>
 
-        <h2>2. Use License</h2>
-        <p>Permission is granted to temporarily download one copy of the materials on WordSolverX's Website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+        <h2>2. Website Purpose</h2>
+        <p>
+          WordSolverX provides puzzle answer pages, archives, guides, and solver tools for
+          informational and entertainment purposes. The site is intended to help users explore puzzle
+          content, review past answers, and use solving tools more easily.
+        </p>
+
+        <h2>3. Acceptable Use</h2>
+        <p>You agree not to misuse the site. This includes, without limitation:</p>
         <ul>
-          <li>modify or copy the materials;</li>
-          <li>use the materials for any commercial purpose or for any public display;</li>
-          <li>attempt to reverse engineer any software contained on WordSolverX's Website;</li>
-          <li>remove any copyright or other proprietary notations from the materials; or</li>
-          <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
+          <li>Trying to disrupt, damage, or overload the website or its infrastructure</li>
+          <li>Attempting unauthorized access to data, accounts, or systems</li>
+          <li>Using automated scraping or abusive traffic in a way that harms site availability</li>
+          <li>Copying site content in bulk for deceptive or competing uses</li>
         </ul>
-        <p>This will let WordSolverX to terminate upon violations of any of these restrictions. Upon termination, your viewing right will also be terminated and you should destroy any downloaded materials in your possession whether it is printed or electronic format.</p>
 
-        <h2>3. Disclaimer</h2>
-        <p>All the materials on WordSolverX's Website are provided "as is". WordSolverX makes no warranties, may it be expressed or implied, therefore negates all other warranties. Furthermore, WordSolverX does not make any representations concerning the accuracy or likely results of the use of the materials on its Website or otherwise relating to such materials or on any sites linked to this Website.</p>
+        <h2>4. Intellectual Property and Trademarks</h2>
+        <p>
+          Unless otherwise noted, content created by WordSolverX belongs to WordSolverX. Puzzle names,
+          trademarks, logos, and brands referenced on the site belong to their respective owners.
+          WordSolverX is an independent website and is not affiliated with the official publishers of
+          the puzzle games covered here unless explicitly stated.
+        </p>
 
-        <h2>4. Limitations</h2>
-        <p>WordSolverX or its suppliers will not be hold accountable for any damages that will arise with the use or inability to use the materials on WordSolverX's Website, even if WordSolverX or an authorize representative of this Website has been notified, orally or written, of the possibility of such damage. Some jurisdiction does not allow limitations on implied warranties or limitations of liability for incidental damages, these limitations may not apply to you.</p>
+        <h2>5. Accuracy and Availability</h2>
+        <p>
+          We aim to keep the site accurate and up to date, but we do not guarantee that every page,
+          answer, archive entry, or tool output will always be complete, correct, or available without
+          interruption.
+        </p>
 
-        <h2>5. Revisions and Errata</h2>
-        <p>The materials appearing on WordSolverX's Website may include technical, typographical, or photographic errors. WordSolverX will not promise that any of the materials in this Website are accurate, complete, or current. WordSolverX may change the materials contained on its Website at any time without notice. WordSolverX does not make any commitment to update the materials.</p>
+        <h2>6. No Professional Advice</h2>
+        <p>
+          The content on WordSolverX is provided for general informational and entertainment purposes
+          only. It is not legal, financial, medical, or other professional advice.
+        </p>
 
-        <h2>6. Links</h2>
-        <p>WordSolverX has not reviewed all of the sites linked to its Website and is not responsible for the contents of any such linked site. The presence of any link does not imply endorsement by WordSolverX of the site. The use of any linked website is at the user's own risk.</p>
+        <h2>7. Third-Party Links and Services</h2>
+        <p>
+          Some pages may include links or embedded content from third-party services. WordSolverX is
+          not responsible for the content, policies, or practices of third-party websites.
+        </p>
 
-        <h2>7. Site Terms of Use Modifications</h2>
-        <p>WordSolverX may revise these Terms of Use for its Website at any time without prior notice. By using this Website, you are agreeing to be bound by the current version of these Terms and Conditions of Use.</p>
+        <h2>8. Limitation of Liability</h2>
+        <p>
+          To the fullest extent permitted by law, WordSolverX will not be liable for any indirect,
+          incidental, special, consequential, or punitive damages arising out of or related to your
+          use of the site.
+        </p>
 
-        <h2>8. Your Privacy</h2>
-        <p>Please read our <a href="/privacy-policy">Privacy Policy</a>.</p>
+        <h2>9. Changes to These Terms</h2>
+        <p>
+          We may update these Terms and Conditions from time to time. Any revised version will be
+          posted on this page with a new last updated date.
+        </p>
 
-        <h2>9. Governing Law</h2>
-        <p>Any claim related to WordSolverX's Website shall be governed by the laws of without regards to its conflict of law provisions.</p>
-
-        <h2>10. Contact Us</h2>
-        <p>If you have any questions about these Terms of Service, please contact us:</p>
-        <ul>
-          <li>By visiting our contact page: <a href="/contact" class="text-green-600 hover:text-green-500 dark:text-green-500 dark:hover:text-green-400">Contact Us</a></li>
-          <li>By email: legal@wordsolverx.com</li>
-        </ul>
+        <h2>10. Contact</h2>
+        <p>
+          If you have questions about these Terms and Conditions, email
+          <a
+            href="mailto:wordsolverx@gmail.com"
+            class="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
+            >wordsolverx@gmail.com</a
+          >
+          or visit our <a href="/contact">contact page</a>.
+        </p>
       </div>
     </div>
   </div>

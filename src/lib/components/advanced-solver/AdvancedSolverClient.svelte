@@ -1,34 +1,70 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
+	import Suggestions from './Suggestions.svelte';
 	import WordGrid from './WordGrid.svelte';
 	import WordLengthSelector from './WordLengthSelector.svelte';
-	import Suggestions from './Suggestions.svelte';
 
 	interface SolverSuggestion {
 		word: string;
 		score: number;
 		expected_guesses?: number;
+		average_remaining?: number;
+		is_possible_answer?: boolean;
+		is_preferred_answer?: boolean;
 	}
 
-	interface SolverResponse {
-		error?: string;
+	interface SolverResult {
 		suggestions?: SolverSuggestion[];
 		possibilities?: number;
 	}
 
-	const showToast = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
+	interface WorkerReadyMessage {
+		type: 'ready';
+	}
+
+	interface WorkerResultMessage {
+		type: 'result';
+		requestId: number;
+		result: SolverResult;
+	}
+
+	interface WorkerErrorMessage {
+		type: 'error';
+		requestId?: number;
+		error: string;
+	}
+
+	interface PendingRequest {
+		kind: 'solve' | 'refresh';
+		nextHistory?: string[];
+	}
+
+	type WorkerMessage = WorkerReadyMessage | WorkerResultMessage | WorkerErrorMessage;
+
+	const createCorrectness = (length: number) => Array(length).fill(1);
+
+	const showToast = (
+		message: string,
+		type: 'success' | 'error' | 'info' | 'warning' = 'info'
+	) => {
 		const toast = document.createElement('div');
 		toast.className = `fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white z-50 ${
-			type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+			type === 'success'
+				? 'bg-green-600'
+				: type === 'error'
+					? 'bg-red-600'
+					: type === 'warning'
+						? 'bg-amber-600'
+						: 'bg-blue-600'
 		}`;
 		toast.textContent = message;
 		document.body.appendChild(toast);
-		setTimeout(() => toast.remove(), 3000);
+		setTimeout(() => toast.remove(), 2800);
 	};
 
 	let currentWord = $state('');
 	let history = $state<string[]>([]);
-	let correctness = $state<number[]>([]);
+	let correctness = $state<number[]>(createCorrectness(5));
 	let currentSelection = $state(0);
 	let suggestion = $state<string | null>(null);
 	let suggestions = $state<SolverSuggestion[]>([]);
@@ -43,27 +79,83 @@
 
 	let suggestionsRef = $state<HTMLDivElement | null>(null);
 	let gameAreaRef = $state<HTMLDivElement | null>(null);
+	let nextRequestId = 0;
+	const pendingRequests = new Map<number, PendingRequest>();
+
+	function applyResult(result: SolverResult) {
+		suggestions = result.suggestions ?? [];
+		possibilities = result.possibilities ?? 0;
+		suggestion = result.suggestions?.[0]?.word ?? null;
+	}
+
+	function resetPendingRequests() {
+		pendingRequests.clear();
+		loading = false;
+	}
 
 	function resetState() {
 		currentWord = '';
 		history = [];
-		correctness = Array(wordLength).fill(1);
+		correctness = createCorrectness(wordLength);
 		currentSelection = 0;
 		suggestion = null;
 		suggestions = [];
+		possibilities = 0;
 		showResult = false;
+	}
+
+	function requestSolver(kind: PendingRequest['kind'], state: string, nextHistory?: string[]) {
+		if (!worker || solverInitializing) {
+			return false;
+		}
+
+		const requestId = ++nextRequestId;
+		pendingRequests.set(requestId, { kind, nextHistory });
+
+		worker.postMessage({
+			type: 'solve',
+			requestId,
+			state,
+			isHardMode,
+			useLimitNYT,
+			wordLength
+		});
+
+		return true;
+	}
+
+	function refreshSuggestions(currentHistory: string[]) {
+		if (!currentHistory.length) {
+			suggestions = [];
+			suggestion = null;
+			possibilities = 0;
+			showResult = false;
+			return;
+		}
+
+		requestSolver('refresh', currentHistory.join(','));
 	}
 
 	function handleWordLengthChange(length: number) {
 		wordLength = length;
 		localStorage.setItem('wordLength', length.toString());
 		localStorage.setItem('useLimitNYT', useLimitNYT.toString());
+		resetPendingRequests();
 		resetState();
+	}
+
+	function handleAnswerSetChange(limitToNYT: boolean) {
+		useLimitNYT = limitToNYT;
+		localStorage.setItem('useLimitNYT', useLimitNYT.toString());
+		resetPendingRequests();
+		refreshSuggestions(history);
 	}
 
 	function toggleHardMode() {
 		isHardMode = !isHardMode;
 		localStorage.setItem('isHardMode', isHardMode.toString());
+		resetPendingRequests();
+		refreshSuggestions(history);
 	}
 
 	function handleCellTap(index: number) {
@@ -76,72 +168,49 @@
 		correctness = next;
 	}
 
-	function submitGuess() {
+	async function submitGuess() {
 		if (currentWord.length !== wordLength) {
 			showToast(`Please enter a ${wordLength}-letter word`, 'error');
 			return;
 		}
 
 		if (correctness.every((c) => c === 3)) {
+			history = [...history, `${currentWord}:${correctness.join('')}`];
+			suggestions = [];
+			suggestion = null;
+			possibilities = 1;
+			currentWord = '';
+			correctness = createCorrectness(wordLength);
+			currentSelection = 0;
 			showToast("You've solved the puzzle!", 'success');
-			showResult = true;
+			showResult = false;
 			return;
 		}
 
-		if (!worker) {
-			showToast('Solver is still initializing, please wait', 'error');
+		if (!worker || solverInitializing) {
+			showToast('Solver is still initializing, please wait', 'warning');
 			return;
 		}
 
 		loading = true;
 		const guessInfo = `${currentWord}:${correctness.join('')}`;
 		const newHistory = [...history, guessInfo];
-		const payload = newHistory.join(',');
 
-		worker.onmessage = (event: MessageEvent<SolverResponse | string>) => {
-			const data = event.data;
-			if (typeof data !== 'string' && data && data.error) {
-				showToast(data.error, 'error');
-				loading = false;
-				return;
-			}
-
+		if (!requestSolver('solve', newHistory.join(','), newHistory)) {
 			loading = false;
-			history = newHistory;
-			correctness = Array(wordLength).fill(1);
-			currentWord = '';
-			currentSelection = 0;
+			showToast('Solver is still initializing, please wait', 'warning');
+			return;
+		}
 
-			if (typeof data === 'string') {
-				suggestion = data;
-				suggestions = [];
-				possibilities = 0;
-			} else if (data?.suggestions && Array.isArray(data.suggestions) && data.suggestions.length > 0) {
-				suggestions = data.suggestions;
-				possibilities = data.possibilities || 0;
-				suggestion = data.suggestions[0].word;
-			} else {
-				suggestion = null;
-				suggestions = [];
-				possibilities = 0;
-			}
-
-			showResult = true;
-		};
-
-		worker.postMessage({
-			state: payload,
-			isHardMode,
-			useLimitNYT
-		});
+		await tick();
 	}
 
 	function useSuggestion(selectedWord?: string) {
 		const wordToUse = typeof selectedWord === 'string' ? selectedWord : suggestion;
 		if (!wordToUse) return;
 
-		currentWord = wordToUse;
-		correctness = Array(wordLength).fill(1);
+		currentWord = wordToUse.toLowerCase();
+		correctness = createCorrectness(wordLength);
 		currentSelection = 0;
 		showResult = false;
 		suggestion = null;
@@ -153,24 +222,31 @@
 	}
 
 	function handleInputChange(event: Event) {
-		const target = event.target as HTMLInputElement;
+		const target = event.currentTarget as HTMLInputElement;
 		const value = target.value.toLowerCase().replace(/[^a-z]/g, '');
 		if (value.length <= wordLength) {
 			currentWord = value;
 			if (value.length === wordLength) {
-				correctness = Array(wordLength).fill(1);
+				correctness = createCorrectness(wordLength);
 			}
 		}
 	}
 
 	function clearInput() {
 		currentWord = '';
-		correctness = Array(wordLength).fill(1);
+		correctness = createCorrectness(wordLength);
+	}
+
+	function resetSolver() {
+		resetPendingRequests();
+		resetState();
+		showToast('Solver reset', 'info');
 	}
 
 	function goBack() {
 		if (history.length === 0) return;
 
+		resetPendingRequests();
 		const newHistory = [...history];
 		const lastGuess = newHistory.pop();
 		if (!lastGuess) return;
@@ -182,16 +258,70 @@
 		showResult = false;
 		suggestion = null;
 		suggestions = [];
+		possibilities = 0;
+
+		refreshSuggestions(newHistory);
 	}
 
-	$effect(() => {
-		if (showResult && suggestions.length > 0 && suggestionsRef) {
-			const timer = setTimeout(() => {
-				suggestionsRef?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}, 100);
-			return () => clearTimeout(timer);
+	async function handleWorkerMessage(event: MessageEvent<WorkerMessage>) {
+		const data = event.data;
+
+		if (data?.type === 'ready') {
+			solverInitializing = false;
+			return;
 		}
-	});
+
+		if (data?.type === 'error' && data.requestId === undefined) {
+			solverInitializing = false;
+			showToast(data.error || 'Failed to initialize solver', 'error');
+			return;
+		}
+
+		if (data?.type !== 'result' && data?.type !== 'error') {
+			return;
+		}
+
+		const requestId = data.requestId;
+		if (requestId === undefined) {
+			return;
+		}
+
+		const pending = pendingRequests.get(requestId);
+		if (!pending) {
+			return;
+		}
+
+		pendingRequests.delete(requestId);
+
+		if (data.type === 'error') {
+			loading = false;
+			showToast(data.error || 'The solver could not finish this request.', 'error');
+			return;
+		}
+
+		const result = data.result ?? {};
+		applyResult(result);
+		loading = false;
+
+		if (pending.kind === 'refresh') {
+			showResult = suggestions.length > 0;
+			return;
+		}
+
+		if (!result.suggestions || result.suggestions.length === 0) {
+			showToast('No matching words found. Please check your colors and try again.', 'warning');
+			return;
+		}
+
+		history = pending.nextHistory ?? history;
+		correctness = createCorrectness(wordLength);
+		currentWord = '';
+		currentSelection = 0;
+		showResult = true;
+
+		await tick();
+		suggestionsRef?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	}
 
 	onMount(() => {
 		const savedLength = localStorage.getItem('wordLength');
@@ -218,52 +348,59 @@
 			workerInstance = new Worker(new URL('../../workers/solver.worker.ts', import.meta.url), {
 				type: 'classic'
 			});
+			worker = workerInstance;
 			solverInitializing = true;
 
-			workerInstance.postMessage(null);
-			workerInstance.onmessage = (event: MessageEvent<unknown>) => {
-				if (event.data === null) {
-					worker = workerInstance;
-					solverInitializing = false;
+			const onMessage = (workerEvent: MessageEvent<WorkerMessage>) => {
+				void handleWorkerMessage(workerEvent);
+			};
+
+			const onError = (error: ErrorEvent) => {
+				showToast(`Failed to initialize solver: ${error.message}`, 'error');
+				solverInitializing = false;
+			};
+
+			workerInstance.addEventListener('message', onMessage);
+			workerInstance.addEventListener('error', onError);
+			workerInstance.postMessage({ type: 'init' });
+
+			const handleKeyDown = (event: KeyboardEvent) => {
+				if (showResult || solverInitializing) return;
+
+				if (
+					event.key === 'Enter' ||
+					event.key === 'Backspace' ||
+					/^[a-zA-Z]$/.test(event.key)
+				) {
+					event.preventDefault();
+				}
+
+				if (event.key === 'Enter') {
+					void submitGuess();
+				} else if (event.key === 'Backspace') {
+					currentWord = currentWord.slice(0, -1);
+				} else if (/^[a-zA-Z]$/.test(event.key) && currentWord.length < wordLength) {
+					currentWord = `${currentWord}${event.key.toLowerCase()}`;
+					if (currentWord.length === wordLength) {
+						correctness = createCorrectness(wordLength);
+					}
 				}
 			};
 
-			workerInstance.onerror = (error: ErrorEvent) => {
-				showToast(`Failed to initialize solver: ${error.message}`, 'error');
-				solverInitializing = false;
+			window.addEventListener('keydown', handleKeyDown);
+
+			return () => {
+				window.removeEventListener('keydown', handleKeyDown);
+				pendingRequests.clear();
+				workerInstance?.removeEventListener('message', onMessage);
+				workerInstance?.removeEventListener('error', onError);
+				workerInstance?.terminate();
 			};
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : 'Unknown error';
 			showToast(`Failed to initialize solver: ${message}`, 'error');
 			solverInitializing = false;
 		}
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (showResult || solverInitializing) return;
-
-			if (
-				event.key === 'Enter' ||
-				event.key === 'Backspace' ||
-				/^[a-zA-Z]$/.test(event.key)
-			) {
-				event.preventDefault();
-			}
-
-			if (event.key === 'Enter') {
-				submitGuess();
-			} else if (event.key === 'Backspace') {
-				currentWord = currentWord.slice(0, -1);
-			} else if (/^[a-zA-Z]$/.test(event.key) && currentWord.length < wordLength) {
-				currentWord = `${currentWord}${event.key.toLowerCase()}`;
-			}
-		};
-
-		window.addEventListener('keydown', handleKeyDown);
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-			workerInstance?.terminate();
-		};
 	});
 </script>
 
@@ -273,7 +410,7 @@
 			<h2
 				class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-600 via-emerald-500 to-teal-600 bg-clip-text text-transparent mb-3"
 			>
-				Wordle Solver Pro
+				Wordle Solver
 			</h2>
 			<p class="text-gray-600 text-lg">Find the solution with fewest attempts</p>
 		</div>
@@ -295,21 +432,15 @@
 					</div>
 					<div class="flex bg-blue-100 p-1.5 rounded-xl shadow-inner">
 						<button
-							onclick={() => {
-								useLimitNYT = true;
-								localStorage.setItem('useLimitNYT', useLimitNYT.toString());
-							}}
+							onclick={() => handleAnswerSetChange(true)}
 							class="flex-1 py-3 px-4 text-sm font-bold rounded-lg transition-all duration-200 transform {useLimitNYT
 								? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md scale-105'
 								: 'text-gray-600 hover:text-gray-800 hover:bg-white/50'}"
 						>
-							Limited Words List
+							Prefer NYT
 						</button>
 						<button
-							onclick={() => {
-								useLimitNYT = false;
-								localStorage.setItem('useLimitNYT', useLimitNYT.toString());
-							}}
+							onclick={() => handleAnswerSetChange(false)}
 							class="flex-1 py-3 px-4 text-sm font-bold rounded-lg transition-all duration-200 transform {!useLimitNYT
 								? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md scale-105'
 								: 'text-gray-600 hover:text-gray-800 hover:bg-white/50'}"
@@ -323,11 +454,11 @@
 					<div class="flex justify-center">
 						<label class="flex items-center cursor-pointer group">
 							<div class="relative">
-				<input
-					type="checkbox"
-					class="sr-only"
-					checked={isHardMode}
-					onchange={toggleHardMode}
+								<input
+									type="checkbox"
+									class="sr-only"
+									checked={isHardMode}
+									onchange={toggleHardMode}
 								/>
 								<div
 									class="block w-14 h-7 rounded-full transition-all duration-300 shadow-inner {isHardMode
@@ -360,7 +491,7 @@
 					value={currentWord}
 					oninput={handleInputChange}
 					placeholder="Enter your word..."
-					class="w-full px-6 py-4 text-center text-3xl font-black uppercase tracking-widest bg-gradient-to-br from-white to-gray-50 rounded-2xl border-3 border-gray-300 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-200 transition-all shadow-lg hover:shadow-xl text-gray-900"
+					class="w-full px-6 py-4 text-center text-3xl font-black uppercase tracking-widest bg-gradient-to-br from-white to-gray-50 rounded-2xl border-[3px] border-gray-300 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-200 transition-all shadow-lg hover:shadow-xl text-gray-900"
 					maxlength={wordLength}
 					autofocus
 				/>
@@ -419,8 +550,16 @@
 			</div>
 		{/if}
 
-		{#if history.length > 0}
-			<div class="flex justify-center mb-6">
+		{#if history.length > 0 || currentWord.length > 0 || showResult}
+			<div class="flex justify-center gap-3 mb-6 flex-wrap">
+				<button
+					onclick={resetSolver}
+					class="flex items-center space-x-2 px-5 py-2.5 text-sm font-bold text-red-600 hover:text-red-700 bg-white hover:bg-red-50 rounded-xl border-2 border-red-200 transition-all shadow-sm hover:shadow-md"
+				>
+					<span>&#x21bb;</span>
+					<span>Reset Solver</span>
+				</button>
+				{#if history.length > 0}
 				<button
 					onclick={goBack}
 					class="flex items-center space-x-2 px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 bg-white hover:bg-gray-50 rounded-xl border-2 border-gray-300 transition-all shadow-sm hover:shadow-md"
@@ -428,12 +567,13 @@
 					<span>&larr;</span>
 					<span>Remove Last Entry</span>
 				</button>
+				{/if}
 			</div>
 		{/if}
 
 		<div class="mb-8">
 			<button
-				onclick={submitGuess}
+				onclick={() => void submitGuess()}
 				disabled={loading || currentWord.length !== wordLength}
 				class="w-full max-w-md mx-auto block py-5 px-8 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 text-white font-black text-2xl rounded-2xl shadow-2xl transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-4"
 			>

@@ -6,24 +6,55 @@ declare const wasm_bindgen: any;
 importScripts('/wasm-lib/wasm_lib.js');
 
 const { compute } = wasm_bindgen;
+let initPromise: Promise<unknown> | null = null;
 
-self.onmessage = async (event: MessageEvent) => {
+function ensureReady() {
+	if (!initPromise) {
+		initPromise = wasm_bindgen('/wasm-lib/wasm_lib_bg.wasm');
+	}
+
+	return initPromise;
+}
+
+self.onmessage = async (event: MessageEvent<any>) => {
 	const data = event.data;
 
-	if (data === null) {
+	if (data?.type === 'init') {
 		try {
-			await wasm_bindgen('/wasm-lib/wasm_lib_bg.wasm');
-			self.postMessage(null);
+			await ensureReady();
+			self.postMessage({ type: 'ready' });
 		} catch (error: any) {
-			self.postMessage({ error: 'Failed to initialize solver' });
+			self.postMessage({
+				type: 'error',
+				error: error?.message || 'Failed to initialize the solver engine.'
+			});
 		}
 		return;
 	}
 
+	if (data?.type !== 'solve') {
+		return;
+	}
+
 	try {
-		const result = compute(data.state, data.isHardMode, data.useLimitNYT);
-		self.postMessage(result);
+		await ensureReady();
+		const result = compute(
+			data.state || '',
+			Boolean(data.isHardMode),
+			Boolean(data.useLimitNYT),
+			data.wordLength || 5
+		);
+
+		self.postMessage({
+			type: 'result',
+			requestId: data.requestId,
+			result
+		});
 	} catch (error: any) {
-		self.postMessage({ error: error?.message || 'Computation failed' });
+		self.postMessage({
+			type: 'error',
+			requestId: data.requestId,
+			error: error?.message || 'The solver could not finish this request.'
+		});
 	}
 };
