@@ -1,6 +1,8 @@
 <script lang="ts">
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
-  import { formatWaffleDateForSlug } from '$lib/waffle';
+  import WaffleAnswerCard from '$lib/components/WaffleAnswerCard.svelte';
+
+  let { data } = $props();
 
   const startDate = new Date(2022, 0, 1); // January 1, 2022
 </script>
@@ -28,7 +30,59 @@
   gameColor="amber"
   gameIcon="🧇"
   {startDate}
-  slugPrefix="waffle-answer-for-"
-  formatSlug={formatWaffleDateForSlug}
+  basePath="/waffle-archive"
+  selectedDate={data.selectedDateKey}
   description="Every Waffle puzzle answer. Browse the daily grid puzzle history."
 />
+
+<section id="archive-answer" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 scroll-mt-28">
+  {#if data.selectedWaffle}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <div class="mb-8 text-center">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-600 dark:text-amber-300">Selected archive date</p>
+        <h2 class="mt-3 text-3xl font-black text-gray-900 dark:text-white">
+          Waffle answer for {data.selectedWaffle.formattedDate}
+        </h2>
+      </div>
+      <WaffleAnswerCard
+        puzzle={data.selectedWaffle.puzzle}
+        solution={data.selectedWaffle.solution}
+        date={new Date(data.selectedWaffle.date)}
+      />
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        <div>
+          <h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">Across words</h3>
+          <div class="space-y-3">
+            {#each data.selectedWaffle.words.slice(0, 3) as word}
+              {@const definition = data.selectedWaffle.definitions.find((entry) => entry.word.toLowerCase() === word.toLowerCase())}
+              <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/60">
+                <div class="font-black uppercase tracking-wide text-gray-900 dark:text-white">{word}</div>
+                <div class="mt-1 text-sm text-gray-600 dark:text-gray-300">{definition?.definition ?? 'No definition available.'}</div>
+              </div>
+            {/each}
+          </div>
+        </div>
+        <div>
+          <h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">Down words</h3>
+          <div class="space-y-3">
+            {#each data.selectedWaffle.words.slice(3, 6) as word}
+              {@const definition = data.selectedWaffle.definitions.find((entry) => entry.word.toLowerCase() === word.toLowerCase())}
+              <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/60">
+                <div class="font-black uppercase tracking-wide text-gray-900 dark:text-white">{word}</div>
+                <div class="mt-1 text-sm text-gray-600 dark:text-gray-300">{definition?.definition ?? 'No definition available.'}</div>
+              </div>
+            {/each}
+          </div>
+        </div>
+      </div>
+    </div>
+  {:else}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Pick a Waffle date above</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        The solved grid and word definitions for the selected archive date will render here on the archive page.
+      </p>
+    </div>
+  {/if}
+</section>

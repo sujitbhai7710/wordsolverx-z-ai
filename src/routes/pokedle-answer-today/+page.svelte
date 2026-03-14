@@ -25,7 +25,7 @@
       { '@type': 'Question', name: 'What is Pokedle?', acceptedAnswer: { '@type': 'Answer', text: 'Pokedle is a Pokémon-themed daily guessing game inspired by Wordle.' } },
       { '@type': 'Question', name: 'What are the Pokedle game modes?', acceptedAnswer: { '@type': 'Answer', text: 'Modes include Classic, Silhouette, Flavor Text, and Card.' } },
     ]},
-    { '@type': 'NewsArticle', headline: 'Pokedle Answer Today', description: 'Get the confirmed Pokedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/pokedle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/logo.png' } } },
+    { '@type': 'Article', headline: 'Pokedle Answer Today', description: 'Get the confirmed Pokedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/pokedle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } } },
   ]};
 </script>
 

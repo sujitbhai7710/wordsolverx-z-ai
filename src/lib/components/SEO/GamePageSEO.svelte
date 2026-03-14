@@ -9,11 +9,11 @@
   } = $props();
 
   let title = $derived(`${wordLength} Letter Wordle - Play Daily ${wordLength}-Letter Word Puzzles | WordSolverX`);
-  let description = $derived(`Play the best ${wordLength}-letter Wordle game for free. Guess the hidden word in 6 tries. Challenge yourself with our daily ${wordLength}-letter word puzzles.`);
+  let description = $derived(`Play free ${wordLength}-letter Wordle puzzles on WordSolverX. Guess the hidden ${wordLength}-letter word in 6 tries with a fresh daily challenge, instant feedback, and unlimited replay support.`);
   let canonical = $derived(`https://wordsolverx.com/${wordLength}-letter-wordle`);
   let ogTitle = $derived(`${wordLength} Letter Wordle - Free Daily Puzzle`);
-  let ogDescription = $derived(`Test your vocabulary with ${wordLength}-letter word puzzles. New challenge every day!`);
-  let ogImage = $derived(`https://wordsolverx.com/og-images/${wordLength}-letter-wordle.png`);
+  let ogDescription = $derived(`Play a free daily ${wordLength}-letter Wordle puzzle with instant clues, clean feedback, and unlimited replay on WordSolverX.`);
+  let ogImage = $derived('https://wordsolverx.com/wordsolverx.webp');
 </script>
 
 <svelte:head>

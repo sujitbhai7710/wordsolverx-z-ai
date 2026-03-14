@@ -1,21 +1,33 @@
 <script lang="ts">
   const archives = [
-    { name: 'Wordle', href: '/wordle-answer-archive', description: 'Every NYT Wordle answer since June 2021', color: 'from-emerald-500 to-teal-600', icon: '🟩', shadow: 'shadow-emerald-500/20' },
-    { name: 'Quordle', href: '/quordle-archive', description: 'All four-word puzzle solutions', color: 'from-blue-500 to-indigo-600', icon: '4️⃣', shadow: 'shadow-blue-500/20' },
-    { name: 'Colordle', href: '/colordle-archive', description: 'Complete daily color answer history', color: 'from-indigo-500 to-purple-600', icon: '🎨', shadow: 'shadow-indigo-500/20' },
-    { name: 'Semantle', href: '/semantle-archive', description: 'Every secret word since launch', color: 'from-purple-500 to-violet-600', icon: '🧠', shadow: 'shadow-purple-500/20' },
-    { name: 'Phoodle', href: '/phoodle-archive', description: 'All food word puzzle solutions', color: 'from-orange-500 to-amber-600', icon: '🍽️', shadow: 'shadow-orange-500/20' },
-    { name: 'Globle', href: '/globle-archive', description: 'Daily country answers since 2022', color: 'from-sky-500 to-cyan-600', icon: '🌍', shadow: 'shadow-sky-500/20' },
-    { name: 'Waffle', href: '/waffle-archive', description: 'Complete waffle grid puzzle history', color: 'from-amber-500 to-orange-600', icon: '🧇', shadow: 'shadow-amber-500/20' },
+    { name: 'Wordle', href: '/wordle-answer-archive', description: 'Every NYT Wordle answer since June 2021', color: 'from-emerald-500 to-teal-600', icon: 'Wd', shadow: 'shadow-emerald-500/20' },
+    { name: 'Quordle', href: '/quordle-archive', description: 'All four-word puzzle solutions', color: 'from-blue-500 to-indigo-600', icon: 'Qd', shadow: 'shadow-blue-500/20' },
+    { name: 'Colordle', href: '/colordle-archive', description: 'Complete daily color answer history', color: 'from-indigo-500 to-purple-600', icon: 'Cd', shadow: 'shadow-indigo-500/20' },
+    { name: 'Semantle', href: '/semantle-archive', description: 'Every secret word since launch', color: 'from-purple-500 to-violet-600', icon: 'Sm', shadow: 'shadow-purple-500/20' },
+    { name: 'Phoodle', href: '/phoodle-archive', description: 'All food word puzzle solutions', color: 'from-orange-500 to-amber-600', icon: 'Ph', shadow: 'shadow-orange-500/20' },
+    { name: 'Globle', href: '/globle-archive', description: 'Daily country answers since 2022', color: 'from-sky-500 to-cyan-600', icon: 'Gb', shadow: 'shadow-sky-500/20' },
+    { name: 'Waffle', href: '/waffle-archive', description: 'Complete waffle grid puzzle history', color: 'from-amber-500 to-orange-600', icon: 'Wf', shadow: 'shadow-amber-500/20' },
+    { name: 'Worldle', href: '/worldle-archive', description: 'Country silhouette answers by date', color: 'from-sky-600 to-blue-700', icon: 'WL', shadow: 'shadow-sky-500/20' },
+    { name: 'Searchle', href: '/searchle-archive', description: 'Autocomplete puzzle answers and prompts', color: 'from-purple-500 to-pink-600', icon: 'Sr', shadow: 'shadow-purple-500/20' },
+    { name: 'Contexto', href: '/contexto-archive', description: 'Semantic answer words and game dates', color: 'from-violet-500 to-fuchsia-600', icon: 'Cx', shadow: 'shadow-violet-500/20' },
+    { name: 'Phrazle', href: '/phrazle-archive', description: 'Morning and afternoon phrase archive', color: 'from-emerald-500 to-lime-600', icon: 'Pz', shadow: 'shadow-emerald-500/20' },
+    { name: 'Spotle', href: '/spotle-archive', description: 'Spotify artist answer history', color: 'from-emerald-600 to-teal-600', icon: 'Sp', shadow: 'shadow-emerald-500/20' },
   ];
+
+  const archiveItemList = archives.map((archive, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: `${archive.name} Archive`,
+    url: `https://wordsolverx.com${archive.href}`
+  }));
 </script>
 
 <svelte:head>
-  <title>Puzzle Answer Archive - Wordle, Quordle, Phoodle & More | WordSolverX</title>
-  <meta name="description" content="Browse the complete answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, and Waffle puzzles. Calendar views, search, and direct links to every past solution." />
+  <title>Puzzle Answer Archives | WordSolverX</title>
+  <meta name="description" content="Browse complete answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Searchle, Contexto, Phrazle, and Spotle with direct links to past solutions." />
   <link rel="canonical" href="https://wordsolverx.com/archive" />
   <meta property="og:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
-  <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, and Waffle." />
+  <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Searchle, Contexto, Phrazle, and Spotle." />
   <meta property="og:url" content="https://wordsolverx.com/archive" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
@@ -29,7 +41,7 @@
       {
         "@type": "CollectionPage",
         "name": "Puzzle Answer Archive",
-        "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, and Waffle.",
+        "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Searchle, Contexto, Phrazle, and Spotle.",
         "url": "https://wordsolverx.com/archive",
         "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
       },
@@ -38,6 +50,11 @@
         "name": "Puzzle Answer Archive",
         "description": "Archive hub for past puzzle answers, history pages, and answer calendars.",
         "url": "https://wordsolverx.com/archive"
+      },
+      {
+        "@type": "ItemList",
+        "name": "Puzzle archive list",
+        "itemListElement": archiveItemList
       }
     ]
   })}</script>`}
@@ -45,10 +62,9 @@
 
 <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-    <!-- Hero -->
     <header class="text-center mb-14">
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-teal-500 to-cyan-600 text-white text-4xl mb-5 shadow-xl shadow-teal-500/30">
-        📚
+        Ar
       </div>
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-600 bg-clip-text text-transparent mb-4 tracking-tight leading-tight">
         Puzzle Answer Archive
@@ -62,24 +78,20 @@
       </div>
     </header>
 
-    <!-- Archive Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {#each archives as archive}
         <a
           href={archive.href}
           class="group relative bg-white dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 {archive.shadow} backdrop-blur-sm"
         >
-          <!-- Gradient top bar -->
           <div class="h-1.5 bg-gradient-to-r {archive.color}"></div>
           
           <div class="p-6">
             <div class="flex items-start gap-4">
-              <!-- Icon -->
-              <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br {archive.color} flex items-center justify-center text-white text-2xl shadow-lg {archive.shadow} group-hover:scale-110 transition-transform">
+              <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br {archive.color} flex items-center justify-center text-white text-2xl font-black shadow-lg {archive.shadow} group-hover:scale-110 transition-transform">
                 {archive.icon}
               </div>
               
-              <!-- Content -->
               <div class="flex-1 min-w-0">
                 <h2 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:{archive.color} group-hover:bg-clip-text transition-all">
                   {archive.name} Archive
@@ -90,7 +102,6 @@
               </div>
             </div>
 
-            <!-- Arrow -->
             <div class="mt-4 flex items-center justify-end">
               <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
                 Browse Archive
@@ -112,9 +123,14 @@
       <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
         If you are researching puzzle trends, checking a streak, or just catching up after missing a day, this archive hub gives you one central place to reach every supported answer history quickly.
       </p>
+      <p class="mt-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+        Every archive route is organized around clean permanent pages instead of thin one-date URL variations, which makes it easier to browse answer history without landing on duplicate or low-value pages. That helps both visitors and search engines understand where the main archive content lives.
+      </p>
+      <p class="mt-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+        If you regularly check Wordle, Quordle, Phoodle, Worldle, Searchle, Contexto, or other daily games, this archive hub is the fastest starting point for finding official past answers, confirming dates, and moving into the correct puzzle history page with fewer clicks.
+      </p>
     </section>
 
-    <!-- Footer CTA -->
     <div class="mt-14 text-center">
       <div class="inline-flex flex-col sm:flex-row items-center gap-4">
         <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-bold rounded-xl shadow-lg shadow-teal-500/25 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm">
@@ -122,7 +138,7 @@
           Home
         </a>
         <a href="/wordle-solver" class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm">
-          🟩 Try Wordle Solver
+          Try Wordle Solver
         </a>
       </div>
     </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import FiEye from '$lib/components/icons/FiEye.svelte';
   import FiHash from '$lib/components/icons/FiHash.svelte';
   import FiType from '$lib/components/icons/FiType.svelte';
   import FiChevronDown from '$lib/components/icons/FiChevronDown.svelte';
@@ -61,11 +60,6 @@
 </script>
 
 <div class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 rounded-3xl shadow-xl overflow-hidden border border-blue-100 dark:border-blue-900/30">
-  <div class="bg-gradient-to-r {modeColor} p-6 text-white">
-    <div class="flex items-center gap-3 mb-2"><FiEye class="text-2xl" /><h2 class="text-xl font-bold">{mode} Mode - Hints & Clues</h2></div>
-    <p class="text-white/80 text-sm">Use these clues to solve all 4 words!</p>
-  </div>
-
   <div class="p-6 space-y-4">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-blue-100 dark:border-blue-800/30">

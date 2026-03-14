@@ -1,15 +1,7 @@
 <script lang="ts">
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import FAQSection from '$lib/components/FAQSection.svelte';
-	import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameMonth, isSameDay } from 'date-fns';
 	import type { SpotleArtist, SpotleAnswer } from '$lib/spotle';
-
-	type SpotleDay = {
-		date: string;
-		dayNumber: number;
-		artistName: string;
-		artist: SpotleArtist | null;
-	};
 
 	let { data }: {
 		data: {
@@ -19,7 +11,6 @@
 			todayArtist: SpotleArtist | null;
 			artists: SpotleArtist[];
 			answers: SpotleAnswer[];
-			last30Days: SpotleDay[];
 			faqItems: { question: string; answer: string }[];
 			schemaJson: string;
 			meta: { title: string; description: string; keywords?: string };
@@ -27,7 +18,6 @@
 		};
 	} = $props();
 
-	const todayStr = $derived(data.todayStr);
 	const todayFormatted = $derived(data.todayFormatted);
 	const todayAnswer = $derived(data.todayAnswer);
 	const todayArtist = $derived(data.todayArtist);
@@ -37,53 +27,6 @@
 	const schemaJson = $derived(data.schemaJson);
 	const meta = $derived(data.meta);
 	const labels = $derived(data.labels);
-
-	const todayDate = new Date(`${todayStr}T12:00:00`);
-	let selectedMonth = $state(new Date(todayDate.getFullYear(), todayDate.getMonth(), 1));
-	let selectedDay = $state<SpotleDay | null>(null);
-
-	const calendarDays = $derived.by(() => {
-		const monthStart = startOfMonth(selectedMonth);
-		const monthEnd = endOfMonth(selectedMonth);
-		const gridStart = startOfWeek(monthStart, { weekStartsOn: 0 });
-		const gridEnd = endOfWeek(monthEnd, { weekStartsOn: 0 });
-		const days: Date[] = [];
-		let cursor = gridStart;
-		while (cursor <= gridEnd) {
-			days.push(new Date(cursor));
-			cursor = addDays(cursor, 1);
-		}
-		return days;
-	});
-
-	const answerLookup = $derived.by(() => {
-		const map = new Map<string, SpotleDay>();
-		for (const answer of answers) {
-			const artist =
-				artists.find((entry) => entry.artist.toLowerCase() === answer.artist.toLowerCase()) ??
-				null;
-			map.set(answer.date, {
-				date: answer.date,
-				dayNumber: answer.dayNumber,
-				artistName: answer.artist,
-				artist
-			});
-		}
-		return map;
-	});
-
-	function prevMonth() {
-		selectedMonth = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() - 1, 1);
-	}
-
-	function nextMonth() {
-		selectedMonth = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1, 1);
-	}
-
-	function pickDay(dateStr: string) {
-		const entry = answerLookup.get(dateStr) ?? null;
-		selectedDay = entry;
-	}
 </script>
 
 <svelte:head>
@@ -151,7 +94,7 @@
 					</div>
 				{:else}
 					<div class="text-gray-500">
-						Answer not available for today. Check the calendar below for recent answers.
+						Answer not available for today right now. Please check back later.
 					</div>
 				{/if}
 			</div>
@@ -176,88 +119,24 @@
 		</section>
 
 		<section class="bg-white border border-gray-200 rounded-3xl shadow-lg p-6 mb-12">
-			<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-				<div>
-					<h2 class="text-2xl font-bold text-gray-900">Calendar Archive</h2>
-					<p class="text-gray-500 text-sm">Tap a day to reveal the answer.</p>
-				</div>
-				<div class="flex items-center gap-2">
-					<button
-						type="button"
-						onclick={prevMonth}
-						class="h-9 w-9 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50"
-					>
-						&lt;
-					</button>
-					<div class="text-sm font-semibold text-gray-900 min-w-[140px] text-center">
-						{format(selectedMonth, 'MMMM yyyy')}
-					</div>
-					<button
-						type="button"
-						onclick={nextMonth}
-						class="h-9 w-9 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50"
-					>
-						&gt;
-					</button>
-				</div>
+			<h2 class="text-2xl font-bold text-gray-900">Need an older Spotle answer?</h2>
+			<p class="mt-3 text-gray-600">
+				Older artist answers now live on the dedicated Spotle archive page instead of this today page.
+			</p>
+			<div class="mt-5 flex flex-wrap gap-3">
+				<a
+					href="/spotle-archive"
+					class="inline-flex items-center rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
+				>
+					Open Spotle Archive
+				</a>
+				<a
+					href="/spotle-solver"
+					class="inline-flex items-center rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+				>
+					Open Spotle Solver
+				</a>
 			</div>
-
-			<div class="max-w-md">
-				<div class="rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-teal-50 p-4 shadow-sm">
-					<div class="grid grid-cols-7 gap-1 text-center text-[11px] font-semibold text-emerald-700 mb-3">
-						{#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as day}
-							<div>{day}</div>
-						{/each}
-					</div>
-
-					<div class="grid grid-cols-7 gap-1">
-						{#each calendarDays as day}
-							{@const dateStr = format(day, 'yyyy-MM-dd')}
-							{@const entry = answerLookup.get(dateStr)}
-							{@const inMonth = isSameMonth(day, selectedMonth)}
-							{@const isFuture = day > todayDate}
-							<button
-								type="button"
-								disabled={isFuture || !entry}
-								onclick={() => entry && !isFuture && pickDay(dateStr)}
-								class={`h-9 w-9 rounded-full text-xs font-semibold flex items-center justify-center transition ${
-									entry && !isFuture
-										? 'bg-emerald-600 text-white shadow-sm hover:bg-emerald-700'
-										: 'bg-white text-gray-300 border border-emerald-100'
-								} ${!inMonth ? 'opacity-30' : ''} ${isFuture ? 'cursor-not-allowed opacity-30' : ''} ${isSameDay(day, todayDate) ? 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-white' : ''}`}
-							>
-								{format(day, 'd')}
-							</button>
-						{/each}
-					</div>
-				</div>
-
-				{#if selectedDay}
-					<div class="mt-4 border border-emerald-100 bg-emerald-50 rounded-2xl p-4">
-						<p class="text-xs uppercase tracking-[0.2em] text-emerald-600">
-							{format(new Date(selectedDay.date), 'MMMM d, yyyy')}
-						</p>
-						<div class="flex gap-3 mt-3 items-center">
-							<div>
-								<p class="text-sm text-emerald-700 font-semibold">Day #{selectedDay.dayNumber}</p>
-								<p class="text-lg font-black text-gray-900">{selectedDay.artistName}</p>
-								{#if selectedDay.artist}
-									<p class="text-xs text-gray-600 mt-1">
-										#{selectedDay.artist.index + 1} - {selectedDay.artist.genre} -
-										{labels.countryNames[selectedDay.artist.country] ??
-										selectedDay.artist.country.toUpperCase()}
-									</p>
-								{/if}
-							</div>
-						</div>
-					</div>
-				{:else}
-					<div class="mt-4 rounded-2xl border border-dashed border-emerald-100 bg-white/70 p-4 text-sm text-gray-500">
-						Select a date with an answer to see the artist.
-					</div>
-				{/if}
-			</div>
-
 		</section>
 
 		<FAQSection title="Spotle Answers FAQ (Last 30 Days)" faqs={faqItems} />

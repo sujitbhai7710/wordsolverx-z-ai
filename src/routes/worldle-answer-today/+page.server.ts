@@ -9,14 +9,10 @@ import {
   generateWebPageSchema,
 } from '$lib/seo';
 import {
-  WORLDLE_START_DATE,
   getCurrentWorldleDateString,
   getDailyWorldleAnswer,
   getDisplayDateLabel,
-  getMonthDate,
-  getMonthKey,
   getRecentWorldleAnswers,
-  isValidWorldleDate,
 } from '$lib/worldle/logic';
 import type { WorldleCity, WorldleCountry, WorldleCountryDetailsMap } from '$lib/worldle/types';
 import type { PageServerLoad } from './$types';
@@ -25,32 +21,13 @@ const countries = countriesData as WorldleCountry[];
 const cities = citiesData as WorldleCity[];
 const countryDetails = countryDetailsData as WorldleCountryDetailsMap;
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async () => {
   const todayDate = getCurrentWorldleDateString();
-  const requestedDate = url.searchParams.get('date');
-  const selectedDate = requestedDate && isValidWorldleDate(requestedDate, todayDate) ? requestedDate : null;
-
-  const fallbackMonthKey = getMonthKey(selectedDate ?? todayDate);
-  const requestedMonth = url.searchParams.get('month');
-  const fallbackMonth = getMonthDate(fallbackMonthKey);
-  const minimumMonth = getMonthDate(getMonthKey(WORLDLE_START_DATE));
-  const maximumMonth = getMonthDate(getMonthKey(todayDate));
-  const requestedMonthDate = isValidMonthKey(requestedMonth) ? getMonthDate(requestedMonth) : null;
-  const displayMonth =
-    requestedMonthDate &&
-    requestedMonthDate.getTime() >= minimumMonth.getTime() &&
-    requestedMonthDate.getTime() <= maximumMonth.getTime()
-      ? requestedMonthDate
-      : fallbackMonth;
 
   const todayAnswer = getDailyWorldleAnswer(countries, cities, countryDetails, todayDate);
   const recentAnswers = getRecentWorldleAnswers(10, countries, cities, countryDetails, todayDate);
-  const selectedAnswer = selectedDate
-    ? getDailyWorldleAnswer(countries, cities, countryDetails, selectedDate)
-    : null;
 
   const formattedTodayDate = getDisplayDateLabel(todayDate);
-  const formattedSelectedDate = selectedDate ? getDisplayDateLabel(selectedDate) : null;
 
   const faqEntries = recentAnswers.map((answer) => ({
     question: `What was the Worldle answer on ${getDisplayDateLabel(answer.date)}?`,
@@ -58,14 +35,14 @@ export const load: PageServerLoad = async ({ url }) => {
   }));
 
   const pageTitle = `Worldle Hints and Answer for Today (${formattedTodayDate})`;
-  const pageDescription = `Get Worldle hints and the confirmed Worldle answer for today, ${formattedTodayDate}. Today's country is ${todayAnswer.country.name}, with recent answers and the built-in date calendar for past puzzles.`;
+  const pageDescription = `Get Worldle hints and the confirmed Worldle answer for today, ${formattedTodayDate}. Today's country is ${todayAnswer.country.name}, with a direct link to the full Worldle archive for older puzzles.`;
   const pageKeywords = `worldle answer today, worldle answer, worldle hint, worldle hint today, worldle answer for ${formattedTodayDate}`;
 
   const pageUrl = 'https://wordsolverx.com/worldle-answer-today';
 
   const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    '@type': 'Article',
     headline: `Worldle Answer Today for ${formattedTodayDate}: ${todayAnswer.country.name}`,
     description: pageDescription,
     datePublished: `${todayDate}T00:00:00Z`,
@@ -97,12 +74,12 @@ export const load: PageServerLoad = async ({ url }) => {
         text: 'Read the top answer card to see the current Worldle country and quick facts.',
       },
       {
-        name: 'Review recent answers',
-        text: 'Use the last 10 answers and FAQs to compare today with recent Worldle puzzles.',
+        name: 'Open the archive',
+        text: 'Use the archive link on the page whenever you need to verify an older Worldle answer.',
       },
       {
-        name: 'Pick a date',
-        text: 'Select any valid day in the calendar to load that date and reveal the matching Worldle answer below it.',
+        name: 'Solve if needed',
+        text: 'Open the Worldle solver if you want help before revealing the answer.',
       },
     ]),
     generateSoftwareApplicationSchema('Worldle Answer Today', 'UtilitiesApplication'),
@@ -117,12 +94,7 @@ export const load: PageServerLoad = async ({ url }) => {
   return {
     todayDate,
     todayAnswer,
-    recentAnswers,
-    selectedDate,
-    selectedAnswer,
-    displayMonth,
     formattedTodayDate,
-    formattedSelectedDate,
     faqEntries,
     schemas,
     meta: {
@@ -133,12 +105,3 @@ export const load: PageServerLoad = async ({ url }) => {
     },
   };
 };
-
-function isValidMonthKey(value: string | null): value is string {
-  if (typeof value !== 'string' || !/^\d{4}-\d{2}$/.test(value)) {
-    return false;
-  }
-
-  const [, month] = value.split('-').map(Number);
-  return month >= 1 && month <= 12;
-}

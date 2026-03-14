@@ -96,7 +96,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
             '@graph': [
                 { '@type': 'FAQPage', mainEntity: faqItems },
                 {
-                    '@type': 'NewsArticle',
+                    '@type': 'Article',
                     headline: pageTitle,
                     description: pageDescription,
                     image: [featuredImage],

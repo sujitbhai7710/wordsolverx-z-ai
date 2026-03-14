@@ -1,11 +1,11 @@
 <svelte:head>
-  <title>Contact WordSolverX</title>
+  <title>Contact WordSolverX | Support, Feedback, and Corrections</title>
   <meta
     name="description"
     content="Contact WordSolverX for support, corrections, feedback, partnerships, or questions about our puzzle answer pages and solver tools."
   />
   <link rel="canonical" href="https://wordsolverx.com/contact" />
-  <meta property="og:title" content="Contact WordSolverX" />
+  <meta property="og:title" content="Contact WordSolverX | Support, Feedback, and Corrections" />
   <meta
     property="og:description"
     content="Reach WordSolverX by email for site updates, corrections, support, and business inquiries."
@@ -14,20 +14,29 @@
   <meta property="og:url" content="https://wordsolverx.com/contact" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Contact WordSolverX" />
+  <meta name="twitter:title" content="Contact WordSolverX | Support, Feedback, and Corrections" />
   <meta
     name="twitter:description"
     content="Get in touch with WordSolverX for support, feedback, and puzzle site updates."
   />
   <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
-  {@html `<script type="application/ld+json">${JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
-    name: 'Contact WordSolverX',
-    description: 'Contact page for WordSolverX support, feedback, and business inquiries.',
-    url: 'https://wordsolverx.com/contact',
-    email: 'wordsolverx@gmail.com'
-  })}</script>`}
+  {@html `<script type="application/ld+json">${JSON.stringify([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ContactPage',
+      name: 'Contact WordSolverX',
+      description: 'Contact page for WordSolverX support, feedback, and business inquiries.',
+      url: 'https://wordsolverx.com/contact',
+      email: 'wordsolverx@gmail.com'
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Contact WordSolverX',
+      description: 'Contact WordSolverX for support, corrections, feedback, and business questions.',
+      url: 'https://wordsolverx.com/contact'
+    }
+  ])}</script>`}
 </svelte:head>
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

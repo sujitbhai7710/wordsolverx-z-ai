@@ -2,50 +2,8 @@
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
   import WorldleCountryCard from '$lib/components/worldle/WorldleCountryCard.svelte';
-  import WorldleDateCalendar from '$lib/components/worldle/WorldleDateCalendar.svelte';
-  import { getDisplayDateLabel } from '$lib/worldle/logic';
-  import type { WorldleAnswer } from '$lib/worldle/types';
 
   let { data } = $props();
-
-  let selectedDate = $state<string | null>(data.selectedDate);
-  let selectedAnswer = $state<WorldleAnswer | null>(data.selectedAnswer);
-  let selectedLabel = $state<string | null>(data.formattedSelectedDate);
-  let displayMonth = $state<Date>(new Date(data.displayMonth));
-  let isArchiveLoading = $state(false);
-  let archiveError = $state('');
-
-  async function selectArchiveDate(date: string): Promise<void> {
-    isArchiveLoading = true;
-    archiveError = '';
-
-    try {
-      const response = await fetch(`/api/worldle-answer?date=${date}`);
-      const payload = await response.json();
-
-      if (!response.ok) {
-        archiveError = payload?.error || 'Failed to load the selected Worldle answer.';
-        return;
-      }
-
-      selectedDate = date;
-      selectedAnswer = payload.answer as WorldleAnswer;
-      selectedLabel = getDisplayDateLabel(date);
-    } catch {
-      archiveError = 'Failed to load the selected Worldle answer.';
-    } finally {
-      isArchiveLoading = false;
-    }
-  }
-
-  function jumpMonth(month: Date): void {
-    displayMonth = new Date(month);
-  }
-
-  function jumpToRecent(date: string): void {
-    jumpMonth(new Date(`${date}T00:00:00`));
-    void selectArchiveDate(date);
-  }
 </script>
 
 <svelte:head>
@@ -81,7 +39,7 @@
           Worldle Hints and Answer for Today ({data.formattedTodayDate})
         </h1>
         <p class="mt-4 max-w-3xl text-base leading-7 text-sky-50/90 sm:text-lg">
-          Check the verified Worldle country for {data.formattedTodayDate}, review the last 10 answers, and use the archive calendar below to load any past Worldle date on the server.
+          Check the verified Worldle country for {data.formattedTodayDate}, then jump to the dedicated archive page if you need an older Worldle answer.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <div class="inline-flex items-center gap-2 rounded-full bg-white/12 px-4 py-2 text-sm font-semibold text-white">
@@ -114,115 +72,34 @@
     </div>
 
     <section class="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Last 10 days</p>
-          <h2 class="mt-1 text-3xl font-black tracking-tight text-slate-900 dark:text-white">Recent Worldle answers</h2>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">More Worldle tools</p>
+          <h2 class="mt-1 text-3xl font-black tracking-tight text-slate-900 dark:text-white">Open the archive or solve first</h2>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
+            Older Worldle answers now live on the dedicated archive page, so this today page stays focused on the current country only.
+          </p>
         </div>
-        <a
-          class="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-sky-600 dark:hover:bg-sky-500"
-          href="/worldle-solver"
-        >
-          Open Worldle solver
-        </a>
-      </div>
-
-      <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-        {#each data.recentAnswers as answer}
-          <button
-            class={`rounded-3xl border px-4 py-4 transition ${
-              answer.date === (selectedDate ?? data.todayDate)
-                ? 'border-sky-500 bg-sky-50 shadow-lg shadow-sky-500/10 dark:border-sky-400 dark:bg-sky-900/20'
-                : 'border-slate-200 bg-slate-50 hover:border-sky-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900/60 dark:hover:border-sky-500 dark:hover:bg-slate-900'
-            }`}
-            onclick={() => jumpToRecent(answer.date)}
-            type="button"
+        <div class="flex flex-wrap gap-3">
+          <a
+            class="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-sky-600 dark:hover:bg-sky-500"
+            href="/worldle-archive"
           >
-            <div class="flex items-center gap-3">
-              <img
-                alt={`Flag of ${answer.country.name}`}
-                class="h-9 w-12 rounded-xl border border-slate-200 object-cover dark:border-slate-700"
-                height="36"
-                loading="lazy"
-                src={`https://flagcdn.com/w80/${answer.country.code.toLowerCase()}.png`}
-                width="48"
-              />
-              <div class="min-w-0">
-                <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">{answer.country.name}</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400">{getDisplayDateLabel(answer.date)}</p>
-              </div>
-            </div>
-            <p class="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-sky-700 dark:text-sky-300">
-              Worldle #{answer.worldleNumber}
-            </p>
-          </button>
-        {/each}
+            Browse Worldle Archive
+          </a>
+          <a
+            class="inline-flex items-center justify-center rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-900/70"
+            href="/worldle-solver"
+          >
+            Open Worldle Solver
+          </a>
+        </div>
       </div>
     </section>
 
     <div class="mt-10 rounded-3xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
       <FAQSection faqs={data.faqEntries} title="Worldle Answers For The Last 10 Days" />
     </div>
-
-    <section class="mt-10 grid gap-8 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-      <div>
-        <div class="mb-5">
-          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Calendar lookup</p>
-          <h2 class="mt-1 text-3xl font-black tracking-tight text-slate-900 dark:text-white">Select any Worldle date</h2>
-          <p class="mt-3 text-base leading-7 text-slate-600 dark:text-slate-300">
-            The calendar below loads answers directly from the server. Click any available day from January 21, 2022 through today to reveal that date&apos;s Worldle answer underneath.
-          </p>
-        </div>
-        <WorldleDateCalendar
-          {displayMonth}
-          minDate="2022-01-21"
-          onSelectDate={selectArchiveDate}
-          onSelectMonth={jumpMonth}
-          {selectedDate}
-          todayDate={data.todayDate}
-        />
-      </div>
-
-      <div>
-        {#if isArchiveLoading}
-          <section class="flex min-h-[24rem] items-center justify-center rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
-            <div class="max-w-md">
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Loading</p>
-              <h3 class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">Fetching archive answer</h3>
-              <p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                Pulling the selected Worldle answer from the server now.
-              </p>
-            </div>
-          </section>
-        {:else if selectedAnswer}
-          <WorldleCountryCard
-            answer={selectedAnswer}
-            headline="Selected archive date"
-            subheadline={`Showing the Worldle answer for ${selectedLabel}.`}
-          />
-          {#if archiveError}
-            <p class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800 dark:border-amber-900/40 dark:bg-amber-950/30 dark:text-amber-200">
-              {archiveError}
-            </p>
-          {/if}
-        {:else}
-          <section class="flex min-h-[24rem] items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white p-8 text-center shadow-xl shadow-slate-200/60 dark:border-slate-600 dark:bg-slate-800 dark:shadow-none">
-            <div class="max-w-md">
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Archive preview</p>
-              <h3 class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">Choose a date to reveal that answer</h3>
-              <p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                Pick a day from the calendar and the answer will load right here, including its capital, region, neighbors, and key stats.
-              </p>
-            </div>
-          </section>
-          {#if archiveError}
-            <p class="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700 dark:border-rose-900/40 dark:bg-rose-950/30 dark:text-rose-200">
-              {archiveError}
-            </p>
-          {/if}
-        {/if}
-      </div>
-    </section>
 
     <article class="mt-10 grid gap-6 lg:grid-cols-2">
       <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
@@ -232,7 +109,7 @@
           Worldle gives you a country silhouette each day and asks you to guess the hidden country. Every incorrect guess returns a distance in kilometers, a direction arrow, and a proximity percentage. Those clues tell you how far your guess is from the target and in which direction to move next.
         </p>
         <p class="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">
-          This page helps in two ways: it shows today&apos;s answer once you are ready to reveal it, and it lets you inspect past dates so you can study patterns, check missed puzzles, or confirm an older answer quickly.
+          This page shows today&apos;s answer once you are ready to reveal it. If you need to verify an older puzzle, use the Worldle archive instead of a dated slug page.
         </p>
       </section>
 
@@ -240,10 +117,10 @@
         <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Why this page helps</p>
         <h2 class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">Use the answer page without leaving WordSolverX</h2>
         <p class="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">
-          The Worldle answer page is built into the same WordSolverX layout as the rest of the site, so it uses your normal navigation, shared header, and footer. It is designed like an article for search visibility, but it still behaves like a practical tool with a fast server-rendered date lookup.
+          The Worldle answer page uses the same shared WordSolverX layout as the rest of the site, so it stays fast, simple, and easy to navigate. It is designed like an article for search visibility, but it still works like a practical answer tool.
         </p>
         <p class="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">
-          If you want to solve the puzzle instead of revealing it, use the Worldle Solver. It runs in the browser and filters countries from the exact same base dataset used here for the answer and archive views.
+          If you want to solve the puzzle instead of revealing it, use the Worldle Solver. It runs in the browser and filters countries from the same base dataset used for the answer and archive views.
         </p>
       </section>
     </article>

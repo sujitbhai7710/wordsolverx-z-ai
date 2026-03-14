@@ -1,5 +1,5 @@
+import { format } from 'date-fns';
 import { getJSTToday, getWordleNumber, formatDate } from '$lib/utils';
-import { getTodayWordle } from '$lib/api';
 import type { WordleAnswer } from '$lib/api';
 import { getAuthorForGame, getAuthorProfileUrl } from '$lib/authors';
 import { generatePersonAuthorSchema } from '$lib/seo';
@@ -12,12 +12,13 @@ interface TodayApiResponse extends WordleAnswer {
 
 export const load: PageServerLoad = async () => {
     const today = getJSTToday();
+    const todayKey = format(today, 'yyyy-MM-dd');
     const fallbackNumber = getWordleNumber(today);
     const fallbackDate = formatDate(today);
 
     let wordleData: TodayApiResponse | null = null;
     try {
-        wordleData = (await getTodayWordle()) as TodayApiResponse;
+        wordleData = await getWordleDataWithFallback(todayKey, fallbackNumber);
     } catch (error) {
         console.error("Error fetching today's Wordle:", error);
     }
@@ -49,17 +50,17 @@ export const load: PageServerLoad = async () => {
 
     const articleSchema = {
         '@context': 'https://schema.org',
-        '@type': 'NewsArticle',
+        '@type': 'Article',
         headline: `Wordle Hints and Answer for Today (${formattedDate})`,
         datePublished: new Date(wordleData?.date || today).toISOString(),
         dateModified: new Date(wordleData?.date || today).toISOString(),
         author: generatePersonAuthorSchema(getAuthorForGame('Wordle'), getAuthorProfileUrl(getAuthorForGame('Wordle'))),
-        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/logo.png' } },
+        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } },
         description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/wordle-answer-today' },
     };
 
-    const socialImageUrl = wordleData?.social_image || 'https://wordsolverx.com/logo.png';
+    const socialImageUrl = wordleData?.social_image || 'https://wordsolverx.com/wordsolverx.webp';
     const pageTitle = `Wordle Hints and Answer for Today (${formattedDate})`;
     const pageDescription = `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. See the full solution for Wordle #${wordleNumber}, plus clue details and recent answers.`;
     const pageKeywords = `wordle answer today, wordle answer, wordle hint, wordle hint today, wordle answer for ${formattedDate}`;
@@ -80,3 +81,51 @@ export const load: PageServerLoad = async () => {
         },
     };
 };
+
+async function getWordleDataWithFallback(todayKey: string, fallbackNumber: number): Promise<TodayApiResponse | null> {
+    const todayResponse = await fetch('https://api.wordsolverx.workers.dev/api/today');
+    const todayPayload = (await todayResponse.json()) as TodayApiResponse & { error?: string };
+
+    if (todayResponse.ok && todayPayload?.solution) {
+        return todayPayload;
+    }
+
+    const recentAnswers = Array.isArray(todayPayload?.recent_answers) ? todayPayload.recent_answers : [];
+
+    try {
+        const nytResponse = await fetch(`https://www.nytimes.com/svc/wordle/v2/${todayKey}.json`, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 WordSolverX'
+            }
+        });
+
+        if (nytResponse.ok) {
+            const nytPayload = await nytResponse.json() as {
+                solution?: string;
+                days_since_launch?: number;
+                editor?: string;
+            };
+
+            if (nytPayload.solution) {
+                return {
+                    id: nytPayload.days_since_launch ?? fallbackNumber,
+                    date: todayKey,
+                    solution: nytPayload.solution,
+                    days_since_launch: nytPayload.days_since_launch,
+                    editor: nytPayload.editor,
+                    recent_answers: recentAnswers
+                };
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching NYT Wordle fallback:', error);
+    }
+
+    const latestAvailable = recentAnswers.find((answer) => answer?.solution) ?? null;
+    return latestAvailable
+        ? {
+            ...latestAvailable,
+            recent_answers: recentAnswers
+        }
+        : null;
+}

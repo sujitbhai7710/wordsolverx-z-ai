@@ -15,9 +15,19 @@ export const load: PageServerLoad = async () => {
     month: 'long',
     day: 'numeric',
   });
-  const pageTitle = `Betweenle Hints and Answer for Today (${todaySeoDate})`;
-  const pageDescription = `Get Betweenle hints and the confirmed Betweenle answer for today, ${todaySeoDate}. Check the live puzzle word first, then browse the full Betweenle archive calendar.`;
-  const pageKeywords = `betweenle answer today, betweenle answer, betweenle hint, betweenle hint today, betweenle answer for ${todaySeoDate}`;
+  const pageTitle = `Betweenle Hints and Answer Today (${todaySeoDate})`;
+  const pageDescription = `Check Betweenle hints and reveal the official Betweenle answer for today, ${todaySeoDate}. Includes clue cards, puzzle number, recent previous answers, and quick links to the solver and archive hub.`;
+  const pageKeywords = [
+    'betweenle answer today',
+    'betweenle answer',
+    'betweenle hint today',
+    'betweenle hints and answer for today',
+    'betweenle daily answer',
+    `betweenle answer for ${todaySeoDate}`,
+    'betweenle solver',
+    'betweenle previous answers',
+    'betweenle archive',
+  ].join(', ');
 
   return {
     todayAnswer,

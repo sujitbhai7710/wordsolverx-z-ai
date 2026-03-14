@@ -39,10 +39,7 @@
         <SemantleClues word={data.word} puzzleNumber={data.puzzleNumber} />
       </div>
 
-      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-        <a href="/semantle-answer-yesterday" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all">
-          Yesterday's Answer
-        </a>
+      <div class="flex justify-center gap-4 mb-12">
         <a href="/semantle-archive" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all">
           Browse Archive
         </a>

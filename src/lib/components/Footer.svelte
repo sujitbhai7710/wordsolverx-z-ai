@@ -57,11 +57,6 @@
             </a>
           </li>
           <li>
-            <a href="/yesterday" class="text-base text-gray-600 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-400 transition-colors duration-150">
-              Yesterday's Answer
-            </a>
-          </li>
-          <li>
             <a href="/archive" class="text-base text-gray-600 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-400 transition-colors duration-150">
               Answer Archive
             </a>

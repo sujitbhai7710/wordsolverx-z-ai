@@ -7,8 +7,8 @@
     gameIcon = '📅',
     startDate,
     availableDates = [],
-    slugPrefix,
-    formatSlug,
+    basePath,
+    selectedDate = null,
     description = '',
   }: {
     gameName: string;
@@ -16,8 +16,8 @@
     gameIcon?: string;
     startDate: Date;
     availableDates?: Date[];
-    slugPrefix: string;
-    formatSlug: (date: Date) => string;
+    basePath: string;
+    selectedDate?: string | null;
     description?: string;
   } = $props();
 
@@ -28,7 +28,7 @@
 
   // All puzzles from start to today
   let allPuzzles = $derived.by(() => {
-    const result: { date: Date; dayNum: number; slug: string; formatted: string }[] = [];
+    const result: { date: Date; dateKey: string; dayNum: number; href: string; formatted: string }[] = [];
 
     if (availableDates.length > 0) {
       const sortedDates = [...availableDates]
@@ -36,10 +36,12 @@
         .sort((a, b) => a.getTime() - b.getTime());
 
       sortedDates.forEach((date, index) => {
+        const dateKey = format(date, 'yyyy-MM-dd');
         result.push({
           date: new Date(date),
+          dateKey,
           dayNum: index + 1,
-          slug: `/${slugPrefix}${formatSlug(date)}`,
+          href: `${basePath}?date=${dateKey}#archive-answer`,
           formatted: format(date, 'MMMM d, yyyy'),
         });
       });
@@ -47,10 +49,12 @@
       let d = new Date(startDate);
       let num = 1;
       while (d <= today) {
+        const dateKey = format(d, 'yyyy-MM-dd');
         result.push({
           date: new Date(d),
+          dateKey,
           dayNum: num,
-          slug: `/${slugPrefix}${formatSlug(d)}`,
+          href: `${basePath}?date=${dateKey}#archive-answer`,
           formatted: format(d, 'MMMM d, yyyy'),
         });
         d = addDays(d, 1);
@@ -78,9 +82,9 @@
 
   // Lookup set for puzzle dates
   let puzzleDateSet = $derived.by(() => {
-    const set = new Map<string, { dayNum: number; slug: string }>();
+    const set = new Map<string, { dayNum: number; href: string }>();
     for (const p of allPuzzles) {
-      set.set(format(p.date, 'yyyy-MM-dd'), { dayNum: p.dayNum, slug: p.slug });
+      set.set(p.dateKey, { dayNum: p.dayNum, href: p.href });
     }
     return set;
   });
@@ -140,7 +144,7 @@
 </script>
 
 <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
     <!-- Hero Header -->
     <header class="text-center mb-10">
       <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br {colors.gradient} text-white text-3xl mb-4 shadow-lg shadow-{gameColor}-500/20">
@@ -159,7 +163,7 @@
     </header>
 
     <!-- Controls Bar -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+    <div class="max-w-[40rem] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
       <!-- View Toggle -->
       <div class="inline-flex bg-white dark:bg-gray-800 rounded-xl p-1 shadow-sm border border-gray-200 dark:border-gray-700">
         <button
@@ -192,9 +196,9 @@
 
     <!-- Calendar View -->
     {#if viewMode === 'calendar' && !searchQuery.trim()}
-      <div class="bg-white dark:bg-gray-800/80 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm">
+      <div class="max-w-[40rem] mx-auto bg-white dark:bg-gray-800/80 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm">
         <!-- Month Navigation -->
-        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r {colors.bg}">
+        <div class="flex items-center justify-between px-4 py-3 sm:px-5 sm:py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r {colors.bg}">
           <button
             aria-label="Previous Month"
             onclick={prevMonth}
@@ -217,7 +221,7 @@
         </div>
 
         <!-- Quick Month Jump -->
-        <div class="px-6 py-3 border-b border-gray-100 dark:border-gray-700 overflow-x-auto">
+        <div class="px-4 py-3 sm:px-5 border-b border-gray-100 dark:border-gray-700 overflow-x-auto">
           <div class="flex gap-1.5 min-w-max">
             {#each availableMonths.slice(0, 12) as m}
               <button
@@ -235,31 +239,32 @@
         </div>
 
         <!-- Calendar Grid -->
-        <div class="p-4 sm:p-6">
+        <div class="mx-auto max-w-[27rem] p-3 sm:p-4">
           <!-- Day Headers -->
-          <div class="grid grid-cols-7 gap-1 mb-2">
+          <div class="grid grid-cols-7 gap-1 sm:gap-1.5 mb-2">
             {#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as day}
               <div class="text-center text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider py-2">{day}</div>
             {/each}
           </div>
 
           <!-- Date Cells -->
-          <div class="grid grid-cols-7 gap-1">
+          <div class="grid grid-cols-7 gap-1 sm:gap-1.5">
             {#each calendarDays as day}
               {@const key = format(day, 'yyyy-MM-dd')}
               {@const puzzle = puzzleDateSet.get(key)}
               {@const isCurrentMonth = isSameMonth(day, currentMonth)}
               {@const isToday = isSameDay(day, today)}
               {@const isFuture = isAfter(day, today)}
+              {@const isSelected = selectedDate === key}
               
               {#if puzzle && isCurrentMonth}
                 <a
-                  href={puzzle.slug}
-                  class="relative aspect-square flex flex-col items-center justify-center rounded-xl text-sm font-semibold transition-all duration-200 {colors.hover} {colors.border} border group cursor-pointer"
+                  href={puzzle.href}
+                  class="relative aspect-square flex flex-col items-center justify-center rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 {colors.hover} {colors.border} border group cursor-pointer {isSelected ? `ring-2 ${colors.ring}` : ''}"
                   title="{gameName} #{puzzle.dayNum} - {format(day, 'MMMM d, yyyy')}"
                 >
-                  <span class="text-gray-900 dark:text-white text-base">{format(day, 'd')}</span>
-                  <span class="text-[10px] {colors.text} font-bold opacity-70 group-hover:opacity-100">#{puzzle.dayNum}</span>
+                  <span class="text-sm sm:text-base text-gray-900 dark:text-white">{format(day, 'd')}</span>
+                  <span class="text-[9px] sm:text-[10px] {colors.text} font-bold opacity-70 group-hover:opacity-100">#{puzzle.dayNum}</span>
                   {#if isToday}
                     <span class="absolute top-1 right-1 w-2 h-2 rounded-full {colors.badge} animate-pulse"></span>
                   {/if}
@@ -294,7 +299,7 @@
 
     <!-- List View / Search Results -->
     {:else}
-      <div class="bg-white dark:bg-gray-800/80 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm">
+      <div class="max-w-[40rem] mx-auto bg-white dark:bg-gray-800/80 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm">
         <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r {colors.bg}">
           <h2 class="font-bold text-gray-900 dark:text-white">
             {#if searchQuery.trim()}
@@ -307,8 +312,8 @@
         <div class="divide-y divide-gray-100 dark:divide-gray-700 max-h-[600px] overflow-y-auto">
           {#each filteredPuzzles as puzzle}
             <a
-              href={puzzle.slug}
-              class="flex items-center justify-between px-6 py-3.5 {colors.hover} transition-colors group"
+              href={puzzle.href}
+              class="flex items-center justify-between px-6 py-3.5 {colors.hover} transition-colors group {selectedDate === puzzle.dateKey ? colors.bg : ''}"
             >
               <div class="flex items-center gap-3">
                 <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl {colors.bg} {colors.text} font-bold text-sm">

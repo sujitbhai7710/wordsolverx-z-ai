@@ -30,24 +30,11 @@ export function generateWordleArchiveItems(baseUrl: string = 'https://wordsolver
         const date = getWordleDate(i);
         const dateStr = date.toISOString();
         const formatted = formatDate(date);
-        // Format: /wordle-answer-for-month-day-year
-        // We need to match the format used in ArchiveClient: MMMM-d-yyyy (lowercase)
-        const slugDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-            .toLowerCase()
-            .replace(/ /g, '-')
-            .replace(/,/g, ''); // formatting might be tricky to match exactly, let's use a helper if possible or strict format
-
-        // Manual formatting to match 'november-24-2023'
-        const month = date.toLocaleString('en-US', { month: 'long' }).toLowerCase();
-        const day = date.getDate();
-        const year = date.getFullYear();
-        const slug = `${month}-${day}-${year}`;
-
         items.push({
             id: i,
             date: dateStr,
             formattedDate: formatted,
-            url: `${baseUrl}/wordle-answer-for-${slug}`,
+            url: `${baseUrl}/wordle-answer-archive?date=${date.toISOString().split('T')[0]}`,
             name: `Wordle Answer for ${formatted} (#${i})`
         });
     }
@@ -76,15 +63,11 @@ export function generateQuordleArchiveItems(baseUrl: string = 'https://wordsolve
         const dateStr = date.toISOString();
         const formatted = formatDate(date);
 
-        // Url Format: /quordle-answer-for-month-day-year
-        const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-        const slug = `${months[date.getMonth()]}-${date.getDate().toString().padStart(2, '0')}-${date.getFullYear()}`;
-
         items.push({
             id: i,
             date: dateStr,
             formattedDate: formatted,
-            url: `${baseUrl}/quordle-answer-for-${slug}`,
+            url: `${baseUrl}/quordle-archive?date=${date.toISOString().split('T')[0]}`,
             name: `Quordle Answer for ${formatted} (#${i})`
         });
     }

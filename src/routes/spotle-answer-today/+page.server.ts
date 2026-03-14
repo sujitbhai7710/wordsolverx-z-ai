@@ -4,10 +4,11 @@ import {
 	COUNTRY_NAMES,
 	GENDER_NAMES,
 	formatSpotleDate,
+	type SpotleData,
 	type SpotleAnswer,
 	type SpotleArtist,
-	type SpotleData
 } from '$lib/spotle';
+import { getISTToday } from '$lib/utils';
 
 interface SpotleDay {
 	date: string;
@@ -32,15 +33,15 @@ export const load: PageServerLoad = async ({ fetch }) => {
 
 	const artists = data?.artists ?? [];
 	const answers = data?.answers ?? [];
-	const latestAnswer =
-		answers.reduce<SpotleAnswer | null>(
-			(currentLatest, entry) =>
-				!currentLatest || entry.date > currentLatest.date ? entry : currentLatest,
-			null
-		) ?? null;
-	const todayStr = latestAnswer?.date ?? formatSpotleDate(new Date());
+	const todayStr = formatSpotleDate(getISTToday());
+	const activeAnswers = answers
+		.filter((entry) => entry.date <= todayStr)
+		.sort((a, b) => b.date.localeCompare(a.date));
+	const latestAnswer = activeAnswers[0] ?? null;
 	const activeDate = new Date(`${todayStr}T12:00:00`);
-	const todayAnswer = latestAnswer;
+	const todayAnswer = answers.find((entry) => entry.date === todayStr) ?? latestAnswer;
+	const displayDate = todayAnswer?.date ?? todayStr;
+	const displayDateObject = new Date(`${displayDate}T12:00:00`);
 	const todayArtist =
 		todayAnswer?.artist
 			? artists.find((artist) => artist.artist.toLowerCase() === todayAnswer.artist.toLowerCase()) ??
@@ -49,7 +50,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 
 	const last30Days: SpotleDay[] = [];
 	for (let i = 0; i < 30; i += 1) {
-		const date = subDays(activeDate, i);
+		const date = subDays(displayDateObject, i);
 		const dateStr = formatSpotleDate(date);
 		const answer = answers.find((entry) => entry.date === dateStr);
 		if (!answer) {
@@ -83,10 +84,10 @@ export const load: PageServerLoad = async ({ fetch }) => {
 		}))
 	};
 
-	const todayFormatted = format(activeDate, 'MMMM d, yyyy');
+	const todayFormatted = format(displayDateObject, 'MMMM d, yyyy');
 	const metaTitle = `Spotle Hints and Answer for Today (${todayFormatted})`;
 	const metaDescription =
-		`Get Spotle hints and the confirmed Spotle answer for today, ${todayFormatted}${todayArtist ? `. Today's artist is ${todayArtist.artist}` : ''}. Browse the last 30 days with the calendar archive.`;
+		`Get Spotle hints and the confirmed Spotle answer for today, ${todayFormatted}${todayArtist ? `. Today's artist is ${todayArtist.artist}` : ''}. Use the dedicated Spotle archive page for older artist answers.`;
 	const metaKeywords = `spotle answer today, spotle answer, spotle hint, spotle hint today, spotle answer for ${todayFormatted}`;
 
 	const breadcrumbSchema = {

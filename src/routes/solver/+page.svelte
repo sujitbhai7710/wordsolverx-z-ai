@@ -24,7 +24,6 @@
     { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
     { name: 'Weaver Solver', href: '/weaver-solver', description: 'Find the shortest word ladder path.', color: 'from-violet-500 to-fuchsia-600', icon: 'Wv' },
     { name: 'Lewdle Solver', href: '/lewdle-solver', description: 'Solver for the NSFW word game.', color: 'from-rose-500 to-red-600', icon: 'Lw' },
-    { name: 'Binance WOTD', href: '/binance-wotd-solver', description: 'Binance Word of the Day solver.', color: 'from-yellow-400 to-amber-500', icon: 'Bn' },
   ];
 
   const faqs = [

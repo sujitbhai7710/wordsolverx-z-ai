@@ -34,7 +34,7 @@ export const load: PageServerLoad = async () => {
         { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqItems },
         {
             '@context': 'https://schema.org',
-            '@type': 'NewsArticle',
+            '@type': 'Article',
             headline: pageTitle,
             datePublished: new Date(formattedDate).toISOString(),
             dateModified: new Date(formattedDate).toISOString(),

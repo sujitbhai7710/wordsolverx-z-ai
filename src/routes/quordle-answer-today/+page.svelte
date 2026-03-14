@@ -1,6 +1,5 @@
 <script lang="ts">
   import QuordleAnswerCard from '$lib/components/QuordleAnswerCard.svelte';
-  import QuordleClues from '$lib/components/QuordleClues.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import FiChevronDown from '$lib/components/icons/FiChevronDown.svelte';
 
@@ -41,12 +40,6 @@
         Browse Archive
       </a>
     </div>
-
-    {#if data.todayData}
-      <div class="mb-12">
-        <QuordleClues words={data.todayData.d} mode="Classic" />
-      </div>
-    {/if}
 
     <div class="mb-16">
       <QuordleAnswerCard date={data.today} />

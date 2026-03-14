@@ -26,7 +26,7 @@
       { '@type': 'Question', name: 'What is OnePiecedle?', acceptedAnswer: { '@type': 'Answer', text: 'OnePiecedle is a daily trivia game for One Piece fans.' } },
       { '@type': 'Question', name: 'How to play OnePiecedle?', acceptedAnswer: { '@type': 'Answer', text: 'Classic, Devil Fruit, Laugh, and Wanted modes.' } },
     ]},
-    { '@type': 'NewsArticle', headline: 'OnePiecedle Answer Today', description: 'Get the confirmed OnePiecedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/onepiecedle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/logo.png' } } },
+    { '@type': 'Article', headline: 'OnePiecedle Answer Today', description: 'Get the confirmed OnePiecedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/onepiecedle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } } },
   ]};
 </script>
 

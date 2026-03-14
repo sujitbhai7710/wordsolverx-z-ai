@@ -24,7 +24,7 @@
 
 <div class="container mx-auto px-4 py-8 max-w-4xl">
   <div class="text-center mb-12">
-    <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">Globle Hints and Answer for Today ({data.formattedDate})</h1>
+    <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">{data.meta.title}</h1>
     <p class="text-lg text-slate-600 dark:text-slate-300">Verified Globle hints and the solution for {data.formattedDate}</p>
   </div>
 

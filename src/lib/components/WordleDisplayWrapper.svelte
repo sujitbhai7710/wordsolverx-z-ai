@@ -19,7 +19,7 @@
     wordleWord: string;
     wordleNumber: number;
     formattedDate: string;
-    pageContext: 'today' | 'yesterday' | 'archive';
+    pageContext: 'today' | 'archive';
     contentGuide?: string | null;
     socialImage?: string | null;
     youtubeVideoUrl?: string | null;
@@ -48,25 +48,21 @@
 
   let pageTitle = $derived.by(() => {
     if (pageContext === 'today') return `Wordle Hints and Answer for Today (${formattedDate})`;
-    if (pageContext === 'yesterday') return `Wordle Answer Yesterday: ${formattedDate}`;
     return `Wordle Answer for ${formattedDate}`;
   });
 
   let aboutTitle = $derived.by(() => {
     if (pageContext === 'today') return "About Today's Wordle";
-    if (pageContext === 'yesterday') return "About Yesterday's Wordle";
     return `About Wordle for ${formattedDate}`;
   });
 
   let solutionText = $derived.by(() => {
     const lw = wordleWord.toLowerCase();
-    if (pageContext === 'yesterday') return `The word <span class="font-semibold text-green-600 dark:text-green-400">"${lw}"</span> was the solution for yesterday's Wordle puzzle.`;
     if (pageContext === 'archive') return `The word <span class="font-semibold text-green-600 dark:text-green-400">"${lw}"</span> was the solution for the Wordle puzzle on ${formattedDate}.`;
     return `The word <span class="font-semibold text-green-600 dark:text-green-400">"${lw}"</span> is the solution for today's Wordle puzzle.`;
   });
 
   let comeBackText = $derived.by(() => {
-    if (pageContext === 'yesterday') return "Hope you solved it! Check back for today's puzzle if you haven't already.";
     if (pageContext === 'archive') return 'Browse the archive for more past Wordle solutions.';
     return "If you've already played today's puzzle, come back tomorrow for the next solution!";
   });
@@ -251,7 +247,7 @@
           {pageContext === 'today' ? 'Daily Answer' : 'Wordle Answer'}
         </p>
         <h1 class="mb-3 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
-          {pageContext === 'today' || pageContext === 'yesterday' ? pageTitle : `Wordle Answer for ${formattedDate}`}
+          {pageContext === 'today' ? pageTitle : `Wordle Answer for ${formattedDate}`}
         </h1>
         {#if !contentGuide}
           <p class="text-base md:text-lg text-gray-600 dark:text-gray-400">

@@ -69,10 +69,7 @@
       />
 
       <!-- Quick Links -->
-      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-        <a href="/phoodle-answer-yesterday" class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-white hover:bg-orange-50 text-gray-700 border border-gray-200 rounded-2xl font-bold transition-all shadow-sm group">
-          Yesterday's Answer
-        </a>
+      <div class="flex justify-center gap-4 mb-16">
         <a href="/phoodle-archive" class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-white hover:bg-amber-50 text-gray-700 border border-gray-200 rounded-2xl font-bold transition-all shadow-sm group">
           Browse Archive
         </a>

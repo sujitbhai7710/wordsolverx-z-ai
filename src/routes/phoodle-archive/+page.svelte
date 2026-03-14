@@ -1,11 +1,12 @@
 <script lang="ts">
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
-  import { formatPhoodleDateForSlug, parseApiDate, PHOODLE_START_DATE } from '$lib/phoodle';
+  import PhoodleAnswerCard from '$lib/components/PhoodleAnswerCard.svelte';
+  import { parseApiDate, PHOODLE_START_DATE } from '$lib/phoodle';
 
   let { data } = $props();
 
-  const availableDates = (data?.availableDateStrings ?? []).map(parseApiDate);
-  const startDate = availableDates.at(-1) ?? PHOODLE_START_DATE;
+  let availableDates = $derived((data?.availableDateStrings ?? []).map(parseApiDate));
+  let startDate = $derived(availableDates.at(-1) ?? PHOODLE_START_DATE);
 </script>
 
 <svelte:head>
@@ -32,7 +33,33 @@
   gameIcon="Ph"
   {startDate}
   {availableDates}
-  slugPrefix="phoodle-answer-for-"
-  formatSlug={formatPhoodleDateForSlug}
+  basePath="/phoodle-archive"
+  selectedDate={data.selectedDateKey}
   description="Every Phoodle food word answer. Browse the complete daily food puzzle history."
 />
+
+<section id="archive-answer" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 scroll-mt-28">
+  {#if data.selectedPhoodle}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <div class="mb-8 text-center">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-orange-600 dark:text-orange-300">Selected archive date</p>
+        <h2 class="mt-3 text-3xl font-black text-gray-900 dark:text-white">
+          Phoodle answer for {data.selectedPhoodle.formattedDate}
+        </h2>
+      </div>
+      <PhoodleAnswerCard
+        word={data.selectedPhoodle.word}
+        date={data.selectedPhoodle.formattedDate}
+        description={data.selectedPhoodle.description}
+        recipe_name={data.selectedPhoodle.recipe_name}
+      />
+    </div>
+  {:else}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Select a Phoodle day to reveal it here</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Older answers now open directly inside the archive page instead of using separate dated permalink pages.
+      </p>
+    </div>
+  {/if}
+</section>

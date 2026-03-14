@@ -10,7 +10,6 @@
     { name: 'Home', href: '/' },
     { name: 'Play Wordle', href: '/multidle' },
     { name: 'Today', href: '/today' },
-    { name: 'Yesterday', href: '/yesterday' },
     { name: 'Archive', href: '/archive' },
     { name: 'Solver', href: '/solver' },
     { name: 'Guides', href: '/guides' },

@@ -149,7 +149,6 @@
 
   const moreLinks = [
     { href: '/colordle-answer-today', label: "Today's Answer" },
-    { href: '/colordle-answer-yesterday', label: "Yesterday's Answer" },
     { href: '/colordle-archive', label: 'Full Archive' },
   ];
 </script>

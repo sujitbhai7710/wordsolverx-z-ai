@@ -10,15 +10,6 @@ export async function getTodayWordle() {
   return response.json();
 }
 
-// Fetch yesterday's Wordle answer directly from API
-export async function getYesterdayWordle() {
-  const response = await fetch(`${API_BASE_URL}/api/yesterday`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch yesterday\'s Wordle answer');
-  }
-  return response.json();
-}
-
 // Fetch Wordle answer by ID
 export async function getWordleById(id: number) {
   const response = await fetch(`${API_BASE_URL}/api/answer/${id}`);
