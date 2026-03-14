@@ -7,7 +7,7 @@ import {
   parseDateKey,
 } from '$lib/betweenle/logic';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
   const todayAnswer = getBetweenleTodayAnswer();
   const archive = getBetweenleArchive();
   const todaySeoDate = parseDateKey(todayAnswer.date).toLocaleDateString('en-US', {
@@ -28,6 +28,10 @@ export const load: PageServerLoad = async () => {
     'betweenle previous answers',
     'betweenle archive',
   ].join(', ');
+
+  setHeaders({
+    'X-Puzzle-Date': todayAnswer.date
+  });
 
   return {
     todayAnswer,

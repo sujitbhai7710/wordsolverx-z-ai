@@ -2,7 +2,8 @@ import type { RequestHandler } from './$types';
 import {
   formatContextoDate,
   getContextoDateFromGameNumber,
-  getContextoGameNumber
+  getContextoGameNumber,
+  getContextoTodayDate
 } from '$lib/contexto';
 
 export const GET: RequestHandler = async ({ url }) => {
@@ -26,12 +27,12 @@ export const GET: RequestHandler = async ({ url }) => {
       const [year, month, day] = dateStr.split('-').map(Number);
       targetDate = new Date(year, month - 1, day);
     } else {
-      targetDate = new Date();
+      targetDate = getContextoTodayDate();
     }
     gameNumber = getContextoGameNumber(targetDate);
   }
 
-  const today = new Date();
+  const today = getContextoTodayDate();
   today.setHours(0, 0, 0, 0);
   const compareDate = new Date(targetDate);
   compareDate.setHours(0, 0, 0, 0);

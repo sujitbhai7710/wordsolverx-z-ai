@@ -2,6 +2,13 @@ import { redirect, type Handle } from '@sveltejs/kit';
 import { format } from 'date-fns';
 import { parseArchiveDateKey } from '$lib/archive-page';
 import { getJSTToday } from '$lib/utils';
+import {
+	ARCHIVE_ROUTE_GAME_MAP,
+	TODAY_ROUTE_GAME_MAP,
+	getPuzzleWindow,
+	isLongCacheStaticPath,
+	type PuzzleGame
+} from '$lib/puzzle-window';
 
 const RETIRED_SOLVER_PATH = /^\/(leddle-solver)\/?$/;
 const LEGACY_SITEMAP_PATH = /^\/(sitemap-index|sitemap-today|sitemap-yesterday|sitemap-solvers|sitemap-games|sitemap-archive|newssitemap)\.xml\/?$/;
@@ -26,6 +33,147 @@ const GAME_ROUTE_MAP = {
 } as const;
 
 type SupportedArchiveGame = keyof typeof GAME_ROUTE_MAP;
+
+type CacheContext = {
+	cacheControl: string;
+	lookupKeys: string[];
+	storeKey: string;
+};
+
+type CloudflareContext = {
+	waitUntil(promise: Promise<unknown>): void;
+};
+
+function buildCacheControl(sMaxage: number, staleWhileRevalidate = 86400): string {
+	return `public, max-age=0, s-maxage=${sMaxage}, stale-while-revalidate=${staleWhileRevalidate}`;
+}
+
+function getNormalizedPathname(pathname: string): string {
+	return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+}
+
+function buildCacheRequest(origin: string, cacheKey: string): Request {
+	return new Request(`${origin}/__edge-cache__?key=${encodeURIComponent(cacheKey)}`, {
+		method: 'GET',
+		headers: {
+			accept: 'text/html'
+		}
+	});
+}
+
+function getCloudflareCache(): Cache | null {
+	const globalCaches = (globalThis as typeof globalThis & {
+		caches?: { default?: Cache };
+	}).caches;
+
+	if (!globalCaches?.default) {
+		return null;
+	}
+
+	return globalCaches.default;
+}
+
+function getCloudflareContext(platform: App.Platform | undefined): CloudflareContext | null {
+	const context = (platform as { context?: CloudflareContext } | undefined)?.context;
+	return context ?? null;
+}
+
+function getArchiveCacheContext(url: URL, pathname: string, game: PuzzleGame): CacheContext {
+	const selectedDate = url.searchParams.get('date');
+
+	if (selectedDate) {
+		const immutableKey = `html:${pathname}:archive-date:${selectedDate}`;
+		return {
+			cacheControl: buildCacheControl(2592000),
+			lookupKeys: [immutableKey],
+			storeKey: immutableKey
+		};
+	}
+
+	const window = getPuzzleWindow(game);
+	const lookupKeys = [`html:${pathname}:archive:${window.effectivePuzzleDate}`];
+	if (window.sourceReadiness === 'latest-payload' && window.fallbackPuzzleDate) {
+		lookupKeys.push(`html:${pathname}:archive:${window.fallbackPuzzleDate}`);
+	}
+
+	return {
+		cacheControl: buildCacheControl(window.ttlSeconds),
+		lookupKeys,
+		storeKey: lookupKeys[0]
+	};
+}
+
+function getHtmlCacheContext(url: URL): CacheContext | null {
+	const pathname = getNormalizedPathname(url.pathname);
+
+	if (pathname === '/') {
+		const window = getPuzzleWindow('wordle');
+		const key = `html:home:${window.effectivePuzzleDate}`;
+		return {
+			cacheControl: buildCacheControl(window.ttlSeconds),
+			lookupKeys: [key],
+			storeKey: key
+		};
+	}
+
+	if (pathname === '/today') {
+		const window = getPuzzleWindow('wordle');
+		const key = `html:today-hub:${window.effectivePuzzleDate}`;
+		return {
+			cacheControl: buildCacheControl(window.ttlSeconds),
+			lookupKeys: [key],
+			storeKey: key
+		};
+	}
+
+	if (isLongCacheStaticPath(pathname)) {
+		const key = `html:static:${pathname}`;
+		return {
+			cacheControl: buildCacheControl(604800),
+			lookupKeys: [key],
+			storeKey: key
+		};
+	}
+
+	const todayGame = TODAY_ROUTE_GAME_MAP[pathname];
+	if (todayGame) {
+		const window = getPuzzleWindow(todayGame);
+		const lookupKeys = [`html:${pathname}:today:${window.effectivePuzzleDate}`];
+		if (window.sourceReadiness === 'latest-payload' && window.fallbackPuzzleDate) {
+			lookupKeys.push(`html:${pathname}:today:${window.fallbackPuzzleDate}`);
+		}
+
+		return {
+			cacheControl: buildCacheControl(window.ttlSeconds),
+			lookupKeys,
+			storeKey: lookupKeys[0]
+		};
+	}
+
+	const archiveGame = ARCHIVE_ROUTE_GAME_MAP[pathname];
+	if (archiveGame) {
+		return getArchiveCacheContext(url, pathname, archiveGame);
+	}
+
+	return null;
+}
+
+function getStoreKeyFromResponse(pathname: string, cacheContext: CacheContext, response: Response): string {
+	const actualPuzzleDate = response.headers.get('X-Puzzle-Date');
+	if (!actualPuzzleDate) {
+		return cacheContext.storeKey;
+	}
+
+	if (TODAY_ROUTE_GAME_MAP[pathname]) {
+		return `html:${pathname}:today:${actualPuzzleDate}`;
+	}
+
+	if (ARCHIVE_ROUTE_GAME_MAP[pathname] && !cacheContext.storeKey.includes(':archive-date:')) {
+		return `html:${pathname}:archive:${actualPuzzleDate}`;
+	}
+
+	return cacheContext.storeKey;
+}
 
 function parseLegacyMonthDate(input: string): string | null {
 	const match = /^(?<month>[a-z]+)-(?<day>\d{1,2})-(?<year>\d{4})$/i.exec(input);
@@ -77,13 +225,12 @@ function getArchiveRedirect(game: SupportedArchiveGame, dateKey: string): string
 		return routes.today;
 	}
 
-	return `${routes.archive}?date=${dateKey}`;
+	return routes.archive;
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const pathname = event.url.pathname;
-	const normalizedPathname =
-		pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+	const normalizedPathname = getNormalizedPathname(pathname);
 
 	if (normalizedPathname in YESTERDAY_REDIRECTS) {
 		throw redirect(301, YESTERDAY_REDIRECTS[normalizedPathname as keyof typeof YESTERDAY_REDIRECTS]);
@@ -115,13 +262,47 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	}
 
+	const shouldAttemptEdgeCache = event.request.method === 'GET';
+	const cacheContext = shouldAttemptEdgeCache ? getHtmlCacheContext(event.url) : null;
+	const edgeCache = cacheContext ? getCloudflareCache() : null;
+
+	if (cacheContext && edgeCache) {
+		for (const cacheKey of cacheContext.lookupKeys) {
+			const cachedResponse = await edgeCache.match(buildCacheRequest(event.url.origin, cacheKey));
+			if (cachedResponse) {
+				const hitResponse = new Response(cachedResponse.body, cachedResponse);
+				hitResponse.headers.set('X-Edge-Cache', 'HIT');
+				return hitResponse;
+			}
+		}
+	}
+
 	const response = await resolve(event);
 	const contentType = response.headers.get('content-type') ?? '';
 
-	// Keep HTML fresh without fully disabling caching. This preserves crawl efficiency
-	// and performance while still encouraging edges to revalidate often.
 	if (contentType.includes('text/html')) {
-		response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=900, stale-while-revalidate=86400');
+		if (cacheContext) {
+			const cacheControl = cacheContext.cacheControl;
+			response.headers.set('Cache-Control', cacheControl);
+			response.headers.set('X-Edge-Cache', 'MISS');
+
+			if (response.status === 200 && edgeCache) {
+				const storeKey = getStoreKeyFromResponse(normalizedPathname, cacheContext, response);
+				const responseToCache = response.clone();
+				responseToCache.headers.set('Cache-Control', cacheControl);
+				const context = getCloudflareContext(event.platform);
+
+				if (context) {
+					context.waitUntil(
+						edgeCache.put(buildCacheRequest(event.url.origin, storeKey), responseToCache)
+					);
+				} else {
+					await edgeCache.put(buildCacheRequest(event.url.origin, storeKey), responseToCache);
+				}
+			}
+		} else {
+			response.headers.set('Cache-Control', buildCacheControl(900));
+		}
 	}
 
 	return response;

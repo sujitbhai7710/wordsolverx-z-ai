@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { getContextoGameNumber } from '$lib/contexto';
+import { getContextoGameNumber, getContextoTodayDate } from '$lib/contexto';
 
 interface ContextoAnswerResponse {
   success: boolean;
@@ -9,9 +9,9 @@ interface ContextoAnswerResponse {
   error?: string;
 }
 
-export const load: PageServerLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
   try {
-    const seedGameNumber = getContextoGameNumber(new Date()) + 2;
+    const seedGameNumber = getContextoGameNumber(getContextoTodayDate()) + 2;
     let latestAnswer: ContextoAnswerResponse | null = null;
     let lastError = 'Failed to load Contexto answer';
 
@@ -32,6 +32,10 @@ export const load: PageServerLoad = async ({ fetch }) => {
     if (!latestAnswer) {
       return { initialAnswer: null, latestDate: null, error: lastError };
     }
+
+    setHeaders({
+      'X-Puzzle-Date': latestAnswer.date
+    });
 
     return {
       initialAnswer: latestAnswer,

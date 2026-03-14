@@ -35,7 +35,7 @@ function formatSeoDate(dateStr: string | null): string {
     });
 }
 
-export const load: PageServerLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
     try {
         const response = await fetch('https://narutodle-worker.narutodle.workers.dev/latest?game=smashdle');
 
@@ -45,6 +45,11 @@ export const load: PageServerLoad = async ({ fetch }) => {
 
         const answers: GameAnswer[] = await response.json();
         const latestDate = pickLatestAnswerDate(answers);
+
+        if (latestDate) {
+            setHeaders({ 'X-Puzzle-Date': latestDate });
+        }
+
         const dateStr = formatAnswerDate(answers) ?? '';
         const seoDate = formatSeoDate(latestDate);
         const featuredImage = 'https://wordsolverx.com/smashdle-answer-today.webp';

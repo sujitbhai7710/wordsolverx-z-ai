@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { formatAnswerDate } from '$lib/game-dle/answer-date';
+import { formatAnswerDate, pickLatestAnswerDate } from '$lib/game-dle/answer-date';
 
 interface GameAnswer {
     game: string;
@@ -10,7 +10,7 @@ interface GameAnswer {
     json_content: string;
 }
 
-export const load: PageServerLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
     try {
         const response = await fetch('https://narutodle-worker.narutodle.workers.dev/latest?game=loldle');
 
@@ -19,6 +19,11 @@ export const load: PageServerLoad = async ({ fetch }) => {
         }
 
         const answers: GameAnswer[] = await response.json();
+        const latestDate = pickLatestAnswerDate(answers);
+
+        if (latestDate) {
+            setHeaders({ 'X-Puzzle-Date': latestDate });
+        }
 
         return {
             answers,

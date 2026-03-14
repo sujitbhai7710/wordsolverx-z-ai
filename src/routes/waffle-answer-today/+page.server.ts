@@ -4,7 +4,7 @@ import { subDays, addDays, startOfDay, isBefore } from 'date-fns';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
     const today = getJSTToday();
     const data = await getWaffleDataForDate(today);
 
@@ -13,6 +13,9 @@ export const load: PageServerLoad = async () => {
     }
 
     const { formattedDate, puzzle, solution, words, definitions, number } = data;
+    setHeaders({
+        'X-Puzzle-Date': data.date.toISOString().split('T')[0]
+    });
     const prevDate = subDays(data.date, 1);
     const nextDate = addDays(data.date, 1);
 

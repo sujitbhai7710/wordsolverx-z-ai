@@ -1,3 +1,5 @@
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
+
 // Contexto game number reference: March 1, 2026 = game 1260
 const REFERENCE_DATE = new Date(2026, 2, 1);
 const REFERENCE_GAME_NUMBER = 1260;
@@ -25,4 +27,8 @@ export function formatContextoDate(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
     date.getDate()
   ).padStart(2, '0')}`;
+}
+
+export function getContextoTodayDate(): Date {
+  return getPuzzleDateForGame('contexto');
 }

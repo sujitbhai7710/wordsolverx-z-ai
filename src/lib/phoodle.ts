@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { getJSTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 
 const PHOODLE_API = 'https://phoodle-worker.pinpoints.workers.dev';
 const PHOODLE_PAGE_SIZE = 20;
@@ -143,7 +143,7 @@ export async function getRecentPhoodleHistory(beforeDate: Date, count: number): 
  * Get today's Phoodle data in JST
  */
 export async function getPhoodleToday(): Promise<PhoodleDayData | null> {
-    const closestDate = await getNearestPhoodleDate(getJSTToday(), 'on-or-before');
+    const closestDate = await getNearestPhoodleDate(getPuzzleDateForGame('phoodle'), 'on-or-before');
     if (!closestDate) return null;
     return getPhoodleDataForDate(closestDate);
 }
@@ -152,7 +152,7 @@ export async function getPhoodleToday(): Promise<PhoodleDayData | null> {
  * Get yesterday's Phoodle data in JST
  */
 export async function getPhoodleYesterday(): Promise<PhoodleDayData | null> {
-    const previousDate = await getNearestPhoodleDate(getJSTToday(), 'before');
+    const previousDate = await getNearestPhoodleDate(getPuzzleDateForGame('phoodle'), 'before');
     if (!previousDate) return null;
     return getPhoodleDataForDate(previousDate);
 }

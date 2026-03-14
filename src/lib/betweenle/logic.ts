@@ -1,4 +1,5 @@
 import { BETWEENLE_DAILY_WORDS, BETWEENLE_WORDS } from './data';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type {
   BetweenleDailyAnswer,
   BetweenleGameMode,
@@ -186,7 +187,7 @@ export function toDateKey(date: Date): string {
 }
 
 export function parseDateKey(dateKey: string): Date {
-  return new Date(`${dateKey}T12:00:00`);
+  return new Date(`${dateKey}T12:00:00Z`);
 }
 
 export function getBetweenlePuzzleNumber(date: Date): number {
@@ -253,10 +254,10 @@ export function createBetweenleGameSetup(
 }
 
 export function getBetweenleTodayAnswer(): BetweenleDailyAnswer {
-  return getBetweenleAnswerForDate(new Date());
+  return getBetweenleAnswerForDate(getPuzzleDateForGame('betweenle'));
 }
 
-export function getBetweenleArchive(endDate: Date = new Date()): BetweenleDailyAnswer[] {
+export function getBetweenleArchive(endDate: Date = getPuzzleDateForGame('betweenle')): BetweenleDailyAnswer[] {
   const archive: BetweenleDailyAnswer[] = [];
   const cursor = new Date(BETWEENLE_START_DATE);
   cursor.setHours(0, 0, 0, 0);

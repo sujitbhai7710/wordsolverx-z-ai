@@ -3,7 +3,7 @@ import { getPhoodleToday, getRecentPhoodleHistory } from '$lib/phoodle';
 import { format } from 'date-fns';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
     const today = getJSTToday();
     const data = await getPhoodleToday();
 
@@ -13,6 +13,10 @@ export const load: PageServerLoad = async () => {
 
     const { word, description, recipe_name, formattedDate } = data;
     const upperWord = word.toUpperCase();
+
+    setHeaders({
+        'X-Puzzle-Date': data.date.toISOString().split('T')[0]
+    });
 
     // Fetch last 10 available days for FAQs (Phoodle can have gaps in dates)
     const last10Days = await getRecentPhoodleHistory(data.date, 10);
