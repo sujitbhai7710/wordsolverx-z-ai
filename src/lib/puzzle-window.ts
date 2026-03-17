@@ -20,7 +20,8 @@ export type PuzzleGame =
 	| 'narutodle'
 	| 'onepiecedle'
 	| 'pokedle'
-	| 'smashdle';
+	| 'smashdle'
+	| 'nerdle';
 
 export interface PuzzleWindow {
 	group: string;
@@ -68,6 +69,7 @@ export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
 	},
 	worldle: { group: 'worldle', timezone: 'UTC', sourceReadiness: 'deterministic' },
 	betweenle: { group: 'betweenle', timezone: 'IST', sourceReadiness: 'deterministic' },
+	nerdle: { group: 'nerdle', timezone: 'IST', sourceReadiness: 'deterministic' },
 	contexto: { group: 'contexto', timezone: 'IST', sourceReadiness: 'deterministic' },
 	searchle: { group: 'searchle', timezone: 'IST', sourceReadiness: 'deterministic' },
 	phrazle: { group: 'phrazle', timezone: 'IST', sourceReadiness: 'deterministic' },
@@ -126,6 +128,7 @@ export const TODAY_ROUTE_GAME_MAP: Record<string, PuzzleGame> = {
 	'/waffle-answer-today': 'waffle',
 	'/worldle-answer-today': 'worldle',
 	'/betweenle-answer-today': 'betweenle',
+	'/nerdle-answer-today': 'nerdle',
 	'/contexto-answer-today': 'contexto',
 	'/searchle-answer-today': 'searchle',
 	'/phrazle-answer-today': 'phrazle',
@@ -147,6 +150,7 @@ export const ARCHIVE_ROUTE_GAME_MAP: Record<string, PuzzleGame> = {
 	'/globle-archive': 'globle',
 	'/waffle-archive': 'waffle',
 	'/worldle-archive': 'worldle',
+	'/nerdle-archive': 'nerdle',
 	'/contexto-archive': 'contexto',
 	'/searchle-archive': 'searchle',
 	'/phrazle-archive': 'phrazle',
@@ -176,6 +180,7 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/weaver-solver',
 	'/worldle-solver',
 	'/betweenle-solver',
+	'/nerdle-solver',
 	'/betweenle-unlimited',
 	'/kanoodle-solver',
 	'/minesweeper-solver',

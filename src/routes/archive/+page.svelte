@@ -8,6 +8,7 @@
     { name: 'Globle', href: '/globle-archive', description: 'Daily country answers since 2022', color: 'from-sky-500 to-cyan-600', icon: 'Gb', shadow: 'shadow-sky-500/20' },
     { name: 'Waffle', href: '/waffle-archive', description: 'Complete waffle grid puzzle history', color: 'from-amber-500 to-orange-600', icon: 'Wf', shadow: 'shadow-amber-500/20' },
     { name: 'Worldle', href: '/worldle-archive', description: 'Country silhouette answers by date', color: 'from-sky-600 to-blue-700', icon: 'WL', shadow: 'shadow-sky-500/20' },
+    { name: 'Nerdle', href: '/nerdle-archive', description: 'Math equation answer history and puzzle dates', color: 'from-emerald-500 to-teal-600', icon: 'Nd', shadow: 'shadow-emerald-500/20' },
     { name: 'Searchle', href: '/searchle-archive', description: 'Autocomplete puzzle answers and prompts', color: 'from-purple-500 to-pink-600', icon: 'Sr', shadow: 'shadow-purple-500/20' },
     { name: 'Contexto', href: '/contexto-archive', description: 'Semantic answer words and game dates', color: 'from-violet-500 to-fuchsia-600', icon: 'Cx', shadow: 'shadow-violet-500/20' },
     { name: 'Phrazle', href: '/phrazle-archive', description: 'Morning and afternoon phrase archive', color: 'from-emerald-500 to-lime-600', icon: 'Pz', shadow: 'shadow-emerald-500/20' },
@@ -24,10 +25,10 @@
 
 <svelte:head>
   <title>Puzzle Answer Archives | WordSolverX</title>
-  <meta name="description" content="Browse complete answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Searchle, Contexto, Phrazle, and Spotle with direct links to past solutions." />
+  <meta name="description" content="Browse complete answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle with direct links to past solutions." />
   <link rel="canonical" href="https://wordsolverx.com/archive" />
   <meta property="og:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
-  <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Searchle, Contexto, Phrazle, and Spotle." />
+  <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
   <meta property="og:url" content="https://wordsolverx.com/archive" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
@@ -41,7 +42,7 @@
       {
         "@type": "CollectionPage",
         "name": "Puzzle Answer Archive",
-        "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Searchle, Contexto, Phrazle, and Spotle.",
+        "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle.",
         "url": "https://wordsolverx.com/archive",
         "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
       },

@@ -10,6 +10,7 @@
     { name: 'Wordle', href: '/wordle-answer-today', description: "Today's Wordle answer and hints.", color: 'from-green-500 to-emerald-600', icon: 'W' },
     { name: 'Worldle', href: '/worldle-answer-today', description: "Today's Worldle country plus archive date lookup.", color: 'from-sky-500 to-blue-700', icon: 'Wr' },
     { name: 'Betweenle', href: '/betweenle-answer-today', description: "Today's Betweenle answer with calendar archive lookup.", color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt' },
+    { name: 'Nerdle', href: '/nerdle-answer-today', description: "Today's Nerdle equation answer with archive links.", color: 'from-emerald-500 to-teal-600', icon: 'Nd' },
     { name: 'Phoodle', href: '/phoodle-answer-today', description: "Today's food-themed puzzle answer.", color: 'from-orange-500 to-red-500', icon: 'Ph' },
     { name: 'Quordle', href: '/quordle-answer-today', description: "All four Quordle answers today.", color: 'from-blue-500 to-indigo-600', icon: 'Q' },
     { name: 'Colordle', href: '/colordle-answer-today', description: "Today's hex color answer.", color: 'from-pink-500 to-purple-600', icon: 'Cd' },

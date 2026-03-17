@@ -10,7 +10,7 @@ interface TodayApiResponse extends WordleAnswer {
     recent_answers?: WordleAnswer[];
 }
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
     const today = getJSTToday();
     const todayKey = format(today, 'yyyy-MM-dd');
     const fallbackNumber = getWordleNumber(today);
@@ -22,6 +22,14 @@ export const load: PageServerLoad = async () => {
     } catch (error) {
         console.error("Error fetching today's Wordle:", error);
     }
+
+    const isCacheReady = Boolean(
+        wordleData?.date === todayKey && wordleData?.content_guide && wordleData?.social_image
+    );
+    setHeaders({
+        'X-Puzzle-Date': wordleData?.date ?? todayKey,
+        'X-Edge-Cache-Bypass': isCacheReady ? '0' : '1'
+    });
 
     const wordleWord = wordleData?.solution || '';
     const wordleNumber = wordleData?.id || fallbackNumber;
@@ -121,11 +129,5 @@ async function getWordleDataWithFallback(todayKey: string, fallbackNumber: numbe
         console.error('Error fetching NYT Wordle fallback:', error);
     }
 
-    const latestAvailable = recentAnswers.find((answer) => answer?.solution) ?? null;
-    return latestAvailable
-        ? {
-            ...latestAvailable,
-            recent_answers: recentAnswers
-        }
-        : null;
+    return null;
 }

@@ -1,20 +1,11 @@
 import { formatSpotleDate, type SpotleData } from '$lib/spotle';
 import { isArchiveDateInRange, parseArchiveDateKey, toArchiveDateKey } from '$lib/archive-page';
 import { getISTToday } from '$lib/utils';
+import spotleData from '../../../static/spotle_data.json';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ fetch, url }) => {
-  let data: SpotleData | null = null;
-
-  try {
-    const response = await fetch('/spotle_data.json');
-    if (response.ok) {
-      data = (await response.json()) as SpotleData;
-    }
-  } catch (error) {
-    console.error('Spotle archive data load failed', error);
-  }
-
+export const load: PageServerLoad = async ({ url }) => {
+  const data = spotleData as SpotleData;
   const artists = data?.artists ?? [];
   const answers = data?.answers ?? [];
   const todayKey = formatSpotleDate(getISTToday());

@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { format, subDays } from 'date-fns';
+import spotleData from '../../../static/spotle_data.json';
 import {
 	COUNTRY_NAMES,
 	GENDER_NAMES,
@@ -17,20 +18,8 @@ interface SpotleDay {
 	artist: SpotleArtist | null;
 }
 
-export const load: PageServerLoad = async ({ fetch }) => {
-	let data: SpotleData | null = null;
-
-	try {
-		const response = await fetch('/spotle_data.json');
-		if (!response.ok) {
-			throw new Error(`Spotle data fetch failed: ${response.status}`);
-		}
-		data = (await response.json()) as SpotleData;
-	} catch (error) {
-		console.error('Spotle data load failed', error);
-		data = null;
-	}
-
+export const load: PageServerLoad = async ({ setHeaders }) => {
+	const data = spotleData as SpotleData;
 	const artists = data?.artists ?? [];
 	const answers = data?.answers ?? [];
 	const todayStr = formatSpotleDate(getISTToday());
@@ -42,6 +31,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 	const todayAnswer = answers.find((entry) => entry.date === todayStr) ?? latestAnswer;
 	const displayDate = todayAnswer?.date ?? todayStr;
 	const displayDateObject = new Date(`${displayDate}T12:00:00`);
+	setHeaders({ 'X-Puzzle-Date': displayDate });
 	const todayArtist =
 		todayAnswer?.artist
 			? artists.find((artist) => artist.artist.toLowerCase() === todayAnswer.artist.toLowerCase()) ??

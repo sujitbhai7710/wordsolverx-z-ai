@@ -282,11 +282,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	if (contentType.includes('text/html')) {
 		if (cacheContext) {
+			const shouldBypassEdgeCache = response.headers.get('X-Edge-Cache-Bypass') === '1';
 			const cacheControl = cacheContext.cacheControl;
-			response.headers.set('Cache-Control', cacheControl);
+			response.headers.set('Cache-Control', shouldBypassEdgeCache ? 'no-store' : cacheControl);
 			response.headers.set('X-Edge-Cache', 'MISS');
 
-			if (response.status === 200 && edgeCache) {
+			if (!shouldBypassEdgeCache && response.status === 200 && edgeCache) {
 				const storeKey = getStoreKeyFromResponse(normalizedPathname, cacheContext, response);
 				const responseToCache = response.clone();
 				responseToCache.headers.set('Cache-Control', cacheControl);
