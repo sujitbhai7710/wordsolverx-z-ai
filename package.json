@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "node scripts/build-cloudflare.mjs",
 		"build:pages": "node scripts/build-pages.mjs",
 		"deploy": "npm run build && wrangler deploy --config wrangler.jsonc",
 		"deploy:pages": "npm run build:pages && wrangler pages deploy build/pages --project-name wordsolverx-svelte",
