@@ -1,6 +1,5 @@
 <script lang="ts">
   import {
-    SEARCHLE_SOLVER_PUZZLE_COUNT,
     getSearchlePuzzleForDate,
     getSearchlePromptSuggestions,
     solveSearchle,
@@ -506,13 +505,6 @@
           <span class="ml-auto text-slate-400">&gt;</span>
         </div>
       </a>
-      <div class="bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">DB</div>
-        <div>
-          <h3 class="font-semibold text-slate-900 dark:text-white">{SEARCHLE_SOLVER_PUZZLE_COUNT.toLocaleString('en-US')} Prompt Profiles</h3>
-          <p class="text-sm text-slate-500">Copied from allsearches.json with answer, lucky, and extra guesses</p>
-        </div>
-      </div>
     </div>
   </main>
 
