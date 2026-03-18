@@ -1,4 +1,5 @@
-import { SEARCHLE_PUZZLES, getDailyPuzzle } from './searchleData';
+import { getDailyPuzzle } from './searchleData';
+import rawAllSearches from './allsearches.json';
 
 export interface SearchleSuggestion {
   word: string;
@@ -20,6 +21,24 @@ export interface SearchleDailyPuzzle {
   answer: string;
   luckyGuess?: string;
 }
+
+interface SearchleSolverPuzzle {
+  text: string;
+  answer: string;
+  luckyGuess: string;
+  guesses?: string[];
+}
+
+const SEARCHLE_SOLVER_PUZZLES: SearchleSolverPuzzle[] = (rawAllSearches as SearchleSolverPuzzle[]).map(
+  (entry) => ({
+    text: entry.text,
+    answer: entry.answer,
+    luckyGuess: entry.luckyGuess,
+    guesses: Array.isArray(entry.guesses) ? entry.guesses : []
+  })
+);
+
+export const SEARCHLE_SOLVER_PUZZLE_COUNT = SEARCHLE_SOLVER_PUZZLES.length;
 
 export function formatSearchleDate(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
@@ -56,6 +75,94 @@ export function getSearchleMonthPuzzles(year: number, monthIndex: number): Searc
   return puzzles;
 }
 
+function normalizeSearchlePrompt(value: string): string {
+  return value.toLowerCase().replace(/\.\.\./g, '').trim().replace(/\s+/g, ' ');
+}
+
+export function getSearchlePromptSuggestions(partialPrompt: string, limit = 8): string[] {
+  const normalizedPrompt = normalizeSearchlePrompt(partialPrompt);
+  if (!normalizedPrompt) return [];
+
+  const rankedMatches = SEARCHLE_SOLVER_PUZZLES
+    .map((puzzle) => {
+      const normalizedText = normalizeSearchlePrompt(puzzle.text);
+      let rank = -1;
+
+      if (normalizedText === normalizedPrompt) {
+        rank = 0;
+      } else if (normalizedText.startsWith(normalizedPrompt)) {
+        rank = 1;
+      } else if (normalizedPrompt.startsWith(normalizedText)) {
+        rank = 2;
+      } else if (normalizedText.includes(normalizedPrompt)) {
+        rank = 3;
+      }
+
+      return rank === -1
+        ? null
+        : {
+            prompt: `${puzzle.text}...`,
+            rank,
+            lengthDiff: Math.abs(normalizedText.length - normalizedPrompt.length)
+          };
+    })
+    .filter((entry): entry is { prompt: string; rank: number; lengthDiff: number } => entry !== null)
+    .sort((a, b) => {
+      if (a.rank !== b.rank) return a.rank - b.rank;
+      if (a.lengthDiff !== b.lengthDiff) return a.lengthDiff - b.lengthDiff;
+      return a.prompt.localeCompare(b.prompt);
+    });
+
+  const seen = new Set<string>();
+  const suggestions: string[] = [];
+
+  for (const entry of rankedMatches) {
+    const normalizedSuggestion = entry.prompt.toLowerCase();
+    if (seen.has(normalizedSuggestion)) continue;
+    seen.add(normalizedSuggestion);
+    suggestions.push(entry.prompt);
+    if (suggestions.length >= limit) break;
+  }
+
+  return suggestions;
+}
+
+function getOrderedPuzzleWords(puzzle: SearchleSolverPuzzle): string[] {
+  const orderedWords = [puzzle.answer, puzzle.luckyGuess, ...(puzzle.guesses ?? [])];
+  const seen = new Set<string>();
+
+  return orderedWords
+    .map((word) => word.trim().toLowerCase())
+    .filter((word) => {
+      if (!word || seen.has(word)) return false;
+      seen.add(word);
+      return true;
+    });
+}
+
+function getPromptMatchOrdering(
+  partialPrompt: string,
+  matchingPuzzles: SearchleSolverPuzzle[]
+): Map<string, number> {
+  const normalizedPrompt = normalizeSearchlePrompt(partialPrompt);
+  const exactMatches = matchingPuzzles.filter(
+    (puzzle) => normalizeSearchlePrompt(puzzle.text) === normalizedPrompt
+  );
+  const orderedPuzzles = exactMatches.length > 0 ? exactMatches : matchingPuzzles;
+  const ordering = new Map<string, number>();
+  let nextIndex = 0;
+
+  for (const puzzle of orderedPuzzles) {
+    for (const word of getOrderedPuzzleWords(puzzle)) {
+      if (ordering.has(word)) continue;
+      ordering.set(word, nextIndex);
+      nextIndex += 1;
+    }
+  }
+
+  return ordering;
+}
+
 function calculateEntropy(word: string, allWords: string[]): number {
   if (allWords.length <= 1) return 0;
 
@@ -81,12 +188,12 @@ function calculateEntropy(word: string, allWords: string[]): number {
   return entropy;
 }
 
-function findMatchingPuzzles(partialPrompt: string): Array<{ text: string; answer: string; luckyGuess: string }> {
-  const promptLower = partialPrompt.toLowerCase().replace('...', '').trim();
+function findMatchingPuzzles(partialPrompt: string): SearchleSolverPuzzle[] {
+  const promptLower = normalizeSearchlePrompt(partialPrompt);
   if (!promptLower) return [];
 
-  return SEARCHLE_PUZZLES.filter((puzzle) => {
-    const textLower = puzzle.text.toLowerCase();
+  return SEARCHLE_SOLVER_PUZZLES.filter((puzzle) => {
+    const textLower = normalizeSearchlePrompt(puzzle.text);
     return (
       textLower.startsWith(promptLower) ||
       promptLower.startsWith(textLower) ||
@@ -99,8 +206,9 @@ function getPossibleAnswers(partialPrompt: string): string[] {
   const matches = findMatchingPuzzles(partialPrompt);
   const answers = new Set<string>();
   for (const puzzle of matches) {
-    answers.add(puzzle.answer.toLowerCase());
-    answers.add(puzzle.luckyGuess.toLowerCase());
+    for (const word of getOrderedPuzzleWords(puzzle)) {
+      answers.add(word);
+    }
   }
   return Array.from(answers);
 }
@@ -137,6 +245,7 @@ export function solveSearchle(
 ): { suggestions: SearchleSuggestion[]; totalWords: number; matchingPuzzlesFound: number } {
   const guessedWords = new Set(previousGuesses.map((g) => g.word.toLowerCase()));
   const matchingPuzzles = findMatchingPuzzles(prompt);
+  const promptOrdering = getPromptMatchOrdering(prompt, matchingPuzzles);
 
   let possibleAnswers = getPossibleAnswers(prompt);
 
@@ -148,14 +257,13 @@ export function solveSearchle(
       .filter((word) => word.length > 2);
 
     for (const word of promptWords) {
-      const wordMatches = SEARCHLE_PUZZLES.filter(
+      const wordMatches = SEARCHLE_SOLVER_PUZZLES.filter(
         (puzzle) =>
           puzzle.text.toLowerCase().includes(word) || puzzle.answer.toLowerCase().includes(word)
       ).slice(0, 30);
 
       for (const match of wordMatches) {
-        possibleAnswers.push(match.answer.toLowerCase());
-        possibleAnswers.push(match.luckyGuess.toLowerCase());
+        possibleAnswers.push(...getOrderedPuzzleWords(match));
       }
     }
   }
@@ -166,34 +274,57 @@ export function solveSearchle(
     possibleAnswers = filterWordsByFeedback(possibleAnswers, guess.word, guess.feedback);
   }
 
-  const matchingAnswers = matchingPuzzles.map((p) => p.answer.toLowerCase());
+  const promptCategory = (word: string): string => {
+    const normalizedWord = word.toLowerCase();
 
-  const suggestions: SearchleSuggestion[] = possibleAnswers.slice(0, 50).map((word, idx) => {
-    const isExactMatch = matchingAnswers.includes(word);
-    const baseScore = isExactMatch ? 100 : 80;
+    for (const puzzle of matchingPuzzles) {
+      if (puzzle.answer.toLowerCase() === normalizedWord) return 'answer';
+      if (puzzle.luckyGuess.toLowerCase() === normalizedWord) return 'lucky_guess';
+      if ((puzzle.guesses ?? []).some((guess) => guess.toLowerCase() === normalizedWord)) {
+        return 'extra_guess';
+      }
+    }
+
+    return 'similar';
+  };
+
+  const suggestions: SearchleSuggestion[] = possibleAnswers.map((word, idx) => {
+    const category = promptCategory(word);
+    const baseScore = category === 'answer' ? 100 : category === 'lucky_guess' ? 95 : 85;
 
     return {
       word,
       score: Math.max(baseScore - idx * 2, 10),
       entropy: calculateEntropy(word, possibleAnswers),
-      category: isExactMatch ? 'exact_match' : 'similar'
+      category
     };
   });
 
-  if (previousGuesses.length === 0) {
-    suggestions.sort((a, b) => {
-      if (a.category === 'exact_match' && b.category !== 'exact_match') return -1;
-      if (b.category === 'exact_match' && a.category !== 'exact_match') return 1;
-      return b.entropy - a.entropy;
-    });
-  }
+  const categoryRank: Record<string, number> = {
+    answer: 0,
+    lucky_guess: 1,
+    extra_guess: 2,
+    similar: 3
+  };
+
+  suggestions.sort((a, b) => {
+    const rankDifference = (categoryRank[a.category] ?? 99) - (categoryRank[b.category] ?? 99);
+    if (rankDifference !== 0) return rankDifference;
+
+    const promptOrderDifference =
+      (promptOrdering.get(a.word.toLowerCase()) ?? Number.MAX_SAFE_INTEGER) -
+      (promptOrdering.get(b.word.toLowerCase()) ?? Number.MAX_SAFE_INTEGER);
+    if (promptOrderDifference !== 0) return promptOrderDifference;
+
+    return b.entropy - a.entropy;
+  });
 
   suggestions.forEach((s, idx) => {
     s.score = Math.max(100 - idx * 5, 10);
   });
 
   return {
-    suggestions: suggestions.slice(0, 10),
+    suggestions,
     totalWords: possibleAnswers.length,
     matchingPuzzlesFound: matchingPuzzles.length
   };

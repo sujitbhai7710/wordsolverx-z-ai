@@ -1,6 +1,8 @@
 <script lang="ts">
   import {
+    SEARCHLE_SOLVER_PUZZLE_COUNT,
     getSearchlePuzzleForDate,
+    getSearchlePromptSuggestions,
     solveSearchle,
     type SearchleFeedback,
     type SearchleGuess,
@@ -41,6 +43,30 @@
   let possibleWords = $state(0);
   let dailyPuzzle = $state<DailyPuzzle | null>(getSearchlePuzzleForDate(new Date()));
   let useDaily = $state(false);
+  let promptSuggestions = $state<string[]>([]);
+  let showPromptSuggestions = $state(false);
+  let activePromptSuggestionIndex = $state(-1);
+  let promptInput: HTMLInputElement | null = $state(null);
+
+  function refreshPromptSuggestions(query: string) {
+    promptSuggestions = getSearchlePromptSuggestions(query);
+    showPromptSuggestions = promptSuggestions.length > 0 && query.trim().length > 0;
+    activePromptSuggestionIndex = promptSuggestions.length > 0 ? 0 : -1;
+  }
+
+  function applyPromptSuggestion(suggestion: string) {
+    prompt = suggestion;
+    showPromptSuggestions = false;
+    activePromptSuggestionIndex = -1;
+    promptInput?.focus();
+    const cursorPosition = suggestion.length;
+    promptInput?.setSelectionRange(cursorPosition, cursorPosition);
+  }
+
+  function handlePromptInput(event: Event) {
+    prompt = (event.currentTarget as HTMLInputElement).value;
+    refreshPromptSuggestions(prompt);
+  }
 
   function handleSolve() {
     if (!prompt.trim() || isLoading) return;
@@ -52,6 +78,8 @@
     isSolved = false;
     possibleWords = 0;
     useDaily = false;
+    showPromptSuggestions = false;
+    activePromptSuggestionIndex = -1;
 
     try {
       const result = solveSearchle(prompt.trim(), []);
@@ -71,6 +99,7 @@
     guesses = [];
     isSolved = false;
     suggestions = [];
+    refreshPromptSuggestions(prompt);
   }
 
   function selectWord(word: string) {
@@ -133,6 +162,41 @@
   }
 
   function handleKeyDown(event: KeyboardEvent) {
+    if (showPromptSuggestions && promptSuggestions.length > 0) {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        activePromptSuggestionIndex =
+          activePromptSuggestionIndex < promptSuggestions.length - 1
+            ? activePromptSuggestionIndex + 1
+            : 0;
+        return;
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        activePromptSuggestionIndex =
+          activePromptSuggestionIndex > 0
+            ? activePromptSuggestionIndex - 1
+            : promptSuggestions.length - 1;
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        showPromptSuggestions = false;
+        activePromptSuggestionIndex = -1;
+        return;
+      }
+
+      if (event.key === 'Enter' && !currentGuess) {
+        const activeSuggestion = promptSuggestions[activePromptSuggestionIndex] ?? promptSuggestions[0];
+        if (activeSuggestion) {
+          event.preventDefault();
+          applyPromptSuggestion(activeSuggestion);
+          return;
+        }
+      }
+    }
+
     if (event.key !== 'Enter') return;
     if (currentGuess && letterStates.length > 0) {
       submitGuess();
@@ -163,7 +227,7 @@
     {
       question: 'How do I use the solver?',
       answer:
-        'Enter the search prompt with "..." for the missing word, click Solve, then click a suggestion and mark the feedback colors.'
+        'Start typing a Searchle-style prompt to get autocomplete query suggestions, pick one, click Solve, then click a guess word and mark the feedback colors.'
     },
     {
       question: "Does it work with today's Searchle?",
@@ -173,7 +237,7 @@
     {
       question: 'Where does the data come from?',
       answer:
-        'The solver uses the Searchle puzzle dataset to generate real autocomplete answers.'
+        'The solver uses the copied allsearches dataset, including the real answer, lucky guess, and extra guesses for each prompt.'
     }
   ];
 
@@ -258,7 +322,7 @@
           </div>
           <button
             type="button"
-            on:click={playDaily}
+            onclick={playDaily}
             class="bg-white text-purple-600 hover:bg-purple-50 px-4 py-2 rounded-lg"
           >
             Play Daily
@@ -269,23 +333,50 @@
 
     <div class="mb-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg rounded-2xl">
       <div class="p-6">
-        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+        <label for="searchle-prompt-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
           Enter the search prompt (with ... for the missing word)
         </label>
         <div class="flex gap-3">
           <div class="relative flex-1">
             <input
+              id="searchle-prompt-input"
               type="text"
-              value={prompt}
-              on:input={(event) => (prompt = (event.currentTarget as HTMLInputElement).value)}
-              on:keydown={handleKeyDown}
+              bind:this={promptInput}
+              bind:value={prompt}
+              oninput={handlePromptInput}
+              onkeydown={handleKeyDown}
+              onfocus={() => refreshPromptSuggestions(prompt)}
+              onblur={() => setTimeout(() => {
+                showPromptSuggestions = false;
+                activePromptSuggestionIndex = -1;
+              }, 120)}
               placeholder="e.g., Why does my cat... or How to make..."
               class="w-full pl-4 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 transition-all"
             />
+            {#if showPromptSuggestions}
+              <div class="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-20 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900">
+                <div class="border-b border-slate-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:border-slate-800">
+                  Searchle Queries
+                </div>
+                <div class="max-h-80 overflow-y-auto py-2">
+                  {#each promptSuggestions as suggestion, index}
+                    <button
+                      type="button"
+                      onmousedown={(event) => event.preventDefault()}
+                      onclick={() => applyPromptSuggestion(suggestion)}
+                      class={`flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors ${index === activePromptSuggestionIndex ? 'bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-200' : 'text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'}`}
+                    >
+                      <span class="truncate text-sm font-medium">{suggestion}</span>
+                      <span class="text-xs uppercase tracking-[0.18em] text-slate-400">Pick</span>
+                    </button>
+                  {/each}
+                </div>
+              </div>
+            {/if}
           </div>
           <button
             type="button"
-            on:click={handleSolve}
+            onclick={handleSolve}
             disabled={isLoading || !prompt.trim()}
             class="bg-purple-500 hover:bg-purple-600 text-white px-6 rounded-xl"
           >
@@ -316,7 +407,7 @@
           </p>
           <button
             type="button"
-            on:click={handleReset}
+            onclick={handleReset}
             class="bg-white text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg"
           >
             New Puzzle
@@ -348,24 +439,21 @@
         <div class="px-6 pt-5 pb-2">
           <h3 class="text-lg font-semibold">Best Guesses</h3>
           <p class="text-sm text-slate-500 mt-1">
-            Ranked by entropy. Click a word to use it as your guess.
+            Ordered so the most likely answers stay on top, followed by the lucky guess and the extra guesses.
           </p>
         </div>
         <div class="px-6 pb-6 grid grid-cols-2 md:grid-cols-5 gap-2">
-          {#each suggestions.slice(0, 10) as suggestion, index}
+          {#each suggestions as suggestion, index}
             <button
               type="button"
-              on:click={() => selectWord(suggestion.word)}
+              onclick={() => selectWord(suggestion.word)}
               disabled={currentGuess === suggestion.word}
               class={`flex flex-col items-center p-3 rounded-xl font-mono text-center transition-all ${currentGuess === suggestion.word ? 'bg-purple-100 dark:bg-purple-900/30 ring-2 ring-purple-400' : 'bg-slate-50 dark:bg-slate-800 hover:bg-purple-50 dark:hover:bg-purple-900/20'} ${index === 0 ? 'ring-1 ring-green-400' : ''}`}
             >
               <span class="text-lg font-bold uppercase">{suggestion.word}</span>
               <span class="text-xs text-slate-500">{suggestion.score}%</span>
-              {#if index === 0}
-                <span class="mt-1 text-xs bg-green-500 text-white px-2 py-0.5 rounded-full">Best</span>
-              {/if}
-              {#if suggestion.category === 'exact_match' && index !== 0}
-                <span class="mt-1 text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full">Match</span>
+              {#if suggestion.category === 'answer'}
+                <span class="mt-1 text-xs bg-green-500 text-white px-2 py-0.5 rounded-full">High Chances</span>
               {/if}
             </button>
           {/each}
@@ -383,7 +471,7 @@
             {#each letterStates as state, idx}
               <button
                 type="button"
-                on:click={() => toggleLetterState(idx)}
+                onclick={() => toggleLetterState(idx)}
                 class={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg transition-all hover:scale-105 ${getStateColor(state)}`}
               >
                 {currentGuess[idx].toUpperCase()}
@@ -391,12 +479,12 @@
             {/each}
           </div>
           <div class="flex justify-center gap-3">
-            <button type="button" on:click={() => { currentGuess = ''; letterStates = []; }} class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg">
+            <button type="button" onclick={() => { currentGuess = ''; letterStates = []; }} class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg">
               Cancel
             </button>
             <button
               type="button"
-              on:click={submitGuess}
+              onclick={submitGuess}
               disabled={letterStates.every((s) => s === 'unknown')}
               class="px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600"
             >
@@ -421,8 +509,8 @@
       <div class="bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex items-center gap-4">
         <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center">DB</div>
         <div>
-          <h3 class="font-semibold text-slate-900 dark:text-white">1,130 Puzzles</h3>
-          <p class="text-sm text-slate-500">Real data from Searchle</p>
+          <h3 class="font-semibold text-slate-900 dark:text-white">{SEARCHLE_SOLVER_PUZZLE_COUNT.toLocaleString('en-US')} Prompt Profiles</h3>
+          <p class="text-sm text-slate-500">Copied from allsearches.json with answer, lucky, and extra guesses</p>
         </div>
       </div>
     </div>
