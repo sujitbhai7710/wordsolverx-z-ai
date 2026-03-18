@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	});
 
 	const pageTitle = `Nerdle Answer Today ( ${formattedDate} )`;
-	const pageDescription = `Get the official Nerdle answer for ${formattedDate}, including puzzle #${answerData.puzzleNumber}, equation tiles, and quick links to the Nerdle archive and solver.`;
+	const pageDescription = `Get the official Nerdle answer for ${formattedDate}, including puzzle #${answerData.puzzleNumber}, equation tiles, and quick links to the Nerdle archive.`;
 	const schemas = JSON.stringify([
 		{
 			'@context': 'https://schema.org',
@@ -69,7 +69,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		meta: {
 			title: pageTitle,
 			description: pageDescription,
-			keywords: `nerdle answer today, nerdle answer, nerdle today answer, nerdle archive, nerdle solver, nerdle answer ${formattedDate}`,
+			keywords: `nerdle answer today, nerdle answer, nerdle today answer, nerdle archive, nerdle answer ${formattedDate}`,
 			canonical: 'https://wordsolverx.com/nerdle-answer-today'
 		},
 		schemas

@@ -73,7 +73,7 @@ export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
 	contexto: { group: 'contexto', timezone: 'IST', sourceReadiness: 'deterministic' },
 	searchle: { group: 'searchle', timezone: 'IST', sourceReadiness: 'deterministic' },
 	phrazle: { group: 'phrazle', timezone: 'IST', sourceReadiness: 'deterministic' },
-	spotle: { group: 'spotle', timezone: 'IST', sourceReadiness: 'deterministic' },
+	spotle: { group: 'spotle', timezone: 'JST', sourceReadiness: 'deterministic' },
 	dotadle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
@@ -180,7 +180,6 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/weaver-solver',
 	'/worldle-solver',
 	'/betweenle-solver',
-	'/nerdle-solver',
 	'/betweenle-unlimited',
 	'/kanoodle-solver',
 	'/minesweeper-solver',

@@ -7,7 +7,6 @@
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Advanced 5-letter word solver with smart filtering.', color: 'from-green-500 to-emerald-600', icon: 'W', isPopular: true },
     { name: 'Worldle Solver', href: '/worldle-solver', description: 'Geography solver for Worldle using distance and direction clues.', color: 'from-sky-500 to-blue-700', icon: 'Wr', isPopular: true },
     { name: 'Betweenle Solver', href: '/betweenle-solver', description: 'Solve Betweenle faster with top and bottom bounds plus distance percentages.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
-    { name: 'Nerdle Solver', href: '/nerdle-solver', description: 'Entropy-style Nerdle equation solver with color feedback tiles.', color: 'from-emerald-500 to-teal-600', icon: 'Nd', isPopular: true },
     { name: 'Kanoodle Solver', href: '/kanoodle-solver', description: 'Online Kanoodle solver and noodle solver with hints, solution counting, and challenge mode.', color: 'from-emerald-500 via-sky-500 to-fuchsia-600', icon: 'K', isPopular: true },
     { name: 'Minesweeper Solver', href: '/minesweeper-solver', description: 'Online Minesweeper solver with board editing, safe move detection, and mine probability hints.', color: 'from-indigo-500 to-violet-700', icon: 'Ms', isPopular: true },
     { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Food-themed word solver for Phoodle.', color: 'from-orange-500 to-red-500', icon: 'Ph' },

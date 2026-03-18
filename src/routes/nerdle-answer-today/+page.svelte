@@ -127,7 +127,6 @@
 				</a>
 				<div class="flex flex-wrap gap-4">
 					<a href="/nerdle-archive" class="text-slate-700 hover:text-slate-900 transition-colors">Browse Archive -></a>
-					<a href="/nerdle-solver" class="text-emerald-700 hover:text-emerald-600 font-medium transition-colors">Open Nerdle Solver -></a>
 				</div>
 			</div>
 		</div>

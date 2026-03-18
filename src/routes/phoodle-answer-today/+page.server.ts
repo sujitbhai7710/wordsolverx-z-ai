@@ -1,14 +1,21 @@
-import { getJSTToday } from '$lib/utils';
 import { getPhoodleToday, getRecentPhoodleHistory } from '$lib/phoodle';
+import { getPuzzleWindow, parsePuzzleDateKey } from '$lib/puzzle-window';
 import { format } from 'date-fns';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
-    const today = getJSTToday();
+    const window = getPuzzleWindow('phoodle');
     const data = await getPhoodleToday();
 
     if (!data) {
-        return { error: true, formattedDate: format(today, 'MMMM d, yyyy') };
+        setHeaders({
+            'X-Edge-Cache-Bypass': '1'
+        });
+
+        return {
+            error: true,
+            formattedDate: format(parsePuzzleDateKey(window.effectivePuzzleDate), 'MMMM d, yyyy')
+        };
     }
 
     const { word, description, recipe_name, formattedDate } = data;

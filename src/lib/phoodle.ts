@@ -30,20 +30,31 @@ async function fetchPhoodleJson(endpoint: string): Promise<any | null> {
     }
 }
 
-async function getPhoodleDataForDateString(dateStr: string): Promise<PhoodleDayData | null> {
-    const data = await fetchPhoodleJson(`show/date/${dateStr}`);
-    if (!data?.success || !data.data) return null;
+function mapPhoodleApiEntry(entry: any): PhoodleDayData | null {
+    if (!entry?.id || !entry?.word) return null;
 
-    const actualDate = parseApiDate(data.data.id);
+    const actualDate = parseApiDate(entry.id);
 
     return {
-        id: data.data.id,
-        word: data.data.word,
-        description: data.data.description,
-        recipe_name: data.data.recipe_name,
+        id: entry.id,
+        word: entry.word,
+        description: entry.description,
+        recipe_name: entry.recipe_name,
         formattedDate: format(actualDate, 'MMMM d, yyyy'),
         date: actualDate
     };
+}
+
+async function getPhoodleDataForDateString(dateStr: string): Promise<PhoodleDayData | null> {
+    const data = await fetchPhoodleJson(`show/date/${dateStr}`);
+    if (!data?.success || !data.data) return null;
+    return mapPhoodleApiEntry(data.data);
+}
+
+async function getPhoodleRelativeDay(endpoint: 'today' | 'yesterday'): Promise<PhoodleDayData | null> {
+    const data = await fetchPhoodleJson(endpoint);
+    if (!data?.success || !data.data) return null;
+    return mapPhoodleApiEntry(data.data);
 }
 
 /**
@@ -143,6 +154,9 @@ export async function getRecentPhoodleHistory(beforeDate: Date, count: number): 
  * Get today's Phoodle data in JST
  */
 export async function getPhoodleToday(): Promise<PhoodleDayData | null> {
+    const workerToday = await getPhoodleRelativeDay('today');
+    if (workerToday) return workerToday;
+
     const closestDate = await getNearestPhoodleDate(getPuzzleDateForGame('phoodle'), 'on-or-before');
     if (!closestDate) return null;
     return getPhoodleDataForDate(closestDate);
@@ -152,6 +166,9 @@ export async function getPhoodleToday(): Promise<PhoodleDayData | null> {
  * Get yesterday's Phoodle data in JST
  */
 export async function getPhoodleYesterday(): Promise<PhoodleDayData | null> {
+    const workerYesterday = await getPhoodleRelativeDay('yesterday');
+    if (workerYesterday) return workerYesterday;
+
     const previousDate = await getNearestPhoodleDate(getPuzzleDateForGame('phoodle'), 'before');
     if (!previousDate) return null;
     return getPhoodleDataForDate(previousDate);

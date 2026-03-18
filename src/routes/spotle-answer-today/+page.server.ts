@@ -5,11 +5,12 @@ import {
 	COUNTRY_NAMES,
 	GENDER_NAMES,
 	formatSpotleDate,
+	parseSpotleDate,
 	type SpotleData,
 	type SpotleAnswer,
 	type SpotleArtist,
 } from '$lib/spotle';
-import { getISTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 
 interface SpotleDay {
 	date: string;
@@ -22,21 +23,24 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	const data = spotleData as SpotleData;
 	const artists = data?.artists ?? [];
 	const answers = data?.answers ?? [];
-	const todayStr = formatSpotleDate(getISTToday());
+	const todayStr = formatSpotleDate(getPuzzleDateForGame('spotle'));
 	const activeAnswers = answers
 		.filter((entry) => entry.date <= todayStr)
 		.sort((a, b) => b.date.localeCompare(a.date));
 	const latestAnswer = activeAnswers[0] ?? null;
-	const activeDate = new Date(`${todayStr}T12:00:00`);
 	const todayAnswer = answers.find((entry) => entry.date === todayStr) ?? latestAnswer;
 	const displayDate = todayAnswer?.date ?? todayStr;
-	const displayDateObject = new Date(`${displayDate}T12:00:00`);
-	setHeaders({ 'X-Puzzle-Date': displayDate });
+	const displayDateObject = parseSpotleDate(displayDate);
 	const todayArtist =
 		todayAnswer?.artist
 			? artists.find((artist) => artist.artist.toLowerCase() === todayAnswer.artist.toLowerCase()) ??
 			  null
 			: null;
+
+	setHeaders({
+		'X-Puzzle-Date': displayDate,
+		...(!todayAnswer || !todayArtist ? { 'X-Edge-Cache-Bypass': '1' } : {})
+	});
 
 	const last30Days: SpotleDay[] = [];
 	for (let i = 0; i < 30; i += 1) {
@@ -57,7 +61,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	}
 
 	const faqItems = last30Days.map((entry) => {
-		const formattedDate = format(new Date(entry.date), 'MMMM d, yyyy');
+		const formattedDate = format(parseSpotleDate(entry.date), 'MMMM d, yyyy');
 		return {
 			question: `What was the Spotle answer on ${formattedDate}?`,
 			answer: `The Spotle answer for ${formattedDate} was ${entry.artistName}. This was Day #${entry.dayNumber}.`

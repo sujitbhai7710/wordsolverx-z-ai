@@ -163,6 +163,10 @@ export function formatSpotleDate(date: Date): string {
 	return format(date, 'yyyy-MM-dd');
 }
 
+export function parseSpotleDate(dateString: string): Date {
+	return new Date(`${dateString}T12:00:00Z`);
+}
+
 export function getDefaultSpotleFeedback(): SpotleGuessFeedback {
 	return {
 		listener_rank: 'gray',

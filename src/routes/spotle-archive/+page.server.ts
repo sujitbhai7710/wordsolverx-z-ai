@@ -1,6 +1,6 @@
-import { formatSpotleDate, type SpotleData } from '$lib/spotle';
+import { formatSpotleDate, parseSpotleDate, type SpotleData } from '$lib/spotle';
 import { isArchiveDateInRange, parseArchiveDateKey, toArchiveDateKey } from '$lib/archive-page';
-import { getISTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import spotleData from '../../../static/spotle_data.json';
 import type { PageServerLoad } from './$types';
 
@@ -8,13 +8,13 @@ export const load: PageServerLoad = async ({ url }) => {
   const data = spotleData as SpotleData;
   const artists = data?.artists ?? [];
   const answers = data?.answers ?? [];
-  const todayKey = formatSpotleDate(getISTToday());
+  const todayKey = formatSpotleDate(getPuzzleDateForGame('spotle'));
   const availableDateStrings = answers
     .map((entry) => entry.date)
     .filter((dateString) => dateString <= todayKey)
     .sort();
-  const startDate = availableDateStrings.length > 0 ? new Date(`${availableDateStrings[0]}T12:00:00`) : null;
-  const latestDate = availableDateStrings.length > 0 ? new Date(`${availableDateStrings[availableDateStrings.length - 1]}T12:00:00`) : null;
+  const startDate = availableDateStrings.length > 0 ? parseSpotleDate(availableDateStrings[0]) : null;
+  const latestDate = availableDateStrings.length > 0 ? parseSpotleDate(availableDateStrings[availableDateStrings.length - 1]) : null;
   const selectedDate = parseArchiveDateKey(url.searchParams.get('date'));
 
   if (!startDate || !latestDate || !selectedDate || !isArchiveDateInRange(selectedDate, startDate, latestDate)) {
@@ -38,7 +38,7 @@ export const load: PageServerLoad = async ({ url }) => {
     selectedSpotle: selectedAnswer
       ? {
           date: selectedAnswer.date,
-          formattedDate: new Date(`${selectedAnswer.date}T12:00:00`).toLocaleDateString('en-US', {
+          formattedDate: parseSpotleDate(selectedAnswer.date).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
