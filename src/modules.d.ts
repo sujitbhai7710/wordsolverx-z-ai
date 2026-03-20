@@ -21,3 +21,14 @@ declare module 'delta-e' {
     };
     export default DeltaE;
 }
+
+declare module '/phoodle-wasm/phoodle_solver.js' {
+    const init: (input?: string | URL | Request | Response | ArrayBuffer | Promise<any>) => Promise<any>;
+    export class PhoodleSolver {
+        get_starters(count: number): string[];
+        solve(guesses: Array<{ word: string; result: string }>): any;
+        word_count(): number;
+        free(): void;
+    }
+    export default init;
+}
