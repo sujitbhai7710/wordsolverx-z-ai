@@ -207,7 +207,7 @@
   const solverLinks = [
     { href: '/wordle-solver', label: 'Wordle Solver' },
     { href: '/quordle-solver', label: 'Quordle Solver' },
-    { href: '/phoodle-solver', label: 'Phoodle Solver' },
+    { href: '/phoodle-answer-today', label: 'Phoodle Answer Today' },
     { href: '/waffle-answer-today', label: 'Waffle Answer Today' },
   ];
 </script>

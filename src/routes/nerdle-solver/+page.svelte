@@ -15,118 +15,151 @@
 		entropy: number;
 	}
 
+	const NERDLE_SOLVER_API_URL = 'https://solver.nerdle.workers.dev';
+	const SUPERSCRIPT_2 = '\u00B2';
+	const SUPERSCRIPT_3 = '\u00B3';
+
 	const MODE_CONFIG = {
-		micro: { length: 5, name: 'Micro', guesses: 6 },
-		mini: { length: 6, name: 'Mini', guesses: 6 },
-		midi: { length: 7, name: 'Midi', guesses: 6 },
-		classic: { length: 8, name: 'Classic', guesses: 6 },
-		maxi: { length: 10, name: 'Maxi', guesses: 6 }
+		micro: { length: 5, name: 'Micro', example: '2+1=3', guesses: 6 },
+		mini: { length: 6, name: 'Mini', example: '4*7=28', guesses: 6 },
+		midi: { length: 7, name: 'Midi', example: '6-1*4=2', guesses: 6 },
+		classic: { length: 8, name: 'Classic', example: '43-28=15', guesses: 6 },
+		maxi: { length: 10, name: 'Maxi', example: '239-171=68', guesses: 6 }
 	} as const;
 
-	const COLORS = {
-		correct: 'bg-[#00d4aa] border-[#00b894] text-white',
-		present: 'bg-[#f78166] border-[#e17055] text-white',
-		absent: 'bg-slate-800 border-slate-900 text-white',
-		empty: 'bg-white border-slate-200 text-slate-300'
+	const FEEDBACK_STYLES = {
+		2: 'bg-green-500 border-green-600 text-white',
+		1: 'bg-yellow-400 border-yellow-500 text-slate-950',
+		0: 'bg-gray-400 border-gray-500 text-white'
 	} as const;
 
 	const VALID_CHARS_BASIC = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '='];
-	const VALID_CHARS_MAXI = [...VALID_CHARS_BASIC, '(', ')', '²', '³'];
+	const VALID_CHARS_MAXI = [...VALID_CHARS_BASIC, '(', ')', SUPERSCRIPT_2, SUPERSCRIPT_3];
 	const MODE_ENTRIES = Object.entries(MODE_CONFIG) as Array<
-		[
-			GameMode,
-			{
-				length: number;
-				name: string;
-				guesses: number;
-			}
-		]
+		[GameMode, (typeof MODE_CONFIG)[GameMode]]
 	>;
 
-	let validEquations = $state<Set<string>>(new Set());
-	let isLoading = $state(true);
-	let loadError = $state<string | null>(null);
 	let mode = $state<GameMode>('classic');
 	let guesses = $state<GuessRow[]>([]);
-	let copiedEq = $state<string | null>(null);
 	let currentInput = $state('');
+	let copiedEq = $state<string | null>(null);
 	let suggestions = $state<Suggestion[]>([]);
-	let isCalculating = $state(false);
 	let remaining = $state(0);
 	let totalCount = $state(0);
+	let isLoading = $state(true);
+	let isCalculating = $state(false);
+	let isCheckingGuess = $state(false);
+	let loadError = $state<string | null>(null);
 	let requestToken = 0;
 
-	const targetLength = $derived(MODE_CONFIG[mode].length);
+	const currentMode = $derived(MODE_CONFIG[mode]);
+	const targetLength = $derived(currentMode.length);
 	const validChars = $derived(mode === 'maxi' ? VALID_CHARS_MAXI : VALID_CHARS_BASIC);
-	const isInputValid = $derived(
-		currentInput.length === targetLength &&
-			validEquations.has(currentInput) &&
-			!guesses.some((guess) => guess.equation === currentInput)
+	const topSuggestion = $derived(suggestions[0] ?? null);
+	const moreSuggestions = $derived(suggestions.slice(1));
+	const isDuplicateGuess = $derived(
+		currentInput.length > 0 && guesses.some((guess) => guess.equation === currentInput)
 	);
+	const canAddGuess = $derived(currentInput.length === targetLength && !isDuplicateGuess);
+	const modeSelectDisabled = $derived(guesses.length > 0 || isLoading || isCalculating);
 	const keypadRows = $derived(
 		mode === 'maxi'
 			? [
 					['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-					['+', '-', '*', '/', '=', '(', ')', '²', '³']
+					['+', '-', '*', '/', '=', '(', ')', SUPERSCRIPT_2, SUPERSCRIPT_3]
 				]
 			: [
 					['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
 					['+', '-', '*', '/', '=']
 				]
 	);
+	const inputMessage = $derived.by(() => {
+		if (currentInput.length === 0) {
+			return { tone: 'info', text: `Enter a ${targetLength}-character equation.` };
+		}
 
-	function getTileClass(length: number, filled: boolean): string {
-		const sizeClass =
-			length <= 6 ? 'w-12 h-14 text-2xl' : length <= 8 ? 'w-11 h-13 text-xl' : 'w-9 h-11 text-lg';
-		return `${sizeClass} rounded-xl border-2 font-bold flex items-center justify-center transition-all ${
-			filled ? 'bg-slate-100 border-slate-300 text-slate-900' : COLORS.empty
+		if (currentInput.length < targetLength) {
+			return {
+				tone: 'info',
+				text: `${targetLength - currentInput.length} more character${targetLength - currentInput.length === 1 ? '' : 's'} needed.`
+			};
+		}
+
+		if (isCheckingGuess) {
+			return { tone: 'info', text: 'Checking this equation with the solver...' };
+		}
+
+		if (isDuplicateGuess) {
+			return { tone: 'warning', text: 'This equation is already in your guess list.' };
+		}
+
+		return { tone: 'success', text: 'Ready to add. Press Enter or tap Add Guess.' };
+	});
+
+	function getInputTileClass(length: number, filled: boolean): string {
+		const size = length <= 6 ? 'w-12 h-14 text-2xl' : length <= 8 ? 'w-11 h-12 text-xl' : 'w-9 h-11 text-base';
+		return `${size} rounded-lg border-2 font-bold flex items-center justify-center ${
+			filled ? 'bg-white border-green-400 text-gray-900 shadow-sm' : 'bg-gray-100 border-gray-300 text-gray-300'
 		}`;
 	}
 
 	function getGuessTileClass(length: number, feedback: Feedback): string {
-		const sizeClass =
-			length <= 6 ? 'w-11 h-13 text-xl' : length <= 8 ? 'w-10 h-12 text-lg' : 'w-9 h-11 text-base';
-		const colorClass =
-			feedback === 2 ? COLORS.correct : feedback === 1 ? COLORS.present : COLORS.absent;
-		return `${sizeClass} rounded-xl border-2 font-bold flex items-center justify-center transition-all ${colorClass}`;
+		const size = length <= 6 ? 'w-11 h-12 text-xl' : length <= 8 ? 'w-10 h-11 text-lg' : 'w-9 h-10 text-base';
+		return `${size} rounded-md border-2 font-bold flex items-center justify-center ${FEEDBACK_STYLES[feedback]}`;
 	}
 
 	function getSuggestionTileClass(length: number): string {
-		const sizeClass =
-			length <= 6 ? 'w-9 h-11 text-lg' : length <= 8 ? 'w-8 h-10 text-base' : 'w-7 h-9 text-sm';
-		return `${sizeClass} rounded-lg border border-slate-200 bg-slate-50 font-bold text-slate-900 flex items-center justify-center`;
+		const size = length <= 6 ? 'w-9 h-10 text-lg' : length <= 8 ? 'w-8 h-9 text-base' : 'w-7 h-8 text-sm';
+		return `${size} rounded-md border-2 border-gray-300 bg-white text-gray-900 font-bold flex items-center justify-center`;
+	}
+
+	function normalizeEquationInput(value: string): string {
+		return Array.from(value)
+			.filter((character) => validChars.includes(character))
+			.slice(0, targetLength)
+			.join('');
+	}
+
+	function cycleFeedback(value: Feedback): Feedback {
+		if (value === 0) return 2;
+		if (value === 2) return 1;
+		return 0;
+	}
+
+	function feedbackLabel(value: Feedback): string {
+		if (value === 2) return 'Correct';
+		if (value === 1) return 'Present';
+		return 'Absent';
 	}
 
 	async function fetchSuggestions(currentGuesses: GuessRow[], nextMode: GameMode, token: number) {
 		isCalculating = true;
 
 		try {
-			const response = await fetch('/api/nerdle-solver', {
+			const response = await fetch(`${NERDLE_SOLVER_API_URL}/solve`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					mode: nextMode,
-					guesses: currentGuesses
-				})
+				body: JSON.stringify({ mode: nextMode, guesses: currentGuesses })
 			});
+			const data = await response.json().catch(() => null);
 
-			const data = await response.json();
 			if (token !== requestToken || nextMode !== mode) {
 				return;
 			}
 
-			if (data.success) {
-				suggestions = data.suggestions;
-				remaining = data.remaining;
-			} else {
-				suggestions = [];
-				remaining = 0;
-				loadError = data.error ?? 'Failed to calculate suggestions.';
+			if (!response.ok || !data?.success) {
+				throw new Error(data?.error ?? data?.message ?? 'Failed to calculate suggestions.');
 			}
+
+			suggestions = data.suggestions ?? [];
+			remaining = data.remaining ?? 0;
+			totalCount = data.total ?? 0;
+			loadError = null;
 		} catch (error) {
 			if (token !== requestToken || nextMode !== mode) {
 				return;
 			}
+
 			suggestions = [];
 			remaining = 0;
 			loadError = error instanceof Error ? error.message : 'Failed to calculate suggestions.';
@@ -137,43 +170,37 @@
 		}
 	}
 
-	async function loadEquations(nextMode: GameMode) {
+	async function validateEquation(nextMode: GameMode, equation: string) {
+		const response = await fetch(`${NERDLE_SOLVER_API_URL}/validate`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ mode: nextMode, equation })
+		});
+		const data = await response.json().catch(() => null);
+
+		if (!response.ok || !data?.success) {
+			throw new Error(data?.error ?? data?.message ?? 'Failed to validate the equation.');
+		}
+
+		return Boolean(data.valid);
+	}
+
+	async function loadModeData(nextMode: GameMode) {
 		const token = ++requestToken;
 		isLoading = true;
 		loadError = null;
+		currentInput = '';
+		guesses = [];
 		suggestions = [];
 		remaining = 0;
-
-		const fileMap: Record<GameMode, string> = {
-			micro: '/micro.txt',
-			mini: '/mini.txt',
-			midi: '/midi.txt',
-			classic: '/classic.txt',
-			maxi: '/maxi.txt'
-		};
+		totalCount = 0;
 
 		try {
-			const response = await fetch(fileMap[nextMode]);
-			const text = await response.text();
-			const equations = text
-				.split('\n')
-				.map((equation) => equation.trim())
-				.filter((equation) => equation.length === MODE_CONFIG[nextMode].length);
-
-			if (token !== requestToken || nextMode !== mode) {
-				return;
-			}
-
-			validEquations = new Set(equations);
-			totalCount = equations.length;
-			guesses = [];
-			currentInput = '';
 			await fetchSuggestions([], nextMode, token);
 		} catch (error) {
-			if (token !== requestToken || nextMode !== mode) {
-				return;
+			if (token === requestToken && nextMode === mode) {
+				loadError = error instanceof Error ? error.message : 'Failed to load mode data.';
 			}
-			loadError = error instanceof Error ? error.message : 'Failed to load equations.';
 		} finally {
 			if (token === requestToken && nextMode === mode) {
 				isLoading = false;
@@ -181,50 +208,87 @@
 		}
 	}
 
-	function setMode(nextMode: GameMode) {
-		if (mode === nextMode && !loadError) {
+	function handleModeChange(value: string) {
+		const nextMode = value as GameMode;
+		if (nextMode === mode || modeSelectDisabled) {
 			return;
 		}
 
 		mode = nextMode;
-		void loadEquations(nextMode);
+		void loadModeData(nextMode);
 	}
 
-	function addGuess(equation: string) {
-		if (
-			equation.length !== targetLength ||
-			guesses.some((guess) => guess.equation === equation) ||
-			!validEquations.has(equation)
-		) {
+	function handleEquationInput(value: string) {
+		currentInput = normalizeEquationInput(value);
+		loadError = null;
+	}
+
+	async function addGuess(
+		equation: string = currentInput,
+		options: { skipValidation?: boolean } = {}
+	) {
+		const nextMode = mode;
+		const nextLength = targetLength;
+
+		if (equation.length !== nextLength || guesses.some((guess) => guess.equation === equation)) {
 			return;
 		}
 
-		guesses = [
-			...guesses,
-			{
-				equation,
-				feedback: new Array(targetLength).fill(0) as Feedback[]
+		try {
+			if (!options.skipValidation) {
+				isCheckingGuess = true;
+				const valid = await validateEquation(nextMode, equation);
+				if (!valid) {
+					loadError = `"${equation}" is not a valid ${MODE_CONFIG[nextMode].name} equation.`;
+					return;
+				}
 			}
-		];
-		currentInput = '';
+
+			if (mode !== nextMode || guesses.some((guess) => guess.equation === equation)) {
+				return;
+			}
+
+			guesses = [
+				...guesses,
+				{ equation, feedback: new Array(nextLength).fill(0) as Feedback[] }
+			];
+			currentInput = '';
+			loadError = null;
+		} catch (error) {
+			loadError = error instanceof Error ? error.message : 'Failed to validate the equation.';
+		} finally {
+			isCheckingGuess = false;
+		}
 	}
 
 	function toggleFeedback(guessIndex: number, charIndex: number) {
 		guesses = guesses.map((guess, index) => {
 			if (index !== guessIndex) return guess;
 			const nextFeedback = [...guess.feedback];
-			const current = nextFeedback[charIndex];
-			const cycleMap: Record<number, Feedback> = { 0: 2, 2: 1, 1: 0 };
-			nextFeedback[charIndex] = cycleMap[current];
-			return {
-				...guess,
-				feedback: nextFeedback
-			};
+			nextFeedback[charIndex] = cycleFeedback(nextFeedback[charIndex]);
+			return { ...guess, feedback: nextFeedback };
 		});
 	}
 
-	function removeGuess(index: number) {
-		guesses = guesses.filter((_, guessIndex) => guessIndex !== index);
+	function clearInput() {
+		currentInput = '';
+	}
+
+	function handleBackspace() {
+		currentInput = currentInput.slice(0, -1);
+	}
+
+	function handleKeypadPress(character: string) {
+		if (currentInput.length >= targetLength) {
+			return;
+		}
+
+		handleEquationInput(`${currentInput}${character}`);
+	}
+
+	function removeLastGuess() {
+		if (guesses.length === 0) return;
+		guesses = guesses.slice(0, -1);
 	}
 
 	function resetSolver() {
@@ -234,37 +298,25 @@
 		void fetchSuggestions([], mode, requestToken);
 	}
 
+	function refreshSolver() {
+		loadError = null;
+		void fetchSuggestions(guesses, mode, requestToken);
+	}
+
 	async function copyEquation(equation: string) {
 		try {
 			await navigator.clipboard.writeText(equation);
 			copiedEq = equation;
 			window.setTimeout(() => {
-				if (copiedEq === equation) {
-					copiedEq = null;
-				}
+				if (copiedEq === equation) copiedEq = null;
 			}, 1500);
 		} catch {
 			copiedEq = null;
 		}
 	}
 
-	function handleKeypadPress(char: string) {
-		if (currentInput.length < targetLength) {
-			currentInput += char;
-		}
-	}
-
-	function handleBackspace() {
-		currentInput = currentInput.slice(0, -1);
-	}
-
-	function handleSolve() {
-		loadError = null;
-		void fetchSuggestions(guesses, mode, requestToken);
-	}
-
 	onMount(() => {
-		void loadEquations(mode);
+		void loadModeData(mode);
 
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (
@@ -277,8 +329,8 @@
 				return;
 			}
 
-			if (event.key === 'Enter' && isInputValid) {
-				addGuess(currentInput);
+			if (event.key === 'Enter' && canAddGuess && !isCheckingGuess) {
+				void addGuess(currentInput);
 				return;
 			}
 
@@ -288,7 +340,7 @@
 			}
 
 			if (validChars.includes(event.key) && currentInput.length < targetLength) {
-				currentInput += event.key;
+				handleEquationInput(`${currentInput}${event.key}`);
 			}
 		};
 
@@ -303,30 +355,26 @@
 				'@type': 'WebApplication',
 				name: 'Nerdle Solver',
 				description:
-					'Free all-modes Nerdle solver for Micro, Mini, Midi, Classic, and Maxi equations using entropy-based guess suggestions.',
+					'Nerdle solver for Micro, Mini, Midi, Classic, and Maxi with direct worker solving and a Wordle-style interface.',
 				url: 'https://wordsolverx.com/nerdle-solver',
 				applicationCategory: 'GameApplication',
-				offers: {
-					'@type': 'Offer',
-					price: '0',
-					priceCurrency: 'USD'
-				}
+				offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
 			}
 		]
 	});
 </script>
 
 <svelte:head>
-	<title>Nerdle Solver All Modes | Micro, Mini, Midi, Classic & Maxi</title>
+	<title>Nerdle Solver All Modes | Micro, Mini, Midi, Classic And Maxi</title>
 	<meta
 		name="description"
-		content="Use the WordSolverX Nerdle Solver for Micro, Mini, Midi, Classic, and Maxi Nerdle. Keep the same equation logic and get fast entropy-based guesses."
+		content="Use the WordSolverX Nerdle Solver for Micro, Mini, Midi, Classic, and Maxi with direct worker solving and a cleaner Wordle-style interface."
 	/>
 	<link rel="canonical" href="https://wordsolverx.com/nerdle-solver" />
 	<meta property="og:title" content="Nerdle Solver All Modes" />
 	<meta
 		property="og:description"
-		content="Solve every Nerdle mode with the same equation logic and copied source equation lists."
+		content="Solve every Nerdle mode with the original logic and a cleaner Wordle-style layout."
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://wordsolverx.com/nerdle-solver" />
@@ -334,284 +382,370 @@
 	<meta name="twitter:title" content="Nerdle Solver All Modes" />
 	<meta
 		name="twitter:description"
-		content="Micro, Mini, Midi, Classic, and Maxi Nerdle support with entropy-based suggestions."
+		content="Solve Nerdle equations with direct worker requests and a cleaner Wordle-style UI."
 	/>
-	{@html `<script type="application/ld+json">${jsonLd}</script>`}
+	<script type="application/ld+json">{jsonLd}</script>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-orange-50 py-10 px-4 sm:px-6">
-	<div class="max-w-4xl mx-auto">
-		<Breadcrumbs />
-
-		<section class="text-center mb-8">
-			<div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-emerald-100 shadow-sm mb-5">
-				<div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#00d4aa] to-[#00b894] flex items-center justify-center text-white shadow-sm">
-					<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m-8 4h10m-9 4h8M6 3h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2z" />
-					</svg>
-				</div>
-				<div class="text-left">
-					<p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">All Modes</p>
-					<p class="text-sm text-slate-600">Entropy-based Nerdle equation solver</p>
-				</div>
-			</div>
-
-			<h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">Nerdle Solver</h1>
-			<p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">
-				The same solver logic and copied equation files from your original project, now inside the default WordSolverX layout and light theme.
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+	<section class="bg-gradient-to-r from-green-600 to-emerald-600 py-14 shadow-lg">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+			<h1 class="text-4xl font-extrabold text-white sm:text-6xl tracking-tight">Nerdle Solver</h1>
+			<p class="mt-5 max-w-3xl mx-auto text-xl text-white/95 font-medium leading-relaxed">
+				Solve Micro, Mini, Midi, Classic, and Maxi Nerdle with the same original logic, direct worker requests, and a layout that matches the Wordle solver more closely.
 			</p>
-		</section>
+			<div class="mt-8 flex flex-wrap justify-center gap-4 text-sm font-bold text-green-100">
+				<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">5 Modes</span>
+				<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">Direct Worker Solve</span>
+				<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">No Frontend Equation Lists</span>
+			</div>
+		</div>
+	</section>
 
-		<section class="bg-white/90 border border-slate-200 rounded-[28px] shadow-[0_20px_60px_rgba(15,23,42,0.08)] p-5 sm:p-7">
-			<div class="flex flex-wrap justify-center gap-2 mb-5">
-				{#each MODE_ENTRIES as [modeKey, config]}
-					<button
-						type="button"
-						onclick={() => setMode(modeKey)}
-						class={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
-							mode === modeKey
-								? 'bg-[#00d4aa] text-slate-950 shadow-sm'
-								: 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-						}`}
-					>
-						{config.name} ({config.length})
-					</button>
-				{/each}
+	<div class="max-w-7xl mx-auto py-12 px-4">
+		<main class="max-w-2xl mx-auto">
+			<div class="mb-6">
+				<Breadcrumbs />
 			</div>
 
-			<div class="flex flex-wrap items-center justify-center gap-3 mb-5">
-				<div class="px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-100 text-sm text-slate-700">
-					Remaining <span class="font-bold text-emerald-700 ml-1">{remaining.toLocaleString()}</span>
-				</div>
-				<div class="px-4 py-2 rounded-xl bg-orange-50 border border-orange-100 text-sm text-slate-700">
-					Guesses <span class="font-bold text-orange-600 ml-1">{guesses.length}</span>
-				</div>
-				<div class="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-700">
-					Equations <span class="font-bold text-slate-900 ml-1">{totalCount.toLocaleString()}</span>
-				</div>
-				{#if guesses.length > 0}
-					<button
-						type="button"
-						onclick={resetSolver}
-						class="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
-					>
-						Reset
-					</button>
-				{/if}
+			<div class="text-center mb-10">
+				<h2 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-600 via-emerald-500 to-teal-600 bg-clip-text text-transparent mb-3">
+					Nerdle Solver
+				</h2>
+				<p class="text-gray-600 text-lg">
+					Choose a mode, enter an equation, then tap the tiles to match the feedback from
+					Nerdle.
+				</p>
 			</div>
 
 			{#if loadError}
-				<div class="mb-5 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-					{loadError}
+				<div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-red-700 shadow-sm">
+					<p class="font-bold">Something needs attention</p>
+					<p class="mt-1 text-sm">{loadError}</p>
 				</div>
 			{/if}
 
 			{#if isLoading}
-				<div class="py-16 text-center">
-					<div class="w-12 h-12 mx-auto rounded-full border-4 border-emerald-100 border-t-emerald-500 animate-spin"></div>
-					<p class="mt-4 text-slate-600">Loading {MODE_CONFIG[mode].name} equations...</p>
+				<div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 text-center">
+					<div class="w-10 h-10 mx-auto border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
+					<p class="mt-4 text-lg font-semibold text-gray-800">Loading {currentMode.name} mode...</p>
+					<p class="mt-1 text-gray-600">Getting the opening suggestions from the solver worker.</p>
 				</div>
 			{:else}
-				<div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-					<div class="space-y-5">
-						<div class="rounded-3xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
-							<div class="flex justify-center mb-4">
-								<div class="flex gap-1.5">
-									{#each Array(targetLength).fill(null) as _, index}
-										<div class={getTileClass(targetLength, Boolean(currentInput[index]))}>
-											{currentInput[index] || ''}
-										</div>
-									{/each}
+				{#if guesses.length === 0}
+					<div class="mb-8">
+						<div class="bg-gradient-to-br from-white to-blue-50 p-6 rounded-2xl shadow-lg border border-blue-200">
+							<div class="block text-sm font-bold text-blue-800 uppercase tracking-wider mb-4">
+								Puzzle Mode
+							</div>
+							<div class="rounded-2xl bg-blue-100/90 p-1.5">
+								<div class="rounded-xl border border-blue-200 bg-white px-4 py-4">
+									<label
+										for="nerdle-mode"
+										class="block text-xs font-bold uppercase tracking-wide text-gray-500 mb-2"
+									>
+										Select mode
+									</label>
+									<select
+										id="nerdle-mode"
+										class="w-full rounded-xl border-2 border-blue-200 bg-white px-4 py-3 text-base font-bold text-gray-800 shadow-sm outline-none focus:border-green-500 focus:ring-4 focus:ring-green-200"
+										value={mode}
+										onchange={(event) => handleModeChange((event.target as HTMLSelectElement).value)}
+										disabled={modeSelectDisabled}
+									>
+										{#each MODE_ENTRIES as [modeKey, config]}
+											<option value={modeKey}>{config.name} ({config.length} chars)</option>
+										{/each}
+									</select>
 								</div>
 							</div>
+							<div class="mt-4 grid gap-3 sm:grid-cols-3">
+								<div class="rounded-xl border border-blue-100 bg-white px-4 py-4 text-center">
+									<p class="text-xs font-bold uppercase tracking-wide text-gray-500">Current Mode</p>
+									<p class="mt-2 text-xl font-black text-gray-900">{currentMode.name}</p>
+								</div>
+								<div class="rounded-xl border border-blue-100 bg-white px-4 py-4 text-center">
+									<p class="text-xs font-bold uppercase tracking-wide text-gray-500">Equation Length</p>
+									<p class="mt-2 text-xl font-black text-gray-900">{targetLength} chars</p>
+								</div>
+								<div class="rounded-xl border border-blue-100 bg-white px-4 py-4 text-center">
+									<p class="text-xs font-bold uppercase tracking-wide text-gray-500">Equation Pool</p>
+									<p class="mt-2 text-xl font-black text-gray-900">{totalCount.toLocaleString()}</p>
+								</div>
+							</div>
+							<div class="mt-4 rounded-xl border border-blue-100 bg-white/80 px-4 py-3 text-sm text-gray-600">
+								Start with an equation like
+								<span class="font-mono font-bold text-gray-900">{currentMode.example}</span>
+								and the worker will return ranked next guesses for the selected mode.
+							</div>
+						</div>
+					</div>
+				{/if}
 
-							<div class="space-y-2">
-								{#each keypadRows as row}
-									<div class="flex flex-wrap justify-center gap-1.5">
-										{#each row as key}
+				<div class="mb-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
+					<div class="flex flex-wrap items-start justify-between gap-4 mb-5">
+						<div>
+							<div class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-1">
+								Enter Equation
+							</div>
+							<p class="text-sm text-gray-600">
+								Type or tap characters below, then add the equation to your board.
+							</p>
+						</div>
+						<div class="flex flex-wrap gap-2 text-xs font-bold uppercase tracking-wide">
+							<span class="rounded-full border border-green-200 bg-green-50 px-3 py-1.5 text-green-700">
+								{currentMode.name}
+							</span>
+							<span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-gray-700">
+								{targetLength} chars
+							</span>
+							<span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-gray-700">
+								{remaining.toLocaleString()} remaining
+							</span>
+						</div>
+					</div>
+
+					<div class="relative w-full max-w-md mx-auto">
+						<input
+							type="text"
+							value={currentInput}
+							oninput={(event) => handleEquationInput((event.target as HTMLInputElement).value)}
+							placeholder={currentMode.example}
+							class="w-full px-6 py-4 text-center text-3xl font-black tracking-widest bg-gradient-to-br from-white to-gray-50 rounded-2xl border-[3px] border-gray-300 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-200 transition-all shadow-lg hover:shadow-xl text-gray-900 font-mono"
+							maxlength={targetLength}
+							autocomplete="off"
+							autocorrect="off"
+							autocapitalize="off"
+							spellcheck="false"
+							onkeydown={(event) => {
+								if (event.key === 'Enter' && canAddGuess && !isCheckingGuess) {
+									event.preventDefault();
+									void addGuess(currentInput);
+								}
+							}}
+						/>
+						<button
+							type="button"
+							aria-label="Clear equation input"
+							onclick={clearInput}
+							class="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold text-gray-600 hover:bg-gray-50"
+						>
+							Clear
+						</button>
+					</div>
+					<div class={`mt-3 text-center text-sm ${
+						inputMessage.tone === 'success'
+							? 'text-green-700'
+							: inputMessage.tone === 'warning'
+								? 'text-amber-700'
+								: 'text-gray-600'
+					}`}>
+						{inputMessage.text}
+					</div>
+					<div class="mt-5 flex justify-center">
+						<div class="flex flex-wrap justify-center gap-1.5 rounded-2xl bg-gray-50 px-4 py-4 border border-gray-200">
+							{#each Array.from({ length: targetLength }) as _, index}
+								<div class={getInputTileClass(targetLength, Boolean(currentInput[index]))}>
+									{currentInput[index] || ''}
+								</div>
+							{/each}
+						</div>
+					</div>
+
+					<div class="mt-6 space-y-2">
+					{#each keypadRows as row, rowIndex}
+						<div class="flex flex-wrap justify-center gap-2">
+							{#each row as key}
+								<button
+									type="button"
+									onclick={() => handleKeypadPress(key)}
+									class={`min-w-12 rounded-xl border-2 px-3 py-3 text-sm font-bold shadow-sm transition-all ${
+										key === '='
+											? 'border-green-300 bg-green-50 text-green-800 hover:bg-green-100'
+											: 'border-gray-300 bg-white text-gray-800 hover:bg-gray-50'
+									}`}
+								>
+									{key === SUPERSCRIPT_2 ? 'x^2' : key === SUPERSCRIPT_3 ? 'x^3' : key}
+								</button>
+							{/each}
+							{#if rowIndex === keypadRows.length - 1}
+								<button
+									type="button"
+									onclick={handleBackspace}
+									class="rounded-xl border-2 border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700 shadow-sm hover:bg-red-100"
+								>
+									DEL
+								</button>
+							{/if}
+						</div>
+					{/each}
+					</div>
+
+					<div class="mt-6 flex justify-center gap-3 flex-wrap">
+					<button
+						onclick={() => void addGuess(currentInput)}
+						disabled={!canAddGuess || isCheckingGuess}
+						class="flex items-center space-x-2 px-5 py-3 text-sm font-bold text-white bg-green-600 hover:bg-green-700 rounded-xl transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+					>
+						<span>{isCheckingGuess ? 'Checking...' : 'Add Guess'}</span>
+					</button>
+					<button
+						onclick={resetSolver}
+						class="flex items-center space-x-2 px-5 py-3 text-sm font-bold text-red-600 hover:text-red-700 bg-white hover:bg-red-50 rounded-xl border-2 border-red-200 transition-all shadow-sm hover:shadow-md"
+					>
+						<span>Reset Solver</span>
+					</button>
+					</div>
+				</div>
+
+				{#if guesses.length > 0}
+					<div class="mb-8 rounded-2xl border border-amber-200 bg-gradient-to-br from-white to-amber-50 p-6 shadow-lg">
+						<div class="flex flex-wrap items-start justify-between gap-3 mb-5">
+							<div>
+								<div class="block text-sm font-bold text-amber-800 uppercase tracking-wider mb-1">
+									Set Nerdle Feedback
+								</div>
+								<p class="text-sm text-gray-600">
+									Tap each tile until it matches the result from the game.
+								</p>
+							</div>
+							<button
+								onclick={removeLastGuess}
+								class="rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50"
+							>
+								Remove Last Entry
+							</button>
+						</div>
+						<div class="space-y-4">
+							{#each guesses as guess, guessIndex}
+								<div class="rounded-2xl border border-amber-100 bg-white/90 p-4">
+									<div class="flex justify-center gap-1.5 flex-wrap">
+										{#each guess.equation.split('') as char, charIndex}
 											<button
 												type="button"
-												onclick={() => handleKeypadPress(key)}
-												class={`${
-													key === '='
-														? 'bg-[#00d4aa] border-[#00b894] text-slate-950'
-														: 'bg-white border-slate-200 text-slate-700'
-												} min-w-10 h-11 px-3 rounded-xl border font-bold hover:translate-y-[-1px] transition-transform`}
+												onclick={() => toggleFeedback(guessIndex, charIndex)}
+												class={getGuessTileClass(targetLength, guess.feedback[charIndex])}
 											>
-												{key === '²' ? 'x²' : key === '³' ? 'x³' : key}
+												{char}
 											</button>
 										{/each}
-										{#if row === keypadRows[keypadRows.length - 1]}
-											<button
-												type="button"
-												onclick={handleBackspace}
-												class="min-w-14 h-11 px-3 rounded-xl border border-rose-200 bg-rose-50 text-rose-700 font-bold"
-											>
-												DEL
-											</button>
-										{/if}
+									</div>
+									<div class="mt-2 text-center text-xs text-gray-500">
+										{#each guess.feedback as value, feedbackIndex}
+											<span class="inline-block mx-1">{feedbackIndex + 1}: {feedbackLabel(value)}</span>
+										{/each}
+									</div>
+								</div>
+							{/each}
+						</div>
+					</div>
+				{/if}
+
+				<div class="mb-8">
+					<button
+						onclick={refreshSolver}
+						disabled={isCalculating}
+						class="w-full max-w-md mx-auto block py-5 px-8 bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 hover:from-green-700 hover:via-emerald-700 hover:to-teal-700 text-white font-black text-2xl rounded-2xl shadow-2xl transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+					>
+						{isCalculating ? 'Calculating...' : guesses.length > 0 ? 'Calculate Best Equation' : 'Get Opening Suggestions'}
+					</button>
+				</div>
+
+				<div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+						<div>
+							<h3 class="text-2xl font-black text-gray-900">Solver Suggestions</h3>
+							<p class="text-gray-600 mt-1">{suggestions.length} shown - {remaining.toLocaleString()} possible equations</p>
+						</div>
+						<div class="grid grid-cols-2 gap-2 text-center">
+							<div class="rounded-xl bg-gray-50 px-4 py-3 border border-gray-200">
+								<p class="text-xs font-bold uppercase tracking-wide text-gray-500">Remaining</p>
+								<p class="mt-1 text-xl font-black text-gray-900">{remaining.toLocaleString()}</p>
+							</div>
+							<div class="rounded-xl bg-gray-50 px-4 py-3 border border-gray-200">
+								<p class="text-xs font-bold uppercase tracking-wide text-gray-500">Pool</p>
+								<p class="mt-1 text-xl font-black text-gray-900">{totalCount.toLocaleString()}</p>
+							</div>
+						</div>
+					</div>
+
+					{#if topSuggestion}
+						<div class="rounded-2xl border border-green-200 bg-gradient-to-br from-green-50 to-white p-5 mb-4">
+							<div class="flex items-center justify-between gap-3 mb-4">
+								<div>
+									<p class="text-sm font-bold uppercase tracking-wide text-green-700">Top Pick</p>
+									<p class="text-xl font-black text-gray-900 mt-1">{topSuggestion.eq}</p>
+									<p class="mt-1 text-sm text-gray-600">Best next guess for the current board.</p>
+								</div>
+								<div class="rounded-xl bg-white border border-green-100 px-4 py-2 text-right">
+									<p class="text-xs font-bold uppercase tracking-wide text-gray-500">Entropy</p>
+									<p class="text-lg font-black text-gray-900 mt-1">{topSuggestion.entropy.toFixed(2)}</p>
+								</div>
+							</div>
+							<div class="flex justify-center gap-1 mb-4">
+								{#each topSuggestion.eq.split('') as char}
+									<div class={getSuggestionTileClass(targetLength)}>{char}</div>
+								{/each}
+							</div>
+							<div class="grid gap-3 sm:grid-cols-2">
+								<button
+									onclick={() => void addGuess(topSuggestion.eq, { skipValidation: true })}
+									class="rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-3 transition-all"
+								>
+									Use This Guess
+								</button>
+								<button
+									onclick={() => void copyEquation(topSuggestion.eq)}
+									class="rounded-xl border-2 border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-bold px-4 py-3 transition-all"
+								>
+									{copiedEq === topSuggestion.eq ? 'Copied' : 'Copy Equation'}
+								</button>
+							</div>
+						</div>
+
+						{#if moreSuggestions.length > 0}
+							<div class="space-y-3">
+								{#each moreSuggestions as item, index}
+									<div class="rounded-xl border border-gray-200 bg-gray-50 p-4">
+										<div class="flex items-center gap-3">
+											<div class="w-10 text-center text-sm font-black text-gray-500">#{index + 2}</div>
+											<div class="flex flex-1 flex-wrap items-center justify-center gap-1">
+												{#each item.eq.split('') as char}
+													<div class={getSuggestionTileClass(targetLength)}>{char}</div>
+												{/each}
+											</div>
+										</div>
+										<div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+											<div class="rounded-full bg-white border border-gray-200 px-3 py-1 text-xs font-bold text-gray-600">
+												Entropy {item.entropy.toFixed(2)}
+											</div>
+											<div class="flex gap-2">
+												<button
+													onclick={() => void addGuess(item.eq, { skipValidation: true })}
+													class="rounded-lg bg-white border border-gray-300 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100"
+												>
+													Use
+												</button>
+												<button
+													onclick={() => void copyEquation(item.eq)}
+													class="rounded-lg bg-white border border-gray-300 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100"
+												>
+													{copiedEq === item.eq ? 'Copied' : 'Copy'}
+												</button>
+											</div>
+										</div>
 									</div>
 								{/each}
 							</div>
-
-							<button
-								type="button"
-								onclick={() => addGuess(currentInput)}
-								disabled={!isInputValid}
-								class={`mt-4 w-full rounded-2xl py-3 font-bold transition-colors ${
-									isInputValid
-										? 'bg-slate-900 text-white hover:bg-slate-800'
-										: 'bg-slate-200 text-slate-400 cursor-not-allowed'
-								}`}
-							>
-								{#if currentInput.length < targetLength}
-									{currentInput.length}/{targetLength} characters
-								{:else if isInputValid}
-									Add Guess
-								{:else}
-									Invalid equation
-								{/if}
-							</button>
-						</div>
-
-						<div class="flex justify-center gap-4 text-xs text-slate-500">
-							<div class="flex items-center gap-2">
-								<div class="w-4 h-4 rounded bg-[#00d4aa]"></div>
-								<span>Correct</span>
-							</div>
-							<div class="flex items-center gap-2">
-								<div class="w-4 h-4 rounded bg-[#f78166]"></div>
-								<span>Present</span>
-							</div>
-							<div class="flex items-center gap-2">
-								<div class="w-4 h-4 rounded bg-slate-800"></div>
-								<span>Absent</span>
-							</div>
-						</div>
-
-						{#if guesses.length > 0}
-							<div class="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-								<div class="flex items-center gap-2 mb-4 text-sm font-semibold text-slate-700">
-									<div class="w-2.5 h-2.5 rounded-full bg-orange-400"></div>
-									Tap each tile to match the Nerdle feedback
-								</div>
-
-								<div class="space-y-3">
-									{#each guesses as guess, guessIndex}
-										<div class="flex items-center justify-center gap-2">
-											<div class="flex gap-1">
-												{#each guess.equation.split('') as char, charIndex}
-													<button
-														type="button"
-														onclick={() => toggleFeedback(guessIndex, charIndex)}
-														class={getGuessTileClass(targetLength, guess.feedback[charIndex])}
-													>
-														{char}
-													</button>
-												{/each}
-											</div>
-											<button
-												type="button"
-												onclick={() => removeGuess(guessIndex)}
-												class="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 font-bold"
-											>
-												×
-											</button>
-										</div>
-									{/each}
-								</div>
-							</div>
 						{/if}
-					</div>
-
-					<div class="space-y-5">
-						<button
-							type="button"
-							onclick={handleSolve}
-							disabled={isCalculating}
-							class="w-full rounded-3xl py-4 px-5 bg-gradient-to-r from-[#f78166] to-[#e17055] text-white font-bold text-lg shadow-lg disabled:opacity-70"
-						>
-							{#if isCalculating}
-								Calculating...
-							{:else}
-								Get Best Guesses
-							{/if}
-						</button>
-
-						<div class="rounded-3xl border border-slate-200 bg-white p-4 sm:p-5">
-							<div class="flex items-center justify-between gap-3 mb-4">
-								<div>
-									<h2 class="text-lg font-bold text-slate-900">Best Guesses</h2>
-									<p class="text-sm text-slate-500">
-										{remaining.toLocaleString()} possible equation{remaining === 1 ? '' : 's'}
-									</p>
-								</div>
-								<div class="px-3 py-1 rounded-full bg-slate-100 text-xs font-semibold text-slate-600">
-									Avg 3.05 guesses
-								</div>
-							</div>
-
-							{#if suggestions.length === 0}
-								<div class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-10 text-center">
-									<p class="font-semibold text-slate-700">No matches found</p>
-									<p class="text-sm text-slate-500 mt-1">Check the feedback colors and try again.</p>
-								</div>
-							{:else}
-								<div class="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
-									{#each suggestions as item, index}
-										<div class="w-full rounded-2xl border border-slate-200 bg-slate-50 p-3">
-											<div class="flex items-center gap-3">
-												<button
-													type="button"
-													onclick={() => addGuess(item.eq)}
-													class="flex-1 text-left flex items-center gap-3 hover:opacity-90 transition-opacity"
-												>
-													<div class="w-10 text-center shrink-0">
-														<p class="text-sm font-bold text-slate-700">#{index + 1}</p>
-														{#if index === 0}
-															<p class="text-[10px] font-bold uppercase tracking-wide text-emerald-600">Best</p>
-														{/if}
-													</div>
-
-													<div class="flex gap-1 flex-1 justify-center">
-														{#each item.eq.split('') as char}
-															<div class={getSuggestionTileClass(targetLength)}>
-																{char}
-															</div>
-														{/each}
-													</div>
-												</button>
-
-												<div class="flex flex-col items-end gap-2 shrink-0">
-													<div class="px-2 py-1 rounded-lg border border-slate-200 bg-white text-[11px] font-semibold text-slate-600">
-														E: {item.entropy.toFixed(2)}
-													</div>
-													<button
-														type="button"
-														onclick={() => void copyEquation(item.eq)}
-														class="text-xs font-semibold text-slate-500 hover:text-emerald-600"
-													>
-														{copiedEq === item.eq ? 'Copied' : 'Copy'}
-													</button>
-												</div>
-											</div>
-										</div>
-									{/each}
-								</div>
-							{/if}
+					{:else}
+						<div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-5 py-10 text-center">
+							<p class="text-lg font-bold text-gray-900">No suggestions yet</p>
+							<p class="text-gray-600 mt-2">Get the opening suggestions or add feedback to narrow the equation pool.</p>
 						</div>
-
-						<div class="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-5">
-							<h3 class="font-bold text-slate-900 mb-2">How this page works</h3>
-							<p class="text-sm text-slate-600 leading-relaxed">
-								This is the copied all-modes Nerdle solver page using the same mode files and the same
-								server-side suggestion logic. The only deliberate visual change is that the surrounding page
-								stays light-themed to match WordSolverX.
-							</p>
-						</div>
-					</div>
+					{/if}
 				</div>
 			{/if}
-		</section>
+		</main>
 	</div>
 </div>

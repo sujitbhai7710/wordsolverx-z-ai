@@ -32,9 +32,14 @@
   let hoverCell = $state<{ row: number; col: number } | null>(null);
   let dragPointer = $state<{ x: number; y: number } | null>(null);
   let puzzlePrefill = $state(3);
+  let compactUi = $state(false);
 
   let unplacedPieces = $derived.by(() => pieces.filter((piece) => !placedPieces.has(piece.id)));
   let activePiece = $derived.by(() => pieces.find((piece) => piece.id === draggingPieceId) ?? null);
+  let boardCellSize = $derived(compactUi ? 26 : 40);
+  let boardGapSize = $derived(compactUi ? 3 : 8);
+  let pieceCellSize = $derived(compactUi ? 16 : PIECE_CELL);
+  let pieceGapSize = $derived(compactUi ? 2 : 3);
   let coverage = $derived.by(() => {
     if (!activePiece || !hoverCell) return [] as Array<{ row: number; col: number }>;
     return getCoverage(activePiece, hoverCell.row, hoverCell.col);
@@ -61,6 +66,13 @@
   });
 
   onMount(() => {
+    const mediaQuery = window.matchMedia('(max-width: 639px)');
+    const updateCompactUi = () => {
+      compactUi = mediaQuery.matches;
+    };
+
+    updateCompactUi();
+
     const onKey = (event: KeyboardEvent) => {
       if (!selectedPiece) return;
       const key = event.key.toLowerCase();
@@ -83,11 +95,13 @@
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('pointercancel', onPointerUp);
+    mediaQuery.addEventListener('change', updateCompactUi);
     return () => {
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('pointercancel', onPointerUp);
+      mediaQuery.removeEventListener('change', updateCompactUi);
     };
   });
 
@@ -168,7 +182,12 @@
     pieces = pieces.map((piece) => (piece.id === selectedPiece ? { ...piece, shape: flip(piece.shape) } : piece));
   }
 
-  function removePiece(pieceId: string): void {
+  function clearSolutionPreview(): void {
+    solutions = [];
+    currentSolutionIndex = 0;
+  }
+
+  function removePiece(pieceId: string, pickUp = false): void {
     const nextBoard = copyBoard(board);
     for (let row = 0; row < BOARD_ROWS; row += 1) {
       for (let col = 0; col < BOARD_COLS; col += 1) {
@@ -179,6 +198,9 @@
     placedPieces = getPlaced(nextBoard);
     gameWon = false;
     message = '';
+    clearSolutionPreview();
+    selectedPiece = pickUp ? pieceId : selectedPiece === pieceId ? null : selectedPiece;
+    clearDragState();
   }
 
   function place(pieceId: string, row: number, col: number): boolean {
@@ -189,6 +211,7 @@
     board = nextBoard;
     placedPieces = getPlaced(nextBoard);
     selectedPiece = null;
+    clearSolutionPreview();
     clearDragState();
     gameWon = nextBoard.every((boardRow) => boardRow.every((cell) => cell !== null));
     message = gameWon ? 'Congratulations! You solved it!' : '';
@@ -197,7 +220,7 @@
 
   function clickCell(row: number, col: number): void {
     const current = board[row][col];
-    if (current) removePiece(current);
+    if (current) removePiece(current, true);
     else if (selectedPiece) place(selectedPiece, row, col);
   }
 
@@ -357,8 +380,8 @@
 <div class:dark={darkMode} class="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
   <div class="px-4 pb-10 pt-8 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-5xl">
-      <div class="fixed right-4 top-24 z-30">
-        <div class="flex flex-wrap items-center gap-3 rounded-[1.5rem] border border-white/70 bg-white/90 px-3 py-3 shadow-2xl backdrop-blur-xl dark:border-slate-700/70 dark:bg-slate-900/90">
+      <div class="mx-auto max-w-3xl">
+        <div class="flex flex-wrap items-center justify-center gap-3 rounded-[1.5rem] border border-white/70 bg-white/90 px-3 py-3 shadow-2xl backdrop-blur-xl dark:border-slate-700/70 dark:bg-slate-900/90">
           {#if challengeMode}
             <div class={`inline-flex min-w-28 items-center justify-center rounded-2xl px-4 py-3 text-sm font-black shadow-lg ${timeRemaining < 30 ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white' : 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white'}`}>
               Timer {timerLabel(timeRemaining)}
@@ -381,19 +404,19 @@
         </div>
       </div>
 
-      <div class="space-y-6 pt-16">
+      <div class="space-y-6 pt-6">
         {#if isDragging && activePiece && dragPointer}
           <div
             class="pointer-events-none fixed z-50 rounded-2xl border border-white/60 bg-white/90 p-3 shadow-2xl backdrop-blur-sm dark:border-slate-700/70 dark:bg-slate-900/90"
             style={`left:${dragPointer.x + 26}px;top:${dragPointer.y}px;transform:translateY(-50%);`}
           >
-            <div class="flex flex-col gap-[3px]">
+            <div class="flex flex-col" style={`gap:${pieceGapSize}px;`}>
               {#each activePiece.shape as shapeRow}
-                <div class="flex gap-[3px]">
+                <div class="flex" style={`gap:${pieceGapSize}px;`}>
                   {#each shapeRow as value}
                     <div
                       class="rounded-full"
-                      style={`width:${PIECE_CELL}px;height:${PIECE_CELL}px;background-color:${value === 1 ? activePiece.color : 'transparent'};opacity:${value === 1 ? '0.96' : '0'};box-shadow:${value === 1 ? `0 8px 16px ${activePiece.color}40, inset 0 -2px 4px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.45)` : 'none'};`}
+                      style={`width:${pieceCellSize}px;height:${pieceCellSize}px;background-color:${value === 1 ? activePiece.color : 'transparent'};opacity:${value === 1 ? '0.96' : '0'};box-shadow:${value === 1 ? `0 8px 16px ${activePiece.color}40, inset 0 -2px 4px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.45)` : 'none'};`}
                     ></div>
                   {/each}
                 </div>
@@ -407,21 +430,22 @@
           <p class="mt-3 text-base text-slate-500 dark:text-slate-400">Drag pieces to solve the puzzle</p>
         </header>
 
-        <div class="flex justify-center">
-          <div class={`rounded-[1.75rem] border p-6 shadow-2xl transition-all ${isDragging ? 'border-sky-300 bg-gradient-to-br from-white to-sky-50 dark:border-sky-700 dark:from-slate-900 dark:to-sky-950/20' : 'border-slate-200 bg-gradient-to-br from-white to-slate-50 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950'}`}>
-            <div class="flex flex-col gap-2">
+        <div class="overflow-x-auto pb-2">
+          <div class="flex justify-center min-w-max">
+          <div class={`rounded-[1.75rem] border p-3 shadow-2xl transition-all sm:p-6 ${isDragging ? 'border-sky-300 bg-gradient-to-br from-white to-sky-50 dark:border-sky-700 dark:from-slate-900 dark:to-sky-950/20' : 'border-slate-200 bg-gradient-to-br from-white to-slate-50 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950'}`}>
+            <div class="flex flex-col" style={`gap:${boardGapSize}px;`}>
               {#each board as boardRow, rowIndex}
-                <div class="flex gap-2">
+                <div class="flex" style={`gap:${boardGapSize}px;`}>
                   {#each boardRow as cell, colIndex}
                     {@const key = `${rowIndex}-${colIndex}`}
                     {@const hoverHit = coverageSet.has(key) && isDragging && activePiece}
                     <button
-                      class={`relative inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-150 ${cell ? 'shadow-[inset_0_-4px_8px_rgba(0,0,0,0.18),inset_0_2px_4px_rgba(255,255,255,0.25),0_6px_14px_rgba(0,0,0,0.1)]' : `border-2 ${hoverHit ? (canDrop ? 'border-sky-400 shadow-[0_0_18px_rgba(14,165,233,0.35)] scale-110' : 'border-red-400 shadow-[0_0_16px_rgba(239,68,68,0.24)]') : 'border-dashed border-slate-300 dark:border-slate-700'}`}`}
+                      class={`relative inline-flex items-center justify-center rounded-full transition-all duration-150 ${cell ? 'shadow-[inset_0_-4px_8px_rgba(0,0,0,0.18),inset_0_2px_4px_rgba(255,255,255,0.25),0_6px_14px_rgba(0,0,0,0.1)]' : `border-2 ${hoverHit ? (canDrop ? 'border-sky-400 shadow-[0_0_18px_rgba(14,165,233,0.35)] scale-110' : 'border-red-400 shadow-[0_0_16px_rgba(239,68,68,0.24)]') : 'border-dashed border-slate-300 dark:border-slate-700'}`}`}
                       data-board-cell="true"
                       data-row={rowIndex}
                       data-col={colIndex}
                       onclick={() => clickCell(rowIndex, colIndex)}
-                      style={`background-color:${cell ? PIECES.find((piece) => piece.id === cell)?.color ?? '#ccc' : hoverHit && activePiece ? (canDrop ? activePiece.color : '#ef4444') : darkMode ? 'rgba(24,24,27,0.8)' : 'rgba(248,250,252,1)'}`}
+                      style={`width:${boardCellSize}px;height:${boardCellSize}px;background-color:${cell ? PIECES.find((piece) => piece.id === cell)?.color ?? '#ccc' : hoverHit && activePiece ? (canDrop ? activePiece.color : '#ef4444') : darkMode ? 'rgba(24,24,27,0.8)' : 'rgba(248,250,252,1)'}`}
                       title={cell ? cell : 'Empty slot'}
                       type="button"
                     >
@@ -433,6 +457,7 @@
                 </div>
               {/each}
             </div>
+          </div>
           </div>
         </div>
 
@@ -460,61 +485,60 @@
           </div>
         {/if}
 
-        <div class="flex flex-wrap justify-center gap-3">
-          <button class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving} onclick={checkBoard} type="button">Check</button>
-          <button class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving || unplacedPieces.length === 0} onclick={hint} type="button">Hint</button>
-          <button class="rounded-2xl bg-gradient-to-r from-emerald-500 to-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-lg disabled:opacity-60" disabled={isSolving} onclick={quickSolve} type="button">Quick Solve</button>
-          <button class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving} onclick={findAllSolutions} type="button">Find All Solutions</button>
-          <label class="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            <select bind:value={puzzlePrefill} class="bg-transparent outline-none">
-              {#each PUZZLE_OPTIONS as count}
-                <option value={count}>{count} placed</option>
-              {/each}
-            </select>
-          </label>
-          <button class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900" onclick={() => randomPuzzle(puzzlePrefill)} type="button">Generate</button>
-          <button class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900" onclick={resetGame} type="button">Reset</button>
-        </div>
-
-        <section class={`rounded-[1.75rem] border p-6 shadow-xl ${isDragging ? 'border-sky-300 bg-white ring-2 ring-sky-200 dark:border-sky-700 dark:bg-slate-900 dark:ring-sky-900/30' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900'}`}>
+        <section class={`mx-auto w-full max-w-4xl rounded-[1.75rem] border p-4 shadow-xl sm:p-6 ${isDragging ? 'border-sky-300 bg-white ring-2 ring-sky-200 dark:border-sky-700 dark:bg-slate-900 dark:ring-sky-900/30' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900'}`}>
           <div class="mb-5 text-center">
             <h2 class="text-xl font-bold">Available Pieces</h2>
             <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">{#if isDragging}Drop on the board!{:else}Drag pieces to the board{/if}</p>
           </div>
-          <div class="flex flex-wrap justify-center gap-4">
+          <div class="grid grid-cols-3 gap-3 sm:gap-4">
             {#each unplacedPieces as piece}
               <div
-                class={`group relative select-none rounded-2xl p-3 transition touch-none ${isDragging && draggingPieceId === piece.id ? 'cursor-grabbing scale-95 opacity-40' : 'cursor-grab'} ${selectedPiece === piece.id ? 'bg-sky-50 ring-2 ring-sky-400 ring-offset-2 ring-offset-white dark:bg-sky-950/20 dark:ring-sky-500 dark:ring-offset-slate-900' : 'hover:bg-slate-50 dark:hover:bg-slate-800/70'}`}
+                class={`group relative flex min-h-[164px] min-w-0 select-none flex-col justify-between rounded-2xl border p-2 shadow-sm transition touch-none sm:min-h-[176px] sm:p-3 ${isDragging && draggingPieceId === piece.id ? 'cursor-grabbing scale-95 opacity-40' : 'cursor-grab'} ${selectedPiece === piece.id ? 'border-sky-300 bg-sky-50 ring-2 ring-sky-400 ring-offset-2 ring-offset-white dark:border-sky-700 dark:bg-sky-950/20 dark:ring-sky-500 dark:ring-offset-slate-900' : 'border-slate-200 bg-slate-50/80 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-950/60 dark:hover:bg-slate-900'}`}
                 onclick={() => selectPiece(piece.id)}
                 onpointerdown={(event) => startPointerDrag(event, piece.id)}
+                onkeydown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    selectPiece(piece.id);
+                  }
+                }}
                 role="button"
                 tabindex="0"
               >
                 <div class="flex flex-col items-center gap-2">
-                  <div class="flex flex-col gap-[3px]">
+                  <div class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-slate-500 shadow-sm dark:bg-slate-900 dark:text-slate-300">
+                    Piece {piece.id}
+                  </div>
+                  <div class="flex min-h-[68px] flex-col justify-center" style={`gap:${pieceGapSize}px;`}>
                     {#each piece.shape as shapeRow}
-                      <div class="flex gap-[3px]">
+                      <div class="flex" style={`gap:${pieceGapSize}px;`}>
                         {#each shapeRow as value}
-                          <div class="rounded-full" style={`width:${PIECE_CELL}px;height:${PIECE_CELL}px;background-color:${value === 1 ? piece.color : 'transparent'};box-shadow:${value === 1 ? `0 2px 8px ${piece.color}50, inset 0 -2px 4px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.4)` : 'none'};`}></div>
+                          <div class="rounded-full" style={`width:${pieceCellSize}px;height:${pieceCellSize}px;background-color:${value === 1 ? piece.color : 'transparent'};box-shadow:${value === 1 ? `0 2px 8px ${piece.color}50, inset 0 -2px 4px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.4)` : 'none'};`}></div>
                         {/each}
                       </div>
                     {/each}
                   </div>
-                  <div
-                    class="grid w-full gap-2 opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100"
-                    onclick={(event) => event.stopPropagation()}
-                    onpointerdown={(event) => event.stopPropagation()}
-                  >
+                  <div class="grid w-full grid-cols-2 gap-2">
                     <button
-                      class="inline-flex min-w-28 items-center justify-center rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 px-3 py-2 text-xs font-bold text-white shadow-md shadow-sky-500/20 transition-transform hover:scale-[1.02]"
-                      onclick={() => { selectPiece(piece.id); rotateSelected(); }}
+                      class="inline-flex min-w-0 items-center justify-center rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 px-2 py-2 text-[11px] font-bold text-white shadow-md shadow-sky-500/20 transition-transform hover:scale-[1.02] sm:px-3"
+                      onclick={(event) => {
+                        event.stopPropagation();
+                        selectPiece(piece.id);
+                        rotateSelected();
+                      }}
+                      onpointerdown={(event) => event.stopPropagation()}
                       type="button"
                     >
                       Rotate
                     </button>
                     <button
-                      class="inline-flex min-w-28 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-sm transition-transform hover:scale-[1.02] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-                      onclick={() => { selectPiece(piece.id); flipSelected(); }}
+                      class="inline-flex min-w-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-2 py-2 text-[11px] font-bold text-slate-700 shadow-sm transition-transform hover:scale-[1.02] sm:px-3 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                      onclick={(event) => {
+                        event.stopPropagation();
+                        selectPiece(piece.id);
+                        flipSelected();
+                      }}
+                      onpointerdown={(event) => event.stopPropagation()}
                       type="button"
                     >
                       Flip
@@ -524,13 +548,29 @@
               </div>
             {/each}
             {#if unplacedPieces.length === 0}
-              <div class="py-8 text-center">
+              <div class="col-span-3 py-8 text-center">
                 <div class="text-2xl font-black">WIN</div>
                 <p class="mt-2 text-sm font-semibold">All pieces placed!</p>
               </div>
             {/if}
           </div>
         </section>
+
+        <div class="mx-auto grid w-full max-w-4xl grid-cols-2 gap-3 lg:grid-cols-4">
+          <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving} onclick={checkBoard} type="button">Check</button>
+          <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving || unplacedPieces.length === 0} onclick={hint} type="button">Hint</button>
+          <button class="w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-lg disabled:opacity-60" disabled={isSolving} onclick={quickSolve} type="button">Quick Solve</button>
+          <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving} onclick={findAllSolutions} type="button">Find All Solutions</button>
+          <label class="col-span-2 w-full rounded-2xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold shadow-sm lg:col-span-1 dark:border-slate-700 dark:bg-slate-900">
+            <select bind:value={puzzlePrefill} class="w-full bg-transparent outline-none">
+              {#each PUZZLE_OPTIONS as count}
+                <option value={count}>{count} placed</option>
+              {/each}
+            </select>
+          </label>
+          <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900" onclick={() => randomPuzzle(puzzlePrefill)} type="button">Generate</button>
+          <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900" onclick={resetGame} type="button">Reset</button>
+        </div>
 
         <section class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-700 dark:bg-slate-900">
           <div class="grid gap-6 lg:grid-cols-2">

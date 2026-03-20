@@ -24,8 +24,8 @@
       description: 'A curated list of common food terms, cooking methods, and ingredients that appear in Phoodle.',
       gradient: 'from-orange-500 to-red-500',
       icon: '🍕',
-      link: '/phoodle-solver',
-      linkText: 'Try Phoodle Solver',
+      link: '/phoodle-answer-today',
+      linkText: 'See Phoodle Answer Today',
     },
     {
       title: 'Waffle Puzzle Strategy',

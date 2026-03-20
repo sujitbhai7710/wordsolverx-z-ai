@@ -170,10 +170,8 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/terms-of-service',
 	'/wordle-solver',
 	'/quordle-solver',
-	'/phoodle-solver',
 	'/waffle-solver',
 	'/colordle-solver',
-	'/lewdle-solver',
 	'/searchle-solver',
 	'/soundmap-solver',
 	'/spotle-solver',
@@ -189,7 +187,6 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/onepiecedle-solver',
 	'/smashdle-solver',
 	'/pokedle-solver',
-	'/phoodle-solver',
 	'/colordle-solver'
 ]);
 
