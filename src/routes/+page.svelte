@@ -29,12 +29,15 @@
 
   const solverTools = [
     { name: 'Wordle Solver', href: '/wordle-solver', description: 'Filter words by green, yellow, and gray letters.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
+    { name: 'Nerdle Solver', href: '/nerdle-solver', description: 'All-modes equation solver for Micro, Mini, Midi, Classic, and Maxi Nerdle.', color: 'from-teal-500 to-emerald-600', icon: 'Nd', isPopular: true },
     { name: 'Betweenle Solver', href: '/betweenle-solver', description: 'Use bounds and distance percentages to solve Betweenle faster.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Play Multidle', href: '/multidle', description: 'Play unlimited Wordle - 4 to 12 letter words.', color: 'from-violet-500 to-purple-600', icon: 'M', isPopular: true },
+    { name: 'Boggle Solver', href: '/boggle-solver', description: 'Find every word on a Boggle board with path highlighting.', color: 'from-emerald-500 to-cyan-600', icon: 'Bg' },
     { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'Solve the food-themed word puzzle.', color: 'from-orange-500 to-red-500', icon: 'P' },
     { name: 'Quordle Solver', href: '/quordle-solver', description: 'Crack all four words at once.', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
     { name: 'Colordle Solver', href: '/colordle-solver', description: 'Find the hex color code answer.', color: 'from-pink-500 to-purple-600', icon: 'C' },
     { name: 'Waffle Solver', href: '/waffle-solver', description: 'Solve the waffle grid puzzle.', color: 'from-amber-500 to-yellow-600', icon: 'W' },
+    { name: 'Word Ladder Solver', href: '/word-ladder-solver', description: 'Find all shortest paths between two words with Scrabble dictionaries.', color: 'from-violet-500 to-fuchsia-600', icon: 'WL' },
     { name: 'LoLdle Solver', href: '/loldle-solver', description: 'League of Legends champion solver.', color: 'from-violet-500 to-purple-700', icon: 'L' },
     { name: 'Dotadle Solver', href: '/dotadle-solver', description: 'Dota 2 hero solver with clue filtering.', color: 'from-red-600 to-rose-700', icon: 'D' },
     { name: 'Pokedle Solver', href: '/pokedle-solver', description: 'Pokemon mystery answer solver.', color: 'from-yellow-400 to-amber-500', icon: 'P' },

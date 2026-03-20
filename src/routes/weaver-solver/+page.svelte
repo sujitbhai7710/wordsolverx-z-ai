@@ -1,251 +1,104 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+  import {
+    WORDSOLVERX_WORD_LENGTHS,
+    getWordLadderIndexClient,
+    getWordsOfLengthClient,
+    type WordLadderIndex,
+  } from '$lib/word-ladder-client';
+  import { solveWordLadderWithIndex } from '$lib/word-ladder-logic';
 
-  // Graph classes for BFS word ladder
-  class WeaverNode {
-    word: string;
-    connected: WeaverNode[] = [];
-    path?: WeaverNode[];
-    visitedFrom?: boolean;
-    visitedTo?: boolean;
-
-    constructor(word: string) {
-      this.word = word;
-    }
-
-    addConnected(node: WeaverNode): WeaverNode {
-      if (!this.connected.includes(node)) {
-        this.connected.push(node);
-      }
-      return this;
-    }
-  }
-
-  class WeaverGraph {
-    nodes: Map<string, WeaverNode> = new Map();
-
-    add(word1: string, word2: string): void {
-      const node1 = this.nodes.get(word1) || new WeaverNode(word1);
-      const node2 = this.nodes.get(word2) || new WeaverNode(word2);
-      this.nodes.set(word1, node1.addConnected(node2));
-      this.nodes.set(word2, node2.addConnected(node1));
-    }
-
-    get(word: string): WeaverNode | undefined {
-      return this.nodes.get(word);
-    }
-
-    clearVisitedAndPaths(): void {
-      for (const node of this.nodes.values()) {
-        delete node.path;
-        delete node.visitedFrom;
-        delete node.visitedTo;
-      }
-    }
-  }
-
-  interface WordsData {
-    words: string[];
-  }
-
-  const WORD_LENGTH_OPTIONS = [3, 4, 5] as const;
+  const WORD_LENGTH_OPTIONS = WORDSOLVERX_WORD_LENGTHS;
   type WordLengthOption = (typeof WORD_LENGTH_OPTIONS)[number];
+  const DEFAULT_WORD_LENGTH: WordLengthOption = 5;
+  const MAX_PATHS_TO_SHOW = 5;
 
-  const WORD_FILES: Record<WordLengthOption, string> = {
-    3: '/3letterwords.json',
-    4: '/4letterwords.json',
-    5: '/words.json',
-  };
-
-  // State
-  let wordLength = $state<WordLengthOption>(5);
+  let wordLength = $state<WordLengthOption>(DEFAULT_WORD_LENGTH);
   let wordSet = $state<Set<string>>(new Set());
-  let graphInstance = $state<WeaverGraph | null>(null);
-  let inputs = $state<string[][]>([Array(5).fill(''), Array(5).fill('')]);
+  let ladderIndex = $state<WordLadderIndex | null>(null);
+  let inputs = $state<string[][]>([
+    Array(DEFAULT_WORD_LENGTH).fill(''),
+    Array(DEFAULT_WORD_LENGTH).fill(''),
+  ]);
   let resultPaths = $state<string[][]>([]);
   let isLoading = $state(true);
   let error = $state<string | null>(null);
-
-  // Input refs
   let inputRefs = $state<(HTMLInputElement | null)[][]>([[], []]);
 
-  function buildGraph(words: Set<string>, length: number): WeaverGraph {
-    const g = new WeaverGraph();
-    for (const word of words) {
-      for (let i = 0; i < length; i++) {
-        for (let charCode = 97; charCode < 123; charCode++) {
-          const char = String.fromCharCode(charCode);
-          if (word[i] === char) continue;
-          const current = word.substring(0, i) + char + word.substring(i + 1);
-          if (words.has(current)) {
-            g.add(word, current);
-          }
-        }
-      }
-    }
-    return g;
-  }
-
-  function getConnectionLogic(from: string, to: string, graph: WeaverGraph | null): string[][] {
-    if (!graph) return [];
-    graph.clearVisitedAndPaths();
-
-    const fromNode = graph.get(from);
-    const toNode = graph.get(to);
-    if (!fromNode || !toNode) return [];
-
-    fromNode.path = [fromNode];
-    toNode.path = [toNode];
-    fromNode.visitedFrom = true;
-    toNode.visitedTo = true;
-
-    const fromQueue: WeaverNode[] = [fromNode];
-    const toQueue: WeaverNode[] = [toNode];
-
-    let collectedPathsNodes: WeaverNode[][] = [];
-    let minPathLength = Infinity;
-    const MAX_PATHS_TO_SHOW = 5;
-
-    while ((fromQueue.length > 0 || toQueue.length > 0) && (collectedPathsNodes.length < MAX_PATHS_TO_SHOW || minPathLength === Infinity)) {
-      let fromQueueProcessCount = fromQueue.length;
-      if (minPathLength !== Infinity && collectedPathsNodes.length >= MAX_PATHS_TO_SHOW) fromQueueProcessCount = 0;
-
-      for (let i = 0; i < fromQueueProcessCount; i++) {
-        const current = fromQueue.shift();
-        if (!current || !current.path) continue;
-        if (current.path.length >= minPathLength && minPathLength !== Infinity) continue;
-
-        for (const neighbor of current.connected) {
-          if (neighbor.visitedTo && neighbor.path) {
-            const path = current.path.concat(neighbor.path.slice().reverse().slice(1));
-            if (path.length < minPathLength) {
-              minPathLength = path.length;
-              collectedPathsNodes = [path];
-            } else if (path.length === minPathLength && collectedPathsNodes.length < MAX_PATHS_TO_SHOW) {
-              collectedPathsNodes.push(path);
-            }
-          }
-          if (!neighbor.visitedFrom) {
-            if (current.path.length + 1 < minPathLength || minPathLength === Infinity) {
-              neighbor.visitedFrom = true;
-              neighbor.path = current.path.concat(neighbor);
-              fromQueue.push(neighbor);
-            }
-          }
-        }
-      }
-
-      if (collectedPathsNodes.length >= MAX_PATHS_TO_SHOW && minPathLength !== Infinity) break;
-
-      let toQueueProcessCount = toQueue.length;
-      if (minPathLength !== Infinity && collectedPathsNodes.length >= MAX_PATHS_TO_SHOW) toQueueProcessCount = 0;
-
-      for (let i = 0; i < toQueueProcessCount; i++) {
-        const current = toQueue.shift();
-        if (!current || !current.path) continue;
-        if (current.path.length >= minPathLength && minPathLength !== Infinity) continue;
-
-        for (const neighbor of current.connected) {
-          if (neighbor.visitedFrom && neighbor.path) {
-            const path = neighbor.path.concat(current.path.slice().reverse().slice(1));
-            if (path.length < minPathLength) {
-              minPathLength = path.length;
-              collectedPathsNodes = [path];
-            } else if (path.length === minPathLength && collectedPathsNodes.length < MAX_PATHS_TO_SHOW) {
-              collectedPathsNodes.push(path);
-            }
-          }
-          if (!neighbor.visitedTo) {
-            if (current.path.length + 1 < minPathLength || minPathLength === Infinity) {
-              neighbor.visitedTo = true;
-              neighbor.path = current.path.concat(neighbor);
-              toQueue.push(neighbor);
-            }
-          }
-        }
-      }
-      if (collectedPathsNodes.length >= MAX_PATHS_TO_SHOW && minPathLength !== Infinity) break;
-
-      if (
-        minPathLength !== Infinity &&
-        fromQueue.every((n) => (n.path?.length || 0) >= minPathLength) &&
-        toQueue.every((n) => (n.path?.length || 0) >= minPathLength) &&
-        collectedPathsNodes.length > 0
-      ) {
-        break;
-      }
-    }
-
-    const uniqueStringPaths = new Set(collectedPathsNodes.map((p) => p.map((n) => n.word).join(',')));
-    return Array.from(uniqueStringPaths)
-      .map((s) => s.split(','))
-      .sort((a, b) => a.length - b.length)
-      .slice(0, MAX_PATHS_TO_SHOW);
-  }
-
-  async function fetchAndBuildGraph(length: WordLengthOption) {
+  async function loadWordData(length: WordLengthOption) {
     isLoading = true;
     error = null;
+
     try {
-      const response = await fetch(WORD_FILES[length]);
-      if (!response.ok) throw new Error(`Failed to fetch words: ${response.status}`);
-      const data = (await response.json()) as WordsData;
+      const [loadedWords, loadedIndex] = await Promise.all([
+        getWordsOfLengthClient(length, 'wordsolverx', 'lower'),
+        getWordLadderIndexClient(length, 'wordsolverx', 'lower'),
+      ]);
 
-      if (!data.words || !Array.isArray(data.words)) throw new Error('Invalid word data format');
-
-      const filteredWords = data.words.filter((word) => word && word.length === length);
-      const fetchedWordSet = new Set(filteredWords.map((w) => w.toLowerCase()));
-      wordSet = fetchedWordSet;
-
-      const newGraph = buildGraph(fetchedWordSet, length);
-      graphInstance = newGraph;
+      wordSet = loadedWords;
+      ladderIndex = loadedIndex;
     } catch (e) {
       error = e instanceof Error ? e.message : 'Unknown error fetching words';
       wordSet = new Set();
-      graphInstance = null;
+      ladderIndex = null;
     } finally {
       isLoading = false;
     }
   }
 
   onMount(() => {
-    fetchAndBuildGraph(wordLength);
+    void loadWordData(wordLength);
   });
+
+  function solveCurrentInputs() {
+    const firstWord = inputs[0].join('');
+    const secondWord = inputs[1].join('');
+
+    if (!ladderIndex) {
+      resultPaths = [];
+      return;
+    }
+
+    if (
+      firstWord.length === wordLength &&
+      secondWord.length === wordLength &&
+      wordSet.has(firstWord) &&
+      wordSet.has(secondWord)
+    ) {
+      resultPaths = solveWordLadderWithIndex(ladderIndex, firstWord, secondWord, {
+        maxSolutions: MAX_PATHS_TO_SHOW,
+        mode: 'short',
+      }).solutions;
+    } else {
+      resultPaths = [];
+    }
+  }
 
   function setWordLength(length: WordLengthOption) {
     wordLength = length;
     inputs = [Array(length).fill(''), Array(length).fill('')];
     resultPaths = [];
     inputRefs = [[], []];
-    fetchAndBuildGraph(length);
+    void loadWordData(length);
   }
 
   function handleInputChange(wordIdx: 0 | 1, letterIdx: number, value: string) {
-    if (isLoading || !graphInstance) return;
+    if (isLoading || !ladderIndex) return;
 
     const letter = value.slice(-1).toLowerCase();
     if (letter && !/^[a-z]$/.test(letter)) return;
 
     inputs[wordIdx][letterIdx] = letter;
-    inputs = [...inputs]; // trigger reactivity
+    inputs = [...inputs];
 
-    // Auto-focus next input
     if (letter && letterIdx < wordLength - 1) {
       inputRefs[wordIdx][letterIdx + 1]?.focus();
     } else if (letter && letterIdx === wordLength - 1 && wordIdx === 0) {
       inputRefs[1][0]?.focus();
     }
 
-    // Check if we can solve
-    const firstWord = inputs[0].join('');
-    const secondWord = inputs[1].join('');
-
-    if (firstWord.length === wordLength && secondWord.length === wordLength && wordSet.has(firstWord) && wordSet.has(secondWord)) {
-      resultPaths = getConnectionLogic(firstWord, secondWord, graphInstance);
-    } else {
-      resultPaths = [];
-    }
+    solveCurrentInputs();
   }
 
   function handleInputKeyDown(wordIdx: 0 | 1, letterIdx: number, e: KeyboardEvent) {
@@ -271,23 +124,47 @@
     }
   }
 
-  function getBlockClasses(letter: string, isResult: boolean = false, targetWordForMatching?: string, charIndex?: number): string {
-    let classes = 'w-12 h-12 sm:w-16 sm:h-16 border-2 flex items-center justify-center text-2xl sm:text-3xl font-bold uppercase transition-all duration-150 ease-in-out rounded-xl shadow-sm';
+  function getSizeClasses(length: number): string {
+    if (length >= 10) {
+      return 'w-8 h-8 text-sm sm:w-10 sm:h-10 sm:text-lg';
+    }
+
+    if (length >= 8) {
+      return 'w-9 h-9 text-base sm:w-11 sm:h-11 sm:text-xl';
+    }
+
+    if (length >= 6) {
+      return 'w-10 h-10 text-lg sm:w-12 sm:h-12 sm:text-2xl';
+    }
+
+    return 'w-12 h-12 text-2xl sm:w-16 sm:h-16 sm:text-3xl';
+  }
+
+  function getBlockClasses(
+    letter: string,
+    isResult: boolean = false,
+    targetWordForMatching?: string,
+    charIndex?: number,
+    currentLength: number = wordLength
+  ): string {
+    let classes = `${getSizeClasses(currentLength)} border-2 flex items-center justify-center font-bold uppercase transition-all duration-150 ease-in-out rounded-xl shadow-sm`;
 
     if (!isResult) {
       if (letter) {
-        classes += ' border-indigo-500 dark:border-indigo-400 bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-300';
+        classes += ' border-indigo-500 bg-white text-indigo-600';
       } else {
-        classes += ' border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700/70 text-gray-400 dark:text-gray-500';
+        classes += ' border-gray-300 bg-white/70 text-gray-400';
       }
+    } else if (
+      targetWordForMatching &&
+      charIndex !== undefined &&
+      letter === targetWordForMatching[charIndex]
+    ) {
+      classes += ' bg-green-500 text-white border-green-600';
     } else {
-      classes += ' border-2';
-      if (targetWordForMatching && charIndex !== undefined && letter === targetWordForMatching[charIndex]) {
-        classes += ' bg-green-500 text-white border-green-600 dark:bg-green-500 dark:text-white dark:border-green-600';
-      } else {
-        classes += ' bg-gray-200 text-gray-800 border-gray-300 dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500';
-      }
+      classes += ' bg-gray-200 text-gray-800 border-gray-300';
     }
+
     return classes;
   }
 
@@ -302,7 +179,7 @@
       {
         '@type': 'ProfessionalService',
         name: 'Weaver Solver',
-        description: 'Professional solver for the Weaver word ladder game supporting 3-5 letter words.',
+        description: 'Professional solver for the Weaver word ladder game supporting 3-12 letter words.',
         url: 'https://wordsolverx.com/weaver-solver',
         areaServed: 'Worldwide',
         serviceType: 'Puzzle Solving Service',
@@ -314,12 +191,18 @@
           {
             '@type': 'Question',
             name: 'What is Weaver?',
-            acceptedAnswer: { '@type': 'Answer', text: 'Weaver is a daily word game where you transform a start word into an end word by changing one letter at a time, with each step being a valid word.' },
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Weaver is a daily word game where you transform a start word into an end word by changing one letter at a time, with each step being a valid word.'
+            },
           },
           {
             '@type': 'Question',
             name: 'How does the Weaver Solver work?',
-            acceptedAnswer: { '@type': 'Answer', text: 'It finds the shortest path between two words using a graph algorithm, ensuring you get the optimal solution for the puzzle.' },
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'It finds the true shortest path between two words using one shared word ladder algorithm, ensuring you get a valid optimal solution.'
+            },
           },
         ],
       },
@@ -350,7 +233,7 @@
     <p class="text-xl text-gray-700 dark:text-gray-300">{error}</p>
     <p class="mt-4 text-gray-500 dark:text-gray-400">Please try refreshing the page or check if the word files are available.</p>
   </div>
-{:else if isLoading && !graphInstance}
+{:else if isLoading && !ladderIndex}
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
     <h1 class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-4">Weaver Solver</h1>
     <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mb-4"></div>
@@ -368,11 +251,11 @@
     <header class="mb-6 text-center">
       <Breadcrumbs />
       <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-300">Weaver Solver</h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">Find the path between two words (3-5 letters).</p>
+      <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">Find the shortest path between two words (3-12 letters).</p>
     </header>
 
     <!-- Word Length Selector -->
-    <div class="mb-6 flex gap-2 sm:gap-3">
+    <div class="mb-6 flex flex-wrap justify-center gap-2 sm:gap-3">
       {#each WORD_LENGTH_OPTIONS as length}
         <button
           onclick={() => setWordLength(length)}
@@ -395,7 +278,8 @@
           </h2>
           <div class="h-px bg-gradient-to-r from-transparent via-indigo-300 dark:via-indigo-600 to-transparent w-1/4 ml-4"></div>
         </div>
-        <div class="flex justify-center space-x-1 sm:space-x-2 p-6 bg-indigo-50/50 dark:bg-indigo-900/10 rounded-xl border border-indigo-100 dark:border-indigo-800/30 shadow-inner">
+        <div class="overflow-x-auto">
+          <div class="flex min-w-max justify-center gap-1 sm:gap-2 p-6 bg-indigo-50/50 dark:bg-indigo-900/10 rounded-xl border border-indigo-100 dark:border-indigo-800/30 shadow-inner">
           {#each inputs[0] as letter, i}
             <input
               bind:this={inputRefs[0][i]}
@@ -405,13 +289,14 @@
               value={letter}
               oninput={(e) => handleInputChange(0, i, (e.target as HTMLInputElement).value)}
               onkeydown={(e) => handleInputKeyDown(0, i, e)}
-              class="text-center outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 focus:scale-105 {getBlockClasses(letter)}"
+              class="text-center outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 focus:scale-105 {getBlockClasses(letter, false, undefined, undefined, wordLength)}"
               autocomplete="off"
               autocorrect="off"
               autocapitalize="off"
               spellcheck="false"
             />
           {/each}
+        </div>
         </div>
       </div>
 
@@ -425,20 +310,22 @@
               </h3>
               <div class="space-y-2 flex-grow flex flex-col justify-center">
                 {#each path.slice(1) as word, stepIndex}
-                  <div
-                    class="flex justify-center space-x-1 sm:space-x-2 animate-fadeIn"
-                    style="animation-delay: {stepIndex * 100}ms"
-                  >
+                  <div class="overflow-x-auto">
+                    <div
+                      class="flex min-w-max justify-center gap-1 sm:gap-2 animate-fadeIn"
+                      style="animation-delay: {stepIndex * 100}ms"
+                    >
                     {#each word.split('') as char, charIndex}
-                      <div class={getBlockClasses(char, true, inputs[1].join(''), charIndex)}>
+                      <div class={getBlockClasses(char, true, inputs[1].join(''), charIndex, word.length)}>
                         {char}
                       </div>
                     {/each}
+                    </div>
                   </div>
                 {/each}
               </div>
               <div class="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600 text-center text-xs text-gray-500 dark:text-gray-400">
-                {path[0]} → {path[path.length - 1]}
+                {path[0]} -&gt; {path[path.length - 1]}
               </div>
             </div>
           {/each}
@@ -454,7 +341,8 @@
           </h2>
           <div class="h-px bg-gradient-to-r from-transparent via-green-300 dark:via-green-600 to-transparent w-1/4 ml-4"></div>
         </div>
-        <div class="flex justify-center space-x-1 sm:space-x-2 p-6 bg-green-50/50 dark:bg-green-900/10 rounded-xl border border-green-100 dark:border-green-800/30 shadow-inner">
+        <div class="overflow-x-auto">
+          <div class="flex min-w-max justify-center gap-1 sm:gap-2 p-6 bg-green-50/50 dark:bg-green-900/10 rounded-xl border border-green-100 dark:border-green-800/30 shadow-inner">
           {#each inputs[1] as letter, i}
             <input
               bind:this={inputRefs[1][i]}
@@ -464,13 +352,14 @@
               value={letter}
               oninput={(e) => handleInputChange(1, i, (e.target as HTMLInputElement).value)}
               onkeydown={(e) => handleInputKeyDown(1, i, e)}
-              class="text-center outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 focus:scale-105 {getBlockClasses(letter)}"
+              class="text-center outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 focus:scale-105 {getBlockClasses(letter, false, undefined, undefined, wordLength)}"
               autocomplete="off"
               autocorrect="off"
               autocapitalize="off"
               spellcheck="false"
             />
           {/each}
+        </div>
         </div>
       </div>
 
@@ -497,7 +386,7 @@
     <footer class="mt-10 text-center text-gray-500 dark:text-gray-400 text-sm max-w-md w-full">
       <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 mb-8">
         <h3 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">How To Play</h3>
-        <p class="mb-3">Tap on any input box to start typing. Select your preferred word length (3-5 letters) using the buttons above.</p>
+        <p class="mb-3">Tap on any input box to start typing. Select your preferred word length (3-12 letters) using the buttons above.</p>
         <p class="mb-3">The solver will automatically find the shortest path between your two words as you type.</p>
         <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Inspired by the game Weaver.</p>
       </div>
@@ -510,7 +399,7 @@
             Weaver is a captivating word game where your goal is to "weave" your way from a starting word to an ending word, changing only one letter at a time. Each intermediate step must be a valid word. It's a classic word ladder puzzle brought to the daily web game era.
           </p>
           <p class="mb-4">
-            Our <strong>Weaver Solver</strong> supports words of <em>3, 4, and 5 letters</em>, using a breadth-first search algorithm to find the <em>shortest possible path</em> between any two words. This helps you solve even the trickiest daily puzzles in seconds.
+            Our <strong>Weaver Solver</strong> supports words from <em>3 to 12 letters</em>, using a breadth-first search algorithm to find the <em>shortest possible path</em> between any two words. This helps you solve even the trickiest daily puzzles in seconds.
           </p>
         </div>
 
@@ -532,7 +421,7 @@
             <div>
               <h4 class="font-semibold text-gray-900 dark:text-gray-100">What word lengths are supported?</h4>
               <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                The solver supports 3, 4, and 5 letter words. Simply click the button for your desired word length before entering your words.
+                The solver supports 3 to 12 letter words. Simply click the button for your desired word length before entering your words.
               </p>
             </div>
           </div>
