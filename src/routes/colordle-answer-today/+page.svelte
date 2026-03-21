@@ -38,7 +38,7 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <header class="text-center mb-12">
         <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 bg-clip-text text-transparent mb-4">
-          Colordle Hints and Answer for Today ({data.formattedDate})
+          Colordle Answer Today ({data.formattedDate})
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
           Verified Colordle hints and the official solution for <span class="font-semibold text-indigo-600 dark:text-indigo-400">{data.formattedDate}</span>

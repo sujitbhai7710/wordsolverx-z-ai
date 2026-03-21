@@ -13,8 +13,8 @@ export const load: PageServerLoad = async () => {
 
     const { color, dayNum, formattedDate } = todayData;
     const featuredImage = 'https://wordsolverx.com/colordle-answer-today.webp';
-    const pageTitle = `Colordle Hints and Answer for Today (${formattedDate})`;
-    const pageDescription = `Get Colordle hints and the confirmed Colordle answer for today, ${formattedDate}. Today's color is ${color.name} (${color.hex}), with the full Colordle answer for ${formattedDate} and quick hex-code verification.`;
+    const pageTitle = `Colordle Answer Today (${formattedDate})`;
+    const pageDescription = `Colordle hints and the confirmed Colordle answer for today, ${formattedDate}, Colordle answer for ${formattedDate}`;
     const pageKeywords = `colordle answer today, colordle answer, colordle hint, colordle hint today, colordle answer for ${formattedDate}`;
 
     const last10Days = Array.from({ length: 10 }, (_, i) => {
