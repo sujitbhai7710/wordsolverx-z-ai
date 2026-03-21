@@ -50,7 +50,7 @@
       </div>
 
       <article class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">About Today's Puzzle</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">About Today's colordle answer</h2>
         <p class="text-gray-600 dark:text-gray-300 mb-6">
           Today's Colordle puzzle number is <strong class="text-indigo-600 dark:text-indigo-400">#{data.dayNum}</strong>. The solution color is <strong class="text-gray-900 dark:text-white">{data.color.name}</strong> with the hex code <code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
         </p>
