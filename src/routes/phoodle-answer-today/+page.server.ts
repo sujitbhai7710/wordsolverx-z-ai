@@ -1,20 +1,16 @@
-import { getPhoodleToday, getRecentPhoodleHistory } from '$lib/phoodle';
+import { getPhoodleTodaySummary } from '$lib/phoodle';
 import { getPuzzleWindow, parsePuzzleDateKey } from '$lib/puzzle-window';
 import { format } from 'date-fns';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
-    const window = getPuzzleWindow('phoodle');
-    const data = await getPhoodleToday();
+    const summary = await getPhoodleTodaySummary(10);
+    const data = summary.current;
 
     if (!data) {
-        setHeaders({
-            'X-Edge-Cache-Bypass': '1'
-        });
-
         return {
             error: true,
-            formattedDate: format(parsePuzzleDateKey(window.effectivePuzzleDate), 'MMMM d, yyyy')
+            formattedDate: format(parsePuzzleDateKey(getPuzzleWindow('phoodle').effectivePuzzleDate), 'MMMM d, yyyy')
         };
     }
 
@@ -25,8 +21,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         'X-Puzzle-Date': data.date.toISOString().split('T')[0]
     });
 
-    // Fetch last 10 available days for FAQs (Phoodle can have gaps in dates)
-    const last10Days = await getRecentPhoodleHistory(data.date, 10);
+    const last10Days = summary.recent;
     const pageTitle = `Phoodle Hints and Answer for Today (${formattedDate})`;
     const pageDescription = `Get Phoodle hints and the confirmed Phoodle answer for today, ${formattedDate}. Today's food word is ${upperWord}, with recent answers and recipe context.`;
     const pageKeywords = `phoodle answer today, phoodle answer, phoodle hint, phoodle hint today, phoodle answer for ${formattedDate}`;

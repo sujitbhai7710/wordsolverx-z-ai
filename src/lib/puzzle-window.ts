@@ -1,3 +1,5 @@
+import { DAILY_ROLLOVER_GRACE_SECONDS } from '$lib/rollover-grace';
+
 export type PuzzleTimezone = 'JST' | 'IST' | 'UTC' | 'worker-latest';
 export type PuzzleSourceReadiness = 'deterministic' | 'latest-payload';
 
@@ -204,20 +206,41 @@ function formatDateKeyFromUtcParts(year: number, month: number, day: number): st
 function getDateKeyFromFixedOffset(offsetMinutes: number, now: Date): string {
 	const localMs = now.getTime() + offsetMinutes * 60_000;
 	const local = new Date(localMs);
+	const currentBoundaryUtcMs =
+		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate(), 0, 0, DAILY_ROLLOVER_GRACE_SECONDS, 0) -
+		offsetMinutes * 60_000;
+
+	if (now.getTime() >= currentBoundaryUtcMs) {
+		return formatDateKeyFromUtcParts(
+			local.getUTCFullYear(),
+			local.getUTCMonth() + 1,
+			local.getUTCDate()
+		);
+	}
+
+	const previous = new Date(Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate() - 1));
 	return formatDateKeyFromUtcParts(
-		local.getUTCFullYear(),
-		local.getUTCMonth() + 1,
-		local.getUTCDate()
+		previous.getUTCFullYear(),
+		previous.getUTCMonth() + 1,
+		previous.getUTCDate()
 	);
 }
 
 function getNextFixedOffsetInvalidation(offsetMinutes: number, now: Date): Date {
 	const localMs = now.getTime() + offsetMinutes * 60_000;
 	const local = new Date(localMs);
-	const nextMidnightUtcMs =
-		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate() + 1, 0, 0, 0) -
+	const currentBoundaryUtcMs =
+		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate(), 0, 0, DAILY_ROLLOVER_GRACE_SECONDS, 0) -
 		offsetMinutes * 60_000;
-	return new Date(nextMidnightUtcMs);
+
+	if (now.getTime() < currentBoundaryUtcMs) {
+		return new Date(currentBoundaryUtcMs);
+	}
+
+	const nextBoundaryUtcMs =
+		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate() + 1, 0, 0, DAILY_ROLLOVER_GRACE_SECONDS, 0) -
+		offsetMinutes * 60_000;
+	return new Date(nextBoundaryUtcMs);
 }
 
 function getWorkerLatestDates(config: PuzzleWindowConfig, now: Date) {
@@ -229,7 +252,7 @@ function getWorkerLatestDates(config: PuzzleWindowConfig, now: Date) {
 		now.getUTCDate(),
 		hour,
 		minute,
-		0,
+		DAILY_ROLLOVER_GRACE_SECONDS,
 		0
 	);
 
@@ -248,7 +271,15 @@ function getWorkerLatestDates(config: PuzzleWindowConfig, now: Date) {
 				previous.getUTCDate()
 			),
 			nextInvalidationAt: new Date(
-				Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, hour, minute, 0, 0)
+				Date.UTC(
+					now.getUTCFullYear(),
+					now.getUTCMonth(),
+					now.getUTCDate() + 1,
+					hour,
+					minute,
+					DAILY_ROLLOVER_GRACE_SECONDS,
+					0
+				)
 			)
 		};
 	}

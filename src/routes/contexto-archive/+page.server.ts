@@ -35,16 +35,7 @@ export const load: PageServerLoad = async ({ fetch, url }) => {
 };
 
 async function getLatestContextoAnswer(fetchFn: typeof fetch): Promise<ContextoAnswerResponse | null> {
-  const seedGameNumber = 1262;
-
-  for (let offset = 0; offset < 7; offset += 1) {
-    const response = await fetchFn(`/api/contexto/daily?game=${seedGameNumber - offset}`);
-    const payload = (await response.json()) as ContextoAnswerResponse;
-
-    if (response.ok && payload.success) {
-      return payload;
-    }
-  }
-
-  return null;
+  const response = await fetchFn('/api/contexto/daily');
+  const payload = (await response.json()) as ContextoAnswerResponse;
+  return response.ok && payload.success ? payload : null;
 }

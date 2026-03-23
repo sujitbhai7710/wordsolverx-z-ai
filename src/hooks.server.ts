@@ -138,15 +138,10 @@ function getHtmlCacheContext(url: URL): CacheContext | null {
 	const todayGame = TODAY_ROUTE_GAME_MAP[pathname];
 	if (todayGame) {
 		const window = getPuzzleWindow(todayGame);
-		const lookupKeys = [`html:${pathname}:today:${window.effectivePuzzleDate}`];
-		if (window.sourceReadiness === 'latest-payload' && window.fallbackPuzzleDate) {
-			lookupKeys.push(`html:${pathname}:today:${window.fallbackPuzzleDate}`);
-		}
-
 		return {
 			cacheControl: buildCacheControl(window.ttlSeconds),
-			lookupKeys,
-			storeKey: lookupKeys[0]
+			lookupKeys: [`html:${pathname}:today:${window.effectivePuzzleDate}`],
+			storeKey: `html:${pathname}:today:${window.effectivePuzzleDate}`
 		};
 	}
 

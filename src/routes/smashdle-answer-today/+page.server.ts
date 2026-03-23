@@ -1,14 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { formatAnswerDate, pickLatestAnswerDate } from '$lib/game-dle/answer-date';
-
-interface GameAnswer {
-    game: string;
-    date: string;
-    mode: string;
-    region: string;
-    game_id: number;
-    json_content: string;
-}
+import { loadGameDleToday, type GameDleAnswer } from '$lib/game-dle/today';
 
 interface ParsedContent {
     champion_name?: string;
@@ -36,21 +27,21 @@ function formatSeoDate(dateStr: string | null): string {
 }
 
 export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
+    const result = await loadGameDleToday({
+        fetchFn: fetch,
+        setHeaders,
+        game: 'smashdle',
+        gameTitle: 'Smashdle'
+    });
+
+    if (result.error) {
+        return result;
+    }
+
+    const answers = result.answers as GameDleAnswer[];
+    const latestDate = result.latestDate;
+    const dateStr = result.dateStr;
     try {
-        const response = await fetch('https://narutodle-worker.narutodle.workers.dev/latest?game=smashdle');
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch Smashdle data');
-        }
-
-        const answers: GameAnswer[] = await response.json();
-        const latestDate = pickLatestAnswerDate(answers);
-
-        if (latestDate) {
-            setHeaders({ 'X-Puzzle-Date': latestDate });
-        }
-
-        const dateStr = formatAnswerDate(answers) ?? '';
         const seoDate = formatSeoDate(latestDate);
         const featuredImage = 'https://wordsolver.tech/smashdle-answer-today.webp';
         const uniqueNames = Array.from(new Set(
@@ -128,6 +119,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
         };
     } catch (err) {
         console.error('Error fetching Smashdle data:', err);
+        setHeaders({ 'X-Edge-Cache-Bypass': '1' });
         return {
             answers: [],
             dateStr: '',

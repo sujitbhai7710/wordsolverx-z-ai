@@ -1,6 +1,5 @@
-
-import { format, differenceInDays, startOfDay } from 'date-fns';
-import { getJSTToday } from '$lib/utils';
+import { format } from 'date-fns';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 
 export interface WaffleDayData {
     date: Date;
@@ -21,12 +20,12 @@ export interface WaffleDayData {
 const WAFFLE_WORKER_URL = 'https://api.wafflegame.workers.dev';
 
 export async function getWaffleDataForDate(date: Date): Promise<WaffleDayData | null> {
-    const todayJST = getJSTToday();
-    const todayJSTStr = format(todayJST, 'yyyy-MM-dd');
+    const activePuzzleDate = getPuzzleDateForGame('waffle');
+    const activePuzzleDateStr = format(activePuzzleDate, 'yyyy-MM-dd');
     const dateStr = format(date, 'yyyy-MM-dd');
 
     // Choose endpoint: Use /today for the dedicated route or if dates match
-    const isToday = dateStr === todayJSTStr;
+    const isToday = dateStr === activePuzzleDateStr;
     const endpoint = isToday ? '/today' : `/date/${dateStr}`;
 
     try {

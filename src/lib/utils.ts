@@ -1,4 +1,5 @@
 import { format, subDays } from 'date-fns';
+import { applyDailyRolloverGrace } from '$lib/rollover-grace';
 
 // The first NYT Wordle was #219 on February 15, 2022
 export const WORDLE_NYT_START_DATE = new Date('2022-02-15');
@@ -21,7 +22,7 @@ export function getWordleDate(number: number): Date {
  * Get today's date in Japan Standard Time (UTC+9)
  */
 export function getJSTToday(): Date {
-  const now = new Date();
+  const now = applyDailyRolloverGrace();
   const jstOffset = 9 * 60; // JST is UTC+9
   const jstTime = new Date(now.getTime() + (jstOffset + now.getTimezoneOffset()) * 60000);
   jstTime.setHours(0, 0, 0, 0);
@@ -32,7 +33,7 @@ export function getJSTToday(): Date {
  * Get today's date using the UTC calendar day
  */
 export function getUTCToday(): Date {
-  const now = new Date();
+  const now = applyDailyRolloverGrace();
   return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 }
 
@@ -40,7 +41,7 @@ export function getUTCToday(): Date {
  * Get today's date in India Standard Time (UTC+5:30)
  */
 export function getISTToday(): Date {
-  const now = new Date();
+  const now = applyDailyRolloverGrace();
   const istOffset = 5.5 * 60; // IST is UTC+5:30
   const istTime = new Date(now.getTime() + (istOffset + now.getTimezoneOffset()) * 60000);
   istTime.setHours(0, 0, 0, 0);

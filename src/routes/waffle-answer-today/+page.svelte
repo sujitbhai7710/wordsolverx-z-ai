@@ -15,6 +15,14 @@
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
+{#if data.error || !data.puzzle}
+<main class="max-w-3xl mx-auto px-4 py-12">
+  <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+    <h1 class="mb-4 text-3xl font-bold text-gray-900">Unable to Load Waffle Right Now</h1>
+    <p class="text-gray-600">Please refresh in a moment.</p>
+  </div>
+</main>
+{:else}
 <main class="max-w-3xl mx-auto px-4 py-8">
   <div class="mb-8">
     <a href="/" class="text-blue-600 hover:text-blue-800 mb-4 inline-block">&larr; Back to Home</a>
@@ -206,3 +214,4 @@
 
   <InternalLinkSection currentGame="Waffle" />
 </main>
+{/if}

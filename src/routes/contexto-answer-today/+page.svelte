@@ -2,7 +2,8 @@
   import FAQSection from '$lib/components/FAQSection.svelte';
   import {
     formatContextoDate,
-    getContextoGameNumber
+    getContextoGameNumber,
+    getContextoTodayDate
   } from '$lib/contexto';
   import {
     generateFAQSchema,
@@ -35,16 +36,20 @@
   }
 
   const activeDate = $derived(
-    data.initialAnswer?.date ?? data.latestDate ?? formatContextoDate(new Date())
+    data.initialAnswer?.date ?? data.latestDate ?? formatContextoDate(getContextoTodayDate())
   );
   const activeLabel = $derived(formatDisplayDate(activeDate));
   const activeGameNumber = $derived(
     data.initialAnswer?.gameNumber ?? getContextoGameNumber(new Date(`${activeDate}T12:00:00`))
   );
 
-  const pageTitle = `Contexto Hints and Answer for Today (${activeLabel})`;
-  const pageDescription = `Get Contexto hints and the confirmed Contexto answer for today, ${activeLabel}. Use the dedicated archive page when you need an older Contexto answer.`;
-  const pageKeywords = `contexto answer today, contexto answer, contexto hint, contexto hint today, contexto answer for ${activeLabel}`;
+  let pageTitle = $derived(`Contexto Hints and Answer for Today (${activeLabel})`);
+  let pageDescription = $derived(
+    `Get Contexto hints and the confirmed Contexto answer for today, ${activeLabel}. Use the dedicated archive page when you need an older Contexto answer.`
+  );
+  let pageKeywords = $derived(
+    `contexto answer today, contexto answer, contexto hint, contexto hint today, contexto answer for ${activeLabel}`
+  );
 
   const faqs = [
     {
@@ -75,10 +80,12 @@
     { name: 'Reveal the answer', text: 'Use the reveal button when you are ready to confirm the secret word.' },
     { name: 'Open the archive', text: 'Use the archive page for older Contexto answers instead of browsing them here.' }
   ]);
-  const webPageSchema = generateWebPageSchema(
-    pageTitle,
-    pageDescription,
-    'https://wordsolver.tech/contexto-answer-today'
+  let webPageSchema = $derived(
+    generateWebPageSchema(
+      pageTitle,
+      pageDescription,
+      'https://wordsolver.tech/contexto-answer-today'
+    )
   );
 </script>
 

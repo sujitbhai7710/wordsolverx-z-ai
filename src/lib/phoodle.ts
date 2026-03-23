@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { getPuzzleDateForGame } from '$lib/puzzle-window';
+import { getPuzzleDateForGame, getPuzzleWindow } from '$lib/puzzle-window';
 
 const PHOODLE_API = 'https://phoodle-worker.pinpoints.workers.dev';
 const PHOODLE_PAGE_SIZE = 20;
@@ -19,6 +19,12 @@ export interface PhoodleDayData {
 
 let cachedPhoodleDates: { fetchedAt: number; dates: string[] } | null = null;
 let pendingPhoodleDates: Promise<string[]> | null = null;
+
+export interface PhoodleTodaySummary {
+    visibleDate: string;
+    current: PhoodleDayData | null;
+    recent: PhoodleDayData[];
+}
 
 async function fetchPhoodleJson(endpoint: string): Promise<any | null> {
     try {
@@ -43,6 +49,10 @@ function mapPhoodleApiEntry(entry: any): PhoodleDayData | null {
         formattedDate: format(actualDate, 'MMMM d, yyyy'),
         date: actualDate
     };
+}
+
+function getPhoodleVisibleDateKey(): string {
+    return getPuzzleWindow('phoodle').effectivePuzzleDate;
 }
 
 async function getPhoodleDataForDateString(dateStr: string): Promise<PhoodleDayData | null> {
@@ -74,20 +84,12 @@ export async function getAllPhoodleDates(): Promise<string[]> {
     }
 
     pendingPhoodleDates = (async () => {
-        const dates: string[] = [];
-        let page = 1;
-
-        while (true) {
-            const pageDates = await getPhoodleDatesPage(page);
-            if (!pageDates.length) break;
-
-            dates.push(...pageDates);
-
-            if (pageDates.length < PHOODLE_PAGE_SIZE) break;
-            page += 1;
-        }
-
-        const uniqueDates = Array.from(new Set(dates)).sort((a, b) => b.localeCompare(a));
+        const data = await fetchPhoodleJson('list/all');
+        const dates = data?.success && Array.isArray(data.data) ? data.data : [];
+        const visibleDate = getPhoodleVisibleDateKey();
+        const uniqueDates = Array.from(new Set(dates))
+            .filter((dateStr) => dateStr <= visibleDate)
+            .sort((a, b) => b.localeCompare(a));
         cachedPhoodleDates = { fetchedAt: Date.now(), dates: uniqueDates };
         pendingPhoodleDates = null;
         return uniqueDates;
@@ -148,6 +150,31 @@ export async function getRecentPhoodleHistory(beforeDate: Date, count: number): 
     const priorDates = dates.filter((dateStr) => dateStr < targetKey).slice(0, count);
     const results = await Promise.all(priorDates.map((dateStr) => getPhoodleDataForDateString(dateStr)));
     return results.filter((result): result is PhoodleDayData => result !== null);
+}
+
+export async function getPhoodleTodaySummary(historyCount = 10): Promise<PhoodleTodaySummary> {
+    const safeHistoryCount = Math.max(0, Math.min(20, historyCount));
+    const data = await fetchPhoodleJson(`summary/today?history=${safeHistoryCount}`);
+    const visibleDate = data?.visible_date ?? getPhoodleVisibleDateKey();
+    const current = mapPhoodleApiEntry(data?.current);
+    const recent = Array.isArray(data?.recent)
+        ? data.recent.map(mapPhoodleApiEntry).filter((entry): entry is PhoodleDayData => entry !== null)
+        : [];
+
+    if (current) {
+        return {
+            visibleDate,
+            current,
+            recent
+        };
+    }
+
+    const fallbackCurrent = await getPhoodleToday();
+    return {
+        visibleDate,
+        current: fallbackCurrent,
+        recent: fallbackCurrent ? await getRecentPhoodleHistory(fallbackCurrent.date, safeHistoryCount) : []
+    };
 }
 
 /**

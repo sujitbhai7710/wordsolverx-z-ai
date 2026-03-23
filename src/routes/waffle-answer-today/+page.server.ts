@@ -1,15 +1,31 @@
-import { getJSTToday } from '$lib/utils';
 import { getWaffleDataForDate } from '$lib/waffle';
 import { subDays, addDays, startOfDay, isBefore } from 'date-fns';
-import { error } from '@sveltejs/kit';
+import { format } from 'date-fns';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
-    const today = getJSTToday();
+    const today = getPuzzleDateForGame('waffle');
     const data = await getWaffleDataForDate(today);
 
     if (!data) {
-        error(404, 'Waffle answer not found');
+        const formattedDate = format(today, 'MMMM d, yyyy');
+        return {
+            error: true,
+            formattedDate,
+            meta: {
+                title: `Waffle Hints and Answer for Today (${formattedDate})`,
+                description: `Get Waffle hints and the confirmed Waffle answer for today, ${formattedDate}.`,
+                keywords: `waffle answer today, waffle answer, waffle hint, waffle hint today, waffle answer for ${formattedDate}`
+            },
+            schemas: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'WebPage',
+                name: `Waffle Hints and Answer for Today (${formattedDate})`,
+                description: `Get Waffle hints and the confirmed Waffle answer for today, ${formattedDate}.`,
+                url: 'https://wordsolver.tech/waffle-answer-today'
+            })
+        };
     }
 
     const { formattedDate, puzzle, solution, words, definitions, number } = data;
@@ -30,6 +46,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: pageTitle, description: pageDescription, datePublished: new Date(today).toISOString(), author: { '@type': 'Organization', name: 'WordSolverX' } });
 
     return {
+        error: false,
         formattedDate, puzzle, solution, words, definitions, number,
         prevSlug, nextSlug, showNext, date: data.date,
         schemas: jsonLd,
