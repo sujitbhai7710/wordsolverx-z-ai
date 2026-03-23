@@ -17,6 +17,18 @@
 	<!-- Critical CSS will be inlined here during build for optimal FCP -->
 	<!-- This space reserved for critical CSS injection -->
 
+	<!-- Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-8QRMXK049Z"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		window.gtag = gtag;
+		gtag('js', new Date());
+		gtag('config', 'G-8QRMXK049Z', { send_page_view: false });
+	</script>
+
 	%sveltekit.head%
 </head>
 

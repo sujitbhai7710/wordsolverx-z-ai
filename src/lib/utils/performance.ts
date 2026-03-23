@@ -13,6 +13,13 @@ export interface AnalyticsEvent {
     metadata?: Record<string, any>;
 }
 
+type GtagFunction = (...args: any[]) => void;
+
+function getGtag(): GtagFunction | null {
+    if (typeof window === 'undefined') return null;
+    return (window as Window & typeof globalThis & { gtag?: GtagFunction }).gtag ?? null;
+}
+
 class Monitor {
     private metrics: PerformanceMetrics = {};
     private isInitialized = false;
@@ -108,6 +115,16 @@ class Tracker {
     trackEvent(event: AnalyticsEvent) {
         if (typeof window === 'undefined') return;
 
+        const gtag = getGtag();
+        if (gtag) {
+            gtag('event', event.action, {
+                event_category: event.category,
+                event_label: event.label,
+                value: event.value,
+                ...event.metadata
+            });
+        }
+
         // In a real application, this would send data to an analytics endpoint
         // (e.g., Google Analytics, Mixpanel, custom backend)
         // For now, we log it to the console in development
@@ -122,11 +139,21 @@ class Tracker {
     }
 
     trackPageView(path: string) {
-        this.trackEvent({
-            category: 'engagement',
-            action: 'page_view',
-            label: path
-        });
+        const gtag = getGtag();
+        if (gtag && typeof window !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_path: path,
+                page_location: window.location.href,
+                page_title: document.title
+            });
+        }
+
+        if (import.meta.env?.DEV) {
+            console.groupCollapsed('[Analytics] page_view');
+            console.log('Category:', 'engagement');
+            console.log('Label:', path);
+            console.groupEnd();
+        }
     }
 
     trackError(error: Error, component?: string) {
