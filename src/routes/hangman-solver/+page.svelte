@@ -13,7 +13,7 @@
   const pageTitle = 'Hangman Solver - Free Online Word Finder & Hint Tool | WordSolverX';
   const pageDescription =
     'Use this Hangman solver to enter your pattern, wrong letters, and included letters, then get the best next guess, ranked answers, and entropy-based letter suggestions.';
-  const pageUrl = 'https://wordsolverx.com/hangman-solver';
+  const pageUrl = 'https://wordsolver.tech/hangman-solver';
 
   const faqs = [
     {
@@ -45,8 +45,8 @@
       keywords: ['hangman solver', 'hangman helper', 'hangman word finder']
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
-      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
       { name: 'Hangman Solver', url: pageUrl }
     ]),
     generateWebPageSchema('Hangman Solver', pageDescription, pageUrl)

@@ -10,17 +10,17 @@
   <title>{data.meta?.title ?? 'Colordle Answer Today'}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
   <meta name="news_keywords" content={data.meta?.keywords ?? 'colordle answer today, colordle answer, colordle hint, colordle hint today'} />
-  <link rel="canonical" href="https://wordsolverx.com/colordle-answer-today" />
+  <link rel="canonical" href="https://wordsolver.tech/colordle-answer-today" />
   <meta property="og:title" content={data.meta?.title ?? 'Colordle Answer Today'} />
   <meta property="og:description" content={data.meta?.description ?? ''} />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://wordsolverx.com/colordle-answer-today" />
-  <meta property="og:image" content={data.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp'} />
+  <meta property="og:url" content="https://wordsolver.tech/colordle-answer-today" />
+  <meta property="og:image" content={data.meta?.featuredImage ?? 'https://wordsolver.tech/wordsolverx.webp'} />
   <meta property="og:image:alt" content={`Colordle hints and answer for ${data.formattedDate ?? 'today'}`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta?.title ?? 'Colordle Answer Today'} />
   <meta name="twitter:description" content={data.meta?.description ?? ''} />
-  <meta name="twitter:image" content={data.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp'} />
+  <meta name="twitter:image" content={data.meta?.featuredImage ?? 'https://wordsolver.tech/wordsolverx.webp'} />
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
   {/if}

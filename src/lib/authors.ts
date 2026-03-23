@@ -19,5 +19,5 @@ export function getAuthorForGame(gameName: string): string {
 export function getAuthorProfileUrl(authorName: string): string {
     // In a real app, this would link to an author bio page
     // For now, we can link to the about page or just return a hash
-    return `https://wordsolverx.com/about#${authorName.toLowerCase().replace(' ', '-')}`;
+    return `https://wordsolver.tech/about#${authorName.toLowerCase().replace(' ', '-')}`;
 }

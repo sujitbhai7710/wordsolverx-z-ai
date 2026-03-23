@@ -52,7 +52,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 
         const dateStr = formatAnswerDate(answers) ?? '';
         const seoDate = formatSeoDate(latestDate);
-        const featuredImage = 'https://wordsolverx.com/smashdle-answer-today.webp';
+        const featuredImage = 'https://wordsolver.tech/smashdle-answer-today.webp';
         const uniqueNames = Array.from(new Set(
             answers
                 .map((answer) => parseContent(answer.json_content).champion_name?.trim())
@@ -105,7 +105,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
                     headline: pageTitle,
                     description: pageDescription,
                     image: [featuredImage],
-                    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/smashdle-answer-today' },
+                    mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/smashdle-answer-today' },
                     author: { '@type': 'Organization', name: 'WordSolverX' },
                     publisher: { '@type': 'Organization', name: 'WordSolverX' },
                     ...(latestDate ? { datePublished: `${latestDate}T00:00:00Z`, dateModified: `${latestDate}T00:00:00Z` } : {})

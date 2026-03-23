@@ -96,7 +96,7 @@
   const webPageSchema = generateWebPageSchema(
     pageTitle,
     pageDescription,
-    'https://wordsolverx.com/phrazle-answer-today'
+    'https://wordsolver.tech/phrazle-answer-today'
   );
 </script>
 
@@ -107,12 +107,12 @@
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/phrazle-answer-today" />
+  <meta property="og:url" content="https://wordsolver.tech/phrazle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <link rel="canonical" href="https://wordsolverx.com/phrazle-answer-today" />
+  <link rel="canonical" href="https://wordsolver.tech/phrazle-answer-today" />
   {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}

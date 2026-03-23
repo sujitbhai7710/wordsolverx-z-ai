@@ -14,7 +14,7 @@
   const pageTitle = 'Minesweeper Solver - Free Online Safe Move Finder | WordSolverX';
   const pageDescription =
     'Use this free Minesweeper solver to find safe moves, mark likely mines, and analyze custom boards online. Built for fast puzzle solving with a visual board editor and smart probability hints.';
-  const pageUrl = 'https://wordsolverx.com/minesweeper-solver';
+  const pageUrl = 'https://wordsolver.tech/minesweeper-solver';
 
   const faqs = [
     {
@@ -61,8 +61,8 @@
     },
     generateWebApplicationSchema('Minesweeper Solver', pageDescription),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
-      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
       { name: 'Minesweeper Solver', url: pageUrl },
     ]),
     generateWebPageSchema('Minesweeper Solver', pageDescription, pageUrl),
@@ -80,7 +80,7 @@
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
-  <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />

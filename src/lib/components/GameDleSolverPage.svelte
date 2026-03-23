@@ -41,7 +41,7 @@
 	const config = $derived(GAME_SOLVER_CONFIGS[gameKey]);
 	const seoContent = $derived(gameSolverSeoContent[gameKey]);
 	const crossLinks = $derived(getSolverCrossLinks(gameKey));
-	const pageUrl = $derived(`https://wordsolverx.com${config.route}`);
+	const pageUrl = $derived(`https://wordsolver.tech${config.route}`);
 	const pageTitle = $derived(seoContent.title);
 	const pageDescription = $derived(seoContent.description);
 	const pageKeywords = $derived(config.keywords.join(', '));
@@ -49,8 +49,8 @@
 	const faqSchema = $derived(generateFAQSchema(seoContent.faqs));
 	const breadcrumbSchema = $derived(
 		generateBreadcrumbSchema([
-			{ name: 'Home', url: 'https://wordsolverx.com' },
-			{ name: 'Solver Tools', url: 'https://wordsolverx.com/solver' },
+			{ name: 'Home', url: 'https://wordsolver.tech' },
+			{ name: 'Solver Tools', url: 'https://wordsolver.tech/solver' },
 			{ name: config.name }
 		])
 	);
@@ -488,7 +488,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={pageTitle} />
 	<meta name="twitter:description" content={pageDescription} />
-	<meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
 	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(webApplicationSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(softwareSchema)}</script>`}

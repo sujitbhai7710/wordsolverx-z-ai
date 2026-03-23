@@ -19,23 +19,23 @@
     '@type': 'ListItem',
     position: index + 1,
     name: `${archive.name} Archive`,
-    url: `https://wordsolverx.com${archive.href}`
+    url: `https://wordsolver.tech${archive.href}`
   }));
 </script>
 
 <svelte:head>
   <title>Puzzle Answer Archives | WordSolverX</title>
   <meta name="description" content="Browse complete answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle with direct links to past solutions." />
-  <link rel="canonical" href="https://wordsolverx.com/archive" />
+  <link rel="canonical" href="https://wordsolver.tech/archive" />
   <meta property="og:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
   <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
-  <meta property="og:url" content="https://wordsolverx.com/archive" />
+  <meta property="og:url" content="https://wordsolver.tech/archive" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
   <meta name="twitter:description" content="Explore complete answer archives and calendar lookups for the most popular daily puzzle games." />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
@@ -43,14 +43,14 @@
         "@type": "CollectionPage",
         "name": "Puzzle Answer Archive",
         "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle.",
-        "url": "https://wordsolverx.com/archive",
-        "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+        "url": "https://wordsolver.tech/archive",
+        "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
       },
       {
         "@type": "WebPage",
         "name": "Puzzle Answer Archive",
         "description": "Archive hub for past puzzle answers, history pages, and answer calendars.",
-        "url": "https://wordsolverx.com/archive"
+        "url": "https://wordsolver.tech/archive"
       },
       {
         "@type": "ItemList",

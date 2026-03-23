@@ -26,7 +26,7 @@
       { '@type': 'Question', name: 'How often does LoLdle reset?', acceptedAnswer: { '@type': 'Answer', text: 'The game resets every 24 hours with a new champion to guess in each mode.' } },
       { '@type': 'Question', name: 'What are the LoLdle game modes?', acceptedAnswer: { '@type': 'Answer', text: 'Classic, Quote, Ability, and Splash.' } },
     ]},
-    { '@type': 'Article', headline: 'LoLdle Answer Today', description: 'Get the confirmed LoLdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/loldle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } } },
+    { '@type': 'Article', headline: 'LoLdle Answer Today', description: 'Get the confirmed LoLdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/loldle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
   ]};
 </script>
 

@@ -13,7 +13,7 @@
   const pageTitle = 'Squaredle Solver - Daily Board Helper & Path Finder | WordSolverX';
   const pageDescription =
     'Use the Squaredle solver to load today’s board, paste any custom grid, and find every valid word path with the same client-side solving logic as the original project.';
-  const pageUrl = 'https://wordsolverx.com/squaredle-solver';
+  const pageUrl = 'https://wordsolver.tech/squaredle-solver';
 
   const faqs = [
     {
@@ -45,8 +45,8 @@
       keywords: ['squaredle solver', 'squaredle helper', 'squaredle today solver']
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
-      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
       { name: 'Squaredle Solver', url: pageUrl }
     ]),
     generateWebPageSchema('Squaredle Solver', pageDescription, pageUrl)

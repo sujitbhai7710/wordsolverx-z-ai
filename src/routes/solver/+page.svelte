@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import GameCard from '$lib/components/GameCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
@@ -58,16 +58,16 @@
 <svelte:head>
   <title>Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX</title>
   <meta name="description" content="Free solver tools for Wordle, Betweenle, Quordle, Phoodle, Waffle, Colordle and more. Get unstuck with smart filtering and clue-based solving. No sign-up required." />
-  <link rel="canonical" href="https://wordsolverx.com/solver" />
+  <link rel="canonical" href="https://wordsolver.tech/solver" />
   <meta property="og:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
   <meta property="og:description" content="Use free solver tools for Wordle, Betweenle, Worldle, Quordle, Phoodle, Waffle, Colordle, and more daily puzzle games." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/solver" />
+  <meta property="og:url" content="https://wordsolver.tech/solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
   <meta name="twitter:description" content="Find the right puzzle solver fast with WordSolverX's full collection of free clue-based tools." />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -75,13 +75,13 @@
         '@type': 'CollectionPage',
         'name': 'Puzzle Solver Tools',
         'description': 'Advanced solver tools for word puzzles',
-        'url': 'https://wordsolverx.com/solver'
+        'url': 'https://wordsolver.tech/solver'
       },
       {
         '@type': 'WebPage',
         'name': 'Puzzle Solver Tools',
         'description': 'Directory of solver tools for word and puzzle games.',
-        'url': 'https://wordsolverx.com/solver'
+        'url': 'https://wordsolver.tech/solver'
       },
       {
         '@type': 'FAQPage',

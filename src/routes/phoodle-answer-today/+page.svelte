@@ -12,7 +12,7 @@
     '@type': 'WebPage',
     name: pageTitle,
     description: pageDescription,
-    url: 'https://wordsolverx.com/phoodle-answer-today'
+    url: 'https://wordsolver.tech/phoodle-answer-today'
   }));
 </script>
 
@@ -22,14 +22,14 @@
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://wordsolverx.com/phoodle-answer-today" />
+  <meta property="og:url" content="https://wordsolver.tech/phoodle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   <meta name="news_keywords" content={data.meta?.keywords ?? 'phoodle answer today, phoodle answer, phoodle hint, phoodle hint today'} />
-  <link rel="canonical" href="https://wordsolverx.com/phoodle-answer-today" />
+  <link rel="canonical" href="https://wordsolver.tech/phoodle-answer-today" />
   {@html `<script type="application/ld+json">${pageSchema}</script>`}
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}

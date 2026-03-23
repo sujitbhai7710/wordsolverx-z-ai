@@ -35,7 +35,7 @@
   const pageTitle = 'Worldle Solver - Solve Worldle With Distance And Direction Clues | WordSolverX';
   const pageDescription =
     'Use the WordSolverX Worldle Solver to filter countries by distance, direction, and proximity clues. This Worldle helper runs instantly in your browser.';
-  const pageUrl = 'https://wordsolverx.com/worldle-solver';
+  const pageUrl = 'https://wordsolver.tech/worldle-solver';
 
   const schemas = JSON.stringify([
     generateFAQSchema(faqs),
@@ -55,8 +55,8 @@
     ]),
     generateSoftwareApplicationSchema('Worldle Solver', 'UtilitiesApplication'),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
-      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
       { name: 'Worldle Solver', url: pageUrl },
     ]),
     generateWebPageSchema('Worldle Solver', pageDescription, pageUrl),
@@ -75,11 +75,11 @@
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
-  <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 

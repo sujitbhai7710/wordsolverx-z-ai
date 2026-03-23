@@ -11,18 +11,18 @@
 <svelte:head>
   <title>Spotle Archive - Complete Artist Answer History | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Spotle answers. Calendar view with direct access to every past Spotify artist puzzle solution." />
-  <link rel="canonical" href="https://wordsolverx.com/spotle-archive" />
+  <link rel="canonical" href="https://wordsolver.tech/spotle-archive" />
   <meta property="og:title" content="Spotle Archive - All Past Artist Answers" />
   <meta property="og:description" content="Complete history of every Spotle answer. Browse by calendar or search." />
-  <meta property="og:url" content="https://wordsolverx.com/spotle-archive" />
+  <meta property="og:url" content="https://wordsolver.tech/spotle-archive" />
   <meta property="og:type" content="website" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Spotle Archive",
     "description": "Complete archive of all Spotle daily artist answers.",
-    "url": "https://wordsolverx.com/spotle-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+    "url": "https://wordsolver.tech/spotle-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
   })}</script>`}
 </svelte:head>
 

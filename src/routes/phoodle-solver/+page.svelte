@@ -13,7 +13,7 @@
   const pageTitle = 'Phoodle Solver - Free Online Food Word Helper | WordSolverX';
   const pageDescription =
     'Use the Phoodle solver to enter your guesses, match the feedback colors, and get the best next food-word suggestions with the original WASM solver logic.';
-  const pageUrl = 'https://wordsolverx.com/phoodle-solver';
+  const pageUrl = 'https://wordsolver.tech/phoodle-solver';
 
   const faqs = [
     {
@@ -45,8 +45,8 @@
       keywords: ['phoodle solver', 'phoodle helper', 'food word solver']
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
-      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
       { name: 'Phoodle Solver', url: pageUrl }
     ]),
     generateWebPageSchema('Phoodle Solver', pageDescription, pageUrl)

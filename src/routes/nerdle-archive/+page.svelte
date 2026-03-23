@@ -251,11 +251,11 @@
 	<meta property="og:url" content={data.meta.canonical} />
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="WordSolverX" />
-	<meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+	<meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={data.meta.title} />
 	<meta name="twitter:description" content={data.meta.description} />
-	<meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
 	{@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 

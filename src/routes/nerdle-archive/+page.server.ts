@@ -48,15 +48,15 @@ export const load: PageServerLoad = async ({ url }) => {
 			'@type': 'CollectionPage',
 			name: 'Nerdle Archive',
 			description,
-			url: 'https://wordsolverx.com/nerdle-archive'
+			url: 'https://wordsolver.tech/nerdle-archive'
 		},
 		{
 			'@context': 'https://schema.org',
 			'@type': 'BreadcrumbList',
 			itemListElement: [
-				{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolverx.com' },
-				{ '@type': 'ListItem', position: 2, name: 'Archive', item: 'https://wordsolverx.com/archive' },
-				{ '@type': 'ListItem', position: 3, name: 'Nerdle Archive', item: 'https://wordsolverx.com/nerdle-archive' }
+				{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolver.tech' },
+				{ '@type': 'ListItem', position: 2, name: 'Archive', item: 'https://wordsolver.tech/archive' },
+				{ '@type': 'ListItem', position: 3, name: 'Nerdle Archive', item: 'https://wordsolver.tech/nerdle-archive' }
 			]
 		}
 	]);
@@ -69,7 +69,7 @@ export const load: PageServerLoad = async ({ url }) => {
 			description,
 			keywords:
 				'nerdle archive, nerdle past answers, nerdle answer history, nerdle calendar, nerdle previous answers',
-			canonical: 'https://wordsolverx.com/nerdle-archive'
+			canonical: 'https://wordsolver.tech/nerdle-archive'
 		},
 		schemas
 	};

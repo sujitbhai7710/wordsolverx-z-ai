@@ -356,7 +356,7 @@
 				name: 'Nerdle Solver',
 				description:
 					'Nerdle solver for Micro, Mini, Midi, Classic, and Maxi with direct worker solving and a Wordle-style interface.',
-				url: 'https://wordsolverx.com/nerdle-solver',
+				url: 'https://wordsolver.tech/nerdle-solver',
 				applicationCategory: 'GameApplication',
 				offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
 			}
@@ -370,14 +370,14 @@
 		name="description"
 		content="Use the WordSolverX Nerdle Solver for Micro, Mini, Midi, Classic, and Maxi with direct worker solving and a cleaner Wordle-style interface."
 	/>
-	<link rel="canonical" href="https://wordsolverx.com/nerdle-solver" />
+	<link rel="canonical" href="https://wordsolver.tech/nerdle-solver" />
 	<meta property="og:title" content="Nerdle Solver All Modes" />
 	<meta
 		property="og:description"
 		content="Solve every Nerdle mode with the original logic and a cleaner Wordle-style layout."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolverx.com/nerdle-solver" />
+	<meta property="og:url" content="https://wordsolver.tech/nerdle-solver" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Nerdle Solver All Modes" />
 	<meta

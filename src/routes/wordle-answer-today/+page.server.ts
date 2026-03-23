@@ -63,12 +63,12 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         datePublished: new Date(wordleData?.date || today).toISOString(),
         dateModified: new Date(wordleData?.date || today).toISOString(),
         author: generatePersonAuthorSchema(getAuthorForGame('Wordle'), getAuthorProfileUrl(getAuthorForGame('Wordle'))),
-        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } },
+        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } },
         description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
-        mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/wordle-answer-today' },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/wordle-answer-today' },
     };
 
-    const socialImageUrl = wordleData?.social_image || 'https://wordsolverx.com/wordsolverx.webp';
+    const socialImageUrl = wordleData?.social_image || 'https://wordsolver.tech/wordsolverx.webp';
     const pageTitle = `Wordle Hints and Answer for Today (${formattedDate})`;
     const pageDescription = `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. See the full solution for Wordle #${wordleNumber}, plus clue details and recent answers.`;
     const pageKeywords = `wordle answer today, wordle answer, wordle hint, wordle hint today, wordle answer for ${formattedDate}`;

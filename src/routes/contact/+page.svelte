@@ -4,14 +4,14 @@
     name="description"
     content="Contact WordSolverX for support, corrections, feedback, partnerships, or questions about our puzzle answer pages and solver tools."
   />
-  <link rel="canonical" href="https://wordsolverx.com/contact" />
+  <link rel="canonical" href="https://wordsolver.tech/contact" />
   <meta property="og:title" content="Contact WordSolverX | Support, Feedback, and Corrections" />
   <meta
     property="og:description"
     content="Reach WordSolverX by email for site updates, corrections, support, and business inquiries."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/contact" />
+  <meta property="og:url" content="https://wordsolver.tech/contact" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Contact WordSolverX | Support, Feedback, and Corrections" />
@@ -19,14 +19,14 @@
     name="twitter:description"
     content="Get in touch with WordSolverX for support, feedback, and puzzle site updates."
   />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify([
     {
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
       name: 'Contact WordSolverX',
       description: 'Contact page for WordSolverX support, feedback, and business inquiries.',
-      url: 'https://wordsolverx.com/contact',
+      url: 'https://wordsolver.tech/contact',
       email: 'wordsolverx@gmail.com'
     },
     {
@@ -34,7 +34,7 @@
       '@type': 'WebPage',
       name: 'Contact WordSolverX',
       description: 'Contact WordSolverX for support, corrections, feedback, and business questions.',
-      url: 'https://wordsolverx.com/contact'
+      url: 'https://wordsolver.tech/contact'
     }
   ])}</script>`}
 </svelte:head>

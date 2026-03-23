@@ -250,7 +250,7 @@
   const webPageSchema = generateWebPageSchema(
     'Searchle Solver',
     'Solve the Searchle autocomplete puzzle with entropy-ranked guesses and daily prompts.',
-    'https://wordsolverx.com/searchle-solver'
+    'https://wordsolver.tech/searchle-solver'
   );
   const webAppSchema = generateWebApplicationSchema(
     'Searchle Solver',
@@ -284,10 +284,10 @@
     content="Enter the Searchle prompt and get the best autocomplete guesses ranked by entropy."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/searchle-solver" />
+  <meta property="og:url" content="https://wordsolver.tech/searchle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://wordsolverx.com/searchle-solver" />
+  <link rel="canonical" href="https://wordsolver.tech/searchle-solver" />
   {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(softwareAppSchema)}</script>`}

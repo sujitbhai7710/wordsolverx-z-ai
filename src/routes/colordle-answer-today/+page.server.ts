@@ -12,7 +12,7 @@ export const load: PageServerLoad = async () => {
     }
 
     const { color, dayNum, formattedDate } = todayData;
-    const featuredImage = 'https://wordsolverx.com/colordle-answer-today.webp';
+    const featuredImage = 'https://wordsolver.tech/colordle-answer-today.webp';
     const pageTitle = `Colordle Answer Today (${formattedDate})`;
     const pageDescription = `Colordle hints and the confirmed Colordle answer for today, ${formattedDate}, Colordle answer for ${formattedDate}`;
     const pageKeywords = `colordle answer today, colordle answer, colordle hint, colordle hint today, colordle answer for ${formattedDate}`;
@@ -40,7 +40,7 @@ export const load: PageServerLoad = async () => {
             dateModified: new Date(formattedDate).toISOString(),
             author: { '@type': 'Organization', name: 'WordSolverX' },
             publisher: { '@type': 'Organization', name: 'WordSolverX' },
-            mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/colordle-answer-today' },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/colordle-answer-today' },
             description: pageDescription,
             image: [featuredImage]
         },

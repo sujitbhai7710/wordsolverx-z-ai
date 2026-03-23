@@ -13,7 +13,7 @@
   const pageTitle = 'Light Out Solver - Free Online Lights Out Puzzle Solver | WordSolverX';
   const pageDescription =
     'Use this Light Out solver online to build any 2x2 to 5x5 puzzle, switch between linked and edit modes, and generate the exact optimal solve path in your browser.';
-  const pageUrl = 'https://wordsolverx.com/light-out-solver';
+  const pageUrl = 'https://wordsolver.tech/light-out-solver';
 
   const faqs = [
     {
@@ -45,8 +45,8 @@
       keywords: ['light out solver', 'lights out solver', 'lights out puzzle solver']
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
-      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
       { name: 'Light Out Solver', url: pageUrl }
     ]),
     generateWebPageSchema('Light Out Solver', pageDescription, pageUrl)

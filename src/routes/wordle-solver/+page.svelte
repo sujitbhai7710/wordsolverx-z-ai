@@ -65,7 +65,7 @@
 	const webPageSchema = generateWebPageSchema(
 		'All Wordle Solver - Wordle Solver for 4-12 Letter Puzzles',
 		'Solve Wordle puzzles and Wordle variants with our all wordle solver, fast suggestions, and free clue-based help on WordSolverX.',
-		'https://wordsolverx.com/wordle-solver'
+		'https://wordsolver.tech/wordle-solver'
 	);
 </script>
 
@@ -85,7 +85,7 @@
 		content="Use our Wordle Solver and All Wordle Solver to solve Wordle puzzles fast with smart suggestions and free clue-based help."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolverx.com/wordle-solver" />
+	<meta property="og:url" content="https://wordsolver.tech/wordle-solver" />
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta
@@ -96,8 +96,8 @@
 		name="twitter:description"
 		content="Use our Wordle Solver and All Wordle Solver to solve Wordle puzzles fast with smart suggestions and free clue-based help."
 	/>
-	<meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
-	<link rel="canonical" href="https://wordsolverx.com/wordle-solver" />
+	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+	<link rel="canonical" href="https://wordsolver.tech/wordle-solver" />
 	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}

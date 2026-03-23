@@ -10,7 +10,7 @@
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
   <meta name="news_keywords" content={data.meta.keywords ?? 'quordle answer today, quordle answer, quordle hint, quordle hint today'} />
-  <link rel="canonical" href="https://wordsolverx.com/quordle-answer-today" />
+  <link rel="canonical" href="https://wordsolver.tech/quordle-answer-today" />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 

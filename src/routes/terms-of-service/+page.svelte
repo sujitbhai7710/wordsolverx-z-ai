@@ -4,14 +4,14 @@
     name="description"
     content="Review the WordSolverX terms and conditions for using our puzzle answer pages, archives, guides, and solver tools."
   />
-  <link rel="canonical" href="https://wordsolverx.com/terms-of-service" />
+  <link rel="canonical" href="https://wordsolver.tech/terms-of-service" />
   <meta property="og:title" content="Terms and Conditions - WordSolverX" />
   <meta
     property="og:description"
     content="Read the current terms and conditions for using WordSolverX and its puzzle tools."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/terms-of-service" />
+  <meta property="og:url" content="https://wordsolver.tech/terms-of-service" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Terms and Conditions - WordSolverX" />
@@ -19,13 +19,13 @@
     name="twitter:description"
     content="Review the rules, site usage terms, and limitations for WordSolverX."
   />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Terms and Conditions - WordSolverX',
     description: 'Terms and conditions and legal information for WordSolverX.',
-    url: 'https://wordsolverx.com/terms-of-service'
+    url: 'https://wordsolver.tech/terms-of-service'
   })}</script>`}
 </svelte:head>
 
@@ -44,7 +44,7 @@
       <div class="prose prose-green dark:prose-invert max-w-none">
         <h2>1. Acceptance of Terms</h2>
         <p>
-          By accessing or using https://wordsolverx.com, you agree to these Terms and Conditions. If
+          By accessing or using https://wordsolver.tech, you agree to these Terms and Conditions. If
           you do not agree, please do not use the site.
         </p>
 

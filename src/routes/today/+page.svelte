@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import GameCard from '$lib/components/GameCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import { getJSTToday } from '$lib/utils';
@@ -33,16 +33,16 @@
 <svelte:head>
   <title>Today's Puzzle Answers ({todayStr}) - WordSolverX</title>
   <meta name="description" content="All of today's puzzle answers in one place - Wordle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
-  <link rel="canonical" href="https://wordsolverx.com/today" />
+  <link rel="canonical" href="https://wordsolver.tech/today" />
   <meta property="og:title" content={"Today's Puzzle Answers (" + todayStr + ") - WordSolverX"} />
   <meta property="og:description" content="See today's verified puzzle answers, daily solution links, and quick access to all supported games in one place." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/today" />
+  <meta property="og:url" content="https://wordsolver.tech/today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={"Today's Puzzle Answers (" + todayStr + ") - WordSolverX"} />
   <meta name="twitter:description" content="Daily answers for Wordle, Worldle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, and more." />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -50,13 +50,13 @@
         '@type': 'CollectionPage',
         'name': "Today's Puzzle Answers",
         'description': "All of today's puzzle answers for " + todayStr,
-        'url': 'https://wordsolverx.com/today'
+        'url': 'https://wordsolver.tech/today'
       },
       {
         '@type': 'WebPage',
         'name': "Today's Puzzle Answers",
         'description': "Hub page for all of today's verified puzzle answers.",
-        'url': 'https://wordsolverx.com/today'
+        'url': 'https://wordsolver.tech/today'
       }
     ]
   })}</script>`}

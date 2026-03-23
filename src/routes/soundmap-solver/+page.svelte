@@ -243,7 +243,7 @@
 	const webPageSchema = generateWebPageSchema(
 		'Soundmap Solver',
 		'Free Soundmap Artist Guesser solver with advanced feedback filters and best-guess recommendations.',
-		'https://wordsolverx.com/soundmap-solver'
+		'https://wordsolver.tech/soundmap-solver'
 	);
 
 	const softwareAppSchema = {
@@ -274,7 +274,7 @@
 		content="Use smart feedback filters to narrow Soundmap answers and get the best next guess instantly."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolverx.com/soundmap-solver" />
+	<meta property="og:url" content="https://wordsolver.tech/soundmap-solver" />
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta
@@ -285,7 +285,7 @@
 		name="twitter:description"
 		content="Free Soundmap solver with best-guess recommendations and instant candidate filtering."
 	/>
-	<link rel="canonical" href="https://wordsolverx.com/soundmap-solver" />
+	<link rel="canonical" href="https://wordsolver.tech/soundmap-solver" />
 	{@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}

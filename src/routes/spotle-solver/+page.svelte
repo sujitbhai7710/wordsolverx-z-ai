@@ -83,14 +83,14 @@
 		name="description"
 		content="Solve Spotle faster with our Spotify artist solver. Match rank, debut year, genre, country, and more using precise feedback filters."
 	/>
-	<link rel="canonical" href="https://wordsolverx.com/spotle-solver" />
+	<link rel="canonical" href="https://wordsolver.tech/spotle-solver" />
 	<meta property="og:title" content="Spotle Solver - Spotify Artist Guess Helper" />
 	<meta
 		property="og:description"
 		content="Use smart feedback filters to narrow Spotle answers by rank, debut year, genre, country, group size, and gender."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolverx.com/spotle-solver" />
+	<meta property="og:url" content="https://wordsolver.tech/spotle-solver" />
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>

@@ -188,7 +188,7 @@
         '@type': 'ProfessionalService',
         name: 'Waffle Solver',
         description: 'High-performance solver for the daily Waffle word puzzle.',
-        url: 'https://wordsolverx.com/waffle-solver',
+        url: 'https://wordsolver.tech/waffle-solver',
         areaServed: 'Worldwide',
         serviceType: 'Puzzle Solving Service',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -216,10 +216,10 @@
   <title>Waffle Solver - Solve Any Waffle Puzzle Instantly | WordSolverX</title>
   <meta name="description" content="Solve today's Waffle puzzle with our high-performance WASM-powered solver. Auto-fill or manually enter your grid and get instant solutions." />
   <meta name="keywords" content="Waffle Solver, Waffle Answer, Waffle Puzzle, Waffle Game Helper, Waffle Cheat" />
-  <link rel="canonical" href="https://wordsolverx.com/waffle-solver" />
+  <link rel="canonical" href="https://wordsolver.tech/waffle-solver" />
   <meta property="og:title" content="Waffle Solver - Instant Puzzle Solutions" />
   <meta property="og:description" content="Solve any Waffle puzzle instantly with our Rust-powered engine." />
-  <meta property="og:url" content="https://wordsolverx.com/waffle-solver" />
+  <meta property="og:url" content="https://wordsolver.tech/waffle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />

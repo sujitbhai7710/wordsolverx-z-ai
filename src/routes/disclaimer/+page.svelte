@@ -4,14 +4,14 @@
     name="description"
     content="Read the WordSolverX disclaimer covering site accuracy, puzzle trademarks, independent status, and external links."
   />
-  <link rel="canonical" href="https://wordsolverx.com/disclaimer" />
+  <link rel="canonical" href="https://wordsolver.tech/disclaimer" />
   <meta property="og:title" content="Disclaimer - WordSolverX" />
   <meta
     property="og:description"
     content="Review the WordSolverX disclaimer for puzzle content, trademarks, and independent site status."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/disclaimer" />
+  <meta property="og:url" content="https://wordsolver.tech/disclaimer" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Disclaimer - WordSolverX" />
@@ -19,13 +19,13 @@
     name="twitter:description"
     content="See the WordSolverX disclaimer for answer accuracy, external links, and trademark notices."
   />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Disclaimer - WordSolverX',
     description: 'Disclaimer for WordSolverX and its puzzle content.',
-    url: 'https://wordsolverx.com/disclaimer'
+    url: 'https://wordsolver.tech/disclaimer'
   })}</script>`}
 </svelte:head>
 

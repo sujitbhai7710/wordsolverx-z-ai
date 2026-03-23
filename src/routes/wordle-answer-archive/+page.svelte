@@ -11,10 +11,10 @@
 <svelte:head>
   <title>Wordle Answer Archive - Complete History of All Solutions | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Wordle answers by date. Calendar view with search, daily puzzle numbers, and direct links to every past solution since June 2021." />
-  <link rel="canonical" href="https://wordsolverx.com/wordle-answer-archive" />
+  <link rel="canonical" href="https://wordsolver.tech/wordle-answer-archive" />
   <meta property="og:title" content="Wordle Answer Archive - All Past Solutions" />
   <meta property="og:description" content="Complete history of every Wordle answer. Browse by calendar or search by date." />
-  <meta property="og:url" content="https://wordsolverx.com/wordle-answer-archive" />
+  <meta property="og:url" content="https://wordsolver.tech/wordle-answer-archive" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Wordle Answer Archive - All Past Solutions | WordSolverX" />
@@ -24,8 +24,8 @@
     "@type": "CollectionPage",
     "name": "Wordle Answer Archive",
     "description": "Complete archive of all New York Times Wordle answers and solutions from June 2021 to present.",
-    "url": "https://wordsolverx.com/wordle-answer-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+    "url": "https://wordsolver.tech/wordle-answer-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
   })}</script>`}
 </svelte:head>
 

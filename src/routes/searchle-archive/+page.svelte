@@ -9,18 +9,18 @@
 <svelte:head>
   <title>Searchle Archive - Complete Prompt Answer History | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Searchle answers. Calendar view with direct access to past autocomplete prompts and confirmed answers." />
-  <link rel="canonical" href="https://wordsolverx.com/searchle-archive" />
+  <link rel="canonical" href="https://wordsolver.tech/searchle-archive" />
   <meta property="og:title" content="Searchle Archive - All Past Answers" />
   <meta property="og:description" content="Complete history of every Searchle answer. Browse by calendar or search." />
-  <meta property="og:url" content="https://wordsolverx.com/searchle-archive" />
+  <meta property="og:url" content="https://wordsolver.tech/searchle-archive" />
   <meta property="og:type" content="website" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Searchle Archive",
     "description": "Complete archive of all Searchle daily autocomplete answers.",
-    "url": "https://wordsolverx.com/searchle-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+    "url": "https://wordsolver.tech/searchle-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
   })}</script>`}
 </svelte:head>
 

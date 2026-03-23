@@ -180,7 +180,7 @@
         '@type': 'ProfessionalService',
         name: 'Weaver Solver',
         description: 'Professional solver for the Weaver word ladder game supporting 3-12 letter words.',
-        url: 'https://wordsolverx.com/weaver-solver',
+        url: 'https://wordsolver.tech/weaver-solver',
         areaServed: 'Worldwide',
         serviceType: 'Puzzle Solving Service',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -214,10 +214,10 @@
   <title>Weaver Solver - Word Ladder Helper</title>
   <meta name="description" content="Solve any Weaver word ladder puzzle with our free solver. Find the shortest path between two words by changing one letter at a time." />
   <meta name="keywords" content="Weaver Solver, Word Ladder, Weaver Game, Weaver Answer, Word Puzzle Solver" />
-  <link rel="canonical" href="https://wordsolverx.com/weaver-solver" />
+  <link rel="canonical" href="https://wordsolver.tech/weaver-solver" />
   <meta property="og:title" content="Weaver Solver - Word Ladder Helper" />
   <meta property="og:description" content="Find the shortest word ladder path between any two words." />
-  <meta property="og:url" content="https://wordsolverx.com/weaver-solver" />
+  <meta property="og:url" content="https://wordsolver.tech/weaver-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />

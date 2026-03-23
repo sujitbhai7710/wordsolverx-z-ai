@@ -73,7 +73,7 @@
   let copiedKey = $state<string | null>(null);
   let dateStr = $derived(data?.dateStr ?? '');
 
-  let canonicalUrl = $derived(`https://wordsolverx.com/${gameKey}-answer-today`);
+  let canonicalUrl = $derived(`https://wordsolver.tech/${gameKey}-answer-today`);
   let seoDate = $derived(dateStr ? dateStr.replace(/^[^,]+,\s*/, '') : '');
   let pageTitle = $derived(
     data?.meta?.title ?? `${gameTitle} Hints and Answers for Today${seoDate ? ` (${seoDate})` : ''}`
@@ -89,7 +89,7 @@
     data?.meta?.keywords ??
       `${gameKey} answer today, ${gameKey} answer, ${gameKey} hint, ${gameKey} hint today${seoDate ? `, ${gameKey} answer for ${seoDate}` : ''}`
   );
-  let pageImage = $derived(data?.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp');
+  let pageImage = $derived(data?.meta?.featuredImage ?? 'https://wordsolver.tech/wordsolverx.webp');
   let crossLinkColsClass = $derived(crossLinks.length > 4 ? 'md:grid-cols-5' : 'md:grid-cols-4');
 
   function normalizeStructuredData(input: unknown): unknown {

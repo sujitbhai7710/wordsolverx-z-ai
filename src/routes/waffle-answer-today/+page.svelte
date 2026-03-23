@@ -11,7 +11,7 @@
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
   <meta name="news_keywords" content={data.meta.keywords ?? 'waffle answer today, waffle answer, waffle hint, waffle hint today'} />
-  <link rel="canonical" href="https://wordsolverx.com/waffle-answer-today" />
+  <link rel="canonical" href="https://wordsolver.tech/waffle-answer-today" />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 

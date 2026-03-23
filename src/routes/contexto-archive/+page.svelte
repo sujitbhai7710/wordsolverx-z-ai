@@ -10,18 +10,18 @@
 <svelte:head>
   <title>Contexto Archive - Complete Secret Word History | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Contexto answers. Calendar view with direct access to past secret words and game numbers." />
-  <link rel="canonical" href="https://wordsolverx.com/contexto-archive" />
+  <link rel="canonical" href="https://wordsolver.tech/contexto-archive" />
   <meta property="og:title" content="Contexto Archive - All Past Answers" />
   <meta property="og:description" content="Complete history of every Contexto answer. Browse by calendar or search." />
-  <meta property="og:url" content="https://wordsolverx.com/contexto-archive" />
+  <meta property="og:url" content="https://wordsolver.tech/contexto-archive" />
   <meta property="og:type" content="website" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Contexto Archive",
     "description": "Complete archive of all Contexto daily answer words.",
-    "url": "https://wordsolverx.com/contexto-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+    "url": "https://wordsolver.tech/contexto-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
   })}</script>`}
 </svelte:head>
 

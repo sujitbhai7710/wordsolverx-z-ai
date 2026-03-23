@@ -14,7 +14,7 @@ export const load: PageServerLoad = async () => {
 
     const { country, formattedDate, date } = data;
     const isFallbackDate = format(date, 'yyyy-MM-dd') !== format(today, 'yyyy-MM-dd');
-    const featuredImage = 'https://wordsolverx.com/globle-answer-today.webp';
+    const featuredImage = 'https://wordsolver.tech/globle-answer-today.webp';
     const pageTitle = isFallbackDate
         ? `Globle Hints and Latest Available Answer (${formattedDate})`
         : `Globle Hints and Answer for Today (${formattedDate})`;
@@ -42,7 +42,7 @@ export const load: PageServerLoad = async () => {
             publisher: { '@type': 'Organization', name: 'WordSolverX' },
             description: pageDescription,
             image: [featuredImage],
-            mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/globle-answer-today' }
+            mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/globle-answer-today' }
         }
     ]);
 

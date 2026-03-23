@@ -13,7 +13,7 @@
   const pageTitle = 'Betweenle Solver - Free Online Betweenle Helper | WordSolverX';
   const pageDescription =
     'Use this free Betweenle solver to enter your top and bottom bounds, add distance percentages, and get the best next word to guess. Built for fast Betweenle solving with real dictionary logic.';
-  const pageUrl = 'https://wordsolverx.com/betweenle-solver';
+  const pageUrl = 'https://wordsolver.tech/betweenle-solver';
 
   const faqs = [
     {
@@ -59,8 +59,8 @@
       keywords: ['betweenle solver', 'betweenle helper', 'betweenle answer solver'],
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
-      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
       { name: 'Betweenle Solver', url: pageUrl },
     ]),
     generateWebPageSchema('Betweenle Solver', pageDescription, pageUrl),
@@ -79,7 +79,7 @@
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
-  <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />

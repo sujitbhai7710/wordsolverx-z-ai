@@ -21,7 +21,7 @@
       { '@type': 'Question', name: 'When does Dotadle reset?', acceptedAnswer: { '@type': 'Answer', text: 'Dotadle resets daily at midnight UTC, providing fresh puzzles for all game modes.' } },
       { '@type': 'Question', name: 'What is Dotadle?', acceptedAnswer: { '@type': 'Answer', text: 'Dotadle is a daily Dota 2 puzzle game where players guess heroes based on attributes, quotes, abilities, and loading screens.' } },
     ]},
-    { '@type': 'Article', headline: 'Dotadle Answer Today', description: 'Get the confirmed Dotadle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/dotadle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } } },
+    { '@type': 'Article', headline: 'Dotadle Answer Today', description: 'Get the confirmed Dotadle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/dotadle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
   ]};
 </script>
 

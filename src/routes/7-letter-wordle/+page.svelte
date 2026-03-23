@@ -10,9 +10,9 @@
 <GamePageSEO {wordLength} />
 <BreadcrumbSchema 
     items={[
-        { name: 'Home', url: 'https://wordsolverx.com' },
-        { name: 'Wordle', url: 'https://wordsolverx.com/multidle' },
-        { name: `${wordLength} Letter Wordle`, url: `https://wordsolverx.com/${wordLength}-letter-wordle` }
+        { name: 'Home', url: 'https://wordsolver.tech' },
+        { name: 'Wordle', url: 'https://wordsolver.tech/multidle' },
+        { name: `${wordLength} Letter Wordle`, url: `https://wordsolver.tech/${wordLength}-letter-wordle` }
     ]} 
 />
 

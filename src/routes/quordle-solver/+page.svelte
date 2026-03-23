@@ -168,7 +168,7 @@
         '@type': 'ProfessionalService',
         name: 'Quordle Solver',
         description: 'Professional tool to solve 4 Wordle puzzles simultaneously (Quordle).',
-        url: 'https://wordsolverx.com/quordle-solver',
+        url: 'https://wordsolver.tech/quordle-solver',
         areaServed: 'Worldwide',
         serviceType: 'Puzzle Solving Service',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -189,10 +189,10 @@
   <title>Quordle Solver Today - Solve All 4 Words | WordSolverX</title>
   <meta name="description" content="Solve today's Quordle instantly with our free solver. Enter guesses, match tile colors across all 4 boards, and get the best next word." />
   <meta name="keywords" content="Quordle Solver, Quordle Answer, Quordle Help, Quordle Hints, 4 Word Puzzle Solver" />
-  <link rel="canonical" href="https://wordsolverx.com/quordle-solver" />
+  <link rel="canonical" href="https://wordsolver.tech/quordle-solver" />
   <meta property="og:title" content="Quordle Solver - Solve All 4 Words" />
   <meta property="og:description" content="Get optimal word suggestions for Quordle across all 4 boards." />
-  <meta property="og:url" content="https://wordsolverx.com/quordle-solver" />
+  <meta property="og:url" content="https://wordsolver.tech/quordle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />

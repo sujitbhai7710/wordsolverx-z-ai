@@ -10,10 +10,10 @@
 
   let title = $derived(`${wordLength} Letter Wordle - Play Daily ${wordLength}-Letter Word Puzzles | WordSolverX`);
   let description = $derived(`Play free ${wordLength}-letter Wordle puzzles on WordSolverX. Guess the hidden ${wordLength}-letter word in 6 tries with a fresh daily challenge, instant feedback, and unlimited replay support.`);
-  let canonical = $derived(`https://wordsolverx.com/${wordLength}-letter-wordle`);
+  let canonical = $derived(`https://wordsolver.tech/${wordLength}-letter-wordle`);
   let ogTitle = $derived(`${wordLength} Letter Wordle - Free Daily Puzzle`);
   let ogDescription = $derived(`Play a free daily ${wordLength}-letter Wordle puzzle with instant clues, clean feedback, and unlimited replay on WordSolverX.`);
-  let ogImage = $derived('https://wordsolverx.com/wordsolverx.webp');
+  let ogImage = $derived('https://wordsolver.tech/wordsolverx.webp');
 </script>
 
 <svelte:head>

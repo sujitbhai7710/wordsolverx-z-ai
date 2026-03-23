@@ -4,14 +4,14 @@
     name="description"
     content="Read the WordSolverX privacy policy to understand what information may be collected, how site preferences are stored, and how to contact us about privacy questions."
   />
-  <link rel="canonical" href="https://wordsolverx.com/privacy-policy" />
+  <link rel="canonical" href="https://wordsolver.tech/privacy-policy" />
   <meta property="og:title" content="Privacy Policy - WordSolverX" />
   <meta
     property="og:description"
     content="Review the current privacy policy for WordSolverX, including browser storage, technical logs, and contact information."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/privacy-policy" />
+  <meta property="og:url" content="https://wordsolver.tech/privacy-policy" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Privacy Policy - WordSolverX" />
@@ -19,13 +19,13 @@
     name="twitter:description"
     content="See how WordSolverX handles privacy, browser preferences, and contact requests."
   />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Privacy Policy - WordSolverX',
     description: 'Privacy policy and data handling information for WordSolverX.',
-    url: 'https://wordsolverx.com/privacy-policy'
+    url: 'https://wordsolver.tech/privacy-policy'
   })}</script>`}
 </svelte:head>
 
@@ -44,7 +44,7 @@
       <div class="prose prose-green dark:prose-invert max-w-none">
         <p class="lead">
           This Privacy Policy explains how WordSolverX may collect, use, and store information when
-          you visit https://wordsolverx.com, use our puzzle pages, or contact us directly.
+          you visit https://wordsolver.tech, use our puzzle pages, or contact us directly.
         </p>
 
         <h2>1. Information You Provide Voluntarily</h2>

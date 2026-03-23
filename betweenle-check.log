@@ -62,7 +62,7 @@ c:\Users\akasa\Desktop\MYPROJECTS\wordsolverx-cloudflare\wordsolverx-svelte\[32
 [33mWarn[39m: This reference only captures the initial value of `gameKey`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally (svelte)
 [36m  // Generate canonical URL based on gameKey
-  const canonicalUrl = `https://wordsolverx.com/${[35mgameKey[36m}-answer-today`;[39m
+  const canonicalUrl = `https://wordsolver.tech/${[35mgameKey[36m}-answer-today`;[39m
 
 c:\Users\akasa\Desktop\MYPROJECTS\wordsolverx-cloudflare\wordsolverx-svelte\[32msrc\lib\components\betweenle\BetweenleSolverClient.svelte[39m:161:13
 [33mWarn[39m: A form label must be associated with a control
@@ -304,7 +304,7 @@ https://svelte.dev/e/state_referenced_locally (svelte)
 c:\Users\akasa\Desktop\MYPROJECTS\wordsolverx-cloudflare\wordsolverx-svelte\[32msrc\routes\betweenle-answer-today\+page.svelte[39m:74:46
 [33mWarn[39m: This reference only captures the initial value of `data`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally (svelte)
-[36m      { name: 'Today', url: 'https://wordsolverx.com/today' },
+[36m      { name: 'Today', url: 'https://wordsolver.tech/today' },
       { name: 'Betweenle Answer Today', url: [35mdata[36m.meta.canonical },
     ]),[39m
 

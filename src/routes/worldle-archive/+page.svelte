@@ -10,18 +10,18 @@
 <svelte:head>
   <title>Worldle Archive - Complete Country Answer History | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Worldle answers. Calendar view with direct access to every past country silhouette puzzle solution." />
-  <link rel="canonical" href="https://wordsolverx.com/worldle-archive" />
+  <link rel="canonical" href="https://wordsolver.tech/worldle-archive" />
   <meta property="og:title" content="Worldle Archive - All Past Country Answers" />
   <meta property="og:description" content="Complete history of every Worldle country answer. Browse by calendar or search." />
-  <meta property="og:url" content="https://wordsolverx.com/worldle-archive" />
+  <meta property="og:url" content="https://wordsolver.tech/worldle-archive" />
   <meta property="og:type" content="website" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Worldle Archive",
     "description": "Complete archive of all Worldle daily country answers.",
-    "url": "https://wordsolverx.com/worldle-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
+    "url": "https://wordsolver.tech/worldle-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
   })}</script>`}
 </svelte:head>
 

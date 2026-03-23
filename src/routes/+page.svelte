@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import GameCard from '$lib/components/GameCard.svelte';
   import { getJSTToday } from '$lib/utils';
   import { format } from 'date-fns';
@@ -53,8 +53,8 @@
   ];
 
   const jsonLd = JSON.stringify([
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolverx.com' },
-    { '@context': 'https://schema.org', '@type': 'WebPage', name: 'WordSolverX Homepage', description: 'Daily puzzle answers, solver tools, and Wordle resources for popular word and trivia games.', url: 'https://wordsolverx.com' },
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolver.tech' },
+    { '@context': 'https://schema.org', '@type': 'WebPage', name: 'WordSolverX Homepage', description: 'Daily puzzle answers, solver tools, and Wordle resources for popular word and trivia games.', url: 'https://wordsolver.tech' },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
       { '@type': 'Question', name: 'What is WordSolverX?', acceptedAnswer: { '@type': 'Answer', text: 'WordSolverX is your ultimate companion for word puzzle games like Wordle, Quordle, Phoodle, and more.' } },
       { '@type': 'Question', name: 'When are the answers updated?', acceptedAnswer: { '@type': 'Answer', text: 'All game answers are updated daily at midnight.' } },
@@ -66,16 +66,16 @@
 <svelte:head>
   <title>WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools</title>
   <meta name="description" content="Get daily puzzle answers, smart solver tools, archives, and practice modes for Wordle, Betweenle, Worldle, Quordle, Phoodle, Colordle, and more on WordSolverX." />
-  <link rel="canonical" href="https://wordsolverx.com/" />
+  <link rel="canonical" href="https://wordsolver.tech/" />
   <meta property="og:title" content="WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools" />
   <meta property="og:description" content="Find daily answers, puzzle solvers, archives, and free practice tools for Wordle and dozens of popular daily games." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/" />
+  <meta property="og:url" content="https://wordsolver.tech/" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools" />
   <meta name="twitter:description" content="Daily answers, archives, and free solver tools for Wordle, Betweenle, Quordle, Phoodle, and more." />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 

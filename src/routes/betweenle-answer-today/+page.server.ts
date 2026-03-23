@@ -42,7 +42,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
       title: pageTitle,
       description: pageDescription,
       keywords: pageKeywords,
-      canonical: 'https://wordsolverx.com/betweenle-answer-today',
+      canonical: 'https://wordsolver.tech/betweenle-answer-today',
     },
   };
 };

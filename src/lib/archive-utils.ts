@@ -8,7 +8,7 @@ export interface ArchiveItem {
     name: string;
 }
 
-export function generateWordleArchiveItems(baseUrl: string = 'https://wordsolverx.com'): ArchiveItem[] {
+export function generateWordleArchiveItems(baseUrl: string = 'https://wordsolver.tech'): ArchiveItem[] {
     const jstToday = getJSTToday();
     const todayNum = getWordleNumber(jstToday);
     const items: ArchiveItem[] = [];
@@ -42,7 +42,7 @@ export function generateWordleArchiveItems(baseUrl: string = 'https://wordsolver
     return items;
 }
 
-export function generateQuordleArchiveItems(baseUrl: string = 'https://wordsolverx.com'): ArchiveItem[] {
+export function generateQuordleArchiveItems(baseUrl: string = 'https://wordsolver.tech'): ArchiveItem[] {
     const jstToday = getJSTToday();
     const QUORDLE_START_DATE = new Date(2022, 0, 24); // January 24, 2022
 

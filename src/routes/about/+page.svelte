@@ -4,14 +4,14 @@
     name="description"
     content="Learn about WordSolverX and how we publish daily puzzle answers, archives, Wordle solver tools, and guides for popular word games."
   />
-  <link rel="canonical" href="https://wordsolverx.com/about" />
+  <link rel="canonical" href="https://wordsolver.tech/about" />
   <meta property="og:title" content="About WordSolverX | Puzzle Answers, Archives, and Solver Tools" />
   <meta
     property="og:description"
     content="See what WordSolverX offers, which puzzle tools we cover, and how we keep the site updated."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolverx.com/about" />
+  <meta property="og:url" content="https://wordsolver.tech/about" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="About WordSolverX | Puzzle Answers, Archives, and Solver Tools" />
@@ -19,21 +19,21 @@
     name="twitter:description"
     content="Learn about WordSolverX, our puzzle resources, and how the site helps players every day."
   />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify([
     {
       '@context': 'https://schema.org',
       '@type': 'AboutPage',
       name: 'About WordSolverX',
       description: 'About page for WordSolverX and its puzzle answer, archive, and solver content.',
-      url: 'https://wordsolverx.com/about'
+      url: 'https://wordsolver.tech/about'
     },
     {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       name: 'About WordSolverX',
       description: 'Learn about WordSolverX, its puzzle answer pages, archives, solver tools, and guides.',
-      url: 'https://wordsolverx.com/about'
+      url: 'https://wordsolver.tech/about'
     }
   ])}</script>`}
 </svelte:head>

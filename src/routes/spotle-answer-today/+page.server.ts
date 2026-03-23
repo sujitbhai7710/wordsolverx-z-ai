@@ -92,19 +92,19 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 				'@type': 'ListItem',
 				position: 1,
 				name: 'Home',
-				item: 'https://wordsolverx.com'
+				item: 'https://wordsolver.tech'
 			},
 			{
 				'@type': 'ListItem',
 				position: 2,
 				name: 'Today',
-				item: 'https://wordsolverx.com/today'
+				item: 'https://wordsolver.tech/today'
 			},
 			{
 				'@type': 'ListItem',
 				position: 3,
 				name: 'Spotle Answer Today',
-				item: 'https://wordsolverx.com/spotle-answer-today'
+				item: 'https://wordsolver.tech/spotle-answer-today'
 			}
 		]
 	};
@@ -114,12 +114,12 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		'@type': 'WebPage',
 		name: metaTitle,
 		description: metaDescription,
-		url: 'https://wordsolverx.com/spotle-answer-today',
+		url: 'https://wordsolver.tech/spotle-answer-today',
 		inLanguage: 'en',
 		isPartOf: {
 			'@type': 'WebSite',
 			name: 'WordSolverX',
-			url: 'https://wordsolverx.com'
+			url: 'https://wordsolver.tech'
 		}
 	};
 

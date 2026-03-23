@@ -10,7 +10,7 @@
   <title>{data.meta?.title ?? 'Semantle Answer Today'}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
   <meta name="news_keywords" content={data.meta?.keywords ?? 'semantle answer today, semantle answer, semantle hint, semantle hint today'} />
-  <link rel="canonical" href="https://wordsolverx.com/semantle-answer-today" />
+  <link rel="canonical" href="https://wordsolver.tech/semantle-answer-today" />
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
   {/if}

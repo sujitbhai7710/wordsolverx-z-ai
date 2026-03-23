@@ -188,7 +188,7 @@
 				name: 'Word Ladder Solver',
 				description:
 					'Find mixed word ladder paths with manual answer limits and post-solve filters for words and steps.',
-				url: 'https://wordsolverx.com/word-ladder-solver',
+				url: 'https://wordsolver.tech/word-ladder-solver',
 				applicationCategory: 'GameApplication',
 				offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
 			}
@@ -202,14 +202,14 @@
 		name="description"
 		content="Find mixed word ladder paths, search results by word, filter by steps after solving, and use manual answer limits with Our Word List, OWL2, or SOWPODS."
 	/>
-	<link rel="canonical" href="https://wordsolverx.com/word-ladder-solver" />
+	<link rel="canonical" href="https://wordsolver.tech/word-ladder-solver" />
 	<meta property="og:title" content="Word Ladder Solver" />
 	<meta
 		property="og:description"
 		content="Solve word ladders with mixed step counts plus post-solve word and step filters."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolverx.com/word-ladder-solver" />
+	<meta property="og:url" content="https://wordsolver.tech/word-ladder-solver" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Word Ladder Solver" />
 	<meta

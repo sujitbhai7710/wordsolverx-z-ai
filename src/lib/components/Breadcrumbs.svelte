@@ -35,13 +35,13 @@
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://wordsolverx.com',
+        item: 'https://wordsolver.tech',
       },
       ...breadcrumbItems.map((item: { name: string; href: string }, index: number) => ({
         '@type': 'ListItem',
         position: index + 2,
         name: item.name,
-        item: `https://wordsolverx.com${item.href}`,
+        item: `https://wordsolver.tech${item.href}`,
       })),
     ],
   }));

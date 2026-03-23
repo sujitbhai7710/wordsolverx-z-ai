@@ -226,7 +226,7 @@
 				name: 'Boggle Solver',
 				description:
 					'Find every valid word in a 3x3 to 10x10 Boggle board using the same trie and DFS logic as the source project.',
-				url: 'https://wordsolverx.com/boggle-solver',
+				url: 'https://wordsolver.tech/boggle-solver',
 				applicationCategory: 'GameApplication',
 				offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
 			}
@@ -261,14 +261,14 @@
 		name="description"
 		content="A light-theme Boggle Solver for 3x3 to 10x10 boards using the same trie and DFS algorithm as the original source project."
 	/>
-	<link rel="canonical" href="https://wordsolverx.com/boggle-solver" />
+	<link rel="canonical" href="https://wordsolver.tech/boggle-solver" />
 	<meta property="og:title" content="Boggle Solver" />
 	<meta
 		property="og:description"
 		content="Solve any Boggle board, highlight paths, filter by starting cell, and share board URLs."
 	/>
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolverx.com/boggle-solver" />
+	<meta property="og:url" content="https://wordsolver.tech/boggle-solver" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Boggle Solver" />
 	<meta

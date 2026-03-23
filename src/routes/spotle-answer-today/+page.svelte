@@ -33,11 +33,11 @@
 	<title>{meta.title}</title>
 	<meta name="description" content={meta.description} />
 	<meta name="keywords" content={meta.keywords ?? 'spotle answer today, spotle answer, spotle hint, spotle hint today'} />
-	<link rel="canonical" href="https://wordsolverx.com/spotle-answer-today" />
+	<link rel="canonical" href="https://wordsolver.tech/spotle-answer-today" />
 	<meta property="og:title" content={meta.title} />
 	<meta property="og:description" content={meta.description} />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolverx.com/spotle-answer-today" />
+	<meta property="og:url" content="https://wordsolver.tech/spotle-answer-today" />
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={meta.title} />

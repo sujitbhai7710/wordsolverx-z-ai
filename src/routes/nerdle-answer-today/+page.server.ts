@@ -33,7 +33,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			description: pageDescription,
 			datePublished: `${answerData.date}T00:00:00+05:30`,
 			dateModified: `${answerData.date}T00:00:00+05:30`,
-			mainEntityOfPage: 'https://wordsolverx.com/nerdle-answer-today',
+			mainEntityOfPage: 'https://wordsolver.tech/nerdle-answer-today',
 			author: {
 				'@type': 'Organization',
 				name: 'WordSolverX'
@@ -43,7 +43,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 				name: 'WordSolverX',
 				logo: {
 					'@type': 'ImageObject',
-					url: 'https://wordsolverx.com/wordsolverx.webp'
+					url: 'https://wordsolver.tech/wordsolverx.webp'
 				}
 			}
 		},
@@ -51,13 +51,13 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			'@context': 'https://schema.org',
 			'@type': 'BreadcrumbList',
 			itemListElement: [
-				{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolverx.com' },
-				{ '@type': 'ListItem', position: 2, name: 'Today', item: 'https://wordsolverx.com/today' },
+				{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolver.tech' },
+				{ '@type': 'ListItem', position: 2, name: 'Today', item: 'https://wordsolver.tech/today' },
 				{
 					'@type': 'ListItem',
 					position: 3,
 					name: 'Nerdle Answer Today',
-					item: 'https://wordsolverx.com/nerdle-answer-today'
+					item: 'https://wordsolver.tech/nerdle-answer-today'
 				}
 			]
 		}
@@ -70,7 +70,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			title: pageTitle,
 			description: pageDescription,
 			keywords: `nerdle answer today, nerdle answer, nerdle today answer, nerdle archive, nerdle answer ${formattedDate}`,
-			canonical: 'https://wordsolverx.com/nerdle-answer-today'
+			canonical: 'https://wordsolver.tech/nerdle-answer-today'
 		},
 		schemas
 	};

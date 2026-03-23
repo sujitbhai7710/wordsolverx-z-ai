@@ -51,7 +51,7 @@
         headline: data.meta.title,
         description: data.meta.description,
         mainEntityOfPage: data.meta.canonical,
-        image: 'https://wordsolverx.com/wordsolverx.webp',
+        image: 'https://wordsolver.tech/wordsolverx.webp',
         keywords: data.meta.keywords,
         datePublished: `${data.todayAnswer.date}T00:00:00Z`,
         dateModified: `${data.todayAnswer.date}T00:00:00Z`,
@@ -64,13 +64,13 @@
           name: 'WordSolverX',
           logo: {
             '@type': 'ImageObject',
-            url: 'https://wordsolverx.com/wordsolverx.webp',
+            url: 'https://wordsolver.tech/wordsolverx.webp',
           },
         },
       },
       generateBreadcrumbSchema([
-        { name: 'Home', url: 'https://wordsolverx.com' },
-        { name: 'Today', url: 'https://wordsolverx.com/today' },
+        { name: 'Home', url: 'https://wordsolver.tech' },
+        { name: 'Today', url: 'https://wordsolver.tech/today' },
         { name: 'Betweenle Answer Today', url: data.meta.canonical },
       ]),
       generateWebPageSchema(data.meta.title, data.meta.description, data.meta.canonical),
@@ -100,12 +100,12 @@
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content={data.meta.canonical} />
-  <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
-  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 

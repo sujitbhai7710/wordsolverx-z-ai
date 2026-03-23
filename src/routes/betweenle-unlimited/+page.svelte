@@ -13,7 +13,7 @@
   const pageTitle = 'Betweenle Unlimited Game - Play Unlimited and Custom Betweenle | WordSolverX';
   const pageDescription =
     'Play Betweenle Unlimited online with the same sorted word-list logic, replay daily puzzles, or start a custom Betweenle round. Free browser game with no signup required.';
-  const pageUrl = 'https://wordsolverx.com/betweenle-unlimited';
+  const pageUrl = 'https://wordsolver.tech/betweenle-unlimited';
 
   const faqs = [
     {
@@ -64,7 +64,7 @@
       ],
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Home', url: 'https://wordsolver.tech' },
       { name: 'Betweenle Unlimited', url: pageUrl },
     ]),
     generateWebPageSchema(pageTitle, pageDescription, pageUrl),
@@ -83,7 +83,7 @@
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
-  <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />

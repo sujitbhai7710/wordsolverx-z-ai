@@ -38,7 +38,7 @@ export const load: PageServerLoad = async () => {
                 author: generatePersonAuthorSchema(getAuthorForGame('Quordle'), getAuthorProfileUrl(getAuthorForGame('Quordle'))),
                 publisher: { '@type': 'Organization', name: 'WordSolverX' },
                 description: pageDescription,
-                mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/quordle-answer-today' },
+                mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/quordle-answer-today' },
             },
         ],
     };
