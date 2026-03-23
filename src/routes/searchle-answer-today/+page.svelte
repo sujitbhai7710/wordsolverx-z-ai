@@ -1,24 +1,22 @@
 <script lang="ts">
   import FAQSection from '$lib/components/FAQSection.svelte';
-  import { getSearchlePuzzleForDate } from '$lib/searchle/searchleSolver';
-  import { SEARCHLE_PUZZLES } from '$lib/searchle/searchleData';
+  import type { SearchleDailyPuzzle } from '$lib/searchle/daily';
   import {
     generateFAQSchema,
     generateHowToSchema,
     generateWebPageSchema
   } from '$lib/seo';
-  import { getISTToday } from '$lib/utils';
 
-  interface DailyPuzzle {
-    date: string;
-    prompt: string;
-    answer: string;
-  }
+  let { data } = $props<{
+    data: {
+      totalPuzzles: number;
+      todayPuzzle: SearchleDailyPuzzle;
+    };
+  }>();
 
-  const today = getISTToday();
-  const totalPuzzles = SEARCHLE_PUZZLES.length;
-  const todayPuzzle: DailyPuzzle = getSearchlePuzzleForDate(today);
   let copiedWord = $state<string | null>(null);
+  const totalPuzzles = $derived(data.totalPuzzles);
+  const todayPuzzle = $derived(data.todayPuzzle);
 
   async function copyToClipboard(text: string) {
     if (!navigator?.clipboard) return;
@@ -37,10 +35,14 @@
     });
   }
 
-  const todayLabel = formatDisplayDate(todayPuzzle.date);
-  const pageTitle = `Searchle Hints and Answer for Today (${todayLabel})`;
-  const pageDescription = `Get Searchle hints and the confirmed Searchle answer for today, ${todayLabel}. Use the dedicated archive page for older Searchle prompts and answers.`;
-  const pageKeywords = `searchle answer today, searchle answer, searchle hint, searchle hint today, searchle answer for ${todayLabel}`;
+  const todayLabel = $derived(formatDisplayDate(data.todayPuzzle.date));
+  const pageTitle = $derived(`Searchle Hints and Answer for Today (${todayLabel})`);
+  const pageDescription = $derived(
+    `Get Searchle hints and the confirmed Searchle answer for today, ${todayLabel}. Use the dedicated archive page for older Searchle prompts and answers.`
+  );
+  const pageKeywords = $derived(
+    `searchle answer today, searchle answer, searchle hint, searchle hint today, searchle answer for ${todayLabel}`
+  );
 
   const faqs = [
     {
@@ -71,10 +73,12 @@
     { name: 'Reveal or copy the answer', text: 'Use the answer card tools to confirm the solution quickly.' },
     { name: 'Open the archive', text: 'Use the dedicated archive page when you need an older Searchle answer.' }
   ]);
-  const webPageSchema = generateWebPageSchema(
-    pageTitle,
-    pageDescription,
-    'https://wordsolver.tech/searchle-answer-today'
+  const webPageSchema = $derived(
+    generateWebPageSchema(
+      pageTitle,
+      pageDescription,
+      'https://wordsolver.tech/searchle-answer-today'
+    )
   );
 </script>
 

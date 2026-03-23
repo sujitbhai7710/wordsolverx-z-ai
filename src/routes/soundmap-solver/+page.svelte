@@ -2,16 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import FAQSection from '$lib/components/FAQSection.svelte';
-	import artistsData from '$lib/data/soundmap-artists.json';
-	import {
-		filterCandidates,
-		findBestGuess,
-		getRecommendedFirstGuesses,
-		type Artist,
-		type AttributeFeedback,
-		type FeedbackType,
-		type Guess
-	} from '$lib/soundmap/algorithm';
+	import type { Artist, AttributeFeedback, FeedbackType, Guess } from '$lib/soundmap/types';
 	import {
 		generateFAQSchema,
 		generateHowToSchema,
@@ -20,7 +11,17 @@
 		generateSoftwareApplicationSchema
 	} from '$lib/seo';
 
-	const artists = artistsData as Artist[];
+	type SoundmapAlgorithm = Pick<
+		typeof import('$lib/soundmap/algorithm'),
+		'filterCandidates' | 'findBestGuess' | 'getRecommendedFirstGuesses'
+	>;
+
+	type SoundmapRuntime = {
+		artists: Artist[];
+		algorithm: SoundmapAlgorithm;
+	};
+
+	let soundmapRuntimePromise: Promise<SoundmapRuntime> | null = null;
 
 	const defaultFeedback: AttributeFeedback = {
 		debut: 'wrong',
@@ -31,17 +32,21 @@
 		gender: 'wrong'
 	};
 
+	let artists = $state<Artist[]>([]);
 	let searchQuery = $state('');
 	let showDropdown = $state(false);
 	let selectedArtist = $state<Artist | null>(null);
 	let guesses = $state<Guess[]>([]);
 	let currentFeedback = $state<AttributeFeedback>({ ...defaultFeedback });
+	let solverLoading = $state(true);
+	let runtimeError = $state<string | null>(null);
 	let darkMode = $state(true);
 	let showBestGuess = $state(true);
 	let showHelp = $state(false);
 	let showCandidates = $state(true);
 	let notice = $state<string | null>(null);
 	let searchRef: HTMLDivElement | null = null;
+	let soundmapRuntime = $state<SoundmapRuntime | null>(null);
 	let guideFeedback = $state({
 		debut: 'wrong' as FeedbackType,
 		popularity: 'wrong' as FeedbackType,
@@ -49,21 +54,59 @@
 	});
 	let guideActive = $state<'debut' | 'popularity' | 'country'>('debut');
 
+	function loadSoundmapRuntime(): Promise<SoundmapRuntime> {
+		if (!soundmapRuntimePromise) {
+			soundmapRuntimePromise = Promise.all([
+				import('$lib/data/soundmap-artists.json'),
+				import('$lib/soundmap/algorithm')
+			]).then(([artistsModule, algorithm]) => ({
+				artists: artistsModule.default as Artist[],
+				algorithm: {
+					filterCandidates: algorithm.filterCandidates,
+					findBestGuess: algorithm.findBestGuess,
+					getRecommendedFirstGuesses: algorithm.getRecommendedFirstGuesses
+				}
+			}));
+		}
+
+		return soundmapRuntimePromise;
+	}
+
+	async function ensureSoundmapRuntime(): Promise<SoundmapRuntime | null> {
+		if (soundmapRuntime) return soundmapRuntime;
+
+		try {
+			const runtime = await loadSoundmapRuntime();
+			soundmapRuntime = runtime;
+			artists = runtime.artists;
+			return runtime;
+		} catch {
+			runtimeError = 'Failed to load the Soundmap artist database.';
+			return null;
+		} finally {
+			solverLoading = false;
+		}
+	}
+
 	const filteredArtists = $derived.by(() => {
 		const query = searchQuery.trim().toLowerCase();
 		if (!query) return [];
 		return artists.filter((artist) => artist.name.toLowerCase().includes(query)).slice(0, 8);
 	});
 
-	const candidates = $derived(filterCandidates(artists, guesses));
+	const candidates = $derived.by(() =>
+		soundmapRuntime ? soundmapRuntime.algorithm.filterCandidates(artists, guesses) : []
+	);
 
 	const bestGuess = $derived.by(() => {
-		if (!showBestGuess || guesses.length === 0) return null;
+		if (!soundmapRuntime || !showBestGuess || guesses.length === 0) return null;
 		const previous = guesses.map((guess) => guess.artist.name);
-		return findBestGuess(artists, candidates, previous);
+		return soundmapRuntime.algorithm.findBestGuess(artists, candidates, previous);
 	});
 
-	const recommendedGuesses = getRecommendedFirstGuesses(artists);
+	const recommendedGuesses = $derived.by(() =>
+		soundmapRuntime ? soundmapRuntime.algorithm.getRecommendedFirstGuesses(artists) : []
+	);
 
 	const hasWon = $derived(candidates.length === 1 && guesses.length > 0);
 
@@ -162,6 +205,8 @@
 	}
 
 	onMount(() => {
+		void ensureSoundmapRuntime();
+
 		if (browser) {
 			const saved = localStorage.getItem('soundmap-dark-mode');
 			if (saved !== null) darkMode = saved === 'true';
@@ -329,6 +374,16 @@
 				</div>
 			{/if}
 
+			{#if solverLoading}
+				<div class="rounded-xl border border-blue-200 bg-blue-50 text-blue-900 px-4 py-3 text-sm">
+					Loading the Soundmap artist database...
+				</div>
+			{:else if runtimeError}
+				<div class="rounded-xl border border-red-200 bg-red-50 text-red-900 px-4 py-3 text-sm">
+					{runtimeError}
+				</div>
+			{/if}
+
 			<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
 				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 text-center">
 					<p class="text-2xl font-bold text-green-500">{candidates.length}</p>
@@ -489,7 +544,7 @@
 				</div>
 			{/if}
 
-			{#if guesses.length === 0}
+			{#if guesses.length === 0 && !solverLoading}
 				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
 					<h2 class="text-lg font-semibold mb-3">Recommended First Guesses</h2>
 					<div class="flex flex-wrap gap-2">
@@ -518,6 +573,7 @@
 							type="text"
 							placeholder="Search for an artist..."
 							value={searchQuery}
+							disabled={solverLoading || !!runtimeError}
 							oninput={(event) => {
 								searchQuery = (event.currentTarget as HTMLInputElement).value;
 								showDropdown = true;

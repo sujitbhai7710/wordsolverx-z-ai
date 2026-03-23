@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import type { SearchleDailyPuzzle } from '$lib/searchle/daily';
   import {
-    getSearchlePuzzleForDate,
-    getSearchlePromptSuggestions,
-    solveSearchle,
     type SearchleFeedback,
     type SearchleGuess,
     type SearchleSuggestion
@@ -16,12 +15,12 @@
   } from '$lib/seo';
   import FAQSection from '$lib/components/FAQSection.svelte';
 
-  interface DailyPuzzle {
-    date: string;
-    prompt: string;
-    answer: string;
-    luckyGuess?: string;
-  }
+  type SearchleRuntime = Pick<
+    typeof import('$lib/searchle/searchleSolver'),
+    'getSearchlePromptSuggestions' | 'solveSearchle'
+  >;
+
+  let searchleRuntimePromise: Promise<SearchleRuntime> | null = null;
 
   interface GuessResult {
     word: string;
@@ -31,24 +30,75 @@
 
   type LetterState = SearchleFeedback;
 
+  let { data } = $props<{
+    data: {
+      dailyPuzzle: SearchleDailyPuzzle;
+    };
+  }>();
+
   let prompt = $state('');
   let suggestions = $state<SearchleSuggestion[]>([]);
   let isLoading = $state(false);
+  let runtimeLoading = $state(false);
   let error = $state<string | null>(null);
   let guesses = $state<GuessResult[]>([]);
   let currentGuess = $state('');
   let letterStates = $state<LetterState[]>([]);
   let isSolved = $state(false);
   let possibleWords = $state(0);
-  let dailyPuzzle = $state<DailyPuzzle | null>(getSearchlePuzzleForDate(new Date()));
   let useDaily = $state(false);
   let promptSuggestions = $state<string[]>([]);
   let showPromptSuggestions = $state(false);
   let activePromptSuggestionIndex = $state(-1);
   let promptInput: HTMLInputElement | null = $state(null);
+  let searchleRuntime = $state<SearchleRuntime | null>(null);
+  const dailyPuzzle = $derived(data.dailyPuzzle);
 
-  function refreshPromptSuggestions(query: string) {
-    promptSuggestions = getSearchlePromptSuggestions(query);
+  function loadSearchleRuntime(): Promise<SearchleRuntime> {
+    if (!searchleRuntimePromise) {
+      searchleRuntimePromise = import('$lib/searchle/searchleSolver').then((module) => ({
+        getSearchlePromptSuggestions: module.getSearchlePromptSuggestions,
+        solveSearchle: module.solveSearchle
+      }));
+    }
+
+    return searchleRuntimePromise;
+  }
+
+  async function ensureSearchleRuntime(): Promise<SearchleRuntime | null> {
+    if (searchleRuntime) return searchleRuntime;
+
+    runtimeLoading = true;
+
+    try {
+      const runtime = await loadSearchleRuntime();
+      searchleRuntime = runtime;
+      return runtime;
+    } catch {
+      error = 'Failed to load Searchle solver data';
+      return null;
+    } finally {
+      runtimeLoading = false;
+    }
+  }
+
+  onMount(() => {
+    void ensureSearchleRuntime();
+  });
+
+  async function refreshPromptSuggestions(query: string) {
+    if (!query.trim()) {
+      promptSuggestions = [];
+      showPromptSuggestions = false;
+      activePromptSuggestionIndex = -1;
+      return;
+    }
+
+    const runtime = await ensureSearchleRuntime();
+    if (!runtime) return;
+    if (prompt !== query) return;
+
+    promptSuggestions = runtime.getSearchlePromptSuggestions(query);
     showPromptSuggestions = promptSuggestions.length > 0 && query.trim().length > 0;
     activePromptSuggestionIndex = promptSuggestions.length > 0 ? 0 : -1;
   }
@@ -64,10 +114,10 @@
 
   function handlePromptInput(event: Event) {
     prompt = (event.currentTarget as HTMLInputElement).value;
-    refreshPromptSuggestions(prompt);
+    void refreshPromptSuggestions(prompt);
   }
 
-  function handleSolve() {
+  async function handleSolve() {
     if (!prompt.trim() || isLoading) return;
 
     isLoading = true;
@@ -81,7 +131,9 @@
     activePromptSuggestionIndex = -1;
 
     try {
-      const result = solveSearchle(prompt.trim(), []);
+      const runtime = await ensureSearchleRuntime();
+      if (!runtime) return;
+      const result = runtime.solveSearchle(prompt.trim(), []);
       suggestions = result.suggestions;
       possibleWords = result.totalWords;
     } catch {
@@ -98,7 +150,7 @@
     guesses = [];
     isSolved = false;
     suggestions = [];
-    refreshPromptSuggestions(prompt);
+    void refreshPromptSuggestions(prompt);
   }
 
   function selectWord(word: string) {
@@ -114,7 +166,7 @@
     letterStates = next;
   }
 
-  function submitGuess() {
+  async function submitGuess() {
     if (!currentGuess || letterStates.length === 0) return;
 
     const isCorrect = letterStates.every((state) => state === 'correct');
@@ -136,11 +188,13 @@
     isLoading = true;
 
     try {
+      const runtime = await ensureSearchleRuntime();
+      if (!runtime) return;
       const previousGuesses: SearchleGuess[] = guesses.map((guess) => ({
         word: guess.word,
         feedback: guess.feedback
       }));
-      const result = solveSearchle(prompt.trim(), previousGuesses);
+      const result = runtime.solveSearchle(prompt.trim(), previousGuesses);
       suggestions = result.suggestions;
       possibleWords = result.totalWords;
     } catch {
@@ -198,9 +252,9 @@
 
     if (event.key !== 'Enter') return;
     if (currentGuess && letterStates.length > 0) {
-      submitGuess();
+      void submitGuess();
     } else {
-      handleSolve();
+      void handleSolve();
     }
   }
 
@@ -344,7 +398,7 @@
               bind:value={prompt}
               oninput={handlePromptInput}
               onkeydown={handleKeyDown}
-              onfocus={() => refreshPromptSuggestions(prompt)}
+              onfocus={() => void refreshPromptSuggestions(prompt)}
               onblur={() => setTimeout(() => {
                 showPromptSuggestions = false;
                 activePromptSuggestionIndex = -1;
@@ -379,7 +433,7 @@
             disabled={isLoading || !prompt.trim()}
             class="bg-purple-500 hover:bg-purple-600 text-white px-6 rounded-xl"
           >
-            {isLoading ? 'Loading' : 'Solve'}
+            {isLoading || runtimeLoading ? 'Loading' : 'Solve'}
           </button>
         </div>
         {#if possibleWords > 0}

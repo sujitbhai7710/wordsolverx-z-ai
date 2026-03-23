@@ -1,5 +1,5 @@
 import { isArchiveDateInRange, parseArchiveDateKey, toArchiveDateKey } from '$lib/archive-page';
-import { getSearchlePuzzleForDate } from '$lib/searchle/searchleSolver';
+import { getSearchlePuzzleForDate } from '$lib/searchle/daily';
 import { getISTToday } from '$lib/utils';
 import type { PageServerLoad } from './$types';
 

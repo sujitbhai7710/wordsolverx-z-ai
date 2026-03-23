@@ -2,7 +2,14 @@
   import { onMount } from 'svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
-  import { getAllColors, getUniqueTargetColors, findBestCandidates, type ColorData } from '$lib/colordle';
+  import type { ColorData } from '$lib/colordle';
+
+  type ColordleRuntime = Pick<
+    typeof import('$lib/colordle'),
+    'getAllColors' | 'getUniqueTargetColors' | 'findBestCandidates'
+  >;
+
+  let colordleRuntimePromise: Promise<ColordleRuntime> | null = null;
 
   // State
   let allColors = $state<ColorData[]>([]);
@@ -12,17 +19,44 @@
   let guessInput = $state('');
   let percentageInput = $state('');
   let loading = $state(true);
+  let loadingError = $state<string | null>(null);
   let processing = $state(false);
 
   let selectedGuess = $state<ColorData | null>(null);
   let displayLimit = $state(12);
+  let colordleRuntime = $state<ColordleRuntime | null>(null);
+
+  function loadColordleRuntime(): Promise<ColordleRuntime> {
+    if (!colordleRuntimePromise) {
+      colordleRuntimePromise = import('$lib/colordle').then((module) => ({
+        getAllColors: module.getAllColors,
+        getUniqueTargetColors: module.getUniqueTargetColors,
+        findBestCandidates: module.findBestCandidates
+      }));
+    }
+
+    return colordleRuntimePromise;
+  }
+
+  async function ensureColordleRuntime(): Promise<ColordleRuntime | null> {
+    if (colordleRuntime) return colordleRuntime;
+
+    try {
+      const runtime = await loadColordleRuntime();
+      colordleRuntime = runtime;
+      allColors = runtime.getAllColors();
+      candidates = runtime.getUniqueTargetColors();
+      return runtime;
+    } catch {
+      loadingError = 'Failed to load the Colordle solver data.';
+      return null;
+    } finally {
+      loading = false;
+    }
+  }
 
   onMount(() => {
-    const colors = getAllColors();
-    const targets = getUniqueTargetColors();
-    allColors = colors;
-    candidates = targets;
-    loading = false;
+    void ensureColordleRuntime();
   });
 
   let suggestions = $derived.by(() => {
@@ -39,7 +73,7 @@
   });
 
   function handleAddStep() {
-    if (!selectedGuess || !percentageInput) return;
+    if (!colordleRuntime || !selectedGuess || !percentageInput) return;
     const percent = parseFloat(percentageInput);
     if (isNaN(percent) || percent < 0 || percent > 100) {
       alert('Please enter a valid percentage (0-100)');
@@ -48,8 +82,8 @@
     processing = true;
     const newHistoryItem = { guess: selectedGuess, percent };
     history = [...history, newHistoryItem];
-    const allTargets = getUniqueTargetColors();
-    candidates = findBestCandidates(allTargets, history);
+    const allTargets = colordleRuntime.getUniqueTargetColors();
+    candidates = colordleRuntime.findBestCandidates(allTargets, history);
     guessInput = '';
     percentageInput = '';
     selectedGuess = null;
@@ -58,8 +92,9 @@
   }
 
   function handleReset() {
+    if (!colordleRuntime) return;
     history = [];
-    candidates = getUniqueTargetColors();
+    candidates = colordleRuntime.getUniqueTargetColors();
     guessInput = '';
     percentageInput = '';
     selectedGuess = null;
@@ -72,12 +107,13 @@
   }
 
   function handleRemoveHistoryItem(idx: number) {
+    if (!colordleRuntime) return;
     history = history.filter((_: any, i: number) => i !== idx);
-    const allTargets = getUniqueTargetColors();
+    const allTargets = colordleRuntime.getUniqueTargetColors();
     if (history.length === 0) {
       candidates = allTargets;
     } else {
-      candidates = findBestCandidates(allTargets, history);
+      candidates = colordleRuntime.findBestCandidates(allTargets, history);
     }
   }
 
@@ -213,6 +249,10 @@
     {#if loading}
       <div class="flex justify-center items-center py-20">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
+      </div>
+    {:else if loadingError}
+      <div class="max-w-2xl mx-auto rounded-2xl border border-red-200 bg-red-50 px-6 py-5 text-center text-red-700 shadow-sm">
+        {loadingError}
       </div>
     {:else}
       <div class="grid lg:grid-cols-12 gap-6">
