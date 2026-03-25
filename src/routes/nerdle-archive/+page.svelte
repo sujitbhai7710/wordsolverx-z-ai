@@ -1,20 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { getNerdleAllModeAnswerForDate, type NerdleAllModeAnswerData } from '$lib/nerdle-answers';
 
 	let { data } = $props();
 
-	interface AnswerData {
-		date: string;
-		puzzleNumber: number;
-		answer: string | null;
-	}
-
-	type AnswerRange = AnswerData;
-	type ViewMode = 'calendar' | 'list';
-
 	const NERDLE_START_UTC_MS = Date.UTC(2022, 0, 20);
 	const DAY_MS = 24 * 60 * 60 * 1000;
-	const NERDLE_START_DATE = new Date(2022, 0, 20);
 	const MONTH_NAMES = [
 		'January',
 		'February',
@@ -65,7 +56,7 @@
 
 	function getPuzzleNumber(date: Date): number {
 		const utcDay = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-		return Math.floor((utcDay - NERDLE_START_UTC_MS) / DAY_MS);
+		return Math.floor((utcDay - NERDLE_START_UTC_MS) / DAY_MS) + 1;
 	}
 
 	function tileStyle(char: string, index: number): string {
@@ -85,11 +76,22 @@
 
 	let selectedDate = $state(new Date());
 	let currentMonth = $state(new Date());
-	let selectedAnswer = $state<AnswerData | null>(null);
-	let loadedAnswers = $state(new Map<string, string>());
+	let selectedRecord = $state<NerdleAllModeAnswerData | null>(null);
+	let selectedModeId = $state('classic');
+	let copiedToken = $state<string | null>(null);
 	let isLoading = $state(false);
-	let viewMode = $state<ViewMode>('calendar');
-	let rangeAnswers = $state<AnswerRange[]>([]);
+	let errorMessage = $state<string | null>(null);
+
+	let selectedMode = $derived(
+		selectedRecord?.modes.find((mode) => mode.id === selectedModeId) ??
+			(selectedRecord?.modes.length ? selectedRecord.modes[0] : null)
+	);
+
+	$effect(() => {
+		if (selectedRecord?.modes.length && !selectedRecord.modes.some((mode) => mode.id === selectedModeId)) {
+			selectedModeId = selectedRecord.modes[0].id;
+		}
+	});
 
 	function isFutureDate(date: Date): boolean {
 		return formatDateKey(date) > formatDateKey(getTodayDateFromData());
@@ -120,53 +122,18 @@
 	}
 
 	async function fetchAnswer(date: Date): Promise<void> {
-		const dateStr = formatDateKey(date);
+		const dateKey = formatDateKey(date);
 		isLoading = true;
-		try {
-			const res = await fetch(`/api/nerdle-answer?date=${dateStr}`);
-			const payload = (await res.json()) as { success?: boolean; data?: AnswerData };
-			if (payload.success && payload.data) {
-				selectedAnswer = payload.data;
-				if (payload.data.answer) {
-					const next = new Map(loadedAnswers);
-					next.set(dateStr, payload.data.answer);
-					loadedAnswers = next;
-				}
-			}
-		} catch (error) {
-			console.error('Error fetching Nerdle answer:', error);
-		} finally {
-			isLoading = false;
-		}
-	}
+		errorMessage = null;
 
-	async function fetchRange(anchorDate: Date, days: number): Promise<void> {
-		isLoading = true;
 		try {
-			const rangeDays = Math.max(1, Math.min(days, 30));
-			const startDate = new Date(anchorDate);
-			startDate.setDate(anchorDate.getDate() - (rangeDays - 1));
-			const clampedStart = startDate < NERDLE_START_DATE ? NERDLE_START_DATE : startDate;
-			const startDateKey = formatDateKey(clampedStart);
-
-			const res = await fetch(`/api/nerdle-answer?range=${rangeDays}&date=${startDateKey}`);
-			const payload = (await res.json()) as { success?: boolean; data?: AnswerRange[] };
-			if (payload.success && payload.data) {
-				const todayDate = getTodayDateFromData();
-				const filtered = payload.data
-					.filter((item) => item.date <= formatDateKey(todayDate))
-					.sort((a, b) => b.date.localeCompare(a.date));
-				rangeAnswers = filtered;
-				const next = new Map(loadedAnswers);
-				for (const item of filtered) {
-					if (item.answer) {
-						next.set(item.date, item.answer);
-					}
-				}
-				loadedAnswers = next;
+			selectedRecord = await getNerdleAllModeAnswerForDate(dateKey);
+			if (!selectedRecord) {
+				errorMessage = `No answer stored for ${dateKey}.`;
 			}
-		} catch (error) {
-			console.error('Error fetching Nerdle range answers:', error);
+		} catch {
+			errorMessage = 'Failed to load Nerdle data.';
+			selectedRecord = null;
 		} finally {
 			isLoading = false;
 		}
@@ -183,7 +150,6 @@
 			window.history.replaceState(window.history.state, '', `/nerdle-archive?date=${dateKey}`);
 		}
 		await fetchAnswer(date);
-		await fetchRange(date, 10);
 	}
 
 	async function goToPrev(): Promise<void> {
@@ -217,6 +183,26 @@
 		currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
 	}
 
+	async function copyText(text: string, token: string): Promise<void> {
+		await navigator.clipboard.writeText(text);
+		copiedToken = token;
+		setTimeout(() => {
+			if (copiedToken === token) {
+				copiedToken = null;
+			}
+		}, 1400);
+	}
+
+	async function copyAllModeAnswers(): Promise<void> {
+		if (!selectedMode || selectedMode.answers.length === 0) {
+			return;
+		}
+		await copyText(
+			selectedMode.answers.map((entry) => entry.answer).join('\n'),
+			`all-${selectedMode.id}`
+		);
+	}
+
 	let daysInMonth = $derived(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate());
 	let firstDayOfMonth = $derived(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay());
 	let monthLabel = $derived(`${MONTH_NAMES[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`);
@@ -235,9 +221,7 @@
 
 		selectedDate = safeDate;
 		currentMonth = new Date(safeDate.getFullYear(), safeDate.getMonth(), 1);
-
 		await fetchAnswer(safeDate);
-		await fetchRange(safeDate, 10);
 	});
 </script>
 
@@ -261,138 +245,83 @@
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 text-slate-900">
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-		<header class="flex items-center justify-between mb-8 gap-3">
-			<div>
-				<h1 class="text-3xl sm:text-4xl font-black">Nerdle Archive</h1>
-				<p class="text-slate-600 mt-2">Browse all Nerdle puzzles since January 20, 2022</p>
-			</div>
-			<div class="flex bg-white border border-slate-200 rounded-lg p-1 shadow-sm">
-				<button
-					onclick={() => (viewMode = 'calendar')}
-					type="button"
-					class={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-						viewMode === 'calendar' ? 'bg-emerald-600 text-white' : 'text-slate-600 hover:text-slate-900'
-					}`}
-				>
-					Calendar
-				</button>
-				<button
-					onclick={() => (viewMode = 'list')}
-					type="button"
-					class={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-						viewMode === 'list' ? 'bg-emerald-600 text-white' : 'text-slate-600 hover:text-slate-900'
-					}`}
-				>
-					List
-				</button>
-			</div>
+		<header class="mb-8">
+			<h1 class="text-3xl sm:text-4xl font-black">Nerdle Archive</h1>
+			<p class="text-slate-600 mt-2">Browse all stored Nerdle all-mode answers by date.</p>
 		</header>
 
 		<div class="grid lg:grid-cols-3 gap-8">
 			<div class="lg:col-span-1">
-				{#if viewMode === 'calendar'}
-					<div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-						<div class="flex items-center justify-between mb-4">
-							<button aria-label="Previous month" onclick={prevMonth} type="button" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-								</svg>
-							</button>
-							<h2 class="text-lg font-semibold">{monthLabel}</h2>
-							<button
-								aria-label="Next month"
-								onclick={nextMonth}
-								type="button"
-								disabled={!isCurrentMonthOrPast()}
-								class="p-2 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-							>
-								<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-								</svg>
-							</button>
-						</div>
-
-						<div class="grid grid-cols-7 gap-1 mb-2">
-							{#each DAY_NAMES as dayName}
-								<div class="text-center text-xs text-slate-500 py-2">{dayName}</div>
-							{/each}
-						</div>
-
-						<div class="grid grid-cols-7 gap-1">
-							{#each Array(firstDayOfMonth) as _}
-								<div class="h-10" aria-hidden="true"></div>
-							{/each}
-
-							{#each Array(daysInMonth) as _, idx}
-								{@const day = idx + 1}
-								{@const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)}
-								{@const dateStr = formatDateKey(dateObj)}
-								{@const hasAnswer = loadedAnswers.has(dateStr)}
-								{@const future = isFutureDate(dateObj)}
-								{#if !isNerdleDate(dateObj)}
-									<div class="h-10 flex items-center justify-center text-slate-300 text-sm">{day}</div>
-								{:else}
-									<button
-										onclick={() => handleSelectDate(dateObj)}
-										type="button"
-										disabled={future}
-										class={`h-10 rounded-lg flex items-center justify-center text-sm transition-all ${
-											future
-												? 'text-slate-300 bg-slate-50 cursor-not-allowed'
-												: isSelected(day)
-													? 'bg-emerald-600 text-white font-bold'
-													: isToday(day)
-														? 'bg-violet-100 text-violet-700 font-medium hover:bg-violet-200'
-														: hasAnswer
-															? 'bg-slate-100 hover:bg-slate-200'
-															: 'hover:bg-slate-100'
-										}`}
-									>
-										{day}
-									</button>
-								{/if}
-							{/each}
-						</div>
-
-						<div class="flex gap-4 mt-4 pt-4 border-t border-slate-200 text-xs text-slate-500">
-							<div class="flex items-center gap-1">
-								<div class="w-3 h-3 rounded bg-emerald-600"></div>
-								<span>Selected</span>
-							</div>
-							<div class="flex items-center gap-1">
-								<div class="w-3 h-3 rounded bg-violet-200"></div>
-								<span>Today</span>
-							</div>
-						</div>
+				<div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+					<div class="flex items-center justify-between mb-4">
+						<button aria-label="Previous month" onclick={prevMonth} type="button" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+							</svg>
+						</button>
+						<h2 class="text-lg font-semibold">{monthLabel}</h2>
+						<button
+							aria-label="Next month"
+							onclick={nextMonth}
+							type="button"
+							disabled={!isCurrentMonthOrPast()}
+							class="p-2 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+						>
+							<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+							</svg>
+						</button>
 					</div>
-				{:else}
-					<div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-						<h2 class="text-lg font-semibold mb-4">Recent Puzzles</h2>
-						<div class="space-y-2 max-h-96 overflow-y-auto">
-							{#each rangeAnswers as item}
+
+					<div class="grid grid-cols-7 gap-1 mb-2">
+						{#each DAY_NAMES as dayName}
+							<div class="text-center text-xs text-slate-500 py-2">{dayName}</div>
+						{/each}
+					</div>
+
+					<div class="grid grid-cols-7 gap-1">
+						{#each Array(firstDayOfMonth) as _}
+							<div class="h-10" aria-hidden="true"></div>
+						{/each}
+
+						{#each Array(daysInMonth) as _, idx}
+							{@const day = idx + 1}
+							{@const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)}
+							{@const future = isFutureDate(dateObj)}
+							{#if !isNerdleDate(dateObj)}
+								<div class="h-10 flex items-center justify-center text-slate-300 text-sm">{day}</div>
+							{:else}
 								<button
-									onclick={() => handleSelectDate(parseDateKey(item.date) ?? new Date(item.date))}
+									onclick={() => handleSelectDate(dateObj)}
 									type="button"
-									class={`w-full p-3 rounded-lg text-left transition-colors ${
-										formatDateKey(selectedDate) === item.date
-											? 'bg-emerald-50 border border-emerald-300'
-											: 'hover:bg-slate-50 border border-slate-100'
+									disabled={future}
+									class={`h-10 rounded-lg flex items-center justify-center text-sm transition-all ${
+										future
+											? 'text-slate-300 bg-slate-50 cursor-not-allowed'
+											: isSelected(day)
+												? 'bg-emerald-600 text-white font-bold'
+												: isToday(day)
+													? 'bg-violet-100 text-violet-700 font-medium hover:bg-violet-200'
+													: 'hover:bg-slate-100'
 									}`}
 								>
-									<div class="flex justify-between items-center">
-										<div>
-											<div class="text-sm text-slate-500">#{item.puzzleNumber}</div>
-											<div class="text-slate-900 font-medium">{item.date}</div>
-										</div>
-										{#if item.answer}
-											<div class="text-emerald-700 font-mono">{item.answer}</div>
-										{/if}
-									</div>
+									{day}
 								</button>
-							{/each}
+							{/if}
+						{/each}
+					</div>
+
+					<div class="flex gap-4 mt-4 pt-4 border-t border-slate-200 text-xs text-slate-500">
+						<div class="flex items-center gap-1">
+							<div class="w-3 h-3 rounded bg-emerald-600"></div>
+							<span>Selected</span>
+						</div>
+						<div class="flex items-center gap-1">
+							<div class="w-3 h-3 rounded bg-violet-200"></div>
+							<span>Today</span>
 						</div>
 					</div>
-				{/if}
+				</div>
 
 				<div class="mt-4 flex gap-2">
 					<button onclick={goToToday} type="button" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors">
@@ -420,7 +349,9 @@
 
 					<div class="text-center">
 						<div class="text-2xl font-black text-slate-900">{formatDateKey(selectedDate)}</div>
-						<div class="text-sm text-slate-600">Puzzle #{selectedAnswer?.puzzleNumber ?? getPuzzleNumber(selectedDate)}</div>
+						<div class="text-sm text-slate-600">
+							Puzzle #{selectedRecord?.classicPuzzleNumber ?? getPuzzleNumber(selectedDate)}
+						</div>
 					</div>
 
 					<button
@@ -442,44 +373,82 @@
 							<div class="animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent mx-auto mb-4"></div>
 							<p class="text-slate-600">Loading answer...</p>
 						</div>
-					{:else if selectedAnswer?.answer}
+					{:else if errorMessage}
+						<div class="text-center py-12">
+							<p class="text-slate-600">{errorMessage}</p>
+						</div>
+					{:else if selectedRecord && selectedMode}
 						<div>
-							<div class="flex justify-center gap-2 mb-6">
-								{#each selectedAnswer.answer.split('') as char, index}
-									<div class="rounded flex items-center justify-center font-bold text-white transition-all duration-200 hover:scale-105" style={tileStyle(char, index)}>
-										{char}
-									</div>
+							<div class="flex flex-wrap justify-center gap-2 mb-6">
+								{#each selectedRecord.modes as mode}
+									<button
+										type="button"
+										onclick={() => (selectedModeId = mode.id)}
+										class={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+											selectedModeId === mode.id
+												? 'bg-emerald-600 text-white'
+												: 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+										}`}
+									>
+										{mode.name}
+									</button>
 								{/each}
 							</div>
 
-							<div class="grid grid-cols-2 gap-4 text-sm border-t border-slate-200 pt-6">
-								<div>
-									<span class="text-slate-600">Date:</span>
-									<p class="text-slate-900 font-medium mt-1">{selectedAnswer.date}</p>
-								</div>
-								<div>
-									<span class="text-slate-600">Puzzle Number:</span>
-									<p class="text-slate-900 font-medium mt-1">#{selectedAnswer.puzzleNumber}</p>
-								</div>
-								<div>
-									<span class="text-slate-600">Equation:</span>
-									<p class="text-slate-900 font-mono mt-1">{selectedAnswer.answer}</p>
-								</div>
-								<div>
-									<span class="text-slate-600">Days since launch:</span>
-									<p class="text-slate-900 font-medium mt-1">{selectedAnswer.puzzleNumber} days</p>
-								</div>
+							<div class="text-center mb-6">
+								<p class="text-slate-700 font-semibold">{selectedMode.name}</p>
+								<p class="text-slate-500 text-sm">{selectedMode.description}</p>
 							</div>
+
+							{#if selectedMode.answers.length > 0}
+								<div class="space-y-6">
+									{#each selectedMode.answers as answerEntry, index}
+										<div class="rounded-xl border border-slate-200 p-4">
+											<div class="text-sm text-slate-600 mb-3 text-center">Puzzle #{answerEntry.puzzleNumber}</div>
+											<div class="flex justify-center gap-2 flex-wrap mb-4">
+												{#each answerEntry.answer.split('') as char, charIndex}
+													<div class="rounded flex items-center justify-center font-bold text-white transition-all duration-200 hover:scale-105" style={tileStyle(char, charIndex)}>
+														{char}
+													</div>
+												{/each}
+											</div>
+											<button
+												type="button"
+												onclick={() => copyText(answerEntry.answer, `${selectedMode.id}-${index}`)}
+												class="w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors"
+											>
+												{copiedToken === `${selectedMode.id}-${index}`
+													? 'Copied'
+													: `Copy ${selectedMode.answers.length > 1 ? `Answer ${index + 1}` : 'Answer'}`}
+											</button>
+										</div>
+									{/each}
+								</div>
+
+								{#if selectedMode.answers.length > 1}
+									<button
+										type="button"
+										onclick={copyAllModeAnswers}
+										class="mt-4 w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors"
+									>
+										{copiedToken === `all-${selectedMode.id}` ? 'Copied All' : 'Copy All Answers'}
+									</button>
+								{/if}
+							{:else}
+								<div class="text-center py-8">
+									<p class="text-slate-600">No stored answer for this mode on this date.</p>
+								</div>
+							{/if}
 						</div>
 					{:else}
 						<div class="text-center py-12">
-							<p class="text-slate-600">No answer available for this date</p>
+							<p class="text-slate-600">Select a date to view answer details.</p>
 						</div>
 					{/if}
 				</div>
 
 				<div class="mt-6 flex justify-center gap-4 text-sm">
-					<a href="/nerdle-answer-today" class="text-emerald-700 hover:text-emerald-600 font-medium transition-colors">View Today&apos;s Answer -></a>
+					<a href="/nerdle-answer-today?v=3" class="text-emerald-700 hover:text-emerald-600 font-medium transition-colors">View Today&apos;s Answer -></a>
 					<a href="https://www.nerdlegame.com/" target="_blank" rel="noopener noreferrer" class="text-slate-700 hover:text-slate-900 transition-colors">Play on Nerdle -></a>
 				</div>
 			</div>

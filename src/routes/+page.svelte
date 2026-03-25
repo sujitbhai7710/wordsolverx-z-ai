@@ -8,7 +8,7 @@
   const answerTodayGames = [
     { name: 'Wordle', href: '/wordle-answer-today', description: 'The classic 5-letter word game by NYT.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
     { name: 'Betweenle', href: '/betweenle-answer-today', description: 'Today\'s Betweenle answer plus archive calendar.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
-    { name: 'Nerdle', href: '/nerdle-answer-today', description: 'Today\'s Nerdle math equation answer and archive.', color: 'from-emerald-500 to-teal-600', icon: 'Nd', isPopular: true },
+    { name: 'Nerdle', href: '/nerdle-answer-today?v=3', description: 'Today\'s Nerdle math equation answer and archive.', color: 'from-emerald-500 to-teal-600', icon: 'Nd', isPopular: true },
     { name: 'Phoodle', href: '/phoodle-answer-today', description: 'Food-themed Wordle with culinary words.', color: 'from-orange-500 to-red-500', icon: 'P' },
     { name: 'Quordle', href: '/quordle-answer-today', description: 'Solve four Wordles simultaneously.', color: 'from-blue-500 to-indigo-600', icon: 'Q', isPopular: true },
     { name: 'Colordle', href: '/colordle-answer-today', description: 'Guess the daily color hex code.', color: 'from-pink-500 to-purple-600', icon: 'C' },

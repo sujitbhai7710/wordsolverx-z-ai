@@ -5,6 +5,7 @@ import {
 	isValidNerdleDateKey,
 	isNerdleDateKeyAfterToday
 } from '$lib/nerdle';
+import { getNerdleAllModeAnswerForToday, type NerdleAnswerFetchOptions } from '$lib/nerdle-answers';
 
 function formatSeoDate(dateKey: string): string {
 	const date = new Date(`${dateKey}T00:00:00Z`);
@@ -16,13 +17,18 @@ function formatSeoDate(dateKey: string): string {
 		year: 'numeric',
 		month: 'long',
 		day: 'numeric',
-		timeZone: 'Asia/Kolkata'
+		timeZone: 'Asia/Tokyo'
 	});
 }
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, platform, fetch }) => {
+	const fetchOptions: NerdleAnswerFetchOptions = {
+		platform,
+		fetchImpl: fetch
+	};
 	const dateParam = url.searchParams.get('date');
-	const todayDateKey = getNerdleTodayDateKey();
+	const todayPayload = await getNerdleAllModeAnswerForToday(fetchOptions);
+	const todayDateKey = todayPayload?.date ?? getNerdleTodayDateKey();
 
 	let selectedDateKey: string | null = null;
 	if (
@@ -37,10 +43,10 @@ export const load: PageServerLoad = async ({ url }) => {
 	const selectedDateLabel = selectedDateKey ? formatSeoDate(selectedDateKey) : null;
 	const title = selectedDateLabel
 		? `Nerdle Archive ( ${selectedDateLabel} )`
-		: 'Nerdle Archive - All Past Nerdle Answers by Date';
+		: 'Nerdle Archive - All Modes Answers by Date';
 	const description = selectedDateLabel
-		? `View the Nerdle answer for ${selectedDateLabel}, plus full equation history and date navigation in the Nerdle archive.`
-		: 'Browse the complete Nerdle archive by date. Check past Nerdle equations, puzzle numbers, and answer history with calendar navigation.';
+		? `View all Nerdle mode answers for ${selectedDateLabel}, including Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant.`
+		: 'Browse stored Nerdle answers by date for all modes: Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant.';
 
 	const schemas = JSON.stringify([
 		{
@@ -68,7 +74,7 @@ export const load: PageServerLoad = async ({ url }) => {
 			title,
 			description,
 			keywords:
-				'nerdle archive, nerdle past answers, nerdle answer history, nerdle calendar, nerdle previous answers',
+				'nerdle archive, nerdle all modes archive, nerdle classic micro mini midi maxi quad speed instant answers, nerdle previous answers',
 			canonical: 'https://wordsolver.tech/nerdle-archive'
 		},
 		schemas

@@ -41,6 +41,7 @@ interface PuzzleWindowConfig {
 	sourceReadiness: PuzzleSourceReadiness;
 	boundaryHourUtc?: number;
 	boundaryMinuteUtc?: number;
+	rolloverGraceSeconds?: number;
 }
 
 const OFFSET_MINUTES = {
@@ -71,7 +72,12 @@ export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
 	},
 	worldle: { group: 'worldle', timezone: 'UTC', sourceReadiness: 'deterministic' },
 	betweenle: { group: 'betweenle', timezone: 'IST', sourceReadiness: 'deterministic' },
-	nerdle: { group: 'nerdle', timezone: 'IST', sourceReadiness: 'deterministic' },
+	nerdle: {
+		group: 'nerdle',
+		timezone: 'UTC',
+		sourceReadiness: 'deterministic',
+		rolloverGraceSeconds: 60
+	},
 	contexto: { group: 'contexto', timezone: 'IST', sourceReadiness: 'deterministic' },
 	searchle: { group: 'searchle', timezone: 'IST', sourceReadiness: 'deterministic' },
 	phrazle: { group: 'phrazle', timezone: 'IST', sourceReadiness: 'deterministic' },
@@ -203,11 +209,15 @@ function formatDateKeyFromUtcParts(year: number, month: number, day: number): st
 	return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
 
-function getDateKeyFromFixedOffset(offsetMinutes: number, now: Date): string {
+function getDateKeyFromFixedOffset(
+	offsetMinutes: number,
+	now: Date,
+	rolloverGraceSeconds = DAILY_ROLLOVER_GRACE_SECONDS
+): string {
 	const localMs = now.getTime() + offsetMinutes * 60_000;
 	const local = new Date(localMs);
 	const currentBoundaryUtcMs =
-		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate(), 0, 0, DAILY_ROLLOVER_GRACE_SECONDS, 0) -
+		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate(), 0, 0, rolloverGraceSeconds, 0) -
 		offsetMinutes * 60_000;
 
 	if (now.getTime() >= currentBoundaryUtcMs) {
@@ -226,11 +236,15 @@ function getDateKeyFromFixedOffset(offsetMinutes: number, now: Date): string {
 	);
 }
 
-function getNextFixedOffsetInvalidation(offsetMinutes: number, now: Date): Date {
+function getNextFixedOffsetInvalidation(
+	offsetMinutes: number,
+	now: Date,
+	rolloverGraceSeconds = DAILY_ROLLOVER_GRACE_SECONDS
+): Date {
 	const localMs = now.getTime() + offsetMinutes * 60_000;
 	const local = new Date(localMs);
 	const currentBoundaryUtcMs =
-		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate(), 0, 0, DAILY_ROLLOVER_GRACE_SECONDS, 0) -
+		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate(), 0, 0, rolloverGraceSeconds, 0) -
 		offsetMinutes * 60_000;
 
 	if (now.getTime() < currentBoundaryUtcMs) {
@@ -238,12 +252,16 @@ function getNextFixedOffsetInvalidation(offsetMinutes: number, now: Date): Date 
 	}
 
 	const nextBoundaryUtcMs =
-		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate() + 1, 0, 0, DAILY_ROLLOVER_GRACE_SECONDS, 0) -
+		Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate() + 1, 0, 0, rolloverGraceSeconds, 0) -
 		offsetMinutes * 60_000;
 	return new Date(nextBoundaryUtcMs);
 }
 
-function getWorkerLatestDates(config: PuzzleWindowConfig, now: Date) {
+function getWorkerLatestDates(
+	config: PuzzleWindowConfig,
+	now: Date,
+	rolloverGraceSeconds = DAILY_ROLLOVER_GRACE_SECONDS
+) {
 	const hour = config.boundaryHourUtc ?? 0;
 	const minute = config.boundaryMinuteUtc ?? 0;
 	const currentBoundary = Date.UTC(
@@ -252,7 +270,7 @@ function getWorkerLatestDates(config: PuzzleWindowConfig, now: Date) {
 		now.getUTCDate(),
 		hour,
 		minute,
-		DAILY_ROLLOVER_GRACE_SECONDS,
+		rolloverGraceSeconds,
 		0
 	);
 
@@ -277,7 +295,7 @@ function getWorkerLatestDates(config: PuzzleWindowConfig, now: Date) {
 					now.getUTCDate() + 1,
 					hour,
 					minute,
-					DAILY_ROLLOVER_GRACE_SECONDS,
+					rolloverGraceSeconds,
 					0
 				)
 			)
@@ -319,12 +337,13 @@ export function getPuzzleWindow(
 	const config = PUZZLE_WINDOW_CONFIG[game];
 	const now = options.now ?? new Date();
 	const payloadDate = options.payloadDate ?? null;
+	const rolloverGraceSeconds = config.rolloverGraceSeconds ?? DAILY_ROLLOVER_GRACE_SECONDS;
 
 	if (config.timezone === 'worker-latest') {
-		const latestDates = getWorkerLatestDates(config, now);
+		const latestDates = getWorkerLatestDates(config, now, rolloverGraceSeconds);
 		const effectivePuzzleDate = payloadDate ?? latestDates.effectivePuzzleDate;
 		const ttlSeconds = Math.max(
-			60,
+			1,
 			Math.floor((latestDates.nextInvalidationAt.getTime() - now.getTime()) / 1000)
 		);
 
@@ -340,9 +359,9 @@ export function getPuzzleWindow(
 	}
 
 	const offsetMinutes = OFFSET_MINUTES[config.timezone];
-	const effectivePuzzleDate = getDateKeyFromFixedOffset(offsetMinutes, now);
-	const nextInvalidationAt = getNextFixedOffsetInvalidation(offsetMinutes, now);
-	const ttlSeconds = Math.max(60, Math.floor((nextInvalidationAt.getTime() - now.getTime()) / 1000));
+	const effectivePuzzleDate = getDateKeyFromFixedOffset(offsetMinutes, now, rolloverGraceSeconds);
+	const nextInvalidationAt = getNextFixedOffsetInvalidation(offsetMinutes, now, rolloverGraceSeconds);
+	const ttlSeconds = Math.max(1, Math.floor((nextInvalidationAt.getTime() - now.getTime()) / 1000));
 
 	return {
 		group: config.group,

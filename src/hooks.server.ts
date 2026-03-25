@@ -32,6 +32,10 @@ const GAME_ROUTE_MAP = {
 	waffle: { today: '/waffle-answer-today', archive: '/waffle-archive' }
 } as const;
 
+const TODAY_CACHE_VERSION_BY_GAME: Partial<Record<PuzzleGame, string>> = {
+	nerdle: 'v3'
+};
+
 type SupportedArchiveGame = keyof typeof GAME_ROUTE_MAP;
 
 type CacheContext = {
@@ -138,10 +142,14 @@ function getHtmlCacheContext(url: URL): CacheContext | null {
 	const todayGame = TODAY_ROUTE_GAME_MAP[pathname];
 	if (todayGame) {
 		const window = getPuzzleWindow(todayGame);
+		const cacheVersion = TODAY_CACHE_VERSION_BY_GAME[todayGame];
+		const cacheKey = cacheVersion
+			? `html:${pathname}:today:${window.effectivePuzzleDate}:${cacheVersion}`
+			: `html:${pathname}:today:${window.effectivePuzzleDate}`;
 		return {
 			cacheControl: buildCacheControl(window.ttlSeconds),
-			lookupKeys: [`html:${pathname}:today:${window.effectivePuzzleDate}`],
-			storeKey: `html:${pathname}:today:${window.effectivePuzzleDate}`
+			lookupKeys: [cacheKey],
+			storeKey: cacheKey
 		};
 	}
 
@@ -153,6 +161,17 @@ function getHtmlCacheContext(url: URL): CacheContext | null {
 	return null;
 }
 
+function getCacheKeySuffix(storeKey: string, marker: string): string {
+	const markerIndex = storeKey.indexOf(marker);
+	if (markerIndex === -1) {
+		return '';
+	}
+
+	const afterMarker = storeKey.slice(markerIndex + marker.length);
+	const suffixIndex = afterMarker.indexOf(':');
+	return suffixIndex === -1 ? '' : afterMarker.slice(suffixIndex);
+}
+
 function getStoreKeyFromResponse(pathname: string, cacheContext: CacheContext, response: Response): string {
 	const actualPuzzleDate = response.headers.get('X-Puzzle-Date');
 	if (!actualPuzzleDate) {
@@ -160,11 +179,15 @@ function getStoreKeyFromResponse(pathname: string, cacheContext: CacheContext, r
 	}
 
 	if (TODAY_ROUTE_GAME_MAP[pathname]) {
-		return `html:${pathname}:today:${actualPuzzleDate}`;
+		const marker = `html:${pathname}:today:`;
+		const suffix = getCacheKeySuffix(cacheContext.storeKey, marker);
+		return `html:${pathname}:today:${actualPuzzleDate}${suffix}`;
 	}
 
 	if (ARCHIVE_ROUTE_GAME_MAP[pathname] && !cacheContext.storeKey.includes(':archive-date:')) {
-		return `html:${pathname}:archive:${actualPuzzleDate}`;
+		const marker = `html:${pathname}:archive:`;
+		const suffix = getCacheKeySuffix(cacheContext.storeKey, marker);
+		return `html:${pathname}:archive:${actualPuzzleDate}${suffix}`;
 	}
 
 	return cacheContext.storeKey;
@@ -278,7 +301,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (contentType.includes('text/html')) {
 		if (cacheContext) {
 			const shouldBypassEdgeCache = response.headers.get('X-Edge-Cache-Bypass') === '1';
-			const cacheControl = cacheContext.cacheControl;
+			const ttlOverrideHeader = response.headers.get('X-Edge-Cache-TTL');
+			const ttlOverrideSeconds =
+				ttlOverrideHeader !== null ? Number.parseInt(ttlOverrideHeader, 10) : Number.NaN;
+			const cacheControl =
+				Number.isInteger(ttlOverrideSeconds) && ttlOverrideSeconds >= 60
+					? buildCacheControl(ttlOverrideSeconds)
+					: cacheContext.cacheControl;
 			response.headers.set('Cache-Control', shouldBypassEdgeCache ? 'no-store' : cacheControl);
 			response.headers.set('X-Edge-Cache', 'MISS');
 

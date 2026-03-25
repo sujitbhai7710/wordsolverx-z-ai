@@ -12,6 +12,14 @@ export interface NerdleAnswerData {
 	answer: string | null;
 }
 
+function toPublicPuzzleNumber(puzzleIndex: number): number {
+	return puzzleIndex + 1;
+}
+
+function toPuzzleIndex(puzzleNumber: number): number {
+	return puzzleNumber - 1;
+}
+
 function parseDateKeyToUtcDay(dateKey: string): number | null {
 	if (!DATE_KEY_PATTERN.test(dateKey)) {
 		return null;
@@ -58,16 +66,16 @@ export function getNerdlePuzzleNumber(dateKey: string): number {
 		return Number.NaN;
 	}
 
-	return Math.floor((utcDay - NERDLE_START_DAY_UTC) / DAY_MS);
+	return toPublicPuzzleNumber(Math.floor((utcDay - NERDLE_START_DAY_UTC) / DAY_MS));
 }
 
 export function getNerdleDateKeyFromPuzzleNumber(puzzleNumber: number): string {
-	const utcDay = NERDLE_START_DAY_UTC + puzzleNumber * DAY_MS;
+	const utcDay = NERDLE_START_DAY_UTC + toPuzzleIndex(puzzleNumber) * DAY_MS;
 	return new Date(utcDay).toISOString().slice(0, 10);
 }
 
 export function getNerdleFilename(puzzleNumber: number): string {
-	return CryptoJS.MD5(String(puzzleNumber)).toString();
+	return CryptoJS.MD5(String(toPuzzleIndex(puzzleNumber))).toString();
 }
 
 export function decodeNerdleAnswer(encoded: string): string {
@@ -89,7 +97,7 @@ export function decodeNerdleAnswer(encoded: string): string {
 }
 
 export async function fetchNerdleAnswerByPuzzleNumber(puzzleNumber: number): Promise<string | null> {
-	if (!Number.isInteger(puzzleNumber) || puzzleNumber < 0) {
+	if (!Number.isInteger(puzzleNumber) || puzzleNumber < 1) {
 		return null;
 	}
 
@@ -119,7 +127,7 @@ export async function getNerdleAnswerForDateKey(dateKey: string): Promise<Nerdle
 	}
 
 	const puzzleNumber = getNerdlePuzzleNumber(dateKey);
-	if (!Number.isFinite(puzzleNumber) || puzzleNumber < 0) {
+	if (!Number.isFinite(puzzleNumber) || puzzleNumber < 1) {
 		return null;
 	}
 
@@ -148,7 +156,7 @@ export async function getNerdleAnswerRange(days: number, startDateKey?: string):
 	const baseDateKey = startDateKey ?? getNerdleTodayDateKey();
 	const basePuzzleNumber = getNerdlePuzzleNumber(baseDateKey);
 
-	if (!Number.isFinite(basePuzzleNumber) || basePuzzleNumber < 0) {
+	if (!Number.isFinite(basePuzzleNumber) || basePuzzleNumber < 1) {
 		return [];
 	}
 
