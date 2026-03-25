@@ -10,7 +10,7 @@
     generateWebPageSchema
   } from '$lib/seo';
 
-  const pageTitle = 'Light Out Solver - Free Online Lights Out Puzzle Solver | WordSolverX';
+  const pageTitle = 'Light Out Solver - Get detailed solutions';
   const pageDescription =
     'Use this Light Out solver online to build any 2x2 to 5x5 puzzle, switch between linked and edit modes, and generate the exact optimal solve path in your browser.';
   const pageUrl = 'https://wordsolver.tech/light-out-solver';

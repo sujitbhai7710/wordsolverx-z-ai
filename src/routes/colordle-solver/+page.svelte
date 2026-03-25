@@ -136,7 +136,7 @@
     '@graph': [
       {
         '@type': 'WebPage',
-        name: 'Colordle Solver - Daily Color Puzzle Helper | WordSolverX',
+        name: 'Ai Colordle Solver - Solve colordle within 2 attempts',
         description: 'Interactive Colordle solver with similarity percentage filtering and color database matching.',
         url: 'https://wordsolver.tech/colordle-solver'
       },

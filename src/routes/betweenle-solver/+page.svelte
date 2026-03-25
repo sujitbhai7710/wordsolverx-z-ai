@@ -10,9 +10,9 @@
     generateWebPageSchema,
   } from '$lib/seo';
 
-  const pageTitle = 'Betweenle Solver - Free Online Betweenle Helper | WordSolverX';
+  const pageTitle = 'Ai Betweenle Solver - Solve Betweenle within seconds';
   const pageDescription =
-    'Use this free Betweenle solver to enter your top and bottom bounds, add distance percentages, and get the best next word to guess. Built for fast Betweenle solving with real dictionary logic.';
+    'Use our Ai Betweenle solver to enter your top and bottom bounds, add distance percentages, and get the best next word to guess. Built for fast Betweenle solving with real dictionary logic.';
   const pageUrl = 'https://wordsolver.tech/betweenle-solver';
 
   const faqs = [
