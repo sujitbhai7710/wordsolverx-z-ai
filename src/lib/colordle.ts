@@ -15,11 +15,17 @@ export interface RGB {
     b: number;
 }
 
+let targetColorsCache: ColorData[] | null = null;
+
 export const getAllColors = (): ColorData[] => {
     return colornames;
 };
 
 export const getTargetColors = (): ColorData[] => {
+    if (targetColorsCache) {
+        return targetColorsCache;
+    }
+
     // We must preserve the order of targetColorNames.colors to match the daily sequence.
     // Create a lookup map for performance (O(1) access instead of O(N) scan per target)
     // Map key: normalized name -> ColorData object
@@ -51,7 +57,8 @@ export const getTargetColors = (): ColorData[] => {
         }
     }
 
-    return orderedTargets;
+    targetColorsCache = orderedTargets;
+    return targetColorsCache;
 };
 
 export const getUniqueTargetColors = (): ColorData[] => {
