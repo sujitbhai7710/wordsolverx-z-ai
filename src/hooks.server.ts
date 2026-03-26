@@ -93,10 +93,10 @@ function getArchiveCacheContext(url: URL, pathname: string, game: PuzzleGame): C
 	if (selectedDate) {
 		const immutableKey = `html:${pathname}:archive-date:${selectedDate}`;
 		return {
-			cacheControl: buildCacheControl(2592000),
+			cacheControl: buildCacheControl(2592000, 3600),
 			lookupKeys: [immutableKey],
 			storeKey: immutableKey,
-			browserMaxAge: 0
+			browserMaxAge: 3600
 		};
 	}
 
@@ -107,10 +107,10 @@ function getArchiveCacheContext(url: URL, pathname: string, game: PuzzleGame): C
 	}
 
 	return {
-		cacheControl: buildCacheControl(window.ttlSeconds),
+		cacheControl: buildCacheControl(window.ttlSeconds, 3600),
 		lookupKeys,
 		storeKey: lookupKeys[0],
-		browserMaxAge: 0
+		browserMaxAge: 3600
 	};
 }
 
@@ -121,10 +121,10 @@ function getHtmlCacheContext(url: URL): CacheContext | null {
 		const window = getPuzzleWindow('wordle');
 		const key = `html:home:${window.effectivePuzzleDate}`;
 		return {
-			cacheControl: buildCacheControl(window.ttlSeconds),
+			cacheControl: buildCacheControl(window.ttlSeconds, 86400),
 			lookupKeys: [key],
 			storeKey: key,
-			browserMaxAge: 3600
+			browserMaxAge: 86400
 		};
 	}
 
@@ -337,7 +337,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				}
 			}
 		} else {
-			response.headers.set('Cache-Control', buildCacheControl(900));
+			response.headers.set('Cache-Control', buildCacheControl(900, 86400));
 		}
 	}
 
