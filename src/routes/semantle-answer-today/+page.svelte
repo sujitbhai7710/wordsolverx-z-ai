@@ -1,7 +1,13 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import SemantleClues from '$lib/components/SemantleClues.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import FiChevronDown from '$lib/components/icons/FiChevronDown.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   let { data } = $props();
 </script>
@@ -31,7 +37,7 @@
           Semantle Hints and Answer for Today ({data.formattedDate})
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
-          {data.formattedDate} • Puzzle <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400">#{data.puzzleNumber}</span>
+          {data.formattedDate} â€¢ Puzzle <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400">#{data.puzzleNumber}</span>
         </p>
       </header>
 
@@ -88,13 +94,13 @@
             What is Semantle?
           </h2>
           <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            Semantle is a word game with a twist — it's not about spelling, it's about meaning. Instead of guessing letters, you're trying to find a secret word based on how semantically similar your guesses are. The game uses word embeddings, which is a fancy way of saying it understands how words relate to each other conceptually.
+            Semantle is a word game with a twist â€” it's not about spelling, it's about meaning. Instead of guessing letters, you're trying to find a secret word based on how semantically similar your guesses are. The game uses word embeddings, which is a fancy way of saying it understands how words relate to each other conceptually.
           </p>
           <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            Here's how it works: you type a word, any word, and the game gives you a similarity score. A score of 100 means you've found the exact word. Lower scores mean you're getting warmer or colder, but not in a letter-by-letter way — in a meaning-by-meaning way. It's like playing a game of "hot or cold" with concepts instead of hidden objects.
+            Here's how it works: you type a word, any word, and the game gives you a similarity score. A score of 100 means you've found the exact word. Lower scores mean you're getting warmer or colder, but not in a letter-by-letter way â€” in a meaning-by-meaning way. It's like playing a game of "hot or cold" with concepts instead of hidden objects.
           </p>
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-            What makes Semantle unique is that there's no limit on guesses. You can try hundreds of words if you need to. The challenge isn't about running out of tries — it's about figuring out what direction to explore. If "dog" scores 15 and "cat" scores 20, you know you're heading toward animals. But if "philosophy" scores 35, suddenly you're in a completely different territory.
+            What makes Semantle unique is that there's no limit on guesses. You can try hundreds of words if you need to. The challenge isn't about running out of tries â€” it's about figuring out what direction to explore. If "dog" scores 15 and "cat" scores 20, you know you're heading toward animals. But if "philosophy" scores 35, suddenly you're in a completely different territory.
           </p>
         </section>
 
@@ -109,7 +115,7 @@
             <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Similarity Scores</h3>
               <p class="text-gray-600 dark:text-gray-300">
-                Every guess gets a score from -100 to 100. A score of 100 means you've found the exact word. Scores above 70 are very close — you're in the right conceptual neighborhood. Scores between 30-70 suggest moderate similarity. Below 30, and you're pretty far off.
+                Every guess gets a score from -100 to 100. A score of 100 means you've found the exact word. Scores above 70 are very close â€” you're in the right conceptual neighborhood. Scores between 30-70 suggest moderate similarity. Below 30, and you're pretty far off.
               </p>
             </div>
             <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
@@ -145,7 +151,7 @@
               <div class="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-purple-100 dark:border-purple-800/30">
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Follow the Trail</h3>
                 <p class="text-gray-600 dark:text-gray-300">
-                  When a word scores well, explore related concepts. If "music" scores 40, try "song," "instrument," "melody," "rhythm" — follow the semantic path.
+                  When a word scores well, explore related concepts. If "music" scores 40, try "song," "instrument," "melody," "rhythm" â€” follow the semantic path.
                 </p>
               </div>
               <div class="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-purple-100 dark:border-purple-800/30">
@@ -182,9 +188,18 @@
         </section>
       </article>
 
+      <div class="mb-12">
+        <AuthorCard
+          name={PRESTON_HAYES_AUTHOR_NAME}
+          image={PRESTON_HAYES_AUTHOR_IMAGE}
+          description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+        />
+      </div>
+
       <div class="mt-16">
         <InternalLinkSection currentGame="Semantle" />
       </div>
     </div>
   </div>
 {/if}
+

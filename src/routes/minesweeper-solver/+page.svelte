@@ -11,7 +11,7 @@
     generateWebPageSchema,
   } from '$lib/seo';
 
-  const pageTitle = 'Minesweeper Solver - Free Online Safe Move Finder | WordSolverX';
+  const pageTitle = 'Minesweeper Solver - Free Online Safe Move Finder';
   const pageDescription =
     'Use this free Minesweeper solver to find safe moves, mark likely mines, and analyze custom boards online. Built for fast puzzle solving with a visual board editor and smart probability hints.';
   const pageUrl = 'https://wordsolver.tech/minesweeper-solver';

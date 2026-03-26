@@ -1,6 +1,12 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import WordleDisplayWrapper from '$lib/components/WordleDisplayWrapper.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
   import type { WordleAnswer } from '$lib/api';
 
   let { data } = $props();
@@ -84,9 +90,19 @@
       </section>
     {/if}
 
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+
     <!-- Internal Linking -->
     <div class="mt-16">
       <InternalLinkSection currentGame="Wordle" />
     </div>
   </div>
 </main>
+
+

@@ -21,7 +21,7 @@
       { '@type': 'Question', name: 'When does Narutodle reset?', acceptedAnswer: { '@type': 'Answer', text: 'Narutodle resets daily at midnight UTC.' } },
       { '@type': 'Question', name: 'What is Narutodle?', acceptedAnswer: { '@type': 'Answer', text: 'Narutodle is a daily Naruto-themed guessing game with modes for quotes, eye techniques, jutsu, and classical character trivia.' } },
     ]},
-    { '@type': 'Article', headline: 'Narutodle Answer Today', description: 'Get the confirmed Narutodle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/narutodle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
+    { '@type': 'Article', headline: 'Narutodle Answer Today', description: 'Get the confirmed Narutodle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/narutodle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
   ]};
 </script>
 

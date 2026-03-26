@@ -6,13 +6,6 @@
     type SearchleGuess,
     type SearchleSuggestion
   } from '$lib/searchle/searchleSolver';
-  import {
-    generateFAQSchema,
-    generateHowToSchema,
-    generateWebApplicationSchema,
-    generateWebPageSchema,
-    generateSoftwareApplicationSchema
-  } from '$lib/seo';
   import FAQSection from '$lib/components/FAQSection.svelte';
 
   type SearchleRuntime = Pick<
@@ -294,32 +287,6 @@
     }
   ];
 
-  const faqSchema = generateFAQSchema(faqs);
-  const howToSchema = generateHowToSchema('How to use Searchle Solver', [
-    { name: 'Enter the prompt', text: 'Type the Searchle prompt with ... for the missing word.' },
-    { name: 'Solve', text: 'Click Solve to get the best guesses.' },
-    { name: 'Match feedback', text: 'Click letters to match Searchle feedback colors.' },
-    { name: 'Submit', text: 'Submit your guess to refine the next suggestions.' }
-  ]);
-  const webPageSchema = generateWebPageSchema(
-    'Searchle Solver',
-    'Solve the Searchle autocomplete puzzle with entropy-ranked guesses and daily prompts.',
-    'https://wordsolver.tech/searchle-solver'
-  );
-  const webAppSchema = generateWebApplicationSchema(
-    'Searchle Solver',
-    'Autocomplete puzzle solver with entropy-ranked guesses, daily prompts, and feedback tracking.'
-  );
-  const softwareAppSchema = {
-    ...generateSoftwareApplicationSchema('Searchle Solver', 'GameApplication', 'Any'),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '5',
-      bestRating: '5',
-      worstRating: '1',
-      ratingCount: '894'
-    }
-  };
 </script>
 
 <svelte:head>
@@ -342,11 +309,6 @@
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://wordsolver.tech/searchle-solver" />
-  {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
-  {@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
-  {@html `<script type="application/ld+json">${JSON.stringify(softwareAppSchema)}</script>`}
-  {@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
-  {@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-slate-50 dark:bg-slate-950">

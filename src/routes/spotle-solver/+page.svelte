@@ -78,7 +78,7 @@
 </script>
 
 <svelte:head>
-	<title>Spotle Solver - Spotify Artist Guess Helper | WordSolverX</title>
+	<title>Spotle Solver - Spotify Artist Guess Helper</title>
 	<meta
 		name="description"
 		content="Solve Spotle faster with our Spotify artist solver. Match rank, debut year, genre, country, and more using precise feedback filters."

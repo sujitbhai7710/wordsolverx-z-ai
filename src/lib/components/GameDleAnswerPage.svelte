@@ -1,5 +1,12 @@
 <script lang="ts">
   import { type Snippet } from 'svelte';
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
+  import { generatePersonAuthorSchema } from '$lib/seo';
 
   interface ModeConfig {
     name: string;
@@ -178,10 +185,11 @@
     headline: pageTitle,
     description: pageDescription,
     mainEntityOfPage: canonicalUrl,
-    author: {
-      '@type': 'Organization',
-      name: 'WordSolverX'
-    },
+    author: generatePersonAuthorSchema(
+      'Preston Hayes',
+      'https://wordsolver.tech/about#preston-hayes',
+      'https://wordsolver.tech/auther-wordsolverx.webp'
+    ),
     publisher: {
       '@type': 'Organization',
       name: 'WordSolverX'
@@ -320,6 +328,14 @@
 
       <div class="mb-12 rounded-3xl bg-white p-8 shadow-sm md:p-12">
         {@render seoContent()}
+      </div>
+
+      <div class="mb-12">
+        <AuthorCard
+          name={PRESTON_HAYES_AUTHOR_NAME}
+          image={PRESTON_HAYES_AUTHOR_IMAGE}
+          description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+        />
       </div>
     {/if}
   </div>

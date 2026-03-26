@@ -3,13 +3,6 @@
 	import { browser } from '$app/environment';
 	import FAQSection from '$lib/components/FAQSection.svelte';
 	import type { Artist, AttributeFeedback, FeedbackType, Guess } from '$lib/soundmap/types';
-	import {
-		generateFAQSchema,
-		generateHowToSchema,
-		generateWebApplicationSchema,
-		generateWebPageSchema,
-		generateSoftwareApplicationSchema
-	} from '$lib/seo';
 
 	type SoundmapAlgorithm = Pick<
 		typeof import('$lib/soundmap/algorithm'),
@@ -264,43 +257,6 @@
 		}
 	];
 
-	const howToSchema = generateHowToSchema('How to use the Soundmap Solver', [
-		{ name: 'Search an artist', text: 'Find and select your guessed artist from the search list.' },
-		{
-			name: 'Match the feedback',
-			text: 'Tap each feedback button to match the colors/arrows shown in Soundmap.'
-		},
-		{
-			name: 'Add the guess',
-			text: 'Submit the guess to instantly filter the remaining candidates.'
-		},
-		{
-			name: 'Use the best guess',
-			text: 'Take the next recommendation to solve in fewer attempts.'
-		}
-	]);
-
-	const faqSchema = generateFAQSchema(faqs);
-	const webAppSchema = generateWebApplicationSchema(
-		'Soundmap Solver',
-		'Solve the Soundmap Artist Guesser with smart filtering, best-guess suggestions, and fast feedback matching.'
-	);
-	const webPageSchema = generateWebPageSchema(
-		'Soundmap Solver',
-		'Free Soundmap Artist Guesser solver with advanced feedback filters and best-guess recommendations.',
-		'https://wordsolver.tech/soundmap-solver'
-	);
-
-	const softwareAppSchema = {
-		...generateSoftwareApplicationSchema('Soundmap Solver', 'GameApplication', 'Any'),
-		aggregateRating: {
-			'@type': 'AggregateRating',
-			ratingValue: '5',
-			bestRating: '5',
-			worstRating: '1',
-			ratingCount: '1387'
-		}
-	};
 </script>
 
 <svelte:head>
@@ -331,11 +287,6 @@
 		content="Free Soundmap solver with best-guess recommendations and instant candidate filtering."
 	/>
 	<link rel="canonical" href="https://wordsolver.tech/soundmap-solver" />
-	{@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(softwareAppSchema)}</script>`}
 </svelte:head>
 
 <div class="soundmap-solver" class:dark={darkMode}>

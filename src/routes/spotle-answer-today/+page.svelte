@@ -1,6 +1,12 @@
-<script lang="ts">
+﻿<script lang="ts">
+	import AuthorCard from '$lib/components/AuthorCard.svelte';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import FAQSection from '$lib/components/FAQSection.svelte';
+	import {
+		PRESTON_HAYES_AUTHOR_DESCRIPTION,
+		PRESTON_HAYES_AUTHOR_IMAGE,
+		PRESTON_HAYES_AUTHOR_NAME
+	} from '$lib/authors';
 	import type { SpotleArtist, SpotleAnswer } from '$lib/spotle';
 
 	let { data }: {
@@ -140,5 +146,12 @@
 		</section>
 
 		<FAQSection title="Spotle Answers FAQ (Last 30 Days)" faqs={faqItems} />
-	</div>
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>	</div>
 </div>
+

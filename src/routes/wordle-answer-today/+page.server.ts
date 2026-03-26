@@ -1,7 +1,6 @@
 import { format } from 'date-fns';
 import { getJSTToday, getWordleNumber, formatDate } from '$lib/utils';
 import type { WordleAnswer } from '$lib/api';
-import { getAuthorForGame, getAuthorProfileUrl } from '$lib/authors';
 import { generatePersonAuthorSchema } from '$lib/seo';
 import type { PageServerLoad } from './$types';
 
@@ -62,7 +61,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         headline: `Wordle Hints and Answer for Today (${formattedDate})`,
         datePublished: new Date(wordleData?.date || today).toISOString(),
         dateModified: new Date(wordleData?.date || today).toISOString(),
-        author: generatePersonAuthorSchema(getAuthorForGame('Wordle'), getAuthorProfileUrl(getAuthorForGame('Wordle'))),
+        author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolver.tech/about#preston-hayes', 'https://wordsolver.tech/auther-wordsolverx.webp'),
         publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } },
         description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/wordle-answer-today' },

@@ -9,10 +9,4 @@
     "directory": "build/cloudflare-worker",
     "binding": "ASSETS"
   },
-  "services": [
-    {
-      "binding": "NERDLE_ANSWERS",
-      "service": "nerdle-answers"
-    }
-  ]
 }

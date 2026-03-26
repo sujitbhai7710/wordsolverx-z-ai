@@ -10,7 +10,7 @@
     generateWebPageSchema
   } from '$lib/seo';
 
-  const pageTitle = 'Squaredle Solver - Daily Board Helper & Path Finder | WordSolverX';
+  const pageTitle = 'Ai Squaredle Solver - Solve board in seconds';
   const pageDescription =
     'Use the Squaredle solver to load today’s board, paste any custom grid, and find every valid word path with the same client-side solving logic as the original project.';
   const pageUrl = 'https://wordsolver.tech/squaredle-solver';

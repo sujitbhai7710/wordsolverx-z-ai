@@ -38,7 +38,7 @@ export const load: PageServerLoad = async () => {
             headline: pageTitle,
             datePublished: new Date(date).toISOString(),
             dateModified: new Date(date).toISOString(),
-            author: { '@type': 'Organization', name: 'WordSolverX' },
+            author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' },
             publisher: { '@type': 'Organization', name: 'WordSolverX' },
             description: pageDescription,
             image: [featuredImage],

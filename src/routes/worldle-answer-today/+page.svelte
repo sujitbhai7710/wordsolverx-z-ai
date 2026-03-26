@@ -1,7 +1,13 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
   import WorldleCountryCard from '$lib/components/worldle/WorldleCountryCard.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   let { data } = $props();
 </script>
@@ -124,5 +130,15 @@
         </p>
       </section>
     </article>
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
   </div>
 </main>
+
+

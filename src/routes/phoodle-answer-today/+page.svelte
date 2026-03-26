@@ -1,5 +1,11 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import PhoodleAnswerCard from '$lib/components/PhoodleAnswerCard.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   let { data } = $props();
   let pageTitle = $derived(data.meta?.title ?? "Phoodle Answer Today | WordSolverX");
@@ -42,7 +48,7 @@
       <h1 class="text-3xl font-bold mb-4 text-gray-900">Phoodle Answer Not Available</h1>
       <p class="text-gray-600">Unable to load today's puzzle. Please try again later.</p>
       <a href="/today" class="mt-6 inline-block px-6 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-all font-medium">
-        ← Back to Today's Hub
+        â† Back to Today's Hub
       </a>
     </div>
   </div>
@@ -52,7 +58,7 @@
       <!-- Header -->
       <header class="text-center mb-12">
         <div class="inline-flex items-center justify-center p-4 bg-orange-100 rounded-full text-orange-600 mb-6">
-          <span class="text-4xl">🍽️</span>
+          <span class="text-4xl">ðŸ½ï¸</span>
         </div>
         <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
           Phoodle Hints and Answer for Today ({data.formattedDate})
@@ -88,7 +94,7 @@
         </p>
 
         <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100 mb-8 border-l-4 border-l-orange-500">
-          <h3 class="text-lg font-bold text-orange-700 mb-2 flex items-center gap-2">💡 Daily Hint</h3>
+          <h3 class="text-lg font-bold text-orange-700 mb-2 flex items-center gap-2">ðŸ’¡ Daily Hint</h3>
           <p class="text-gray-700">
             The word "<strong class="text-orange-800">{data.word}</strong>" has {data.word.length} letters, starts with "{data.word[0].toUpperCase()}",
             and ends with "{data.word[data.word.length - 1].toUpperCase()}". Next time, think about everything related to cooking and dining!
@@ -237,6 +243,15 @@
           </div>
         </section>
       </article>
+
+      <div class="mb-12">
+        <AuthorCard
+          name={PRESTON_HAYES_AUTHOR_NAME}
+          image={PRESTON_HAYES_AUTHOR_IMAGE}
+          description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+        />
+      </div>
     </div>
   </div>
 {/if}
+

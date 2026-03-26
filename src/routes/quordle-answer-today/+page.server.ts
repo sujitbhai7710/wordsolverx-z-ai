@@ -1,6 +1,5 @@
 import { getJSTToday } from '$lib/utils';
 import { getQuordleToday, getQuordleDataForDate } from '$lib/quordle';
-import { getAuthorForGame, getAuthorProfileUrl } from '$lib/authors';
 import { generatePersonAuthorSchema } from '$lib/seo';
 import { format, subDays } from 'date-fns';
 import type { PageServerLoad } from './$types';
@@ -35,7 +34,7 @@ export const load: PageServerLoad = async () => {
                 headline: pageTitle,
                 datePublished: new Date(today).toISOString(),
                 dateModified: new Date(today).toISOString(),
-                author: generatePersonAuthorSchema(getAuthorForGame('Quordle'), getAuthorProfileUrl(getAuthorForGame('Quordle'))),
+                author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolver.tech/about#preston-hayes', 'https://wordsolver.tech/auther-wordsolverx.webp'),
                 publisher: { '@type': 'Organization', name: 'WordSolverX' },
                 description: pageDescription,
                 mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/quordle-answer-today' },

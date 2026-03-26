@@ -118,6 +118,7 @@ export interface SchemaPerson {
     '@type': 'Person';
     name: string;
     url?: string;
+    image?: string;
 }
 
 // Generate Organization Schema
@@ -296,13 +297,15 @@ export function generateSearchActionSchema(
 // Generate Person Schema
 export function generatePersonAuthorSchema(
     name: string,
-    url?: string
+    url?: string,
+    image?: string
 ): SchemaPerson {
     return {
         '@context': 'https://schema.org',
         '@type': 'Person',
         name,
         ...(url && { url }),
+        ...(image && { image }),
     };
 }
 

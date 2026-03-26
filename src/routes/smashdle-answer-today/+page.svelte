@@ -27,7 +27,7 @@
       { '@type': 'Question', name: 'What is Smashdle?', acceptedAnswer: { '@type': 'Answer', text: 'Smashdle is a daily trivia game based on Super Smash Bros Ultimate characters.' } },
       { '@type': 'Question', name: 'What are the Smashdle modes?', acceptedAnswer: { '@type': 'Answer', text: 'Classic, Emoji, Silhouette, Final Smash, and Kirby Copy.' } },
     ]},
-    { '@type': 'Article', headline: 'Smashdle Answer Today', description: 'Get the confirmed Smashdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/smashdle-answer-today' }, author: { '@type': 'Organization', name: 'WordSolverX' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
+    { '@type': 'Article', headline: 'Smashdle Answer Today', description: 'Get the confirmed Smashdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/smashdle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
   ]};
 </script>
 

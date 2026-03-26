@@ -1,8 +1,14 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
   import { formatBetweenleDate } from '$lib/betweenle/logic';
   import type { BetweenleDailyAnswer } from '$lib/betweenle/types';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
   import {
     generateBreadcrumbSchema,
     generateFAQSchema,
@@ -247,4 +253,15 @@
   <section class="pb-12">
     <FAQSection {faqs} title="Betweenle Answer FAQs" />
   </section>
+
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
 </main>
+
+

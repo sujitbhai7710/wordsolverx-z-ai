@@ -52,6 +52,18 @@
     { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'S' },
   ];
 
+  let siteSearch = $state('');
+
+  const matchesSearch = (item: { name: string; description: string; href: string }) => {
+    const query = siteSearch.trim().toLowerCase();
+    if (!query) return true;
+
+    return [item.name, item.description, item.href].some((value) => value.toLowerCase().includes(query));
+  };
+
+  const filteredAnswerTodayGames = $derived.by(() => answerTodayGames.filter(matchesSearch));
+  const filteredSolverTools = $derived.by(() => solverTools.filter(matchesSearch));
+
   const jsonLd = JSON.stringify([
     { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolver.tech' },
     { '@context': 'https://schema.org', '@type': 'WebPage', name: 'WordSolverX Homepage', description: 'Daily puzzle answers, solver tools, and Wordle resources for popular word and trivia games.', url: 'https://wordsolver.tech' },
@@ -114,6 +126,21 @@
         </a>
       </div>
 
+      <form class="mt-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/10 shadow-2xl shadow-black/20 backdrop-blur-sm" onsubmit={(event) => event.preventDefault()}>
+        <input
+          bind:value={siteSearch}
+          type="search"
+          placeholder="Search the whole website..."
+          class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-white placeholder:text-gray-400 outline-none"
+        />
+        <button
+          type="submit"
+          class="border-l border-white/10 bg-green-500 px-6 py-4 text-base font-semibold text-white transition hover:bg-green-400"
+        >
+          Search
+        </button>
+      </form>
+
       <div class="mt-12 flex flex-wrap justify-center gap-8 text-gray-500">
         {#each ['100% Free', '15+ Games', 'Verified Answers'] as badge}
           <div class="flex items-center gap-2">
@@ -136,10 +163,13 @@
       <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Get the latest answers for all your favorite daily word puzzles - updated every midnight.</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-      {#each answerTodayGames as game}
+      {#each filteredAnswerTodayGames as game}
         <GameCard name={game.name} href={game.href} description={game.description} color={game.color} icon={game.icon} isPopular={game.isPopular} actionText="View Answer" />
       {/each}
     </div>
+    {#if siteSearch.trim() && filteredAnswerTodayGames.length === 0}
+      <p class="mt-6 text-center text-gray-500 dark:text-gray-400">No answer pages matched your search.</p>
+    {/if}
   </section>
 
   <!-- Solver Tools Section -->
@@ -154,10 +184,13 @@
         <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Stuck on a puzzle? Use our solvers to narrow down possibilities.</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {#each solverTools as tool}
+        {#each filteredSolverTools as tool}
           <GameCard name={tool.name} href={tool.href} description={tool.description} color={tool.color} icon={tool.icon} isPopular={tool.isPopular} actionText="Open Tool" />
         {/each}
       </div>
+      {#if siteSearch.trim() && filteredSolverTools.length === 0}
+        <p class="mt-6 text-center text-gray-500 dark:text-gray-400">No solver tools matched your search.</p>
+      {/if}
     </div>
   </section>
 

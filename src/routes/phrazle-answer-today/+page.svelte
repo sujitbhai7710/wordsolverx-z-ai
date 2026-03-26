@@ -1,8 +1,14 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
   import { TOTAL_PHRASES, getAnswerForDate } from '$lib/phrazle/phrases';
   import { generateFAQSchema, generateHowToSchema, generateWebPageSchema } from '$lib/seo';
   import { getISTToday } from '$lib/utils';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   interface PhrazleAnswer {
     phrase: string;
@@ -89,7 +95,7 @@
 
   const faqSchema = generateFAQSchema(faqs);
   const howToSchema = generateHowToSchema('How to use the Phrazle answer page', [
-    { name: 'Check both puzzles', text: 'Review the morning and afternoon answer cards for today’s date.' },
+    { name: 'Check both puzzles', text: 'Review the morning and afternoon answer cards for todayâ€™s date.' },
     { name: 'Reveal or copy', text: 'Use the buttons to hide, reveal, or copy either phrase.' },
     { name: 'Open the archive', text: 'Use the dedicated archive page when you need an older Phrazle answer pair.' }
   ]);
@@ -216,7 +222,18 @@
         </a>
       </div>
     </div>
-  </main>
+
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+</main>
 
   <FAQSection {faqs} />
 </div>
+
+

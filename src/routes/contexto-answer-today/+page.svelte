@@ -1,4 +1,5 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
   import {
     formatContextoDate,
@@ -10,6 +11,11 @@
     generateHowToSchema,
     generateWebPageSchema
   } from '$lib/seo';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   interface ContextoAnswer {
     success: boolean;
@@ -205,5 +211,16 @@
     </section>
 
     <FAQSection title="Contexto Answer FAQ" {faqs} class="pb-0" />
-  </main>
+
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+</main>
 </div>
+
+

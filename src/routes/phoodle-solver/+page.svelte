@@ -10,7 +10,7 @@
     generateWebPageSchema
   } from '$lib/seo';
 
-  const pageTitle = 'Phoodle Solver - Free Online Food Word Helper | WordSolverX';
+  const pageTitle = 'Phoodle Solver - Solver within 3 attempts';
   const pageDescription =
     'Use the Phoodle solver to enter your guesses, match the feedback colors, and get the best next food-word suggestions with the original WASM solver logic.';
   const pageUrl = 'https://wordsolver.tech/phoodle-solver';

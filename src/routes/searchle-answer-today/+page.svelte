@@ -1,9 +1,16 @@
-<script lang="ts">
+﻿<script lang="ts">
   import FAQSection from '$lib/components/FAQSection.svelte';
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import type { SearchleDailyPuzzle } from '$lib/searchle/daily';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
   import {
     generateFAQSchema,
     generateHowToSchema,
+    generatePersonAuthorSchema,
     generateWebPageSchema
   } from '$lib/seo';
 
@@ -69,17 +76,22 @@
 
   const faqSchema = generateFAQSchema(faqs);
   const howToSchema = generateHowToSchema('How to use the Searchle answer page', [
-    { name: 'Read the prompt', text: 'Check today’s Searchle prompt before revealing the answer.' },
+    { name: 'Read the prompt', text: 'Check todayâ€™s Searchle prompt before revealing the answer.' },
     { name: 'Reveal or copy the answer', text: 'Use the answer card tools to confirm the solution quickly.' },
     { name: 'Open the archive', text: 'Use the dedicated archive page when you need an older Searchle answer.' }
   ]);
-  const webPageSchema = $derived(
-    generateWebPageSchema(
+  const webPageSchema = $derived({
+    ...generateWebPageSchema(
       pageTitle,
       pageDescription,
       'https://wordsolver.tech/searchle-answer-today'
+    ),
+    author: generatePersonAuthorSchema(
+      'Preston Hayes',
+      'https://wordsolver.tech/about#preston-hayes',
+      'https://wordsolver.tech/auther-wordsolverx.webp'
     )
-  );
+  });
 </script>
 
 <svelte:head>
@@ -171,7 +183,18 @@
         </a>
       </div>
     </div>
-  </main>
+
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+</main>
 
   <FAQSection {faqs} />
 </div>
+
+

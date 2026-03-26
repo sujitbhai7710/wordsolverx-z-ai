@@ -43,7 +43,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     const pageTitle = `Waffle Hints and Answer for Today (${formattedDate})`;
     const pageDescription = `Get Waffle hints and the confirmed Waffle answer for today, ${formattedDate}. View the solved grid, complete word list, and definitions for puzzle #${number}.`;
     const pageKeywords = `waffle answer today, waffle answer, waffle hint, waffle hint today, waffle answer for ${formattedDate}`;
-    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: pageTitle, description: pageDescription, datePublished: new Date(today).toISOString(), author: { '@type': 'Organization', name: 'WordSolverX' } });
+    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: pageTitle, description: pageDescription, datePublished: new Date(today).toISOString(), author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' } });
 
     return {
         error: false,

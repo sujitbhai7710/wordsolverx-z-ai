@@ -1,8 +1,14 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import WaffleAnswerCard from '$lib/components/WaffleAnswerCard.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import FiArrowRight from '$lib/components/icons/FiArrowRight.svelte';
   import FiHash from '$lib/components/icons/FiHash.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   let { data } = $props();
 </script>
@@ -115,10 +121,10 @@
         What is Waffle?
       </h2>
       <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-        Waffle is a word puzzle that gives you all the letters upfront — but they're scrambled. Your job is to swap letters around until you've formed six correct words: three across and three down, crossword-style. The grid is shaped like a waffle, which is where the game gets its name.
+        Waffle is a word puzzle that gives you all the letters upfront â€” but they're scrambled. Your job is to swap letters around until you've formed six correct words: three across and three down, crossword-style. The grid is shaped like a waffle, which is where the game gets its name.
       </p>
       <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-        Unlike Wordle where you're guessing from scratch, Waffle gives you everything you need to solve the puzzle right from the start. The challenge isn't figuring out what letters to use — it's figuring out where each letter belongs. Some letters are already in the correct position (shown in green), while others need to be swapped.
+        Unlike Wordle where you're guessing from scratch, Waffle gives you everything you need to solve the puzzle right from the start. The challenge isn't figuring out what letters to use â€” it's figuring out where each letter belongs. Some letters are already in the correct position (shown in green), while others need to be swapped.
       </p>
       <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
         The game tracks how many swaps you make, and the goal is to solve it in 15 moves or fewer. Every puzzle is solvable within that limit, but finding the optimal path requires careful thinking about which letters go where.
@@ -136,7 +142,7 @@
         <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
           <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 1: Analyze the Grid</h3>
           <p class="text-gray-600 dark:text-gray-300">
-            Look at the starting grid. Green letters are already correct — don't move these. Yellow letters are in the word but wrong position. Gray letters don't belong in that word at all.
+            Look at the starting grid. Green letters are already correct â€” don't move these. Yellow letters are in the word but wrong position. Gray letters don't belong in that word at all.
           </p>
         </div>
         <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
@@ -213,5 +219,16 @@
   </article>
 
   <InternalLinkSection currentGame="Waffle" />
+
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
 </main>
 {/if}
+
+

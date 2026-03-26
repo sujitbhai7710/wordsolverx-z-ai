@@ -1,5 +1,11 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import GlobleCluesSection from '$lib/components/GlobleCluesSection.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   let { data } = $props();
 </script>
@@ -49,7 +55,7 @@
               class="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
             />
             <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-900/90 text-white px-4 py-2 rounded-lg text-sm backdrop-blur-sm shadow-lg">
-              {data.country.latitude.toFixed(2)}°, {data.country.longitude.toFixed(2)}°
+              {data.country.latitude.toFixed(2)}Â°, {data.country.longitude.toFixed(2)}Â°
             </div>
           </div>
         </div>
@@ -119,7 +125,7 @@
         <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
           <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Step 2: Read the Color Hints</h3>
           <p class="text-slate-600 dark:text-slate-300">
-            After each guess, pay attention to the color. Red means you're very close — within a few hundred kilometers. Orange and yellow mean moderate distance. White or pale pink means you're far away, possibly on the other side of the world.
+            After each guess, pay attention to the color. Red means you're very close â€” within a few hundred kilometers. Orange and yellow mean moderate distance. White or pale pink means you're far away, possibly on the other side of the world.
           </p>
         </div>
         <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
@@ -164,7 +170,7 @@
           <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800/30">
             <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Practice with Smaller Countries</h3>
             <p class="text-slate-600 dark:text-slate-300">
-              Small countries are often the hardest to find. Practice by learning the locations of smaller nations — they're frequently the mystery country.
+              Small countries are often the hardest to find. Practice by learning the locations of smaller nations â€” they're frequently the mystery country.
             </p>
           </div>
         </div>
@@ -177,7 +183,7 @@
       </h2>
       <div class="space-y-4 text-lg text-slate-600 dark:text-slate-300">
         <p class="leading-relaxed">
-          Games like Globle do more than entertain — they actually teach you about the world. Many people can name dozens of countries but would struggle to point to them on a map. Globle fixes that by making you actively think about where countries are located.
+          Games like Globle do more than entertain â€” they actually teach you about the world. Many people can name dozens of countries but would struggle to point to them on a map. Globle fixes that by making you actively think about where countries are located.
         </p>
         <p class="leading-relaxed">
           Regular players often find themselves getting better not just at the game, but at understanding world geography in general. You start to remember that Mongolia is between Russia and China, that Namibia is on the southwest coast of Africa, or that the Philippines is an archipelago in Southeast Asia.
@@ -188,4 +194,13 @@
       </div>
     </section>
   </article>
+
+  <div class="mt-12">
+    <AuthorCard
+      name={PRESTON_HAYES_AUTHOR_NAME}
+      image={PRESTON_HAYES_AUTHOR_IMAGE}
+      description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+    />
+  </div>
 </div>
+

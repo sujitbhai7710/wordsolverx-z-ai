@@ -190,7 +190,7 @@
 </script>
 
 <svelte:head>
-  <title>Colordle Solver - Daily Color Puzzle Helper | WordSolverX</title>
+  <title>Ai Colordle Solver - solve in 2 attempts</title>
   <meta name="description" content="Crack the daily Colordle puzzle with our free Colordle solver. Enter color guesses, add similarity percentages, and narrow the exact hex match in seconds." />
   <meta name="keywords" content="Colordle Solver, Colordle Answer, Color Puzzle, Colordle Help, Colordle Cheat" />
   <link rel="canonical" href="https://wordsolver.tech/colordle-solver" />

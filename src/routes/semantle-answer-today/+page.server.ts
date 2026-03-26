@@ -27,7 +27,7 @@ export const load: PageServerLoad = async () => {
         ...last10Days.map(d => ({ '@type': 'Question', name: `What was the Semantle answer for ${d!.formattedDate}?`, acceptedAnswer: { '@type': 'Answer', text: `The answer was "${d!.word}" (Puzzle #${d!.puzzleNumber}).` } })),
     ];
 
-    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'FAQPage', mainEntity: faqItems }, { '@type': 'Article', headline: pageTitle, description: pageDescription, datePublished: new Date(formattedDate).toISOString(), author: { '@type': 'Organization', name: 'WordSolverX' } }] });
+    const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'FAQPage', mainEntity: faqItems }, { '@type': 'Article', headline: pageTitle, description: pageDescription, datePublished: new Date(formattedDate).toISOString(), author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' } }] });
 
     return { word, puzzleNumber, formattedDate, last10Days, schemas: jsonLd, meta: { title: pageTitle, description: pageDescription, keywords: pageKeywords } };
 };

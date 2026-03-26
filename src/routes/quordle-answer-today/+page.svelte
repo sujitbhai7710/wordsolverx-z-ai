@@ -1,7 +1,13 @@
-<script lang="ts">
+﻿<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
   import QuordleAnswerCard from '$lib/components/QuordleAnswerCard.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import FiChevronDown from '$lib/components/icons/FiChevronDown.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME
+  } from '$lib/authors';
 
   let { data } = $props();
 </script>
@@ -25,7 +31,7 @@
         Quordle Hints and Answer for Today ({data.formattedDate})
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        <span class="font-semibold text-gray-900 dark:text-white">{data.formattedDate}</span> — Get hints and solutions for
+        <span class="font-semibold text-gray-900 dark:text-white">{data.formattedDate}</span> â€” Get hints and solutions for
         <span class="text-emerald-600 font-bold">Classic</span>,
         <span class="text-blue-600 font-bold">Chill</span>,
         <span class="text-red-600 font-bold">Extreme</span>,
@@ -94,7 +100,7 @@
           Quordle takes the Wordle concept and multiplies it by four. Instead of guessing one five-letter word, you're solving four puzzles at the same time. Each guess you make applies to all four boards, and you get color-coded feedback for each one. It sounds chaotic, but that's what makes it so engaging.
         </p>
         <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-          The game gives you nine guesses to solve all four words — that's three more than regular Wordle, but trust us, you'll need them. Managing four boards simultaneously requires a different kind of thinking. You can't just focus on one puzzle; you have to keep track of what's happening across all of them.
+          The game gives you nine guesses to solve all four words â€” that's three more than regular Wordle, but trust us, you'll need them. Managing four boards simultaneously requires a different kind of thinking. You can't just focus on one puzzle; you have to keep track of what's happening across all of them.
         </p>
         <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
           Quordle has become hugely popular among word game enthusiasts who find Wordle too easy. If you're someone who regularly solves Wordle in three guesses or less, Quordle offers the challenge you've been looking for.
@@ -130,7 +136,7 @@
           <div class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-2xl p-6 border border-violet-100 dark:border-violet-800/30">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Sequence</h3>
             <p class="text-gray-600 dark:text-gray-300">
-              You must solve the puzzles in order — first the top-left, then top-right, and so on. This changes your strategy significantly since you can't use early guesses to gather information across all boards.
+              You must solve the puzzles in order â€” first the top-left, then top-right, and so on. This changes your strategy significantly since you can't use early guesses to gather information across all boards.
             </p>
           </div>
         </div>
@@ -180,7 +186,7 @@
             There's something uniquely satisfying about solving four puzzles at once. Each board is like its own little mystery, and watching them all come together feels like completing a puzzle where the pieces are words.
           </p>
           <p class="leading-relaxed">
-            The game also rewards a different kind of thinking than Wordle. In Wordle, you're focused on one target. In Quordle, you're juggling four targets simultaneously. It's like playing chess on four boards at once — challenging, but incredibly rewarding when you pull it off.
+            The game also rewards a different kind of thinking than Wordle. In Wordle, you're focused on one target. In Quordle, you're juggling four targets simultaneously. It's like playing chess on four boards at once â€” challenging, but incredibly rewarding when you pull it off.
           </p>
           <p class="leading-relaxed">
             Plus, Quordle's multiple game modes mean you never get bored. If Classic feels too easy, try Extreme. If you want pressure-free practice, there's Chill. The variety keeps the game fresh even after months of daily play.
@@ -189,8 +195,18 @@
       </section>
     </article>
 
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+
     <div class="mt-16">
       <InternalLinkSection currentGame="Quordle" />
     </div>
   </div>
 </div>
+
+
