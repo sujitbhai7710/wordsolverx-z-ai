@@ -42,14 +42,19 @@ type CacheContext = {
 	cacheControl: string;
 	lookupKeys: string[];
 	storeKey: string;
+	browserMaxAge: number;
 };
 
 type CloudflareContext = {
 	waitUntil(promise: Promise<unknown>): void;
 };
 
-function buildCacheControl(sMaxage: number, staleWhileRevalidate = 86400): string {
-	return `public, max-age=0, s-maxage=${sMaxage}, stale-while-revalidate=${staleWhileRevalidate}`;
+function buildCacheControl(
+	sMaxage: number,
+	browserMaxAge = 0,
+	staleWhileRevalidate = 86400
+): string {
+	return `public, max-age=${browserMaxAge}, s-maxage=${sMaxage}, stale-while-revalidate=${staleWhileRevalidate}`;
 }
 
 function getNormalizedPathname(pathname: string): string {
@@ -90,7 +95,8 @@ function getArchiveCacheContext(url: URL, pathname: string, game: PuzzleGame): C
 		return {
 			cacheControl: buildCacheControl(2592000),
 			lookupKeys: [immutableKey],
-			storeKey: immutableKey
+			storeKey: immutableKey,
+			browserMaxAge: 0
 		};
 	}
 
@@ -103,7 +109,8 @@ function getArchiveCacheContext(url: URL, pathname: string, game: PuzzleGame): C
 	return {
 		cacheControl: buildCacheControl(window.ttlSeconds),
 		lookupKeys,
-		storeKey: lookupKeys[0]
+		storeKey: lookupKeys[0],
+		browserMaxAge: 0
 	};
 }
 
@@ -116,7 +123,8 @@ function getHtmlCacheContext(url: URL): CacheContext | null {
 		return {
 			cacheControl: buildCacheControl(window.ttlSeconds),
 			lookupKeys: [key],
-			storeKey: key
+			storeKey: key,
+			browserMaxAge: 3600
 		};
 	}
 
@@ -126,16 +134,18 @@ function getHtmlCacheContext(url: URL): CacheContext | null {
 		return {
 			cacheControl: buildCacheControl(window.ttlSeconds),
 			lookupKeys: [key],
-			storeKey: key
+			storeKey: key,
+			browserMaxAge: 3600
 		};
 	}
 
 	if (isLongCacheStaticPath(pathname)) {
 		const key = `html:static:${pathname}`;
 		return {
-			cacheControl: buildCacheControl(604800),
+			cacheControl: buildCacheControl(604800, 86400),
 			lookupKeys: [key],
-			storeKey: key
+			storeKey: key,
+			browserMaxAge: 86400
 		};
 	}
 
@@ -147,9 +157,10 @@ function getHtmlCacheContext(url: URL): CacheContext | null {
 			? `html:${pathname}:today:${window.effectivePuzzleDate}:${cacheVersion}`
 			: `html:${pathname}:today:${window.effectivePuzzleDate}`;
 		return {
-			cacheControl: buildCacheControl(window.ttlSeconds),
+			cacheControl: buildCacheControl(window.ttlSeconds, 3600),
 			lookupKeys: [cacheKey],
-			storeKey: cacheKey
+			storeKey: cacheKey,
+			browserMaxAge: 3600
 		};
 	}
 
@@ -306,7 +317,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				ttlOverrideHeader !== null ? Number.parseInt(ttlOverrideHeader, 10) : Number.NaN;
 			const cacheControl =
 				Number.isInteger(ttlOverrideSeconds) && ttlOverrideSeconds >= 60
-					? buildCacheControl(ttlOverrideSeconds)
+					? buildCacheControl(ttlOverrideSeconds, cacheContext.browserMaxAge)
 					: cacheContext.cacheControl;
 			response.headers.set('Cache-Control', shouldBypassEdgeCache ? 'no-store' : cacheControl);
 			response.headers.set('X-Edge-Cache', 'MISS');
