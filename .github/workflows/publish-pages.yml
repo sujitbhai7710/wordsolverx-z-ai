@@ -1,0 +1,153 @@
+name: Publish Pages
+
+run-name: Publish Pages (${{ github.event.client_payload.group || inputs.group || 'manual' }} ${{ github.event.client_payload.target_date || inputs.target_date || '' }})
+
+on:
+  repository_dispatch:
+    types:
+      - pages-publish-requested
+  workflow_dispatch:
+    inputs:
+      group:
+        description: Publish group
+        required: true
+        type: choice
+        options:
+          - main
+          - waffle
+          - gamedle
+      target_date:
+        description: Target date in YYYY-MM-DD format
+        required: false
+        type: string
+      source:
+        description: Optional trigger source label
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: pages-publish-${{ github.event.client_payload.group || inputs.group || 'manual' }}-${{ github.event.client_payload.target_date || inputs.target_date || github.run_id }}
+      cancel-in-progress: false
+    env:
+      GROUP_NAME: ${{ github.event.client_payload.group || inputs.group || 'manual' }}
+      TARGET_DATE: ${{ github.event.client_payload.target_date || inputs.target_date || '' }}
+      SOURCE_NAME: ${{ github.event.client_payload.source || inputs.source || github.event.action || 'manual' }}
+      PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev
+      PUBLIC_BASE_URL: https://wordsolver.tech
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Resolve Canary Path
+        id: canary_path
+        shell: bash
+        run: |
+          case "$GROUP_NAME" in
+            main) echo "path=/wordle-answer-today" >> "$GITHUB_OUTPUT" ;;
+            waffle) echo "path=/waffle-answer-today" >> "$GITHUB_OUTPUT" ;;
+            gamedle) echo "path=/narutodle-answer-today" >> "$GITHUB_OUTPUT" ;;
+            *) echo "path=" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Skip If Canary Already Current
+        id: canary
+        if: env.TARGET_DATE != '' && steps.canary_path.outputs.path != ''
+        env:
+          CANARY_PATH: ${{ steps.canary_path.outputs.path }}
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          const targetDate = process.env.TARGET_DATE;
+          const canaryPath = process.env.CANARY_PATH;
+          const outputPath = process.env.GITHUB_OUTPUT;
+          const baseUrls = [
+            process.env.PREVIEW_BASE_URL,
+            process.env.PUBLIC_BASE_URL
+          ].filter(Boolean);
+
+          function formatDisplayDate(dateKey) {
+            const date = new Date(`${dateKey}T12:00:00Z`);
+            return date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              timeZone: 'UTC'
+            });
+          }
+
+          function stripHtml(text) {
+            return text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+          }
+
+          async function canaryShowsDate(baseUrl) {
+            const response = await fetch(`${baseUrl}${canaryPath}`, {
+              headers: { 'User-Agent': 'WordSolverX GitHub Pages Publisher' }
+            });
+
+            if (!response.ok) {
+              return { ok: false, current: false, baseUrl, status: response.status };
+            }
+
+            const html = await response.text();
+            const title = stripHtml(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? '');
+            const h1 = stripHtml(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '');
+            const displayDate = formatDisplayDate(targetDate);
+            const current = title.includes(displayDate) || h1.includes(displayDate);
+
+            return { ok: true, current, baseUrl };
+          }
+
+          async function main() {
+            for (const baseUrl of baseUrls) {
+              try {
+                const result = await canaryShowsDate(baseUrl);
+                if (result.current) {
+                  fs.appendFileSync(outputPath, `skip=true\nbase_url=${result.baseUrl}\n`);
+                  console.log(`Canary already current at ${result.baseUrl}`);
+                  return;
+                }
+              } catch (error) {
+                console.warn(`Canary check failed for ${baseUrl}: ${error instanceof Error ? error.message : String(error)}`);
+              }
+            }
+
+            fs.appendFileSync(outputPath, 'skip=false\n');
+            console.log('Canary still stale; proceeding with deploy.');
+          }
+
+          main().catch((error) => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
+
+      - name: Stop Duplicate Publish
+        if: steps.canary.outputs.skip == 'true'
+        run: |
+          echo "Canary already shows $TARGET_DATE at ${{ steps.canary.outputs.base_url }}. No deploy needed."
+
+      - name: Install Dependencies
+        if: steps.canary.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Deploy Cloudflare Pages
+        if: steps.canary.outputs.skip != 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm run deploy:pages
