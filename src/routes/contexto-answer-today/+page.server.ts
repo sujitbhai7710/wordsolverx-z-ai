@@ -1,25 +1,10 @@
 import type { PageServerLoad } from './$types';
+import { fetchTodayContextoAnswer, type ContextoAnswerPayload } from '$lib/contexto-api';
+import { formatContextoDate, getContextoTodayDate } from '$lib/contexto';
 
-interface ContextoAnswerResponse {
-  success: boolean;
-  gameNumber: number;
-  date: string;
-  answer?: string;
-  error?: string;
-}
-
-export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
   try {
-    const response = await fetch('/api/contexto/daily');
-    const latestAnswer = (await response.json()) as ContextoAnswerResponse;
-
-    if (!response.ok || !latestAnswer?.success) {
-      return {
-        initialAnswer: null,
-        latestDate: latestAnswer?.date ?? null,
-        error: latestAnswer?.error ?? 'Failed to load Contexto answer'
-      };
-    }
+    const latestAnswer = await fetchTodayContextoAnswer();
 
     setHeaders({
       'X-Puzzle-Date': latestAnswer.date
@@ -32,6 +17,12 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
     };
   } catch (error) {
     console.error('Contexto load error:', error);
-    return { initialAnswer: null, latestDate: null, error: 'Failed to load Contexto answer' };
+
+    const fallbackDate = formatContextoDate(getContextoTodayDate());
+    return {
+      initialAnswer: null as ContextoAnswerPayload | null,
+      latestDate: fallbackDate,
+      error: 'Failed to load Contexto answer'
+    };
   }
 };

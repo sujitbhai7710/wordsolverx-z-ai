@@ -1,7 +1,7 @@
 
 import { startOfDay, differenceInDays, addDays, subDays, format } from 'date-fns';
 import { getTargetColors, type ColorData } from './colordle';
-import { getJSTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 
 // Start date from app.js: moment([2023, 7, 7]) -> August 7, 2023
 // Offset from app.js: 500
@@ -49,11 +49,11 @@ export const getColordleDataForDate = (date: Date): ColordleDayData | null => {
 };
 
 export const getColordleToday = (): ColordleDayData | null => {
-    return getColordleDataForDate(getJSTToday());
+    return getColordleDataForDate(getPuzzleDateForGame('colordle'));
 };
 
 export const getColordleYesterday = (): ColordleDayData | null => {
-    return getColordleDataForDate(subDays(getJSTToday(), 1));
+    return getColordleDataForDate(subDays(getPuzzleDateForGame('colordle'), 1));
 };
 
 

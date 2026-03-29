@@ -9,12 +9,12 @@ import {
   generateWebPageSchema,
 } from '$lib/seo';
 import {
-  getCurrentWorldleDateString,
   getDailyWorldleAnswer,
   getDisplayDateLabel,
   getRecentWorldleAnswers,
 } from '$lib/worldle/logic';
 import type { WorldleCity, WorldleCountry, WorldleCountryDetailsMap } from '$lib/worldle/types';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
 const countries = countriesData as WorldleCountry[];
@@ -22,7 +22,8 @@ const cities = citiesData as WorldleCity[];
 const countryDetails = countryDetailsData as WorldleCountryDetailsMap;
 
 export const load: PageServerLoad = async () => {
-  const todayDate = getCurrentWorldleDateString();
+  const today = getPuzzleDateForGame('worldle');
+  const todayDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
   const todayAnswer = getDailyWorldleAnswer(countries, cities, countryDetails, todayDate);
   const recentAnswers = getRecentWorldleAnswers(10, countries, cities, countryDetails, todayDate);

@@ -2,7 +2,7 @@
 // Epoch: January 29, 2022 (Puzzle #1)
 
 import { format, differenceInDays, subDays } from 'date-fns';
-import { getJSTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 
 // Import the secret words list
 import { SECRET_WORDS } from '$lib/data/semantle-words';
@@ -107,7 +107,7 @@ export function formatSemantleDateForSlug(date: Date): string {
  * Get today's Semantle data based on UTC time
  */
 export function getTodaySemantleData(): SemantleData | null {
-    const today = getJSTToday();
+    const today = getPuzzleDateForGame('semantle');
     return getSemantleDataForDate(today);
 }
 
@@ -115,7 +115,7 @@ export function getTodaySemantleData(): SemantleData | null {
  * Get yesterday's Semantle data based on UTC time
  */
 export function getYesterdaySemantleData(): SemantleData | null {
-    const today = getJSTToday();
+    const today = getPuzzleDateForGame('semantle');
     const yesterday = subDays(today, 1);
     return getSemantleDataForDate(yesterday);
 }

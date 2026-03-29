@@ -1,13 +1,10 @@
-import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import {
-	getNerdleAllModeAnswerForToday,
+	getNerdleAllModeAnswerForDate,
 	type NerdleAllModeAnswerData,
 	type NerdleAnswerFetchOptions
 } from '$lib/nerdle-answers';
-import { getNerdleTodayDateKey } from '$lib/nerdle';
-
-const NERDLE_TODAY_PAGE_VERSION = '3';
+import { getPuzzleWindow } from '$lib/puzzle-window';
 
 function formatDateLabel(dateKey: string): string {
 	const date = new Date(`${dateKey}T00:00:00Z`);
@@ -23,20 +20,14 @@ function formatDateLabel(dateKey: string): string {
 	});
 }
 
-export const load: PageServerLoad = async ({ url, setHeaders, platform, fetch }) => {
-	if (!url.searchParams.has('v')) {
-		const searchParams = new URLSearchParams(url.searchParams);
-		searchParams.set('v', NERDLE_TODAY_PAGE_VERSION);
-		throw redirect(302, `${url.pathname}?${searchParams.toString()}`);
-	}
-
+export const load: PageServerLoad = async ({ setHeaders, platform, fetch }) => {
 	const fetchOptions: NerdleAnswerFetchOptions = {
 		platform,
 		fetchImpl: fetch
 	};
-	const fallbackDate = getNerdleTodayDateKey();
+	const fallbackDate = getPuzzleWindow('nerdle').effectivePuzzleDate;
 	const answerData =
-		(await getNerdleAllModeAnswerForToday(fetchOptions)) ??
+		(await getNerdleAllModeAnswerForDate(fallbackDate, fetchOptions)) ??
 		({
 			date: fallbackDate,
 			classicPuzzleNumber: Number.NaN,
@@ -60,6 +51,25 @@ export const load: PageServerLoad = async ({ url, setHeaders, platform, fetch })
 
 	const pageTitle = `Nerdle Answer Today ( ${formattedDate} )`;
 	const pageDescription = `Get all Nerdle answers for ${formattedDate}: Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant.`;
+	const faqItems = [
+		{
+			question: `What is the Nerdle classic answer for ${formattedDate}?`,
+			answer:
+				answerData.modes.find((mode) => mode.id === 'classic')?.answers.map((entry) => entry.answer).join(', ') ??
+				'The latest Nerdle classic answer is listed in the Classic section above.'
+		},
+		{
+			question: 'Does this page include all Nerdle modes?',
+			answer:
+				'Yes. This page lists the current answers for Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant whenever that mode is available.'
+		},
+		{
+			question: 'Where can I solve old Nerdle puzzles?',
+			answer:
+				'Use the Nerdle Solver and the Nerdle Archive on WordSolverX to check older dates, mode answers, and puzzle history.'
+		}
+	];
+
 	const schemas = JSON.stringify([
 		{
 			'@context': 'https://schema.org',
@@ -95,12 +105,25 @@ export const load: PageServerLoad = async ({ url, setHeaders, platform, fetch })
 					item: 'https://wordsolver.tech/nerdle-answer-today'
 				}
 			]
+		},
+		{
+			'@context': 'https://schema.org',
+			'@type': 'FAQPage',
+			mainEntity: faqItems.map((item) => ({
+				'@type': 'Question',
+				name: item.question,
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: item.answer
+				}
+			}))
 		}
 	]);
 
 	return {
 		answerData,
 		formattedDate,
+		faqItems,
 		meta: {
 			title: pageTitle,
 			description: pageDescription,

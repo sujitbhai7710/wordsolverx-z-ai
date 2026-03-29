@@ -1,10 +1,70 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import { page } from '$app/state';
+  import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import WaffleAnswerCard from '$lib/components/WaffleAnswerCard.svelte';
+  import type { WaffleDayData } from '$lib/waffle';
 
-  let { data } = $props();
+  interface WaffleArchivePayload {
+    selectedDateKey: string | null;
+    selectedWaffle: WaffleDayData | null;
+  }
 
-  const startDate = new Date(2022, 0, 1); // January 1, 2022
+  let data = $state<WaffleArchivePayload>({
+    selectedDateKey: null,
+    selectedWaffle: null
+  });
+  let isLoading = $state(false);
+  let loadError = $state<string | null>(null);
+
+  const startDate = new Date(2022, 0, 1);
+  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+
+  async function loadArchive(dateKey: string | null): Promise<void> {
+    if (!dateKey) {
+      data.selectedDateKey = null;
+      data.selectedWaffle = null;
+      isLoading = false;
+      loadError = null;
+      return;
+    }
+
+    const requestDateKey = dateKey;
+    isLoading = true;
+    loadError = null;
+
+    try {
+      const payload = await fetchArchivePayload<WaffleArchivePayload>('waffle', requestDateKey);
+
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = payload.selectedDateKey;
+      data.selectedWaffle = payload.selectedWaffle;
+    } catch (error) {
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = requestDateKey;
+      data.selectedWaffle = null;
+      loadError = error instanceof Error ? error.message : 'Failed to load the Waffle archive entry.';
+    } finally {
+      if (selectedDateParam === requestDateKey) {
+        isLoading = false;
+      }
+    }
+  }
+
+  $effect(() => {
+    if (!browser) {
+      return;
+    }
+
+    void loadArchive(selectedDateParam);
+  });
 </script>
 
 <svelte:head>
@@ -28,7 +88,7 @@
 <ArchiveCalendar
   gameName="Waffle"
   gameColor="amber"
-  gameIcon="🧇"
+  gameIcon="??"
   {startDate}
   basePath="/waffle-archive"
   selectedDate={data.selectedDateKey}
@@ -77,6 +137,18 @@
         </div>
       </div>
     </div>
+  {:else if loadError}
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+      <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Waffle date</h2>
+      <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
+    </div>
+  {:else if isLoading && data.selectedDateKey}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Waffle archive entry...</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Pulling the selected grid answer into this archive page now.
+      </p>
+    </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Pick a Waffle date above</h2>
@@ -86,3 +158,5 @@
     </div>
   {/if}
 </section>
+
+

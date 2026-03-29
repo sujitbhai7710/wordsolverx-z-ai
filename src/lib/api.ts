@@ -68,5 +68,6 @@ export interface WordleAnswer {
   editor?: string;
   content_guide?: string;
   social_image?: string;
+  social_image_direct?: string;
   youtube_video_url?: string;
 }

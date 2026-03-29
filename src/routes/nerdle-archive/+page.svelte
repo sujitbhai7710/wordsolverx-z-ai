@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getNerdleAllModeAnswerForDate, type NerdleAllModeAnswerData } from '$lib/nerdle-answers';
-
-	let { data } = $props();
+	import { fetchArchivePayload } from '$lib/archive-client';
+	import { getNerdleTodayDateKey } from '$lib/nerdle';
+	import type { NerdleAllModeAnswerData } from '$lib/nerdle-answers';
 
 	const NERDLE_START_UTC_MS = Date.UTC(2022, 0, 20);
 	const DAY_MS = 24 * 60 * 60 * 1000;
@@ -21,6 +21,38 @@
 		'December'
 	];
 	const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	const META = {
+		title: 'Nerdle Archive - All Modes Answers by Date',
+		description:
+			'Browse stored Nerdle answers by date for all modes: Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant.',
+		keywords:
+			'nerdle archive, nerdle all modes archive, nerdle classic micro mini midi maxi quad speed instant answers, nerdle previous answers',
+		canonical: 'https://wordsolver.tech/nerdle-archive'
+	};
+	const SCHEMAS = JSON.stringify([
+		{
+			'@context': 'https://schema.org',
+			'@type': 'CollectionPage',
+			name: 'Nerdle Archive',
+			description: META.description,
+			url: META.canonical
+		},
+		{
+			'@context': 'https://schema.org',
+			'@type': 'BreadcrumbList',
+			itemListElement: [
+				{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolver.tech' },
+				{ '@type': 'ListItem', position: 2, name: 'Archive', item: 'https://wordsolver.tech/archive' },
+				{ '@type': 'ListItem', position: 3, name: 'Nerdle Archive', item: META.canonical }
+			]
+		}
+	]);
+
+	interface NerdleArchivePayload {
+		selectedDateKey: string | null;
+		selectedNerdle: NerdleAllModeAnswerData | null;
+		todayDateKey: string;
+	}
 
 	function formatDateKey(date: Date): string {
 		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString().slice(0, 10);
@@ -70,8 +102,8 @@
 		return `width: 2.5rem; height: 3rem; font-size: 1.25rem; animation-delay: ${index * 50}ms; background: ${background};`;
 	}
 
-	function getTodayDateFromData(): Date {
-		return parseDateKey(data.todayDateKey) ?? new Date();
+	function getTodayDate(): Date {
+		return parseDateKey(getNerdleTodayDateKey()) ?? new Date();
 	}
 
 	let selectedDate = $state(new Date());
@@ -94,7 +126,7 @@
 	});
 
 	function isFutureDate(date: Date): boolean {
-		return formatDateKey(date) > formatDateKey(getTodayDateFromData());
+		return formatDateKey(date) > formatDateKey(getTodayDate());
 	}
 
 	function isSelected(day: number): boolean {
@@ -106,7 +138,7 @@
 	}
 
 	function isToday(day: number): boolean {
-		const todayDate = getTodayDateFromData();
+		const todayDate = getTodayDate();
 		return (
 			todayDate.getFullYear() === currentMonth.getFullYear() &&
 			todayDate.getMonth() === currentMonth.getMonth() &&
@@ -116,7 +148,7 @@
 
 	function isCurrentMonthOrPast(): boolean {
 		const monthStart = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
-		const todayDate = getTodayDateFromData();
+		const todayDate = getTodayDate();
 		const todayMonthStart = new Date(todayDate.getFullYear(), todayDate.getMonth(), 1);
 		return monthStart.getTime() < todayMonthStart.getTime();
 	}
@@ -127,7 +159,8 @@
 		errorMessage = null;
 
 		try {
-			selectedRecord = await getNerdleAllModeAnswerForDate(dateKey);
+			const payload = await fetchArchivePayload<NerdleArchivePayload>('nerdle', dateKey);
+			selectedRecord = payload.selectedNerdle;
 			if (!selectedRecord) {
 				errorMessage = `No answer stored for ${dateKey}.`;
 			}
@@ -169,7 +202,7 @@
 	}
 
 	async function goToToday(): Promise<void> {
-		await handleSelectDate(getTodayDateFromData());
+		await handleSelectDate(getTodayDate());
 	}
 
 	function prevMonth(): void {
@@ -208,16 +241,11 @@
 	let monthLabel = $derived(`${MONTH_NAMES[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`);
 
 	onMount(async () => {
-		const todayDate = getTodayDateFromData();
+		const todayDate = getTodayDate();
 		const params = new URLSearchParams(window.location.search);
 		const dateParam = params.get('date');
 		const fromUrl = parseDateKey(dateParam);
-		const fromServer = parseDateKey(data.selectedDateKey ?? null);
-		const initialFromServer = fromServer && isNerdleDate(fromServer) && !isFutureDate(fromServer) ? fromServer : null;
-		const safeDate =
-			fromUrl && isNerdleDate(fromUrl) && !isFutureDate(fromUrl)
-				? fromUrl
-				: initialFromServer ?? todayDate;
+		const safeDate = fromUrl && isNerdleDate(fromUrl) && !isFutureDate(fromUrl) ? fromUrl : todayDate;
 
 		selectedDate = safeDate;
 		currentMonth = new Date(safeDate.getFullYear(), safeDate.getMonth(), 1);
@@ -226,21 +254,21 @@
 </script>
 
 <svelte:head>
-	<title>{data.meta.title}</title>
-	<meta name="description" content={data.meta.description} />
-	<meta name="keywords" content={data.meta.keywords} />
-	<link rel="canonical" href={data.meta.canonical} />
-	<meta property="og:title" content={data.meta.title} />
-	<meta property="og:description" content={data.meta.description} />
-	<meta property="og:url" content={data.meta.canonical} />
+	<title>{META.title}</title>
+	<meta name="description" content={META.description} />
+	<meta name="keywords" content={META.keywords} />
+	<link rel="canonical" href={META.canonical} />
+	<meta property="og:title" content={META.title} />
+	<meta property="og:description" content={META.description} />
+	<meta property="og:url" content={META.canonical} />
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={data.meta.title} />
-	<meta name="twitter:description" content={data.meta.description} />
+	<meta name="twitter:title" content={META.title} />
+	<meta name="twitter:description" content={META.description} />
 	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
-	{@html `<script type="application/ld+json">${data.schemas}</script>`}
+	{@html `<script type="application/ld+json">${SCHEMAS}</script>`}
 </svelte:head>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 text-slate-900">
@@ -448,7 +476,7 @@
 				</div>
 
 				<div class="mt-6 flex justify-center gap-4 text-sm">
-					<a href="/nerdle-answer-today?v=3" class="text-emerald-700 hover:text-emerald-600 font-medium transition-colors">View Today&apos;s Answer -></a>
+					<a href="/nerdle-answer-today" class="text-emerald-700 hover:text-emerald-600 font-medium transition-colors">View Today&apos;s Answer -></a>
 					<a href="https://www.nerdlegame.com/" target="_blank" rel="noopener noreferrer" class="text-slate-700 hover:text-slate-900 transition-colors">Play on Nerdle -></a>
 				</div>
 			</div>

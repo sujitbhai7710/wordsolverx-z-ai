@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
-import { getJSTToday, getWordleNumber, formatDate } from '$lib/utils';
+import { getWordleNumber, formatDate } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { WordleAnswer } from '$lib/api';
 import { generatePersonAuthorSchema } from '$lib/seo';
 import type { PageServerLoad } from './$types';
@@ -7,10 +8,11 @@ import type { PageServerLoad } from './$types';
 interface TodayApiResponse extends WordleAnswer {
     today_jst?: string;
     recent_answers?: WordleAnswer[];
+    social_image_direct?: string;
 }
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
-    const today = getJSTToday();
+    const today = getPuzzleDateForGame('wordle');
     const todayKey = format(today, 'yyyy-MM-dd');
     const fallbackNumber = getWordleNumber(today);
     const fallbackDate = formatDate(today);
@@ -22,18 +24,32 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         console.error("Error fetching today's Wordle:", error);
     }
 
+    const recentAnswers = wordleData?.recent_answers || [];
+    const directSocialImage =
+        wordleData?.social_image_direct ||
+        recentAnswers.find((answer) => answer.date === (wordleData?.date ?? todayKey))?.social_image ||
+        wordleData?.social_image ||
+        'https://wordsolver.tech/wordsolverx.webp';
+    const normalizedWordleData = wordleData
+        ? {
+            ...wordleData,
+            social_image: directSocialImage,
+            social_image_direct: directSocialImage
+        }
+        : null;
     const isCacheReady = Boolean(
-        wordleData?.date === todayKey && wordleData?.content_guide && wordleData?.social_image
+        normalizedWordleData?.date === todayKey &&
+        normalizedWordleData?.content_guide &&
+        normalizedWordleData?.social_image
     );
     setHeaders({
-        'X-Puzzle-Date': wordleData?.date ?? todayKey,
+        'X-Puzzle-Date': normalizedWordleData?.date ?? todayKey,
         'X-Edge-Cache-Bypass': isCacheReady ? '0' : '1'
     });
 
-    const wordleWord = wordleData?.solution || '';
-    const wordleNumber = wordleData?.id || fallbackNumber;
-    const formattedDate = wordleData?.date ? formatDate(new Date(wordleData.date)) : fallbackDate;
-    const recentAnswers = wordleData?.recent_answers || [];
+    const wordleWord = normalizedWordleData?.solution || '';
+    const wordleNumber = normalizedWordleData?.id || fallbackNumber;
+    const formattedDate = normalizedWordleData?.date ? formatDate(new Date(normalizedWordleData.date)) : fallbackDate;
 
     // Hints for SEO schema
     const vowelCount = wordleWord.toLowerCase().split('').filter((c: string) => 'aeiou'.includes(c)).length;
@@ -59,25 +75,26 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: `Wordle Hints and Answer for Today (${formattedDate})`,
-        datePublished: new Date(wordleData?.date || today).toISOString(),
-        dateModified: new Date(wordleData?.date || today).toISOString(),
+        datePublished: new Date(normalizedWordleData?.date || today).toISOString(),
+        dateModified: new Date(normalizedWordleData?.date || today).toISOString(),
         author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolver.tech/about#preston-hayes', 'https://wordsolver.tech/auther-wordsolverx.webp'),
         publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } },
         description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/wordle-answer-today' },
     };
 
-    const socialImageUrl = wordleData?.social_image || 'https://wordsolver.tech/wordsolverx.webp';
+    const socialImageUrl = directSocialImage;
     const pageTitle = `Wordle Hints and Answer for Today (${formattedDate})`;
     const pageDescription = `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. See the full solution for Wordle #${wordleNumber}, plus clue details and recent answers.`;
     const pageKeywords = `wordle answer today, wordle answer, wordle hint, wordle hint today, wordle answer for ${formattedDate}`;
 
     return {
-        wordleData,
+        wordleData: normalizedWordleData,
         wordleWord,
         wordleNumber,
         formattedDate,
         recentAnswers,
+        directSocialImage,
         hintFaqs,
         schemas: JSON.stringify([faqSchema, articleSchema]),
         meta: {

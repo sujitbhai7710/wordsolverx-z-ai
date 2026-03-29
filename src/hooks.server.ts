@@ -1,4 +1,4 @@
-import { redirect, type Handle } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 import { format } from 'date-fns';
 import { parseArchiveDateKey } from '$lib/archive-page';
 import { getJSTToday } from '$lib/utils';
@@ -258,7 +258,8 @@ function getArchiveRedirect(game: SupportedArchiveGame, dateKey: string): string
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const pathname = event.url.pathname;
+	const requestUrl = new URL(event.request.url);
+	const pathname = requestUrl.pathname;
 	const normalizedPathname = getNormalizedPathname(pathname);
 
 	if (normalizedPathname in YESTERDAY_REDIRECTS) {
@@ -292,12 +293,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	const shouldAttemptEdgeCache = event.request.method === 'GET';
-	const cacheContext = shouldAttemptEdgeCache ? getHtmlCacheContext(event.url) : null;
+	const cacheContext = shouldAttemptEdgeCache ? getHtmlCacheContext(requestUrl) : null;
 	const edgeCache = cacheContext ? getCloudflareCache() : null;
 
 	if (cacheContext && edgeCache) {
 		for (const cacheKey of cacheContext.lookupKeys) {
-			const cachedResponse = await edgeCache.match(buildCacheRequest(event.url.origin, cacheKey));
+			const cachedResponse = await edgeCache.match(buildCacheRequest(requestUrl.origin, cacheKey));
 			if (cachedResponse) {
 				const hitResponse = new Response(cachedResponse.body, cachedResponse);
 				hitResponse.headers.set('X-Edge-Cache', 'HIT');
@@ -330,10 +331,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 				if (context) {
 					context.waitUntil(
-						edgeCache.put(buildCacheRequest(event.url.origin, storeKey), responseToCache)
+						edgeCache.put(buildCacheRequest(requestUrl.origin, storeKey), responseToCache)
 					);
 				} else {
-					await edgeCache.put(buildCacheRequest(event.url.origin, storeKey), responseToCache);
+					await edgeCache.put(buildCacheRequest(requestUrl.origin, storeKey), responseToCache);
 				}
 			}
 		} else {
@@ -342,4 +343,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	return response;
+};
+
+export const handleError: HandleServerError = ({ error, event }) => {
+	console.error(`[handleError] ${event.request.method} ${event.url.pathname}${event.url.search}`, error);
+
+	return {
+		message: 'Internal Server Error'
+	};
 };

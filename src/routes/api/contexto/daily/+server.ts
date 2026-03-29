@@ -5,11 +5,14 @@ import {
   getContextoGameNumber,
   getContextoTodayDate
 } from '$lib/contexto';
+import {
+  fetchContextoAnswerForDate,
+  fetchContextoAnswerForGame
+} from '$lib/contexto-api';
 import { getPuzzleWindow } from '$lib/puzzle-window';
 
 const LONG_CACHE_CONTROL = 'public, max-age=0, s-maxage=2592000, stale-while-revalidate=86400';
 const SHORT_RETRY_CACHE_CONTROL = 'public, max-age=0, s-maxage=30, stale-while-revalidate=30';
-const LATEST_LOOKBACK_DAYS = 7;
 
 export const GET: RequestHandler = async ({ url }) => {
   const dateStr = url.searchParams.get('date');
@@ -21,20 +24,28 @@ export const GET: RequestHandler = async ({ url }) => {
   let targetDate: Date;
 
   if (!dateStr && !gameNumberStr) {
-    const latestAnswer = await findLatestContextoAnswer();
-
-    if (!latestAnswer) {
+    try {
+      const todayAnswer = await fetchContextoAnswerForDate(visibleDate);
       return jsonResponse(
-        { success: false, error: 'Failed to fetch the latest Contexto answer' },
-        503
+        todayAnswer,
+        200,
+        getLatestCacheControl(todayAnswer.date, visibleDateKey)
+      );
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return jsonResponse(
+        {
+          success: false,
+          error:
+            message === 'Game not found'
+              ? "Today's Contexto answer is not available yet"
+              : 'Failed to fetch the latest Contexto answer',
+          date: visibleDateKey
+        },
+        503,
+        SHORT_RETRY_CACHE_CONTROL
       );
     }
-
-    return jsonResponse(
-      latestAnswer,
-      200,
-      getLatestCacheControl(latestAnswer.date, visibleDateKey)
-    );
   }
 
   if (gameNumberStr) {
@@ -62,7 +73,10 @@ export const GET: RequestHandler = async ({ url }) => {
   }
 
   try {
-    const payload = await fetchContextoAnswer(gameNumber, targetDate);
+    const payload = gameNumberStr
+      ? await fetchContextoAnswerForGame(gameNumber)
+      : await fetchContextoAnswerForDate(targetDate);
+
     return jsonResponse(
       payload,
       200,
@@ -80,7 +94,8 @@ export const GET: RequestHandler = async ({ url }) => {
           gameNumber,
           date: formatContextoDate(targetDate)
         },
-        404
+        404,
+        SHORT_RETRY_CACHE_CONTROL
       );
     }
 
@@ -92,7 +107,8 @@ export const GET: RequestHandler = async ({ url }) => {
         gameNumber,
         date: formatContextoDate(targetDate)
       },
-      500
+      500,
+      SHORT_RETRY_CACHE_CONTROL
     );
   }
 };
@@ -111,54 +127,6 @@ function jsonResponse(body: unknown, status = 200, cacheControl?: string): Respo
   }
 
   return new Response(JSON.stringify(body), { status, headers });
-}
-
-async function fetchContextoAnswer(gameNumber: number, targetDate: Date) {
-  const response = await fetch(`https://api.contexto.me/machado/en/giveup/${gameNumber}`, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      Accept: 'application/json'
-    }
-  });
-
-  if (!response.ok) {
-    if (response.status === 404) {
-      throw new Error('Game not found');
-    }
-
-    throw new Error(`HTTP error ${response.status}`);
-  }
-
-  const data = await response.json();
-  const answer = data.word || data.answer || data;
-
-  return {
-    success: true,
-    gameNumber,
-    date: formatContextoDate(targetDate),
-    answer: typeof answer === 'string' ? answer : answer.word || answer
-  };
-}
-
-async function findLatestContextoAnswer() {
-  const visibleDate = getContextoTodayDate();
-  const seedGameNumber = getContextoGameNumber(visibleDate) + 2;
-
-  for (let offset = 0; offset < LATEST_LOOKBACK_DAYS; offset += 1) {
-    const gameNumber = seedGameNumber - offset;
-    const targetDate = getContextoDateFromGameNumber(gameNumber);
-
-    try {
-      return await fetchContextoAnswer(gameNumber, targetDate);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      if (message !== 'Game not found') {
-        console.error('Contexto latest lookup error:', error);
-      }
-    }
-  }
-
-  return null;
 }
 
 function getLatestCacheControl(actualDate: string, visibleDateKey: string): string {

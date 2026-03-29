@@ -1,10 +1,10 @@
-import { getJSTToday } from '$lib/utils';
 import { getColordleToday, getColordleYesterday, getColordleDataForDate } from '$lib/colordle-date';
 import { subDays } from 'date-fns';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-    const today = getJSTToday();
+    const today = getPuzzleDateForGame('colordle');
     const todayData = getColordleToday();
 
     if (!todayData) {

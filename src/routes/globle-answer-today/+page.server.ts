@@ -1,11 +1,11 @@
 import { getGlobleDataForDate } from '$lib/globle-date';
-import { getJSTToday } from '$lib/utils';
 import { format, subDays } from 'date-fns';
 import { redirect } from '@sveltejs/kit';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-    const today = getJSTToday();
+    const today = getPuzzleDateForGame('globle');
     const data = await getLatestAvailableGlobleData(today);
 
     if (!data) {

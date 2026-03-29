@@ -9,7 +9,21 @@
 
   interface DatamuseWord { word: string; defs?: string[]; }
 
-  let { word, puzzleNumber }: { word: string; puzzleNumber: number } = $props();
+  let {
+    word,
+    puzzleNumber,
+    definition: initialDefinition = null,
+    rhymes: initialRhymes = [],
+    synonyms: initialSynonyms = [],
+    disableClientFetch = false
+  }: {
+    word: string;
+    puzzleNumber: number;
+    definition?: string | null;
+    rhymes?: string[];
+    synonyms?: string[];
+    disableClientFetch?: boolean;
+  } = $props();
 
   let showAnswer = $state(false);
   let definition = $state<string | null>(null);
@@ -24,26 +38,52 @@
   let letterCount = $derived(lowerWord.length);
 
   $effect(() => {
+    let cancelled = false;
+
+    definition = initialDefinition;
+    rhymes = [...initialRhymes];
+    synonyms = [...initialSynonyms];
+
+    if (initialDefinition || initialRhymes.length || initialSynonyms.length) {
+      loading = false;
+      return;
+    }
+
+    if (disableClientFetch) {
+      loading = false;
+      return;
+    }
+
+    loading = true;
+
     const fetchWordData = async () => {
       try {
         const defResponse = await fetch(`https://api.datamuse.com/words?sp=${encodeURIComponent(lowerWord)}&md=d&max=1`);
         const defData: DatamuseWord[] = await defResponse.json();
-        if (defData.length > 0 && defData[0].defs && defData[0].defs.length > 0) {
+        if (!cancelled && defData.length > 0 && defData[0].defs && defData[0].defs.length > 0) {
           definition = defData[0].defs[0].split('\t')[1];
         }
         const rhymeResponse = await fetch(`https://api.datamuse.com/words?rel_rhy=${encodeURIComponent(lowerWord)}&max=5`);
         const rhymeData = await rhymeResponse.json();
-        if (rhymeData.length > 0) rhymes = rhymeData.slice(0, 5).map((r: { word: string }) => r.word);
+        if (!cancelled && rhymeData.length > 0) rhymes = rhymeData.slice(0, 5).map((r: { word: string }) => r.word);
         const synResponse = await fetch(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(lowerWord)}&max=5`);
         const synData = await synResponse.json();
-        if (synData.length > 0) synonyms = synData.slice(0, 5).map((s: { word: string }) => s.word);
+        if (!cancelled && synData.length > 0) synonyms = synData.slice(0, 5).map((s: { word: string }) => s.word);
       } catch (error) {
-        console.error('Failed to fetch word data:', error);
+        if (!cancelled) {
+          console.error('Failed to fetch word data:', error);
+        }
       } finally {
-        loading = false;
+        if (!cancelled) {
+          loading = false;
+        }
       }
     };
     fetchWordData();
+
+    return () => {
+      cancelled = true;
+    };
   });
 </script>
 

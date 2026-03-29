@@ -1,6 +1,6 @@
 
 import { Q_DAT_D, Q_DAT_C, Q_DAT_E, Q_DAT_B, Q_DAT_W } from '$lib/data/QuordleObfuscatedData';
-import { getJSTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import { subDays, format } from 'date-fns';
 
 // Obfuscated RNG and Generation Logic
@@ -113,9 +113,9 @@ export function getQuordleDataForDate(date: Date): QuordleData | null {
 }
 
 export function getQuordleToday(): QuordleData | null {
-    return getQuordleDataForDate(getJSTToday());
+    return getQuordleDataForDate(getPuzzleDateForGame('quordle'));
 }
 
 export function getQuordleYesterday(): QuordleData | null {
-    return getQuordleDataForDate(subDays(getJSTToday(), 1));
+    return getQuordleDataForDate(subDays(getPuzzleDateForGame('quordle'), 1));
 }

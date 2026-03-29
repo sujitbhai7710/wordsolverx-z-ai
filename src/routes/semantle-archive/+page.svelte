@@ -1,10 +1,70 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import { page } from '$app/state';
+  import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import SemantleClues from '$lib/components/SemantleClues.svelte';
+  import type { SemantleData } from '$lib/semantle';
 
-  let { data } = $props();
+  interface SemantleArchivePayload {
+    selectedDateKey: string | null;
+    selectedSemantle: SemantleData | null;
+  }
 
-  const startDate = new Date(2022, 0, 29); // January 29, 2022
+  let data = $state<SemantleArchivePayload>({
+    selectedDateKey: null,
+    selectedSemantle: null
+  });
+  let isLoading = $state(false);
+  let loadError = $state<string | null>(null);
+
+  const startDate = new Date(2022, 0, 29);
+  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+
+  async function loadArchive(dateKey: string | null): Promise<void> {
+    if (!dateKey) {
+      data.selectedDateKey = null;
+      data.selectedSemantle = null;
+      isLoading = false;
+      loadError = null;
+      return;
+    }
+
+    const requestDateKey = dateKey;
+    isLoading = true;
+    loadError = null;
+
+    try {
+      const payload = await fetchArchivePayload<SemantleArchivePayload>('semantle', requestDateKey);
+
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = payload.selectedDateKey;
+      data.selectedSemantle = payload.selectedSemantle;
+    } catch (error) {
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = requestDateKey;
+      data.selectedSemantle = null;
+      loadError = error instanceof Error ? error.message : 'Failed to load the Semantle archive entry.';
+    } finally {
+      if (selectedDateParam === requestDateKey) {
+        isLoading = false;
+      }
+    }
+  }
+
+  $effect(() => {
+    if (!browser) {
+      return;
+    }
+
+    void loadArchive(selectedDateParam);
+  });
 </script>
 
 <svelte:head>
@@ -28,7 +88,7 @@
 <ArchiveCalendar
   gameName="Semantle"
   gameColor="purple"
-  gameIcon="🧠"
+  gameIcon="??"
   {startDate}
   basePath="/semantle-archive"
   selectedDate={data.selectedDateKey}
@@ -46,12 +106,26 @@
       </div>
       <SemantleClues word={data.selectedSemantle.word} puzzleNumber={data.selectedSemantle.puzzleNumber} />
     </div>
+  {:else if loadError}
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+      <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Semantle date</h2>
+      <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
+    </div>
+  {:else if isLoading && data.selectedDateKey}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Semantle archive entry...</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Pulling the selected semantic answer into this archive page now.
+      </p>
+    </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Pick a Semantle archive date above</h2>
       <p class="mt-3 text-gray-600 dark:text-gray-300">
-        The selected puzzle’s clue-and-reveal block will load here, so the archive page itself becomes the answer page.
+        The selected puzzle�s clue-and-reveal block will load here, so the archive page itself becomes the answer page.
       </p>
     </div>
   {/if}
 </section>
+
+

@@ -1,11 +1,71 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import { page } from '$app/state';
+  import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import WordleDisplayWrapper from '$lib/components/WordleDisplayWrapper.svelte';
+  import type { WordleAnswer } from '$lib/api';
   import { formatDate } from '$lib/utils';
 
-  let { data } = $props();
+  interface WordleArchivePayload {
+    selectedDateKey: string | null;
+    selectedWordle: WordleAnswer | null;
+  }
 
-  const startDate = new Date(2021, 5, 19); // June 19, 2021 - Wordle launch
+  let data = $state<WordleArchivePayload>({
+    selectedDateKey: null,
+    selectedWordle: null
+  });
+  let isLoading = $state(false);
+  let loadError = $state<string | null>(null);
+
+  const startDate = new Date(2021, 5, 19);
+  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+
+  async function loadArchive(dateKey: string | null): Promise<void> {
+    if (!dateKey) {
+      data.selectedDateKey = null;
+      data.selectedWordle = null;
+      isLoading = false;
+      loadError = null;
+      return;
+    }
+
+    const requestDateKey = dateKey;
+    isLoading = true;
+    loadError = null;
+
+    try {
+      const payload = await fetchArchivePayload<WordleArchivePayload>('wordle', requestDateKey);
+
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = payload.selectedDateKey;
+      data.selectedWordle = payload.selectedWordle;
+    } catch (error) {
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = requestDateKey;
+      data.selectedWordle = null;
+      loadError = error instanceof Error ? error.message : 'Failed to load the Wordle archive entry.';
+    } finally {
+      if (selectedDateParam === requestDateKey) {
+        isLoading = false;
+      }
+    }
+  }
+
+  $effect(() => {
+    if (!browser) {
+      return;
+    }
+
+    void loadArchive(selectedDateParam);
+  });
 </script>
 
 <svelte:head>
@@ -32,7 +92,7 @@
 <ArchiveCalendar
   gameName="Wordle"
   gameColor="emerald"
-  gameIcon="🟩"
+  gameIcon="??"
   {startDate}
   basePath="/wordle-answer-archive"
   selectedDate={data.selectedDateKey}
@@ -54,6 +114,18 @@
       socialImage={data.selectedWordle.social_image}
       youtubeVideoUrl={data.selectedWordle.youtube_video_url}
     />
+  {:else if loadError}
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+      <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Wordle date</h2>
+      <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
+    </div>
+  {:else if isLoading && data.selectedDateKey}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Wordle archive entry...</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Pulling the selected answer into this archive page now.
+      </p>
+    </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Pick a date to reveal the answer here</h2>
@@ -63,3 +135,5 @@
     </div>
   {/if}
 </section>
+
+

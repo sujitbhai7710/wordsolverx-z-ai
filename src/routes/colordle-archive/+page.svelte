@@ -1,10 +1,84 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import { afterNavigate } from '$app/navigation';
+  import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import ColorClues from '$lib/components/ColorClues.svelte';
+  import type { ColordleDayData } from '$lib/colordle-date';
+  import { onMount } from 'svelte';
 
-  let { data } = $props();
+  interface ColordleArchivePayload {
+    selectedDateKey: string | null;
+    selectedColordle: ColordleDayData | null;
+  }
 
-  const startDate = new Date(2023, 7, 7); // August 7, 2023
+  let data = $state<ColordleArchivePayload>({
+    selectedDateKey: null,
+    selectedColordle: null
+  });
+  let isLoading = $state(false);
+  let loadError = $state<string | null>(null);
+
+  const startDate = new Date(2023, 7, 7);
+  let selectedDateParam = $state<string | null>(null);
+
+  function getSelectedDateParam(): string | null {
+    if (!browser) {
+      return null;
+    }
+
+    return new URL(window.location.href).searchParams.get('date');
+  }
+
+  function syncArchiveFromUrl(): void {
+    selectedDateParam = getSelectedDateParam();
+    void loadArchive(selectedDateParam);
+  }
+
+  async function loadArchive(dateKey: string | null): Promise<void> {
+    if (!dateKey) {
+      data.selectedDateKey = null;
+      data.selectedColordle = null;
+      isLoading = false;
+      loadError = null;
+      return;
+    }
+
+    const requestDateKey = dateKey;
+    isLoading = true;
+    loadError = null;
+
+    try {
+      const payload = await fetchArchivePayload<ColordleArchivePayload>('colordle', requestDateKey);
+
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = payload.selectedDateKey;
+      data.selectedColordle = payload.selectedColordle;
+    } catch (error) {
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = requestDateKey;
+      data.selectedColordle = null;
+      loadError = error instanceof Error ? error.message : 'Failed to load the Colordle archive entry.';
+    } finally {
+      if (selectedDateParam === requestDateKey) {
+        isLoading = false;
+      }
+    }
+  }
+
+  onMount(() => {
+    syncArchiveFromUrl();
+  });
+
+  afterNavigate(() => {
+    syncArchiveFromUrl();
+  });
 </script>
 
 <svelte:head>
@@ -28,7 +102,7 @@
 <ArchiveCalendar
   gameName="Colordle"
   gameColor="indigo"
-  gameIcon="🎨"
+  gameIcon="??"
   {startDate}
   basePath="/colordle-archive"
   selectedDate={data.selectedDateKey}
@@ -46,6 +120,18 @@
       </div>
       <ColorClues colorName={data.selectedColordle.color.name} colorHex={data.selectedColordle.color.hex} />
     </div>
+  {:else if loadError}
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+      <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Colordle date</h2>
+      <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
+    </div>
+  {:else if isLoading && data.selectedDateKey}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Colordle archive entry...</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Pulling the selected color answer into this archive page now.
+      </p>
+    </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Choose a color date from the archive</h2>
@@ -55,3 +141,5 @@
     </div>
   {/if}
 </section>
+
+

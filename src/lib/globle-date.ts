@@ -1,5 +1,5 @@
 import { startOfDay, format, subDays, addDays } from 'date-fns';
-import { getJSTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import countries from '$lib/data/globle-countries.json';
 
 import CryptoJS from 'crypto-js';
@@ -78,11 +78,11 @@ export async function getGlobleDataForDate(date: Date): Promise<GlobleDayData | 
 }
 
 export async function getGlobleToday(): Promise<GlobleDayData | null> {
-    return getGlobleDataForDate(getJSTToday());
+    return getGlobleDataForDate(getPuzzleDateForGame('globle'));
 }
 
 export async function getGlobleYesterday(): Promise<GlobleDayData | null> {
-    return getGlobleDataForDate(subDays(getJSTToday(), 1));
+    return getGlobleDataForDate(subDays(getPuzzleDateForGame('globle'), 1));
 }
 
 // Helper to parse the verbose url format: "january-27-2026"

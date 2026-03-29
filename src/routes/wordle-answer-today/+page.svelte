@@ -52,7 +52,7 @@
       formattedDate={data.formattedDate}
       pageContext="today"
       contentGuide={data.wordleData?.content_guide}
-      socialImage={data.wordleData?.social_image}
+      socialImage={data.directSocialImage}
       youtubeVideoUrl={data.wordleData?.youtube_video_url}
     />
 

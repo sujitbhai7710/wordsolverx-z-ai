@@ -1,7 +1,7 @@
 import { getSearchlePuzzleForDate } from '$lib/searchle/daily';
-import { getISTToday } from '$lib/utils';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = () => ({
-	dailyPuzzle: getSearchlePuzzleForDate(getISTToday())
+	dailyPuzzle: getSearchlePuzzleForDate(getPuzzleDateForGame('searchle'))
 });

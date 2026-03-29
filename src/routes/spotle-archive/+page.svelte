@@ -1,11 +1,82 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import { page } from '$app/state';
+  import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
-  import { COUNTRY_NAMES, GENDER_NAMES } from '$lib/spotle';
+  import { getPuzzleDateForGame } from '$lib/puzzle-window';
+  import { COUNTRY_NAMES, GENDER_NAMES, formatSpotleDate, parseSpotleDate, type SpotleData } from '$lib/spotle';
+  import spotleData from '../../../static/spotle_data.json';
 
-  let { data } = $props();
+  interface SpotleArchivePayload {
+    availableDateStrings: string[];
+    selectedDateKey: string | null;
+    selectedSpotle: any;
+  }
+
+  const localSpotleData = spotleData as SpotleData;
+  const todayKey = formatSpotleDate(getPuzzleDateForGame('spotle'));
+  const localAvailableDateStrings = (localSpotleData.answers ?? [])
+    .map((entry) => entry.date)
+    .filter((dateString) => dateString <= todayKey)
+    .sort();
+
+  let data = $state<SpotleArchivePayload>({
+    availableDateStrings: localAvailableDateStrings,
+    selectedDateKey: null,
+    selectedSpotle: null
+  });
+  let isLoading = $state(false);
+  let loadError = $state<string | null>(null);
 
   let availableDates = $derived((data.availableDateStrings ?? []).map((dateString: string) => new Date(`${dateString}T12:00:00`)));
   let startDate = $derived(availableDates[0] ?? new Date());
+  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+
+  async function loadArchive(dateKey: string | null): Promise<void> {
+    if (!dateKey) {
+      data.selectedDateKey = null;
+      data.selectedSpotle = null;
+      isLoading = false;
+      loadError = null;
+      return;
+    }
+
+    const requestDateKey = dateKey;
+    isLoading = true;
+    loadError = null;
+
+    try {
+      const payload = await fetchArchivePayload<SpotleArchivePayload>('spotle', requestDateKey);
+
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.availableDateStrings = payload.availableDateStrings ?? localAvailableDateStrings;
+      data.selectedDateKey = payload.selectedDateKey;
+      data.selectedSpotle = payload.selectedSpotle;
+    } catch (error) {
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = requestDateKey;
+      data.selectedSpotle = null;
+      loadError = error instanceof Error ? error.message : 'Failed to load the Spotle archive entry.';
+    } finally {
+      if (selectedDateParam === requestDateKey) {
+        isLoading = false;
+      }
+    }
+  }
+
+  $effect(() => {
+    if (!browser) {
+      return;
+    }
+
+    void loadArchive(selectedDateParam);
+  });
 </script>
 
 <svelte:head>
@@ -89,6 +160,18 @@
         </div>
       </div>
     </div>
+  {:else if loadError}
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+      <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Spotle date</h2>
+      <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
+    </div>
+  {:else if isLoading && data.selectedDateKey}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Spotle archive entry...</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Pulling the selected artist answer into this archive page now.
+      </p>
+    </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Choose a Spotle date above</h2>
@@ -98,3 +181,5 @@
     </div>
   {/if}
 </section>
+
+

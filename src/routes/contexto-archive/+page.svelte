@@ -1,10 +1,77 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import { page } from '$app/state';
+  import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import { getContextoDateFromGameNumber } from '$lib/contexto';
 
-  let { data } = $props();
+  interface ContextoAnswerResponse {
+    success: boolean;
+    gameNumber: number;
+    date: string;
+    answer?: string;
+    error?: string;
+  }
+
+  interface ContextoArchivePayload {
+    selectedDateKey: string | null;
+    selectedContexto: ContextoAnswerResponse | null;
+  }
+
+  let data = $state<ContextoArchivePayload>({
+    selectedDateKey: null,
+    selectedContexto: null
+  });
+  let isLoading = $state(false);
+  let loadError = $state<string | null>(null);
 
   const startDate = getContextoDateFromGameNumber(1);
+  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+
+  async function loadArchive(dateKey: string | null): Promise<void> {
+    if (!dateKey) {
+      data.selectedDateKey = null;
+      data.selectedContexto = null;
+      isLoading = false;
+      loadError = null;
+      return;
+    }
+
+    const requestDateKey = dateKey;
+    isLoading = true;
+    loadError = null;
+
+    try {
+      const payload = await fetchArchivePayload<ContextoArchivePayload>('contexto', requestDateKey);
+
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = payload.selectedDateKey;
+      data.selectedContexto = payload.selectedContexto;
+    } catch (error) {
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = requestDateKey;
+      data.selectedContexto = null;
+      loadError = error instanceof Error ? error.message : 'Failed to load the Contexto archive entry.';
+    } finally {
+      if (selectedDateParam === requestDateKey) {
+        isLoading = false;
+      }
+    }
+  }
+
+  $effect(() => {
+    if (!browser) {
+      return;
+    }
+
+    void loadArchive(selectedDateParam);
+  });
 </script>
 
 <svelte:head>
@@ -60,6 +127,18 @@
         </div>
       </div>
     </div>
+  {:else if loadError}
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+      <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Contexto date</h2>
+      <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
+    </div>
+  {:else if isLoading && data.selectedDateKey}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Contexto archive entry...</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Pulling the selected semantic answer into this archive page now.
+      </p>
+    </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Select a Contexto date above</h2>
@@ -69,3 +148,5 @@
     </div>
   {/if}
 </section>
+
+

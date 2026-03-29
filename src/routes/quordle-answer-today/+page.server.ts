@@ -1,11 +1,11 @@
-import { getJSTToday } from '$lib/utils';
 import { getQuordleToday, getQuordleDataForDate } from '$lib/quordle';
 import { generatePersonAuthorSchema } from '$lib/seo';
 import { format, subDays } from 'date-fns';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-    const today = getJSTToday();
+    const today = getPuzzleDateForGame('quordle');
     const formattedDate = format(today, 'MMMM d, yyyy');
     const todayData = getQuordleToday();
     const todayWords = todayData ? todayData.d.join(', ').replace(/, ([^,]*)$/, ', and $1') : '';

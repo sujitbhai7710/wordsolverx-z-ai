@@ -1,5 +1,6 @@
 import seedrandom from 'seedrandom';
 import { format } from 'date-fns';
+import { getPuzzleWindow } from '$lib/puzzle-window';
 
 import type {
   WorldleAnswer,
@@ -40,13 +41,6 @@ function localDateToString(date: Date): string {
   return `${year}-${month}-${day}`;
 }
 
-function utcDateToString(date: Date): string {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(date.getUTCDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
 function daysBetween(fromDate: string, toDate: string): number {
   const start = dateStringToLocalDate(fromDate);
   const end = dateStringToLocalDate(toDate);
@@ -70,7 +64,7 @@ function isDirectionMatch(actual: WorldleDirection, expected: WorldleDirection):
 }
 
 export function getCurrentWorldleDateString(now: Date = new Date()): string {
-  return utcDateToString(now);
+  return getPuzzleWindow('worldle', { now }).effectivePuzzleDate;
 }
 
 export function getWorldleNumberFromDateString(dateStr: string): number {

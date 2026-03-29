@@ -1,10 +1,70 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
+  import { page } from '$app/state';
+  import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import GlobleCluesSection from '$lib/components/GlobleCluesSection.svelte';
+  import type { GlobleDayData } from '$lib/globle-date';
 
-  let { data } = $props();
+  interface GlobleArchivePayload {
+    selectedDateKey: string | null;
+    selectedGloble: GlobleDayData | null;
+  }
 
-  const startDate = new Date(2022, 0, 1); // January 1, 2022
+  let data = $state<GlobleArchivePayload>({
+    selectedDateKey: null,
+    selectedGloble: null
+  });
+  let isLoading = $state(false);
+  let loadError = $state<string | null>(null);
+
+  const startDate = new Date(2022, 0, 1);
+  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+
+  async function loadArchive(dateKey: string | null): Promise<void> {
+    if (!dateKey) {
+      data.selectedDateKey = null;
+      data.selectedGloble = null;
+      isLoading = false;
+      loadError = null;
+      return;
+    }
+
+    const requestDateKey = dateKey;
+    isLoading = true;
+    loadError = null;
+
+    try {
+      const payload = await fetchArchivePayload<GlobleArchivePayload>('globle', requestDateKey);
+
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = payload.selectedDateKey;
+      data.selectedGloble = payload.selectedGloble;
+    } catch (error) {
+      if (selectedDateParam !== requestDateKey) {
+        return;
+      }
+
+      data.selectedDateKey = requestDateKey;
+      data.selectedGloble = null;
+      loadError = error instanceof Error ? error.message : 'Failed to load the Globle archive entry.';
+    } finally {
+      if (selectedDateParam === requestDateKey) {
+        isLoading = false;
+      }
+    }
+  }
+
+  $effect(() => {
+    if (!browser) {
+      return;
+    }
+
+    void loadArchive(selectedDateParam);
+  });
 </script>
 
 <svelte:head>
@@ -28,7 +88,7 @@
 <ArchiveCalendar
   gameName="Globle"
   gameColor="sky"
-  gameIcon="ðŸŒ"
+  gameIcon="??"
   {startDate}
   basePath="/globle-archive"
   selectedDate={data.selectedDateKey}
@@ -67,13 +127,25 @@
               <div class="rounded-lg bg-gradient-to-br from-yellow-50 to-orange-50 p-4 dark:from-slate-700 dark:to-slate-600">
                 <div class="text-sm font-medium text-slate-600 dark:text-slate-300">Coordinates</div>
                 <div class="text-lg font-bold text-slate-900 dark:text-white">
-                  {data.selectedGloble.country.latitude.toFixed(2)}Â°, {data.selectedGloble.country.longitude.toFixed(2)}Â°
+                  {data.selectedGloble.country.latitude.toFixed(2)}°, {data.selectedGloble.country.longitude.toFixed(2)}°
                 </div>
               </div>
             </div>
           </div>
         </div>
       </GlobleCluesSection>
+    </div>
+  {:else if loadError}
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+      <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Globle date</h2>
+      <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
+    </div>
+  {:else if isLoading && data.selectedDateKey}
+    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Globle archive entry...</h2>
+      <p class="mt-3 text-gray-600 dark:text-gray-300">
+        Pulling the selected country answer into this archive page now.
+      </p>
     </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
@@ -84,3 +156,5 @@
     </div>
   {/if}
 </section>
+
+

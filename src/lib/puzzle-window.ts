@@ -42,6 +42,7 @@ interface PuzzleWindowConfig {
 	boundaryHourUtc?: number;
 	boundaryMinuteUtc?: number;
 	rolloverGraceSeconds?: number;
+	visibleDateOffsetDays?: number;
 }
 
 const OFFSET_MINUTES = {
@@ -51,18 +52,54 @@ const OFFSET_MINUTES = {
 } as const;
 
 export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
-	wordle: { group: 'wordle', timezone: 'JST', sourceReadiness: 'deterministic' },
-	quordle: { group: 'quordle', timezone: 'JST', sourceReadiness: 'deterministic' },
+	wordle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
+	quordle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
 	phoodle: {
-		group: 'phoodle',
+		group: 'main',
 		timezone: 'worker-latest',
 		sourceReadiness: 'latest-payload',
-		boundaryHourUtc: 15,
-		boundaryMinuteUtc: 0
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
 	},
-	semantle: { group: 'semantle', timezone: 'JST', sourceReadiness: 'deterministic' },
-	colordle: { group: 'colordle', timezone: 'JST', sourceReadiness: 'deterministic' },
-	globle: { group: 'globle', timezone: 'JST', sourceReadiness: 'deterministic' },
+	semantle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
+	colordle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
+	globle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
 	waffle: {
 		group: 'waffle',
 		timezone: 'worker-latest',
@@ -70,59 +107,104 @@ export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
 		boundaryHourUtc: 0,
 		boundaryMinuteUtc: 1
 	},
-	worldle: { group: 'worldle', timezone: 'UTC', sourceReadiness: 'deterministic' },
-	betweenle: { group: 'betweenle', timezone: 'IST', sourceReadiness: 'deterministic' },
-	nerdle: {
-		group: 'nerdle',
-		timezone: 'UTC',
+	worldle: {
+		group: 'main',
+		timezone: 'worker-latest',
 		sourceReadiness: 'deterministic',
-		rolloverGraceSeconds: 60
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
 	},
-	contexto: { group: 'contexto', timezone: 'IST', sourceReadiness: 'deterministic' },
-	searchle: { group: 'searchle', timezone: 'IST', sourceReadiness: 'deterministic' },
-	phrazle: { group: 'phrazle', timezone: 'IST', sourceReadiness: 'deterministic' },
-	spotle: { group: 'spotle', timezone: 'JST', sourceReadiness: 'deterministic' },
+	betweenle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
+	nerdle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'latest-payload',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		rolloverGraceSeconds: 60,
+		visibleDateOffsetDays: 1
+	},
+	contexto: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'latest-payload',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
+	searchle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
+	phrazle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
+	spotle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 16,
+		boundaryMinuteUtc: 30,
+		visibleDateOffsetDays: 1
+	},
 	dotadle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
 		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 6,
-		boundaryMinuteUtc: 0
+		boundaryMinuteUtc: 2
 	},
 	loldle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
 		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 6,
-		boundaryMinuteUtc: 0
+		boundaryMinuteUtc: 2
 	},
 	narutodle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
 		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 6,
-		boundaryMinuteUtc: 0
+		boundaryMinuteUtc: 2
 	},
 	onepiecedle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
 		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 6,
-		boundaryMinuteUtc: 0
+		boundaryMinuteUtc: 2
 	},
 	pokedle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
 		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 6,
-		boundaryMinuteUtc: 0
+		boundaryMinuteUtc: 2
 	},
 	smashdle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
 		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 6,
-		boundaryMinuteUtc: 0
+		boundaryMinuteUtc: 2
 	}
 };
 
@@ -262,6 +344,7 @@ function getWorkerLatestDates(
 	now: Date,
 	rolloverGraceSeconds = DAILY_ROLLOVER_GRACE_SECONDS
 ) {
+	const visibleDateOffsetDays = config.visibleDateOffsetDays ?? 0;
 	const hour = config.boundaryHourUtc ?? 0;
 	const minute = config.boundaryMinuteUtc ?? 0;
 	const currentBoundary = Date.UTC(
@@ -275,18 +358,22 @@ function getWorkerLatestDates(
 	);
 
 	if (now.getTime() >= currentBoundary) {
-		const currentKey = formatDateKeyFromUtcParts(
-			now.getUTCFullYear(),
-			now.getUTCMonth() + 1,
-			now.getUTCDate()
+		const currentVisibleDate = new Date(
+			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + visibleDateOffsetDays)
 		);
-		const previous = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 1));
+		const previousVisibleDate = new Date(
+			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + visibleDateOffsetDays - 1)
+		);
 		return {
-			effectivePuzzleDate: currentKey,
+			effectivePuzzleDate: formatDateKeyFromUtcParts(
+				currentVisibleDate.getUTCFullYear(),
+				currentVisibleDate.getUTCMonth() + 1,
+				currentVisibleDate.getUTCDate()
+			),
 			fallbackPuzzleDate: formatDateKeyFromUtcParts(
-				previous.getUTCFullYear(),
-				previous.getUTCMonth() + 1,
-				previous.getUTCDate()
+				previousVisibleDate.getUTCFullYear(),
+				previousVisibleDate.getUTCMonth() + 1,
+				previousVisibleDate.getUTCDate()
 			),
 			nextInvalidationAt: new Date(
 				Date.UTC(
@@ -302,17 +389,22 @@ function getWorkerLatestDates(
 		};
 	}
 
-	const previous = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 1));
+	const previousVisibleDate = new Date(
+		Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + visibleDateOffsetDays - 1)
+	);
+	const fallbackVisibleDate = new Date(
+		Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + visibleDateOffsetDays - 2)
+	);
 	return {
 		effectivePuzzleDate: formatDateKeyFromUtcParts(
-			previous.getUTCFullYear(),
-			previous.getUTCMonth() + 1,
-			previous.getUTCDate()
+			previousVisibleDate.getUTCFullYear(),
+			previousVisibleDate.getUTCMonth() + 1,
+			previousVisibleDate.getUTCDate()
 		),
 		fallbackPuzzleDate: formatDateKeyFromUtcParts(
-			now.getUTCFullYear(),
-			now.getUTCMonth() + 1,
-			now.getUTCDate() - 2
+			fallbackVisibleDate.getUTCFullYear(),
+			fallbackVisibleDate.getUTCMonth() + 1,
+			fallbackVisibleDate.getUTCDate()
 		),
 		nextInvalidationAt: new Date(currentBoundary)
 	};
