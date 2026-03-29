@@ -64,7 +64,7 @@ jobs:
 
       - name: Skip If Canary Already Current
         id: canary
-        if: env.TARGET_DATE != '' && steps.canary_path.outputs.path != ''
+        if: env.GROUP_NAME != 'gamedle' && env.TARGET_DATE != '' && steps.canary_path.outputs.path != ''
         env:
           CANARY_PATH: ${{ steps.canary_path.outputs.path }}
         shell: bash
