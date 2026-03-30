@@ -2,7 +2,7 @@
   import GameCard from '$lib/components/GameCard.svelte';
 
   let { data } = $props<{ data: { todayStr: string } }>();
-  const todayStr = $derived(data.todayStr);
+  let todayStr = $derived(data.todayStr);
 
   const answerTodayGames = [
     { name: 'Wordle', href: '/wordle-answer-today', description: 'The classic 5-letter word game by NYT.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
@@ -50,18 +50,6 @@
     { name: 'Searchle Solver', href: '/searchle-solver', description: 'Autocomplete puzzle solver for Searchle.', color: 'from-purple-500 to-pink-600', icon: 'Se' },
     { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'S' },
   ];
-
-  let siteSearch = $state('');
-
-  const matchesSearch = (item: { name: string; description: string; href: string }) => {
-    const query = siteSearch.trim().toLowerCase();
-    if (!query) return true;
-
-    return [item.name, item.description, item.href].some((value) => value.toLowerCase().includes(query));
-  };
-
-  const filteredAnswerTodayGames = $derived.by(() => answerTodayGames.filter(matchesSearch));
-  const filteredSolverTools = $derived.by(() => solverTools.filter(matchesSearch));
 
   const jsonLd = JSON.stringify([
     { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolver.tech' },
@@ -125,12 +113,12 @@
         </a>
       </div>
 
-      <form class="mt-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/10 shadow-2xl shadow-black/20 backdrop-blur-sm" onsubmit={(event) => event.preventDefault()}>
+      <form class="mt-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-white/10 shadow-2xl shadow-black/20 backdrop-blur-sm" data-card-filter-form>
         <input
-          bind:value={siteSearch}
           type="search"
           placeholder="Search the whole website..."
           class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-white placeholder:text-gray-400 outline-none"
+          data-card-filter-input="home-search"
         />
         <button
           type="submit"
@@ -162,13 +150,17 @@
       <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Get the latest answers for all your favorite daily word puzzles - updated every midnight.</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-      {#each filteredAnswerTodayGames as game}
-        <GameCard name={game.name} href={game.href} description={game.description} color={game.color} icon={game.icon} isPopular={game.isPopular} actionText="View Answer" />
+      {#each answerTodayGames as game}
+        <div
+          data-card-filter-item="home-search"
+          data-filter-section="answers"
+          data-search-text={`${game.name} ${game.description} ${game.href}`}
+        >
+          <GameCard name={game.name} href={game.href} description={game.description} color={game.color} icon={game.icon} isPopular={game.isPopular} actionText="View Answer" />
+        </div>
       {/each}
     </div>
-    {#if siteSearch.trim() && filteredAnswerTodayGames.length === 0}
-      <p class="mt-6 text-center text-gray-500 dark:text-gray-400">No answer pages matched your search.</p>
-    {/if}
+    <p class="mt-6 text-center text-gray-500 dark:text-gray-400" hidden data-card-filter-empty="home-search" data-empty-scope="answers">No answer pages matched your search.</p>
   </section>
 
   <!-- Solver Tools Section -->
@@ -183,13 +175,17 @@
         <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Stuck on a puzzle? Use our solvers to narrow down possibilities.</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {#each filteredSolverTools as tool}
-          <GameCard name={tool.name} href={tool.href} description={tool.description} color={tool.color} icon={tool.icon} isPopular={tool.isPopular} actionText="Open Tool" />
+        {#each solverTools as tool}
+          <div
+            data-card-filter-item="home-search"
+            data-filter-section="solvers"
+            data-search-text={`${tool.name} ${tool.description} ${tool.href}`}
+          >
+            <GameCard name={tool.name} href={tool.href} description={tool.description} color={tool.color} icon={tool.icon} isPopular={tool.isPopular} actionText="Open Tool" />
+          </div>
         {/each}
       </div>
-      {#if siteSearch.trim() && filteredSolverTools.length === 0}
-        <p class="mt-6 text-center text-gray-500 dark:text-gray-400">No solver tools matched your search.</p>
-      {/if}
+      <p class="mt-6 text-center text-gray-500 dark:text-gray-400" hidden data-card-filter-empty="home-search" data-empty-scope="solvers">No solver tools matched your search.</p>
     </div>
   </section>
 

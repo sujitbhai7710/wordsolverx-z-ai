@@ -31,17 +31,6 @@
     { name: 'Word Ladder Solver', href: '/word-ladder-solver', description: 'Find all shortest paths with OWL2 and SOWPODS dictionaries.', color: 'from-fuchsia-500 to-violet-600', icon: 'WL' },
   ];
 
-  let solverSearch = $state('');
-
-  const matchesSolverSearch = (item: { name: string; description: string; href: string }) => {
-    const query = solverSearch.trim().toLowerCase();
-    if (!query) return true;
-
-    return [item.name, item.description, item.href].some((value) => value.toLowerCase().includes(query));
-  };
-
-  const filteredSolvers = $derived.by(() => solvers.filter(matchesSolverSearch));
-
   const faqs = [
     {
       question: 'How do puzzle solvers work?',
@@ -119,9 +108,9 @@
       </p>
     </div>
 
-    <form class="mb-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800" onsubmit={(event) => event.preventDefault()}>
+    <form class="mb-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800" data-card-filter-form>
       <input
-        bind:value={solverSearch}
+        data-card-filter-input="solver-search"
         type="search"
         placeholder="Search solvers..."
         class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-gray-900 outline-none placeholder:text-gray-400 dark:text-white"
@@ -135,13 +124,24 @@
     </form>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-      {#each filteredSolvers as solver}
-        <GameCard name={solver.name} href={solver.href} description={solver.description} color={solver.color} icon={solver.icon} isPopular={solver.isPopular} actionText="Open Solver" />
+      {#each solvers as solver}
+        <div
+          data-card-filter-item="solver-search"
+          data-filter-section="solvers"
+          data-search-text={`${solver.name} ${solver.description} ${solver.href}`}
+        >
+          <GameCard name={solver.name} href={solver.href} description={solver.description} color={solver.color} icon={solver.icon} isPopular={solver.isPopular} actionText="Open Solver" />
+        </div>
       {/each}
     </div>
-    {#if solverSearch.trim() && filteredSolvers.length === 0}
-      <p class="mt-6 text-center text-gray-500 dark:text-gray-400">No solver tools matched your search.</p>
-    {/if}
+    <p
+      class="mt-6 text-center text-gray-500 dark:text-gray-400"
+      hidden
+      data-card-filter-empty="solver-search"
+      data-empty-scope="solvers"
+    >
+      No solver tools matched your search.
+    </p>
 
     <!-- SEO Content Section -->
     <article class="mt-16 max-w-4xl mx-auto">

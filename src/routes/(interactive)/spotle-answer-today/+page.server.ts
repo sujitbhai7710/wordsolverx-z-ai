@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { format, subDays } from 'date-fns';
-import spotleData from '../../../static/spotle_data.json';
+import spotleData from '../../../../static/spotle_data.json';
 import {
 	COUNTRY_NAMES,
 	GENDER_NAMES,

@@ -2,8 +2,7 @@
   import GameCard from '$lib/components/GameCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   let { data } = $props<{ data: { todayStr: string } }>();
-
-  const todayStr = $derived(data.todayStr);
+  let todayStr = $derived(data.todayStr);
 
   const games = [
     { name: 'Wordle', href: '/wordle-answer-today', description: "Today's Wordle answer and hints.", color: 'from-green-500 to-emerald-600', icon: 'W' },
@@ -28,16 +27,6 @@
     { name: 'Spotle', href: '/spotle-answer-today', description: "Today's Spotify artist answer.", color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
   ];
 
-  let answerSearch = $state('');
-
-  const matchesAnswerSearch = (item: { name: string; description: string; href: string }) => {
-    const query = answerSearch.trim().toLowerCase();
-    if (!query) return true;
-
-    return [item.name, item.description, item.href].some((value) => value.toLowerCase().includes(query));
-  };
-
-  const filteredGames = $derived.by(() => games.filter(matchesAnswerSearch));
 </script>
 
 <svelte:head>
@@ -85,12 +74,12 @@
       </p>
     </div>
 
-    <form class="mb-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800" onsubmit={(event) => event.preventDefault()}>
+    <form class="mb-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800" data-card-filter-form>
       <input
-        bind:value={answerSearch}
         type="search"
         placeholder="Search answer today pages..."
         class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-gray-900 outline-none placeholder:text-gray-400 dark:text-white"
+        data-card-filter-input="today-search"
       />
       <button
         type="submit"
@@ -101,13 +90,13 @@
     </form>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-      {#each filteredGames as game}
-        <GameCard name={game.name} href={game.href} description={game.description} color={game.color} icon={game.icon} actionText="View Answer" />
+      {#each games as game}
+        <div data-card-filter-item="today-search" data-filter-section="answers" data-search-text={`${game.name} ${game.description} ${game.href}`}>
+          <GameCard name={game.name} href={game.href} description={game.description} color={game.color} icon={game.icon} actionText="View Answer" />
+        </div>
       {/each}
     </div>
-    {#if answerSearch.trim() && filteredGames.length === 0}
-      <p class="mt-6 text-center text-gray-500 dark:text-gray-400">No answer pages matched your search.</p>
-    {/if}
+    <p class="mt-6 text-center text-gray-500 dark:text-gray-400" hidden data-card-filter-empty="today-search" data-empty-scope="answers">No answer pages matched your search.</p>
 
     <article class="mt-16 max-w-4xl mx-auto space-y-8">
       <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm">

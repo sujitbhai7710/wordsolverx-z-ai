@@ -77,7 +77,6 @@
   let answers = $derived(data?.answers ?? []);
   let loading = $derived(!data?.answers?.length);
   let error = $derived(data?.error ?? null);
-  let copiedKey = $state<string | null>(null);
   let dateStr = $derived(data?.dateStr ?? '');
 
   let canonicalUrl = $derived(`https://wordsolver.tech/${gameKey}-answer-today`);
@@ -205,14 +204,6 @@
     }
   }
 
-  function copyToClipboard(text: string, key: string) {
-    navigator.clipboard.writeText(text);
-    copiedKey = key;
-    setTimeout(() => {
-      copiedKey = null;
-    }, 2000);
-  }
-
   function getAnswer(mode: string, region: string) {
     return answers.find((answer) => answer.mode === mode && answer.region === region);
   }
@@ -265,7 +256,11 @@
     {:else if error}
       <div class="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
         <p class="text-red-600">{error}</p>
-        <button onclick={() => window.location.reload()} class="mt-4 rounded-lg bg-red-500 px-4 py-2 text-white">
+        <button
+          type="button"
+          data-reload-page
+          class="mt-4 inline-flex rounded-lg bg-red-500 px-4 py-2 text-white"
+        >
           Retry
         </button>
       </div>
@@ -299,11 +294,14 @@
                     </div>
                     <div class="flex items-center gap-2">
                       <button
-                        onclick={() => copyToClipboard(content.champion_name, `${mode}-${region.key}`)}
+                        type="button"
+                        data-copy-value={content.champion_name}
+                        data-copy-default="Copy"
+                        data-copy-success="Copied"
                         class="text-gray-400 transition-colors hover:text-gray-600"
                         title="Copy answer"
                       >
-                        {copiedKey === `${mode}-${region.key}` ? 'Copied' : 'Copy'}
+                        Copy
                       </button>
                       <span class="flex items-center gap-1 text-green-500">
                         <span class="h-2 w-2 rounded-full bg-green-500"></span>

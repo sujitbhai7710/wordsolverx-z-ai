@@ -112,6 +112,8 @@ class Monitor {
 }
 
 class Tracker {
+    private lastPagePath: string | null = null;
+
     trackEvent(event: AnalyticsEvent) {
         if (typeof window === 'undefined') return;
 
@@ -139,6 +141,9 @@ class Tracker {
     }
 
     trackPageView(path: string) {
+        if (path === this.lastPagePath) return;
+        this.lastPagePath = path;
+
         const gtag = getGtag();
         if (gtag && typeof window !== 'undefined') {
             gtag('event', 'page_view', {

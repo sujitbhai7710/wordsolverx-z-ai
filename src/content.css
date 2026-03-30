@@ -1,0 +1,12 @@
+@import 'tailwindcss' source(none);
+@import './lib/styles/theme.css';
+@plugin "@tailwindcss/typography";
+
+@source "./routes/(content)/**/*.{html,js,svelte,ts}";
+@source "./lib/components/ContentNavigation.svelte";
+@source "./lib/components/Footer.svelte";
+@source "./lib/components/GameCard.svelte";
+@source "./lib/components/Breadcrumbs.svelte";
+@source "./lib/components/FAQSection.svelte";
+@source "./lib/components/AuthorCard.svelte";
+@source "./lib/components/GameDleAnswerPage.svelte";

@@ -25,6 +25,7 @@ const config = {
 					}
 				: {})
 		}),
+		inlineStyleThreshold: 100000,
 		prerender: {
 			crawl: false,
 			entries: PRERENDER_ENTRIES

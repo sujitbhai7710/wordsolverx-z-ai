@@ -167,7 +167,7 @@
 
           const content = document.createElement('div');
           content.className = 'faq-content';
-          content.style.maxHeight = '0px';
+          content.hidden = true;
           const inner = document.createElement('div');
           inner.className = 'faq-content-inner';
           item.answer.forEach(el => inner.appendChild(el.cloneNode(true)));
@@ -177,7 +177,7 @@
             const isOpen = trigger.getAttribute('aria-expanded') === 'true';
             trigger.setAttribute('aria-expanded', String(!isOpen));
             wrapper.classList.toggle('faq-item-open', !isOpen);
-            content.style.maxHeight = !isOpen ? content.scrollHeight + 'px' : '0px';
+            content.hidden = isOpen;
           };
 
           wrapper.appendChild(trigger);
@@ -405,7 +405,8 @@
   :global(.faq-chevron) { flex-shrink: 0; transition: transform 0.3s ease; color: #6b7280; }
   :global(.dark .faq-chevron) { color: #9ca3af; }
   :global(.faq-item-open .faq-chevron) { transform: rotate(180deg); }
-  :global(.faq-content) { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  :global(.faq-content) { overflow: hidden; }
+  :global(.faq-content[hidden]) { display: none; }
   :global(.faq-content-inner) { padding: 0 20px 16px 20px; color: #374151; font-size: 14.5px; line-height: 1.65; }
   :global(.dark .faq-content-inner) { color: #d1d5db; }
   :global(.faq-content-inner p) { margin: 0; }

@@ -5,7 +5,7 @@
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import { getPuzzleDateForGame } from '$lib/puzzle-window';
   import { COUNTRY_NAMES, GENDER_NAMES, formatSpotleDate, parseSpotleDate, type SpotleData } from '$lib/spotle';
-  import spotleData from '../../../static/spotle_data.json';
+  import spotleData from '../../../../static/spotle_data.json';
 
   interface SpotleArchivePayload {
     availableDateStrings: string[];

@@ -22,13 +22,13 @@
 		</h2>
 		<div class="space-y-4">
 			{#each faqs as faq}
-				<details class="faq-item group bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg">
-					<summary class="list-none cursor-pointer px-6 py-4 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-green-500">
+				<details class="group bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg">
+					<summary class="list-none cursor-pointer px-6 py-4 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-green-500 [&::-webkit-details-marker]:hidden">
 						<span class="text-lg font-semibold text-gray-900 dark:text-white">
 							{faq.question}
 						</span>
 						<svg
-							class="faq-chevron w-5 h-5 text-gray-500 transition-transform duration-200"
+							class="w-5 h-5 text-gray-500 transition-transform duration-200 group-open:rotate-180"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke="currentColor"
@@ -44,13 +44,3 @@
 		</div>
 	</div>
 </section>
-
-<style>
-	.faq-item summary::-webkit-details-marker {
-		display: none;
-	}
-
-	.faq-item[open] .faq-chevron {
-		transform: rotate(180deg);
-	}
-</style>

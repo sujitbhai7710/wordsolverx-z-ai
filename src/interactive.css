@@ -1,0 +1,6 @@
+@import 'tailwindcss' source(none);
+@import './lib/styles/theme.css';
+@plugin "@tailwindcss/typography";
+
+@source "./routes/(interactive)/**/*.{html,js,svelte,ts}";
+@source "./lib/**/*.{html,js,svelte,ts}";
