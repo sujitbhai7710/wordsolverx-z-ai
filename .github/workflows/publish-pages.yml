@@ -1,23 +1,28 @@
 name: Publish Pages
 
-run-name: Publish Pages (${{ github.event.client_payload.group || inputs.group || 'manual' }} ${{ github.event.client_payload.target_date || inputs.target_date || '' }})
+run-name: Publish Pages (${{ github.event.client_payload.group || github.event.inputs.group || (github.event_name == 'push' && 'site') || 'manual' }}${{ (github.event.client_payload.target_date || github.event.inputs.target_date) && format(' {0}', github.event.client_payload.target_date || github.event.inputs.target_date) || '' }})
 
 on:
+  push:
+    branches:
+      - main
   repository_dispatch:
     types:
       - pages-publish-requested
   workflow_dispatch:
     inputs:
       group:
-        description: Publish group
-        required: true
+        description: What to publish
+        required: false
+        default: site
         type: choice
         options:
+          - site
           - main
           - waffle
           - gamedle
       target_date:
-        description: Target date in YYYY-MM-DD format
+        description: Optional target date in YYYY-MM-DD format for worker-style publishes
         required: false
         type: string
       source:
@@ -33,12 +38,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
-      group: pages-publish-${{ github.event.client_payload.group || inputs.group || 'manual' }}-${{ github.event.client_payload.target_date || inputs.target_date || github.run_id }}
+      group: pages-publish-${{ github.event.client_payload.group || github.event.inputs.group || (github.event_name == 'push' && 'site') || 'manual' }}-${{ github.event.client_payload.target_date || github.event.inputs.target_date || github.sha || github.run_id }}
       cancel-in-progress: false
     env:
-      GROUP_NAME: ${{ github.event.client_payload.group || inputs.group || 'manual' }}
-      TARGET_DATE: ${{ github.event.client_payload.target_date || inputs.target_date || '' }}
-      SOURCE_NAME: ${{ github.event.client_payload.source || inputs.source || github.event.action || 'manual' }}
+      GROUP_NAME: ${{ github.event.client_payload.group || github.event.inputs.group || (github.event_name == 'push' && 'site') || 'manual' }}
+      TARGET_DATE: ${{ github.event.client_payload.target_date || github.event.inputs.target_date || '' }}
+      SOURCE_NAME: ${{ github.event.client_payload.source || github.event.inputs.source || (github.event_name == 'push' && format('push:{0}', github.ref_name)) || github.event.action || 'manual' }}
       PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev
       PUBLIC_BASE_URL: https://wordsolver.tech
     steps:
@@ -56,6 +61,7 @@ jobs:
         shell: bash
         run: |
           case "$GROUP_NAME" in
+            site) echo "path=" >> "$GITHUB_OUTPUT" ;;
             main) echo "path=/wordle-answer-today" >> "$GITHUB_OUTPUT" ;;
             waffle) echo "path=/waffle-answer-today" >> "$GITHUB_OUTPUT" ;;
             gamedle) echo "path=/narutodle-answer-today" >> "$GITHUB_OUTPUT" ;;
