@@ -1,3 +1,42 @@
+<script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+  import {
+    PRESTON_HAYES_AUTHOR_DESCRIPTION,
+    PRESTON_HAYES_AUTHOR_IMAGE,
+    PRESTON_HAYES_AUTHOR_NAME,
+    PRESTON_HAYES_AUTHOR_URL,
+    getPrestonHayesAuthorSchema
+  } from '$lib/authors';
+
+  const aboutSchemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      name: 'About WordSolverX',
+      description: 'About page for WordSolverX and its puzzle answer, archive, and solver content.',
+      url: 'https://wordsolver.tech/about'
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'About WordSolverX',
+      description: 'Learn about WordSolverX, its puzzle answer pages, archives, solver tools, and guides.',
+      url: 'https://wordsolver.tech/about'
+    },
+    {
+      ...getPrestonHayesAuthorSchema(),
+      url: PRESTON_HAYES_AUTHOR_URL,
+      description: PRESTON_HAYES_AUTHOR_DESCRIPTION,
+      worksFor: {
+        '@type': 'Organization',
+        name: 'WordSolverX',
+        url: 'https://wordsolver.tech'
+      }
+    }
+  ];
+</script>
+
 <svelte:head>
   <title>About WordSolverX | Puzzle Answers, Archives, and Solver Tools</title>
   <meta
@@ -20,30 +59,17 @@
     content="Learn about WordSolverX, our puzzle resources, and how the site helps players every day."
   />
   <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
-  {@html `<script type="application/ld+json">${JSON.stringify([
-    {
-      '@context': 'https://schema.org',
-      '@type': 'AboutPage',
-      name: 'About WordSolverX',
-      description: 'About page for WordSolverX and its puzzle answer, archive, and solver content.',
-      url: 'https://wordsolver.tech/about'
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      name: 'About WordSolverX',
-      description: 'Learn about WordSolverX, its puzzle answer pages, archives, solver tools, and guides.',
-      url: 'https://wordsolver.tech/about'
-    }
-  ])}</script>`}
+  {@html `<script type="application/ld+json">${JSON.stringify(aboutSchemas)}</script>`}
 </svelte:head>
 
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <Breadcrumbs />
+
   <div class="text-center mb-12">
     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
       About WordSolverX
     </h1>
-    <p class="mt-4 max-w-3xl text-xl text-gray-500 dark:text-gray-300 mx-auto">
+    <p class="mt-4 max-w-3xl text-xl text-gray-600 dark:text-gray-300 mx-auto">
       WordSolverX is an independent puzzle resource built to make daily answers, archives, guides,
       and solver tools easier to find and easier to use.
     </p>
@@ -99,7 +125,24 @@
           through multiple websites. WordSolverX is designed to be that single resource - fast,
           readable, and focused on useful puzzle help.
         </p>
+
+        <section id="preston-hayes" class="mt-10 scroll-mt-28">
+          <h2>About Preston Hayes</h2>
+          <p>
+            Preston Hayes is the credited author behind our daily answer pages and archive updates.
+            His work focuses on making each puzzle page clear, trustworthy, and easy to skim when
+            readers need a quick answer or a fast archive lookup.
+          </p>
+        </section>
       </div>
     </div>
+  </div>
+
+  <div class="mt-10">
+    <AuthorCard
+      name={PRESTON_HAYES_AUTHOR_NAME}
+      image={PRESTON_HAYES_AUTHOR_IMAGE}
+      description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+    />
   </div>
 </div>

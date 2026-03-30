@@ -59,7 +59,7 @@
       <li class="inline-flex items-center">
         <a
           href="/"
-          class="inline-flex items-center text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-500 transition-colors"
+          class="inline-flex items-center text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 transition-colors"
         >
           <FiHome class="mr-2 h-4 w-4" />
           Home
@@ -67,7 +67,7 @@
       </li>
       {#each breadcrumbItems as item}
         <li class="flex items-center">
-          <FiChevronRight class="h-4 w-4 text-gray-400 mx-1" />
+          <FiChevronRight class="h-4 w-4 text-gray-500 dark:text-gray-400 mx-1" />
           {#if item.isLast}
             <span class="text-gray-900 dark:text-gray-100 font-bold ml-1 md:ml-2">
               {item.name}
@@ -75,7 +75,7 @@
           {:else}
             <a
               href={item.href}
-              class="text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-500 transition-colors ml-1 md:ml-2"
+              class="text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 transition-colors ml-1 md:ml-2"
             >
               {item.name}
             </a>

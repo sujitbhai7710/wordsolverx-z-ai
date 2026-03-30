@@ -17,6 +17,7 @@
 <svelte:head>
 	<title>{status} Error | WordSolverX</title>
 	<meta name="description" content="Oops! Looks like you've landed on a missing page." />
+	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
 <div class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-950">

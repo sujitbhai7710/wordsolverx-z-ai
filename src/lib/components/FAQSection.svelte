@@ -28,7 +28,7 @@
 							{faq.question}
 						</span>
 						<svg
-							class="w-5 h-5 text-gray-500 transition-transform duration-200 group-open:rotate-180"
+							class="w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform duration-200 group-open:rotate-180"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke="currentColor"

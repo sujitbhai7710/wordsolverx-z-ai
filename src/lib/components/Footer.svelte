@@ -125,7 +125,7 @@
         >
           wordsolverx@gmail.com
         </a>
-        <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+        <p class="mt-4 text-sm text-gray-600 dark:text-gray-300">
           We review messages about page corrections, solver issues, and new puzzle requests.
         </p>
       </div>
@@ -133,10 +133,10 @@
 
     <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
       <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-base text-gray-500 dark:text-gray-400 text-center md:text-left">
+        <p class="text-base text-gray-600 dark:text-gray-300 text-center md:text-left">
           &copy; {new Date().getFullYear()} WordSolverX. All rights reserved.
         </p>
-        <p class="mt-4 md:mt-0 text-sm text-gray-500 dark:text-gray-400 text-center md:text-right">
+        <p class="mt-4 md:mt-0 text-sm text-gray-600 dark:text-gray-300 text-center md:text-right">
           Wordle is a trademark of The New York Times Company. WordSolverX is not affiliated with NYT.
         </p>
       </div>

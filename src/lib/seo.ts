@@ -9,6 +9,12 @@ export interface SchemaOrganization {
     sameAs?: string[];
 }
 
+export const SOCIAL_PROFILE_URLS = [
+    'https://www.facebook.com/wordsolverx/',
+    'https://www.pinterest.com/wordsolverx/',
+    'https://t.me/wordsolverx',
+];
+
 export interface SchemaWebPage {
     '@context': string;
     '@type': 'WebPage';
@@ -129,9 +135,7 @@ export function generateOrganizationSchema(): SchemaOrganization {
         name: 'WordSolverX',
         url: 'https://wordsolver.tech',
         logo: 'https://wordsolver.tech/wordsolverx.webp',
-        sameAs: [
-            // Add your social media URLs here
-        ],
+        sameAs: SOCIAL_PROFILE_URLS,
     };
 }
 

@@ -1,3 +1,7 @@
+<script lang="ts">
+  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+</script>
+
 <svelte:head>
   <title>Disclaimer - WordSolverX</title>
   <meta
@@ -30,9 +34,11 @@
 </svelte:head>
 
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <Breadcrumbs />
+
   <div class="text-center mb-12">
     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">Disclaimer</h1>
-    <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 mx-auto">
+    <p class="mt-4 max-w-2xl text-xl text-gray-600 dark:text-gray-300 mx-auto">
       Last updated: March 14, 2026
     </p>
   </div>

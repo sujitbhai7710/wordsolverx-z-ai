@@ -69,7 +69,7 @@
       <h1 class="text-4xl font-extrabold sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-emerald-600">
         Today's Answers
       </h1>
-      <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300">
+      <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300">
         {todayStr} - Every daily puzzle answer in one place
       </p>
     </div>
@@ -96,7 +96,7 @@
         </div>
       {/each}
     </div>
-    <p class="mt-6 text-center text-gray-500 dark:text-gray-400" hidden data-card-filter-empty="today-search" data-empty-scope="answers">No answer pages matched your search.</p>
+    <p class="mt-6 text-center text-gray-600 dark:text-gray-300" hidden data-card-filter-empty="today-search" data-empty-scope="answers">No answer pages matched your search.</p>
 
     <article class="mt-16 max-w-4xl mx-auto space-y-8">
       <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm">

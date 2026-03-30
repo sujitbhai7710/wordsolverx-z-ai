@@ -117,7 +117,7 @@
       <h1 class="text-4xl font-extrabold sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-600">
         Guides & Strategies
       </h1>
-      <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300">
+      <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300">
         Master every word puzzle with expert tips and techniques
       </p>
     </div>
@@ -137,7 +137,7 @@
                 class="inline-flex items-center text-sm font-semibold uppercase tracking-wider bg-clip-text text-transparent bg-gradient-to-r {guide.gradient} hover:opacity-80 transition-opacity"
               >
                 {guide.linkText}
-                <svg class="w-4 h-4 ml-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="w-4 h-4 ml-1 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </a>

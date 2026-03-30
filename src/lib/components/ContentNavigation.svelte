@@ -40,7 +40,7 @@
 						class={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
 							active
 								? 'text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30'
-								: 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+								: 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
 						}`}
 					>
 						{link.name}
@@ -52,7 +52,7 @@
 			</div>
 
 			<details class="relative flex items-center lg:hidden">
-				<summary class="list-none p-2.5 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 transition-colors cursor-pointer">
+				<summary class="list-none p-2.5 rounded-xl text-gray-600 hover:text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 transition-colors cursor-pointer">
 					<span class="sr-only">Toggle navigation</span>
 					<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -67,7 +67,7 @@
 								class={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all ${
 									active
 										? 'text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/30'
-										: 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+										: 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
 								}`}
 							>
 								{link.name}

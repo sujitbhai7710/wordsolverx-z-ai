@@ -81,6 +81,7 @@
 
   let canonicalUrl = $derived(`https://wordsolver.tech/${gameKey}-answer-today`);
   let seoDate = $derived(dateStr ? dateStr.replace(/^[^,]+,\s*/, '') : '');
+  let publishedDate = $derived(answers[0]?.date ?? '');
   let pageTitle = $derived(
     data?.meta?.title ?? `${gameTitle} Hints and Answers for Today${seoDate ? ` (${seoDate})` : ''}`
   );
@@ -128,6 +129,10 @@
         '@id': canonicalUrl
       };
       normalized.image = pageImage;
+      if (publishedDate) {
+        normalized.datePublished = normalized.datePublished ?? publishedDate;
+        normalized.dateModified = normalized.dateModified ?? publishedDate;
+      }
     }
 
     if (type === 'WebPage') {
@@ -183,7 +188,10 @@
     '@type': 'Article',
     headline: pageTitle,
     description: pageDescription,
-    mainEntityOfPage: canonicalUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl
+    },
     author: generatePersonAuthorSchema(
       'Preston Hayes',
       'https://wordsolver.tech/about#preston-hayes',
@@ -193,7 +201,13 @@
       '@type': 'Organization',
       name: 'WordSolverX'
     },
-    image: pageImage
+    image: pageImage,
+    ...(publishedDate
+      ? {
+          datePublished: publishedDate,
+          dateModified: publishedDate
+        }
+      : {})
   });
 
   function parseContent(jsonContent: string): ParsedContent {
@@ -237,7 +251,7 @@
     <div class="max-w-6xl mx-auto px-4 py-10">
       <h1 class="text-4xl font-extrabold text-gray-900">{pageHeading}</h1>
       {#if dateStr}
-        <p class="mt-2 text-lg text-gray-500">{dateStr}</p>
+        <p class="mt-2 text-lg text-gray-600">{dateStr}</p>
       {/if}
     </div>
   </div>
@@ -298,7 +312,7 @@
                         data-copy-value={content.champion_name}
                         data-copy-default="Copy"
                         data-copy-success="Copied"
-                        class="text-gray-400 transition-colors hover:text-gray-600"
+                        class="text-gray-600 transition-colors hover:text-gray-800"
                         title="Copy answer"
                       >
                         Copy
@@ -311,12 +325,12 @@
                   </div>
                   {#if content.yesterday}
                     <div class="mt-3 border-t border-dashed pt-3 text-center">
-                      <span class="text-xs text-gray-400">Yesterday: </span>
-                      <span class="text-sm font-medium text-gray-600">{content.yesterday}</span>
+                      <span class="text-xs text-gray-500">Yesterday: </span>
+                      <span class="text-sm font-medium text-gray-700">{content.yesterday}</span>
                     </div>
                   {/if}
                 {:else}
-                  <div class="py-4 text-center text-gray-400">No data available</div>
+                  <div class="py-4 text-center text-gray-500">No data available</div>
                 {/if}
               </div>
             {/each}

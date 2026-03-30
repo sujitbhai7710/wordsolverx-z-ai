@@ -1,3 +1,7 @@
+<script lang="ts">
+  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+</script>
+
 <svelte:head>
   <title>Contact WordSolverX | Support, Feedback, and Corrections</title>
   <meta
@@ -40,11 +44,13 @@
 </svelte:head>
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <Breadcrumbs />
+
   <div class="text-center mb-12">
     <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
       Contact WordSolverX
     </h1>
-    <p class="mt-4 max-w-3xl text-xl text-gray-500 dark:text-gray-300 mx-auto">
+    <p class="mt-4 max-w-3xl text-xl text-gray-600 dark:text-gray-300 mx-auto">
       Questions, corrections, feature ideas, or partnerships? Email us directly and we will review
       it as soon as we can.
     </p>
@@ -92,7 +98,7 @@
             class="flex items-center justify-between rounded-xl border border-gray-200 px-4 py-4 hover:border-green-300 hover:bg-green-50 dark:border-gray-700 dark:hover:border-green-700 dark:hover:bg-green-900/20"
           >
             <span class="font-medium text-gray-900 dark:text-white">Facebook</span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">facebook.com/wordsolverx</span>
+            <span class="text-sm text-gray-600 dark:text-gray-300">facebook.com/wordsolverx</span>
           </a>
           <a
             href="https://www.pinterest.com/wordsolverx/"
@@ -101,7 +107,7 @@
             class="flex items-center justify-between rounded-xl border border-gray-200 px-4 py-4 hover:border-green-300 hover:bg-green-50 dark:border-gray-700 dark:hover:border-green-700 dark:hover:bg-green-900/20"
           >
             <span class="font-medium text-gray-900 dark:text-white">Pinterest</span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">pinterest.com/wordsolverx</span>
+            <span class="text-sm text-gray-600 dark:text-gray-300">pinterest.com/wordsolverx</span>
           </a>
           <a
             href="https://t.me/wordsolverx"
@@ -110,7 +116,7 @@
             class="flex items-center justify-between rounded-xl border border-gray-200 px-4 py-4 hover:border-green-300 hover:bg-green-50 dark:border-gray-700 dark:hover:border-green-700 dark:hover:bg-green-900/20"
           >
             <span class="font-medium text-gray-900 dark:text-white">Telegram</span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">t.me/wordsolverx</span>
+            <span class="text-sm text-gray-600 dark:text-gray-300">t.me/wordsolverx</span>
           </a>
         </div>
       </div>

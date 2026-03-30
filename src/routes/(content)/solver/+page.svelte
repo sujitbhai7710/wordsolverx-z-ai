@@ -57,7 +57,7 @@
 
 <svelte:head>
   <title>Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX</title>
-  <meta name="description" content="Free solver tools for Wordle, Betweenle, Quordle, Phoodle, Waffle, Colordle and more. Get unstuck with smart filtering and clue-based solving. No sign-up required." />
+  <meta name="description" content="Free puzzle solver tools for Wordle, Betweenle, Quordle, Phoodle, Waffle, Colordle, and more with fast clue-based filtering." />
   <link rel="canonical" href="https://wordsolver.tech/solver" />
   <meta property="og:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
   <meta property="og:description" content="Use free solver tools for Wordle, Betweenle, Worldle, Quordle, Phoodle, Waffle, Colordle, and more daily puzzle games." />
@@ -103,7 +103,7 @@
       <h1 class="text-4xl font-extrabold sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-600">
         Solver Tools
       </h1>
-      <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500 dark:text-gray-300">
+      <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300">
         Stuck on a puzzle? Use our smart solvers to crack any word game
       </p>
     </div>
@@ -135,7 +135,7 @@
       {/each}
     </div>
     <p
-      class="mt-6 text-center text-gray-500 dark:text-gray-400"
+      class="mt-6 text-center text-gray-600 dark:text-gray-300"
       hidden
       data-card-filter-empty="solver-search"
       data-empty-scope="solvers"

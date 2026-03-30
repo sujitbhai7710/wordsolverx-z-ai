@@ -36,7 +36,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90
     concurrency:
       group: pages-publish-${{ github.event.client_payload.group || github.event.inputs.group || (github.event_name == 'push' && 'site') || 'manual' }}-${{ github.event.client_payload.target_date || github.event.inputs.target_date || github.sha || github.run_id }}
       cancel-in-progress: false
@@ -46,9 +46,17 @@ jobs:
       SOURCE_NAME: ${{ github.event.client_payload.source || github.event.inputs.source || (github.event_name == 'push' && format('push:{0}', github.ref_name)) || github.event.action || 'manual' }}
       PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev
       PUBLIC_BASE_URL: https://wordsolver.tech
+      INDEXING_ARTIFACT_DIR: artifacts/indexing
+      SITEMAP_URL: https://wordsolver.tech/sitemap.xml
+      GOOGLE_INSPECTION_DELAY_SECONDS: 120
+      GOOGLE_INSPECTION_LIMIT: 30
+      HAS_INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY != '' }}
+      HAS_GOOGLE_SEARCH_CONSOLE: ${{ secrets.GOOGLE_SEARCH_CONSOLE_CREDENTIALS != '' && secrets.GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT != '' && secrets.GOOGLE_SEARCH_CONSOLE_SITE_URL != '' }}
     steps:
       - name: Check Out Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -151,9 +159,71 @@ jobs:
         if: steps.canary.outputs.skip != 'true'
         run: npm ci
 
+      - name: Materialize IndexNow Verification Key
+        if: steps.canary.outputs.skip != 'true' && env.HAS_INDEXNOW_KEY == 'true'
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        shell: bash
+        run: |
+          printf '%s' "$INDEXNOW_KEY" > "static/${INDEXNOW_KEY}.txt"
+
       - name: Deploy Cloudflare Pages
         if: steps.canary.outputs.skip != 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npm run deploy:pages
+
+      - name: Prepare Indexing Targets
+        if: steps.canary.outputs.skip != 'true'
+        id: indexing_targets
+        run: node scripts/seo/prepare-indexing-targets.mjs
+
+      - name: Authenticate Google Search Console
+        if: steps.canary.outputs.skip != 'true' && env.HAS_GOOGLE_SEARCH_CONSOLE == 'true'
+        id: google_auth
+        uses: google-github-actions/auth@v3
+        with:
+          credentials_json: ${{ secrets.GOOGLE_SEARCH_CONSOLE_CREDENTIALS }}
+          service_account: ${{ secrets.GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/webmasters
+
+      - name: Submit Updated URLs To IndexNow
+        if: steps.canary.outputs.skip != 'true'
+        continue-on-error: true
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          INDEXING_TARGETS_PATH: ${{ steps.indexing_targets.outputs.targets_path }}
+        run: node scripts/seo/submit-indexnow.mjs
+
+      - name: Submit Sitemap To Google Search Console
+        if: steps.canary.outputs.skip != 'true' && steps.google_auth.outputs.access_token != ''
+        continue-on-error: true
+        env:
+          GOOGLE_ACCESS_TOKEN: ${{ steps.google_auth.outputs.access_token }}
+          GOOGLE_SEARCH_CONSOLE_SITE_URL: ${{ secrets.GOOGLE_SEARCH_CONSOLE_SITE_URL }}
+        run: node scripts/seo/submit-google-sitemap.mjs
+
+      - name: Inspect Priority URLs In Google
+        if: steps.canary.outputs.skip != 'true' && steps.google_auth.outputs.access_token != ''
+        continue-on-error: true
+        env:
+          GOOGLE_ACCESS_TOKEN: ${{ steps.google_auth.outputs.access_token }}
+          GOOGLE_SEARCH_CONSOLE_SITE_URL: ${{ secrets.GOOGLE_SEARCH_CONSOLE_SITE_URL }}
+          INDEXING_TARGETS_PATH: ${{ steps.indexing_targets.outputs.targets_path }}
+        run: node scripts/seo/inspect-google-urls.mjs
+
+      - name: Write Indexing Summary
+        if: steps.canary.outputs.skip != 'true'
+        env:
+          INDEXING_TARGETS_PATH: ${{ steps.indexing_targets.outputs.targets_path }}
+        run: node scripts/seo/write-indexing-summary.mjs
+
+      - name: Upload Indexing Report
+        if: steps.canary.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexing-report-${{ github.run_id }}
+          path: artifacts/indexing
+          if-no-files-found: ignore

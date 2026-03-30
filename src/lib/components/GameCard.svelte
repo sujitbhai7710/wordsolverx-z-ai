@@ -26,13 +26,13 @@
 
 <a
   {href}
-  class="relative group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 {disabled ? 'opacity-75 cursor-default' : ''}"
+  class="group relative z-0 block h-full w-full isolate overflow-hidden rounded-2xl shadow-lg transform-gpu hover:z-10 hover:shadow-2xl [transition-property:transform,box-shadow] duration-300 hover:-translate-y-1 {disabled ? 'opacity-75 cursor-default' : ''}"
   onclick={handleClick}
 >
-  <div class="absolute inset-0 bg-gradient-to-br {color} opacity-90 transition-opacity duration-300 group-hover:opacity-100"></div>
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-br {color} opacity-90 transition-opacity duration-300 group-hover:opacity-100"></div>
 
   <!-- Shine Effect -->
-  <div class="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-1000 transform"></div>
+  <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:translate-x-full [transition-property:transform,opacity] duration-1000 transform-gpu"></div>
 
   <div class="relative p-6 h-full flex flex-col justify-between">
     <div>
