@@ -36,8 +36,11 @@
 	function loadWasmModule(): Promise<WasmModuleShape> {
 		if (!wasmPromise) {
 			wasmPromise = (async () => {
+				const modulePath = '/wasm/canuckle_solver_wasm.js';
 				// @ts-expect-error served from static /wasm at runtime
-				const module = (await import('/wasm/canuckle_solver_wasm.js')) as unknown as WasmModuleShape;
+				const module = (await import(
+					/* @vite-ignore */ modulePath
+				)) as unknown as WasmModuleShape;
 				await module.default();
 				return module;
 			})();
