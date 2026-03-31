@@ -208,15 +208,17 @@
 	<nav class="mx-auto mt-4 flex max-w-4xl gap-2 px-4">
 		<a
 			class="flex-1 rounded-lg bg-gray-200 px-4 py-3 text-center font-bold text-gray-700"
-			href="/canuckle-answer-today"
+			href="https://www.canucklegame.ca"
+			rel="noopener noreferrer"
+			target="_blank"
 		>
-			Today's Answer
+			Official Game
 		</a>
 		<a
 			class="flex-1 rounded-lg bg-gray-200 px-4 py-3 text-center font-bold text-gray-700"
-			href="/canuckle-archive"
+			href="/solver"
 		>
-			Archive
+			All Solvers
 		</a>
 		<a class="flex-1 rounded-lg bg-red-600 px-4 py-3 text-center font-bold text-white" href="/canuckle-solver">
 			Solver
