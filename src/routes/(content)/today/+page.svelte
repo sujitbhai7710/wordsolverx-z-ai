@@ -25,6 +25,11 @@
     { name: 'Searchle', href: '/searchle-answer-today', description: "Today's Searchle answer.", color: 'from-purple-500 to-pink-600', icon: 'Sr' },
     { name: 'Phrazle', href: '/phrazle-answer-today', description: "Today's morning and afternoon phrases.", color: 'from-emerald-500 to-lime-600', icon: 'Pz' },
     { name: 'Spotle', href: '/spotle-answer-today', description: "Today's Spotify artist answer.", color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
+    { name: 'Canuckle', href: '/canuckle-answer-today', description: "Today's Canadian Wordle answer.", color: 'from-red-600 to-red-700', icon: 'Ca' },
+    { name: 'Countryle', href: '/countryle-answer-today', description: "Today's country guessing game answer.", color: 'from-emerald-600 to-teal-600', icon: 'Cy' },
+    { name: 'Dordle', href: '/dordle-answer-today', description: "Today's dual-word Dordle answers.", color: 'from-green-600 to-emerald-600', icon: 'Do' },
+    { name: 'Framed', href: '/framed-answer-today', description: "Today's movie guessing game answer.", color: 'from-slate-700 to-slate-900', icon: 'Fr' },
+    { name: 'Colorfle', href: '/colorfle-answer-today', description: "Today's color mixing puzzle answer.", color: 'from-pink-500 via-purple-500 to-indigo-500', icon: 'Cf' },
   ];
 
 </script>

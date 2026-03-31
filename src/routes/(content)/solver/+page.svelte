@@ -29,6 +29,11 @@
     { name: 'Spotle Solver', href: '/spotle-solver', description: 'Spotify artist solver for Spotle.', color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
     { name: 'Weaver Solver', href: '/weaver-solver', description: 'Find the shortest word ladder path.', color: 'from-violet-500 to-fuchsia-600', icon: 'Wv' },
     { name: 'Word Ladder Solver', href: '/word-ladder-solver', description: 'Find all shortest paths with OWL2 and SOWPODS dictionaries.', color: 'from-fuchsia-500 to-violet-600', icon: 'WL' },
+    { name: 'Canuckle Solver', href: '/canuckle-solver', description: 'Solve the daily Canadian Wordle with smart 5-letter word filtering.', color: 'from-red-600 to-red-700', icon: 'Ca' },
+    { name: 'Countryle Solver', href: '/countryle-solver', description: 'Country guessing game helper with geographic clues and filtering.', color: 'from-emerald-600 to-teal-600', icon: 'Cy' },
+    { name: 'Dordle Solver', href: '/dordle-solver', description: 'Dual-board Wordle solver with entropy-based suggestions for both words.', color: 'from-green-600 to-emerald-600', icon: 'Do' },
+    { name: 'Nonogram Solver', href: '/nonogram-solver', description: 'Step-by-step Picross solver with constraint propagation visualization.', color: 'from-violet-600 to-purple-600', icon: 'No' },
+    { name: 'Colorfle Solver', href: '/colorfle-solver', description: 'Color mixing puzzle solver with hex input and similarity matching.', color: 'from-pink-500 via-purple-500 to-indigo-500', icon: 'Cf' },
   ];
 
   const faqs = [

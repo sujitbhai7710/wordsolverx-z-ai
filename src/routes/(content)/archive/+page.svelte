@@ -15,6 +15,11 @@
     { name: 'Contexto', href: '/contexto-archive', description: 'Semantic answer words and game dates', color: 'from-violet-500 to-fuchsia-600', icon: 'Cx', shadow: 'shadow-violet-500/20' },
     { name: 'Phrazle', href: '/phrazle-archive', description: 'Morning and afternoon phrase archive', color: 'from-emerald-500 to-lime-600', icon: 'Pz', shadow: 'shadow-emerald-500/20' },
     { name: 'Spotle', href: '/spotle-archive', description: 'Spotify artist answer history', color: 'from-emerald-600 to-teal-600', icon: 'Sp', shadow: 'shadow-emerald-500/20' },
+    { name: 'Canuckle', href: '/canuckle-archive', description: 'Canadian Wordle answer history with fun facts', color: 'from-red-600 to-red-700', icon: 'Ca', shadow: 'shadow-red-500/20' },
+    { name: 'Countryle', href: '/countryle-archive', description: 'Country guessing game answer archive', color: 'from-emerald-600 to-teal-600', icon: 'Cy', shadow: 'shadow-emerald-500/20' },
+    { name: 'Dordle', href: '/dordle-archive', description: 'Dual-word puzzle answer history', color: 'from-green-600 to-emerald-600', icon: 'Do', shadow: 'shadow-green-500/20' },
+    { name: 'Framed', href: '/framed-archive', description: 'Movie guessing game answer calendar', color: 'from-slate-700 to-slate-900', icon: 'Fr', shadow: 'shadow-slate-500/20' },
+    { name: 'Colorfle', href: '/colorfle-archive', description: 'Color mixing puzzle answer history', color: 'from-pink-500 via-purple-500 to-indigo-500', icon: 'Cf', shadow: 'shadow-purple-500/20' },
   ];
 
   const archiveItemList = archives.map((archive, index) => ({

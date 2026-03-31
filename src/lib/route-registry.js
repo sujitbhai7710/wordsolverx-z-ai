@@ -19,7 +19,12 @@ export const TODAY_STATIC_ROUTES = [
   '/spotle-answer-today',
   '/waffle-answer-today',
   '/wordle-answer-today',
-  '/worldle-answer-today'
+  '/worldle-answer-today',
+  '/canuckle-answer-today',
+  '/countryle-answer-today',
+  '/dordle-answer-today',
+  '/framed-answer-today',
+  '/colorfle-answer-today'
 ];
 
 export const EVERGREEN_STATIC_ROUTES = [
@@ -60,6 +65,11 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/word-ladder-solver',
   '/wordle-solver',
   '/worldle-solver',
+  '/canuckle-solver',
+  '/countryle-solver',
+  '/dordle-solver',
+  '/nonogram-solver',
+  '/colorfle-solver',
   '/3-letter-wordle',
   '/4-letter-wordle',
   '/5-letter-wordle',
@@ -85,7 +95,12 @@ export const ARCHIVE_STATIC_ROUTES = [
   '/spotle-archive',
   '/waffle-archive',
   '/wordle-answer-archive',
-  '/worldle-archive'
+  '/worldle-archive',
+  '/canuckle-archive',
+  '/countryle-archive',
+  '/dordle-archive',
+  '/framed-archive',
+  '/colorfle-archive'
 ];
 
 export const API_RUNTIME_ROUTES = [
