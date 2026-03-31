@@ -8,7 +8,7 @@
 
   let { data } = $props();
 
-  let selectedMode = $state(data.mode);
+  let selectedMode = $state('classic');
   let revealed = $state(false);
 
   let activeMode = $derived(data.modes.find((m) => m.key === selectedMode) ?? data.modes[0]);

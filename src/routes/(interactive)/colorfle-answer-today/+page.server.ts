@@ -1,16 +1,21 @@
-import { getPuzzleAnswer, getDayInfo } from '$lib/colorfle';
+import { getDayInfoForDateKey, getPuzzleAnswerForDateKey } from '$lib/colorfle';
+import { getPuzzleWindow, parsePuzzleDateKey } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
-	const now = new Date();
-	const answer = getPuzzleAnswer(now);
-	const dayInfo = getDayInfo(now);
-
-	const formattedDate = now.toLocaleDateString('en-US', {
+	const window = getPuzzleWindow('colorfle');
+	const dateKey = window.effectivePuzzleDate;
+	const answer = getPuzzleAnswerForDateKey(dateKey);
+	const dayInfo = {
+		...getDayInfoForDateKey(dateKey),
+		nextResetTime: window.nextInvalidationAt.getTime()
+	};
+	const formattedDate = parsePuzzleDateKey(dateKey).toLocaleDateString('en-US', {
 		weekday: 'long',
 		year: 'numeric',
 		month: 'long',
-		day: 'numeric'
+		day: 'numeric',
+		timeZone: 'UTC'
 	});
 
 	const pageTitle = `Colorfle Hints and Answer for Today (${formattedDate})`;
@@ -66,8 +71,8 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			'@context': 'https://schema.org',
 			'@type': 'Article',
 			headline: pageTitle,
-			datePublished: now.toISOString(),
-			dateModified: now.toISOString(),
+			datePublished: `${dateKey}T00:00:00Z`,
+			dateModified: `${dateKey}T00:00:00Z`,
 			author: {
 				'@type': 'Person',
 				name: 'Preston Hayes',

@@ -9,10 +9,6 @@
 
 	let { data } = $props();
 	let revealed = $state(false);
-
-	const letterColors = $derived(
-		data.answer?.word.toUpperCase().split('').map(() => 'bg-red-500 text-white border-red-600') ?? []
-	);
 </script>
 
 <svelte:head>
@@ -20,137 +16,94 @@
 	<meta name="description" content={data.meta.description} />
 	<meta name="keywords" content={data.meta.keywords ?? 'canuckle answer today, canuckle hint, canadian wordle'} />
 	<link rel="canonical" href="https://wordsolver.tech/canuckle-answer-today" />
-	<meta property="og:title" content={data.meta.title} />
-	<meta property="og:description" content={data.meta.description} />
-	<meta property="og:type" content="article" />
-	<meta property="og:url" content="https://wordsolver.tech/canuckle-answer-today" />
-	<meta property="og:site_name" content="WordSolverX" />
-	<meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={data.meta.title} />
-	<meta name="twitter:description" content={data.meta.description} />
-	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
 	{@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
 {#if data.error || !data.answer}
-	<div class="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
+	<div class="min-h-screen flex items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
 		<div class="text-center">
-			<h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Error Loading Data</h1>
-			<p class="text-gray-500">Could not retrieve today's Canuckle answer.</p>
+			<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Error Loading Data</h1>
+			<p class="mt-2 text-gray-500 dark:text-gray-400">Could not retrieve today's Canuckle answer.</p>
 		</div>
 	</div>
 {:else}
-	<div class="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-orange-50 dark:from-gray-900 dark:via-gray-900 dark:to-red-950 font-sans">
-		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-			<header class="text-center mb-12">
-				<h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent mb-4">
+	<div class="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-orange-50 dark:from-gray-900 dark:via-gray-900 dark:to-red-950">
+		<div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+			<header class="text-center">
+				<h1 class="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-4xl font-extrabold text-transparent md:text-5xl">
 					Canuckle Answer Today ({data.answer.date})
 				</h1>
-				<p class="text-lg text-gray-600 dark:text-gray-400">
-					Today's Canuckle solution for <span class="font-semibold text-red-600 dark:text-red-400">{data.answer.date}</span>
+				<p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+					The current Canuckle answer and clue details for {data.answer.date}
 				</p>
 			</header>
 
-			<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 mb-8">
-				<div class="text-center mb-8">
-					<p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-600 dark:text-red-300 mb-2">
-						Puzzle #{data.answer.puzzleNumber}
-					</p>
-					<p class="text-gray-600 dark:text-gray-400 text-sm">{data.answer.date}</p>
+			<section class="mt-10 rounded-3xl border border-gray-100 bg-white p-8 shadow-xl dark:border-gray-700 dark:bg-gray-800">
+				<div class="text-center">
+					{#if data.answer.hintTitle}
+						<p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-600 dark:text-red-300">
+							{data.answer.hintTitle}
+						</p>
+					{/if}
+					{#if data.answer.hintText}
+						<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{data.answer.hintText}</p>
+					{/if}
 				</div>
 
-				<div class="flex justify-center gap-3 mb-8">
+				<div class="mt-8 flex justify-center gap-3">
 					{#if revealed}
-						{#each data.answer.word.toUpperCase().split('') as letter, i}
-							<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold {letterColors[i] ?? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white'} border-2 shadow-md">
+						{#each data.answer.word.split('') as letter}
+							<div class="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-red-600 bg-red-500 text-2xl font-bold text-white shadow-md sm:h-16 sm:w-16 sm:text-3xl">
 								{letter}
 							</div>
 						{/each}
 					{:else}
-						{#each Array(5) as _, i}
-							<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 border-2 border-gray-300 dark:border-gray-600">
+						{#each Array(data.answer.word.length) as _}
+							<div class="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-gray-300 bg-gray-200 text-2xl font-bold text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-500 sm:h-16 sm:w-16 sm:text-3xl">
 								?
 							</div>
 						{/each}
 					{/if}
 				</div>
 
-				<div class="text-center">
+				<div class="mt-8 text-center">
 					<button
 						type="button"
-						onclick={() => revealed = !revealed}
-						class="px-8 py-3 rounded-xl bg-red-600 text-white font-bold text-lg shadow-lg shadow-red-200 dark:shadow-red-900/30 transition hover:bg-red-700"
+						onclick={() => (revealed = !revealed)}
+						class="rounded-xl bg-red-600 px-8 py-3 text-lg font-bold text-white shadow-lg shadow-red-200 transition hover:bg-red-700 dark:shadow-red-900/30"
 					>
 						{revealed ? 'Hide Answer' : 'Reveal Answer'}
 					</button>
 				</div>
 
 				{#if revealed}
-					<div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8">
-						<div class="grid sm:grid-cols-2 gap-6">
-							<div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-5">
-								<p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-1">Average Guesses</p>
-								<p class="text-3xl font-bold text-red-600 dark:text-red-400">{data.answer.avgGuesses}</p>
-							</div>
-							<div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-5">
-								<p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 mb-1">Puzzle Number</p>
-								<p class="text-3xl font-bold text-red-600 dark:text-red-400">#{data.answer.puzzleNumber}</p>
-							</div>
+					<div class="mt-8 grid gap-4 border-t border-gray-200 pt-8 dark:border-gray-700 sm:grid-cols-2">
+						<div class="rounded-2xl bg-gray-50 p-5 dark:bg-gray-700/40">
+							<p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+								Date
+							</p>
+							<p class="mt-2 text-2xl font-bold text-red-600 dark:text-red-400">{data.answer.date}</p>
 						</div>
-
-						<div class="mt-6 bg-red-50 dark:bg-red-900/20 rounded-2xl p-6 border border-red-100 dark:border-red-800/30">
-							<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-								<span class="text-red-500">🍁</span> Fun Fact
-							</h3>
-							<p class="text-gray-700 dark:text-gray-300 leading-relaxed">{data.answer.funFact}</p>
+						<div class="rounded-2xl bg-gray-50 p-5 dark:bg-gray-700/40">
+							<p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+								Word Length
+							</p>
+							<p class="mt-2 text-2xl font-bold text-red-600 dark:text-red-400">{data.answer.word.length} letters</p>
 						</div>
 					</div>
 				{/if}
-			</div>
 
-			<article class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 mb-8">
-				<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">About Today's Canuckle</h2>
-				<div class="prose prose-lg max-w-none text-gray-600 dark:text-gray-300">
-					<p class="leading-relaxed">
-						Today's Canuckle puzzle is <strong class="text-red-600 dark:text-red-400">#{data.answer.puzzleNumber}</strong>, released on <strong class="text-gray-900 dark:text-white">{data.answer.date}</strong>. The answer is a five-letter Canadian-themed word. Players across Canada and around the world attempt to solve it daily, with an average of <strong class="text-gray-900 dark:text-white">{data.answer.avgGuesses}</strong> guesses needed.
-					</p>
+				<div class="mt-6 rounded-2xl border border-red-100 bg-red-50 p-6 dark:border-red-800/30 dark:bg-red-900/20">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Fun Fact</h2>
+					<p class="mt-3 leading-relaxed text-gray-700 dark:text-gray-300">{data.answer.funFact}</p>
 				</div>
-			</article>
+			</section>
 
-			<section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 mb-8">
-				<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-				<div class="space-y-4">
-					<details class="group bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-100 dark:border-red-800/30 overflow-hidden" open>
-						<summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900 dark:text-white">
-							What is the Canuckle answer for today, {data.answer.date}?
-							<span class="text-red-500 group-open:rotate-180 transition-transform">▼</span>
-						</summary>
-						<div class="px-5 pb-5 text-gray-600 dark:text-gray-300">
-							The Canuckle answer for today, {data.answer.date}, is <span class="font-bold uppercase text-gray-900 dark:text-white">{data.answer.word}</span>. This is Canuckle puzzle #{data.answer.puzzleNumber}.
-						</div>
-					</details>
-
-					<details class="group bg-gray-50 dark:bg-gray-700/30 rounded-2xl border border-gray-200 dark:border-gray-600/50 overflow-hidden">
-						<summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-							How many guesses does it take on average?
-							<span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
-						</summary>
-						<div class="px-5 pb-5 text-gray-600 dark:text-gray-300">
-							The average number of guesses for today's Canuckle puzzle is {data.answer.avgGuesses}.
-						</div>
-					</details>
-
-					<details class="group bg-gray-50 dark:bg-gray-700/30 rounded-2xl border border-gray-200 dark:border-gray-600/50 overflow-hidden">
-						<summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-							What is Canuckle?
-							<span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
-						</summary>
-						<div class="px-5 pb-5 text-gray-600 dark:text-gray-300">
-							Canuckle is a Canadian-themed Wordle game where each answer is a five-letter word related to Canada. A new puzzle is released daily with a fun fact about Canadian culture, geography, or history.
-						</div>
-					</details>
-				</div>
+			<section class="mt-8 rounded-3xl border border-gray-100 bg-white p-8 shadow-xl dark:border-gray-700 dark:bg-gray-800">
+				<h2 class="text-2xl font-bold text-gray-900 dark:text-white">About Today's Canuckle</h2>
+				<p class="mt-4 leading-7 text-gray-600 dark:text-gray-300">
+					Canuckle is a Canadian-themed daily word puzzle. This page rebuilds from the live Canuckle answer source each day, so the answer, hint, and fun fact stay aligned with the current puzzle instead of a frozen migration snapshot.
+				</p>
 			</section>
 
 			<div class="mt-12">

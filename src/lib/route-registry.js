@@ -22,6 +22,7 @@ export const TODAY_STATIC_ROUTES = [
   '/worldle-answer-today',
   '/canuckle-answer-today',
   '/countryle-answer-today',
+  '/countryle-solver',
   '/dordle-answer-today',
   '/framed-answer-today',
   '/colorfle-answer-today'
@@ -66,7 +67,6 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/wordle-solver',
   '/worldle-solver',
   '/canuckle-solver',
-  '/countryle-solver',
   '/dordle-solver',
   '/nonogram-solver',
   '/colorfle-solver',

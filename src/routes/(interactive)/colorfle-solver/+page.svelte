@@ -1,321 +1,505 @@
 <script lang="ts">
-  import FAQSection from '$lib/components/FAQSection.svelte';
-  import {
-    COLORS,
-    COLOR_NAMES,
-    solveFromHexTopN,
-    hexToRgb,
-    rgbToHex,
-    type SolveResult
-  } from '$lib/colorfle';
-  import {
-    generateWebPageSchema,
-    generateFAQSchema,
-    generateHowToSchema,
-    generateWebApplicationSchema
-  } from '$lib/seo';
+	import {
+		COLORS,
+		COLOR_NAMES,
+		WEIGHTS,
+		checkGuess,
+		getAllCombinations,
+		getCombinationTargetColor,
+		hexToRgb,
+		solveFromHexTopN
+	} from '$lib/colorfle';
 
-  let hexInput = $state('#E6BEFF');
-  let results = $state<SolveResult[]>([]);
-  let solved = $state(false);
-  let feedbackSlots = $state<string[][]>([[], [], []]);
+	type Feedback = 'green' | 'yellow' | 'gray';
 
-  const colorPickerValue = $derived(hexInput.length === 7 && hexInput.startsWith('#') ? hexInput : '#000000');
+	interface GuessWithFeedback {
+		colors: number[];
+		feedback: Array<Feedback | null>;
+	}
 
-  function handleSolve() {
-    const hex = hexInput.trim();
-    if (!/^#?[0-9A-Fa-f]{6}$/.test(hex)) return;
-    const normalizedHex = hex.startsWith('#') ? hex : `#${hex}`;
-    hexInput = normalizedHex;
-    results = solveFromHexTopN(normalizedHex, 5);
-    solved = true;
-    feedbackSlots = [[], [], []];
-  }
+	interface UnifiedSuggestion {
+		colors: number[];
+		colorNames: string[];
+		colorHexes: string[];
+		targetHex: string;
+		targetRgb: { r: number; g: number; b: number };
+		similarity?: number;
+	}
 
-  function toggleFeedback(slotIndex: number, color: string) {
-    const slot = feedbackSlots[slotIndex];
-    const idx = slot.indexOf(color);
-    if (idx === -1) {
-      feedbackSlots[slotIndex] = [...slot, color];
-    } else {
-      feedbackSlots[slotIndex] = slot.filter((_, i) => i !== idx);
-    }
-    feedbackSlots = [...feedbackSlots];
-  }
+	function getContrastColor(hex: string): string {
+		const r = parseInt(hex.slice(1, 3), 16);
+		const g = parseInt(hex.slice(3, 5), 16);
+		const b = parseInt(hex.slice(5, 7), 16);
+		const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+		return luminance > 0.5 ? '#000000' : '#FFFFFF';
+	}
 
-  const feedbackColors = [
-    { label: 'Green', value: 'green', bg: 'bg-green-500', ring: 'ring-green-400' },
-    { label: 'Yellow', value: 'yellow', bg: 'bg-yellow-400', ring: 'ring-yellow-300' },
-    { label: 'Gray', value: 'gray', bg: 'bg-gray-400', ring: 'ring-gray-300' }
-  ];
+	function isValidHex(hex: string): boolean {
+		return /^#?([a-f\d]{3}|[a-f\d]{6})$/i.test(hex);
+	}
 
-  const faqs = [
-    { question: 'What is the Colorfle Solver?', answer: 'The Colorfle Solver is a free tool that helps you find the best color combination for the Colorfle mixing puzzle. Enter any hex color code, and the solver will return the top 5 color combinations that produce the closest match when mixed.' },
-    { question: 'How does color mixing work in Colorfle?', answer: 'Colorfle mixes three colors with weighted proportions (50%, 34%, 16%). The mixing algorithm operates in the YCC color space and averages with an RGB blend to produce a visually accurate result that matches how the game computes its target color.' },
-    { question: 'What is a hex color code?', answer: 'A hex color code is a 6-character string starting with # that represents a specific color using the RGB model. For example, #FF0000 is pure red, #00FF00 is pure green, and #0000FF is pure blue. You can use any online color picker to find the hex code for a color.' },
-    { question: 'How accurate is the solver?', answer: 'The solver checks every possible permutation of 3 colors from a palette of 20, calculating the exact mixed result for each combination. It ranks them by visual similarity using a YCC-based color distance metric, giving you the most accurate matches first.' },
-    { question: 'Can I use the solver on mobile?', answer: 'Yes! The Colorfle Solver is fully responsive and works on all devices. The color picker and results grid adapt to your screen size for the best experience.' },
-    { question: 'What do the feedback slots mean?', answer: 'The feedback slots let you track your Colorfle guesses. Green means the color is correct and in the right position. Yellow means the color is in the answer but in a different position. Gray means the color is not in the answer at all.' }
-  ];
+	function normalizeHex(hex: string): string {
+		let value = hex.startsWith('#') ? hex : `#${hex}`;
+		if (value.length === 4) {
+			value = `#${value[1]}${value[1]}${value[2]}${value[2]}${value[3]}${value[3]}`;
+		}
+		return value.toLowerCase();
+	}
 
-  const schemas = $derived.by(() =>
-    JSON.stringify([
-      generateWebPageSchema(
-        'Colorfle Solver',
-        'Free online Colorfle solver. Enter a hex color and find the best 3-color combinations that match the target when mixed.',
-        'https://wordsolver.tech/colorfle-solver'
-      ),
-      generateFAQSchema(faqs),
-      generateHowToSchema('How to Use the Colorfle Solver', [
-        { name: 'Enter a Color', text: 'Type a hex color code (e.g. #E6BEFF) or use the color picker to select your target color.' },
-        { name: 'Click Solve', text: 'Press the Solve button to find the top 5 color combinations that produce the closest match.' },
-        { name: 'Review Results', text: 'Check the results grid to see color swatches, names, hex values, and similarity percentages.' },
-        { name: 'Track Feedback', text: 'Use the feedback slots to mark which colors are correct (green), misplaced (yellow), or absent (gray).' }
-      ]),
-      generateWebApplicationSchema(
-        'Colorfle Solver',
-        'Free online tool to solve Colorfle color mixing puzzles by finding the best matching color combinations.'
-      )
-    ])
-  );
+	let hexInput = $state('');
+	let solving = $state(false);
+	let refining = $state(false);
+	let error = $state('');
+	let inputHex = $state<string | null>(null);
+	let suggestions = $state<UnifiedSuggestion[]>([]);
+	let guesses = $state<GuessWithFeedback[]>([]);
+	let isSolved = $state(false);
+
+	const allGuessesComplete = $derived(guesses.length > 0 && guesses.every((guess) => guess.feedback.every((value) => value !== null)));
+	const hasIncompleteGuesses = $derived(guesses.some((guess) => guess.feedback.some((value) => value === null)));
+
+	function handleQuickFill(hex: string) {
+		hexInput = hex;
+		error = '';
+	}
+
+	async function handleSolve() {
+		const trimmed = hexInput.trim();
+		if (!trimmed || !isValidHex(trimmed)) {
+			error = 'Please enter a valid hex color code such as #8ce874.';
+			return;
+		}
+
+		solving = true;
+		error = '';
+		isSolved = false;
+		guesses = [];
+		suggestions = [];
+
+		const normalized = normalizeHex(trimmed);
+		const matches = solveFromHexTopN(normalized, 5);
+		inputHex = normalized;
+		suggestions = matches.map((match) => ({
+			colors: [...match.colors],
+			colorNames: [...match.colorNames],
+			colorHexes: [...match.colorHexes],
+			targetHex: match.targetHex,
+			targetRgb: hexToRgb(match.targetHex),
+			similarity: match.similarity
+		}));
+		solving = false;
+	}
+
+	function handleUseThis(suggestion: UnifiedSuggestion) {
+		if (isSolved) {
+			return;
+		}
+		guesses = [...guesses, { colors: [...suggestion.colors], feedback: [null, null, null] }];
+		suggestions = [];
+	}
+
+	function cycleFeedback(guessIndex: number, colorIndex: number) {
+		if (isSolved) {
+			return;
+		}
+
+		const updated = guesses.map((guess, index) => {
+			if (index !== guessIndex) {
+				return guess;
+			}
+
+			const nextFeedback = [...guess.feedback];
+			const current = nextFeedback[colorIndex];
+			nextFeedback[colorIndex] =
+				current === null ? 'green' : current === 'green' ? 'yellow' : current === 'yellow' ? 'gray' : null;
+
+			return { ...guess, feedback: nextFeedback };
+		});
+
+		guesses = updated;
+		isSolved = updated.some((guess) => guess.feedback.every((feedback) => feedback === 'green'));
+		if (isSolved) {
+			suggestions = [];
+		}
+	}
+
+	async function handleRefine() {
+		if (!allGuessesComplete || isSolved) {
+			return;
+		}
+
+		refining = true;
+		const completedGuesses = guesses.filter((guess) => guess.feedback.every((value) => value !== null)) as Array<{
+			colors: number[];
+			feedback: Feedback[];
+		}>;
+
+		const possibilities = getAllCombinations(0).filter((answer) =>
+			completedGuesses.every((guess) => checkGuess(guess.colors, answer, guess.feedback))
+		);
+
+		if (possibilities.length === 0) {
+			error = 'No matching combinations found. Check your feedback and try again.';
+			suggestions = [];
+			refining = false;
+			return;
+		}
+
+		error = '';
+		suggestions = possibilities.slice(0, 5).map((colors) => {
+			const target = getCombinationTargetColor(colors, 0);
+			return {
+				colors,
+				colorNames: colors.map((index) => COLOR_NAMES[index] ?? 'Unknown'),
+				colorHexes: colors.map((index) => COLORS[index] ?? '#000000'),
+				targetHex: target.hex,
+				targetRgb: target.rgb
+			};
+		});
+		refining = false;
+	}
+
+	function handleReset() {
+		hexInput = '';
+		solving = false;
+		refining = false;
+		error = '';
+		inputHex = null;
+		suggestions = [];
+		guesses = [];
+		isSolved = false;
+	}
+
+	function renderFeedbackLabel(feedback: Feedback | null): string {
+		if (feedback === 'green') return 'Green';
+		if (feedback === 'yellow') return 'Yellow';
+		if (feedback === 'gray') return 'Gray';
+		return 'Tap';
+	}
+
+	function feedbackClasses(feedback: Feedback | null): string {
+		if (feedback === 'green') return 'border-emerald-500 ring-2 ring-emerald-500/30';
+		if (feedback === 'yellow') return 'border-amber-400 ring-2 ring-amber-400/30';
+		if (feedback === 'gray') return 'border-zinc-300 opacity-70';
+		return 'border-dashed border-zinc-300';
+	}
 </script>
 
 <svelte:head>
-  <title>Colorfle Solver - Free Color Mixing Puzzle Solver | WordSolverX</title>
-  <meta name="description" content="Free online Colorfle solver. Enter any hex color code and instantly find the best 3-color combinations that match the target when mixed. Solve Colorfle puzzles fast." />
-  <meta name="keywords" content="colorfle solver, colorfle cheat, color mixing puzzle solver, colorfle help, colorfle answer, hex color solver, colorfle tool, free colorfle solver" />
-  <link rel="canonical" href="https://wordsolver.tech/colorfle-solver" />
-  <meta property="og:title" content="Colorfle Solver - Free Color Mixing Puzzle Solver" />
-  <meta property="og:description" content="Enter any hex color and find the best 3-color combinations for the Colorfle puzzle. Free, fast, and accurate." />
-  <meta property="og:url" content="https://wordsolver.tech/colorfle-solver" />
-  <meta property="og:site_name" content="WordSolverX" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Colorfle Solver - Free Color Mixing Puzzle Solver" />
-  <meta name="twitter:description" content="Solve Colorfle color mixing puzzles instantly. Enter a hex code and get the top matching color combinations." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
-  {@html `<script type="application/ld+json">${schemas}</script>`}
+	<title>Colorfle Solver - Original Solver Flow | WordSolverX</title>
+	<meta
+		name="description"
+		content="Solve Colorfle with the original hex-to-suggestion flow, feedback cycling, and elimination refinement."
+	/>
+	<link rel="canonical" href="https://wordsolver.tech/colorfle-solver" />
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-  <!-- Hero Section -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-pink-600 via-purple-600 to-cyan-600 pt-16 pb-20">
-    <div class="absolute inset-0">
-      <div class="absolute top-0 left-1/4 w-[400px] h-[400px] rounded-full bg-yellow-400/10 blur-[120px]"></div>
-      <div class="absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-green-400/10 blur-[100px]"></div>
-      <div class="absolute top-1/3 right-1/3 w-[300px] h-[300px] rounded-full bg-red-400/10 blur-[110px]"></div>
-    </div>
+<div class="min-h-screen bg-background">
+	<div class="fixed inset-0 -z-10 overflow-hidden">
+		<div
+			class="absolute left-1/4 top-0 h-96 w-96 rounded-full opacity-[0.07]"
+			style="background: radial-gradient(circle, #E6194B, transparent 70%); filter: blur(80px);"
+		></div>
+		<div
+			class="absolute right-1/4 top-1/3 h-96 w-96 rounded-full opacity-[0.07]"
+			style="background: radial-gradient(circle, #4363D8, transparent 70%); filter: blur(80px);"
+		></div>
+		<div
+			class="absolute bottom-0 left-1/2 h-96 w-96 rounded-full opacity-[0.05]"
+			style="background: radial-gradient(circle, #3CB44B, transparent 70%); filter: blur(80px);"
+		></div>
+	</div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-6">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        <span class="text-sm font-medium text-white/90">Color Mixing Puzzle Solver</span>
-      </div>
+	<header class="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-sm dark:bg-slate-950/80">
+		<div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
+			<div class="flex items-center gap-3">
+				<div class="relative h-10 w-10 overflow-hidden rounded-xl shadow-lg">
+					<div
+						class="absolute inset-0"
+						style="background: conic-gradient(from 0deg, #E6194B, #F58231, #FFE119, #3CB44B, #46F0F0, #4363D8, #911EB4, #E6194B);"
+					></div>
+				</div>
+				<div>
+					<h1 class="text-xl font-bold tracking-tight">
+						Color<span class="bg-clip-text text-transparent" style="background-image: linear-gradient(135deg, #E6194B, #F58231, #FFE119, #3CB44B, #4363D8);">fle</span>
+					</h1>
+					<p class="text-[10px] uppercase tracking-wide text-slate-500 dark:text-slate-400">
+						Solver and Archive
+					</p>
+				</div>
+			</div>
+			<a
+				class="text-xs text-slate-500 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+				href="https://colorfle.com/"
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				Play on colorfle.com ->
+			</a>
+		</div>
+	</header>
 
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 leading-tight">
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-pink-300 to-cyan-300">Colorfle</span> Solver
-      </h1>
-      <p class="max-w-2xl mx-auto text-lg text-white/80 mb-10">
-        Enter a target hex color and instantly find the best 3-color combinations that produce the closest match when mixed.
-      </p>
-    </div>
-  </section>
+	<main class="mx-auto max-w-4xl px-4 py-8">
+		<div class="mb-8 grid grid-cols-3 gap-2">
+			<a class="flex items-center justify-center gap-1.5 rounded-lg border bg-white px-4 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900" href="/colorfle-solver">
+				Solver
+			</a>
+			<a class="flex items-center justify-center gap-1.5 rounded-lg border bg-white px-4 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900" href="/colorfle-answer-today">
+				Today's Answer
+			</a>
+			<a class="flex items-center justify-center gap-1.5 rounded-lg border bg-white px-4 py-3 text-sm font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900" href="/colorfle-archive">
+				Archive
+			</a>
+		</div>
 
-  <!-- Main Solver Area -->
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 relative z-20 pb-12">
-    <!-- Input Card -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white text-lg">
-          🎨
-        </div>
-        <div>
-          <h2 class="text-lg font-bold text-gray-900 dark:text-white">Enter Target Color</h2>
-          <p class="text-xs text-gray-500 dark:text-gray-400">Type a hex code or use the color picker</p>
-        </div>
-      </div>
+		<div class="space-y-6">
+			{#if isSolved}
+				<section class="overflow-hidden rounded-2xl border border-emerald-300 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 dark:border-emerald-800/50 dark:from-emerald-950/30 dark:to-teal-950/30">
+					<h2 class="text-center text-xl font-bold text-emerald-800 dark:text-emerald-300">Solved!</h2>
+					<p class="mt-2 text-center text-sm text-emerald-700 dark:text-emerald-400">
+						You found the answer in {guesses.length} guess{guesses.length !== 1 ? 'es' : ''}.
+					</p>
+				</section>
+			{/if}
 
-      <div class="flex flex-col sm:flex-row gap-4">
-        <div class="flex-1">
-          <label for="hexInput" class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5 block">Hex Color Code</label>
-          <div class="relative">
-            <input
-              id="hexInput"
-              type="text"
-              bind:value={hexInput}
-              placeholder="#E6BEFF"
-              maxlength="7"
-              class="w-full bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3.5 pr-14 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400 font-mono uppercase transition-all"
-              onkeydown={(e) => { if ((e as KeyboardEvent).key === 'Enter') handleSolve(); }}
-            />
-            <div
-              class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg border-2 border-white dark:border-gray-600 shadow-sm"
-              style="background-color: {colorPickerValue}"
-            ></div>
-          </div>
-        </div>
+			<section class="rounded-2xl border bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+				<div class="mb-4 flex items-center justify-between gap-4">
+					<div>
+						<h2 class="text-lg font-semibold">Enter the Target Color</h2>
+						<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+							Paste the hex color code from Colorfle to find the best match.
+						</p>
+					</div>
+					{#if guesses.length > 0}
+						<button class="rounded-lg border px-4 py-2 text-sm font-semibold" type="button" onclick={handleReset}>
+							Reset
+						</button>
+					{/if}
+				</div>
 
-        <div class="sm:w-28 flex flex-col">
-          <label for="colorPicker" class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1.5 block">Picker</label>
-          <input
-            id="colorPicker"
-            type="color"
-            bind:value={hexInput}
-            class="w-full h-[50px] rounded-xl border border-gray-200 dark:border-gray-600 cursor-pointer"
-          />
-        </div>
+				<div class="space-y-4">
+					<div class="flex items-center gap-3">
+						<input
+							class="h-14 w-14 cursor-pointer overflow-hidden rounded-xl border-2 border-slate-300 p-0"
+							type="color"
+							value={hexInput.startsWith('#') && hexInput.length === 7 ? hexInput : '#ffffff'}
+							oninput={(event) => {
+								hexInput = (event.currentTarget as HTMLInputElement).value;
+								error = '';
+							}}
+						/>
+						<div class="flex flex-1 gap-2">
+							<div class="relative flex-1">
+								<span class="absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-slate-400">#</span>
+								<input
+									class="w-full rounded-xl border px-4 py-3 pl-7 font-mono text-lg dark:border-slate-700 dark:bg-slate-950"
+									disabled={solving}
+									placeholder="e.g. 8ce874"
+									type="text"
+									value={hexInput.startsWith('#') ? hexInput.slice(1) : hexInput}
+									oninput={(event) => {
+										hexInput = (event.currentTarget as HTMLInputElement).value;
+										error = '';
+									}}
+									onkeydown={(event) => {
+										if ((event as KeyboardEvent).key === 'Enter') {
+											handleSolve();
+										}
+									}}
+								/>
+							</div>
+							<button
+								class="rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white dark:bg-white dark:text-slate-900"
+								disabled={solving || !hexInput.trim()}
+								type="button"
+								onclick={handleSolve}
+							>
+								{solving ? 'Solving...' : 'Solve'}
+							</button>
+						</div>
+					</div>
 
-        <div class="sm:w-32 flex flex-col">
-          <span class="text-xs font-bold uppercase tracking-wider text-transparent mb-1.5 block">Solve</span>
-          <button
-            onclick={handleSolve}
-            class="w-full h-[50px] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 transition-all"
-          >
-            Solve
-          </button>
-        </div>
-      </div>
-    </div>
+					<div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+						<span>Try it:</span>
+						<button class="rounded-md bg-slate-100 px-2 py-1 font-mono dark:bg-slate-800" type="button" onclick={() => handleQuickFill('8ce874')}>
+							#8ce874
+						</button>
+						<button class="rounded-md bg-slate-100 px-2 py-1 font-mono dark:bg-slate-800" type="button" onclick={() => handleQuickFill('e6194b')}>
+							#e6194b
+						</button>
+						<button class="rounded-md bg-slate-100 px-2 py-1 font-mono dark:bg-slate-800" type="button" onclick={() => handleQuickFill('4363d8')}>
+							#4363d8
+						</button>
+					</div>
 
-    <!-- Results Grid -->
-    {#if solved && results.length > 0}
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-lg">
-            ✓
-          </div>
-          <div>
-            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Top 5 Matches</h2>
-            <p class="text-xs text-gray-500 dark:text-gray-400">Best color combinations ranked by similarity</p>
-          </div>
-        </div>
+					{#if error}
+						<p class="text-sm text-red-600">{error}</p>
+					{/if}
+				</div>
+			</section>
 
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {#each results as result, i}
-            <div class="group bg-gray-50 dark:bg-gray-700/30 border border-gray-200 dark:border-gray-600 rounded-xl p-4 hover:border-purple-300 dark:hover:border-purple-500 transition-all hover:shadow-lg">
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">#{i + 1}</span>
-                <span class="px-2 py-0.5 rounded-full text-xs font-bold font-mono bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300">
-                  {result.similarity}%
-                </span>
-              </div>
+			{#if guesses.length > 0}
+				<section class="space-y-4">
+					<div class="flex items-center gap-2">
+						<h2 class="text-lg font-semibold">Guesses</h2>
+						<span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold dark:bg-slate-800">
+							{guesses.length} guess{guesses.length !== 1 ? 'es' : ''}
+						</span>
+					</div>
 
-              <div class="flex gap-1.5 mb-3">
-                {#each result.colorHexes as hex}
-                  <div
-                    class="flex-1 aspect-square rounded-lg shadow-inner border border-black/5"
-                    style="background-color: {hex}"
-                    title={hex}
-                  ></div>
-                {/each}
-              </div>
+					<div class="space-y-3">
+						{#each guesses as guess, guessIndex}
+							<div class="rounded-2xl border bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+								<div class="mb-3 flex items-center gap-2">
+									<span class="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-mono text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+										#{guessIndex + 1}
+									</span>
+									{#if guess.feedback.every((feedback) => feedback === 'green')}
+										<span class="rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-white">
+											Correct!
+										</span>
+									{/if}
+								</div>
 
-              <div class="space-y-1.5">
-                {#each result.colorNames as name, ci}
-                  <div class="flex items-center gap-2">
-                    <div class="w-4 h-4 rounded shrink-0 border border-black/10" style="background-color: {result.colorHexes[ci]}"></div>
-                    <span class="text-xs text-gray-600 dark:text-gray-300 truncate">{name}</span>
-                    <span class="text-[10px] text-gray-400 font-mono ml-auto">{result.colorHexes[ci]}</span>
-                  </div>
-                {/each}
-              </div>
+								<div class="flex items-center justify-center gap-4">
+									{#each guess.colors as colorIndex, colorPosition}
+										<div class="flex flex-col items-center gap-2">
+											<button
+												class={`relative h-16 w-16 rounded-xl border-2 transition-all ${feedbackClasses(guess.feedback[colorPosition])}`}
+												style={`background-color: ${COLORS[colorIndex]};`}
+												type="button"
+												onclick={() => cycleFeedback(guessIndex, colorPosition)}
+											>
+												{#if guess.feedback[colorPosition] === null}
+													<span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white" style={`text-shadow: 0 1px 3px rgba(0,0,0,0.5); color: ${getContrastColor(COLORS[colorIndex])};`}>
+														?
+													</span>
+												{/if}
+											</button>
+											<div class="text-center">
+												<p class="text-[11px] font-medium">{COLOR_NAMES[colorIndex]}</p>
+												<p class="text-[10px] font-mono text-slate-500 dark:text-slate-400">{COLORS[colorIndex]}</p>
+												<p class="text-[10px] text-slate-500 dark:text-slate-400">{renderFeedbackLabel(guess.feedback[colorPosition])}</p>
+											</div>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{/each}
+					</div>
 
-              <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
-                <div class="flex items-center gap-2">
-                  <div
-                    class="w-8 h-8 rounded-lg shadow-inner border border-black/10"
-                    style="background-color: {result.targetHex}"
-                  ></div>
-                  <div>
-                    <p class="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Mixed</p>
-                    <p class="text-xs font-mono font-semibold text-gray-700 dark:text-gray-200">{result.targetHex}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {/each}
-        </div>
-      </div>
+					{#if !isSolved && allGuessesComplete}
+						<div class="flex justify-center">
+							<button
+								class="rounded-xl bg-slate-900 px-8 py-3 font-semibold text-white dark:bg-white dark:text-slate-900"
+								disabled={refining}
+								type="button"
+								onclick={handleRefine}
+							>
+								{refining ? 'Refining...' : 'Refine'}
+							</button>
+						</div>
+					{:else if !isSolved && hasIncompleteGuesses}
+						<p class="text-center text-xs text-slate-500 dark:text-slate-400">
+							Set feedback on all colors above to enable Refine.
+						</p>
+					{/if}
+				</section>
+			{/if}
 
-      <!-- Feedback System -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-lg">
-            🎯
-          </div>
-          <div>
-            <h2 class="text-lg font-bold text-gray-900 dark:text-white">Feedback Tracker</h2>
-            <p class="text-xs text-gray-500 dark:text-gray-400">Toggle green, yellow, or gray for each color slot</p>
-          </div>
-        </div>
+			{#if suggestions.length > 0 && !isSolved}
+				<section class="space-y-4">
+					<div class="flex items-center justify-between">
+						<div class="flex items-center gap-2">
+							<h2 class="text-lg font-semibold">{guesses.length === 0 ? 'Best Matches' : 'Suggestions'}</h2>
+							<span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold dark:bg-slate-800">
+								{suggestions.length} result{suggestions.length !== 1 ? 's' : ''}
+							</span>
+						</div>
+						{#if inputHex}
+							<div class="flex items-center gap-2">
+								<div class="h-5 w-5 rounded-md border" style={`background-color: ${inputHex};`}></div>
+								<span class="font-mono text-xs text-slate-500 dark:text-slate-400">{inputHex}</span>
+							</div>
+						{/if}
+					</div>
 
-        <div class="grid gap-4 sm:grid-cols-3">
-          {#each [0, 1, 2] as slotIdx}
-            <div class="bg-gray-50 dark:bg-gray-700/30 border border-gray-200 dark:border-gray-600 rounded-xl p-4">
-              <h3 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Color Slot {slotIdx + 1}</h3>
-              <div class="flex gap-2">
-                {#each feedbackColors as fc}
-                  <button
-                    onclick={() => toggleFeedback(slotIdx, fc.value)}
-                    class="flex-1 py-2 rounded-lg text-xs font-bold transition-all border-2 {feedbackSlots[slotIdx].includes(fc.value)
-                      ? `${fc.bg} text-white border-transparent shadow-md`
-                      : 'bg-white dark:bg-gray-600 text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-500 hover:border-gray-400'}"
-                  >
-                    {fc.label}
-                  </button>
-                {/each}
-              </div>
-            </div>
-          {/each}
-        </div>
-      </div>
-    {/if}
+					<div class="space-y-3">
+						{#each suggestions as suggestion, index}
+							<div class={`overflow-hidden rounded-2xl border bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900 ${index === 0 ? 'ring-2 ring-slate-300 dark:ring-slate-700' : ''}`}>
+								<div class="flex items-stretch">
+									<div class="relative w-20 flex-shrink-0" style={`background-color: ${suggestion.targetHex};`}>
+										<div class="absolute inset-0 flex items-center justify-center px-2 text-center font-mono text-[10px] font-bold" style={`color: ${getContrastColor(suggestion.targetHex)}; text-shadow: 0 1px 3px rgba(0,0,0,0.4);`}>
+											{suggestion.targetHex}
+										</div>
+									</div>
+									<div class="flex-1 p-4">
+										<div class="mb-3 flex items-center gap-3">
+											{#each suggestion.colors as _, colorIndex}
+												<div class="flex flex-col items-center gap-1">
+													<div
+														class="h-12 w-12 rounded-xl border shadow-sm"
+														style={`background-color: ${suggestion.colorHexes[colorIndex]};`}
+													></div>
+													<p class="text-[10px] font-medium">{suggestion.colorNames[colorIndex]}</p>
+													<p class="text-[9px] font-mono text-slate-500 dark:text-slate-400">
+														{Math.round(WEIGHTS[0][colorIndex] * 100)}%
+													</p>
+												</div>
+											{/each}
+										</div>
+										<div class="flex items-center justify-between gap-3">
+											{#if suggestion.similarity !== undefined}
+												<span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold dark:bg-slate-800">
+													{suggestion.similarity}% match
+												</span>
+											{:else}
+												<div></div>
+											{/if}
+											<button
+												class={`rounded-lg px-4 py-2 text-sm font-semibold ${
+													index === 0
+														? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
+														: 'border'
+												}`}
+												type="button"
+												onclick={() => handleUseThis(suggestion)}
+											>
+												{index === 0 ? 'Use This' : 'Use'}
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						{/each}
+					</div>
 
-    <!-- Info Sections -->
-    <div class="grid md:grid-cols-2 gap-6 mb-8">
-      <section class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 shadow-sm">
-        <div class="flex items-center gap-3 mb-5">
-          <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-600 dark:text-pink-400 text-lg">
-            ℹ️
-          </div>
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">What is Colorfle?</h2>
-        </div>
-        <div class="space-y-3 text-gray-600 dark:text-gray-400 leading-relaxed">
-          <p>
-            <strong class="text-gray-900 dark:text-white">Colorfle</strong> is a daily color mixing puzzle where you must figure out which three colors, mixed in specific proportions (50%, 34%, 16%), produce a given target color.
-          </p>
-          <p>
-            You pick three colors from a palette of 20, and the game tells you how close you are. Green means correct color in the correct slot, yellow means the color is used but in a different position, and gray means the color isn't in the answer.
-          </p>
-        </div>
-      </section>
+					{#if guesses.length === 0}
+						<p class="text-center text-xs text-slate-500 dark:text-slate-400">
+							Use the top suggestion first, then enter the feedback from Colorfle and refine.
+						</p>
+					{/if}
+				</section>
+			{/if}
 
-      <section class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-8 shadow-sm">
-        <div class="flex items-center gap-3 mb-5">
-          <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-lg">
-            📚
-          </div>
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">How to Use the Solver</h2>
-        </div>
-        <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-          <li class="flex gap-3 items-start">
-            <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-pink-500 to-purple-600 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
-            <span>Enter the target hex color code or pick a color with the color picker.</span>
-          </li>
-          <li class="flex gap-3 items-start">
-            <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-pink-500 to-purple-600 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
-            <span>Click "Solve" to find the top 5 color combinations ranked by similarity.</span>
-          </li>
-          <li class="flex gap-3 items-start">
-            <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-pink-500 to-purple-600 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
-            <span>Use the feedback tracker to mark which colors are correct, misplaced, or absent.</span>
-          </li>
-        </ul>
-      </section>
-    </div>
+			<section class="rounded-2xl border border-sky-200 bg-sky-50/50 p-4 dark:border-sky-900/50 dark:bg-sky-950/20">
+				<h2 class="text-sm font-semibold text-sky-800 dark:text-sky-300">How to use</h2>
+				<ol class="mt-2 space-y-1 text-xs text-sky-700 dark:text-sky-400">
+					<li>1. Go to colorfle.com and copy the target hex color.</li>
+					<li>2. Enter the hex above and click Solve.</li>
+					<li>3. Use the top suggestion on Colorfle.</li>
+					<li>4. Click each color tile here to set Green, Yellow, or Gray feedback.</li>
+					<li>5. Click Refine for the next set of suggestions.</li>
+				</ol>
+			</section>
+		</div>
+	</main>
 
-    <!-- FAQ Section -->
-    <FAQSection title="Colorfle Solver FAQs" {faqs} />
-  </div>
+	<footer class="mt-12 border-t">
+		<div class="mx-auto max-w-4xl px-4 py-6 text-center">
+			<p class="text-xs text-slate-500 dark:text-slate-400">
+				Colorfle Solver is an unofficial fan tool and now follows the original solver flow from the migrated source page.
+			</p>
+		</div>
+	</footer>
 </div>

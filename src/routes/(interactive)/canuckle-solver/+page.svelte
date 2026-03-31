@@ -1,323 +1,436 @@
 <script lang="ts">
-	import FAQSection from '$lib/components/FAQSection.svelte';
-	import { validateGuess } from '$lib/canuckle';
-	import {
-		generateFAQSchema,
-		generateHowToSchema,
-		generateWebApplicationSchema,
-		generateWebPageSchema
-	} from '$lib/seo';
+	import { onMount } from 'svelte';
 
-	let guessInput = $state('');
-	let tileStates = $state<('gray' | 'yellow' | 'green')[]>(['gray', 'gray', 'gray', 'gray', 'gray']);
-	let results = $state<string[]>([]);
-	let hasChecked = $state(false);
+	type Feedback = 'absent' | 'present' | 'correct';
 
-	const wordList = $derived.by(() => {
-		const words = [
-			'MAPLE', 'HOCKEY', 'CANOE', 'BEAVER', 'IGLOO', 'NORTH', 'MOOSE', 'LOONS',
-			'PINES', 'SNOWY', 'LAKER', 'BROOK', 'GRIZZ', 'CEDAR', 'TROUT', 'EAGLE',
-			'FJORD', 'TUNDRA', 'LARCH', 'WHALE', 'BEARS', 'WOLVES', 'OTTER', 'GEODE',
-			'PRONG', 'STOKE', 'GRUEL', 'RADII', 'PLAIT', 'APHID', 'BOGGY', 'PIPES',
-			'FRILL', 'TEAMS', 'HYENA', 'DRAFT', 'VINES', 'MAMBA', 'SLEEP', 'BITER',
-			'MILKY', 'WRIST', 'MANIC', 'SPOOR'
-		];
-		return words;
-	});
-
-	function cycleTileState(index: number) {
-		const order: ('gray' | 'yellow' | 'green')[] = ['gray', 'yellow', 'green'];
-		const currentIndex = order.indexOf(tileStates[index]);
-		tileStates[index] = order[(currentIndex + 1) % 3];
+	interface Suggestion {
+		word: string;
+		entropy: number;
+		expected_remaining: number;
+		is_possible_answer: boolean;
 	}
 
-	function handleCheck() {
-		const guess = guessInput.toUpperCase().trim();
-		if (guess.length !== 5) return;
+	interface WasmSolver {
+		reset(): void;
+		remaining_count(): number;
+		get_possible_answers(): string[];
+		add_guess(word: string, feedback: string[]): boolean;
+		get_suggestions(max_count: number): Suggestion[];
+		is_valid_word(word: string): boolean;
+		word_count(): number;
+	}
 
-		const pattern = guess.split('').map((letter, i) => {
-			const state = tileStates[i];
-			return { letter, state, index: i };
-		});
+	interface WasmModuleShape {
+		CanuckleSolver: new () => WasmSolver;
+		default: (input?: string | URL | Request | Response | ArrayBuffer | Promise<any>) => Promise<any>;
+	}
 
-		const matching = wordList.filter((word) => {
-			const upperWord = word.toUpperCase();
-			for (const { letter, state, index } of pattern) {
-				if (state === 'green') {
-					if (upperWord[index] !== letter) return false;
-				} else if (state === 'yellow') {
-					if (!upperWord.includes(letter) || upperWord[index] === letter) return false;
-				} else {
-					if (upperWord.includes(letter)) return false;
-				}
+	const keyboardRows = [
+		['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+		['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+		['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACK']
+	];
+
+	let wasmPromise: Promise<WasmModuleShape> | null = null;
+
+	function loadWasmModule(): Promise<WasmModuleShape> {
+		if (!wasmPromise) {
+			wasmPromise = (async () => {
+				// @ts-expect-error served from static /wasm at runtime
+				const module = (await import('/wasm/canuckle_solver_wasm.js')) as unknown as WasmModuleShape;
+				await module.default();
+				return module;
+			})();
+		}
+		return wasmPromise;
+	}
+
+	let solver = $state<WasmSolver | null>(null);
+	let loading = $state(true);
+	let loadError = $state('');
+	let validationError = $state('');
+	let currentGuess = $state('');
+	let guesses = $state<Array<{ word: string; feedback: Feedback[] }>>([]);
+	let suggestions = $state<Suggestion[]>([]);
+	let possibleAnswers = $state<string[]>([]);
+	let remainingCount = $state(0);
+	let keyboardState = $state<Record<string, Feedback>>({});
+	let draftFeedback = $state<Feedback[]>(['absent', 'absent', 'absent', 'absent', 'absent']);
+
+	const showFeedbackSelector = $derived(currentGuess.length === 5);
+
+	function refreshSolverState() {
+		if (!solver) {
+			return;
+		}
+
+		solver.reset();
+		for (const guess of guesses) {
+			solver.add_guess(guess.word, guess.feedback);
+		}
+
+		suggestions = solver.get_suggestions(10) ?? [];
+		possibleAnswers = guesses.length > 0 ? (solver.get_possible_answers() ?? []).slice(0, 20) : [];
+		remainingCount = guesses.length > 0 ? solver.remaining_count() : solver.word_count();
+	}
+
+	function updateKeyboard(word: string, feedback: Feedback[]) {
+		const nextState = { ...keyboardState };
+		word.split('').forEach((letter, index) => {
+			const state = feedback[index];
+			if (state === 'correct') {
+				nextState[letter] = 'correct';
+				return;
 			}
-			return true;
+			if (state === 'present' && nextState[letter] !== 'correct') {
+				nextState[letter] = 'present';
+				return;
+			}
+			if (!nextState[letter]) {
+				nextState[letter] = 'absent';
+			}
 		});
+		keyboardState = nextState;
+	}
 
-		results = matching;
-		hasChecked = true;
+	function handleGuessInput(value: string) {
+		currentGuess = value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 5);
+		validationError = '';
+		draftFeedback = ['absent', 'absent', 'absent', 'absent', 'absent'];
+	}
+
+	function cycleDraftFeedback(index: number) {
+		const order: Feedback[] = ['absent', 'present', 'correct'];
+		const currentIndex = order.indexOf(draftFeedback[index]);
+		draftFeedback[index] = order[(currentIndex + 1) % order.length];
+		draftFeedback = [...draftFeedback];
+	}
+
+	function submitGuess() {
+		if (!solver || currentGuess.length !== 5) {
+			return;
+		}
+
+		const guess = currentGuess.toUpperCase();
+		if (!solver.is_valid_word(guess)) {
+			validationError = 'That word is not in the Canuckle solver dictionary.';
+			return;
+		}
+
+		const feedback = [...draftFeedback];
+		guesses = [...guesses, { word: guess, feedback }];
+		updateKeyboard(guess, feedback);
+		currentGuess = '';
+		draftFeedback = ['absent', 'absent', 'absent', 'absent', 'absent'];
+		validationError = '';
+		refreshSolverState();
 	}
 
 	function handleReset() {
-		guessInput = '';
-		tileStates = ['gray', 'gray', 'gray', 'gray', 'gray'];
-		results = [];
-		hasChecked = false;
+		guesses = [];
+		currentGuess = '';
+		draftFeedback = ['absent', 'absent', 'absent', 'absent', 'absent'];
+		keyboardState = {};
+		validationError = '';
+		refreshSolverState();
 	}
 
-	const faqs = [
-		{
-			question: 'What is Canuckle?',
-			answer:
-				'Canuckle is a Canadian-themed Wordle game where each daily answer is a five-letter word related to Canada. It was created to celebrate Canadian culture, geography, and history through a fun word puzzle format.'
-		},
-		{
-			question: 'How does the Canuckle Solver work?',
-			answer:
-				'Enter your guess, then tap each letter tile to set the color feedback you received in the game (gray for absent, yellow for present, green for correct). Click "Check" to see all matching Canadian-themed words that fit your clues.'
-		},
-		{
-			question: 'Is the Canuckle Solver free to use?',
-			answer:
-				'Yes, the Canuckle Solver is completely free with no registration or limits. Use it as a learning tool to improve your word-guessing skills and discover Canadian vocabulary.'
+	function handleKeyPress(key: string) {
+		if (key === 'BACK') {
+			handleGuessInput(currentGuess.slice(0, -1));
+			return;
 		}
-	];
+		if (key === 'ENTER') {
+			return;
+		}
+		if (currentGuess.length < 5) {
+			handleGuessInput(currentGuess + key);
+		}
+	}
 
-	const webPageSchema = generateWebPageSchema(
-		'Canuckle Solver - Free Canadian Wordle Helper Tool',
-		'Solve Canuckle puzzles fast with our free Canadian Wordle helper. Filter by letter positions and colors to find the answer.',
-		'https://wordsolver.tech/canuckle-solver'
-	);
-	const webAppSchema = generateWebApplicationSchema(
-		'Canuckle Solver',
-		'A free tool to help solve Canuckle, the Canadian-themed Wordle variant with five-letter words related to Canada.'
-	);
-	const faqSchema = generateFAQSchema(faqs);
-	const howToSchema = generateHowToSchema('How to Use the Canuckle Solver', [
-		{
-			name: 'Enter Your Guess',
-			text: 'Type the five-letter word you guessed in Canuckle into the input field.'
-		},
-		{
-			name: 'Set Color Feedback',
-			text: 'Tap each letter tile to cycle through gray (absent), yellow (present), or green (correct) to match the feedback from your game.'
-		},
-		{
-			name: 'Get Matching Words',
-			text: 'Click "Check" to see all possible Canadian-themed words that match your color pattern.'
+	function getFeedbackClasses(state: Feedback) {
+		if (state === 'correct') {
+			return 'bg-green-600 text-white border-green-700';
 		}
-	]);
+		if (state === 'present') {
+			return 'bg-yellow-500 text-white border-yellow-600';
+		}
+		return 'bg-gray-500 text-white border-gray-600';
+	}
+
+	function getKeyClasses(key: string) {
+		const state = keyboardState[key];
+		if (state === 'correct') {
+			return 'bg-green-600 text-white';
+		}
+		if (state === 'present') {
+			return 'bg-yellow-500 text-white';
+		}
+		if (state === 'absent') {
+			return 'bg-gray-500 text-white';
+		}
+		return 'bg-gray-200 text-gray-800';
+	}
+
+	onMount(async () => {
+		try {
+			const wasmModule = await loadWasmModule();
+			solver = new wasmModule.CanuckleSolver();
+			refreshSolverState();
+		} catch (error) {
+			loadError = error instanceof Error ? error.message : 'Failed to load the Canuckle solver.';
+		} finally {
+			loading = false;
+		}
+	});
 </script>
 
 <svelte:head>
-	<title>Canuckle Solver - Free Canadian Wordle Helper Tool | WordSolverX</title>
+	<title>Canuckle Solver - WASM Entropy Helper | WordSolverX</title>
 	<meta
 		name="description"
-		content="Use our free Canuckle Solver to find Canadian Wordle answers fast. Filter by letter positions and colors to narrow down the correct five-letter Canadian word."
-	/>
-	<meta
-		name="keywords"
-		content="canuckle solver, canadian wordle solver, canuckle helper, canuckle cheat, canuckle answer finder, canadian word game, five letter canadian words"
+		content="Use the original Canuckle WASM solver with entropy-ranked suggestions, feedback entry, and live remaining-answer filtering."
 	/>
 	<link rel="canonical" href="https://wordsolver.tech/canuckle-solver" />
-	<meta property="og:title" content="Canuckle Solver - Free Canadian Wordle Helper Tool | WordSolverX" />
-	<meta
-		property="og:description"
-		content="Use our free Canuckle Solver to find Canadian Wordle answers fast. Filter by letter positions and colors to narrow down the correct word."
-	/>
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolver.tech/canuckle-solver" />
-	<meta property="og:site_name" content="WordSolverX" />
-	<meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Canuckle Solver - Free Canadian Wordle Helper Tool | WordSolverX" />
-	<meta
-		name="twitter:description"
-		content="Use our free Canuckle Solver to find Canadian Wordle answers fast. Filter by letter positions and colors."
-	/>
-	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
-	{@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(webAppSchema)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-orange-50 dark:from-gray-900 dark:via-gray-900 dark:to-red-950">
-	<section class="bg-gradient-to-r from-red-600 to-red-700 py-16 shadow-lg">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="text-center">
-				<h1 class="text-4xl font-extrabold text-white sm:text-6xl md:text-7xl tracking-tight">
-					Canuckle Solver
-				</h1>
-				<p class="mt-6 max-w-3xl mx-auto text-xl text-white/95 sm:text-2xl font-medium leading-relaxed">
-					Find Canadian Wordle answers fast with our free Canuckle helper tool.
-				</p>
-				<div class="mt-8 flex flex-wrap justify-center gap-4 text-sm font-bold text-red-100">
-					<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">5-Letter Words</span>
-					<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">Canadian Themed</span>
-					<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">Instant Results</span>
-					<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">100% Free</span>
-				</div>
-			</div>
+<div class="min-h-screen bg-red-50">
+	<header class="bg-red-600 px-4 py-4 text-white">
+		<div class="mx-auto flex max-w-4xl items-center justify-between">
+			<h1 class="text-2xl font-bold">CANUCKLE</h1>
+			<span class="text-sm font-medium">Answers and Solver</span>
 		</div>
-	</section>
+	</header>
 
-	<div class="max-w-3xl mx-auto py-12 px-4">
-		<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700">
-			<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Enter Your Guess</h2>
+	<nav class="mx-auto mt-4 flex max-w-4xl gap-2 px-4">
+		<a
+			class="flex-1 rounded-lg bg-gray-200 px-4 py-3 text-center font-bold text-gray-700"
+			href="/canuckle-answer-today"
+		>
+			Today's Answer
+		</a>
+		<a
+			class="flex-1 rounded-lg bg-gray-200 px-4 py-3 text-center font-bold text-gray-700"
+			href="/canuckle-archive"
+		>
+			Archive
+		</a>
+		<a class="flex-1 rounded-lg bg-red-600 px-4 py-3 text-center font-bold text-white" href="/canuckle-solver">
+			Solver
+		</a>
+	</nav>
 
-			<div class="flex flex-col items-center gap-6">
-				<input
-					type="text"
-					maxlength="5"
-					bind:value={guessInput}
-					placeholder="Enter 5-letter word"
-					class="w-full max-w-xs text-center text-2xl font-bold tracking-widest uppercase px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:border-red-500 focus:ring-2 focus:ring-red-200 dark:focus:ring-red-800 outline-none transition"
-				/>
-
-				<p class="text-sm text-gray-500 dark:text-gray-400">
-					Tap tiles to set color feedback: <span class="font-semibold text-gray-700 dark:text-gray-300">Gray</span> → <span class="font-semibold text-yellow-600">Yellow</span> → <span class="font-semibold text-green-600">Green</span>
-				</p>
-
-				<div class="flex gap-3">
-					{#each tileStates as state, i}
-						<button
-							type="button"
-							onclick={() => cycleTileState(i)}
-							class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl text-xl sm:text-2xl font-bold uppercase transition-all duration-150 cursor-pointer select-none focus:outline-none focus:ring-2 focus:ring-red-400
-								{state === 'gray' ? 'bg-gray-400 dark:bg-gray-600 text-white border-2 border-gray-500 dark:border-gray-500' : ''}
-								{state === 'yellow' ? 'bg-yellow-400 text-gray-900 border-2 border-yellow-500 shadow-md shadow-yellow-200 dark:shadow-yellow-900/30' : ''}
-								{state === 'green' ? 'bg-green-500 text-white border-2 border-green-600 shadow-md shadow-green-200 dark:shadow-green-900/30' : ''}
-							"
-						>
-							{guessInput[i]?.toUpperCase() || '?'}
-						</button>
-					{/each}
-				</div>
-
-				<div class="flex gap-3 w-full max-w-xs">
-					<button
-						type="button"
-						onclick={handleCheck}
-						disabled={guessInput.length !== 5}
-						class="flex-1 px-6 py-3 rounded-xl bg-red-600 text-white font-bold text-lg shadow-lg shadow-red-200 dark:shadow-red-900/30 transition hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
-					>
-						Check
-					</button>
-					<button
-						type="button"
-						onclick={handleReset}
-						class="px-6 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-bold text-lg transition hover:bg-gray-50 dark:hover:bg-gray-700"
-					>
-						Reset
-					</button>
-				</div>
+	<main class="mx-auto max-w-4xl px-4 py-6">
+		{#if loading}
+			<div class="rounded-xl bg-white p-10 text-center shadow-md">
+				<div class="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-red-600 border-t-transparent"></div>
+				<p class="text-gray-600">Loading WASM Solver...</p>
 			</div>
+		{:else if loadError}
+			<div class="rounded-xl bg-white p-10 text-center shadow-md">
+				<p class="font-semibold text-red-600">{loadError}</p>
+			</div>
+		{:else}
+			<div class="space-y-4">
+				<div class="grid gap-4 md:grid-cols-3">
+					<div class="rounded-xl bg-white p-4 text-center shadow-md">
+						<div class="text-3xl font-bold text-gray-900">{remainingCount}</div>
+						<div class="text-xs uppercase tracking-wide text-gray-500">Possible Words</div>
+					</div>
+					<div class="rounded-xl bg-white p-4 text-center shadow-md">
+						<div class="text-3xl font-bold text-gray-900">{guesses.length}</div>
+						<div class="text-xs uppercase tracking-wide text-gray-500">Guesses Made</div>
+					</div>
+					<div class="rounded-xl bg-white p-4 text-center shadow-md">
+						<div class="text-3xl font-bold text-gray-900">
+							{suggestions[0] ? suggestions[0].entropy.toFixed(2) : '0.00'}
+						</div>
+						<div class="text-xs uppercase tracking-wide text-gray-500">Best Entropy</div>
+					</div>
+				</div>
 
-			{#if hasChecked}
-				<div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8">
-					<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-						{results.length > 0 ? `Matching Words (${results.length})` : 'No Matching Words Found'}
-					</h3>
-					{#if results.length > 0}
-						<div class="flex flex-wrap justify-center gap-3">
-							{#each results as word}
-								<span class="inline-flex items-center px-4 py-2 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 font-bold tracking-wider uppercase text-lg">
+				<section class="rounded-xl bg-white p-6 shadow-md">
+					<div class="mb-4 flex items-center justify-between">
+						<h2 class="text-xl font-bold text-gray-900">Best Guesses</h2>
+						<button
+							class="rounded-lg bg-gray-200 px-4 py-2 font-bold text-gray-700"
+							type="button"
+							onclick={handleReset}
+						>
+							Reset
+						</button>
+					</div>
+
+					<div class="space-y-2">
+						{#each suggestions.slice(0, 5) as suggestion, index}
+							<button
+								class={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left ${
+									index === 0
+										? 'border-2 border-green-600 bg-green-50'
+										: suggestion.is_possible_answer
+											? 'bg-blue-50'
+											: 'bg-gray-50'
+								}`}
+								type="button"
+								onclick={() => handleGuessInput(suggestion.word)}
+							>
+								<div class="flex items-center gap-3">
+									<span class="text-lg font-bold text-gray-900">{suggestion.word}</span>
+									{#if index === 0}
+										<span class="rounded bg-green-600 px-2 py-0.5 text-[10px] font-bold text-white">BEST</span>
+									{/if}
+									{#if suggestion.is_possible_answer}
+										<span class="rounded bg-blue-600 px-2 py-0.5 text-[10px] font-bold text-white">POSSIBLE</span>
+									{/if}
+								</div>
+								<div class="text-right">
+									<div class="text-sm font-semibold text-gray-900">
+										Entropy: {suggestion.entropy.toFixed(3)}
+									</div>
+									<div class="text-xs text-gray-500">
+										~{suggestion.expected_remaining.toFixed(1)} words left
+									</div>
+								</div>
+							</button>
+						{/each}
+					</div>
+				</section>
+
+				<section class="rounded-xl bg-white p-6 shadow-md">
+					<h2 class="mb-4 text-xl font-bold text-gray-900">Your Guesses</h2>
+
+					<div class="mb-6 space-y-2">
+						{#each guesses as guess}
+							<div class="flex justify-center gap-1">
+								{#each guess.word.split('') as letter, index}
+									<div
+										class={`flex h-12 w-12 items-center justify-center rounded-lg border-2 text-xl font-bold ${getFeedbackClasses(guess.feedback[index])}`}
+									>
+										{letter}
+									</div>
+								{/each}
+							</div>
+						{/each}
+
+						{#if showFeedbackSelector}
+							<div class="rounded-lg bg-gray-50 p-4">
+								<p class="mb-3 text-center text-sm text-gray-600">
+									Click each letter to set feedback from Canuckle.
+								</p>
+								<div class="mb-4 flex justify-center gap-1">
+									{#each currentGuess.split('') as letter, index}
+										<button
+											class={`flex h-12 w-12 items-center justify-center rounded-lg border-2 text-xl font-bold ${getFeedbackClasses(draftFeedback[index])}`}
+											type="button"
+											onclick={() => cycleDraftFeedback(index)}
+										>
+											{letter}
+										</button>
+									{/each}
+								</div>
+								<div class="flex justify-center gap-2">
+									<button
+										class="rounded-lg bg-red-600 px-4 py-2 font-bold text-white"
+										type="button"
+										onclick={submitGuess}
+									>
+										Submit Guess
+									</button>
+									<button
+										class="rounded-lg bg-gray-200 px-4 py-2 text-gray-700"
+										type="button"
+										onclick={() => handleGuessInput('')}
+									>
+										Cancel
+									</button>
+								</div>
+							</div>
+						{/if}
+
+						{#each Array(Math.max(0, 6 - guesses.length)) as _, rowIndex}
+							<div class="flex justify-center gap-1">
+								{#each Array(5) as _, columnIndex}
+									<div
+										class="h-12 w-12 rounded-lg border-2 border-gray-200"
+										aria-label={`empty-${rowIndex}-${columnIndex}`}
+									></div>
+								{/each}
+							</div>
+						{/each}
+					</div>
+
+					<div class="mb-4 flex gap-2">
+						<input
+							class="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-lg uppercase tracking-[0.3em] text-gray-900 outline-none focus:border-red-500"
+							maxlength="5"
+							placeholder="Type a guess..."
+							type="text"
+							value={currentGuess}
+							oninput={(event) => handleGuessInput((event.currentTarget as HTMLInputElement).value)}
+						/>
+						<button
+							class={`rounded-lg px-4 py-3 font-bold text-white ${
+								currentGuess.length === 5 ? 'bg-red-600' : 'bg-gray-400'
+							}`}
+							disabled={currentGuess.length !== 5}
+							type="button"
+						>
+							Set Feedback
+						</button>
+					</div>
+
+					{#if validationError}
+						<p class="mb-4 text-sm font-medium text-red-600">{validationError}</p>
+					{/if}
+
+					<div class="space-y-2">
+						{#each keyboardRows as row}
+							<div class="flex justify-center gap-1">
+								{#each row as key}
+									<button
+										class={`rounded-lg px-2 py-3 text-sm font-bold ${
+											key === 'ENTER' || key === 'BACK'
+												? 'min-w-[64px] bg-gray-300 text-gray-700'
+												: `min-w-[36px] ${getKeyClasses(key)}`
+										}`}
+										type="button"
+										onclick={() => handleKeyPress(key)}
+									>
+										{key === 'BACK' ? 'Back' : key}
+									</button>
+								{/each}
+							</div>
+						{/each}
+					</div>
+				</section>
+
+				{#if possibleAnswers.length > 0 && possibleAnswers.length <= 20}
+					<section class="rounded-xl bg-white p-6 shadow-md">
+						<h2 class="text-xl font-bold text-gray-900">Remaining Possible Answers</h2>
+						<p class="mb-4 mt-1 text-sm text-gray-500">
+							{possibleAnswers.length} words match your clues.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							{#each possibleAnswers as word}
+								<button
+									class="rounded-lg bg-red-50 px-4 py-2 font-bold text-red-800"
+									type="button"
+									onclick={() => handleGuessInput(word)}
+								>
 									{word}
-								</span>
+								</button>
 							{/each}
 						</div>
-					{:else}
-						<p class="text-center text-gray-500 dark:text-gray-400">
-							No words in our Canadian word list match your pattern. Try adjusting your color feedback.
-						</p>
-					{/if}
-				</div>
-			{/if}
-		</div>
-	</div>
-
-	<div class="py-12">
-		<FAQSection {faqs} />
-	</div>
-
-	<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-		<div class="bg-white dark:bg-gray-800 rounded-3xl p-10 md:p-14 shadow-2xl border border-gray-100 dark:border-gray-700">
-			<h2 class="text-3xl font-black text-gray-900 dark:text-white mb-8 text-center">
-				How to Solve Canuckle Fast
-			</h2>
-			<div class="grid md:grid-cols-2 gap-10 text-gray-700 dark:text-gray-300">
-				<div class="space-y-4">
-					<h3 class="font-bold text-xl flex items-center gap-2 text-red-600 dark:text-red-400">
-						<span class="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 text-sm">1</span>
-						Enter Your Guess
-					</h3>
-					<p class="leading-relaxed">
-						Type the five-letter word you tried in today's Canuckle puzzle into the input field. Every answer is a word with a Canadian connection.
-					</p>
-				</div>
-				<div class="space-y-4">
-					<h3 class="font-bold text-xl flex items-center gap-2 text-red-600 dark:text-red-400">
-						<span class="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 text-sm">2</span>
-						Set the Colors
-					</h3>
-					<p class="leading-relaxed">
-						Tap each letter tile to cycle through gray, yellow, and green to match the feedback from your Canuckle game.
-					</p>
-				</div>
-				<div class="space-y-4">
-					<h3 class="font-bold text-xl flex items-center gap-2 text-red-600 dark:text-red-400">
-						<span class="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 text-sm">3</span>
-						Click Check
-					</h3>
-					<p class="leading-relaxed">
-						Hit the Check button to see all matching Canadian words that fit your clue pattern. The solver filters our word list instantly.
-					</p>
-				</div>
-				<div class="space-y-4">
-					<h3 class="font-bold text-xl flex items-center gap-2 text-red-600 dark:text-red-400">
-						<span class="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 text-sm">4</span>
-						Find the Answer
-					</h3>
-					<p class="leading-relaxed">
-						Review the matching words and pick the one that fits best. Repeat with new guesses until you solve today's Canuckle puzzle.
-					</p>
-				</div>
+					</section>
+				{/if}
 			</div>
-		</div>
-	</section>
+		{/if}
+	</main>
 
-	<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-		<article class="space-y-12">
-			<div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
-				<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">What is Canuckle?</h2>
-				<div class="prose prose-lg max-w-none text-gray-600 dark:text-gray-300">
-					<p class="mb-6 leading-relaxed">
-						Canuckle is a beloved Canadian twist on the Wordle format. Each daily puzzle features a five-letter word that has some connection to Canada — whether it's about geography, wildlife, food, culture, or history. Players get six attempts to guess the word, with color-coded feedback after each try.
-					</p>
-					<p class="mb-6 leading-relaxed">
-						What makes Canuckle special is the fun fact that accompanies every answer. After solving the puzzle, you learn something new about Canada, from the habits of Arctic wildlife to the origins of everyday Canadian slang. It's a game that entertains and educates at the same time.
-					</p>
-					<p class="leading-relaxed">
-						Our Canuckle Solver helps you find the answer by filtering Canadian-themed words based on the color feedback you've received. Whether you're stuck on the last guess or just want to confirm your answer, the solver narrows down the possibilities in seconds.
-					</p>
-				</div>
-			</div>
-
-			<div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
-				<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Tips for Playing Canuckle</h2>
-				<div class="prose prose-lg max-w-none text-gray-600 dark:text-gray-300">
-					<p class="mb-6 leading-relaxed">
-						Starting with a word that contains common Canadian letters is a great strategy. Words like "MAPLE", "NORTH", or "MOOSE" cover many letters that frequently appear in Canadian-themed answers. Pay attention to the unique Canadian vocabulary that sets Canuckle apart from standard Wordle.
-					</p>
-					<p class="mb-6 leading-relaxed">
-						Think about Canada's diverse landscape and culture when guessing. Canuckle answers might reference animals like beavers and moose, geographical features like fjords and tundra, or cultural touchstones like hockey and maple syrup. The more Canadian words you know, the better you'll do.
-					</p>
-					<p class="leading-relaxed">
-						Don't forget that Canuckle uses the same color system as Wordle — green means the letter is in the right spot, yellow means it's in the word but in a different position, and gray means it's not in the word at all. Use this feedback systematically to eliminate possibilities.
-					</p>
-				</div>
-			</div>
-		</article>
-	</section>
+	<footer class="px-4 py-8 text-center text-sm text-gray-600">
+		<a class="font-semibold text-red-600" href="https://www.canucklegame.ca" rel="noopener noreferrer" target="_blank">
+			Play the official game
+		</a>
+		<p class="mt-2">This page now uses the original Canuckle WASM solver logic during play.</p>
+	</footer>
 </div>

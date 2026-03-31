@@ -31,13 +31,13 @@
 
   const weightLabels = ['50%', '34%', '16%'];
 
-  const faqs = [
+  const faqs = $derived([
     { question: `What is the Colorfle answer for today, ${data.formattedDate}?`, answer: `Today's Colorfle answer for puzzle #${data.dayInfo.puzzleNumber} uses three colors mixed at 50%, 34%, and 16%. The target mixed color is ${data.answer.targetHex}.` },
     { question: 'How does Colorfle color mixing work?', answer: 'Colorfle mixes three colors with weighted proportions: 50% for the first color, 34% for the second, and 16% for the third. The algorithm blends in both YCC and RGB color spaces for a visually accurate result.' },
     { question: 'When does the Colorfle puzzle reset?', answer: 'A new Colorfle puzzle is released every day. The countdown timer on this page shows exactly when the next puzzle will be available.' },
     { question: 'What do the feedback colors mean?', answer: 'Green means the color is correct and in the right position. Yellow means the color is in the answer but in a different slot. Gray means the color is not in today\'s answer at all.' },
     { question: 'Can I play past Colorfle puzzles?', answer: 'Yes! Visit the Colorfle archive page to browse and play previous puzzles. Each puzzle has a unique number and a unique combination of colors.' }
-  ];
+  ]);
 </script>
 
 <svelte:head>

@@ -1,5 +1,7 @@
 import seedrandom from 'seedrandom';
 
+const DAY_MS = 86_400_000;
+
 export const COLORS: string[] = [
   "#FFFFFF", "#FFFAC8", "#FABEBE", "#AAFFC3", "#E6BEFF",
   "#46F0F0", "#FFE119", "#BCF60C", "#F58231", "#3CB44B",
@@ -21,7 +23,7 @@ export const WEIGHTS: number[][] = [
   [0.4, 0.3, 0.2, 0.1]
 ];
 
-const LAUNCH_DATE = new Date("4/25/2022 17:00:00");
+const LAUNCH_DATE = new Date('2022-04-25T12:00:00Z');
 
 export interface RGB { r: number; g: number; b: number; }
 export interface YCC { r: number; y: number; b: number; }
@@ -38,6 +40,10 @@ export interface DayInfo {
   puzzleNumber: number;
   date: string;
   nextResetTime: number;
+}
+
+function getUtcAnchorDate(date: Date): Date {
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 12, 0, 0));
 }
 
 export function hexToRgb(hex: string): RGB {
@@ -118,19 +124,13 @@ export function mixColors(colorIndices: number[], mode: number = 0): RGB {
 }
 
 export function getPuzzleNumber(date: Date = new Date()): number {
-  const G = date;
-  const q = LAUNCH_DATE;
-  const z = 60 * (G.getTimezoneOffset() - q.getTimezoneOffset()) * 1000;
-  const R = G.getTime() - q.getTime() - z;
-  return Math.floor(R / 864e5);
+  const anchorDate = getUtcAnchorDate(date);
+  return Math.floor((anchorDate.getTime() - LAUNCH_DATE.getTime()) / DAY_MS);
 }
 
 function getSeedString(date: Date, mode: number = 0): string {
-  const x = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17);
-  if (x < date) {
-    x.setDate(x.getDate() + 1);
-  }
-  const dateStr = x.getDate() + " " + x.getMonth() + " " + x.getFullYear();
+  const anchorDate = getUtcAnchorDate(date);
+  const dateStr = `${anchorDate.getUTCDate()} ${anchorDate.getUTCMonth()} ${anchorDate.getUTCFullYear()}`;
   return mode + " " + dateStr;
 }
 
@@ -159,7 +159,7 @@ export function getPuzzleAnswer(date: Date = new Date(), mode: number = 0): Puzz
 }
 
 export function getPuzzleAnswerByNumber(puzzleNumber: number, mode: number = 0): PuzzleAnswer {
-  const date = new Date(LAUNCH_DATE.getTime() + puzzleNumber * 864e5);
+  const date = new Date(LAUNCH_DATE.getTime() + puzzleNumber * DAY_MS);
   return getPuzzleAnswer(date, mode);
 }
 
@@ -186,17 +186,24 @@ export function getColorName(index: number): string { return COLOR_NAMES[index] 
 export function getColorHex(index: number): string { return COLORS[index] || "#000000"; }
 
 export function getNextResetTime(date: Date = new Date()): number {
-  const x = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17);
-  if (x <= date) { x.setDate(x.getDate() + 1); }
-  return x.getTime();
+  return getUtcAnchorDate(date).getTime() + DAY_MS;
 }
 
 export function getDayInfo(date: Date = new Date()): DayInfo {
+  const anchorDate = getUtcAnchorDate(date);
   return {
-    puzzleNumber: getPuzzleNumber(date),
-    date: date.toISOString().split('T')[0],
-    nextResetTime: getNextResetTime(date)
+    puzzleNumber: getPuzzleNumber(anchorDate),
+    date: anchorDate.toISOString().split('T')[0],
+    nextResetTime: getNextResetTime(anchorDate)
   };
+}
+
+export function getPuzzleAnswerForDateKey(dateKey: string, mode: number = 0): PuzzleAnswer {
+  return getPuzzleAnswer(new Date(`${dateKey}T12:00:00Z`), mode);
+}
+
+export function getDayInfoForDateKey(dateKey: string): DayInfo {
+  return getDayInfo(new Date(`${dateKey}T12:00:00Z`));
 }
 
 export function generateAllCombinations(mode: number = 0): number[][] {

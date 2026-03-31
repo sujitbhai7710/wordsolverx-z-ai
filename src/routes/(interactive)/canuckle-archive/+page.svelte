@@ -1,100 +1,62 @@
 <script lang="ts">
-	import { fetchArchive } from '$lib/canuckle';
-	import { generateCollectionPageSchema } from '$lib/seo';
-
-	const archiveResponse = fetchArchive();
-	const archive = archiveResponse.success && archiveResponse.data ? archiveResponse.data : [];
-
-	const collectionSchema = generateCollectionPageSchema(
-		'Canuckle Answer Archive',
-		'Complete archive of all Canuckle puzzle answers with puzzle numbers, dates, and fun facts about Canada.',
-		'https://wordsolver.tech/canuckle-archive',
-		archive.map((entry) => ({
-			name: `Canuckle #${entry.puzzleNumber} - ${entry.word}`,
-			url: `https://wordsolver.tech/canuckle-archive#puzzle-${entry.puzzleNumber}`
-		}))
-	);
+	let { data } = $props();
 </script>
 
 <svelte:head>
-	<title>Canuckle Archive - Complete History of All Canuckle Answers | WordSolverX</title>
+	<title>Canuckle Archive - Recent Canuckle Answers | WordSolverX</title>
 	<meta
 		name="description"
-		content="Browse the complete archive of all Canuckle puzzle answers. View puzzle numbers, dates, words, and fun Canadian facts for every past Canuckle puzzle."
-	/>
-	<meta
-		name="keywords"
-		content="canuckle archive, past canuckle answers, canuckle answer history, canuckle puzzle list, canadian wordle archive, all canuckle answers"
+		content="Browse recent Canuckle answers with their dates, daily hints, and Canadian fun facts."
 	/>
 	<link rel="canonical" href="https://wordsolver.tech/canuckle-archive" />
-	<meta property="og:title" content="Canuckle Archive - All Past Canuckle Answers | WordSolverX" />
-	<meta
-		property="og:description"
-		content="Complete history of every Canuckle answer. Browse puzzle numbers, dates, and fun facts."
-	/>
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://wordsolver.tech/canuckle-archive" />
-	<meta property="og:site_name" content="WordSolverX" />
-	<meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Canuckle Archive - All Past Canuckle Answers | WordSolverX" />
-	<meta
-		name="twitter:description"
-		content="Complete history of every Canuckle answer with puzzle numbers, dates, and fun facts."
-	/>
-	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
-	{@html `<script type="application/ld+json">${JSON.stringify(collectionSchema)}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-orange-50 dark:from-gray-900 dark:via-gray-900 dark:to-red-950">
 	<section class="bg-gradient-to-r from-red-600 to-red-700 py-16 shadow-lg">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="text-center">
-				<h1 class="text-4xl font-extrabold text-white sm:text-6xl tracking-tight">
-					Canuckle Archive
-				</h1>
-				<p class="mt-6 max-w-3xl mx-auto text-xl text-white/95 sm:text-2xl font-medium leading-relaxed">
-					Browse every Canuckle puzzle answer with fun facts about Canada.
-				</p>
-			</div>
+		<div class="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+			<h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-6xl">Canuckle Archive</h1>
+			<p class="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-white/95">
+				Recent Canuckle answers pulled from the live source used by the game.
+			</p>
 		</div>
 	</section>
 
-	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-		{#if archive.length === 0}
-			<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 text-center">
-				<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">No Archive Data Available</h2>
-				<p class="text-gray-500">Could not load the Canuckle archive at this time.</p>
+	<div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+		{#if !data.archive?.length}
+			<div class="rounded-3xl border border-gray-100 bg-white p-8 text-center shadow-xl dark:border-gray-700 dark:bg-gray-800">
+				<h2 class="text-2xl font-bold text-gray-900 dark:text-white">No Archive Data Available</h2>
+				<p class="mt-2 text-gray-500 dark:text-gray-400">Could not load the Canuckle archive at this time.</p>
 			</div>
 		{:else}
 			<div class="space-y-6">
-				{#each archive as entry (entry.puzzleNumber)}
-					<div id="puzzle-{entry.puzzleNumber}" class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 shadow-xl border border-gray-100 dark:border-gray-700 scroll-mt-28">
-						<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+				{#each data.archive as entry (entry.dateKey)}
+					<div class="rounded-3xl border border-gray-100 bg-white p-6 shadow-xl dark:border-gray-700 dark:bg-gray-800">
+						<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 							<div>
 								<p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-600 dark:text-red-300">
-									Puzzle #{entry.puzzleNumber}
+									{entry.date}
 								</p>
-								<p class="text-gray-600 dark:text-gray-400 text-sm mt-1">{entry.date}</p>
-							</div>
-							<div class="text-sm text-gray-500 dark:text-gray-400">
-								Avg guesses: <span class="font-bold text-red-600 dark:text-red-400">{entry.avgGuesses}</span>
+								{#if entry.hintTitle}
+									<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{entry.hintTitle}</p>
+								{/if}
 							</div>
 						</div>
 
-						<div class="flex gap-3 mb-6">
-							{#each entry.word.toUpperCase().split('') as letter}
-								<div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center text-xl sm:text-2xl font-bold bg-red-500 text-white border-2 border-red-600 shadow-md">
+						<div class="mt-6 flex gap-3">
+							{#each entry.word.split('') as letter}
+								<div class="flex h-12 w-12 items-center justify-center rounded-xl border-2 border-red-600 bg-red-500 text-xl font-bold text-white shadow-md sm:h-14 sm:w-14 sm:text-2xl">
 									{letter}
 								</div>
 							{/each}
 						</div>
 
-						<div class="bg-red-50 dark:bg-red-900/20 rounded-2xl p-5 border border-red-100 dark:border-red-800/30">
-							<h3 class="text-sm font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-								<span class="text-red-500">🍁</span> Fun Fact
-							</h3>
-							<p class="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">{entry.funFact}</p>
+						{#if entry.hintText}
+							<p class="mt-5 text-sm text-gray-600 dark:text-gray-300">{entry.hintText}</p>
+						{/if}
+
+						<div class="mt-5 rounded-2xl border border-red-100 bg-red-50 p-5 dark:border-red-800/30 dark:bg-red-900/20">
+							<h3 class="text-sm font-bold text-gray-900 dark:text-white">Fun Fact</h3>
+							<p class="mt-2 text-sm leading-relaxed text-gray-700 dark:text-gray-300">{entry.funFact}</p>
 						</div>
 					</div>
 				{/each}
