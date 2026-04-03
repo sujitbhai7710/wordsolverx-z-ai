@@ -3,6 +3,7 @@ import { colornames } from 'color-name-list';
 import space from 'color-space';
 import DeltaE from 'delta-e';
 import targetColorNames from './data/colordle-targets.json';
+import { colordleColorOverrides } from './data/colordle-color-overrides.js';
 
 export interface ColorData {
     name: string;
@@ -16,9 +17,89 @@ export interface RGB {
 }
 
 let targetColorsCache: ColorData[] | null = null;
+let colorLookupCache: Map<string, ColorData> | null = null;
+let allColorsCache: ColorData[] | null = null;
+
+const normalizeColorName = (name: string): string => {
+    return name.toLowerCase().replace(/ /g, "");
+};
+
+const getAugmentedColors = (): ColorData[] => {
+    if (allColorsCache) {
+        return allColorsCache;
+    }
+
+    const colors: ColorData[] = [];
+    const seen = new Set<string>();
+
+    const appendColor = (color: ColorData) => {
+        const normalized = normalizeColorName(color.name);
+        if (seen.has(normalized)) {
+            return;
+        }
+
+        seen.add(normalized);
+        colors.push(color);
+    };
+
+    for (const color of colornames) {
+        appendColor(color);
+    }
+
+    for (const color of Object.values(colordleColorOverrides) as ColorData[]) {
+        appendColor(color);
+    }
+
+    allColorsCache = colors;
+    return allColorsCache;
+};
 
 export const getAllColors = (): ColorData[] => {
-    return colornames;
+    return getAugmentedColors();
+};
+
+const getColorLookup = (): Map<string, ColorData> => {
+    if (colorLookupCache) {
+        return colorLookupCache;
+    }
+
+    const colorMap = new Map<string, ColorData>();
+
+    for (const c of getAugmentedColors()) {
+        const normalized = normalizeColorName(c.name);
+        if (!colorMap.has(normalized)) {
+            colorMap.set(normalized, c);
+        }
+    }
+
+    colorLookupCache = colorMap;
+    return colorLookupCache;
+};
+
+export const getBundledTargetColorNames = (): string[] => {
+    return targetColorNames.colors;
+};
+
+export const resolveTargetColors = (targetNames: string[]): ColorData[] => {
+    const colorMap = getColorLookup();
+    const orderedTargets: ColorData[] = [];
+
+    for (const name of targetNames) {
+        const normalizedName = normalizeColorName(name);
+        const match = colorMap.get(normalizedName);
+
+        if (match) {
+            orderedTargets.push(match);
+        } else {
+            console.warn(`Colordle Target Missing in Library: ${name}`);
+            orderedTargets.push({
+                name: name,
+                hex: '#000000'
+            });
+        }
+    }
+
+    return orderedTargets;
 };
 
 export const getTargetColors = (): ColorData[] => {
@@ -26,38 +107,7 @@ export const getTargetColors = (): ColorData[] => {
         return targetColorsCache;
     }
 
-    // We must preserve the order of targetColorNames.colors to match the daily sequence.
-    // Create a lookup map for performance (O(1) access instead of O(N) scan per target)
-    // Map key: normalized name -> ColorData object
-    const colorMap = new Map<string, ColorData>();
-
-    for (const c of colornames) {
-        const normalized = c.name.toLowerCase().replace(/ /g, "");
-        // If duplicates exist in library, first one wins (or doesn't matter much)
-        if (!colorMap.has(normalized)) {
-            colorMap.set(normalized, c);
-        }
-    }
-
-    const targetsRaw = targetColorNames.colors;
-    const orderedTargets: ColorData[] = [];
-
-    for (const name of targetsRaw) {
-        const normalizedName = name.toLowerCase().replace(/ /g, "");
-        const match = colorMap.get(normalizedName);
-        if (match) {
-            orderedTargets.push(match);
-        } else {
-            console.warn(`Colordle Target Missing in Library: ${name}`);
-            // Must push a placeholder to preserve index alignment with day numbers
-            orderedTargets.push({
-                name: name,
-                hex: '#000000' // Default fallback (Black) to avoid crash, user will at least see the name
-            });
-        }
-    }
-
-    targetColorsCache = orderedTargets;
+    targetColorsCache = resolveTargetColors(targetColorNames.colors);
     return targetColorsCache;
 };
 
@@ -67,7 +117,7 @@ export const getUniqueTargetColors = (): ColorData[] => {
     const unique: ColorData[] = [];
 
     for (const t of targets) {
-        const key = t.name.toLowerCase();
+        const key = normalizeColorName(t.name);
         if (!seen.has(key)) {
             seen.add(key);
             unique.push(t);

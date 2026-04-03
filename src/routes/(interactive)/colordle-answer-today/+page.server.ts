@@ -1,27 +1,76 @@
-import { getColordleToday, getColordleYesterday, getColordleDataForDate } from '$lib/colordle-date';
-import { subDays } from 'date-fns';
+import {
+	getColordleTodayPayload,
+	type ColordleTodayPayload
+} from '$lib/colordle-date';
+import { format } from 'date-fns';
 import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-    const today = getPuzzleDateForGame('colordle');
-    const todayData = getColordleToday();
+export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
+	const today = getPuzzleDateForGame('colordle');
+	const requestedFormattedDate = format(today, 'MMMM d, yyyy');
+	let todayData: ColordleTodayPayload | null = null;
 
-    if (!todayData) {
-        return { error: true };
-    }
+	try {
+		const response = await fetch('/api/colordle/today');
+		const payload = (await response.json().catch(() => null)) as
+			| ({ success?: boolean } & Partial<ColordleTodayPayload>)
+			| null;
 
-	const { color, dayNum, formattedDate } = todayData;
-	const yesterdayData = getColordleYesterday();
-	const featuredImage = '/colordle-answer-today.webp';
+		if (response.ok && payload?.success && payload.color && payload.formattedDate) {
+			todayData = payload as ColordleTodayPayload;
+			const puzzleDateHeader = response.headers.get('X-Puzzle-Date');
+			if (puzzleDateHeader) {
+				setHeaders({
+					'X-Puzzle-Date': puzzleDateHeader
+				});
+			}
+		}
+	} catch (error) {
+		console.warn('Colordle today API request failed, using local dataset fallback:', error);
+	}
+
+	todayData ??= getColordleTodayPayload(today);
+
+	if (!todayData) {
+		return {
+			error: true,
+			color: null,
+			dayNum: null,
+			formattedDate: requestedFormattedDate,
+			requestedFormattedDate,
+			isFallback: false,
+			availableThroughFormattedDate: null,
+			yesterdayData: null,
+			last100Days: [],
+			schemas: null,
+			meta: {
+				title: 'Colordle Answer Today',
+				description: '',
+				keywords: 'colordle answer today, colordle answer, colordle hint, colordle hint today',
+				featuredImage: '/colordle-answer-today.webp'
+			}
+		};
+	}
+
+	const {
+		color,
+		dayNum,
+		formattedDate,
+		isFallback,
+		availableThroughFormattedDate,
+		yesterdayData,
+		last100Days,
+		actualDateKey
+	} = todayData;
+
+	setHeaders({
+		'X-Puzzle-Date': actualDateKey
+	});
+
 	const pageTitle = `Colordle Answer Today (${formattedDate}) | Yesterday & Archive`;
 	const pageDescription = `Today's Colordle answer for ${formattedDate}, yesterday's answer, and a 100-day archive of Colordle color solutions with fast search links.`;
 	const pageKeywords = `colordle answer today, colordle answer yesterday, colordle archive, colordle color answers, colordle search, last 100 days, colordle hex code`;
-
-	const last100Days = Array.from({ length: 100 }, (_, i) => {
-		const date = subDays(today, i);
-		return getColordleDataForDate(date);
-	}).filter(Boolean);
 
 	const faqItems = [
 		{
@@ -50,38 +99,61 @@ export const load: PageServerLoad = async () => {
 				text: 'Use the Colordle archive page to browse previous answers by date and open any past solution instantly.'
 			}
 		},
-		{ '@type': 'Question', name: 'How is the Colordle answer calculated?', acceptedAnswer: { '@type': 'Answer', text: 'Colordle uses an algorithm based on the CIEDE2000 color difference formula.' } },
-		{ '@type': 'Question', name: 'When does the new color release?', acceptedAnswer: { '@type': 'Answer', text: 'A new Colordle puzzle is released every day at midnight JST.' } },
+		{
+			'@type': 'Question',
+			name: 'How is the Colordle answer calculated?',
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: 'Colordle uses an algorithm based on the CIEDE2000 color difference formula.'
+			}
+		},
+		{
+			'@type': 'Question',
+			name: 'When does the new color release?',
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: 'A new Colordle puzzle is released every day at midnight JST.'
+			}
+		}
 	];
 
-    const jsonLd = JSON.stringify([
-        { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqItems },
-        {
-            '@context': 'https://schema.org',
-            '@type': 'Article',
+	const jsonLd = JSON.stringify([
+		{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqItems },
+		{
+			'@context': 'https://schema.org',
+			'@type': 'Article',
 			headline: pageTitle,
-			datePublished: today.toISOString(),
+			datePublished: `${todayData.actualDateKey}T00:00:00.000Z`,
 			dateModified: today.toISOString(),
-            author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' },
+			author: {
+				'@type': 'Person',
+				name: 'Preston Hayes',
+				image: 'https://wordsolver.tech/auther-wordsolverx.webp',
+				url: 'https://wordsolver.tech/about#preston-hayes'
+			},
 			publisher: { '@type': 'Organization', name: 'WordSolverX' },
 			mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/colordle-answer-today' },
-            description: pageDescription,
-            image: [featuredImage]
-        },
-    ]);
+			description: pageDescription,
+			image: ['/colordle-answer-today.webp']
+		}
+	]);
 
-    return {
+	return {
+		error: false,
 		color,
 		dayNum,
 		formattedDate,
+		requestedFormattedDate,
+		isFallback,
+		availableThroughFormattedDate,
 		yesterdayData,
 		last100Days,
 		schemas: jsonLd,
 		meta: {
 			title: pageTitle,
-            description: pageDescription,
-            keywords: pageKeywords,
-            featuredImage
-        }
-    };
+			description: pageDescription,
+			keywords: pageKeywords,
+			featuredImage: '/colordle-answer-today.webp'
+		}
+	};
 };

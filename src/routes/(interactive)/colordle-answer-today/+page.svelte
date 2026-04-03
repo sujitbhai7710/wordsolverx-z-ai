@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import ColorClues from '$lib/components/ColorClues.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
@@ -11,13 +11,17 @@
 
   let { data } = $props();
   let historySearch = $state('');
+
   const featuredImage = $derived(data.meta?.featuredImage ?? '/colordle-answer-today.webp');
+  const historyEntries = $derived(data.last100Days ?? []);
+  const requestedDateLabel = $derived(data.requestedFormattedDate ?? data.formattedDate ?? 'today');
+  const answerDateLabel = $derived(data.formattedDate ?? requestedDateLabel);
 
   const filteredHistory = $derived.by(() => {
     const query = historySearch.trim().toLowerCase();
-    if (!query) return data.last100Days;
+    if (!query) return historyEntries;
 
-    return data.last100Days.filter((entry) =>
+    return historyEntries.filter((entry) =>
       [entry.formattedDate, entry.color.name, entry.color.hex].some((value) =>
         value.toLowerCase().includes(query)
       )
@@ -35,7 +39,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://wordsolver.tech/colordle-answer-today" />
   <meta property="og:image" content={featuredImage} />
-  <meta property="og:image:alt" content={`Colordle hints and answer for ${data.formattedDate ?? 'today'}`} />
+  <meta property="og:image:alt" content={`Colordle hints and answer for ${answerDateLabel}`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta?.title ?? 'Colordle Answer Today'} />
   <meta name="twitter:description" content={data.meta?.description ?? ''} />
@@ -47,9 +51,26 @@
 
 {#if data.error || !data.color}
   <div class="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
-    <div class="text-center">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Error Loading Data</h1>
-      <p class="text-gray-500">Could not retrieve today's Colordle answer.</p>
+    <div class="max-w-2xl rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-lg dark:border-gray-800 dark:bg-gray-900/80">
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600 dark:text-indigo-300">Colordle</p>
+      <h1 class="mt-3 text-3xl font-black text-gray-900 dark:text-white">Latest Colordle data is temporarily unavailable</h1>
+      <p class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+        We could not load a verified Colordle answer for {requestedDateLabel} right now. You can still browse the archive or use the solver while the latest answer data refreshes.
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a
+          href="/colordle-archive"
+          class="inline-flex items-center justify-center rounded-full bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-500/20 transition hover:bg-indigo-700"
+        >
+          Browse Colordle Archive
+        </a>
+        <a
+          href="/colordle-solver"
+          class="inline-flex items-center justify-center rounded-full border border-indigo-200 px-5 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50 dark:border-indigo-800 dark:text-indigo-300 dark:hover:bg-indigo-900/20"
+        >
+          Open Colordle Solver
+        </a>
+      </div>
     </div>
   </div>
 {:else}
@@ -58,7 +79,7 @@
       <figure class="mb-12 overflow-hidden rounded-3xl border border-indigo-100 bg-white shadow-lg dark:border-indigo-900/40 dark:bg-gray-800">
         <img
           src={featuredImage}
-          alt={`Colordle answer today featured image for ${data.formattedDate}`}
+          alt={`Colordle answer today featured image for ${answerDateLabel}`}
           class="h-auto w-full object-cover"
           loading="eager"
           fetchpriority="high"
@@ -68,26 +89,39 @@
         </figcaption>
       </figure>
 
-      <header class="text-center mb-12">
+      <header class="text-center mb-10">
         <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 bg-clip-text text-transparent mb-4">
-          Colordle Answer Today ({data.formattedDate})
+          Colordle Answer Today ({requestedDateLabel})
         </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-400">
-          Verified Colordle hints and the official solution for <span class="font-semibold text-indigo-600 dark:text-indigo-400">{data.formattedDate}</span>
+        <p class="mx-auto max-w-3xl text-lg leading-8 text-gray-600 dark:text-gray-300">
+          {#if data.isFallback}
+            We are showing the latest confirmed Colordle answer from <span class="font-semibold text-indigo-600 dark:text-indigo-400">{answerDateLabel}</span> while the live source catches up with newer puzzle dates.
+          {:else}
+            Verified Colordle hints, the exact color name, and the matching hex code for <span class="font-semibold text-indigo-600 dark:text-indigo-400">{answerDateLabel}</span>.
+          {/if}
         </p>
       </header>
+
+      {#if data.isFallback}
+        <div class="mb-10 rounded-3xl border border-amber-200 bg-amber-50 p-6 shadow-sm dark:border-amber-900/40 dark:bg-amber-950/20">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-700 dark:text-amber-300">Source status</p>
+          <p class="mt-3 text-base leading-7 text-amber-900 dark:text-amber-100">
+            The official Colordle source currently only confirms answers through {data.availableThroughFormattedDate}. Until a newer color is published there, this page keeps showing the latest valid answer instead of a broken error state.
+          </p>
+        </div>
+      {/if}
 
       <div class="mb-12">
         <ColorClues colorName={data.color.name} colorHex={data.color.hex} />
       </div>
 
-<div class="mb-12 rounded-3xl border border-indigo-100 bg-white p-6 shadow-lg dark:border-indigo-900/40 dark:bg-gray-800">
+      <div class="mb-12 rounded-3xl border border-indigo-100 bg-white p-6 shadow-lg dark:border-indigo-900/40 dark:bg-gray-800">
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600 dark:text-indigo-300">Quick Actions</p>
             <h2 class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">Search previous Colordle answers</h2>
             <p class="mt-2 text-gray-600 dark:text-gray-300">
-              Jump to the archive to look up older colors, browse past days, or compare today with yesterday.
+              Compare today with earlier colors, jump into the archive, or open the solver if you want to work through the puzzle yourself.
             </p>
           </div>
           <div class="flex flex-wrap gap-3">
@@ -98,19 +132,26 @@
               Search Previous Answers
             </a>
             <a
-              href="/colordle-archive#archive-answer"
+              href="/colordle-solver"
               class="inline-flex items-center justify-center rounded-full border border-indigo-200 px-5 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50 dark:border-indigo-800 dark:text-indigo-300 dark:hover:bg-indigo-900/20"
             >
-              Open Archive Page
+              Open Solver
             </a>
           </div>
         </div>
       </div>
 
       <article class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">About Today's colordle answer</h2>
-        <p class="text-gray-600 dark:text-gray-300 mb-6">
-          Today's Colordle puzzle number is <strong class="text-indigo-600 dark:text-indigo-400">#{data.dayNum}</strong>. The solution color is <strong class="text-gray-900 dark:text-white">{data.color.name}</strong> with the hex code <code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">About today&apos;s Colordle answer</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4 leading-7">
+          {#if data.isFallback}
+            The latest confirmed Colordle puzzle in our dataset is <strong class="text-indigo-600 dark:text-indigo-400">#{data.dayNum}</strong>, solved by <strong class="text-gray-900 dark:text-white">{data.color.name}</strong> with the hex code <code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm">{data.color.hex}</code>. This keeps the page useful and accurate even if the live answer list is a little behind.
+          {:else}
+            Today&apos;s Colordle puzzle number is <strong class="text-indigo-600 dark:text-indigo-400">#{data.dayNum}</strong>. The solution color is <strong class="text-gray-900 dark:text-white">{data.color.name}</strong>, and the matching hex code is <code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
+          {/if}
+        </p>
+        <p class="text-gray-600 dark:text-gray-300 leading-7">
+          People searching for the Colordle answer today usually want three things fast: the exact color name, the hex value, and a quick way to check earlier answers. This page is built around that intent, so the answer card appears first and the searchable archive sits right below it.
         </p>
 
         <section class="mt-10">
@@ -118,24 +159,40 @@
           <div class="space-y-4">
             <details class="group bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl border border-purple-100 dark:border-purple-800/30 overflow-hidden" open>
               <summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900 dark:text-white">
-                <span>What is the Colordle answer for today, {data.formattedDate}?</span>
+                <span>
+                  {#if data.isFallback}
+                    What is the latest confirmed Colordle answer?
+                  {:else}
+                    What is the Colordle answer for today, {requestedDateLabel}?
+                  {/if}
+                </span>
                 <FiChevronDown class="text-purple-600 dark:text-purple-400 group-open:rotate-180 transition-transform" />
               </summary>
-              <div class="p-5 pt-0 text-gray-600 dark:text-gray-300">
-                The Colordle answer for today, {data.formattedDate}, is <span class="font-bold text-gray-900 dark:text-white">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">{data.color.hex}</span>.
+              <div class="p-5 pt-0 text-gray-600 dark:text-gray-300 leading-7">
+                {#if data.isFallback}
+                  The latest confirmed Colordle answer we can verify right now is <span class="font-bold text-gray-900 dark:text-white">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">{data.color.hex}</span>, published for {answerDateLabel}.
+                {:else}
+                  The Colordle answer for today, {requestedDateLabel}, is <span class="font-bold text-gray-900 dark:text-white">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 dark:text-indigo-400 font-bold">{data.color.hex}</span>.
+                {/if}
               </div>
             </details>
 
             {#if data.yesterdayData}
               <details class="group bg-gray-50 dark:bg-gray-700/30 rounded-2xl border border-gray-200 dark:border-gray-600/50 overflow-hidden">
                 <summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
-                  <span>What was the Colordle answer for yesterday?</span>
+                  <span>
+                    {#if data.isFallback}
+                      What was the previous confirmed Colordle answer?
+                    {:else}
+                      What was the Colordle answer for yesterday?
+                    {/if}
+                  </span>
                   <FiChevronDown class="text-gray-500 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div class="p-5 pt-0 text-gray-600 dark:text-gray-300 flex items-center gap-4">
                   <div class="w-10 h-10 rounded-lg shadow-inner border border-gray-300 dark:border-gray-600 flex-shrink-0" style="background-color: {data.yesterdayData.color.hex}"></div>
                   <span>
-                    Yesterday's answer was <span class="font-bold text-gray-900 dark:text-white">{data.yesterdayData.color.name}</span>
+                    The previous answer was <span class="font-bold text-gray-900 dark:text-white">{data.yesterdayData.color.name}</span>
                     <span class="font-mono text-indigo-600 dark:text-indigo-400">({data.yesterdayData.color.hex})</span>
                     for {data.yesterdayData.formattedDate}.
                   </span>
@@ -148,8 +205,8 @@
                 <span>How can I search previous Colordle answers?</span>
                 <FiChevronDown class="text-gray-500 group-open:rotate-180 transition-transform" />
               </summary>
-              <div class="p-5 pt-0 text-gray-600 dark:text-gray-300">
-                Use the Colordle archive to search older answers, browse by date, and open any previous color solution from the archive page.
+              <div class="p-5 pt-0 text-gray-600 dark:text-gray-300 leading-7">
+                Use the Colordle archive to browse by calendar date, jump straight to a specific day, or scan recent answers here on the page with the built-in search box.
               </div>
             </details>
 
@@ -158,8 +215,8 @@
                 <span>When does the new color release?</span>
                 <FiChevronDown class="text-gray-500 group-open:rotate-180 transition-transform" />
               </summary>
-              <div class="p-5 pt-0 text-gray-600 dark:text-gray-300">
-                A new Colordle puzzle is released every day at midnight JST.
+              <div class="p-5 pt-0 text-gray-600 dark:text-gray-300 leading-7">
+                A new Colordle puzzle is released every day at midnight JST, which is why this page refreshes around the game&apos;s daily rollover rather than on a local midnight schedule.
               </div>
             </details>
           </div>
@@ -169,10 +226,10 @@
           <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-6">
             <div>
               <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600 dark:text-indigo-300">Answer history</p>
-              <h2 class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">Colordle answers for the last 100 days</h2>
+              <h2 class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">Latest 100 Colordle answers</h2>
             </div>
             <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xl">
-              Date - answer format for quick scanning, with the newest answers first.
+              Date and answer format for quick scanning, with the newest confirmed answers first.
             </p>
           </div>
 
@@ -180,7 +237,7 @@
             <input
               bind:value={historySearch}
               type="search"
-              placeholder="Search by date or color name..."
+              placeholder="Search by date, color name, or hex code..."
               class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-gray-900 outline-none placeholder:text-gray-400 dark:text-white"
             />
             <button
@@ -193,18 +250,16 @@
 
           <div class="grid gap-3 md:grid-cols-2">
             {#each filteredHistory as d}
-              {#if d}
-                <div class="flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50/60 dark:border-gray-700 dark:bg-gray-900/40 dark:hover:border-indigo-800 dark:hover:bg-indigo-950/20">
-                  <div class="min-w-0">
-                    <p class="text-sm font-semibold text-gray-900 dark:text-white">{d.formattedDate}</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Colordle answer</p>
-                  </div>
-                  <div class="text-right">
-                    <p class="font-semibold text-gray-900 dark:text-white">{d.color.name}</p>
-                    <p class="font-mono text-sm text-indigo-600 dark:text-indigo-400">{d.color.hex}</p>
-                  </div>
+              <div class="flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50/60 dark:border-gray-700 dark:bg-gray-900/40 dark:hover:border-indigo-800 dark:hover:bg-indigo-950/20">
+                <div class="min-w-0">
+                  <p class="text-sm font-semibold text-gray-900 dark:text-white">{d.formattedDate}</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Colordle answer</p>
                 </div>
-              {/if}
+                <div class="text-right">
+                  <p class="font-semibold text-gray-900 dark:text-white">{d.color.name}</p>
+                  <p class="font-mono text-sm text-indigo-600 dark:text-indigo-400">{d.color.hex}</p>
+                </div>
+              </div>
             {/each}
           </div>
           {#if historySearch.trim() && filteredHistory.length === 0}
@@ -213,91 +268,49 @@
         </section>
       </article>
 
-      <!-- SEO Content Section -->
       <article class="mt-12 space-y-8">
         <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-            What is Colordle?
+            How this Colordle answer page helps
           </h2>
           <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            Colordle is a daily color guessing game that works a bit like Wordle, but instead of guessing words, you're guessing colors. Each day, the game picks a specific color, and your job is to figure out what that color is by making guesses and getting feedback on how close you are.
-          </p>
-          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            The game gives you hints based on how far your guess is from the target color. It measures this using RGB values â€” the red, green, and blue components that make up every color on your screen. The closer your RGB values are to the target, the warmer you are.
+            A good Colordle answer today page should do more than just drop a color name. It should confirm the exact hex code, show a visual sample, and make it easy to compare the latest answer with earlier puzzles. That is why this page combines the live answer card, the recent history list, and direct archive links in one place.
           </p>
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-            What makes Colordle tricky is that you need to know color names. It's not enough to get the right hex code â€” you have to know what that color is actually called. Is it "Crimson" or "Ruby"? "Navy" or "Midnight Blue"? That's where the real challenge lies.
+            If you are trying to protect a streak, double-check a guess, or simply verify the answer after playing, you should be able to get the information in seconds. The goal here is to keep that workflow simple and dependable every day.
           </p>
         </section>
 
         <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-            How to Play Colordle
+            What today&apos;s Colordle answer tells you
           </h2>
-          <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300">
-            <p class="leading-relaxed">
-              Playing Colordle is straightforward once you understand the basics:
-            </p>
-            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 1: Make Your First Guess</h3>
-              <p class="text-gray-600 dark:text-gray-300">
-                Start by typing a color name. Common colors like "Red", "Blue", or "Green" are good starting points. The game will show you how close your guess is to the target.
-              </p>
-            </div>
-            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 2: Read the RGB Hints</h3>
-              <p class="text-gray-600 dark:text-gray-300">
-                After each guess, you'll see how your RGB values compare to the target. If your red value is too low, try a warmer color. If your blue is too high, try something less purple.
-              </p>
-            </div>
-            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 3: Narrow It Down</h3>
-              <p class="text-gray-600 dark:text-gray-300">
-                Use each guess to get closer. Think about color families â€” is it a warm color or a cool one? Is it light or dark? Is it more red, more blue, or more green?
-              </p>
-            </div>
-            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 4: Name the Exact Color</h3>
-              <p class="text-gray-600 dark:text-gray-300">
-                Once you've figured out roughly what the color looks like, you need to name it precisely. This is where knowing color names really helps. There are hundreds of named colors out there!
-              </p>
-            </div>
-          </div>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            In Colordle, the answer is not just a shade on a screen. You need the correct named color and the exact hex code that matches it. That makes the game harder than a normal color picker because two shades can look similar while still counting as different answers.
+          </p>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            Seeing the official name alongside the hex code helps you build pattern memory. Over time, that makes it easier to recognize families like cool blues, dusty pinks, muted greens, and dark reds before you burn too many guesses.
+          </p>
+          <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            The archive matters here too. When you scan older answers, you start noticing how often Colordle returns to familiar tones and naming styles. That context can make today&apos;s puzzle feel far less random.
+          </p>
         </section>
 
         <section class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8 border border-purple-100 dark:border-purple-800/30">
           <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-            Tips for Getting Better at Colordle
+            How Colordle scoring works
           </h2>
-          <div class="space-y-4 text-lg text-gray-600 dark:text-gray-300">
-            <p class="leading-relaxed">
-              Want to improve your Colordle game? Here are some strategies that actually work:
-            </p>
-            <ul class="list-disc list-inside space-y-3 ml-4">
-              <li><strong class="text-gray-900 dark:text-white">Learn color names</strong> â€” The more color names you know, the better. Look up lists of CSS color names or explore paint color charts to expand your vocabulary.</li>
-              <li><strong class="text-gray-900 dark:text-white">Understand RGB basics</strong> â€” Knowing that high red + high green = yellow, or that red + blue = purple, helps you make smarter guesses.</li>
-              <li><strong class="text-gray-900 dark:text-white">Start broad, then narrow</strong> â€” Begin with primary colors to get a sense of the color family, then zero in on specific shades.</li>
-              <li><strong class="text-gray-900 dark:text-white">Use the Colordle Solver</strong> â€” If you're stuck, our solver can help you figure out the color based on your previous guesses and the RGB hints.</li>
-              <li><strong class="text-gray-900 dark:text-white">Practice daily</strong> â€” Like any game, you get better with practice. Each day's puzzle teaches you something new about colors.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-            Why Colordle is Addictive
-          </h2>
-          <div class="space-y-4 text-lg text-gray-600 dark:text-gray-300">
-            <p class="leading-relaxed">
-              There's something satisfying about guessing colors. Maybe it's the visual nature of the game â€” you can actually see how close you're getting. Or maybe it's the challenge of translating what you see into words.
-            </p>
-            <p class="leading-relaxed">
-              Unlike word games where you're working with letters, Colordle works with your visual perception. You might see a color and think "that's kind of purple-ish" but then struggle to find the exact name. Is it Lavender? Lilac? Violet? Plum?
-            </p>
-            <p class="leading-relaxed">
-              The game also teaches you something useful. After playing for a while, you start to recognize colors better in real life. You might find yourself saying "that's not just red, that's Crimson" or "this isn't blue, it's Teal." It's a game that makes you more observant of the world around you.
-            </p>
-          </div>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            Colordle does not judge guesses by name similarity. It compares colors mathematically. The game uses RGB values and a perceptual color-difference formula so the percentage reflects how close your guess looks to the target, not just how close the hex numbers are.
+          </p>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            In the source logic, that comparison is based on Delta E in LAB color space. That is why a tiny visual shift can matter, and why some guesses that feel close can still score lower than expected.
+          </p>
+          <ul class="list-disc list-inside space-y-3 text-lg text-gray-600 dark:text-gray-300">
+            <li><strong class="text-gray-900 dark:text-white">Use broad opening guesses.</strong> Start with clear anchor colors so the feedback tells you which direction to move.</li>
+            <li><strong class="text-gray-900 dark:text-white">Watch color temperature.</strong> Warm versus cool is often easier to read than the exact name on your first few tries.</li>
+            <li><strong class="text-gray-900 dark:text-white">Check the archive.</strong> Previous answers give you a better feel for the naming conventions Colordle tends to use.</li>
+          </ul>
         </section>
       </article>
 
@@ -315,6 +328,3 @@
     </div>
   </div>
 {/if}
-
-
-

@@ -9,10 +9,6 @@ export type PuzzleGame =
 	| 'phoodle'
 	| 'semantle'
 	| 'colordle'
-	| 'colorfle'
-	| 'canuckle'
-	| 'countryle'
-	| 'framed'
 	| 'globle'
 	| 'waffle'
 	| 'worldle'
@@ -92,38 +88,6 @@ export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
 		group: 'main',
 		timezone: 'worker-latest',
 		sourceReadiness: 'deterministic',
-		boundaryHourUtc: 16,
-		boundaryMinuteUtc: 30,
-		visibleDateOffsetDays: 1
-	},
-	colorfle: {
-		group: 'main',
-		timezone: 'worker-latest',
-		sourceReadiness: 'deterministic',
-		boundaryHourUtc: 16,
-		boundaryMinuteUtc: 30,
-		visibleDateOffsetDays: 1
-	},
-	canuckle: {
-		group: 'main',
-		timezone: 'worker-latest',
-		sourceReadiness: 'latest-payload',
-		boundaryHourUtc: 16,
-		boundaryMinuteUtc: 30,
-		visibleDateOffsetDays: 1
-	},
-	countryle: {
-		group: 'main',
-		timezone: 'worker-latest',
-		sourceReadiness: 'latest-payload',
-		boundaryHourUtc: 16,
-		boundaryMinuteUtc: 30,
-		visibleDateOffsetDays: 1
-	},
-	framed: {
-		group: 'main',
-		timezone: 'worker-latest',
-		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 16,
 		boundaryMinuteUtc: 30,
 		visibleDateOffsetDays: 1
@@ -250,9 +214,6 @@ export const TODAY_ROUTE_GAME_MAP: Record<string, PuzzleGame> = {
 	'/phoodle-answer-today': 'phoodle',
 	'/semantle-answer-today': 'semantle',
 	'/colordle-answer-today': 'colordle',
-	'/colorfle-answer-today': 'colorfle',
-	'/countryle-answer-today': 'countryle',
-	'/framed-answer-today': 'framed',
 	'/globle-answer-today': 'globle',
 	'/waffle-answer-today': 'waffle',
 	'/worldle-answer-today': 'worldle',
@@ -276,9 +237,6 @@ export const ARCHIVE_ROUTE_GAME_MAP: Record<string, PuzzleGame> = {
 	'/phoodle-archive': 'phoodle',
 	'/semantle-archive': 'semantle',
 	'/colordle-archive': 'colordle',
-	'/colorfle-archive': 'colorfle',
-	'/countryle-archive': 'countryle',
-	'/framed-archive': 'framed',
 	'/globle-archive': 'globle',
 	'/waffle-archive': 'waffle',
 	'/worldle-archive': 'worldle',

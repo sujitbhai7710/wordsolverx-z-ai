@@ -3,7 +3,10 @@ import citiesData from '$lib/data/worldle/cities.json';
 import countryDetailsData from '$lib/data/worldle/country-details.json';
 import { getWordleByDate } from '$lib/api';
 import { isArchiveDateInRange, parseArchiveDateKey, toArchiveDateKey } from '$lib/archive-page';
-import { getColordleDataForDate } from '$lib/colordle-date';
+import {
+	getColordleAvailableDateKeys,
+	getColordleDataForDate
+} from '$lib/colordle-date';
 import { getContextoDateFromGameNumber, getContextoTodayDate } from '$lib/contexto';
 import { getGlobleDataForDate } from '$lib/globle-date';
 import {
@@ -118,15 +121,16 @@ async function getWordleArchiveData(dateKey: string | null) {
 }
 
 function getColordleArchiveData(dateKey: string | null) {
-	const { selectedDate, selectedDateKey } = getValidatedSelection(
-		dateKey,
-		COLORDLE_START_DATE,
-		getPuzzleDateForGame('colordle')
-	);
+	const availableDateStrings = getColordleAvailableDateKeys();
+	const availableDateSet = new Set(availableDateStrings);
+	const selectedDate = parseArchiveDateKey(dateKey);
+	const selectedDateKey = selectedDate ? toArchiveDateKey(selectedDate) : null;
+	const isAvailable = Boolean(selectedDateKey && availableDateSet.has(selectedDateKey));
 
 	return {
-		selectedDateKey,
-		selectedColordle: selectedDate ? getColordleDataForDate(selectedDate) : null
+		availableDateStrings,
+		selectedDateKey: isAvailable ? selectedDateKey : null,
+		selectedColordle: selectedDate && isAvailable ? getColordleDataForDate(selectedDate) : null
 	};
 }
 

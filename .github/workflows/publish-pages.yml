@@ -1,11 +1,13 @@
 name: Publish Pages
 
-run-name: Publish Pages (${{ github.event.client_payload.group || github.event.inputs.group || (github.event_name == 'push' && 'site') || 'manual' }}${{ (github.event.client_payload.target_date || github.event.inputs.target_date) && format(' {0}', github.event.client_payload.target_date || github.event.inputs.target_date) || '' }})
+run-name: Publish Pages (${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}${{ (github.event.client_payload.target_date || github.event.inputs.target_date) && format(' {0}', github.event.client_payload.target_date || github.event.inputs.target_date) || '' }})
 
 on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '20 15 * * *'
   repository_dispatch:
     types:
       - pages-publish-requested
@@ -38,10 +40,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     concurrency:
-      group: pages-publish-${{ github.event.client_payload.group || github.event.inputs.group || (github.event_name == 'push' && 'site') || 'manual' }}-${{ github.event.client_payload.target_date || github.event.inputs.target_date || github.sha || github.run_id }}
+      group: pages-publish-${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}-${{ github.event.client_payload.target_date || github.event.inputs.target_date || github.sha || github.run_id }}
       cancel-in-progress: false
     env:
-      GROUP_NAME: ${{ github.event.client_payload.group || github.event.inputs.group || (github.event_name == 'push' && 'site') || 'manual' }}
+      GROUP_NAME: ${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}
       TARGET_DATE: ${{ github.event.client_payload.target_date || github.event.inputs.target_date || '' }}
       SOURCE_NAME: ${{ github.event.client_payload.source || github.event.inputs.source || (github.event_name == 'push' && format('push:{0}', github.ref_name)) || github.event.action || 'manual' }}
       PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev

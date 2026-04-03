@@ -1,49 +1,33 @@
 <script lang="ts">
   import { browser } from '$app/environment';
-  import { afterNavigate } from '$app/navigation';
+  import { page } from '$app/state';
   import { fetchArchivePayload } from '$lib/archive-client';
+  import { parseArchiveDateKey } from '$lib/archive-page';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import ColorClues from '$lib/components/ColorClues.svelte';
   import type { ColordleDayData } from '$lib/colordle-date';
-  import { onMount } from 'svelte';
 
   interface ColordleArchivePayload {
+    availableDateStrings: string[];
     selectedDateKey: string | null;
     selectedColordle: ColordleDayData | null;
   }
 
+  const fallbackStartDate = new Date(2023, 7, 7);
+
   let data = $state<ColordleArchivePayload>({
+    availableDateStrings: [],
     selectedDateKey: null,
     selectedColordle: null
   });
   let isLoading = $state(false);
   let loadError = $state<string | null>(null);
 
-  const startDate = new Date(2023, 7, 7);
-  let selectedDateParam = $state<string | null>(null);
-
-  function getSelectedDateParam(): string | null {
-    if (!browser) {
-      return null;
-    }
-
-    return new URL(window.location.href).searchParams.get('date');
-  }
-
-  function syncArchiveFromUrl(): void {
-    selectedDateParam = getSelectedDateParam();
-    void loadArchive(selectedDateParam);
-  }
+  let availableDates = $derived((data.availableDateStrings ?? []).map((dateString) => parseArchiveDateKey(dateString)).filter((date): date is Date => date !== null));
+  let startDate = $derived(availableDates[0] ?? fallbackStartDate);
+  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
 
   async function loadArchive(dateKey: string | null): Promise<void> {
-    if (!dateKey) {
-      data.selectedDateKey = null;
-      data.selectedColordle = null;
-      isLoading = false;
-      loadError = null;
-      return;
-    }
-
     const requestDateKey = dateKey;
     isLoading = true;
     loadError = null;
@@ -55,6 +39,7 @@
         return;
       }
 
+      data.availableDateStrings = payload.availableDateStrings ?? [];
       data.selectedDateKey = payload.selectedDateKey;
       data.selectedColordle = payload.selectedColordle;
     } catch (error) {
@@ -72,12 +57,12 @@
     }
   }
 
-  onMount(() => {
-    syncArchiveFromUrl();
-  });
+  $effect(() => {
+    if (!browser) {
+      return;
+    }
 
-  afterNavigate(() => {
-    syncArchiveFromUrl();
+    void loadArchive(selectedDateParam);
   });
 </script>
 
@@ -102,8 +87,9 @@
 <ArchiveCalendar
   gameName="Colordle"
   gameColor="indigo"
-  gameIcon="??"
+  gameIcon="Cd"
   {startDate}
+  {availableDates}
   basePath="/colordle-archive"
   selectedDate={data.selectedDateKey}
   description="Every Colordle color answer. Find any past hex code solution instantly."
@@ -125,21 +111,19 @@
       <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Colordle date</h2>
       <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
     </div>
-  {:else if isLoading && data.selectedDateKey}
+  {:else if isLoading}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Colordle archive entry...</h2>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Colordle archive data...</h2>
       <p class="mt-3 text-gray-600 dark:text-gray-300">
-        Pulling the selected color answer into this archive page now.
+        Preparing the archive calendar and selected color answer for this page.
       </p>
     </div>
   {:else}
     <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Choose a color date from the archive</h2>
       <p class="mt-3 text-gray-600 dark:text-gray-300">
-        When you select a day, the Colordle answer card for that date will render below the calendar on this same page.
+        Pick any archived Colordle date above to reveal the exact color name and hex code on this page.
       </p>
     </div>
   {/if}
 </section>
-
-
