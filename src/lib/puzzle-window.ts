@@ -284,7 +284,6 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/onepiecedle-solver',
 	'/smashdle-solver',
 	'/pokedle-solver',
-	'/colordle-solver'
 ]);
 
 function formatDateKeyFromUtcParts(year: number, month: number, day: number): string {
