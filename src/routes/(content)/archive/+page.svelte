@@ -4,7 +4,10 @@
   const archives = [
     { name: 'Wordle', href: '/wordle-answer-archive', description: 'Every NYT Wordle answer since June 2021', color: 'from-emerald-500 to-teal-600', icon: 'Wd', shadow: 'shadow-emerald-500/20' },
     { name: 'Quordle', href: '/quordle-archive', description: 'All four-word puzzle solutions', color: 'from-blue-500 to-indigo-600', icon: 'Qd', shadow: 'shadow-blue-500/20' },
+    { name: 'Colorfle', href: '/colorfle-archive', description: 'Daily mixed color answer history', color: 'from-fuchsia-500 to-pink-600', icon: 'Cf', shadow: 'shadow-fuchsia-500/20' },
     { name: 'Colordle', href: '/colordle-archive', description: 'Complete daily color answer history', color: 'from-indigo-500 to-purple-600', icon: 'Cd', shadow: 'shadow-indigo-500/20' },
+    { name: 'Countryle', href: '/countryle-archive', description: 'Past country answers with saved stats', color: 'from-emerald-500 to-teal-600', icon: 'Cy', shadow: 'shadow-emerald-500/20' },
+    { name: 'Framed', href: '/framed-archive', description: 'Past Framed movie titles by date', color: 'from-amber-500 to-orange-600', icon: 'Fr', shadow: 'shadow-amber-500/20' },
     { name: 'Semantle', href: '/semantle-archive', description: 'Every secret word since launch', color: 'from-purple-500 to-violet-600', icon: 'Sm', shadow: 'shadow-purple-500/20' },
     { name: 'Phoodle', href: '/phoodle-archive', description: 'All food word puzzle solutions', color: 'from-orange-500 to-amber-600', icon: 'Ph', shadow: 'shadow-orange-500/20' },
     { name: 'Globle', href: '/globle-archive', description: 'Daily country answers since 2022', color: 'from-sky-500 to-cyan-600', icon: 'Gb', shadow: 'shadow-sky-500/20' },

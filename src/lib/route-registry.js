@@ -1,9 +1,12 @@
 export const TODAY_STATIC_ROUTES = [
   '/today',
   '/betweenle-answer-today',
+  '/colorfle-answer-today',
   '/colordle-answer-today',
   '/contexto-answer-today',
+  '/countryle-answer-today',
   '/dotadle-answer-today',
+  '/framed-answer-today',
   '/globle-answer-today',
   '/loldle-answer-today',
   '/narutodle-answer-today',
@@ -29,8 +32,10 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/betweenle-solver',
   '/betweenle-unlimited',
   '/boggle-solver',
+  '/colorfle-solver',
   '/colordle-solver',
   '/contact',
+  '/countryle-solver',
   '/create-custom-wordle',
   '/disclaimer',
   '/dotadle-solver',
@@ -73,8 +78,11 @@ export const EVERGREEN_STATIC_ROUTES = [
 ];
 
 export const ARCHIVE_STATIC_ROUTES = [
+  '/colorfle-archive',
   '/colordle-archive',
   '/contexto-archive',
+  '/countryle-archive',
+  '/framed-archive',
   '/globle-archive',
   '/nerdle-archive',
   '/phoodle-archive',
