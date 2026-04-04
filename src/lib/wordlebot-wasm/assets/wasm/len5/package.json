@@ -1,0 +1,15 @@
+{
+  "name": "solver-len5",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "solver_len5_bg.wasm",
+    "solver_len5.js",
+    "solver_len5.d.ts"
+  ],
+  "main": "solver_len5.js",
+  "types": "solver_len5.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

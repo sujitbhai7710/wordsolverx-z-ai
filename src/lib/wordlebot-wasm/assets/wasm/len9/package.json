@@ -1,0 +1,15 @@
+{
+  "name": "solver-len9",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "solver_len9_bg.wasm",
+    "solver_len9.js",
+    "solver_len9.d.ts"
+  ],
+  "main": "solver_len9.js",
+  "types": "solver_len9.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "solver-len3",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "solver_len3_bg.wasm",
+    "solver_len3.js",
+    "solver_len3.d.ts"
+  ],
+  "main": "solver_len3.js",
+  "types": "solver_len3.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

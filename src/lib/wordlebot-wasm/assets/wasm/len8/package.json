@@ -1,0 +1,15 @@
+{
+  "name": "solver-len8",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "solver_len8_bg.wasm",
+    "solver_len8.js",
+    "solver_len8.d.ts"
+  ],
+  "main": "solver_len8.js",
+  "types": "solver_len8.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

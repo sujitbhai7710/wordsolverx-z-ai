@@ -1,0 +1,15 @@
+{
+  "name": "solver-canuckle",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "solver_canuckle_bg.wasm",
+    "solver_canuckle.js",
+    "solver_canuckle.d.ts"
+  ],
+  "main": "solver_canuckle.js",
+  "types": "solver_canuckle.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
