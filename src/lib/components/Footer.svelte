@@ -62,8 +62,8 @@
             </a>
           </li>
           <li>
-            <a href="/wordle-solver" class="text-base text-gray-600 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-400 transition-colors duration-150">
-              All Wordle Solver
+            <a href="/5-letter-wordle-solver" class="text-base text-gray-600 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-400 transition-colors duration-150">
+              5-Letter Wordle Solver
             </a>
           </li>
           <li>

@@ -64,7 +64,7 @@ export function getWordleLengthSolverPath(wordLength: number): string {
 }
 
 export function getCanucklePagePath(page: 'today' | 'archive' | 'solver'): string {
-	if (page === 'today') return '/canuckle';
+	if (page === 'today') return '/canuckle-answer-today';
 	if (page === 'archive') return '/canuckle-archive';
 	return '/canuckle-solver';
 }

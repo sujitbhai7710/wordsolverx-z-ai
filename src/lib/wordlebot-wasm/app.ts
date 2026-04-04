@@ -130,21 +130,50 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					`;
 
 		const subtitle =
-			state.game === 'canuckle'
-				? '5-letter Canuckle solving with a dedicated Rust/WASM build and the public Canuckle word sources.'
-				: `${state.wordLength}-letter mode with live Rust/WASM solving.`;
+			state.game === 'wordle'
+				? `${state.wordLength}-letter clue filtering with ranked next guesses, hard mode support, and fast answer narrowing.`
+				: state.game === 'canuckle'
+					? 'Canadian-themed answer filtering with ranked next guesses and direct links to the Canuckle today and archive pages.'
+					: `${state.gameName} clue filtering with fast next-guess ranking and responsive board updates.`;
+
+		const solverTitle =
+			state.game === 'wordle'
+				? `${state.wordLength}-Letter Wordle Solver`
+				: state.game === 'spotle'
+					? 'Spotle Wordle Solver'
+					: `${state.gameName} Solver`;
+
+		const headerClass =
+			state.game === 'wordle'
+				? 'top-of-screen is-wordle'
+				: state.game === 'canuckle'
+					? 'top-of-screen is-canuckle'
+					: 'top-of-screen';
+
+		const solverContainerClass =
+			state.game === 'wordle'
+				? 'solver-container wordle-solver-container'
+				: state.game === 'canuckle'
+					? 'solver-container canuckle-daily-container'
+					: 'solver-container';
 
 		target.innerHTML = `
 			<main class="solver-page">
-				<div class="solver-container">
-					<header class="top-of-screen">
-						<a class="brand-link" href="/solver">WordSolverX WASM</a>
+				<div class="${solverContainerClass}">
+					<header class="${headerClass}">
+						<a class="brand-link" href="/solver">WordSolverX</a>
 						<div class="title-block">
-							<h1>${escapeHtml(state.game === 'spotle' ? 'Spotle Wordle Solver' : `${state.gameName} Solver`)}</h1>
+							<h1>${escapeHtml(solverTitle)}</h1>
 							<p class="subtitle">${escapeHtml(subtitle)}</p>
 							<p class="mode-description">${escapeHtml(state.description)}</p>
 						</div>
-						${state.game === 'canuckle' ? buildCanuckleNav('solver') : ''}
+						${
+							state.game === 'canuckle'
+								? buildCanuckleNav('solver')
+								: state.game === 'wordle'
+									? buildWordLengthTabs(state.wordLength)
+									: ''
+						}
 					</header>
 
 					<section class="settings-card">
@@ -248,13 +277,13 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 
 		target.innerHTML = `
 			<main class="solver-page">
-				<div class="solver-container">
-					<header class="top-of-screen">
-						<a class="brand-link" href="/solver">WordSolverX WASM</a>
+				<div class="solver-container canuckle-daily-container">
+					<header class="top-of-screen is-canuckle">
+						<a class="brand-link" href="/solver">WordSolverX</a>
 						<div class="title-block">
-							<h1>Canuckle Today</h1>
-							<p class="subtitle">Live daily puzzle metadata based on Canuckle's public Firestore collections.</p>
-							<p class="mode-description">Today's puzzle resolves from the same date schedule Canuckle uses for its daily and archive views.</p>
+							<h1>Canuckle Answer Today</h1>
+							<p class="subtitle">Today&apos;s Canuckle answer, puzzle number, and Canadian fact in one place.</p>
+							<p class="mode-description">This page follows the same public Canuckle schedule logic used for the live game and archive.</p>
 						</div>
 						${buildCanuckleNav('today')}
 					</header>
@@ -262,13 +291,13 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					<section class="settings-card canuckle-summary-card">
 						<div class="canuckle-summary-grid">
 							<div>
-								<p class="canuckle-label">Puzzle</p>
+								<p class="canuckle-label">Current puzzle</p>
 								<h2 class="canuckle-number">#${today.index}</h2>
 								<p class="canuckle-meta">${escapeHtml(formatCanuckleDate(today.date))}</p>
 							</div>
 							<div class="canuckle-actions">
-								<a class="main-action button-link" href="${getCanucklePagePath('solver')}">Open solver</a>
-								<a class="subtle-link-button" href="${getCanucklePagePath('archive')}">Browse archive</a>
+								<a class="main-action button-link" href="${getCanucklePagePath('archive')}">Browse archive</a>
+								<a class="subtle-link-button" href="${getCanucklePagePath('solver')}">Open solver</a>
 							</div>
 						</div>
 						<p class="canuckle-source-note">
@@ -279,12 +308,13 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					</section>
 
 					<section class="results-panel canuckle-story-card">
-						<h2 class="mini-title">Today's Canuckle fact</h2>
+						<h2 class="mini-title">Today&apos;s Canuckle fact</h2>
 						<div class="canuckle-fact">${renderCanuckleFact(today)}</div>
 						<details class="candidate-group" open>
-							<summary>Reveal today's answer</summary>
+							<summary>Reveal today&apos;s answer</summary>
 							<p class="canuckle-answer">${escapeHtml(today.answer)}</p>
 						</details>
+						${renderCanuckleDistribution(today)}
 					</section>
 				</div>
 			</main>
@@ -301,17 +331,24 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 		target.innerHTML = `
 			<main class="solver-page">
 				<div class="solver-container canuckle-archive-container">
-					<header class="top-of-screen">
-						<a class="brand-link" href="/solver">WordSolverX WASM</a>
+					<header class="top-of-screen is-canuckle">
+						<a class="brand-link" href="/solver">WordSolverX</a>
 						<div class="title-block">
 							<h1>Canuckle Archive</h1>
-							<p class="subtitle">Previous Canuckle puzzles, dates, answers, facts, and public result distributions.</p>
-							<p class="mode-description">This page is built from the same public Firestore puzzle collection the original Canuckle app reads.</p>
+							<p class="subtitle">Search old Canuckle answers, dates, facts, and public result distributions.</p>
+							<p class="mode-description">Use the search box to jump to past puzzles by puzzle number, answer, date, or Canadian fact text.</p>
 						</div>
 						${buildCanuckleNav('archive')}
 					</header>
 
 					<section class="settings-card archive-toolbar">
+						<div class="archive-toolbar-top">
+							<p class="archive-toolbar-copy">Browse ${archive.length} visible Canuckle archive entries without leaving the main archive page.</p>
+							<div class="archive-toolbar-actions">
+								<a class="subtle-link-button" href="${getCanucklePagePath('today')}">See answer today</a>
+								<a class="main-action button-link" href="${getCanucklePagePath('solver')}">Open solver</a>
+							</div>
+						</div>
 						<label class="archive-search">
 							<span>Search archive</span>
 							<input id="archive-search" type="search" placeholder="Search by puzzle, date, answer, or fact" />
@@ -767,6 +804,20 @@ function buildCanuckleNav(active: 'today' | 'archive' | 'solver') {
 	`;
 }
 
+function buildWordLengthTabs(activeLength: number) {
+	return `
+		<nav class="wordle-length-tabs">
+			${[3, 4, 5, 6, 7, 8, 9, 10, 11]
+				.map(
+					(length) => `
+						<a class="wordle-length-link ${activeLength === length ? 'is-active' : ''}" href="/${length}-letter-wordle-solver">${length} letters</a>
+					`
+				)
+				.join('')}
+		</nav>
+	`;
+}
+
 function getVisibleCanucklePuzzles(data: CanuckleData) {
 	const maxVisibleIndex = Math.min(getCanuckleTodayIndex(), data.maxIndex);
 	return data.puzzles.filter((puzzle) => puzzle.index <= maxVisibleIndex);
@@ -810,6 +861,40 @@ function renderCanuckleFact(puzzle: CanucklePuzzle) {
 			.replace(/\s*Check out\s*$/i, '')
 			.trim()
 	);
+}
+
+function renderCanuckleDistribution(puzzle: CanucklePuzzle) {
+	if (!puzzle.distribution) {
+		return '';
+	}
+
+	const rows = [
+		{ label: '1 guess', value: puzzle.distribution.ones ?? 0 },
+		{ label: '2 guesses', value: puzzle.distribution.twos ?? 0 },
+		{ label: '3 guesses', value: puzzle.distribution.threes ?? 0 },
+		{ label: '4 guesses', value: puzzle.distribution.fours ?? 0 },
+		{ label: '5 guesses', value: puzzle.distribution.fives ?? 0 },
+		{ label: '6 guesses', value: puzzle.distribution.sixes ?? 0 },
+		{ label: 'Losses', value: puzzle.distribution.losses ?? 0 }
+	];
+	const maxValue = Math.max(...rows.map((row) => row.value), 1);
+
+	return `
+		<div class="canuckle-distribution compact-distribution">
+			<h3 class="mini-title">Public result distribution</h3>
+			${rows
+				.map(
+					(row) => `
+						<div class="distribution-row">
+							<span class="distribution-label">${row.label}</span>
+							<div class="distribution-bar"><span style="width:${(row.value / maxValue) * 100}%"></span></div>
+							<span class="distribution-value">${row.value.toLocaleString()}</span>
+						</div>
+					`
+				)
+				.join('')}
+		</div>
+	`;
 }
 
 function matchesArchiveQuery(puzzle: CanucklePuzzle, query: string) {
@@ -880,7 +965,6 @@ function formatSuggestionScore(
 	boardCount: number
 ) {
 	const turnsSoFar = state.turns.length;
-	if (!suggestion.fullyTested) return 'not fully tested';
 	if (state.game === 'xordle') return `${suggestion.average.toFixed(3)} merge score`;
 	if (boardCount > 1) return `${suggestion.average.toFixed(3)} guesses`;
 	if (suggestion.wrong > 0) return `${((1 - suggestion.wrong) * 100).toFixed(2)}% solve rate`;

@@ -4,6 +4,7 @@
   import FAQSection from '$lib/components/FAQSection.svelte';
   import { formatBetweenleDate } from '$lib/betweenle/logic';
   import type { BetweenleDailyAnswer } from '$lib/betweenle/types';
+  import { WORD_GAMES_BETWEENLE_UNLIMITED_URL } from '$lib/word-games-links';
   import {
     PRESTON_HAYES_AUTHOR_DESCRIPTION,
     PRESTON_HAYES_AUTHOR_IMAGE,
@@ -235,7 +236,7 @@
           Betweenle Solver
         </a>
         <a
-          href="/betweenle-unlimited"
+          href={WORD_GAMES_BETWEENLE_UNLIMITED_URL}
           class="rounded-2xl border border-slate-200 bg-white px-5 py-4 text-center text-sm font-bold text-slate-800 transition-colors hover:bg-slate-50"
         >
           Play Betweenle Unlimited

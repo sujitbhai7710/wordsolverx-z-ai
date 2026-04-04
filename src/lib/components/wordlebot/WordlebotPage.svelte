@@ -3,87 +3,329 @@
 	import FAQSection from '$lib/components/FAQSection.svelte';
 	import WordlebotWasmClient from '$lib/components/wordlebot/WordlebotWasmClient.svelte';
 	import { getWordlebotStructuredData } from '$lib/wordlebot-wasm/route-config';
+	import {
+		getCanucklePagePath,
+		getWordleLengthSolverPath,
+		WORDLEBOT_WORDLE_SOLVER_LENGTHS
+	} from '$lib/wordlebot-wasm/routes';
 	import type { WordlebotPageConfig } from '$lib/wordlebot-wasm/types';
 
 	let { config }: { config: WordlebotPageConfig } = $props();
 
 	let structuredData = $derived(getWordlebotStructuredData(config));
+	let isWordleLengthPage = $derived(
+		config.appConfig.pageType === 'solver' && config.appConfig.game === 'wordle'
+	);
+	let isCanuckleTodayPage = $derived(config.appConfig.pageType === 'canuckle-daily');
+	let isCanuckleArchivePage = $derived(config.appConfig.pageType === 'canuckle-archive');
+	let isCanuckleSolverPage = $derived(
+		config.appConfig.pageType === 'solver' && config.appConfig.game === 'canuckle'
+	);
+	let isCanuckleFamilyPage = $derived(
+		isCanuckleTodayPage || isCanuckleArchivePage || isCanuckleSolverPage
+	);
+	let currentWordLength = $derived(
+		config.appConfig.pageType === 'solver' && config.appConfig.game === 'wordle'
+			? (config.appConfig.wordLength ?? 5)
+			: WORDLEBOT_WORDLE_SOLVER_LENGTHS[2]
+	);
+	let ogType = $derived(isCanuckleTodayPage ? 'article' : 'website');
+	let canuckleTabs = [
+		{ key: 'today', label: 'Today', href: getCanucklePagePath('today') },
+		{ key: 'archive', label: 'Archive', href: getCanucklePagePath('archive') },
+		{ key: 'solver', label: 'Solver', href: getCanucklePagePath('solver') }
+	];
+	let activeCanuckleTab = $derived(
+		isCanuckleTodayPage ? 'today' : isCanuckleArchivePage ? 'archive' : 'solver'
+	);
 </script>
 
 <svelte:head>
 	<title>{config.title} | WordSolverX</title>
 	<meta name="description" content={config.description} />
 	<meta name="keywords" content={config.keywords.join(', ')} />
+	{#if isCanuckleTodayPage}
+		<meta
+			name="news_keywords"
+			content="canuckle answer today, canuckle today, canuckle answer, canuckle puzzle today"
+		/>
+	{/if}
 	<meta property="og:title" content={`${config.title} | WordSolverX`} />
 	<meta property="og:description" content={config.description} />
-	<meta property="og:type" content="website" />
+	<meta property="og:type" content={ogType} />
 	<meta property="og:url" content={config.pageUrl} />
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={`${config.title} | WordSolverX`} />
 	<meta name="twitter:description" content={config.description} />
+	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
 	<link rel="canonical" href={config.pageUrl} />
 	{@html `<script type="application/ld+json">${structuredData}</script>`}
 </svelte:head>
 
-<main class="min-h-screen bg-[linear-gradient(180deg,#f7fbf8_0%,#ffffff_36%,#f7f4eb_100%)]">
-	<div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-		<Breadcrumbs />
-
-		<section class="mb-8 overflow-hidden rounded-[2rem] border border-emerald-100 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_34%),linear-gradient(135deg,#ffffff_0%,#f7fbf8_45%,#f8f1e5_100%)] p-6 shadow-[0_28px_80px_rgba(16,185,129,0.08)] sm:p-8">
-			<div class="flex flex-wrap items-start justify-between gap-6">
-				<div class="max-w-3xl">
-					<p class="inline-flex rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+{#if isWordleLengthPage}
+	<main class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+		<section class="bg-gradient-to-r from-green-600 to-emerald-600 py-16 shadow-lg">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<Breadcrumbs />
+				<div class="mt-6 text-center">
+					<p class="text-sm font-bold uppercase tracking-[0.28em] text-green-100">
 						{config.eyebrow}
 					</p>
-					<h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+					<h1 class="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
 						{config.title}
 					</h1>
-					<p class="mt-4 max-w-2xl text-base leading-8 text-slate-600">
+					<p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/90 sm:text-2xl">
 						{config.description}
 					</p>
-
+					<div class="mt-8 flex flex-wrap justify-center gap-3 text-sm font-bold text-green-100">
+						{#each config.chips as chip}
+							<span class="rounded-full border border-white/20 bg-white/10 px-4 py-2">
+								{chip}
+							</span>
+						{/each}
+					</div>
+					<nav
+						class="mt-8 flex flex-wrap justify-center gap-2"
+						aria-label="Wordle solver lengths"
+					>
+						{#each WORDLEBOT_WORDLE_SOLVER_LENGTHS as wordLength}
+							<a
+								class={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+									wordLength === currentWordLength
+										? 'border-white bg-white text-green-700 shadow-sm'
+										: 'border-white/20 bg-white/10 text-white hover:bg-white/20'
+								}`}
+								href={getWordleLengthSolverPath(wordLength)}
+							>
+								{wordLength} Letters
+							</a>
+						{/each}
+					</nav>
 					{#if config.cta}
 						<a
-							class="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-50"
+							class="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-green-700 shadow-lg shadow-green-900/20 transition hover:-translate-y-0.5 hover:shadow-xl"
 							href={config.cta.href}
 						>
 							{config.cta.label}
 						</a>
 					{/if}
 				</div>
+			</div>
+		</section>
 
-				<div class="flex flex-wrap gap-2">
-					{#each config.chips as chip}
-						<span class="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700">
-							{chip}
-						</span>
+		<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+			<WordlebotWasmClient config={config.appConfig} />
+		</div>
+
+		<div class="mx-auto max-w-5xl px-4 pb-12 sm:px-6 lg:px-8">
+			<div class="rounded-3xl border border-gray-100 bg-white p-2 shadow-xl">
+				<FAQSection class="py-0" title={config.faqTitle} faqs={config.faqs} />
+			</div>
+		</div>
+
+		<section class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8">
+			<div class="rounded-3xl border border-gray-100 bg-white p-10 shadow-xl">
+				<h2 class="text-center text-3xl font-black tracking-tight text-gray-900">
+					{config.howToTitle}
+				</h2>
+				<div class="mt-10 grid gap-8 md:grid-cols-3">
+					{#each config.howToSteps as step, index}
+						<div class="space-y-4 rounded-2xl bg-green-50 p-6">
+							<div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-sm font-black text-green-700">
+								{index + 1}
+							</div>
+							<h3 class="text-xl font-bold text-gray-900">{step.name}</h3>
+							<p class="leading-7 text-gray-600">{step.text}</p>
+						</div>
 					{/each}
 				</div>
 			</div>
+
+			<article class="mt-10 space-y-8">
+				{#each config.sections as section}
+					<section class="rounded-3xl border border-gray-100 bg-white p-8 shadow-lg">
+						<h2 class="text-3xl font-black tracking-tight text-gray-900">{section.title}</h2>
+						<div class="mt-4 space-y-4 text-lg leading-8 text-gray-600">
+							{#each section.paragraphs as paragraph}
+								<p>{paragraph}</p>
+							{/each}
+						</div>
+					</section>
+				{/each}
+			</article>
 		</section>
-	</div>
+	</main>
+{:else if isCanuckleFamilyPage}
+	<main class="min-h-screen bg-[linear-gradient(180deg,#fff8f7_0%,#ffffff_42%,#f8fafc_100%)]">
+		<div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+			<Breadcrumbs />
 
-	<div class="pb-10">
-		<WordlebotWasmClient config={config.appConfig} />
-	</div>
+			<section class="overflow-hidden rounded-[2rem] border border-rose-100 bg-[radial-gradient(circle_at_top_left,rgba(239,68,68,0.18),transparent_34%),linear-gradient(135deg,#ffffff_0%,#fff5f5_40%,#f8fafc_100%)] p-6 shadow-[0_28px_80px_rgba(239,68,68,0.09)] sm:p-8">
+				<nav class="mb-6 flex flex-wrap gap-2" aria-label="Canuckle pages">
+					{#each canuckleTabs as tab}
+						<a
+							class={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+								tab.key === activeCanuckleTab
+									? 'border-rose-300 bg-rose-600 text-white shadow-sm'
+									: 'border-rose-200 bg-white/80 text-rose-700 hover:border-rose-300 hover:bg-rose-50'
+							}`}
+							href={tab.href}
+						>
+							{tab.label}
+						</a>
+					{/each}
+				</nav>
 
-	<div class="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
-		<div class="rounded-[2rem] border border-slate-200 bg-white/85 p-2 shadow-[0_24px_70px_rgba(148,163,184,0.12)]">
-			<FAQSection class="py-0" title={config.faqTitle} faqs={config.faqs} />
-		</div>
+				<div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+					<div>
+						<p class="inline-flex rounded-full border border-rose-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-rose-700">
+							{config.eyebrow}
+						</p>
+						<h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-5xl">
+							{config.title}
+						</h1>
+						<p class="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+							{config.description}
+						</p>
+						<div class="mt-6 flex flex-wrap gap-3">
+							{#if config.cta}
+								<a
+									class="inline-flex items-center gap-2 rounded-full bg-rose-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-rose-500/20 transition hover:-translate-y-0.5 hover:bg-rose-500"
+									href={config.cta.href}
+								>
+									{config.cta.label}
+								</a>
+							{/if}
+							{#if activeCanuckleTab !== 'solver'}
+								<a
+									class="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white px-5 py-3 text-sm font-bold text-rose-700 transition hover:border-rose-300 hover:bg-rose-50"
+									href={getCanucklePagePath('solver')}
+								>
+									Open Canuckle solver
+								</a>
+							{/if}
+						</div>
+					</div>
 
-		<article class="mt-10 space-y-8">
-			{#each config.sections as section}
-				<section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_20px_60px_rgba(148,163,184,0.10)]">
-					<h2 class="text-2xl font-black tracking-tight text-slate-900">{section.title}</h2>
-					<div class="mt-4 space-y-4 text-base leading-8 text-slate-600">
-						{#each section.paragraphs as paragraph}
-							<p>{paragraph}</p>
+					<div class="grid gap-3">
+						{#each config.chips as chip}
+							<div class="rounded-2xl border border-white/80 bg-white/85 px-5 py-4 text-sm font-semibold text-slate-700 shadow-sm">
+								{chip}
+							</div>
 						{/each}
 					</div>
-				</section>
-			{/each}
-		</article>
-	</div>
-</main>
+				</div>
+			</section>
+
+			<section class="mt-8 grid gap-4 md:grid-cols-3">
+				{#each config.howToSteps as step, index}
+					<article class="rounded-3xl border border-rose-100 bg-white p-6 shadow-sm">
+						<p class="text-sm font-bold uppercase tracking-[0.24em] text-rose-600">
+							Step {index + 1}
+						</p>
+						<h2 class="mt-3 text-xl font-black text-slate-900">{step.name}</h2>
+						<p class="mt-3 leading-7 text-slate-600">{step.text}</p>
+					</article>
+				{/each}
+			</section>
+		</div>
+
+		<div class="pb-10">
+			<WordlebotWasmClient config={config.appConfig} />
+		</div>
+
+		<div class="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
+			<div class="rounded-[2rem] border border-rose-100 bg-white p-2 shadow-[0_24px_70px_rgba(239,68,68,0.08)]">
+				<FAQSection class="py-0" title={config.faqTitle} faqs={config.faqs} />
+			</div>
+
+			<article class="mt-10 space-y-8">
+				{#each config.sections as section}
+					<section class="rounded-[2rem] border border-rose-100 bg-white p-8 shadow-[0_20px_60px_rgba(148,163,184,0.10)]">
+						<h2 class="text-2xl font-black tracking-tight text-slate-900">{section.title}</h2>
+						<div class="mt-4 space-y-4 text-base leading-8 text-slate-600">
+							{#each section.paragraphs as paragraph}
+								<p>{paragraph}</p>
+							{/each}
+						</div>
+					</section>
+				{/each}
+			</article>
+		</div>
+	</main>
+{:else}
+	<main class="min-h-screen bg-[linear-gradient(180deg,#f7fbf8_0%,#ffffff_36%,#f7f4eb_100%)]">
+		<div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+			<Breadcrumbs />
+
+			<section class="mb-8 overflow-hidden rounded-[2rem] border border-emerald-100 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_34%),linear-gradient(135deg,#ffffff_0%,#f7fbf8_45%,#f8f1e5_100%)] p-6 shadow-[0_28px_80px_rgba(16,185,129,0.08)] sm:p-8">
+				<div class="flex flex-wrap items-start justify-between gap-6">
+					<div class="max-w-3xl">
+						<p class="inline-flex rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+							{config.eyebrow}
+						</p>
+						<h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+							{config.title}
+						</h1>
+						<p class="mt-4 max-w-2xl text-base leading-8 text-slate-600">
+							{config.description}
+						</p>
+
+						{#if config.cta}
+							<a
+								class="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-50"
+								href={config.cta.href}
+							>
+								{config.cta.label}
+							</a>
+						{/if}
+					</div>
+
+					<div class="flex flex-wrap gap-2">
+						{#each config.chips as chip}
+							<span class="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700">
+								{chip}
+							</span>
+						{/each}
+					</div>
+				</div>
+			</section>
+
+			<section class="grid gap-4 md:grid-cols-3">
+				{#each config.howToSteps as step, index}
+					<article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+						<p class="text-sm font-bold uppercase tracking-[0.24em] text-emerald-600">
+							Step {index + 1}
+						</p>
+						<h2 class="mt-3 text-xl font-black text-slate-900">{step.name}</h2>
+						<p class="mt-3 leading-7 text-slate-600">{step.text}</p>
+					</article>
+				{/each}
+			</section>
+		</div>
+
+		<div class="pb-10">
+			<WordlebotWasmClient config={config.appConfig} />
+		</div>
+
+		<div class="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
+			<div class="rounded-[2rem] border border-slate-200 bg-white/85 p-2 shadow-[0_24px_70px_rgba(148,163,184,0.12)]">
+				<FAQSection class="py-0" title={config.faqTitle} faqs={config.faqs} />
+			</div>
+
+			<article class="mt-10 space-y-8">
+				{#each config.sections as section}
+					<section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_20px_60px_rgba(148,163,184,0.10)]">
+						<h2 class="text-2xl font-black tracking-tight text-slate-900">{section.title}</h2>
+						<div class="mt-4 space-y-4 text-base leading-8 text-slate-600">
+							{#each section.paragraphs as paragraph}
+								<p>{paragraph}</p>
+							{/each}
+						</div>
+					</section>
+				{/each}
+			</article>
+		</div>
+	</main>
+{/if}

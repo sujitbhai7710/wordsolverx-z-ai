@@ -1,6 +1,7 @@
 <script lang="ts">
   import { BETWEENLE_WORDS } from '$lib/betweenle/data';
   import { computeBetweenleSuggestion } from '$lib/betweenle/logic';
+  import { WORD_GAMES_BETWEENLE_UNLIMITED_URL } from '$lib/word-games-links';
 
   let topWord = $state('');
   let bottomWord = $state('');
@@ -121,7 +122,7 @@
         </button>
         <a
           class="rounded-xl border border-white/15 bg-white/10 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
-          href="/betweenle-unlimited"
+          href={WORD_GAMES_BETWEENLE_UNLIMITED_URL}
         >
           Play Betweenle Unlimited
         </a>

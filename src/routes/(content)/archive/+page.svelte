@@ -3,6 +3,7 @@
 
   const archives = [
     { name: 'Wordle', href: '/wordle-answer-archive', description: 'Every NYT Wordle answer since June 2021', color: 'from-emerald-500 to-teal-600', icon: 'Wd', shadow: 'shadow-emerald-500/20' },
+    { name: 'Canuckle', href: '/canuckle-archive', description: 'Canuckle answer history with puzzle numbers, dates, and facts', color: 'from-rose-500 to-red-600', icon: 'Ca', shadow: 'shadow-rose-500/20' },
     { name: 'Quordle', href: '/quordle-archive', description: 'All four-word puzzle solutions', color: 'from-blue-500 to-indigo-600', icon: 'Qd', shadow: 'shadow-blue-500/20' },
     { name: 'Colorfle', href: '/colorfle-archive', description: 'Daily mixed color answer history', color: 'from-fuchsia-500 to-pink-600', icon: 'Cf', shadow: 'shadow-fuchsia-500/20' },
     { name: 'Colordle', href: '/colordle-archive', description: 'Complete daily color answer history', color: 'from-indigo-500 to-purple-600', icon: 'Cd', shadow: 'shadow-indigo-500/20' },
@@ -30,16 +31,16 @@
 
 <svelte:head>
   <title>Puzzle Answer Archives | WordSolverX</title>
-  <meta name="description" content="Browse archive pages for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
+  <meta name="description" content="Browse archive pages for Wordle, Canuckle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
   <link rel="canonical" href="https://wordsolver.tech/archive" />
   <meta property="og:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
-  <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
+  <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Canuckle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
   <meta property="og:url" content="https://wordsolver.tech/archive" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
-  <meta name="twitter:description" content="Explore complete answer archives and calendar lookups for the most popular daily puzzle games." />
+  <meta name="twitter:description" content="Explore complete answer archives and calendar lookups for Wordle, Canuckle, and the most popular daily puzzle games." />
   <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
@@ -47,7 +48,7 @@
       {
         "@type": "CollectionPage",
         "name": "Puzzle Answer Archive",
-        "description": "Browse answer archives for Wordle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle.",
+        "description": "Browse answer archives for Wordle, Canuckle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle.",
         "url": "https://wordsolver.tech/archive",
         "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
       },
@@ -145,8 +146,8 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           Home
         </a>
-        <a href="/wordle-solver" class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm">
-          Try Wordle Solver
+        <a href="/5-letter-wordle-solver" class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm">
+          Try 5-Letter Wordle Solver
         </a>
       </div>
     </div>

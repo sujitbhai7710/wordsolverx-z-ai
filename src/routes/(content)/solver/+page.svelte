@@ -2,13 +2,19 @@
   import GameCard from '$lib/components/GameCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
-  import { getWordlebotGameIndexLinks } from '$lib/wordlebot-wasm/route-config';
 
-  const wasmWordlebotLinks = getWordlebotGameIndexLinks();
+  const wordleLengthSolvers = [3, 4, 5, 6, 7, 8, 9, 10, 11].map((length) => ({
+    name: `${length}-Letter Wordle Solver`,
+    href: `/${length}-letter-wordle-solver`,
+    description: `Solve ${length}-letter Wordle boards with clue filtering, ranked next guesses, and quick switching between Wordle lengths.`,
+    color: length <= 5 ? 'from-green-500 to-emerald-600' : length <= 8 ? 'from-emerald-500 to-teal-600' : 'from-teal-500 to-cyan-600',
+    icon: `${length}`,
+    isPopular: length === 5
+  }));
 
   const solvers = [
-    { name: 'Wordle Solver', href: '/wordle-solver', description: 'Advanced 5-letter word solver with smart filtering.', color: 'from-green-500 to-emerald-600', icon: 'W', isPopular: true },
-    { name: 'Canuckle Solver', href: '/canuckle-solver', description: 'Dedicated Canuckle WASM solver with the Canadian answer bank plus linked today and archive pages.', color: 'from-amber-500 to-orange-600', icon: 'Ca', isPopular: true },
+    ...wordleLengthSolvers,
+    { name: 'Canuckle Solver', href: '/canuckle-solver', description: 'Dedicated Canuckle solver with the Canadian answer list plus linked answer today and archive pages.', color: 'from-rose-500 to-red-600', icon: 'Ca', isPopular: true },
     { name: 'Nerdle Solver', href: '/nerdle-solver', description: 'All-modes equation solver for Micro, Mini, Midi, Classic, and Maxi Nerdle.', color: 'from-teal-500 to-emerald-600', icon: 'Nd', isPopular: true },
     { name: 'Worldle Solver', href: '/worldle-solver', description: 'Geography solver for Worldle using distance and direction clues.', color: 'from-sky-500 to-blue-700', icon: 'Wr', isPopular: true },
     { name: 'Betweenle Solver', href: '/betweenle-solver', description: 'Solve Betweenle faster with top and bottom bounds plus distance percentages.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
@@ -19,17 +25,17 @@
     { name: 'Light Out Solver', href: '/light-out-solver', description: 'Interactive Lights Out solver with linked toggle mode, edit mode, and optimal step cards.', color: 'from-emerald-500 to-cyan-600', icon: 'Lo' },
     { name: 'Phoodle Solver', href: '/phoodle-solver', description: 'WASM-powered Phoodle helper with the same standalone food-word solving logic.', color: 'from-orange-500 to-red-500', icon: 'Ph' },
     { name: 'Minesweeper Solver', href: '/minesweeper-solver', description: 'Online Minesweeper solver with board editing, safe move detection, and mine probability hints.', color: 'from-indigo-500 to-violet-700', icon: 'Ms', isPopular: true },
-    { name: 'Thirdle Solver', href: '/thirdle-solver', description: '3-letter Wordle-style solver using the standalone WASM build from the new reference app.', color: 'from-lime-500 to-emerald-600', icon: 'Th' },
-    { name: 'Hardle Solver', href: '/hardle-solver', description: 'Variant solver where green and yellow clue roles can swap, powered by separate WASM bundles.', color: 'from-red-500 to-orange-600', icon: 'Hd' },
-    { name: 'Warmle Solver', href: '/warmle-solver', description: 'Alphabet-distance Wordle solver with adjustable Warmle distance and dedicated WASM scoring.', color: 'from-amber-500 to-rose-500', icon: 'Wa' },
-    { name: 'Woodle Solver', href: '/woodle-solver', description: 'Count-based Woodle helper with exact and misplaced totals backed by the standalone WASM logic.', color: 'from-stone-500 to-amber-700', icon: 'Wd' },
-    { name: 'Wordle Peaks Solver', href: '/w-peaks-solver', description: 'Earlier-or-later alphabet clue solver for Wordle Peaks using the separate WASM build.', color: 'from-cyan-500 to-sky-700', icon: 'Wp' },
-    { name: 'Xordle Solver', href: '/xordle-solver', description: 'Merged-clue Xordle solver with length switching and the new multi-length WASM engine.', color: 'from-violet-500 to-indigo-700', icon: 'X' },
-    { name: 'Fibble Solver', href: '/fibble-solver', description: 'Lie-aware Fibble solver built on the new reference WebAssembly logic.', color: 'from-pink-500 to-rose-600', icon: 'Fb' },
-    { name: 'Dordle Solver', href: '/dordle-solver', description: 'Solve two linked boards at once with the new WASM-powered Dordle flow.', color: 'from-blue-500 to-cyan-600', icon: 'Do' },
-    { name: 'Quordle Solver', href: '/quordle-solver', description: 'Solve all four Quordle words at once with the new standalone WASM engine and length selector.', color: 'from-blue-500 to-indigo-600', icon: 'Q', isPopular: true },
-    { name: 'Octordle Solver', href: '/octordle-solver', description: 'Eight-board Octordle solver powered by the same new worker and per-length WASM bundles.', color: 'from-indigo-500 to-fuchsia-700', icon: 'O8' },
-    { name: 'Spotle Wordle Solver', href: '/spotle-wordle-solver', description: 'Blank-clue Wordle-variant solver from the WASM project, kept separate from the music Spotle page.', color: 'from-teal-500 to-cyan-700', icon: 'Sw' },
+    { name: 'Thirdle Solver', href: '/thirdle-solver', description: '3-letter Wordle-style solver with fast clue filtering and ranked next guesses.', color: 'from-lime-500 to-emerald-600', icon: 'Th' },
+    { name: 'Hardle Solver', href: '/hardle-solver', description: 'Variant solver where green and yellow clue roles can swap.', color: 'from-red-500 to-orange-600', icon: 'Hd' },
+    { name: 'Warmle Solver', href: '/warmle-solver', description: 'Alphabet-distance Wordle solver with adjustable Warmle distance.', color: 'from-amber-500 to-rose-500', icon: 'Wa' },
+    { name: 'Woodle Solver', href: '/woodle-solver', description: 'Count-based Wordle helper with exact and misplaced totals.', color: 'from-stone-500 to-amber-700', icon: 'Wd' },
+    { name: 'Wordle Peaks Solver', href: '/w-peaks-solver', description: 'Earlier-or-later alphabet clue solver for Wordle Peaks.', color: 'from-cyan-500 to-sky-700', icon: 'Wp' },
+    { name: 'Xordle Solver', href: '/xordle-solver', description: 'Merged-clue Xordle solver with built-in length switching.', color: 'from-violet-500 to-indigo-700', icon: 'X' },
+    { name: 'Fibble Solver', href: '/fibble-solver', description: 'Lie-aware Fibble solver with clue matching and ranked guesses.', color: 'from-pink-500 to-rose-600', icon: 'Fb' },
+    { name: 'Dordle Solver', href: '/dordle-solver', description: 'Solve two linked boards at once with shared guesses.', color: 'from-blue-500 to-cyan-600', icon: 'Do' },
+    { name: 'Quordle Solver', href: '/quordle-solver', description: 'Solve all four Quordle words at once with one shared solver page.', color: 'from-blue-500 to-indigo-600', icon: 'Q', isPopular: true },
+    { name: 'Octordle Solver', href: '/octordle-solver', description: 'Eight-board Octordle solver with ranked next guesses and word-length selection.', color: 'from-indigo-500 to-fuchsia-700', icon: 'O8' },
+    { name: 'Spotle Wordle Solver', href: '/spotle-wordle-solver', description: 'Blank-clue Wordle-variant solver kept separate from the music Spotle page.', color: 'from-teal-500 to-cyan-700', icon: 'Sw' },
     { name: 'Squaredle Solver', href: '/squaredle-solver', description: 'Solve custom or official Squaredle boards with path highlighting and compressed dictionary search.', color: 'from-red-500 to-rose-700', icon: 'Sq' },
     { name: 'Colordle Solver', href: '/colordle-solver', description: 'Find the hex color with visual clues.', color: 'from-pink-500 to-purple-600', icon: 'Cd' },
     { name: 'Countryle Solver', href: '/countryle-solver', description: 'Filter countries by Countryle clue feedback and direction.', color: 'from-emerald-500 to-teal-600', icon: 'Cy', isPopular: true },
@@ -58,11 +64,11 @@
     },
     {
       question: 'Which solver should I use for regular Wordle?',
-      answer: 'Use the classic Wordle Solver for the older all-in-one helper, or open one of the dedicated 3 to 11 letter Wordle solver pages if you want the new standalone WASM version from the WordleBot reference project.'
+      answer: 'Use the 5-Letter Wordle Solver for standard Wordle. If you play custom-length boards, the dedicated 3 to 11 letter Wordle solver pages use the same clue entry flow with the right answer bank for each length.'
     },
     {
-      question: 'Why are there now separate Dordle, Quordle, Octordle, and Canuckle solver pages?',
-      answer: 'Those pages use the new WordleBot WASM engine, which ships separate WebAssembly bundles per word length and game family. Breaking them out into dedicated pages keeps the routes clearer for users and search engines while preserving the original classic Wordle page.'
+      question: 'Why are there separate Dordle, Quordle, Octordle, and Canuckle solver pages?',
+      answer: 'Each puzzle family now has its own dedicated solver route so users can land directly on the right interface, switch lengths where available, and move between related pages more easily.'
     },
     {
       question: 'Can I use these solvers on my phone?',
@@ -77,16 +83,16 @@
 
 <svelte:head>
   <title>Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX</title>
-  <meta name="description" content="Free puzzle solver tools for Wordle, Betweenle, Quordle, Phoodle, Waffle, Colordle, and more with fast clue-based filtering." />
+  <meta name="description" content="Free puzzle solver tools for 3 to 11 letter Wordle, Canuckle, Quordle, Betweenle, Phoodle, Waffle, Colordle, and more with fast clue-based filtering." />
   <link rel="canonical" href="https://wordsolver.tech/solver" />
   <meta property="og:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
-  <meta property="og:description" content="Use free solver tools for Wordle, Betweenle, Worldle, Quordle, Phoodle, Waffle, Colordle, and more daily puzzle games." />
+  <meta property="og:description" content="Use free solver tools for 3 to 11 letter Wordle, Canuckle, Betweenle, Worldle, Quordle, Phoodle, Waffle, Colordle, and more daily puzzle games." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolver.tech/solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
-  <meta name="twitter:description" content="Find the right puzzle solver fast with WordSolverX's full collection of free clue-based tools." />
+  <meta name="twitter:description" content="Find the right puzzle solver fast with WordSolverX's full collection of free clue-based tools for Wordle, Canuckle, Quordle, and more." />
   <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
@@ -142,23 +148,6 @@
         Search
       </button>
     </form>
-
-    <section class="mb-10 rounded-3xl border border-blue-100 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-      <h2 class="text-xl font-bold text-gray-900 dark:text-white">New WASM Wordle-Family Pages</h2>
-      <p class="mt-2 text-sm leading-7 text-gray-600 dark:text-gray-300">
-        The new WordleBot WASM integration now lives on dedicated pages for Canuckle, multi-board variants, and separate 3 to 11 letter Wordle solvers. These links use the new standalone worker and per-length WebAssembly files.
-      </p>
-      <div class="mt-4 flex flex-wrap gap-2">
-        {#each wasmWordlebotLinks as link}
-          <a
-            class="rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:border-blue-300 hover:bg-blue-100 dark:border-blue-900/40 dark:bg-blue-950/30 dark:text-blue-300"
-            href={link.href}
-          >
-            {link.name}
-          </a>
-        {/each}
-      </div>
-    </section>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
       {#each solvers as solver}

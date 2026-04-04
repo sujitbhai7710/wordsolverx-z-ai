@@ -8,8 +8,8 @@
       description: 'Learn the best starting words, elimination strategies, and how to solve Wordle in 3 guesses or fewer.',
       gradient: 'from-green-500 to-emerald-600',
       icon: '🟩',
-      link: '/wordle-solver',
-      linkText: 'Try Wordle Solver',
+      link: '/5-letter-wordle-solver',
+      linkText: 'Try 5-Letter Wordle Solver',
     },
     {
       title: 'Quordle Tips & Tricks',

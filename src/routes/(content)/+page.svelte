@@ -1,11 +1,13 @@
 <script lang="ts">
   import GameCard from '$lib/components/GameCard.svelte';
+  import { WORD_GAMES_MULTIDLE_URL } from '$lib/word-games-links';
 
   let { data } = $props<{ data: { todayStr: string } }>();
   let todayStr = $derived(data.todayStr);
 
   const answerTodayGames = [
     { name: 'Wordle', href: '/wordle-answer-today', description: 'The classic 5-letter word game by NYT.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
+    { name: 'Canuckle', href: '/canuckle-answer-today', description: 'Today\'s Canuckle answer, puzzle number, and Canadian fact.', color: 'from-rose-500 to-red-600', icon: 'Ca', isPopular: true },
     { name: 'Betweenle', href: '/betweenle-answer-today', description: 'Today\'s Betweenle answer plus archive calendar.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Colorfle', href: '/colorfle-answer-today', description: 'Today\'s mixed Colorfle answer.', color: 'from-fuchsia-500 to-pink-600', icon: 'Cf', isPopular: true },
     { name: 'Nerdle', href: '/nerdle-answer-today', description: 'Today\'s Nerdle math equation answer and archive.', color: 'from-emerald-500 to-teal-600', icon: 'Nd', isPopular: true },
@@ -30,11 +32,11 @@
   ];
 
   const solverTools = [
-    { name: 'Wordle Solver', href: '/wordle-solver', description: 'Filter words by green, yellow, and gray letters.', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
+    { name: '5-Letter Wordle Solver', href: '/5-letter-wordle-solver', description: 'Filter standard Wordle boards with ranked next guesses and quick clue entry.', color: 'from-emerald-500 to-green-600', icon: '5', isPopular: true },
     { name: 'Nerdle Solver', href: '/nerdle-solver', description: 'All-modes equation solver for Micro, Mini, Midi, Classic, and Maxi Nerdle.', color: 'from-teal-500 to-emerald-600', icon: 'Nd', isPopular: true },
     { name: 'Betweenle Solver', href: '/betweenle-solver', description: 'Use bounds and distance percentages to solve Betweenle faster.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Colorfle Solver', href: '/colorfle-solver', description: 'Solve Colorfle from target hex values or clue feedback.', color: 'from-fuchsia-500 to-pink-600', icon: 'Cf', isPopular: true },
-    { name: 'Play Multidle', href: '/multidle', description: 'Play unlimited Wordle - 4 to 12 letter words.', color: 'from-violet-500 to-purple-600', icon: 'M', isPopular: true },
+    { name: 'Play Multidle', href: WORD_GAMES_MULTIDLE_URL, description: 'Play unlimited Wordle boards in the standalone arcade.', color: 'from-violet-500 to-purple-600', icon: 'M', isPopular: true },
     { name: 'Boggle Solver', href: '/boggle-solver', description: 'Find every word on a Boggle board with path highlighting.', color: 'from-emerald-500 to-cyan-600', icon: 'Bg' },
     { name: 'Hangman Solver', href: '/hangman-solver', description: 'Entropy-based hangman helper with ranked answers and next-letter suggestions.', color: 'from-orange-500 to-amber-600', icon: 'H' },
     { name: 'Light Out Solver', href: '/light-out-solver', description: 'Build and solve Lights Out boards with optimal step-by-step solutions.', color: 'from-emerald-500 to-cyan-600', icon: 'Lo' },

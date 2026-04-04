@@ -251,13 +251,12 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/about',
 	'/archive',
 	'/canuckle',
+	'/canuckle-answer-today',
 	'/canuckle-archive',
 	'/canuckle-solver',
 	'/contact',
-	'/create-custom-wordle',
 	'/disclaimer',
 	'/guides',
-	'/multidle',
 	'/privacy-policy',
 	'/solver',
 	'/terms-of-service',
@@ -294,7 +293,6 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/weaver-solver',
 	'/worldle-solver',
 	'/betweenle-solver',
-	'/betweenle-unlimited',
 	'/boggle-solver',
 	'/kanoodle-solver',
 	'/minesweeper-solver',
@@ -488,10 +486,6 @@ export function getPuzzleWindow(
 
 export function isLongCacheStaticPath(pathname: string): boolean {
 	if (LONG_CACHE_STATIC_PATHS.has(pathname)) {
-		return true;
-	}
-
-	if (/^\/\d+-letter-wordle$/.test(pathname)) {
 		return true;
 	}
 

@@ -6,6 +6,7 @@
 
   const games = [
     { name: 'Wordle', href: '/wordle-answer-today', description: "Today's Wordle answer and hints.", color: 'from-green-500 to-emerald-600', icon: 'W' },
+    { name: 'Canuckle', href: '/canuckle-answer-today', description: "Today's Canuckle answer, puzzle number, and fact.", color: 'from-rose-500 to-red-600', icon: 'Ca' },
     { name: 'Worldle', href: '/worldle-answer-today', description: "Today's Worldle country plus archive date lookup.", color: 'from-sky-500 to-blue-700', icon: 'Wr' },
     { name: 'Betweenle', href: '/betweenle-answer-today', description: "Today's Betweenle answer with calendar archive lookup.", color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt' },
     { name: 'Colorfle', href: '/colorfle-answer-today', description: "Today's Colorfle mixed color answer.", color: 'from-fuchsia-500 to-pink-600', icon: 'Cf' },
@@ -34,7 +35,7 @@
 
 <svelte:head>
   <title>Today's Puzzle Answers ({todayStr}) - WordSolverX</title>
-  <meta name="description" content="All of today's puzzle answers in one place - Wordle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
+  <meta name="description" content="All of today's puzzle answers in one place - Wordle, Canuckle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, Globle and more for {todayStr}." />
   <link rel="canonical" href="https://wordsolver.tech/today" />
   <meta property="og:title" content={"Today's Puzzle Answers (" + todayStr + ") - WordSolverX"} />
   <meta property="og:description" content="See today's verified puzzle answers, daily solution links, and quick access to all supported games in one place." />
@@ -43,7 +44,7 @@
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={"Today's Puzzle Answers (" + todayStr + ") - WordSolverX"} />
-  <meta name="twitter:description" content="Daily answers for Wordle, Worldle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, and more." />
+  <meta name="twitter:description" content="Daily answers for Wordle, Canuckle, Worldle, Betweenle, Phoodle, Quordle, Colordle, Semantle, Waffle, and more." />
   <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',

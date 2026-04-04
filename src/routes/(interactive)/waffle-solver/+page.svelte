@@ -205,7 +205,7 @@
   });
 
   const solverLinks = [
-    { href: '/wordle-solver', label: 'Wordle Solver' },
+    { href: '/5-letter-wordle-solver', label: '5-Letter Wordle Solver' },
     { href: '/quordle-solver', label: 'Quordle Solver' },
     { href: '/phoodle-answer-today', label: 'Phoodle Answer Today' },
     { href: '/waffle-answer-today', label: 'Waffle Answer Today' },

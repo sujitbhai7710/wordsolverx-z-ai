@@ -16,7 +16,7 @@ Tools to help you solve specific game puzzles interactively.
 
 | Solver Page | Description | Key Features |
 | :--- | :--- | :--- |
-| **[Wordle Solver](/wordle-solver)** | Generic Wordle solver | Supports 4-11 letter variations |
+| **[5-Letter Wordle Solver](/5-letter-wordle-solver)** | Standard Wordle solver | Dedicated 5-letter clue filtering and ranked guesses |
 | **[Colordle Solver](/colordle-solver)** | Color code guessing | Hex/RGB conversion & distance logic |
 | **[Quordle Solver](/quordle-solver)** | 4-board simultaneous | WASM-powered multi-board logic |
 | **[Waffle Solver](/waffle-solver)** | Grid-based word swap | Rust/WASM engine, 5x5 grid support |

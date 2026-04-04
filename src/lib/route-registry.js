@@ -1,6 +1,7 @@
 export const TODAY_STATIC_ROUTES = [
   '/today',
   '/betweenle-answer-today',
+  '/canuckle-answer-today',
   '/colorfle-answer-today',
   '/colordle-answer-today',
   '/contexto-answer-today',
@@ -30,13 +31,11 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/about',
   '/archive',
   '/betweenle-solver',
-  '/betweenle-unlimited',
   '/boggle-solver',
   '/colorfle-solver',
   '/colordle-solver',
   '/contact',
   '/countryle-solver',
-  '/create-custom-wordle',
   '/disclaimer',
   '/dotadle-solver',
   '/guides',
@@ -45,11 +44,11 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/light-out-solver',
   '/loldle-solver',
   '/minesweeper-solver',
-  '/multidle',
   '/narutodle-solver',
   '/nerdle-solver',
   '/onepiecedle-solver',
   '/canuckle',
+  '/canuckle-answer-today',
   '/canuckle-archive',
   '/canuckle-solver',
   '/phoodle-solver',
@@ -87,16 +86,7 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/9-letter-wordle-solver',
   '/10-letter-wordle-solver',
   '/11-letter-wordle-solver',
-  '/3-letter-wordle',
-  '/4-letter-wordle',
-  '/5-letter-wordle',
-  '/6-letter-wordle',
-  '/7-letter-wordle',
-  '/8-letter-wordle',
-  '/9-letter-wordle',
-  '/10-letter-wordle',
-  '/11-letter-wordle',
-  '/12-letter-wordle'
+  '/12-letter-wordle-solver'
 ];
 
 export const ARCHIVE_STATIC_ROUTES = [

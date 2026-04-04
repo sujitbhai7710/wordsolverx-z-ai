@@ -1,6 +1,4 @@
 <script lang="ts">
-  import GameTile from './wordle/GameTile.svelte';
-
   let {
     word,
     number,
@@ -56,11 +54,15 @@
         class="focus:outline-none transition-transform hover:scale-105 active:scale-95"
         aria-label="Reveal Tile {index + 1}"
       >
-        <GameTile 
-          letter={revealedIndices.has(index) ? letter.toUpperCase() : ''} 
-          state={revealedIndices.has(index) ? 'correct' : 'filled'} 
-          size="large" 
-        />
+        <div
+          class={`flex h-14 w-14 items-center justify-center rounded-xl border-2 text-3xl font-black uppercase transition-all md:h-16 md:w-16 md:text-4xl ${
+            revealedIndices.has(index)
+              ? 'border-[#6aaa64] bg-[#6aaa64] text-white shadow-md'
+              : 'border-slate-300 bg-slate-100 text-transparent dark:border-slate-600 dark:bg-slate-800'
+          }`}
+        >
+          {revealedIndices.has(index) ? letter.toUpperCase() : ''}
+        </div>
       </button>
     {/each}
   </div>

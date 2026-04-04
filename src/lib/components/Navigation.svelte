@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
+  import { WORD_GAMES_MULTIDLE_URL } from '$lib/word-games-links';
   
   let isOpen = $state(false);
   let scrolled = $state(false);
@@ -8,7 +9,7 @@
   // navLinks are constant
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Play Wordle', href: '/multidle' },
+    { name: 'Play Wordle', href: WORD_GAMES_MULTIDLE_URL },
     { name: 'Today', href: '/today' },
     { name: 'Archive', href: '/archive' },
     { name: 'Solver', href: '/solver' },
