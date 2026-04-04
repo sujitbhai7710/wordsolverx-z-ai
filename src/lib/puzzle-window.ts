@@ -250,6 +250,9 @@ export const ARCHIVE_ROUTE_GAME_MAP: Record<string, PuzzleGame> = {
 export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/about',
 	'/archive',
+	'/canuckle',
+	'/canuckle-archive',
+	'/canuckle-solver',
 	'/contact',
 	'/create-custom-wordle',
 	'/disclaimer',
@@ -259,6 +262,25 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/solver',
 	'/terms-of-service',
 	'/wordle-solver',
+	'/3-letter-wordle-solver',
+	'/4-letter-wordle-solver',
+	'/5-letter-wordle-solver',
+	'/6-letter-wordle-solver',
+	'/7-letter-wordle-solver',
+	'/8-letter-wordle-solver',
+	'/9-letter-wordle-solver',
+	'/10-letter-wordle-solver',
+	'/11-letter-wordle-solver',
+	'/thirdle-solver',
+	'/dordle-solver',
+	'/octordle-solver',
+	'/hardle-solver',
+	'/warmle-solver',
+	'/woodle-solver',
+	'/w-peaks-solver',
+	'/xordle-solver',
+	'/fibble-solver',
+	'/spotle-wordle-solver',
 	'/hangman-solver',
 	'/light-out-solver',
 	'/phoodle-solver',
@@ -470,6 +492,10 @@ export function isLongCacheStaticPath(pathname: string): boolean {
 	}
 
 	if (/^\/\d+-letter-wordle$/.test(pathname)) {
+		return true;
+	}
+
+	if (/^\/\d+-letter-wordle-solver$/.test(pathname)) {
 		return true;
 	}
 

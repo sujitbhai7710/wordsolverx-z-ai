@@ -32,3 +32,8 @@ declare module '/phoodle-wasm/phoodle_solver.js' {
     }
     export default init;
 }
+
+declare module '*.css?raw' {
+	const content: string;
+	export default content;
+}
