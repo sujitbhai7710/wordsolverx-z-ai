@@ -3,11 +3,7 @@
 	import FAQSection from '$lib/components/FAQSection.svelte';
 	import WordlebotWasmClient from '$lib/components/wordlebot/WordlebotWasmClient.svelte';
 	import { getWordlebotStructuredData } from '$lib/wordlebot-wasm/route-config';
-	import {
-		getCanucklePagePath,
-		getWordleLengthSolverPath,
-		WORDLEBOT_WORDLE_SOLVER_LENGTHS
-	} from '$lib/wordlebot-wasm/routes';
+	import { getCanucklePagePath } from '$lib/wordlebot-wasm/routes';
 	import type { WordlebotPageConfig } from '$lib/wordlebot-wasm/types';
 
 	let { config }: { config: WordlebotPageConfig } = $props();
@@ -23,11 +19,6 @@
 	);
 	let isCanuckleFamilyPage = $derived(
 		isCanuckleTodayPage || isCanuckleArchivePage || isCanuckleSolverPage
-	);
-	let currentWordLength = $derived(
-		config.appConfig.pageType === 'solver' && config.appConfig.game === 'wordle'
-			? (config.appConfig.wordLength ?? 5)
-			: WORDLEBOT_WORDLE_SOLVER_LENGTHS[2]
 	);
 	let ogType = $derived(isCanuckleTodayPage ? 'article' : 'website');
 	let seoTitle = $derived(config.metaTitle ?? config.title);
@@ -95,23 +86,6 @@
 							</span>
 						{/each}
 					</div>
-					<nav
-						class="mt-8 flex flex-wrap justify-center gap-2"
-						aria-label="Wordle solver lengths"
-					>
-						{#each WORDLEBOT_WORDLE_SOLVER_LENGTHS as wordLength}
-							<a
-								class={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-									wordLength === currentWordLength
-										? 'border-white bg-white text-green-700 shadow-sm'
-										: 'border-white/20 bg-white/10 text-white hover:bg-white/20'
-								}`}
-								href={getWordleLengthSolverPath(wordLength)}
-							>
-								{wordLength} Letters
-							</a>
-						{/each}
-					</nav>
 					{#if config.cta}
 						<a
 							class="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-green-700 shadow-lg shadow-green-900/20 transition hover:-translate-y-0.5 hover:shadow-xl"
