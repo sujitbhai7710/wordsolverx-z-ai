@@ -14,10 +14,9 @@ export const load: PageServerLoad = async () => {
 
     const { country, formattedDate, date } = data;
     const isFallbackDate = format(date, 'yyyy-MM-dd') !== format(today, 'yyyy-MM-dd');
+    const currentMonth = format(today, 'MMMM');
     const featuredImage = 'https://wordsolver.tech/globle-answer-today.webp';
-    const pageTitle = isFallbackDate
-        ? `Globle Hints and Latest Available Answer (${formattedDate})`
-        : `Globle Hints and Answer for Today (${formattedDate})`;
+    const pageTitle = `Globle Answer Today - ${currentMonth} - Updated`;
     const pageDescription = isFallbackDate
         ? `The official Globle answer for ${format(today, 'MMMM d, yyyy')} is not available yet, so this page is showing the latest confirmed answer from ${formattedDate}. The country is ${country.name}, with continent, subregion, flag, and map clues included.`
         : `Get Globle hints and the confirmed Globle answer for today, ${formattedDate}. Today's country is ${country.name}, with continent, subregion, flag, and map clues plus the full Globle answer for ${formattedDate}.`;

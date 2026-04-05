@@ -43,7 +43,9 @@
   }
 
   const todayLabel = $derived(formatDisplayDate(data.todayPuzzle.date));
-  const pageTitle = $derived(`Searchle Hints and Answer for Today (${todayLabel})`);
+  const currentMonth = $derived(new Date(`${data.todayPuzzle.date}T12:00:00`).toLocaleDateString('en-US', { month: 'long' }));
+  const metaTitle = $derived(`Searchle Answer Today - ${currentMonth} - Updated`);
+  const pageTitle = $derived(`Searchle Answer Today (${todayLabel})`);
   const pageDescription = $derived(
     `Get Searchle hints and the confirmed Searchle answer for today, ${todayLabel}. Use the dedicated archive page for older Searchle prompts and answers.`
   );
@@ -76,13 +78,13 @@
 
   const faqSchema = generateFAQSchema(faqs);
   const howToSchema = generateHowToSchema('How to use the Searchle answer page', [
-    { name: 'Read the prompt', text: 'Check todayâ€™s Searchle prompt before revealing the answer.' },
+    { name: 'Read the prompt', text: 'Check today\u2019s Searchle prompt before revealing the answer.' },
     { name: 'Reveal or copy the answer', text: 'Use the answer card tools to confirm the solution quickly.' },
     { name: 'Open the archive', text: 'Use the dedicated archive page when you need an older Searchle answer.' }
   ]);
   const webPageSchema = $derived({
     ...generateWebPageSchema(
-      pageTitle,
+      metaTitle,
       pageDescription,
       'https://wordsolver.tech/searchle-answer-today'
     ),
@@ -95,10 +97,10 @@
 </script>
 
 <svelte:head>
-  <title>{pageTitle}</title>
+  <title>{metaTitle}</title>
   <meta name="description" content={pageDescription} />
   <meta name="keywords" content={pageKeywords} />
-  <meta property="og:title" content={pageTitle} />
+  <meta property="og:title" content={metaTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolver.tech/searchle-answer-today" />
@@ -110,46 +112,46 @@
   {@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-slate-50 dark:bg-slate-950">
+<div class="min-h-screen bg-slate-50">
   <main class="max-w-5xl mx-auto px-4 py-8">
     <div class="text-center mb-8">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-sm font-medium mb-4">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-600 text-sm font-medium mb-4">
         <span>{totalPuzzles.toLocaleString('en-US')} Real Puzzles from Searchle</span>
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-        Searchle Hints and Answer for Today ({todayLabel})
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+        Searchle Answer Today ({todayLabel})
       </h1>
-      <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+      <p class="text-slate-600 max-w-xl mx-auto">
         Today&apos;s Searchle prompt and answer, with a dedicated archive page for older puzzles.
       </p>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg overflow-hidden mb-8">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden mb-8">
       <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
       <div class="p-6 text-center">
         <div class="flex items-center justify-center gap-2 mb-2">
           <span class="text-sm font-semibold">Today&apos;s Searchle</span>
-          <span class="text-xs px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
+          <span class="text-xs px-2 py-0.5 rounded-full border border-slate-200">
             {todayPuzzle.date}
           </span>
         </div>
-        <div class="text-lg text-slate-600 dark:text-slate-400 mb-4 italic">
+        <div class="text-lg text-slate-600 mb-4 italic">
           "{todayPuzzle.prompt}"
         </div>
-        <div class="font-mono text-5xl font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-6">
+        <div class="font-mono text-5xl font-bold text-purple-600 uppercase tracking-wider mb-6">
           {todayPuzzle.answer}
         </div>
         <div class="flex justify-center gap-3 flex-wrap">
           <button
             type="button"
             onclick={() => copyToClipboard(todayPuzzle.answer.toUpperCase())}
-            class="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm"
+            class="px-3 py-2 rounded-lg border border-slate-200 text-sm"
           >
             {copiedWord === todayPuzzle.answer.toUpperCase() ? 'Copied' : 'Copy Answer'}
           </button>
           <a
             href="/searchle-archive"
-            class="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+            class="px-3 py-2 rounded-lg border border-slate-200 text-sm hover:bg-slate-50"
           >
             Browse Archive
           </a>
@@ -163,21 +165,21 @@
       </div>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg p-6 mb-8">
-      <h2 class="text-xl font-bold text-slate-900 dark:text-white">Need an older Searchle answer?</h2>
-      <p class="mt-3 text-slate-600 dark:text-slate-400">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900">Need an older Searchle answer?</h2>
+      <p class="mt-3 text-slate-600">
         Older Searchle prompts and answers now live on the dedicated archive page instead of this today page.
       </p>
       <div class="mt-5 flex flex-wrap gap-3">
         <a
           href="/searchle-archive"
-          class="inline-flex items-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-purple-600 dark:hover:bg-purple-500"
+          class="inline-flex items-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-700"
         >
           Open Searchle Archive
         </a>
         <a
           href="/searchle-solver"
-          class="inline-flex items-center rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+          class="inline-flex items-center rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
         >
           Try the Solver
         </a>
@@ -196,5 +198,3 @@
 
   <FAQSection {faqs} />
 </div>
-
-

@@ -13,7 +13,8 @@ export const load = () => {
   const entries = getTodayFramedEntries();
   const dateKey = entries[0]?.date ?? new Date().toISOString().slice(0, 10);
   const formattedDate = formatFramedDate(new Date(`${dateKey}T00:00:00Z`));
-  const pageTitle = `Framed Answers Today (${formattedDate}) | Archive`;
+  const currentMonth = new Date(`${dateKey}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+  const pageTitle = `Framed Answer Today - ${currentMonth} - Updated`;
   const pageDescription = `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from the static archive dataset.`;
   const pageUrl = 'https://wordsolver.tech/framed-answer-today';
 

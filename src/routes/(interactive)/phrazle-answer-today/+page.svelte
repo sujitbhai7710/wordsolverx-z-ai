@@ -26,6 +26,7 @@
       todayAnswers: PhrazleDayAnswers;
       todayLabel: string;
       pageTitle: string;
+      metaTitle: string;
       pageDescription: string;
       pageKeywords: string;
       faqs: { question: string; answer: string }[];
@@ -48,37 +49,37 @@
 </script>
 
 <svelte:head>
-  <title>{data.pageTitle}</title>
+  <title>{data.metaTitle}</title>
   <meta name="description" content={data.pageDescription} />
   <meta name="keywords" content={data.pageKeywords} />
-  <meta property="og:title" content={data.pageTitle} />
+  <meta property="og:title" content={data.metaTitle} />
   <meta property="og:description" content={data.pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolver.tech/phrazle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={data.pageTitle} />
+  <meta name="twitter:title" content={data.metaTitle} />
   <meta name="twitter:description" content={data.pageDescription} />
   <link rel="canonical" href="https://wordsolver.tech/phrazle-answer-today" />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-slate-50 dark:bg-slate-950">
+<div class="min-h-screen bg-slate-50">
   <main class="max-w-5xl mx-auto px-4 py-8">
     <div class="text-center mb-8">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-sm font-medium mb-4">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium mb-4">
         <span>{data.totalPhrases.toLocaleString('en-US')} Phrase Library</span>
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-        Phrazle Hints and Answers for Today ({data.todayLabel})
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+        Phrazle Answer Today ({data.todayLabel})
       </h1>
-      <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+      <p class="text-slate-600 max-w-xl mx-auto">
         Two puzzles every day, with archive browsing moved to the dedicated Phrazle archive page.
       </p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-6 mb-8">
-      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden">
         <div class="h-2 bg-gradient-to-r from-amber-400 to-orange-400"></div>
         <div class="p-6 text-center">
           <div class="text-xs uppercase tracking-wide text-amber-600 mb-2">Morning Puzzle</div>
@@ -112,7 +113,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden">
         <div class="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
         <div class="p-6 text-center">
           <div class="text-xs uppercase tracking-wide text-indigo-600 mb-2">Afternoon Puzzle</div>
@@ -147,9 +148,9 @@
       </div>
     </div>
 
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 mb-8">
-      <h2 class="text-xl font-bold text-slate-900 dark:text-white">Need an older Phrazle answer?</h2>
-      <p class="mt-3 text-slate-600 dark:text-slate-400">
+    <div class="bg-white border border-slate-200 rounded-2xl p-6 mb-8">
+      <h2 class="text-xl font-bold text-slate-900">Need an older Phrazle answer?</h2>
+      <p class="mt-3 text-slate-600">
         Past morning and afternoon phrase pairs now live on the dedicated archive page instead of this today page.
       </p>
       <div class="mt-5 flex flex-wrap gap-3">

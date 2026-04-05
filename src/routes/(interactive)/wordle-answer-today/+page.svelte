@@ -43,7 +43,7 @@
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
-<main class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-900 dark:to-emerald-950 font-sans">
+<main class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 font-sans">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <WordleDisplayWrapper
       wordleData={data.wordleData}
@@ -58,27 +58,27 @@
 
     <!-- Recent Wordle Answers Table -->
     {#if data.recentAnswers.length > 1}
-      <section class="mt-12 bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+      <section class="mt-12 bg-white rounded-3xl p-8 shadow-xl border border-gray-100 overflow-hidden">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
           <span class="w-2 h-8 bg-green-500 rounded-full"></span>
           Recent Wordle Answers
         </h3>
         <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead class="bg-gray-50 dark:bg-gray-900">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
               <tr>
-                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Wordle #</th>
-                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
-                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Answer</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Wordle #</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Answer</th>
               </tr>
             </thead>
-            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody class="bg-white divide-y divide-gray-200">
               {#each data.recentAnswers as answer}
-                <tr class="transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50 {answer.date === data.wordleData?.date ? 'bg-green-50/50 dark:bg-green-900/10' : ''}">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">#{answer.id}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{formatDateForFAQ(answer.date)}</td>
+                <tr class="transition-colors hover:bg-gray-50 {answer.date === data.wordleData?.date ? 'bg-green-50/50' : ''}">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">#{answer.id}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{formatDateForFAQ(answer.date)}</td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800">
                       {answer.solution.toUpperCase()}
                     </span>
                   </td>

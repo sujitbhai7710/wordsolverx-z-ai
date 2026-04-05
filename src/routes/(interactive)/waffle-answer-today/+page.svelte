@@ -39,8 +39,8 @@
     </div>
 
     <div class="flex items-center gap-3 mb-2">
-      <h1 class="text-4xl font-bold text-gray-900">Waffle Hints and Answer for Today ({data.formattedDate})</h1>
-      <div class="flex items-center gap-1.5 px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 rounded-lg font-bold text-sm">
+      <h1 class="text-4xl font-bold text-gray-900">Waffle Answer Today ({data.formattedDate})</h1>
+      <div class="flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-800 rounded-lg font-bold text-sm">
         <FiHash class="w-3.5 h-3.5" />
         <span>#{data.number}</span>
       </div>
@@ -48,11 +48,11 @@
     <p class="text-xl text-gray-600">Here are the solutions for today's Waffle puzzle ({data.formattedDate}).</p>
   </div>
 
-  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-6 mb-8">
+  <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-8">
     <WaffleAnswerCard puzzle={data.puzzle} solution={data.solution} date={data.date} />
 
     <div class="mt-8">
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white border-b-2 border-amber-200 dark:border-amber-800 pb-2 mb-6 flex items-center gap-2">
+      <h3 class="text-xl font-bold text-gray-900 border-b-2 border-amber-200 pb-2 mb-6 flex items-center gap-2">
         <FiHash class="text-amber-500" />
         Word Definitions
       </h3>
@@ -60,20 +60,20 @@
       <div class="grid md:grid-cols-2 gap-8">
         <!-- Across Section -->
         <div>
-          <h4 class="flex items-center gap-2 text-sm font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-4">
+          <h4 class="flex items-center gap-2 text-sm font-black text-amber-600 uppercase tracking-widest mb-4">
             <FiArrowRight class="w-4 h-4" /> Across
           </h4>
           <div class="space-y-4">
             {#each data.words.slice(0, 3) as word}
               {@const def = data.definitions.find((d: any) => d.word.toLowerCase() === word.toLowerCase())}
-              <div class="bg-gray-50 dark:bg-gray-900/50 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+              <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
                 <div class="flex items-baseline gap-2 mb-1">
-                  <span class="text-lg font-black text-gray-900 dark:text-gray-100 uppercase tracking-tight">{word}</span>
+                  <span class="text-lg font-black text-gray-900 uppercase tracking-tight">{word}</span>
                   {#if def?.type}
                     <span class="text-[10px] font-bold text-amber-500 italic">({def.type})</span>
                   {/if}
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
+                <p class="text-gray-600 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
               </div>
             {/each}
           </div>
@@ -81,20 +81,20 @@
 
         <!-- Down Section -->
         <div>
-          <h4 class="flex items-center gap-2 text-sm font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-4">
+          <h4 class="flex items-center gap-2 text-sm font-black text-amber-600 uppercase tracking-widest mb-4">
             <FiArrowRight class="rotate-90 w-4 h-4" /> Down
           </h4>
           <div class="space-y-4">
             {#each data.words.slice(3, 6) as word}
               {@const def = data.definitions.find((d: any) => d.word.toLowerCase() === word.toLowerCase())}
-              <div class="bg-gray-50 dark:bg-gray-900/50 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+              <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
                 <div class="flex items-baseline gap-2 mb-1">
-                  <span class="text-lg font-black text-gray-900 dark:text-gray-100 uppercase tracking-tight">{word}</span>
+                  <span class="text-lg font-black text-gray-900 uppercase tracking-tight">{word}</span>
                   {#if def?.type}
                     <span class="text-[10px] font-bold text-amber-500 italic">({def.type})</span>
                   {/if}
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
+                <p class="text-gray-600 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
               </div>
             {/each}
           </div>
@@ -116,83 +116,83 @@
 
   <!-- SEO Content Section -->
   <article class="space-y-8 mb-12">
-    <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">
         What is Waffle?
       </h2>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-        Waffle is a word puzzle that gives you all the letters upfront â€” but they're scrambled. Your job is to swap letters around until you've formed six correct words: three across and three down, crossword-style. The grid is shaped like a waffle, which is where the game gets its name.
+      <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+        Waffle is a word puzzle that gives you all the letters upfront — but they're scrambled. Your job is to swap letters around until you've formed six correct words: three across and three down, crossword-style. The grid is shaped like a waffle, which is where the game gets its name.
       </p>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-        Unlike Wordle where you're guessing from scratch, Waffle gives you everything you need to solve the puzzle right from the start. The challenge isn't figuring out what letters to use â€” it's figuring out where each letter belongs. Some letters are already in the correct position (shown in green), while others need to be swapped.
+      <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+        Unlike Wordle where you're guessing from scratch, Waffle gives you everything you need to solve the puzzle right from the start. The challenge isn't figuring out what letters to use — it's figuring out where each letter belongs. Some letters are already in the correct position (shown in green), while others need to be swapped.
       </p>
-      <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+      <p class="text-lg text-gray-600 leading-relaxed">
         The game tracks how many swaps you make, and the goal is to solve it in 15 moves or fewer. Every puzzle is solvable within that limit, but finding the optimal path requires careful thinking about which letters go where.
       </p>
     </section>
 
-    <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">
         How to Play Waffle
       </h2>
-      <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300">
+      <div class="space-y-6 text-lg text-gray-600">
         <p class="leading-relaxed">
           Playing Waffle is straightforward once you understand the basics:
         </p>
-        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 1: Analyze the Grid</h3>
-          <p class="text-gray-600 dark:text-gray-300">
-            Look at the starting grid. Green letters are already correct â€” don't move these. Yellow letters are in the word but wrong position. Gray letters don't belong in that word at all.
+        <div class="bg-gray-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 1: Analyze the Grid</h3>
+          <p class="text-gray-600">
+            Look at the starting grid. Green letters are already correct — don't move these. Yellow letters are in the word but wrong position. Gray letters don't belong in that word at all.
           </p>
         </div>
-        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 2: Identify Fixed Letters</h3>
-          <p class="text-gray-600 dark:text-gray-300">
+        <div class="bg-gray-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 2: Identify Fixed Letters</h3>
+          <p class="text-gray-600">
             Green letters are your anchors. They tell you exactly which letters belong in which positions. Use these as your starting point for figuring out the rest of the words.
           </p>
         </div>
-        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 3: Plan Your Swaps</h3>
-          <p class="text-gray-600 dark:text-gray-300">
+        <div class="bg-gray-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 3: Plan Your Swaps</h3>
+          <p class="text-gray-600">
             Before making any moves, think through which letters need to go where. Each swap affects two positions, so consider the ripple effects. Sometimes the obvious swap isn't the best one.
           </p>
         </div>
-        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Step 4: Solve Efficiently</h3>
-          <p class="text-gray-600 dark:text-gray-300">
+        <div class="bg-gray-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 4: Solve Efficiently</h3>
+          <p class="text-gray-600">
             The goal is 15 swaps or fewer. If you're careful, most puzzles can be solved in 10-12 moves. Rush and you might find yourself running out of moves.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">
         Tips for Solving Waffle Faster
       </h2>
-      <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300">
+      <div class="space-y-6 text-lg text-gray-600">
         <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-2xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Start with Crossings</h3>
-            <p class="text-gray-600 dark:text-gray-300">
+          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Start with Crossings</h3>
+            <p class="text-gray-600">
               Letters that appear in both across and down words are crucial. Getting these right helps you solve two words at once. Focus on intersection points first.
             </p>
           </div>
-          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-2xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Think Crossword-Style</h3>
-            <p class="text-gray-600 dark:text-gray-300">
+          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Think Crossword-Style</h3>
+            <p class="text-gray-600">
               The words interlock like a mini crossword. If you're stuck on one word, try solving a crossing word instead. Sometimes the answer reveals itself through the intersections.
             </p>
           </div>
-          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-2xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Avoid Unnecessary Swaps</h3>
-            <p class="text-gray-600 dark:text-gray-300">
+          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Avoid Unnecessary Swaps</h3>
+            <p class="text-gray-600">
               Every swap counts. Don't move letters just to see what happens. Plan ahead and make each swap purposeful. The best solvers think several moves ahead.
             </p>
           </div>
-          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-2xl p-6 border border-amber-100 dark:border-amber-800/30">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Use Our Waffle Solver</h3>
-            <p class="text-gray-600 dark:text-gray-300">
+          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Use Our Waffle Solver</h3>
+            <p class="text-gray-600">
               If you're completely stuck, our Waffle Solver can show you the solution. It's great for learning how the pieces fit together and improving your solving skills.
             </p>
           </div>
@@ -200,11 +200,11 @@
       </div>
     </section>
 
-    <section class="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-3xl p-8 border border-amber-100 dark:border-amber-800/30">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+    <section class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-8 border border-amber-100">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">
         Why Waffle is So Satisfying
       </h2>
-      <div class="space-y-4 text-lg text-gray-600 dark:text-gray-300">
+      <div class="space-y-4 text-lg text-gray-600">
         <p class="leading-relaxed">
           There's something deeply satisfying about watching a scrambled grid transform into perfect words. Each swap brings you closer to the solution, and when the last letter clicks into place, it feels like completing a puzzle where everything just makes sense.
         </p>
@@ -230,5 +230,3 @@
     </div>
 </main>
 {/if}
-
-

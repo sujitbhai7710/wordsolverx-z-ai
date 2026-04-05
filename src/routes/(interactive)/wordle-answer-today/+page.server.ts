@@ -84,7 +84,8 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     };
 
     const socialImageUrl = directSocialImage;
-    const pageTitle = `Wordle Hints and Answer for Today (${formattedDate})`;
+    const currentMonth = format(today, 'MMMM');
+    const pageTitle = `Wordle Answer Today - ${currentMonth} - Updated`;
     const pageDescription = `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. See the full solution for Wordle #${wordleNumber}, plus clue details and recent answers.`;
     const pageKeywords = `wordle answer today, wordle answer, wordle hint, wordle hint today, wordle answer for ${formattedDate}`;
 

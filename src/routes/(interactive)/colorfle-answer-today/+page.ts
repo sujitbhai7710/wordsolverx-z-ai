@@ -26,8 +26,9 @@ export const load = () => {
   const answer = buildColorfleAnswerPayload(today, 0);
   const recentEntries = getColorfleArchiveEntries(10, today).slice(1);
 
-  const pageTitle = `Colorfle Answer Today (${formattedDate}) | Archive & Solver`;
-  const pageDescription = `Get today's Colorfle answer for ${formattedDate}, including the exact mixed target color, the three source colors, and quick links to the Colorfle archive and solver.`;
+  const currentMonth = today.toLocaleDateString('en-US', { month: 'long' });
+  const pageTitle = `Colorfle Answer Today - ${currentMonth} - Updated`;
+  const pageDescription = `Get today's Colorfle answer for ${formattedDate}. Colorfle shows a target color and you guess the three colors that mix to create it. See the exact answer hex, source colors, and weights.`;
   const pageUrl = 'https://wordsolver.tech/colorfle-answer-today';
 
   const schemas = JSON.stringify([

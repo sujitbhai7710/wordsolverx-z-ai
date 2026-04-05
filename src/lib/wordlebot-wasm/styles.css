@@ -159,10 +159,24 @@ select:focus-visible,
 
 .canuckle-daily-container {
   width: min(760px, calc(100vw - 12px));
+  --correct-color: rgb(220, 38, 38);
+}
+
+.canuckle-daily-container .main-action {
+  border-color: rgba(220, 38, 38, 0.4);
+  background: linear-gradient(180deg, #ef4444 0%, rgb(220, 38, 38) 100%);
+  box-shadow: 0 10px 24px rgba(220, 38, 38, 0.2);
 }
 
 .canuckle-archive-container {
   width: min(920px, calc(100vw - 12px));
+  --correct-color: rgb(220, 38, 38);
+}
+
+.canuckle-archive-container .main-action {
+  border-color: rgba(220, 38, 38, 0.4);
+  background: linear-gradient(180deg, #ef4444 0%, rgb(220, 38, 38) 100%);
+  box-shadow: 0 10px 24px rgba(220, 38, 38, 0.2);
 }
 
 .top-of-screen {

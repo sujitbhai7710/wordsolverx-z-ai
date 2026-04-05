@@ -26,7 +26,8 @@ export const load = () => {
     .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
 
   const formattedDate = today ? formatDisplayDate(today.date) : 'today';
-  const pageTitle = `Countryle Answer Today (${formattedDate}) | Archive & Solver`;
+  const currentMonth = new Date(`${today?.date ?? new Date().toISOString().slice(0,10)}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+  const pageTitle = `Countryle Answer Today - ${currentMonth} - Updated`;
   const pageDescription = today
     ? `Get today's Countryle answer for ${formattedDate}. See the country, continent, hemisphere, population, coordinates, and direct links to the archive and Countryle solver.`
     : 'Get today\'s Countryle answer, archive access, and the Countryle solver.';

@@ -49,7 +49,9 @@
     data.initialAnswer?.gameNumber ?? getContextoGameNumber(new Date(`${activeDate}T12:00:00`))
   );
 
-  let pageTitle = $derived(`Contexto Hints and Answer for Today (${activeLabel})`);
+  const currentMonth = $derived(new Date(`${activeDate}T12:00:00`).toLocaleDateString('en-US', { month: 'long' }));
+  let metaTitle = $derived(`Contexto Answer Today - ${currentMonth} - Updated`);
+  let pageTitle = $derived(`Contexto Answer Today (${activeLabel})`);
   let pageDescription = $derived(
     `Get Contexto hints and the confirmed Contexto answer for today, ${activeLabel}. Use the dedicated archive page when you need an older Contexto answer.`
   );
@@ -88,7 +90,7 @@
   ]);
   let webPageSchema = $derived(
     generateWebPageSchema(
-      pageTitle,
+      metaTitle,
       pageDescription,
       'https://wordsolver.tech/contexto-answer-today'
     )
@@ -96,16 +98,16 @@
 </script>
 
 <svelte:head>
-  <title>{pageTitle}</title>
+  <title>{metaTitle}</title>
   <meta name="description" content={pageDescription} />
   <meta name="keywords" content={pageKeywords} />
-  <meta property="og:title" content={pageTitle} />
+  <meta property="og:title" content={metaTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolver.tech/contexto-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:title" content={metaTitle} />
   <meta name="twitter:description" content={pageDescription} />
   <link rel="canonical" href="https://wordsolver.tech/contexto-answer-today" />
   {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
@@ -113,21 +115,21 @@
   {@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-slate-50 dark:bg-slate-950">
+<div class="min-h-screen bg-slate-50">
   <main class="max-w-5xl mx-auto px-4 py-8">
     <div class="text-center mb-8">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-sm font-medium mb-4">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-600 text-sm font-medium mb-4">
         <span>Daily Contexto Answers</span>
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-        Contexto Hints and Answer for Today ({activeLabel})
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+        Contexto Answer Today ({activeLabel})
       </h1>
-      <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+      <p class="text-slate-600 max-w-xl mx-auto">
         A focused today page for the current Contexto answer, with archive lookups moved to the dedicated archive page.
       </p>
     </div>
 
-    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl overflow-hidden mb-10">
+    <section class="bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden mb-10">
       <div class="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 px-6 py-6 text-white">
         <p class="text-sm uppercase tracking-[0.2em] text-violet-100 mb-2">Answer Today</p>
         <div class="flex flex-wrap items-center gap-3">
@@ -148,10 +150,10 @@
         {:else if data.initialAnswer?.success}
           <div class="grid lg:grid-cols-[1.4fr_0.9fr] gap-6 items-start">
             <div>
-              <div class={`rounded-3xl border-2 transition-all p-6 md:p-8 ${showAnswer ? 'bg-violet-50 dark:bg-violet-900/20 border-violet-200 dark:border-violet-700' : 'bg-slate-50 dark:bg-slate-800 border-dashed border-slate-300 dark:border-slate-700'}`}>
+              <div class={`rounded-3xl border-2 transition-all p-6 md:p-8 ${showAnswer ? 'bg-violet-50 border-violet-200' : 'bg-slate-50 border-dashed border-slate-300'}`}>
                 <p class="text-sm text-slate-500 mb-3">The Contexto answer for this day</p>
                 {#if showAnswer}
-                  <p class="text-4xl md:text-6xl font-black tracking-tight text-violet-600 dark:text-violet-300 capitalize">
+                  <p class="text-4xl md:text-6xl font-black tracking-tight text-violet-600 capitalize">
                     {data.initialAnswer.answer}
                   </p>
                 {:else}
@@ -169,7 +171,7 @@
                 </button>
                 <a
                   href="/contexto-archive"
-                  class="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-medium hover:bg-slate-100 dark:hover:bg-slate-800"
+                  class="px-5 py-3 rounded-xl border border-slate-200 font-medium hover:bg-slate-100"
                 >
                   Browse Archive
                 </a>
@@ -177,9 +179,9 @@
             </div>
 
             <div class="space-y-4">
-              <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 p-5">
+              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                 <h2 class="text-base font-semibold mb-3">Need an older Contexto answer?</h2>
-                <p class="text-sm text-slate-600 dark:text-slate-300">
+                <p class="text-sm text-slate-600">
                   Older Contexto dates and game-number lookups now live on the dedicated archive page.
                 </p>
                 <a
@@ -222,5 +224,3 @@
     </div>
 </main>
 </div>
-
-

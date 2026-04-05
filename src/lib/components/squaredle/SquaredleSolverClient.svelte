@@ -30,6 +30,8 @@
   let isOfficialPuzzle = false;
   let officialWordCount = 0;
   let officialBonusCount = 0;
+  let gridSectionRef: HTMLElement | null = null;
+  let resultsSectionRef: HTMLElement | null = null;
 
   $: allLengths = result ? Object.keys(result.byLength).map(Number).sort((a, b) => b - a) : [];
   $: filteredWords =
@@ -127,6 +129,11 @@
 
       result = solveSquaredle(grid, 2, officialWords, bonusWords);
       selectedLength = null;
+
+      // Auto-scroll to results section after solving
+      requestAnimationFrame(() => {
+        resultsSectionRef?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     } catch (error) {
       errorMessage = error instanceof Error ? error.message : 'Failed to solve puzzle.';
     } finally {
@@ -229,7 +236,7 @@
     {/if}
 
     <div class="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-      <div class="space-y-6">
+      <div class="space-y-6" bind:this={gridSectionRef}>
         <section class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_70px_rgba(148,163,184,0.12)] sm:p-8">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -285,7 +292,7 @@
         </section>
       </div>
 
-      <div class="space-y-6">
+      <div class="space-y-6" bind:this={resultsSectionRef}>
         <section class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_70px_rgba(148,163,184,0.12)] sm:p-8">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -320,7 +327,7 @@
 
             <div class="mt-6 max-h-[46rem] space-y-3 overflow-y-auto pr-1">
               {#each filteredWords as word}
-                <button class={`w-full rounded-3xl border px-4 py-4 text-left transition hover:border-red-300 hover:bg-red-50 ${highlightedWord?.word === word.word ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50/60'}`} on:mouseenter={() => (highlightedWord = word)} on:focus={() => (highlightedWord = word)} type="button">
+                <button class={`w-full rounded-3xl border px-4 py-4 text-left transition hover:border-red-300 hover:bg-red-50 ${highlightedWord?.word === word.word ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50/60'}`} on:mouseenter={() => (highlightedWord = word)} on:focus={() => (highlightedWord = word)} on:click={() => { highlightedWord = word; requestAnimationFrame(() => { gridSectionRef?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); }} type="button">
                   <div class="flex items-center justify-between gap-4">
                     <div>
                       <p class="font-mono text-lg font-bold uppercase tracking-[0.16em] text-slate-900">{word.word}</p>

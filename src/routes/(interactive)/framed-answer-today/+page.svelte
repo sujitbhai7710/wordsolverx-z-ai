@@ -25,16 +25,16 @@
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
-<div class="bg-black min-h-screen py-12">
+<div class="bg-white min-h-screen py-12">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
     <Breadcrumbs />
 
-    <section class="rounded-3xl border border-zinc-800 bg-zinc-950 p-8">
+    <section class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
       <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-400">Framed Answers Today</p>
-          <h1 class="mt-3 text-4xl font-black text-white">{data.formattedDate}</h1>
-          <p class="mt-4 max-w-3xl text-lg text-zinc-300">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-600">Framed Answers Today</p>
+          <h1 class="mt-3 text-4xl font-black text-gray-900">Framed Answer Today ({data.formattedDate})</h1>
+          <p class="mt-4 max-w-3xl text-lg text-gray-600">
             Today's saved movie titles for Framed Classic, One Frame, Titleshot, and Poster.
           </p>
         </div>

@@ -234,9 +234,13 @@ export function getVariantSolverPageConfig(variant: WordlebotVariantRouteSlug): 
 }
 
 export function getCanuckleTodayPageConfig(): WordlebotPageConfig {
+	const now = new Date();
+	const currentMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(now);
+
 	return {
 		appConfig: { pageType: 'canuckle-daily' },
 		title: 'Canuckle Answer Today',
+		metaTitle: `Canuckle Answer Today - ${currentMonth} - Updated`,
 		eyebrow: 'Daily Canuckle answer, fact, and puzzle number',
 		description:
 			"See the Canuckle answer today, check the current puzzle number, and read the matching Canadian fact with quick links to the archive and solver.",

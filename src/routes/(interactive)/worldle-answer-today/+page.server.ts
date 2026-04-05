@@ -35,7 +35,8 @@ export const load: PageServerLoad = async () => {
     answer: `The Worldle answer on ${getDisplayDateLabel(answer.date)} was ${answer.country.name}. That puzzle was Worldle #${answer.worldleNumber}.`,
   }));
 
-  const pageTitle = `Worldle Hints and Answer for Today (${formattedTodayDate})`;
+  const currentMonth = today.toLocaleDateString('en-US', { month: 'long' });
+  const pageTitle = `Worldle Answer Today - ${currentMonth} - Updated`;
   const pageDescription = `Get Worldle hints and the confirmed Worldle answer for today, ${formattedTodayDate}. Today's country is ${todayAnswer.country.name}, with a direct link to the full Worldle archive for older puzzles.`;
   const pageKeywords = `worldle answer today, worldle answer, worldle hint, worldle hint today, worldle answer for ${formattedTodayDate}`;
 

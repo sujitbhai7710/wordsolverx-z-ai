@@ -79,7 +79,8 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	};
 
 	const todayFormatted = format(displayDateObject, 'MMMM d, yyyy');
-	const metaTitle = `Spotle Hints and Answer for Today (${todayFormatted})`;
+	const currentMonth = format(displayDateObject, 'MMMM');
+	const metaTitle = `Spotle Answer Today - ${currentMonth} - Updated`;
 	const metaDescription =
 		`Get Spotle hints and the confirmed Spotle answer for today, ${todayFormatted}${todayArtist ? `. Today's artist is ${todayArtist.artist}` : ''}. Use the dedicated Spotle archive page for older artist answers.`;
 	const metaKeywords = `spotle answer today, spotle answer, spotle hint, spotle hint today, spotle answer for ${todayFormatted}`;

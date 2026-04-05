@@ -30,6 +30,7 @@
 			: WORDLEBOT_WORDLE_SOLVER_LENGTHS[2]
 	);
 	let ogType = $derived(isCanuckleTodayPage ? 'article' : 'website');
+	let seoTitle = $derived(config.metaTitle ?? config.title);
 	let canuckleTabs = [
 		{ key: 'today', label: 'Today', href: getCanucklePagePath('today') },
 		{ key: 'archive', label: 'Archive', href: getCanucklePagePath('archive') },
@@ -38,10 +39,19 @@
 	let activeCanuckleTab = $derived(
 		isCanuckleTodayPage ? 'today' : isCanuckleArchivePage ? 'archive' : 'solver'
 	);
+
+	function formatTodayDate() {
+		const now = new Date();
+		return new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(now);
+	}
+
+	let displayTitle = $derived(
+		isCanuckleTodayPage ? `Canuckle Answer Today (${formatTodayDate()})` : config.title
+	);
 </script>
 
 <svelte:head>
-	<title>{config.title} | WordSolverX</title>
+	<title>{seoTitle} | WordSolverX</title>
 	<meta name="description" content={config.description} />
 	<meta name="keywords" content={config.keywords.join(', ')} />
 	{#if isCanuckleTodayPage}
@@ -50,13 +60,13 @@
 			content="canuckle answer today, canuckle today, canuckle answer, canuckle puzzle today"
 		/>
 	{/if}
-	<meta property="og:title" content={`${config.title} | WordSolverX`} />
+	<meta property="og:title" content={`${seoTitle} | WordSolverX`} />
 	<meta property="og:description" content={config.description} />
 	<meta property="og:type" content={ogType} />
 	<meta property="og:url" content={config.pageUrl} />
 	<meta property="og:site_name" content="WordSolverX" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={`${config.title} | WordSolverX`} />
+	<meta name="twitter:title" content={`${seoTitle} | WordSolverX`} />
 	<meta name="twitter:description" content={config.description} />
 	<meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
 	<link rel="canonical" href={config.pageUrl} />
@@ -183,7 +193,7 @@
 							{config.eyebrow}
 						</p>
 						<h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-5xl">
-							{config.title}
+							{displayTitle}
 						</h1>
 						<p class="mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
 							{config.description}

@@ -68,7 +68,8 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		'X-Puzzle-Date': actualDateKey
 	});
 
-	const pageTitle = `Colordle Answer Today (${formattedDate}) | Yesterday & Archive`;
+	const currentMonth = format(today, 'MMMM');
+	const pageTitle = `Colordle Answer Today - ${currentMonth} - Updated`;
 	const pageDescription = `Today's Colordle answer for ${formattedDate}, yesterday's answer, and a 100-day archive of Colordle color solutions with fast search links.`;
 	const pageKeywords = `colordle answer today, colordle answer yesterday, colordle archive, colordle color answers, colordle search, last 100 days, colordle hex code`;
 

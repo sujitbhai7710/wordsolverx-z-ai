@@ -320,16 +320,16 @@
           {:else}
             <div class="mt-6 space-y-4">
               {#each guesses as guess, guessIndex}
-                <div class="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50/70 px-4 py-4">
-                  <div class="w-6 text-sm font-semibold text-slate-400">{guessIndex + 1}.</div>
-                  <div class="flex flex-1 flex-wrap gap-2">
+                <div class="flex items-center gap-3 rounded-3xl border border-slate-200 bg-slate-50/70 px-3 py-4 sm:px-4">
+                  <div class="hidden sm:block w-6 text-sm font-semibold text-slate-400">{guessIndex + 1}.</div>
+                  <div class="flex flex-1 justify-center gap-1.5 sm:gap-2 sm:justify-start">
                     {#each guess.word.split('') as letter, letterIndex}
-                      <button class={`flex h-11 w-11 items-center justify-center rounded-2xl border-2 text-base font-black uppercase transition hover:scale-[1.04] ${RESULT_CLASS[guess.result[letterIndex]]}`} on:click={() => cycleLetterResult(guessIndex, letterIndex)} type="button">
+                      <button class={`flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl border-2 text-sm sm:text-base font-black uppercase transition hover:scale-[1.04] ${RESULT_CLASS[guess.result[letterIndex]]}`} on:click={() => cycleLetterResult(guessIndex, letterIndex)} type="button">
                         {letter}
                       </button>
                     {/each}
                   </div>
-                  <button class="rounded-full p-2 text-sm font-semibold text-rose-500 transition hover:bg-rose-50" on:click={() => removeGuess(guessIndex)} type="button">
+                  <button class="rounded-full p-2 text-sm font-semibold text-rose-500 transition hover:bg-rose-50 shrink-0" on:click={() => removeGuess(guessIndex)} type="button">
                     Remove
                   </button>
                 </div>

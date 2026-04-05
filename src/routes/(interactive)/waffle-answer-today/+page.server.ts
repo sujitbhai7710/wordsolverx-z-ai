@@ -8,13 +8,15 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     const today = getPuzzleDateForGame('waffle');
     const data = await getWaffleDataForDate(today);
 
+    const currentMonth = format(today, 'MMMM');
+
     if (!data) {
         const formattedDate = format(today, 'MMMM d, yyyy');
         return {
             error: true,
             formattedDate,
             meta: {
-                title: `Waffle Hints and Answer for Today (${formattedDate})`,
+                title: `Waffle Answer Today - ${currentMonth} - Updated`,
                 description: `Get Waffle hints and the confirmed Waffle answer for today, ${formattedDate}.`,
                 keywords: `waffle answer today, waffle answer, waffle hint, waffle hint today, waffle answer for ${formattedDate}`
             },
@@ -40,7 +42,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     const nextSlug = formatArchiveHref(nextDate);
     const showNext = isBefore(startOfDay(nextDate), addDays(startOfDay(today), 1));
 
-    const pageTitle = `Waffle Hints and Answer for Today (${formattedDate})`;
+    const pageTitle = `Waffle Answer Today - ${currentMonth} - Updated`;
     const pageDescription = `Get Waffle hints and the confirmed Waffle answer for today, ${formattedDate}. View the solved grid, complete word list, and definitions for puzzle #${number}.`;
     const pageKeywords = `waffle answer today, waffle answer, waffle hint, waffle hint today, waffle answer for ${formattedDate}`;
     const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: pageTitle, description: pageDescription, datePublished: new Date(today).toISOString(), author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' } });

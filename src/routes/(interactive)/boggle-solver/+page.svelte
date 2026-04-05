@@ -64,6 +64,8 @@
 	let copiedUrl = $state(false);
 	let statusMessage = $state<StatusMessage | null>(null);
 	let clearMessageTimer = $state<number | undefined>(undefined);
+	let resultsSection = $state<HTMLElement | null>(null);
+	let boardSection = $state<HTMLElement | null>(null);
 
 	const filteredWords = $derived.by(() => {
 		if (!result?.words) return [] as FoundWord[];
@@ -161,6 +163,11 @@
 			pageUrl.searchParams.set('b', data.letters);
 			pageUrl.searchParams.set('s', String(data.size));
 			window.history.replaceState({}, '', pageUrl);
+
+			// Auto-scroll to results section after solving
+			requestAnimationFrame(() => {
+				resultsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			});
 		} catch (error) {
 			setStatus('error', 'Error', error instanceof Error ? error.message : 'Failed to connect to solver');
 		} finally {
@@ -401,7 +408,7 @@
 		</section>
 
 		<div class="grid gap-8 lg:grid-cols-[auto_minmax(0,1fr)]">
-			<div class="space-y-6">
+			<div class="space-y-6" bind:this={boardSection}>
 				{#if result}
 					<section class="rounded-[28px] border border-emerald-100 bg-gradient-to-br from-emerald-50 to-teal-50 p-5">
 						<div class="grid grid-cols-3 gap-4 text-center">
@@ -470,7 +477,7 @@
 				{/if}
 			</div>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] overflow-hidden">
+			<section bind:this={resultsSection} class="rounded-[30px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] overflow-hidden">
 				<div class="p-5 border-b border-slate-200">
 					<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 						<div>
@@ -537,7 +544,14 @@
 										{#each words as word}
 											<button
 												type="button"
-												onclick={() => (selectedWord = selectedWord?.word === word.word ? null : word)}
+												onclick={() => {
+													selectedWord = selectedWord?.word === word.word ? null : word;
+													if (selectedWord) {
+														requestAnimationFrame(() => {
+															boardSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+														});
+													}
+												}}
 												class={`h-8 px-3 rounded-xl text-xs font-mono border transition-colors ${
 													selectedWord?.word === word.word
 														? 'bg-emerald-500 border-emerald-500 text-white'

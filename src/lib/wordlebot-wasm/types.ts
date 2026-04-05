@@ -145,6 +145,7 @@ export interface WordlebotSeoSection {
 export interface WordlebotPageConfig {
 	appConfig: WordlebotAppPageConfig;
 	title: string;
+	metaTitle?: string;
 	eyebrow: string;
 	description: string;
 	pageUrl: string;
