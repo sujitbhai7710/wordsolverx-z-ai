@@ -250,9 +250,9 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 		const data = await getCanuckleData();
 		if (destroyed) return;
 
-		const visiblePuzzles = getVisibleCanucklePuzzles(data);
-		const todayIndex = Math.min(getCanuckleTodayIndex(), visiblePuzzles.at(-1)?.index ?? 0);
-		const today = visiblePuzzles.find((puzzle) => puzzle.index === todayIndex) ?? visiblePuzzles.at(-1);
+		const visibleDateKey = config.pageType === 'canuckle-daily' ? config.visibleDateKey : getLocalDateKey();
+		const visiblePuzzles = getVisibleCanucklePuzzles(data, visibleDateKey);
+		const today = visiblePuzzles.find((puzzle) => puzzle.date === visibleDateKey) ?? visiblePuzzles.at(-1);
 
 		if (!today) {
 			renderError(target, 'Canuckle data is not available right now.');
@@ -298,7 +298,8 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 		const data = await getCanuckleData();
 		if (destroyed) return;
 
-		const archive = [...getVisibleCanucklePuzzles(data)].reverse();
+		const visibleDateKey = config.pageType === 'canuckle-archive' ? config.visibleDateKey : getLocalDateKey();
+		const archive = [...getVisibleCanucklePuzzles(data, visibleDateKey)].reverse();
 		const archiveState = { query: '', visibleCount: 250 };
 
 		target.innerHTML = `
@@ -749,32 +750,14 @@ async function getCanuckleData() {
 	return canuckleDataPromise;
 }
 
-function getVisibleCanucklePuzzles(data: CanuckleData) {
-	const maxVisibleIndex = Math.min(getCanuckleTodayIndex(), data.maxIndex);
-	return data.puzzles.filter((puzzle) => puzzle.index <= maxVisibleIndex);
+function getVisibleCanucklePuzzles(data: CanuckleData, visibleDateKey: string = getLocalDateKey()) {
+	return data.puzzles.filter((puzzle) => puzzle.date <= visibleDateKey);
 }
 
-function getCanuckleTodayIndex(now = new Date()) {
-	const current = startOfLocalDay(now);
-	const originalStart = new Date(2022, 1, 10);
-	const originalEnd = new Date(2022, 6, 1);
-	const currentStart = new Date(2022, 9, 4);
-
-	if (current <= originalEnd) {
-		return diffLocalDays(originalStart, current) + 1;
-	}
-	if (current < currentStart) {
-		return 142;
-	}
-	return diffLocalDays(currentStart, current) + 143;
-}
-
-function startOfLocalDay(date: Date) {
-	return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
-
-function diffLocalDays(start: Date, end: Date) {
-	return Math.floor((startOfLocalDay(end).getTime() - startOfLocalDay(start).getTime()) / 86_400_000);
+function getLocalDateKey(date: Date = new Date()) {
+	return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(
+		date.getDate()
+	).padStart(2, '0')}`;
 }
 
 function renderCanuckleFact(puzzle: CanucklePuzzle) {
@@ -811,7 +794,7 @@ function formatCanuckleDate(isoDate: string) {
 		month: 'short',
 		day: 'numeric',
 		year: 'numeric'
-	}).format(new Date(`${isoDate}T12:00:00`));
+	}).format(new Date(`${isoDate}T12:00:00Z`));
 }
 
 function readState(key: string) {

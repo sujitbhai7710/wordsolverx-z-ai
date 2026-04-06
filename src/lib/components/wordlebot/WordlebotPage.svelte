@@ -30,15 +30,7 @@
 	let activeCanuckleTab = $derived(
 		isCanuckleTodayPage ? 'today' : isCanuckleArchivePage ? 'archive' : 'solver'
 	);
-
-	function formatTodayDate() {
-		const now = new Date();
-		return new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(now);
-	}
-
-	let displayTitle = $derived(
-		isCanuckleTodayPage ? `Canuckle Answer Today (${formatTodayDate()})` : config.title
-	);
+	let displayTitle = $derived(config.displayTitle ?? config.title);
 </script>
 
 <svelte:head>

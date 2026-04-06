@@ -37,7 +37,22 @@ export function getLatestCountryleArchiveEntry(): CountryleArchiveEntry | null {
   return latestDate ? archiveData[latestDate] : null;
 }
 
-export function getCountryleToday(): CountryleTodayPayload | null {
+function toTodayPayload(entry: CountryleArchiveEntry): CountryleTodayPayload {
+  return {
+    date: entry.date,
+    gameNumber: entry.gameNumber,
+    country: entry.country
+  };
+}
+
+export function getCountryleToday(targetDateKey?: string): CountryleTodayPayload | null {
+  if (targetDateKey) {
+    const matchingDate = getCountryleArchiveDates().find((dateKey) => dateKey <= targetDateKey);
+    if (matchingDate) {
+      return toTodayPayload(archiveData[matchingDate]);
+    }
+  }
+
   if (todayData?.country?.country) {
     return todayData;
   }
@@ -45,9 +60,5 @@ export function getCountryleToday(): CountryleTodayPayload | null {
   const latest = getLatestCountryleArchiveEntry();
   if (!latest) return null;
 
-  return {
-    date: latest.date,
-    gameNumber: latest.gameNumber,
-    country: latest.country
-  };
+  return toTodayPayload(latest);
 }

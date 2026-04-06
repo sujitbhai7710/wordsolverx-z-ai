@@ -1,4 +1,5 @@
 import { formatFramedDate, getTodayFramedEntries } from '$lib/framed';
+import { getMainDailyDateKey } from '$lib/main-daily-date';
 import {
   generateBreadcrumbSchema,
   generateFAQSchema,
@@ -10,8 +11,9 @@ import {
 export const prerender = true;
 
 export const load = () => {
-  const entries = getTodayFramedEntries();
-  const dateKey = entries[0]?.date ?? new Date().toISOString().slice(0, 10);
+  const targetDateKey = getMainDailyDateKey();
+  const entries = getTodayFramedEntries(targetDateKey);
+  const dateKey = entries[0]?.date ?? targetDateKey;
   const formattedDate = formatFramedDate(new Date(`${dateKey}T00:00:00Z`));
   const currentMonth = new Date(`${dateKey}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
   const pageTitle = `Framed Answer Today - ${currentMonth} - Updated`;

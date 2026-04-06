@@ -41,9 +41,11 @@ export type WordlebotAppPageConfig =
 	  }
 	| {
 			pageType: 'canuckle-daily';
+			visibleDateKey: string;
 	  }
 	| {
 			pageType: 'canuckle-archive';
+			visibleDateKey: string;
 	  };
 
 export interface SolverDataset {
@@ -146,6 +148,7 @@ export interface WordlebotPageConfig {
 	appConfig: WordlebotAppPageConfig;
 	title: string;
 	metaTitle?: string;
+	displayTitle?: string;
 	eyebrow: string;
 	description: string;
 	pageUrl: string;

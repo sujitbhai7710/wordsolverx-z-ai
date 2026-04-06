@@ -5,6 +5,7 @@ import {
 	generateSoftwareApplicationSchema,
 	generateWebPageSchema
 } from '$lib/seo';
+import { getMainDailyDate, getMainDailyDateKey, getMainDailyDateLabel } from '$lib/main-daily-date';
 import {
 	getBestLengthForWordlebotGame,
 	getWordlebotGame,
@@ -234,12 +235,15 @@ export function getVariantSolverPageConfig(variant: WordlebotVariantRouteSlug): 
 }
 
 export function getCanuckleTodayPageConfig(): WordlebotPageConfig {
-	const now = new Date();
-	const currentMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(now);
+	const targetDate = getMainDailyDate();
+	const visibleDateKey = getMainDailyDateKey(targetDate);
+	const displayDate = getMainDailyDateLabel(targetDate);
+	const currentMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(targetDate);
 
 	return {
-		appConfig: { pageType: 'canuckle-daily' },
+		appConfig: { pageType: 'canuckle-daily', visibleDateKey },
 		title: 'Canuckle Answer Today',
+		displayTitle: `Canuckle Answer Today (${displayDate})`,
 		metaTitle: `Canuckle Answer Today - ${currentMonth} - Updated`,
 		eyebrow: 'Daily Canuckle answer, fact, and puzzle number',
 		description:
@@ -301,8 +305,10 @@ export function getCanuckleTodayPageConfig(): WordlebotPageConfig {
 }
 
 export function getCanuckleArchivePageConfig(): WordlebotPageConfig {
+	const visibleDateKey = getMainDailyDateKey();
+
 	return {
-		appConfig: { pageType: 'canuckle-archive' },
+		appConfig: { pageType: 'canuckle-archive', visibleDateKey },
 		title: 'Canuckle Archive',
 		eyebrow: 'Search past Canuckle answers by date or puzzle number',
 		description:

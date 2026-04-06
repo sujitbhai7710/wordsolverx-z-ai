@@ -2,6 +2,7 @@ import {
   buildColorfleAnswerPayload,
   getColorfleArchiveEntries
 } from '$lib/colorfle';
+import { getMainDailyDate } from '$lib/main-daily-date';
 import {
   generateBreadcrumbSchema,
   generateFAQSchema,
@@ -21,7 +22,7 @@ function formatDate(date: Date): string {
 }
 
 export const load = () => {
-  const today = new Date();
+  const today = getMainDailyDate();
   const formattedDate = formatDate(today);
   const answer = buildColorfleAnswerPayload(today, 0);
   const recentEntries = getColorfleArchiveEntries(10, today).slice(1);
