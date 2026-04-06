@@ -75,6 +75,7 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/waffle-solver',
   '/weaver-solver',
   '/word-ladder-solver',
+  '/wordle-analyzer',
   '/wordle-solver',
   '/worldle-solver',
   '/3-letter-wordle-solver',

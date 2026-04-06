@@ -3,7 +3,16 @@
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
 
-  const wordleLengthSolvers = [3, 4, 5, 6, 7, 8, 9, 10, 11].map((length) => ({
+  type SolverCard = {
+    name: string;
+    href: string;
+    description: string;
+    color: string;
+    icon: string;
+    isPopular?: boolean;
+  };
+
+  const wordleLengthSolvers: SolverCard[] = [3, 4, 5, 6, 7, 8, 9, 10, 11].map((length) => ({
     name: `${length}-Letter Wordle Solver`,
     href: `/${length}-letter-wordle-solver`,
     description: `Solve ${length}-letter Wordle boards with clue filtering, ranked next guesses, and quick switching between Wordle lengths.`,
@@ -12,8 +21,9 @@
     isPopular: length === 5
   }));
 
-  const solvers = [
+  const solvers: SolverCard[] = [
     ...wordleLengthSolvers,
+    { name: 'Wordle Analyzer', href: '/wordle-analyzer', description: 'Replay a finished Wordle, compare every turn to an AI line, and generate spoiler-safe recap links.', color: 'from-emerald-500 via-teal-500 to-sky-600', icon: 'WA', isPopular: true },
     { name: 'Canuckle Solver', href: '/canuckle-solver', description: 'Dedicated Canuckle solver with the Canadian answer list plus linked answer today and archive pages.', color: 'from-rose-500 to-red-600', icon: 'Ca', isPopular: true },
     { name: 'Nerdle Solver', href: '/nerdle-solver', description: 'All-modes equation solver for Micro, Mini, Midi, Classic, and Maxi Nerdle.', color: 'from-teal-500 to-emerald-600', icon: 'Nd', isPopular: true },
     { name: 'Worldle Solver', href: '/worldle-solver', description: 'Geography solver for Worldle using distance and direction clues.', color: 'from-sky-500 to-blue-700', icon: 'Wr', isPopular: true },
@@ -156,7 +166,7 @@
           data-filter-section="solvers"
           data-search-text={`${solver.name} ${solver.description} ${solver.href}`}
         >
-          <GameCard name={solver.name} href={solver.href} description={solver.description} color={solver.color} icon={solver.icon} isPopular={solver.isPopular} actionText="Open Solver" />
+          <GameCard name={solver.name} href={solver.href} description={solver.description} color={solver.color} icon={solver.icon} isPopular={solver.isPopular ?? false} actionText="Open Solver" />
         </div>
       {/each}
     </div>
