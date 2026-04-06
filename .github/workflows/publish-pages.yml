@@ -7,7 +7,8 @@ on:
     branches:
       - main
   schedule:
-    - cron: '20 15 * * *'
+    # Run after the 16:30 UTC main-game rollover used by prerendered "today" pages.
+    - cron: '35 16 * * *'
   repository_dispatch:
     types:
       - pages-publish-requested
