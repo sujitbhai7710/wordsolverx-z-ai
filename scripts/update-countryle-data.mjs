@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import CryptoJS from 'crypto-js';
+import { markUpdateFailure, markUpdateSuccess } from './lib/update-status.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -139,6 +140,7 @@ async function main() {
   const countries = Array.isArray(countriesPayload.countries) ? countriesPayload.countries : [];
   const countryById = new Map(countries.map((country) => [country.id, country]));
   const archive = { ...archiveSeed };
+  const failedDates = [];
 
   const todayDate = getCurrentJstDate();
 
@@ -181,6 +183,7 @@ async function main() {
         scrapedAt: new Date().toISOString()
       };
     } catch (error) {
+      failedDates.push(dateKey);
       console.warn(`Failed to refresh Countryle entry for ${dateKey}:`, error instanceof Error ? error.message : String(error));
     }
   }
@@ -206,6 +209,23 @@ async function main() {
 
   if (todayPayload) {
     await writeFile(todayPath, `${JSON.stringify(todayPayload, null, 2)}\n`, 'utf8');
+  }
+
+  if (failedDates.length > 0) {
+    await markUpdateFailure(
+      projectRoot,
+      'countryle',
+      `Failed to refresh ${failedDates.length} Countryle date${failedDates.length === 1 ? '' : 's'}.`,
+      {
+        failedDates,
+        latestDate: todayPayload?.date ?? todayKey
+      }
+    );
+  } else {
+    await markUpdateSuccess(projectRoot, 'countryle', {
+      failedDates: [],
+      latestDate: todayPayload?.date ?? todayKey
+    });
   }
 
   console.log(

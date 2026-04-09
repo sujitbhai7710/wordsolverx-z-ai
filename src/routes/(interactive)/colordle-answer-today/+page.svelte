@@ -95,22 +95,9 @@
           Colordle Answer Today ({requestedDateLabel})
         </h1>
         <p class="mx-auto max-w-3xl text-lg leading-8 text-gray-600">
-          {#if data.isFallback}
-            We are showing the latest confirmed Colordle answer from <span class="font-semibold text-indigo-600">{answerDateLabel}</span> while the live source catches up with newer puzzle dates.
-          {:else}
-            Verified Colordle hints, the exact color name, and the matching hex code for <span class="font-semibold text-indigo-600">{answerDateLabel}</span>.
-          {/if}
+          Verified Colordle hints, the exact color name, and the matching hex code for <span class="font-semibold text-indigo-600">{answerDateLabel}</span>.
         </p>
       </header>
-
-      {#if data.isFallback}
-        <div class="mb-10 rounded-3xl border border-amber-200 bg-amber-50 p-6 shadow-sm">
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-700">Source status</p>
-          <p class="mt-3 text-base leading-7 text-amber-900">
-            The official Colordle source currently only confirms answers through {data.availableThroughFormattedDate}. Until a newer color is published there, this page keeps showing the latest valid answer instead of a broken error state.
-          </p>
-        </div>
-      {/if}
 
       <div class="mb-12">
         <ColorClues colorName={data.color.name} colorHex={data.color.hex} />
@@ -148,11 +135,7 @@
         {#if data.gameNarrative && data.gameNarrative.guesses.length > 0}
           <p class="text-gray-600 mb-4 leading-7">
             If you&apos;ve been following this site, you know we&apos;ve been playing Colordle since it launched and posting the daily results here. Today&apos;s puzzle was <strong class="text-gray-900">{data.gameNarrative.difficultyLabel}</strong> — we solved it in <strong class="text-indigo-600">{data.gameNarrative.attempts} {data.gameNarrative.attempts === 1 ? 'attempt' : 'attempts'}</strong>.
-            {#if data.isFallback}
-              The most recent confirmed puzzle in our dataset is <strong class="text-indigo-600">#{data.dayNum}</strong>, so this write-up reflects that color.
-            {:else}
-              Puzzle <strong class="text-indigo-600">#{data.dayNum}</strong> for {requestedDateLabel}.
-            {/if}
+            Puzzle <strong class="text-indigo-600">#{data.dayNum}</strong> for {answerDateLabel}.
           </p>
 
           <div class="space-y-4 mt-6">
@@ -197,11 +180,14 @@
           </p>
         {:else}
           <p class="text-gray-600 mb-4 leading-7">
-            {#if data.isFallback}
+            {#if false}
+            
               The most recent confirmed puzzle in our dataset is <strong class="text-indigo-600">#{data.dayNum}</strong>, and the color is <strong class="text-gray-900">{data.color.name}</strong> — hex code <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>. We keep showing this verified result until the live source publishes a newer color, so the information stays reliable even during gaps.
-            {:else}
+
               Today&apos;s puzzle number is <strong class="text-indigo-600">#{data.dayNum}</strong>. The target color is <strong class="text-gray-900">{data.color.name}</strong>, and its hex code is <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
+
             {/if}
+            Puzzle <strong class="text-indigo-600">#{data.dayNum}</strong> uses the color <strong class="text-gray-900">{data.color.name}</strong>, and its hex code is <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
           </p>
           <p class="text-gray-600 leading-7">
             The answer card at the top has the color swatch and hints. Scroll down for the full guide and searchable archive.
@@ -227,34 +213,18 @@
           <div class="space-y-4">
             <details class="group bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-100 overflow-hidden" open>
               <summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900">
-                <span>
-                  {#if data.isFallback}
-                    What is the latest confirmed daily color?
-                  {:else}
-                    What is the Colordle answer for today, {requestedDateLabel}?
-                  {/if}
-                </span>
+                <span>What is the Colordle answer for {answerDateLabel}?</span>
                 <FiChevronDown class="text-purple-600 group-open:rotate-180 transition-transform" />
               </summary>
               <div class="p-5 pt-0 text-gray-600 leading-7">
-                {#if data.isFallback}
-                  The latest verified color is <span class="font-bold text-gray-900">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 font-bold">{data.color.hex}</span>, published for {answerDateLabel}.
-                {:else}
-                  For {requestedDateLabel}, the daily color is <span class="font-bold text-gray-900">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 font-bold">{data.color.hex}</span>.
-                {/if}
+                For {answerDateLabel}, the daily color is <span class="font-bold text-gray-900">{data.color.name}</span> with hex code <span class="font-mono text-indigo-600 font-bold">{data.color.hex}</span>.
               </div>
             </details>
 
             {#if data.yesterdayData}
               <details class="group bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
                 <summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900 hover:bg-gray-100 transition-colors">
-                  <span>
-                    {#if data.isFallback}
-                      What was the previous confirmed color?
-                    {:else}
-                      What was yesterday&apos;s Colordle color?
-                    {/if}
-                  </span>
+                  <span>What was the previous daily color?</span>
                   <FiChevronDown class="text-gray-500 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div class="p-5 pt-0 text-gray-600 flex items-center gap-4">

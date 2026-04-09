@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { markUpdateFailure, markUpdateSuccess } from './lib/update-status.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -126,6 +127,7 @@ function buildEmptyDataset() {
 async function main() {
   const existing = (await readJsonIfPresent(outputPath)) ?? buildEmptyDataset();
   const today = getCurrentUtcDate();
+  const failedTargets = [];
 
   for (const game of GAME_TYPES) {
     const modePayload = existing.modes?.[game.key] ?? {
@@ -176,6 +178,7 @@ async function main() {
         if (result?.ok) {
           entryByPuzzle.set(result.entry.puzzleNumber, result.entry);
         } else if (result) {
+          failedTargets.push(`${game.key}#${result.puzzleNumber}`);
           console.warn(`Failed to refresh Framed ${game.key} #${result.puzzleNumber}: ${result.message}`);
         }
       }
@@ -196,6 +199,21 @@ async function main() {
 
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, `${JSON.stringify(existing, null, 2)}\n`, 'utf8');
+
+  if (failedTargets.length > 0) {
+    await markUpdateFailure(
+      projectRoot,
+      'framed',
+      `Failed to refresh ${failedTargets.length} Framed puzzle${failedTargets.length === 1 ? '' : 's'}.`,
+      {
+        failedTargets
+      }
+    );
+  } else {
+    await markUpdateSuccess(projectRoot, 'framed', {
+      failedTargets: []
+    });
+  }
 
   const totalEntries = Object.values(existing.modes).reduce(
     (sum, mode) => sum + (Array.isArray(mode.entries) ? mode.entries.length : 0),

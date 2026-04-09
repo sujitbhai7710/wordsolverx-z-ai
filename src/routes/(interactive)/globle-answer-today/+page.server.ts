@@ -13,16 +13,11 @@ export const load: PageServerLoad = async () => {
     }
 
     const { country, formattedDate, date } = data;
-    const isFallbackDate = format(date, 'yyyy-MM-dd') !== format(today, 'yyyy-MM-dd');
     const currentMonth = format(today, 'MMMM');
     const featuredImage = 'https://wordsolver.tech/globle-answer-today.webp';
     const pageTitle = `Globle Answer Today - ${currentMonth} - Updated`;
-    const pageDescription = isFallbackDate
-        ? `The official Globle answer for ${format(today, 'MMMM d, yyyy')} is not available yet, so this page is showing the latest confirmed answer from ${formattedDate}. The country is ${country.name}, with continent, subregion, flag, and map clues included.`
-        : `Get Globle hints and the confirmed Globle answer for today, ${formattedDate}. Today's country is ${country.name}, with continent, subregion, flag, and map clues plus the full Globle answer for ${formattedDate}.`;
-    const pageKeywords = isFallbackDate
-        ? `globle answer, globle latest answer, globle archive, globle answer for ${formattedDate}`
-        : `globle answer today, globle answer, globle hint, globle hint today, globle answer for ${formattedDate}`;
+    const pageDescription = `Get Globle hints and the confirmed Globle answer for ${formattedDate}. The country is ${country.name}, with continent, subregion, flag, and map clues plus the full Globle answer for ${formattedDate}.`;
+    const pageKeywords = `globle answer today, globle answer, globle hint, globle hint today, globle answer for ${formattedDate}`;
     const faqItems = [
         { '@type': 'Question', name: `What is the Globle answer for ${formattedDate}?`, acceptedAnswer: { '@type': 'Answer', text: `The Globle answer for ${formattedDate} is ${country.name}.` } },
         { '@type': 'Question', name: `What are the Globle hints for ${formattedDate}?`, acceptedAnswer: { '@type': 'Answer', text: `The Globle hints include the country flag, continent, subregion, and map-distance clues that lead to ${country.name}.` } },

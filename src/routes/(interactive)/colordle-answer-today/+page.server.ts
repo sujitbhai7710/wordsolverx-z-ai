@@ -276,7 +276,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 
 	const currentMonth = format(today, 'MMMM');
 	const pageTitle = `Colordle Answer Today (${formattedDate}) - Daily Color Puzzle Solution & Tips | WordSolver`;
-	const pageDescription = `Today's Colordle answer for ${formattedDate} with hex code, scoring breakdown, strategy tips, and a full answer archive. Updated daily by real players.`;
+	const pageDescription = `Verified Colordle answer for ${formattedDate} with hex code, scoring breakdown, strategy tips, and a full answer archive. Updated daily by real players.`;
 	const pageKeywords = `colordle answer today, colordle color puzzle, daily color solution, colordle hex code, colordle tips, colordle archive`;
 
 	const faqItems = [

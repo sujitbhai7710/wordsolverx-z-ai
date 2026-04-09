@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { colornames } from 'color-name-list';
 import { colordleColorOverrides } from '../src/lib/data/colordle-color-overrides.js';
+import { markUpdateFailure, markUpdateSuccess } from './lib/update-status.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -144,11 +145,13 @@ async function writeDataset(colors) {
 async function main() {
 	let colors;
 	let usedFallback = false;
+	let failureMessage = '';
 
 	try {
 		colors = await fetchColors();
 	} catch (error) {
 		usedFallback = true;
+		failureMessage = error instanceof Error ? error.message : String(error);
 		console.warn(
 			`Failed to refresh Colordle data from ${COLORDLE_SOURCE_URL}. Reusing existing local dataset.`,
 			error
@@ -158,6 +161,23 @@ async function main() {
 
 	const dataset = await writeDataset(colors);
 	const outputMode = usedFallback ? 'cached fallback data' : 'fresh source data';
+
+	if (usedFallback) {
+		await markUpdateFailure(
+			projectRoot,
+			'colordle',
+			failureMessage || 'Colordle refresh fell back to the cached dataset.',
+			{
+				latestDate: dataset.latestDate,
+				sourceUrl: COLORDLE_SOURCE_URL
+			}
+		);
+	} else {
+		await markUpdateSuccess(projectRoot, 'colordle', {
+			latestDate: dataset.latestDate,
+			sourceUrl: COLORDLE_SOURCE_URL
+		});
+	}
 
 	console.log(
 		`Colordle dataset ready with ${dataset.entryCount} entries through ${dataset.latestDate} using ${outputMode}.`
