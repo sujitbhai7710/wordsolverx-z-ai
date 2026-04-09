@@ -30,20 +30,7 @@
     { question: `What are the coordinates of today's Globle country?`, answer: `The geographic center is at latitude ${country.latitude.toFixed(2)}° and longitude ${country.longitude.toFixed(2)}°.` },
   ]);
 
-  let faqSchemaJson = $derived(JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": clues.map(clue => ({
-      "@type": "Question",
-      "name": clue.question,
-      "acceptedAnswer": { "@type": "Answer", "text": clue.answer }
-    }))
-  }));
 </script>
-
-<svelte:head>
-  {@html `<script type="application/ld+json">${faqSchemaJson}</script>`}
-</svelte:head>
 
 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 p-8 mb-8">
   <div class="text-center mb-6">

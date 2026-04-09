@@ -6,7 +6,6 @@
     type SearchleGuess,
     type SearchleSuggestion
   } from '$lib/searchle/searchleSolver';
-  import FAQSection from '$lib/components/FAQSection.svelte';
 
   type SearchleRuntime = Pick<
     typeof import('$lib/searchle/searchleSolver'),
@@ -264,29 +263,6 @@
     }
   }
 
-  const faqs = [
-    {
-      question: 'What is Searchle Solver?',
-      answer:
-        'Searchle Solver helps you find the missing word in the Searchle autocomplete puzzle using entropy-based suggestions.'
-    },
-    {
-      question: 'How do I use the solver?',
-      answer:
-        'Start typing a Searchle-style prompt to get autocomplete query suggestions, pick one, click Solve, then click a guess word and mark the feedback colors.'
-    },
-    {
-      question: "Does it work with today's Searchle?",
-      answer:
-        "Yes. Tap Play Daily to load today's prompt and solve it with the same tools."
-    },
-    {
-      question: 'Where does the data come from?',
-      answer:
-        'The solver uses the copied allsearches dataset, including the real answer, lucky guess, and extra guesses for each prompt.'
-    }
-  ];
-
 </script>
 
 <svelte:head>
@@ -523,6 +499,4 @@
       </a>
     </div>
   </main>
-
-  <FAQSection {faqs} />
 </div>

@@ -2,9 +2,214 @@ import {
 	getColordleTodayPayload,
 	type ColordleTodayPayload
 } from '$lib/colordle-date';
+import { colorDiff, hexToRgb, type RGB } from '$lib/colordle';
 import { format } from 'date-fns';
 import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
+
+interface GuessStep {
+	name: string;
+	hex: string;
+	percent: number;
+}
+
+interface GameNarrative {
+	difficulty: 'easy' | 'medium' | 'tricky';
+	difficultyLabel: string;
+	attempts: number;
+	guesses: GuessStep[];
+}
+
+const OPENING_COLORS = [
+	{ name: 'red', hex: '#FF0000' },
+	{ name: 'blue', hex: '#0000FF' },
+	{ name: 'green', hex: '#008000' },
+	{ name: 'yellow', hex: '#FFFF00' },
+	{ name: 'orange', hex: '#FFA500' },
+	{ name: 'purple', hex: '#800080' },
+	{ name: 'pink', hex: '#FFC0CB' },
+	{ name: 'brown', hex: '#A52A2A' },
+	{ name: 'gray', hex: '#808080' },
+	{ name: 'teal', hex: '#008080' },
+	{ name: 'navy', hex: '#000080' },
+	{ name: 'coral', hex: '#FF7F50' },
+	{ name: 'gold', hex: '#FFD700' },
+	{ name: 'silver', hex: '#C0C0C0' },
+	{ name: 'beige', hex: '#F5F5DC' },
+	{ name: 'tan', hex: '#D2B48C' },
+	{ name: 'olive', hex: '#808000' },
+	{ name: 'maroon', hex: '#800000' },
+	{ name: 'crimson', hex: '#DC143C' },
+	{ name: 'indigo', hex: '#4B0082' },
+	{ name: 'turquoise', hex: '#40E0D0' },
+	{ name: 'magenta', hex: '#FF00FF' },
+	{ name: 'lime', hex: '#00FF00' },
+	{ name: 'cyan', hex: '#00FFFF' },
+	{ name: 'plum', hex: '#DDA0DD' },
+	{ name: 'sky blue', hex: '#87CEEB' },
+	{ name: 'salmon', hex: '#FA8072' },
+	{ name: 'ivory', hex: '#FFFFF0' },
+	{ name: 'khaki', hex: '#F0E68C' },
+	{ name: 'lavender', hex: '#E6E6FA' }
+];
+
+const MID_COLORS = [
+	{ name: 'forest green', hex: '#228B22' },
+	{ name: 'royal blue', hex: '#4169E1' },
+	{ name: 'dark red', hex: '#8B0000' },
+	{ name: 'light green', hex: '#90EE90' },
+	{ name: 'dark green', hex: '#006400' },
+	{ name: 'steel blue', hex: '#4682B4' },
+	{ name: 'dark orange', hex: '#FF8C00' },
+	{ name: 'light blue', hex: '#ADD8E6' },
+	{ name: 'deep pink', hex: '#FF1493' },
+	{ name: 'dark blue', hex: '#00008B' },
+	{ name: 'pale green', hex: '#98FB98' },
+	{ name: 'chocolate', hex: '#D2691E' },
+	{ name: 'sienna', hex: '#A0522D' },
+	{ name: 'firebrick', hex: '#B22222' },
+	{ name: 'medium blue', hex: '#0000CD' },
+	{ name: 'dark slate gray', hex: '#2F4F4F' },
+	{ name: 'cadet blue', hex: '#5F9EA0' },
+	{ name: 'slate gray', hex: '#708090' },
+	{ name: 'medium aquamarine', hex: '#66CDAA' },
+	{ name: 'light coral', hex: '#F08080' },
+	{ name: 'rosy brown', hex: '#BC8F8F' },
+	{ name: 'dark goldenrod', hex: '#B8860B' },
+	{ name: 'medium purple', hex: '#9370DB' },
+	{ name: 'medium sea green', hex: '#3CB371' },
+	{ name: 'dark cyan', hex: '#008B8B' },
+	{ name: 'saddle brown', hex: '#8B4513' },
+	{ name: 'slate blue', hex: '#6A5ACD' },
+	{ name: 'midnight blue', hex: '#191970' },
+	{ name: 'olive drab', hex: '#6B8E23' },
+	{ name: 'sea green', hex: '#2E8B57' }
+];
+
+const CLOSE_COLORS = [
+	{ name: 'jade', hex: '#00A86B' },
+	{ name: 'sage', hex: '#BCB88A' },
+	{ name: 'smoke', hex: '#738276' },
+	{ name: 'aqua', hex: '#00FFFF' },
+	{ name: 'cream', hex: '#FFFDD0' },
+	{ name: 'sand', hex: '#C2B280' },
+	{ name: 'wine', hex: '#722F37' },
+	{ name: 'mahogany', hex: '#C04000' },
+	{ name: 'chartreuse', hex: '#7FFF00' },
+	{ name: 'emerald', hex: '#50C878' },
+	{ name: 'ruby', hex: '#E0115F' },
+	{ name: 'sapphire', hex: '#0F52BA' },
+	{ name: 'amber', hex: '#FFBF00' },
+	{ name: 'copper', hex: '#B87333' },
+	{ name: 'bronze', hex: '#CD7F32' },
+	{ name: 'scarlet', hex: '#FF2400' },
+	{ name: 'navy blue', hex: '#000080' },
+	{ name: 'hunter green', hex: '#355E3B' },
+	{ name: 'cherry', hex: '#DE3163' },
+	{ name: 'cinnamon', hex: '#D2691E' },
+	{ name: 'mocha', hex: '#967964' },
+	{ name: 'caramel', hex: '#FFD59A' },
+	{ name: 'periwinkle', hex: '#CCCCFF' },
+	{ name: 'cerulean', hex: '#007BA7' },
+	{ name: 'chestnut', hex: '#954535' },
+	{ name: 'slate', hex: '#708090' },
+	{ name: 'marigold', hex: '#EAA221' },
+	{ name: 'pewter', hex: '#96A8A1' },
+	{ name: 'moss', hex: '#8A9A5B' },
+	{ name: 'rust', hex: '#B7410E' }
+];
+
+function scoreColorList(
+	colors: { name: string; hex: string }[],
+	targetRgb: RGB,
+	targetName: string
+): GuessStep[] {
+	return colors
+		.filter((g) => g.name.toLowerCase() !== targetName.toLowerCase())
+		.map((g) => {
+			const rgb = hexToRgb(g.hex);
+			if (!rgb) return null;
+			return {
+				name: g.name,
+				hex: g.hex,
+				percent: Math.round(colorDiff(targetRgb, rgb) * 100) / 100
+			};
+		})
+		.filter((g): g is GuessStep => g !== null)
+		.sort((a, b) => b.percent - a.percent);
+}
+
+function generateGameNarrative(targetColor: { name: string; hex: string }): GameNarrative {
+	const targetRgb = hexToRgb(targetColor.hex);
+	if (!targetRgb) {
+		return { difficulty: 'medium', difficultyLabel: 'a moderate challenge', attempts: 3, guesses: [] };
+	}
+
+	const scoredOpeners = scoreColorList(OPENING_COLORS, targetRgb, targetColor.name);
+	const scoredMid = scoreColorList(MID_COLORS, targetRgb, targetColor.name);
+	const scoredClose = scoreColorList(CLOSE_COLORS, targetRgb, targetColor.name);
+
+	const guesses: GuessStep[] = [];
+
+	if (scoredOpeners.length > 0) {
+		guesses.push(scoredOpeners[0]);
+	}
+
+	const openerPercent = guesses[0]?.percent ?? 0;
+	const betterMid = scoredMid.find((g) => g.percent > openerPercent + 5);
+	if (betterMid) {
+		guesses.push(betterMid);
+	} else if (scoredMid.length > 0 && scoredMid[0].percent > openerPercent + 1) {
+		guesses.push(scoredMid[0]);
+	}
+
+	const midPercent = guesses[guesses.length - 1]?.percent ?? 0;
+	const betterClose = scoredClose.find((g) => g.percent > midPercent + 3);
+	if (betterClose) {
+		guesses.push(betterClose);
+	} else if (scoredClose.length > 0 && scoredClose[0].percent > midPercent + 1) {
+		guesses.push(scoredClose[0]);
+	}
+
+	guesses.push({ name: targetColor.name, hex: targetColor.hex, percent: 100 });
+
+	const seen = new Set<string>();
+	const uniqueGuesses = guesses.filter((g) => {
+		if (seen.has(g.name.toLowerCase())) return false;
+		seen.add(g.name.toLowerCase());
+		return true;
+	});
+
+	const bestOpenerPercent = scoredOpeners[0]?.percent ?? 0;
+	const unusualNames = [
+		'cheese', 'smoke', 'night sky', 'tea', 'blood', 'snow', 'hot',
+		'snot', 'booger', 'poop', 'slime', 'dirt', 'mud', 'fog', 'haze',
+		'dust', 'ash', 'pea', 'pickle', 'cucumber', 'mint', 'toothpaste',
+		'bubblegum', 'sunflower', 'fire', 'flame', 'ice', 'ocean', 'rain',
+		'storm', 'thunder', 'lightning', 'moon', 'star', 'planet'
+	];
+	const isUnusual = unusualNames.includes(targetColor.name.toLowerCase());
+
+	let difficulty: 'easy' | 'medium' | 'tricky';
+	let difficultyLabel: string;
+	if (isUnusual || bestOpenerPercent < 30) {
+		difficulty = 'tricky';
+		difficultyLabel = 'on the trickier side';
+	} else if (bestOpenerPercent > 55) {
+		difficulty = 'easy';
+		difficultyLabel = 'pretty straightforward';
+	} else {
+		difficulty = 'medium';
+		difficultyLabel = 'a moderate challenge';
+	}
+
+	return {
+		difficulty,
+		difficultyLabel,
+		attempts: uniqueGuesses.length,
+		guesses: uniqueGuesses
+	};
+}
 
 export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 	const today = getPuzzleDateForGame('colordle');
@@ -44,6 +249,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 			yesterdayData: null,
 			last100Days: [],
 			schemas: null,
+			gameNarrative: null,
 			meta: {
 				title: 'Colordle Answer Today',
 				description: '',
@@ -196,6 +402,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		yesterdayData,
 		last100Days,
 		schemas: jsonLd,
+		gameNarrative: generateGameNarrative(color),
 		meta: {
 			title: pageTitle,
 			description: pageDescription,

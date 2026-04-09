@@ -143,19 +143,86 @@
       </div>
 
       <article class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">About today&apos;s color puzzle</h2>
-        <p class="text-gray-600 mb-4 leading-7">
-          {#if data.isFallback}
-            The most recent confirmed puzzle in our dataset is <strong class="text-indigo-600">#{data.dayNum}</strong>, and the color is <strong class="text-gray-900">{data.color.name}</strong> — hex code <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>. We keep showing this verified result until the live source publishes a newer color, so the information stays reliable even during gaps.
-          {:else}
-            Today&apos;s puzzle number is <strong class="text-indigo-600">#{data.dayNum}</strong>. The target color is <strong class="text-gray-900">{data.color.name}</strong>, and its hex code is <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
-          {/if}
-        </p>
-        <p class="text-gray-600 leading-7">
-          Most players who land here want the same few things: the exact color name, the hex value, and a fast way to cross-check older puzzles. That is exactly what this page delivers. The answer card sits at the top so you see it immediately, and the searchable archive below lets you look back at previous days without opening another tab.
-        </p>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">How we solved today&apos;s puzzle</h2>
 
-        <section class="mt-10">
+        {#if data.gameNarrative && data.gameNarrative.guesses.length > 0}
+          <p class="text-gray-600 mb-4 leading-7">
+            If you&apos;ve been following this site, you know we&apos;ve been playing Colordle since it launched and posting the daily results here. Today&apos;s puzzle was <strong class="text-gray-900">{data.gameNarrative.difficultyLabel}</strong> — we solved it in <strong class="text-indigo-600">{data.gameNarrative.attempts} {data.gameNarrative.attempts === 1 ? 'attempt' : 'attempts'}</strong>.
+            {#if data.isFallback}
+              The most recent confirmed puzzle in our dataset is <strong class="text-indigo-600">#{data.dayNum}</strong>, so this write-up reflects that color.
+            {:else}
+              Puzzle <strong class="text-indigo-600">#{data.dayNum}</strong> for {requestedDateLabel}.
+            {/if}
+          </p>
+
+          <div class="space-y-4 mt-6">
+            {#each data.gameNarrative.guesses as guess, i}
+              <div class="flex items-start gap-4 group">
+                <div class="flex flex-col items-center">
+                  <div class="w-10 h-10 rounded-xl border-2 shadow-sm shrink-0 transition-transform group-hover:scale-110 {guess.percent === 100 ? 'border-green-400 ring-2 ring-green-100' : 'border-gray-200'}" style="background-color: {guess.hex}"></div>
+                  {#if i < data.gameNarrative.guesses.length - 1}
+                    <div class="w-0.5 h-6 bg-gray-200 mt-2"></div>
+                  {/if}
+                </div>
+                <div class="flex-1 min-w-0 pb-2">
+                  <div class="flex items-baseline gap-2 flex-wrap">
+                    <span class="text-sm font-bold uppercase tracking-wider text-indigo-600">Guess {i + 1}</span>
+                    <span class="font-bold text-gray-900">{guess.name}</span>
+                    <span class="font-mono text-sm {guess.percent === 100 ? 'text-green-600 font-bold' : guess.percent >= 85 ? 'text-emerald-600' : guess.percent >= 60 ? 'text-amber-600' : 'text-gray-500'}">
+                      {guess.percent === 100 ? '✓ 100%' : `${guess.percent}%`}
+                    </span>
+                  </div>
+                  <p class="text-sm text-gray-500 mt-1">
+                    {#if guess.percent === 100}
+                      That was it! {data.color.name} — hex {data.color.hex}.
+                    {:else if guess.percent >= 90}
+                      So close — the shade was nearly right but the name was off.
+                    {:else if guess.percent >= 75}
+                      Definitely in the right neighborhood now. Time to narrow down the exact shade.
+                    {:else if guess.percent >= 55}
+                      Getting warmer. The right color family but still some distance to close.
+                    {:else if guess.percent >= 35}
+                      Some overlap in temperature, but we were clearly looking in the wrong part of the spectrum.
+                    {:else}
+                      Not even close. That told us to look in a completely different direction.
+                    {/if}
+                  </p>
+                </div>
+              </div>
+            {/each}
+          </div>
+
+          <p class="text-gray-600 mt-6 leading-7">
+            The answer card at the top of this page has the color swatch, hex code, and hints if you want to try the puzzle yourself before peeking. Scroll down for the full guide and searchable archive.
+          </p>
+        {:else}
+          <p class="text-gray-600 mb-4 leading-7">
+            {#if data.isFallback}
+              The most recent confirmed puzzle in our dataset is <strong class="text-indigo-600">#{data.dayNum}</strong>, and the color is <strong class="text-gray-900">{data.color.name}</strong> — hex code <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>. We keep showing this verified result until the live source publishes a newer color, so the information stays reliable even during gaps.
+            {:else}
+              Today&apos;s puzzle number is <strong class="text-indigo-600">#{data.dayNum}</strong>. The target color is <strong class="text-gray-900">{data.color.name}</strong>, and its hex code is <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
+            {/if}
+          </p>
+          <p class="text-gray-600 leading-7">
+            The answer card at the top has the color swatch and hints. Scroll down for the full guide and searchable archive.
+          </p>
+        {/if}
+
+        <nav class="mt-10 rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 p-6" aria-label="Table of Contents">
+          <p class="text-sm font-bold uppercase tracking-[0.2em] text-indigo-600 mb-4">On this page</p>
+          <ol class="space-y-2">
+            <li><a href="#frequently-asked-questions" class="text-gray-700 hover:text-indigo-600 transition-colors">Frequently Asked Questions</a></li>
+            <li><a href="#what-is-colordle" class="text-gray-700 hover:text-indigo-600 transition-colors">What is Colordle?</a></li>
+            <li><a href="#how-to-play-colordle" class="text-gray-700 hover:text-indigo-600 transition-colors">How to play Colordle</a></li>
+            <li><a href="#colordle-tips-and-strategy" class="text-gray-700 hover:text-indigo-600 transition-colors">Colordle tips and strategy</a></li>
+            <li><a href="#how-colordle-scoring-works" class="text-gray-700 hover:text-indigo-600 transition-colors">How Colordle scoring works</a></li>
+            <li><a href="#colordle-vs-other-daily-games" class="text-gray-700 hover:text-indigo-600 transition-colors">Colordle vs other daily games</a></li>
+            <li><a href="#common-color-families" class="text-gray-700 hover:text-indigo-600 transition-colors">Common color families in Colordle</a></li>
+            <li><a href="#recent-daily-colors" class="text-gray-700 hover:text-indigo-600 transition-colors">Recent daily colors</a></li>
+          </ol>
+        </nav>
+
+        <section class="mt-10" id="frequently-asked-questions">
           <h2 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
           <div class="space-y-4">
             <details class="group bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border border-purple-100 overflow-hidden" open>
@@ -262,55 +329,10 @@
             </details>
           </div>
         </section>
-
-        <section class="mt-10">
-          <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-6">
-            <div>
-              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600">Answer history</p>
-              <h2 class="mt-2 text-2xl font-bold text-gray-900">Recent daily colors</h2>
-            </div>
-            <p class="text-sm text-gray-500 max-w-xl">
-              Newest confirmed colors first. Search by date, name, or hex code.
-            </p>
-          </div>
-
-          <form class="mb-6 flex overflow-hidden rounded-2xl border border-indigo-200 bg-white shadow-sm" onsubmit={(event) => event.preventDefault()}>
-            <input
-              bind:value={historySearch}
-              type="search"
-              placeholder="Search by date, color name, or hex code..."
-              class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-gray-900 outline-none placeholder:text-gray-400"
-            />
-            <button
-              type="submit"
-              class="border-l border-indigo-200 bg-indigo-600 px-6 py-4 text-base font-semibold text-white transition hover:bg-indigo-500"
-            >
-              Search
-            </button>
-          </form>
-
-          <div class="grid gap-3 md:grid-cols-2">
-            {#each filteredHistory as d}
-              <div class="flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50/60">
-                <div class="min-w-0">
-                  <p class="text-sm font-semibold text-gray-900">{d.formattedDate}</p>
-                  <p class="text-xs text-gray-500">Daily color</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-semibold text-gray-900">{d.color.name}</p>
-                  <p class="font-mono text-sm text-indigo-600">{d.color.hex}</p>
-                </div>
-              </div>
-            {/each}
-          </div>
-          {#if historySearch.trim() && filteredHistory.length === 0}
-            <p class="mt-6 text-center text-gray-500">No matching colors found in the recent archive.</p>
-          {/if}
-        </section>
       </article>
 
       <article class="mt-12 space-y-8">
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <section id="what-is-colordle" class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">
             What is Colordle?
           </h2>
@@ -325,7 +347,7 @@
           </p>
         </section>
 
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <section id="how-to-play-colordle" class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">
             How to play Colordle
           </h2>
@@ -360,7 +382,7 @@
           </ol>
         </section>
 
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+        <section id="colordle-tips-and-strategy" class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">
             Colordle tips and strategy
           </h2>
@@ -411,7 +433,7 @@
           </div>
         </section>
 
-        <section class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-3xl p-8 border border-purple-100">
+        <section id="how-colordle-scoring-works" class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-3xl p-8 border border-purple-100">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">
             How Colordle scoring works
           </h2>
@@ -433,6 +455,113 @@
           <p class="text-lg text-gray-600 leading-relaxed">
             Knowing this, the best approach when you are in the high 90s is to make the smallest possible adjustment to your guess. If you guessed "sky blue" and scored 97%, do not jump to a completely different name like "cerulean." Instead, try the closest neighbors: "light blue," "baby blue," or "azure." Small, controlled moves in naming space mirror small, controlled moves in color space — and that is exactly what the CIEDE2000 math rewards.
           </p>
+        </section>
+
+        <section id="colordle-vs-other-daily-games" class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">
+            Colordle vs other daily games
+          </h2>
+          <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+            The daily-puzzle genre has exploded since Wordle went viral, and Colordle occupies a distinct niche within it. Here is how it compares to a few popular alternatives.
+          </p>
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Colordle vs Wordle</h3>
+              <p class="text-gray-600 leading-relaxed">Wordle tests your vocabulary and deduction with five-letter words. Colordle tests your color perception and knowledge of color names. Wordle gives you letter-by-letter feedback; Colordle gives you a single percentage. Both reset daily, but the skill sets are completely different — being good at one does not guarantee being good at the other.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Colordle vs Semantle</h3>
+              <p class="text-gray-600 leading-relaxed">Semantle also uses a percentage-based feedback system, but for word similarity rather than color. The mental process is similar — make a broad guess, then narrow based on feedback — except Colordle is visual while Semantle is purely linguistic. If you enjoy Semantle&apos;s gradual-convergence style, Colordle scratches the same itch from a different angle.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Colordle vs Colorfle</h3>
+              <p class="text-gray-600 leading-relaxed">Colorfle is another color-based daily puzzle, but it works differently. In Colorfle you guess RGB hex values directly, adjusting sliders to match the target. Colordle asks for named colors instead, which means you need vocabulary rather than precision slider control. Both reward color sense, but Colorfle is more technical while Colordle is more about color-name knowledge.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Colordle vs traditional color matching</h3>
+              <p class="text-gray-600 leading-relaxed">Professional color-matching tools like Pantone swatches or Delta E calculators are built for accuracy. Colordle repurposes that same Delta E math into a game. If you have ever worked in design, printing, or textiles, your professional color-matching instincts translate directly to Colordle — you will probably find yourself solving puzzles faster than players without that background.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="common-color-families" class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">
+            Common color families in Colordle
+          </h2>
+          <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+            After playing hundreds of rounds, you start noticing that Colordle&apos;s answers tend to cluster around certain families. Knowing these patterns helps you make smarter first and second guesses rather than shooting in the dark.
+          </p>
+          <div class="grid gap-4 md:grid-cols-3">
+            <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-5 border border-red-100">
+              <h3 class="font-bold text-gray-900 mb-2">Warm naturals</h3>
+              <p class="text-sm text-gray-600">Sand, gold, copper, bronze, rust, mahogany, sienna, chestnut, cinnamon, caramel. These earthy tones show up constantly and tend to sit in the brown-to-orange range.</p>
+            </div>
+            <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 border border-blue-100">
+              <h3 class="font-bold text-gray-900 mb-2">Cool naturals</h3>
+              <p class="text-sm text-gray-600">Navy, teal, jade, emerald, slate, steel blue, cadet blue, sea green, aqua. These lean blue-green and often have low-to-medium brightness.</p>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-5 border border-purple-100">
+              <h3 class="font-bold text-gray-900 mb-2">Soft pastels</h3>
+              <p class="text-sm text-gray-600">Lavender, periwinkle, blush, peach, mint, ivory, cream, lilac. High lightness with moderate saturation — they look washed out but have distinct hue identities.</p>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border border-green-100">
+              <h3 class="font-bold text-gray-900 mb-2">Greens and naturals</h3>
+              <p class="text-sm text-gray-600">Sage, moss, forest green, olive, hunter green, lime. Colordle loves greens — they appear more often than you would expect and often under unusual names like "moss" or "sage."</p>
+            </div>
+            <div class="bg-gradient-to-br from-gray-50 to-slate-50 rounded-2xl p-5 border border-gray-200">
+              <h3 class="font-bold text-gray-900 mb-2">Neutrals and grays</h3>
+              <p class="text-sm text-gray-600">Smoke, pewter, slate, ash, fog, silver, charcoal. These are the trickiest because they score close to many colors but only one name is the exact match.</p>
+            </div>
+            <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-5 border border-amber-100">
+              <h3 class="font-bold text-gray-900 mb-2">Unexpected names</h3>
+              <p class="text-sm text-gray-600">Cheese, blood, tea, snot, hot, snow, pickle, cucumber. These are the ones that catch you off guard. The percentage might be 98% and you still cannot find the name because it is nothing you would normally associate with that color.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="recent-daily-colors" class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+          <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-6">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600">Answer history</p>
+              <h2 class="mt-2 text-2xl font-bold text-gray-900">Recent daily colors</h2>
+            </div>
+            <p class="text-sm text-gray-500 max-w-xl">
+              Newest confirmed colors first. Search by date, name, or hex code.
+            </p>
+          </div>
+
+          <form class="mb-6 flex overflow-hidden rounded-2xl border border-indigo-200 bg-white shadow-sm" onsubmit={(event) => event.preventDefault()}>
+            <input
+              bind:value={historySearch}
+              type="search"
+              placeholder="Search by date, color name, or hex code..."
+              class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-gray-900 outline-none placeholder:text-gray-400"
+            />
+            <button
+              type="submit"
+              class="border-l border-indigo-200 bg-indigo-600 px-6 py-4 text-base font-semibold text-white transition hover:bg-indigo-500"
+            >
+              Search
+            </button>
+          </form>
+
+          <div class="grid gap-3 md:grid-cols-2">
+            {#each filteredHistory as d}
+              <div class="flex items-center justify-between gap-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50/60">
+                <div class="min-w-0">
+                  <p class="text-sm font-semibold text-gray-900">{d.formattedDate}</p>
+                  <p class="text-xs text-gray-500">Daily color</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-semibold text-gray-900">{d.color.name}</p>
+                  <p class="font-mono text-sm text-indigo-600">{d.color.hex}</p>
+                </div>
+              </div>
+            {/each}
+          </div>
+          {#if historySearch.trim() && filteredHistory.length === 0}
+            <p class="mt-6 text-center text-gray-500">No matching colors found in the recent archive.</p>
+          {/if}
         </section>
       </article>
 
