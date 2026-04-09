@@ -92,7 +92,7 @@
 
       <header class="text-center mb-10">
         <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 bg-clip-text text-transparent mb-4">
-          Colordle Answer Today ({requestedDateLabel})
+          Colordle Answer Today ({answerDateLabel})
         </h1>
         <p class="mx-auto max-w-3xl text-lg leading-8 text-gray-600">
           Verified Colordle hints, the exact color name, and the matching hex code for <span class="font-semibold text-indigo-600">{answerDateLabel}</span>.
@@ -180,32 +180,69 @@
           </p>
         {:else}
           <p class="text-gray-600 mb-4 leading-7">
-            {#if false}
-            
-              The most recent confirmed puzzle in our dataset is <strong class="text-indigo-600">#{data.dayNum}</strong>, and the color is <strong class="text-gray-900">{data.color.name}</strong> — hex code <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>. We keep showing this verified result until the live source publishes a newer color, so the information stays reliable even during gaps.
-
-              Today&apos;s puzzle number is <strong class="text-indigo-600">#{data.dayNum}</strong>. The target color is <strong class="text-gray-900">{data.color.name}</strong>, and its hex code is <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
-
-            {/if}
-            Puzzle <strong class="text-indigo-600">#{data.dayNum}</strong> uses the color <strong class="text-gray-900">{data.color.name}</strong>, and its hex code is <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color.hex}</code>.
+            Puzzle <strong class="text-indigo-600">#{data.dayNum}</strong> uses the color <strong class="text-gray-900">{data.color!.name}</strong>, and its hex code is <code class="bg-gray-100 px-2 py-1 rounded text-sm">{data.color!.hex}</code>.
           </p>
           <p class="text-gray-600 leading-7">
             The answer card at the top has the color swatch and hints. Scroll down for the full guide and searchable archive.
           </p>
         {/if}
 
-        <nav class="mt-10 rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 p-6" aria-label="Table of Contents">
-          <p class="text-sm font-bold uppercase tracking-[0.2em] text-indigo-600 mb-4">On this page</p>
-          <ol class="space-y-2">
-            <li><a href="#frequently-asked-questions" class="text-gray-700 hover:text-indigo-600 transition-colors">Frequently Asked Questions</a></li>
-            <li><a href="#what-is-colordle" class="text-gray-700 hover:text-indigo-600 transition-colors">What is Colordle?</a></li>
-            <li><a href="#how-to-play-colordle" class="text-gray-700 hover:text-indigo-600 transition-colors">How to play Colordle</a></li>
-            <li><a href="#colordle-tips-and-strategy" class="text-gray-700 hover:text-indigo-600 transition-colors">Colordle tips and strategy</a></li>
-            <li><a href="#how-colordle-scoring-works" class="text-gray-700 hover:text-indigo-600 transition-colors">How Colordle scoring works</a></li>
-            <li><a href="#colordle-vs-other-daily-games" class="text-gray-700 hover:text-indigo-600 transition-colors">Colordle vs other daily games</a></li>
-            <li><a href="#common-color-families" class="text-gray-700 hover:text-indigo-600 transition-colors">Common color families in Colordle</a></li>
-            <li><a href="#recent-daily-colors" class="text-gray-700 hover:text-indigo-600 transition-colors">Recent daily colors</a></li>
-          </ol>
+        <nav class="mt-10 rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md" aria-label="Table of Contents">
+          <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 px-6 py-4">
+            <p class="text-sm font-bold uppercase tracking-[0.25em] text-white/90">Jump to section</p>
+          </div>
+          <div class="p-5">
+            <ol class="grid gap-1 sm:grid-cols-2">
+              <li>
+                <a href="#frequently-asked-questions" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-indigo-100 text-indigo-600 text-xs font-bold group-hover:bg-indigo-600 group-hover:text-white transition-colors">1</span>
+                  <span class="text-sm font-medium">FAQs</span>
+                </a>
+              </li>
+              <li>
+                <a href="#what-is-colordle" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-purple-600 hover:bg-purple-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-purple-100 text-purple-600 text-xs font-bold group-hover:bg-purple-600 group-hover:text-white transition-colors">2</span>
+                  <span class="text-sm font-medium">What is Colordle?</span>
+                </a>
+              </li>
+              <li>
+                <a href="#how-to-play-colordle" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-pink-600 hover:bg-pink-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-pink-100 text-pink-600 text-xs font-bold group-hover:bg-pink-600 group-hover:text-white transition-colors">3</span>
+                  <span class="text-sm font-medium">How to play</span>
+                </a>
+              </li>
+              <li>
+                <a href="#colordle-tips-and-strategy" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-amber-100 text-amber-600 text-xs font-bold group-hover:bg-amber-600 group-hover:text-white transition-colors">4</span>
+                  <span class="text-sm font-medium">Tips & Strategy</span>
+                </a>
+              </li>
+              <li>
+                <a href="#how-colordle-scoring-works" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-100 text-emerald-600 text-xs font-bold group-hover:bg-emerald-600 group-hover:text-white transition-colors">5</span>
+                  <span class="text-sm font-medium">How scoring works</span>
+                </a>
+              </li>
+              <li>
+                <a href="#colordle-vs-other-daily-games" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-blue-100 text-blue-600 text-xs font-bold group-hover:bg-blue-600 group-hover:text-white transition-colors">6</span>
+                  <span class="text-sm font-medium">Vs other games</span>
+                </a>
+              </li>
+              <li>
+                <a href="#common-color-families" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-rose-600 hover:bg-rose-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-rose-100 text-rose-600 text-xs font-bold group-hover:bg-rose-600 group-hover:text-white transition-colors">7</span>
+                  <span class="text-sm font-medium">Color families</span>
+                </a>
+              </li>
+              <li>
+                <a href="#recent-daily-colors" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 hover:text-teal-600 hover:bg-teal-50 transition-all group">
+                  <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-teal-100 text-teal-600 text-xs font-bold group-hover:bg-teal-600 group-hover:text-white transition-colors">8</span>
+                  <span class="text-sm font-medium">Recent colors</span>
+                </a>
+              </li>
+            </ol>
+          </div>
         </nav>
 
         <section class="mt-10" id="frequently-asked-questions">

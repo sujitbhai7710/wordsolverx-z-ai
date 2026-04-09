@@ -139,28 +139,96 @@ function scoreColorList(
 		.sort((a, b) => b.percent - a.percent);
 }
 
+function getHueFamily(hex: string): string {
+	const rgb = hexToRgb(hex);
+	if (!rgb) return 'neutral';
+	const r = rgb.r / 255;
+	const g = rgb.g / 255;
+	const b = rgb.b / 255;
+	const max = Math.max(r, g, b);
+	const min = Math.min(r, g, b);
+	const d = max - min;
+	if (d < 0.1) {
+		return max < 0.3 ? 'dark-neutral' : max > 0.7 ? 'light-neutral' : 'neutral';
+	}
+	let h = 0;
+	if (max === r) h = ((g - b) / d) % 6;
+	else if (max === g) h = (b - r) / d + 2;
+	else h = (r - g) / d + 4;
+	h = ((h * 60) + 360) % 360;
+	if (h < 30 || h >= 330) return 'red';
+	if (h < 70) return 'orange';
+	if (h < 90) return 'yellow';
+	if (h < 160) return 'green';
+	if (h < 200) return 'cyan';
+	if (h < 260) return 'blue';
+	if (h < 300) return 'purple';
+	return 'pink';
+}
+
+const CONTRAST_FAMILIES: Record<string, string[]> = {
+	red: ['blue', 'cyan', 'green'],
+	orange: ['blue', 'cyan', 'purple'],
+	yellow: ['blue', 'purple', 'pink'],
+	green: ['red', 'pink', 'purple'],
+	cyan: ['red', 'orange', 'pink'],
+	blue: ['orange', 'yellow', 'red'],
+	purple: ['yellow', 'orange', 'green'],
+	pink: ['green', 'cyan', 'blue'],
+	neutral: ['blue', 'red', 'green'],
+	'dark-neutral': ['yellow', 'orange', 'pink'],
+	'light-neutral': ['blue', 'purple', 'green']
+};
+
+const OPENER_BY_FAMILY: Record<string, { name: string; hex: string }> = {
+	red: { name: 'blue', hex: '#0000FF' },
+	orange: { name: 'navy', hex: '#000080' },
+	yellow: { name: 'purple', hex: '#800080' },
+	green: { name: 'crimson', hex: '#DC143C' },
+	cyan: { name: 'coral', hex: '#FF7F50' },
+	blue: { name: 'orange', hex: '#FFA500' },
+	purple: { name: 'gold', hex: '#FFD700' },
+	pink: { name: 'teal', hex: '#008080' },
+	neutral: { name: 'blue', hex: '#0000FF' },
+	'dark-neutral': { name: 'yellow', hex: '#FFFF00' },
+	'light-neutral': { name: 'indigo', hex: '#4B0082' }
+};
+
 function generateGameNarrative(targetColor: { name: string; hex: string }): GameNarrative {
 	const targetRgb = hexToRgb(targetColor.hex);
 	if (!targetRgb) {
 		return { difficulty: 'medium', difficultyLabel: 'a moderate challenge', attempts: 3, guesses: [] };
 	}
 
+	const targetFamily = getHueFamily(targetColor.hex);
 	const scoredOpeners = scoreColorList(OPENING_COLORS, targetRgb, targetColor.name);
 	const scoredMid = scoreColorList(MID_COLORS, targetRgb, targetColor.name);
 	const scoredClose = scoreColorList(CLOSE_COLORS, targetRgb, targetColor.name);
 
 	const guesses: GuessStep[] = [];
 
-	if (scoredOpeners.length > 0) {
-		guesses.push(scoredOpeners[0]);
+	const contrastOpener = OPENER_BY_FAMILY[targetFamily];
+	if (contrastOpener) {
+		const rgb = hexToRgb(contrastOpener.hex);
+		const pct = rgb ? Math.round(colorDiff(targetRgb, rgb) * 100) / 100 : 0;
+		guesses.push({ name: contrastOpener.name, hex: contrastOpener.hex, percent: pct });
+	} else if (scoredOpeners.length > 0) {
+		guesses.push(scoredOpeners[scoredOpeners.length - 1]);
 	}
 
-	const openerPercent = guesses[0]?.percent ?? 0;
-	const betterMid = scoredMid.find((g) => g.percent > openerPercent + 5);
+	const secondFamilyOptions = CONTRAST_FAMILIES[targetFamily] ?? ['orange', 'green', 'pink'];
+	const secondCandidates = OPENING_COLORS.filter(
+		(c) => secondFamilyOptions.includes(getHueFamily(c.hex)) && c.name.toLowerCase() !== targetColor.name.toLowerCase()
+	);
+	const scoredSecond = scoreColorList(secondCandidates, targetRgb, targetColor.name);
+	if (scoredSecond.length > 0) {
+		guesses.push(scoredSecond[0]);
+	}
+
+	const lastGuessPercent = guesses[guesses.length - 1]?.percent ?? 0;
+	const betterMid = scoredMid.find((g) => g.percent > lastGuessPercent + 5);
 	if (betterMid) {
 		guesses.push(betterMid);
-	} else if (scoredMid.length > 0 && scoredMid[0].percent > openerPercent + 1) {
-		guesses.push(scoredMid[0]);
 	}
 
 	const midPercent = guesses[guesses.length - 1]?.percent ?? 0;
