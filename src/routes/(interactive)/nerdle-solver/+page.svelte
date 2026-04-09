@@ -218,9 +218,24 @@
 		void loadModeData(nextMode);
 	}
 
+	function handleModeSelectChange(event: Event) {
+		handleModeChange((event.target as HTMLSelectElement).value);
+	}
+
 	function handleEquationInput(value: string) {
 		currentInput = normalizeEquationInput(value);
 		loadError = null;
+	}
+
+	function handleEquationTextInput(event: Event) {
+		handleEquationInput((event.target as HTMLInputElement).value);
+	}
+
+	function handleInputKeydown(event: KeyboardEvent) {
+		if (event.key === 'Enter' && canAddGuess && !isCheckingGuess) {
+			event.preventDefault();
+			void addGuess(currentInput);
+		}
 	}
 
 	async function addGuess(
@@ -301,6 +316,20 @@
 	function refreshSolver() {
 		loadError = null;
 		void fetchSuggestions(guesses, mode, requestToken);
+	}
+
+	function addCurrentGuess() {
+		void addGuess(currentInput);
+	}
+
+	function addSuggestedGuess(equation: string) {
+		void addGuess(equation, { skipValidation: true });
+	}
+
+	function getInputMessageClass(tone: 'info' | 'warning' | 'success'): string {
+		if (tone === 'success') return 'mt-3 text-center text-sm text-green-700';
+		if (tone === 'warning') return 'mt-3 text-center text-sm text-amber-700';
+		return 'mt-3 text-center text-sm text-gray-600';
 	}
 
 	async function copyEquation(equation: string) {
@@ -450,7 +479,7 @@
 										id="nerdle-mode"
 										class="w-full rounded-xl border-2 border-blue-200 bg-white px-4 py-3 text-base font-bold text-gray-800 shadow-sm outline-none focus:border-green-500 focus:ring-4 focus:ring-green-200"
 										value={mode}
-										onchange={(event) => handleModeChange((event.target as HTMLSelectElement).value)}
+										onchange={handleModeSelectChange}
 										disabled={modeSelectDisabled}
 									>
 										{#each MODE_ENTRIES as [modeKey, config]}
@@ -509,7 +538,7 @@
 						<input
 							type="text"
 							value={currentInput}
-							oninput={(event) => handleEquationInput((event.target as HTMLInputElement).value)}
+							oninput={handleEquationTextInput}
 							placeholder={currentMode.example}
 							class="w-full px-6 py-4 text-center text-3xl font-black tracking-widest bg-gradient-to-br from-white to-gray-50 rounded-2xl border-[3px] border-gray-300 focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-200 transition-all shadow-lg hover:shadow-xl text-gray-900 font-mono"
 							maxlength={targetLength}
@@ -517,12 +546,7 @@
 							autocorrect="off"
 							autocapitalize="off"
 							spellcheck="false"
-							onkeydown={(event) => {
-								if (event.key === 'Enter' && canAddGuess && !isCheckingGuess) {
-									event.preventDefault();
-									void addGuess(currentInput);
-								}
-							}}
+							onkeydown={handleInputKeydown}
 						/>
 						<button
 							type="button"
@@ -533,13 +557,7 @@
 							Clear
 						</button>
 					</div>
-					<div class={`mt-3 text-center text-sm ${
-						inputMessage.tone === 'success'
-							? 'text-green-700'
-							: inputMessage.tone === 'warning'
-								? 'text-amber-700'
-								: 'text-gray-600'
-					}`}>
+					<div class={getInputMessageClass(inputMessage.tone)}>
 						{inputMessage.text}
 					</div>
 					<div class="mt-5 flex justify-center">
@@ -583,7 +601,7 @@
 
 					<div class="mt-6 flex justify-center gap-3 flex-wrap">
 					<button
-						onclick={() => void addGuess(currentInput)}
+						onclick={addCurrentGuess}
 						disabled={!canAddGuess || isCheckingGuess}
 						class="flex items-center space-x-2 px-5 py-3 text-sm font-bold text-white bg-green-600 hover:bg-green-700 rounded-xl transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
 					>
@@ -689,7 +707,7 @@
 							</div>
 							<div class="grid gap-3 sm:grid-cols-2">
 								<button
-									onclick={() => void addGuess(topSuggestion.eq, { skipValidation: true })}
+									onclick={() => addSuggestedGuess(topSuggestion.eq)}
 									class="rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-3 transition-all"
 								>
 									Use This Guess
@@ -721,7 +739,7 @@
 											</div>
 											<div class="flex gap-2">
 												<button
-													onclick={() => void addGuess(item.eq, { skipValidation: true })}
+													onclick={() => addSuggestedGuess(item.eq)}
 													class="rounded-lg bg-white border border-gray-300 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100"
 												>
 													Use
