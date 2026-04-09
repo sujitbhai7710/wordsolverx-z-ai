@@ -391,6 +391,7 @@
 			}
 		]
 	});
+	const jsonLdScript = `<script type="application/ld+json">${jsonLd}<\/script>`;
 </script>
 
 <svelte:head>
@@ -413,7 +414,7 @@
 		name="twitter:description"
 		content="Solve Nerdle equations with direct worker requests and a cleaner Wordle-style UI."
 	/>
-	<script type="application/ld+json">{jsonLd}</script>
+	{@html jsonLdScript}
 </svelte:head>
 
 <div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
