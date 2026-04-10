@@ -53,7 +53,10 @@ export interface SolverDataset {
 	guesses: string[];
 	restrictedAnswers: string[];
 	completeAnswers: string[];
+	officialAnswers?: string[];
+	officialGuesses?: string[];
 	easyRankings: Record<string, unknown[]>;
+	hardRankings?: Record<string, unknown[]>;
 }
 
 export interface SolverTurn {

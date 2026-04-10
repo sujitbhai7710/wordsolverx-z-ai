@@ -17,6 +17,7 @@ const WORDS_URL =
 
 const ORIGINAL_START_DATE = '2022-02-10';
 const CURRENT_START_DATE = '2022-10-04';
+const RESTART_PUZZLE_INDEX = 143;
 
 const outputPath = path.join(
 	projectRoot,
@@ -41,7 +42,9 @@ function extractInteger(field) {
 }
 
 function extractArray(field) {
-	return (field?.arrayValue?.values ?? []).map((v) => v.stringValue ?? '');
+	return (field?.arrayValue?.values ?? [])
+		.map((v) => v.stringValue ?? '')
+		.filter((value) => value.length > 0);
 }
 
 function extractDistribution(field) {
@@ -59,8 +62,11 @@ function extractDistribution(field) {
 }
 
 function getPuzzleDate(index) {
-	const startDate = new Date(`${CURRENT_START_DATE}T12:00:00Z`);
-	startDate.setUTCDate(startDate.getUTCDate() + (index - 1));
+	const startDate = new Date(
+		`${index >= RESTART_PUZZLE_INDEX ? CURRENT_START_DATE : ORIGINAL_START_DATE}T12:00:00Z`
+	);
+	const dayOffset = index >= RESTART_PUZZLE_INDEX ? index - RESTART_PUZZLE_INDEX : index - 1;
+	startDate.setUTCDate(startDate.getUTCDate() + dayOffset);
 	return startDate.toISOString().slice(0, 10);
 }
 
@@ -78,6 +84,12 @@ function parsePuzzleDocument(doc) {
 	}
 	if (fields.distribution?.mapValue?.fields) {
 		puzzle.distribution = extractDistribution(fields.distribution);
+	}
+	if (doc.createTime) {
+		puzzle.createTime = doc.createTime;
+	}
+	if (doc.updateTime) {
+		puzzle.updateTime = doc.updateTime;
 	}
 	return puzzle;
 }
@@ -150,18 +162,23 @@ async function fetchAcceptedWords() {
 	const payload = await response.json();
 	const fields = payload.fields;
 	const wordsArray = fields?.words?.arrayValue?.values ?? [];
-	return wordsArray.map((v) => decodeBase64(v.stringValue ?? '')).filter(Boolean);
+	return wordsArray
+		.map((v) => (v.stringValue ?? '').trim().toUpperCase())
+		.filter((value) => /^[A-Z]{5}$/.test(value));
 }
 
 function buildSolverDataset(puzzles, acceptedWords) {
-	const answers = puzzles.map((p) => p.answer.toUpperCase());
-	const guesses = acceptedWords.map((w) => w.toUpperCase());
+	const answers = [...new Set(puzzles.map((p) => p.answer.toUpperCase()))].sort();
+	const guesses = [...new Set(acceptedWords.map((w) => w.toUpperCase()))].sort();
 	return {
 		length: 5,
 		guesses,
 		restrictedAnswers: answers,
-		completeAnswers: answers,
-		easyRankings: {}
+		completeAnswers: guesses,
+		officialAnswers: answers,
+		officialGuesses: guesses,
+		easyRankings: {},
+		hardRankings: {}
 	};
 }
 

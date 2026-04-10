@@ -639,17 +639,10 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 				${response.likelyAnswers
 					.map(
 						(answers, index) => `
-							<details class="candidate-group" ${index === 0 ? 'open' : ''}>
+							<details class="candidate-group" data-candidate-board="${index}">
 								<summary>${response.boardCount > 1 ? `Board ${index + 1}: ` : ''}${answers.length} probable, ${response.unlikelyAnswers[index].length} unlikely</summary>
-								<div class="candidate-columns">
-									<div>
-										<p class="column-heading">Probable answers</p>
-										<p>${answers.map(escapeHtml).join(', ') || 'None'}</p>
-									</div>
-									<div>
-										<p class="column-heading">Unlikely answers</p>
-										<p>${response.unlikelyAnswers[index].map(escapeHtml).join(', ') || 'None'}</p>
-									</div>
+								<div class="candidate-columns" data-candidate-content="${index}">
+									<p class="score-note">Expand this section to load the candidate answer lists.</p>
 								</div>
 							</details>
 						`
@@ -665,6 +658,26 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 				input.focus();
 				// Auto-submit the guess to the board
 				required<HTMLButtonElement>(target, '#add-guess').click();
+			});
+		});
+
+		container.querySelectorAll<HTMLDetailsElement>('[data-candidate-board]').forEach((group) => {
+			group.addEventListener('toggle', () => {
+				if (!group.open || group.dataset.loaded === 'true') {
+					return;
+				}
+
+				const boardIndex = Number(group.dataset.candidateBoard);
+				const content = group.querySelector<HTMLElement>(`[data-candidate-content="${boardIndex}"]`);
+				if (!content) {
+					return;
+				}
+
+				content.innerHTML = renderCandidateColumns(
+					response.likelyAnswers[boardIndex] ?? [],
+					response.unlikelyAnswers[boardIndex] ?? []
+				);
+				group.dataset.loaded = 'true';
 			});
 		});
 	}
@@ -850,6 +863,19 @@ function formatSuggestionScore(
 	if (suggestion.wrong > 0) return `${((1 - suggestion.wrong) * 100).toFixed(2)}% solve rate`;
 	if (turnsSoFar === 0) return `${suggestion.average.toFixed(3)} guesses`;
 	return `${(suggestion.average - turnsSoFar).toFixed(3)} guesses left`;
+}
+
+function renderCandidateColumns(likelyAnswers: string[], unlikelyAnswers: string[]) {
+	return `
+		<div>
+			<p class="column-heading">Probable answers</p>
+			<p>${likelyAnswers.map(escapeHtml).join(', ') || 'None'}</p>
+		</div>
+		<div>
+			<p class="column-heading">Unlikely answers</p>
+			<p>${unlikelyAnswers.map(escapeHtml).join(', ') || 'None'}</p>
+		</div>
+	`;
 }
 
 function pluralizePossibility(count: number) {

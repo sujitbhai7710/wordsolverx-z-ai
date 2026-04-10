@@ -1,4 +1,4 @@
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
 import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import canuckleRaw from '$lib/wordlebot-wasm/assets/generated/canuckle-data.json';
 import type { PageServerLoad } from './$types';
@@ -17,23 +17,53 @@ interface CanuckleData {
 }
 
 const canuckleData = canuckleRaw as CanuckleData;
+const canucklePuzzles = [...canuckleData.puzzles].sort((a, b) => a.index - b.index);
+const puzzleByDate = new Map(canucklePuzzles.map((puzzle) => [puzzle.date, puzzle]));
+const puzzlePositionByIndex = new Map(
+	canucklePuzzles.map((puzzle, position) => [puzzle.index, position])
+);
+
+function getLatestPuzzleOnOrBefore(dateKey: string): CanucklePuzzle | null {
+	for (let i = canucklePuzzles.length - 1; i >= 0; i -= 1) {
+		if (canucklePuzzles[i].date <= dateKey) {
+			return canucklePuzzles[i];
+		}
+	}
+
+	return null;
+}
 
 function getPuzzleForDate(targetDate: Date): CanucklePuzzle | null {
 	const dateKey = format(targetDate, 'yyyy-MM-dd');
-	const exact = canuckleData.puzzles.find((p) => p.date === dateKey);
+	const exact = puzzleByDate.get(dateKey);
 	if (exact) return exact;
-	const visible = canuckleData.puzzles.filter((p) => p.date <= dateKey);
-	return visible.at(-1) ?? null;
+	return getLatestPuzzleOnOrBefore(dateKey);
 }
 
-function getLast30Puzzles(baseDate: Date): CanucklePuzzle[] {
-	const results: CanucklePuzzle[] = [];
-	for (let i = 0; i < 30 && results.length < 30; i++) {
-		const d = subDays(baseDate, i);
-		const p = getPuzzleForDate(d);
-		if (p) results.push(p);
+function getPreviousPuzzle(puzzle: CanucklePuzzle | null): CanucklePuzzle | null {
+	if (!puzzle) {
+		return null;
 	}
-	return results;
+
+	const position = puzzlePositionByIndex.get(puzzle.index);
+	if (position === undefined || position === 0) {
+		return null;
+	}
+
+	return canucklePuzzles[position - 1] ?? null;
+}
+
+function getLast30Puzzles(basePuzzle: CanucklePuzzle | null): CanucklePuzzle[] {
+	if (!basePuzzle) {
+		return [];
+	}
+
+	const position = puzzlePositionByIndex.get(basePuzzle.index);
+	if (position === undefined) {
+		return [];
+	}
+
+	return canucklePuzzles.slice(Math.max(0, position - 29), position + 1).reverse();
 }
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
@@ -43,6 +73,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	const todayPuzzle = getPuzzleForDate(today);
 	const isFallback = todayPuzzle ? todayPuzzle.date !== dateKey : false;
 	const puzzleDate = todayPuzzle ? new Date(`${todayPuzzle.date}T12:00:00Z`) : today;
+	const visibleDateKey = todayPuzzle?.date ?? dateKey;
 	const formattedDate = isFallback ? format(puzzleDate, 'MMMM d, yyyy') : format(today, 'MMMM d, yyyy');
 
 	if (!todayPuzzle) {
@@ -52,6 +83,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			todayPuzzle: null,
 			yesterdayPuzzle: null,
 			last30: [],
+			visibleDateKey: dateKey,
 			formattedDate,
 			isFallback: false,
 			schemas: null,
@@ -64,15 +96,11 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		};
 	}
 
-	const yesterdayPuzzle = (() => {
-		const yDate = subDays(puzzleDate, 1);
-		return getPuzzleForDate(yDate);
-	})();
+	const yesterdayPuzzle = getPreviousPuzzle(todayPuzzle);
 
-	setHeaders({ 'X-Puzzle-Date': dateKey });
+	setHeaders({ 'X-Puzzle-Date': visibleDateKey });
 
-	const last30 = getLast30Puzzles(today);
-	const currentMonth = format(today, 'MMMM');
+	const last30 = getLast30Puzzles(todayPuzzle);
 	const pageTitle = `Canuckle Answer Today (${formattedDate}) - Daily Canadian Puzzle Solution & Tips | WordSolver`;
 	const pageDescription = `Today's Canuckle answer for ${formattedDate}, yesterday's word, the Canadian fact, and a searchable archive. Updated daily by real players.`;
 	const pageKeywords = `canuckle answer today, canuckle word, canuckle hint, canuckle fact, canuckle archive, canadian wordle`;
@@ -81,7 +109,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		? {
 				answer: yesterdayPuzzle.answer,
 				index: yesterdayPuzzle.index,
-				date: format(subDays(today, 1), 'MMMM d, yyyy'),
+				date: format(new Date(`${yesterdayPuzzle.date}T12:00:00Z`), 'MMMM d, yyyy'),
 				fact: yesterdayPuzzle.fact.join(' ')
 			}
 		: null;
@@ -175,7 +203,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			'@context': 'https://schema.org',
 			'@type': 'Article',
 			headline: pageTitle,
-			datePublished: `${dateKey}T00:00:00.000Z`,
+			datePublished: `${visibleDateKey}T00:00:00.000Z`,
 			dateModified: today.toISOString(),
 			author: {
 				'@type': 'Person',
@@ -198,6 +226,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			date: formattedDate,
 			fact: todayPuzzle.fact.join(' ')
 		},
+		visibleDateKey,
 		isFallback,
 		yesterdayData,
 		last30: last30.map((p) => ({

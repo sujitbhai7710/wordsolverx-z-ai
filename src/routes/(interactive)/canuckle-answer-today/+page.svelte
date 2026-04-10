@@ -102,7 +102,7 @@
 			</div>
 
 			<div class="mb-12">
-				<WordlebotWasmClient config={{ pageType: 'canuckle-daily', visibleDateKey: data.formattedDate }} />
+				<WordlebotWasmClient config={{ pageType: 'canuckle-daily', visibleDateKey: data.visibleDateKey }} />
 			</div>
 
 			<article class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">

@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-04-10T16:20:15.026Z",
+  "updatedAt": "2026-04-10T16:48:10.391Z",
   "games": {
     "canuckle": {
       "needsRetry": false,
-      "lastRunAt": "2026-04-10T16:20:15.025Z",
-      "lastSuccessAt": "2026-04-10T16:20:15.025Z",
+      "lastRunAt": "2026-04-10T16:48:10.389Z",
+      "lastSuccessAt": "2026-04-10T16:48:10.389Z",
       "lastFailureAt": null,
       "lastFailureMessage": null,
-      "latestDate": "2026-09-04",
+      "latestDate": "2026-04-15",
       "puzzleCount": 1432
     }
   }
