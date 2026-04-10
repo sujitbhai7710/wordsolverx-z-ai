@@ -20,7 +20,10 @@ const canuckleData = canuckleRaw as CanuckleData;
 
 function getPuzzleForDate(targetDate: Date): CanucklePuzzle | null {
 	const dateKey = format(targetDate, 'yyyy-MM-dd');
-	return canuckleData.puzzles.find((p) => p.date === dateKey) ?? null;
+	const exact = canuckleData.puzzles.find((p) => p.date === dateKey);
+	if (exact) return exact;
+	const visible = canuckleData.puzzles.filter((p) => p.date <= dateKey);
+	return visible.at(-1) ?? null;
 }
 
 function getLast30Puzzles(baseDate: Date): CanucklePuzzle[] {
@@ -35,11 +38,12 @@ function getLast30Puzzles(baseDate: Date): CanucklePuzzle[] {
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
 	const today = getPuzzleDateForGame('wordle');
-	const formattedDate = format(today, 'MMMM d, yyyy');
 	const dateKey = format(today, 'yyyy-MM-dd');
 
 	const todayPuzzle = getPuzzleForDate(today);
-	const yesterdayPuzzle = getPuzzleForDate(subDays(today, 1));
+	const isFallback = todayPuzzle ? todayPuzzle.date !== dateKey : false;
+	const puzzleDate = todayPuzzle ? new Date(`${todayPuzzle.date}T12:00:00Z`) : today;
+	const formattedDate = isFallback ? format(puzzleDate, 'MMMM d, yyyy') : format(today, 'MMMM d, yyyy');
 
 	if (!todayPuzzle) {
 		setHeaders({ 'X-Puzzle-Date': dateKey });
@@ -49,6 +53,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			yesterdayPuzzle: null,
 			last30: [],
 			formattedDate,
+			isFallback: false,
 			schemas: null,
 			meta: {
 				title: 'Canuckle Answer Today',
@@ -58,6 +63,11 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			}
 		};
 	}
+
+	const yesterdayPuzzle = (() => {
+		const yDate = subDays(puzzleDate, 1);
+		return getPuzzleForDate(yDate);
+	})();
 
 	setHeaders({ 'X-Puzzle-Date': dateKey });
 
@@ -188,6 +198,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			date: formattedDate,
 			fact: todayPuzzle.fact.join(' ')
 		},
+		isFallback,
 		yesterdayData,
 		last30: last30.map((p) => ({
 			answer: p.answer,
