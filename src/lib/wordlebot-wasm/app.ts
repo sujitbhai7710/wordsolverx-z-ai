@@ -282,11 +282,34 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					</section>
 
 					<section class="results-panel canuckle-story-card">
-						<h2 class="mini-title">Today&apos;s Canuckle fact</h2>
+						<div class="canuckle-story-head">
+							<p class="canuckle-kicker">Verified daily fact</p>
+							<h2 class="mini-title">Today&apos;s Canuckle clue card</h2>
+							<p class="canuckle-story-note">
+								The fact stays visible, but the answer stays hidden until you choose to reveal it.
+							</p>
+						</div>
 						<div class="canuckle-fact">${renderCanuckleFact(today)}</div>
-						<details class="candidate-group" open>
-							<summary>Reveal today&apos;s answer</summary>
-							<p class="canuckle-answer">${escapeHtml(today.answer)}</p>
+						<details class="candidate-group canuckle-reveal-card">
+							<summary>
+								<div class="canuckle-reveal-copy">
+									<span class="canuckle-reveal-title">Reveal today&apos;s answer</span>
+									<span class="canuckle-reveal-hint">
+										<span class="canuckle-when-closed">Spoiler hidden until you tap.</span>
+										<span class="canuckle-when-open">Answer revealed. Tap again to hide it.</span>
+									</span>
+								</div>
+								<span class="canuckle-reveal-toggle">
+									<span class="canuckle-when-closed">Show</span>
+									<span class="canuckle-when-open">Hide</span>
+								</span>
+							</summary>
+							<div class="canuckle-answer-wrap">
+								<p class="canuckle-answer">${escapeHtml(today.answer.toUpperCase())}</p>
+								<p class="canuckle-answer-note">
+									Puzzle #${today.index} - ${escapeHtml(formatCanuckleDate(today.date))}
+								</p>
+							</div>
 						</details>
 					</section>
 				</div>
