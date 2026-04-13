@@ -1,6 +1,6 @@
-<script lang="ts">
+﻿<script lang="ts">
   import { browser } from '$app/environment';
-  import { page } from '$app/state';
+  import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
   import { parseArchiveDateKey } from '$lib/archive-page';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
@@ -25,7 +25,17 @@
 
   let availableDates = $derived((data.availableDateStrings ?? []).map((dateString) => parseArchiveDateKey(dateString)).filter((date): date is Date => date !== null));
   let startDate = $derived(availableDates[0] ?? fallbackStartDate);
-  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+  let selectedDateParam = $state<string | null>(browser ? new URL(window.location.href).searchParams.get('date') : null);
+
+  onMount(() => {
+    if (window.location.search || window.location.hash) {
+      window.history.replaceState(window.history.state, '', window.location.pathname);
+    }
+  });
+
+  function handleDateSelect(dateKey: string): void {
+    selectedDateParam = dateKey;
+  }
 
   async function loadArchive(dateKey: string | null): Promise<void> {
     const requestDateKey = dateKey;
@@ -93,6 +103,7 @@
   basePath="/colordle-archive"
   selectedDate={data.selectedDateKey}
   description="Every Colordle color answer. Find any past hex code solution instantly."
+  onSelectDate={handleDateSelect}
 />
 
 <section id="archive-answer" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 scroll-mt-28">
@@ -127,3 +138,6 @@
     </div>
   {/if}
 </section>
+
+
+

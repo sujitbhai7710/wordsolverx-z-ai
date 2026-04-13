@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
   import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameMonth, isSameDay, isAfter } from 'date-fns';
 
   let {
@@ -10,6 +11,7 @@
     basePath,
     selectedDate = null,
     description = '',
+    onSelectDate = null,
   }: {
     gameName: string;
     gameColor?: string;
@@ -19,6 +21,7 @@
     basePath: string;
     selectedDate?: string | null;
     description?: string;
+    onSelectDate?: ((dateKey: string) => void) | null;
   } = $props();
 
   const today = new Date();
@@ -41,7 +44,7 @@
           date: new Date(date),
           dateKey,
           dayNum: index + 1,
-          href: `${basePath}?date=${dateKey}#archive-answer`,
+          href: `${basePath}?date=${dateKey}`,
           formatted: format(date, 'MMMM d, yyyy'),
         });
       });
@@ -54,7 +57,7 @@
           date: new Date(d),
           dateKey,
           dayNum: num,
-          href: `${basePath}?date=${dateKey}#archive-answer`,
+          href: `${basePath}?date=${dateKey}`,
           formatted: format(d, 'MMMM d, yyyy'),
         });
         d = addDays(d, 1);
@@ -122,6 +125,27 @@
   }
   function goToMonth(date: Date) {
     currentMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+  }
+
+  function handlePuzzleClick(event: MouseEvent, dateKey: string): void {
+    if (
+      !browser ||
+      !onSelectDate ||
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    onSelectDate(dateKey);
+    requestAnimationFrame(() => {
+      document.getElementById('archive-answer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   const colorMap: Record<string, { bg: string; text: string; border: string; ring: string; gradient: string; hover: string; badge: string }> = {
@@ -260,6 +284,7 @@
               {#if puzzle && isCurrentMonth}
                 <a
                   href={puzzle.href}
+                  onclick={(event) => handlePuzzleClick(event, key)}
                   class="relative aspect-square flex flex-col items-center justify-center rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 {colors.hover} {colors.border} border group cursor-pointer {isSelected ? `ring-2 ${colors.ring}` : ''}"
                   title="{gameName} #{puzzle.dayNum} - {format(day, 'MMMM d, yyyy')}"
                 >
@@ -313,6 +338,7 @@
           {#each filteredPuzzles as puzzle}
             <a
               href={puzzle.href}
+              onclick={(event) => handlePuzzleClick(event, puzzle.dateKey)}
               class="flex items-center justify-between px-6 py-3.5 {colors.hover} transition-colors group {selectedDate === puzzle.dateKey ? colors.bg : ''}"
             >
               <div class="flex items-center gap-3">

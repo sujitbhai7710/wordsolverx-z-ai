@@ -178,10 +178,6 @@
 		}
 
 		selectedDate = date;
-		if (typeof window !== 'undefined') {
-			const dateKey = formatDateKey(date);
-			window.history.replaceState(window.history.state, '', `/nerdle-archive?date=${dateKey}`);
-		}
 		await fetchAnswer(date);
 	}
 
@@ -246,6 +242,10 @@
 		const dateParam = params.get('date');
 		const fromUrl = parseDateKey(dateParam);
 		const safeDate = fromUrl && isNerdleDate(fromUrl) && !isFutureDate(fromUrl) ? fromUrl : todayDate;
+
+		if (window.location.search || window.location.hash) {
+			window.history.replaceState(window.history.state, '', window.location.pathname);
+		}
 
 		selectedDate = safeDate;
 		currentMonth = new Date(safeDate.getFullYear(), safeDate.getMonth(), 1);

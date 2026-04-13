@@ -1,6 +1,6 @@
-<script lang="ts">
+﻿<script lang="ts">
   import { browser } from '$app/environment';
-  import { page } from '$app/state';
+  import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
   import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
   import { getContextoDateFromGameNumber } from '$lib/contexto';
@@ -26,7 +26,17 @@
   let loadError = $state<string | null>(null);
 
   const startDate = getContextoDateFromGameNumber(1);
-  let selectedDateParam = $derived(browser ? page.url.searchParams.get('date') : null);
+  let selectedDateParam = $state<string | null>(browser ? new URL(window.location.href).searchParams.get('date') : null);
+
+  onMount(() => {
+    if (window.location.search || window.location.hash) {
+      window.history.replaceState(window.history.state, '', window.location.pathname);
+    }
+  });
+
+  function handleDateSelect(dateKey: string): void {
+    selectedDateParam = dateKey;
+  }
 
   async function loadArchive(dateKey: string | null): Promise<void> {
     if (!dateKey) {
@@ -100,6 +110,7 @@
   basePath="/contexto-archive"
   selectedDate={data.selectedDateKey}
   description="Every Contexto answer word. Browse the full semantic puzzle history."
+  onSelectDate={handleDateSelect}
 />
 
 <section id="archive-answer" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 scroll-mt-28">
@@ -148,5 +159,8 @@
     </div>
   {/if}
 </section>
+
+
+
 
 
