@@ -103,27 +103,115 @@
       <WorldleSolverClient {faqs} />
     </div>
 
-    <article class="mt-10 grid gap-6 lg:grid-cols-2">
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Why use it</p>
-        <h2 class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">Turn raw Worldle clues into a ranked shortlist</h2>
-        <p class="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">
-          Worldle only gives you directional and distance feedback, which can still leave a lot of possible countries after one guess. This solver applies the same geographic math to every country in the dataset, then ranks the best fits so you can focus on the strongest candidates first.
+    <article class="mt-10 space-y-10">
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-5">What is Worldle?</h2>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          Worldle is a daily geography game created by @teuteuf. You see the silhouette of a country or territory and guess what it is. After each guess, you get two clues: the distance from your guess to the answer (in kilometers), and a direction arrow pointing from your guess toward the answer.
         </p>
-        <p class="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">
-          Because the filtering happens on the client, the experience feels immediate. You can add, remove, and reset clues without page reloads, which makes it practical while the actual puzzle is open in another tab.
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          That's it. No continent hint, no hemisphere clue, no population data. Just distance and direction. The silhouette helps — if you recognize the shape, you're halfway there. But for small island nations and territories most people have never heard of, the silhouette isn't much help at all.
+        </p>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+          The game has millions of daily players. Most solve it in 3-5 guesses once they learn how to read the distance-direction combo effectively.
         </p>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Best workflow</p>
-        <h2 class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">Use at least two clues for stronger matches</h2>
-        <p class="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">
-          One clue often leaves several countries that fit the same rough band. After your next Worldle guess, add that second clue here and the list usually drops much faster. If the results look wrong, check whether the arrow was read in the correct direction from your guess to the hidden country.
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-5">Why Distance-Only Clues Make Worldle Harder Than Countryle</h2>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          Countryle gives you five specific clues: hemisphere, continent, temperature, population, and direction. Each one eliminates a clear slice of the answer space. Worldle gives you two vague clues: a number (distance) and an arrow (direction). Both are imprecise.
         </p>
-        <p class="mt-4 text-base leading-7 text-slate-600 dark:text-slate-300">
-          If you decide you would rather reveal the answer than solve it, the <a class="font-semibold text-sky-700 underline decoration-sky-300 underline-offset-4 dark:text-sky-300" href="/worldle-answer-today">Worldle Answer Today</a> page gives you the current country plus a server-rendered date lookup for past puzzles.
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          A distance of 2,000 km with a northeast arrow from Brazil could point to roughly 20 countries across West Africa and Southern Europe. You need a second guess to narrow further. The same information in Countryle — "different continent, hotter" — would cut the field to maybe 5 countries immediately.
         </p>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+          This is why a solver helps more in Worldle than in most other geography games. The clues are fuzzier, the candidate list stays longer, and the difference between a good guess and a great guess is harder to judge by feel.
+        </p>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-5">How Our Worldle Solver Works</h2>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          You enter the country you guessed, the distance the game showed, and the direction arrow. The solver compares every country in its database against all your clues. Any country that doesn't match the distance (within a reasonable tolerance) and direction gets removed.
+        </p>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          The remaining countries are ranked by how closely they match all clues simultaneously. Countries that match the distance more precisely and align better with the direction arrow appear higher in the list.
+        </p>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+          Add a second or third clue and the candidate list collapses fast. The entire computation runs in your browser — no server calls, no waiting, no data leaving your device.
+        </p>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-sky-50 dark:from-slate-800 dark:to-sky-950 p-8 shadow-xl">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-5">The Best Countries to Guess First in Worldle</h2>
+        <div class="grid gap-4 md:grid-cols-3 mb-5">
+          <div class="rounded-xl bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800 p-5">
+            <h3 class="font-bold text-sky-800 dark:text-sky-300 mb-2">France</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Central to Western Europe. A distance of 8,000+ km with an east arrow points toward Asia. A short distance with a south arrow points toward Africa.</p>
+          </div>
+          <div class="rounded-xl bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800 p-5">
+            <h3 class="font-bold text-sky-800 dark:text-sky-300 mb-2">Brazil</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Large and centrally located in South America. A short distance with an east arrow eliminates most of the Americas. A long distance with a northeast arrow points toward Europe or Africa.</p>
+          </div>
+          <div class="rounded-xl bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800 p-5">
+            <h3 class="font-bold text-sky-800 dark:text-sky-300 mb-2">India</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Sits between the Middle East and Southeast Asia. A west arrow with moderate distance points toward the Middle East or Africa. An east arrow with short distance points toward Southeast Asia.</p>
+          </div>
+        </div>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+          The principle: guess countries near the center of a continent. They produce directional arrows that split the world into meaningful regions. A guess from a corner country — like New Zealand or Iceland — mostly tells you "the answer isn't near here," which is barely useful.
+        </p>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-5">When the Distance Clue Is Misleading</h2>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          Worldle measures distance from the geographic center of your guessed country to the center of the answer. For large countries, this can be confusing. The distance from the center of Russia to the center of the US is about 8,000 km, but Alaska is only 4 km from Russia's eastern tip at the Bering Strait.
+        </p>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+          Small countries are the opposite problem. If you guess Luxembourg and the answer is Belgium, the distance shows roughly 200 km — but the direction arrow might point in an unexpected direction because the geographic centers are close but offset.
+        </p>
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+          The solver uses the same center-to-center calculation that Worldle uses. If your distance reading looks weird, check whether you're dealing with a large country where center-to-center doesn't represent the closest border point.
+        </p>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60 dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-5">Tips for Narrowing Down the Answer Fast</h2>
+        <div class="space-y-5">
+          <div class="flex gap-4">
+            <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-sky-100 text-sky-700 font-bold flex items-center justify-center">1</span>
+            <div>
+              <h3 class="font-bold text-slate-900 dark:text-white">Use the silhouette first</h3>
+              <p class="text-slate-600 dark:text-slate-400 mt-1 text-sm">Before guessing, actually look at the country outline. Recognizable shapes — Italy's boot, Japan's arc, Chile's strip — eliminate the need for distance clues entirely on the first guess.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center">2</span>
+            <div>
+              <h3 class="font-bold text-slate-900 dark:text-white">Combine distance + direction mentally before entering clues</h3>
+              <p class="text-slate-600 dark:text-slate-400 mt-1 text-sm">"5,000 km northeast from Brazil" narrows to West Africa and Western Europe. You can probably name 3-4 candidates before even using the solver. Enter your clues anyway — the solver will confirm or correct your intuition.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center">3</span>
+            <div>
+              <h3 class="font-bold text-slate-900 dark:text-white">Don't forget about island territories</h3>
+              <p class="text-slate-600 dark:text-slate-400 mt-1 text-sm">Worldle includes overseas territories and small island nations. If the distance is huge and the direction points toward the middle of an ocean, think French Polynesia, New Caledonia, or Saint Helena — places most people forget exist.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-3xl bg-slate-100 dark:bg-slate-900 p-8 text-center space-y-6">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">More Solvers</h2>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/countryle-solver" class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-xl font-semibold text-slate-700 dark:text-slate-200 shadow-sm hover:shadow-md transition-shadow">Countryle Solver</a>
+          <a href="/worldle-answer-today" class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-xl font-semibold text-slate-700 dark:text-slate-200 shadow-sm hover:shadow-md transition-shadow">Worldle Answer Today</a>
+          <a href="/spotle-solver" class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-xl font-semibold text-slate-700 dark:text-slate-200 shadow-sm hover:shadow-md transition-shadow">Spotle Solver</a>
+          <a href="/5-letter-wordle-solver" class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-xl font-semibold text-slate-700 dark:text-slate-200 shadow-sm hover:shadow-md transition-shadow">Wordle Solver</a>
+        </div>
       </section>
     </article>
   </div>

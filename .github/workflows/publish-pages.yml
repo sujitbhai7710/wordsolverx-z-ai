@@ -8,7 +8,7 @@ on:
       - main
   schedule:
     # Run after the 16:30 UTC main-game rollover used by prerendered "today" pages.
-    - cron: '35 16 * * *'
+    - cron: "35 16 * * *"
   repository_dispatch:
     types:
       - pages-publish-requested
@@ -24,6 +24,11 @@ on:
           - main
           - waffle
           - gamedle
+      run_google_inspection:
+        description: Run a short Google URL inspection pass after deploy
+        required: false
+        default: true
+        type: boolean
       target_date:
         description: Optional target date in YYYY-MM-DD format for worker-style publishes
         required: false
@@ -39,10 +44,10 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 20
     concurrency:
-      group: pages-publish-${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}-${{ github.event.client_payload.target_date || github.event.inputs.target_date || github.sha || github.run_id }}
-      cancel-in-progress: false
+      group: pages-publish-${{ github.ref_name || 'detached' }}-${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}-${{ github.event.client_payload.target_date || github.event.inputs.target_date || 'default' }}
+      cancel-in-progress: true
     env:
       GROUP_NAME: ${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}
       TARGET_DATE: ${{ github.event.client_payload.target_date || github.event.inputs.target_date || '' }}
@@ -50,8 +55,12 @@ jobs:
       PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev
       PUBLIC_BASE_URL: https://wordsolver.tech
       INDEXING_ARTIFACT_DIR: artifacts/indexing
+      INDEXING_REQUEST_TIMEOUT_MS: 10000
       SITEMAP_URL: https://wordsolver.tech/sitemap.xml
-      GOOGLE_INSPECTION_DELAY_SECONDS: 120
+      ENABLE_GOOGLE_INSPECTION: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.run_google_inspection != 'false' }}
+      GOOGLE_INSPECTION_STAGGER_MS: 250
+      GOOGLE_INSPECTION_CONCURRENCY: 6
+      GOOGLE_INSPECTION_REQUEST_TIMEOUT_MS: 10000
       GOOGLE_INSPECTION_LIMIT: 30
       HAS_INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY != '' }}
       HAS_GOOGLE_SEARCH_CONSOLE: ${{ secrets.GOOGLE_SEARCH_CONSOLE_CREDENTIALS != '' && secrets.GOOGLE_SEARCH_CONSOLE_SERVICE_ACCOUNT != '' && secrets.GOOGLE_SEARCH_CONSOLE_SITE_URL != '' }}
@@ -160,7 +169,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.canary.outputs.skip != 'true'
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit
 
       - name: Materialize IndexNow Verification Key
         if: steps.canary.outputs.skip != 'true' && env.HAS_INDEXNOW_KEY == 'true'
@@ -192,30 +201,15 @@ jobs:
           token_format: access_token
           access_token_scopes: https://www.googleapis.com/auth/webmasters
 
-      - name: Submit Updated URLs To IndexNow
+      - name: Run Post-Deploy SEO Requests In Parallel
         if: steps.canary.outputs.skip != 'true'
         continue-on-error: true
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
-          INDEXING_TARGETS_PATH: ${{ steps.indexing_targets.outputs.targets_path }}
-        run: node scripts/seo/submit-indexnow.mjs
-
-      - name: Submit Sitemap To Google Search Console
-        if: steps.canary.outputs.skip != 'true' && steps.google_auth.outputs.access_token != ''
-        continue-on-error: true
-        env:
-          GOOGLE_ACCESS_TOKEN: ${{ steps.google_auth.outputs.access_token }}
-          GOOGLE_SEARCH_CONSOLE_SITE_URL: ${{ secrets.GOOGLE_SEARCH_CONSOLE_SITE_URL }}
-        run: node scripts/seo/submit-google-sitemap.mjs
-
-      - name: Inspect Priority URLs In Google
-        if: steps.canary.outputs.skip != 'true' && steps.google_auth.outputs.access_token != ''
-        continue-on-error: true
-        env:
           GOOGLE_ACCESS_TOKEN: ${{ steps.google_auth.outputs.access_token }}
           GOOGLE_SEARCH_CONSOLE_SITE_URL: ${{ secrets.GOOGLE_SEARCH_CONSOLE_SITE_URL }}
           INDEXING_TARGETS_PATH: ${{ steps.indexing_targets.outputs.targets_path }}
-        run: node scripts/seo/inspect-google-urls.mjs
+        run: node scripts/seo/run-post-deploy-seo.mjs
 
       - name: Write Indexing Summary
         if: steps.canary.outputs.skip != 'true'
