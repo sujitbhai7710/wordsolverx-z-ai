@@ -41,7 +41,32 @@
     {
       question: 'Can I solve Colorfle without revealing today\'s answer?',
       answer: 'Yes. Use the solver first, then visit the Colorfle answer today page only when you want to confirm the result.'
+    },
+    {
+      question: 'What do the green, yellow, and gray feedback colors mean in Colorfle?',
+      answer: 'Green means the color channel matches exactly — you have the right value. Yellow means you are close but not exact — the correct value is nearby. Gray means you are far off on that channel. Click each color swatch in the guess row to cycle through feedback states.'
+    },
+    {
+      question: 'How many guesses do I get in Colorfle?',
+      answer: 'Colorfle gives you 6 guesses to find the correct three-color combination. Each guess consists of three source colors that mix together to produce a target color. The solver can typically narrow the answer within 2-3 guesses.'
+    },
+    {
+      question: 'Can I use the color picker instead of typing a hex code?',
+      answer: 'Yes. Click "Pick a Color Instead" below the hex input to open a visual color picker. Select any color, then click "Use This Color" to submit it as your target hex. This is useful when you can see the target color on screen but do not know its hex value.'
+    },
+    {
+      question: 'Why does the solver show multiple suggestions instead of one answer?',
+      answer: 'Colorfle uses three source colors that mix together, so multiple combinations can produce similar target colors. The solver shows the top 5 matches ranked by similarity. Use the feedback from each guess to refine the list and converge on the exact answer.'
     }
+  ];
+
+  const solverLinks = [
+    { href: '/colorfle-answer-today', label: 'Colorfle Answer Today' },
+    { href: '/colorfle-archive', label: 'Colorfle Archive' },
+    { href: '/colordle-solver', label: 'Colordle Solver' },
+    { href: '/wordle-solver', label: 'Wordle Solver' },
+    { href: '/nerdle-solver', label: 'Nerdle Solver' },
+    { href: '/spotle-solver', label: 'Spotle Solver' }
   ];
 
   function handleSolveHex() {
@@ -168,6 +193,16 @@
       {
         '@type': 'FAQPage',
         mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } }))
+      },
+      {
+        '@type': 'HowTo',
+        name: 'How to use the Colorfle solver',
+        step: [
+          { '@type': 'HowToStep', name: 'Enter the target hex', text: 'Type or paste the target hex code from Colorfle into the input field, or use the color picker to select it visually.', position: 1 },
+          { '@type': 'HowToStep', name: 'Review suggestions', text: 'Click Solve to see the top 5 three-color combinations that produce the closest match to your target.', position: 2 },
+          { '@type': 'HowToStep', name: 'Use a suggestion as a guess', text: 'Click "Use This" on any suggestion to add it as a guess. Then set the feedback colors (green, yellow, gray) for each source color by clicking the swatches.', position: 3 },
+          { '@type': 'HowToStep', name: 'Refine with feedback', text: 'After setting feedback on all three colors, click Refine. The solver filters out combinations that contradict your feedback and shows updated suggestions.', position: 4 }
+        ]
       }
     ]
   })}</script>`}

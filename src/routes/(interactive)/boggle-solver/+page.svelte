@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+	import FAQSection from '$lib/components/FAQSection.svelte';
+	import { generateFAQSchema, generateHowToSchema } from '$lib/seo';
 	import { generateRandomBoggleBoard, solveBoggleBoard } from '$lib/boggle-client';
 
 	interface Position {
@@ -225,6 +227,33 @@
 		selectedWord = null;
 	}
 
+	const faqs = [
+		{
+			question: 'What board sizes does the Boggle solver support?',
+			answer: 'Any grid from 3x3 to 10x10. Standard Boggle is 4x4, Big Boggle is 5x5. Smaller boards finish faster but have fewer words. Larger boards produce more words but take a moment longer to solve.'
+		},
+		{
+			question: 'What is the difference between Classic and Revised dice?',
+			answer: 'Classic dice use the original 1972 Boggle letter distribution. Revised dice use the updated Hasbro distribution that slightly increases vowel frequency. Both produce valid boards. Choose "Random" if you want each letter picked independently by frequency.'
+		},
+		{
+			question: 'How does the Boggle solver find words?',
+			answer: 'It builds a trie from a dictionary of over 100,000 words, then runs a depth-first search from every cell on the board. Each path checks the trie as it goes, so it prunes dead ends early instead of checking every possible path.'
+		},
+		{
+			question: 'Can I share a Boggle board with someone?',
+			answer: 'Yes. After solving, click "Share Board URL" to copy a link that includes the board letters and size. Anyone who opens that link sees the same board already solved.'
+		},
+		{
+			question: 'Does the Boggle solver count the Q tile correctly?',
+			answer: 'Yes. In standard Boggle the Q die shows "Qu" and counts as two letters. The solver handles this the same way the physical game does.'
+		},
+		{
+			question: 'Is this Boggle solver free?',
+			answer: 'Yes, completely free. No sign-up, no ads, no limits. Pick a board size, enter letters or generate one, and solve.'
+		}
+	];
+
 	const jsonLd = JSON.stringify({
 		'@context': 'https://schema.org',
 		'@graph': [
@@ -236,7 +265,13 @@
 				url: 'https://wordsolver.tech/boggle-solver',
 				applicationCategory: 'GameApplication',
 				offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
-			}
+			},
+			generateFAQSchema(faqs),
+			generateHowToSchema('How to use the Boggle solver', [
+				{ name: 'Choose a board size', text: 'Pick a grid size from 3x3 to 10x10. Standard Boggle uses 4x4.' },
+				{ name: 'Enter or generate letters', text: 'Type your board letters manually or click Random to generate a board with proper Boggle dice distribution.' },
+				{ name: 'Click Solve', text: 'The solver finds every valid word and shows them grouped by length, with scores and clickable paths.' }
+			])
 		]
 	});
 
@@ -582,39 +617,181 @@
 
 		{#if !result}
 			<section class="mt-8 rounded-[30px] border border-slate-200 bg-white/90 shadow-[0_20px_60px_rgba(15,23,42,0.08)] p-6">
-				<h2 class="text-2xl font-bold text-slate-900 mb-4">How to Use</h2>
-				<div class="grid gap-6 md:grid-cols-2">
-					<div class="space-y-4 text-sm text-slate-600">
-						<div>
-							<h3 class="font-semibold text-slate-800">Board Size</h3>
-							<p class="mt-1">Create a Boggle board from 3x3 up to 10x10. Standard Boggle uses 4x4.</p>
-						</div>
-						<div>
-							<h3 class="font-semibold text-slate-800">Board Letters</h3>
-							<p class="mt-1">Enter your board manually or use the random generator to create one.</p>
-						</div>
+				<h2 class="text-2xl font-bold text-slate-900 mb-4">Quick Start</h2>
+				<div class="grid gap-4 md:grid-cols-3">
+					<div class="rounded-2xl bg-slate-50 p-4">
+						<h3 class="font-semibold text-slate-800">1. Pick a size</h3>
+						<p class="mt-1 text-sm text-slate-600">3x3 to 10x10. Standard Boggle is 4x4.</p>
 					</div>
-					<div class="space-y-4 text-sm text-slate-600">
-						<div>
-							<h3 class="font-semibold text-slate-800">Letter Distribution</h3>
-							<p class="mt-1">
-								4x4 boards use classic or revised dice. Other sizes use weighted letters that mimic Boggle frequency.
-							</p>
-						</div>
-						<div>
-							<h3 class="font-semibold text-slate-800">Interactive Features</h3>
-							<p class="mt-1">Click a word to highlight its path. Click a letter cell to filter words starting there.</p>
-						</div>
+					<div class="rounded-2xl bg-slate-50 p-4">
+						<h3 class="font-semibold text-slate-800">2. Enter letters</h3>
+						<p class="mt-1 text-sm text-slate-600">Type your board or hit Random to generate one with proper dice.</p>
+					</div>
+					<div class="rounded-2xl bg-slate-50 p-4">
+						<h3 class="font-semibold text-slate-800">3. Click Solve</h3>
+						<p class="mt-1 text-sm text-slate-600">Get every valid word, grouped by length, with scores and paths.</p>
 					</div>
 				</div>
 			</section>
 		{/if}
 
-		<section class="mt-8 rounded-[30px] border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-6">
-			<h2 class="text-2xl font-bold text-slate-900 mb-3">Source Logic Preserved</h2>
-			<p class="text-slate-600 leading-relaxed">
-				This page keeps the same dictionary, the same trie structure, the same DFS traversal, the same random-board rules, and the same path-based UI behavior from your standalone Boggle project. The page chrome is the only part that was adapted to the shared WordSolverX layout.
-			</p>
-		</section>
+		<article class="mt-10 space-y-10 max-w-4xl mx-auto">
+			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+				<h2 class="text-3xl font-bold text-slate-900 mb-5">What is Boggle?</h2>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					Boggle is a word search game that Allan Turoff invented in 1972 and Parker Brothers published (now Hasbro). You shake a tray of 16 lettered dice into a 4x4 grid, flip the three-minute timer, and write down every word you can find by connecting adjacent letters.
+				</p>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					Adjacent means any of the eight neighbors — horizontal, vertical, or diagonal. You can zigzag across the board as long as each step touches the previous letter and you never reuse a die in the same word. The Q die shows "Qu" and counts as two letters, which catches a lot of people off guard.
+				</p>
+				<p class="text-slate-600 leading-relaxed">
+					Three minutes sounds generous. It isn't. A typical 4x4 board contains 100-150 valid words, and most players find maybe 30-40. The gap between what's on the board and what you actually spot is where this solver comes in.
+				</p>
+			</section>
+
+			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+				<h2 class="text-3xl font-bold text-slate-900 mb-5">How Boggle Scoring Works</h2>
+				<p class="text-slate-600 leading-relaxed mb-5">
+					Longer words score dramatically more. A single 8-letter word is worth the same as eleven 3-letter words. Here's the breakdown:
+				</p>
+				<div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
+					<div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-center">
+						<p class="text-2xl font-black text-emerald-700">1</p>
+						<p class="text-xs font-semibold text-emerald-600 mt-1">3-4 letters</p>
+					</div>
+					<div class="rounded-xl bg-teal-50 border border-teal-200 p-4 text-center">
+						<p class="text-2xl font-black text-teal-700">2</p>
+						<p class="text-xs font-semibold text-teal-600 mt-1">5 letters</p>
+					</div>
+					<div class="rounded-xl bg-cyan-50 border border-cyan-200 p-4 text-center">
+						<p class="text-2xl font-black text-cyan-700">3</p>
+						<p class="text-xs font-semibold text-cyan-600 mt-1">6 letters</p>
+					</div>
+					<div class="rounded-xl bg-sky-50 border border-sky-200 p-4 text-center">
+						<p class="text-2xl font-black text-sky-700">5</p>
+						<p class="text-xs font-semibold text-sky-600 mt-1">7 letters</p>
+					</div>
+					<div class="rounded-xl bg-blue-50 border border-blue-200 p-4 text-center">
+						<p class="text-2xl font-black text-blue-700">11</p>
+						<p class="text-xs font-semibold text-blue-600 mt-1">8+ letters</p>
+					</div>
+				</div>
+				<p class="text-slate-600 leading-relaxed">
+					This scoring curve means finding one 7-letter word beats finding five 4-letter words. If you're playing competitively, stop chasing short words and hunt for the long ones — they swing games.
+				</p>
+			</section>
+
+			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+				<h2 class="text-3xl font-bold text-slate-900 mb-5">Why Most Players Miss Half the Board</h2>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					Humans are pattern-matchers. We scan for common prefixes (RE-, UN-, IN-) and suffixes (-ING, -ED, -TION). That works fine for the obvious words. It fails for the weird ones.
+				</p>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					The words people miss most fall into three buckets. First, words that snake diagonally — your eyes track rows and columns more easily than zigzag paths. Second, words starting with uncommon letters like J, K, Q, X, or Z — most players skip past these cells entirely. Third, plural forms and verb conjugations you wouldn't think to check, like RATES or SATED.
+				</p>
+				<p class="text-slate-600 leading-relaxed">
+					Run any board through this solver and compare its word list to yours. The gap is usually 50-70 missing words. That's not a skill issue — it's just how the human visual system works.
+				</p>
+			</section>
+
+			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+				<h2 class="text-3xl font-bold text-slate-900 mb-5">How This Boggle Solver Finds Every Word</h2>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					The solver loads a dictionary of over 100,000 words into a trie — a tree structure where each branch is a letter and each complete path from root to leaf is a word. Then it runs depth-first search from every cell on the board.
+				</p>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					Here's the key: as the DFS walks from cell to cell, it walks the trie at the same time. If the current path doesn't match any trie branch, it stops immediately instead of continuing down a dead end. This pruning is why a 4x4 board with 16 starting cells and up to 8 neighbors each finishes in under a second instead of exploring billions of paths.
+				</p>
+				<p class="text-slate-600 leading-relaxed">
+					The result is every valid word on the board — no more, no less. Click any word to see its exact path highlighted on the grid, or click a cell to filter for words that start there.
+				</p>
+			</section>
+
+			<section class="rounded-[30px] border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
+				<h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Finding Words You Keep Missing</h2>
+				<div class="space-y-5">
+					<div class="flex gap-4">
+						<span class="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">1</span>
+						<div>
+							<h3 class="font-bold text-slate-900">Scan the rare letters first</h3>
+							<p class="text-slate-600 mt-1 text-sm">J, K, Q, X, Z appear once per board at most. Words containing them are easier to find if you start from that letter instead of hoping to stumble on it. The Q die always shows "Qu" — look for QUEUE, QUIET, QUITE.</p>
+						</div>
+					</div>
+					<div class="flex gap-4">
+						<span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">2</span>
+						<div>
+							<h3 class="font-bold text-slate-900">Check plurals and past tenses</h3>
+							<p class="text-slate-600 mt-1 text-sm">If you see an S on the board, try adding it to every word you've already found. Same with ED, ING, and ER endings. This alone catches 10-15 extra words per round.</p>
+						</div>
+					</div>
+					<div class="flex gap-4">
+						<span class="flex-shrink-0 w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 font-bold flex items-center justify-center">3</span>
+						<div>
+							<h3 class="font-bold text-slate-900">Follow diagonals</h3>
+							<p class="text-slate-600 mt-1 text-sm">Diagonal paths are the hardest to spot visually. Trace each diagonal line of letters separately and see if any words jump out. Most missed words travel diagonally at some point.</p>
+						</div>
+					</div>
+					<div class="flex gap-4">
+						<span class="flex-shrink-0 w-10 h-10 rounded-xl bg-sky-100 text-sky-700 font-bold flex items-center justify-center">4</span>
+						<div>
+							<h3 class="font-bold text-slate-900">Use the solver as a training tool</h3>
+							<p class="text-slate-600 mt-1 text-sm">Solve the same board yourself first, then run it through the solver. Compare the lists. You'll start noticing patterns in the words you miss, and your next game will be better for it.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+				<h2 class="text-3xl font-bold text-slate-900 mb-5">Boggle Board Sizes: Which One to Pick</h2>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					4x4 is the standard. It's what the physical game uses, it's what most people grew up playing, and it produces a good mix of short and long words in three minutes.
+				</p>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					5x5 (Big Boggle) raises the ceiling. More cells means more paths, longer words, and higher scores. It also takes longer to search — expect 200-300 valid words instead of 100-150.
+				</p>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					3x3 is a warm-up round. Fewer than 30 words on most boards, and you can scan the whole thing in under a minute.
+				</p>
+				<p class="text-slate-600 leading-relaxed">
+					6x6 and above are for people who want to go deep. A 10x10 board can hold over 1,000 valid words. These larger boards are where the solver really earns its keep — no human is finding all of those unassisted.
+				</p>
+			</section>
+
+			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+				<h2 class="text-3xl font-bold text-slate-900 mb-5">Classic Dice vs Revised Dice vs Random</h2>
+				<p class="text-slate-600 leading-relaxed mb-4">
+					When you click Random, the solver needs to pick letters somehow. It offers three methods:
+				</p>
+				<div class="grid gap-4 md:grid-cols-3 mb-4">
+					<div class="rounded-xl bg-slate-50 p-5">
+						<h3 class="font-bold text-slate-900 mb-2">Classic Dice</h3>
+						<p class="text-sm text-slate-600">The original 1972 letter distribution across 16 dice. Each die has 6 faces. One die per cell. Faithful to the game as sold in the 70s and 80s.</p>
+					</div>
+					<div class="rounded-xl bg-slate-50 p-5">
+						<h3 class="font-bold text-slate-900 mb-2">Revised Dice</h3>
+						<p class="text-sm text-slate-600">Hasbro's updated distribution with slightly more vowels. This is what modern Boggle sets ship with. Better word formation on average.</p>
+					</div>
+					<div class="rounded-xl bg-slate-50 p-5">
+						<h3 class="font-bold text-slate-900 mb-2">Random</h3>
+						<p class="text-sm text-slate-600">Each letter picked independently by its frequency in English. No dice constraints. Produces the widest range of boards — some great, some terrible.</p>
+					</div>
+				</div>
+				<p class="text-slate-600 leading-relaxed">
+					For boards larger than 4x4, the dice distributions don't apply directly (there are only 16 classic dice). Instead, the solver uses weighted letter frequencies that match Boggle's vowel-to-consonant ratio. The result feels like a Boggle board even if it wasn't built from actual dice.
+				</p>
+			</section>
+
+			<FAQSection title="Boggle Solver FAQ" {faqs} />
+
+			<section class="rounded-[30px] bg-slate-100 p-8 text-center space-y-6">
+				<h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
+				<div class="flex flex-wrap justify-center gap-3">
+					<a href="/5-letter-wordle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">5-Letter Wordle Solver</a>
+					<a href="/hangman-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Hangman Solver</a>
+					<a href="/squaredle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Squaredle Solver</a>
+					<a href="/waffle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Waffle Solver</a>
+				</div>
+			</section>
+		</article>
 	</div>
 </div>
