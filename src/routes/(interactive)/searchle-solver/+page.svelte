@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import FAQSection from '$lib/components/FAQSection.svelte';
   import type { SearchleDailyPuzzle } from '$lib/searchle/daily';
   import {
     type SearchleFeedback,
@@ -45,6 +46,42 @@
   let promptInput: HTMLInputElement | null = $state(null);
   let searchleRuntime = $state<SearchleRuntime | null>(null);
   const dailyPuzzle = $derived(data.dailyPuzzle);
+
+  const faqs = [
+    {
+      question: 'What is Searchle?',
+      answer: 'Searchle is a daily puzzle game based on Google autocomplete suggestions. You see a partial search query with a blank and must guess the most common autocomplete word. Feedback shows green, yellow, or gray for each letter — same mechanic as Wordle, but the answers come from real Google search data.'
+    },
+    {
+      question: 'How does the Searchle solver work?',
+      answer: 'Type the partial search prompt (use ... for the blank), hit Solve, and the solver returns entropy-ranked autocomplete candidates. Pick a word, mark each letter green/yellow/gray to match the game feedback, and submit. The solver re-filters after each guess, shrinking the candidate pool until you find the answer.'
+    },
+    {
+      question: 'Does the solver use the same autocomplete data as Searchle?',
+      answer: 'The solver uses the same kind of Google autocomplete data that Searchle pulls from. Its word pool covers common search completions, so the suggestions line up with what the game treats as valid answers.'
+    },
+    {
+      question: 'Can I use the solver for the daily Searchle puzzle?',
+      answer: 'Yes. Click "Play Daily" to load today\'s prompt automatically. Then enter your guesses and feedback just like you would for any other prompt. The solver handles daily puzzles the same way it handles custom prompts.'
+    },
+    {
+      question: 'What do green, yellow, and gray mean in Searchle?',
+      answer: 'Green means the letter is correct and in the right position. Yellow (partial) means the letter appears in the answer but in a different position. Gray (absent) means the letter is not in the answer at all. Click each letter tile to cycle through these states.'
+    },
+    {
+      question: 'How many guesses does it usually take to solve Searchle?',
+      answer: 'Most players solve Searchle in 2-4 guesses when using the solver. The entropy-ranked first suggestion often gets close to the answer, and the feedback filter narrows it down quickly. Without a solver, players typically need 4-6 guesses.'
+    }
+  ];
+
+  const solverLinks = [
+    { href: '/wordle-solver', label: 'Wordle Solver' },
+    { href: '/nerdle-solver', label: 'Nerdle Solver' },
+    { href: '/quordle-solver', label: 'Quordle Solver' },
+    { href: '/searchle-answer-today', label: 'Searchle Answer Today' },
+    { href: '/spotle-solver', label: 'Spotle Solver' },
+    { href: '/contexto-solver', label: 'Contexto Solver' }
+  ];
 
   function loadSearchleRuntime(): Promise<SearchleRuntime> {
     if (!searchleRuntimePromise) {
@@ -285,6 +322,41 @@
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://wordsolver.tech/searchle-solver" />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        name: 'Searchle Solver',
+        description: 'Solve Searchle with entropy-ranked autocomplete guesses and feedback tracking.',
+        url: 'https://wordsolver.tech/searchle-solver'
+      },
+      {
+        '@type': 'WebApplication',
+        name: 'Searchle Solver',
+        applicationCategory: 'GameApplication',
+        operatingSystem: 'Any',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer }
+        }))
+      },
+      {
+        '@type': 'HowTo',
+        name: 'How to use the Searchle solver',
+        step: [
+          { '@type': 'HowToStep', name: 'Enter the search prompt', text: 'Type the partial Google search query from your Searchle game, using ... for the missing word.', position: 1 },
+          { '@type': 'HowToStep', name: 'Pick a suggested word', text: 'Click one of the entropy-ranked guesses, then set the letter feedback colors to match what Searchle showed you.', position: 2 },
+          { '@type': 'HowToStep', name: 'Submit and repeat', text: 'Click Submit Guess, then repeat with the updated suggestions until the answer is found.', position: 3 }
+        ]
+      }
+    ]
+  })}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -497,6 +569,162 @@
           <span class="ml-auto text-slate-400">&gt;</span>
         </div>
       </a>
+    </div>
+
+    <section class="mt-12 space-y-10">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">What is Searchle?</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          Searchle is a daily puzzle game that turns Google autocomplete into a guessing challenge. You see a partial search query with a missing word — something like "Why does my cat..." — and you need to figure out what word fills that blank. The answer is always one of the most common Google autocomplete completions for that query.
+        </p>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          The game drops a new puzzle every day. Some prompts are easy — "How to make..." probably leads to "pancakes" or "money." Others are surprisingly hard. When the prompt is "Why do people..." and the answer is "yawn," you realize how weird search behavior actually is.
+        </p>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          What makes Searchle different from most word games is that you are not guessing from a dictionary. You are guessing from what millions of people actually type into Google. That makes the answers feel more human and more unpredictable than a standard word puzzle.
+        </p>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">How Searchle Feedback Works</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          After each guess, Searchle gives you letter-by-letter feedback — same idea as Wordle. Each character in your guess gets one of three colors: green, yellow, or gray.
+        </p>
+        <div class="space-y-4 mb-4">
+          <div class="rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-5">
+            <h3 class="text-lg font-bold text-green-900 dark:text-green-300 mb-2">Green — Correct letter, correct spot</h3>
+            <p class="text-green-800 dark:text-green-200">The letter is in the answer and in the right position. If you guess "stare" and the "s" turns green, the answer starts with "s." Lock it in and work from there.</p>
+          </div>
+          <div class="rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-5">
+            <h3 class="text-lg font-bold text-yellow-900 dark:text-yellow-300 mb-2">Yellow — Right letter, wrong spot</h3>
+            <p class="text-yellow-800 dark:text-yellow-200">The letter appears somewhere in the answer but not where you placed it. If your "a" in position 2 turns yellow, the answer contains "a" somewhere else. Keep it in play for other positions.</p>
+          </div>
+          <div class="rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-5">
+            <h3 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">Gray — Letter not in the answer</h3>
+            <p class="text-slate-600 dark:text-slate-400">The letter does not appear in the answer at all. Eliminate it from future guesses. Every gray letter shrinks the search space and makes your next guess sharper.</p>
+          </div>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          The feedback is positional, not just about whether a letter exists. Two yellows in different positions tell you the letter appears twice. A green in position 1 and a yellow in position 4 means the same letter appears at least twice — once at the start and once somewhere around position 4.
+        </p>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Why Use a Searchle Solver</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          Searchle feels easy until it does not. The autocomplete angle makes answers slippery — you know the word is common, but which common word? A solver takes the guesswork out of those moments.
+        </p>
+        <div class="space-y-4 mb-4">
+          <div class="rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 p-5">
+            <h3 class="text-lg font-bold text-purple-900 dark:text-purple-300 mb-2">Autocomplete has a long tail</h3>
+            <p class="text-purple-800 dark:text-purple-200">A prompt like "Why does my..." has dozens of plausible completions. Dog, cat, car, phone, eye, back — they all work. The solver ranks them by how often they actually appear in search data, so you start with the most likely answer instead of guessing randomly.</p>
+          </div>
+          <div class="rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 p-5">
+            <h3 class="text-lg font-bold text-purple-900 dark:text-purple-300 mb-2">Feedback filtering is error-prone by hand</h3>
+            <p class="text-purple-800 dark:text-purple-200">When you have green and yellow letters spread across multiple guesses, mentally tracking which letters are still viable gets difficult. The solver eliminates impossible words after each guess instantly, so you never accidentally reuse a gray letter.</p>
+          </div>
+          <div class="rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 p-5">
+            <h3 class="text-lg font-bold text-purple-900 dark:text-purple-300 mb-2">Entropy ranking picks smarter guesses</h3>
+            <p class="text-purple-800 dark:text-purple-200">The top suggestion is not just the most likely answer — it is the guess that maximizes information gain. Sometimes a slightly less likely word splits the remaining candidates better, and the solver catches that. Humans rarely think about information entropy when picking guesses.</p>
+          </div>
+          <div class="rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 p-5">
+            <h3 class="text-lg font-bold text-purple-900 dark:text-purple-300 mb-2">Keep your streak alive</h3>
+            <p class="text-purple-800 dark:text-purple-200">If you are on a 30-day streak and staring at a blank prompt with no ideas, the solver gives you a concrete starting point instead of a blank-page panic. One good opener often cascades into a full solve within 2-3 guesses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">How Our Searchle Solver Works</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          The solver loads a database of common Google autocomplete completions indexed by prompt pattern. When you enter a prompt like "Why does my cat...", it finds every completion that matches and ranks them by search frequency.
+        </p>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          The ranking uses entropy scoring. Instead of just sorting by raw popularity, the solver calculates how much information each guess reveals. A guess that splits the remaining candidates into roughly equal groups scores high on entropy — because no matter what feedback you get, you eliminate a large chunk of possibilities. A guess that produces lopsided feedback patterns scores lower, even if it happens to be the answer.
+        </p>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          After you submit a guess and mark the feedback, the solver re-filters. Any completion that contradicts your feedback — wrong letters in green positions, missing letters marked yellow — gets removed. The solver then re-ranks the survivors and presents a fresh list. Each round narrows the pool until only a handful of candidates remain.
+        </p>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          The prompt autocomplete dropdown also helps. As you type, the solver suggests matching queries from its database. Pick the right prompt before solving, and you avoid typos that would throw off the entire result set.
+        </p>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Tips for Getting Better at Searchle</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          The solver does the heavy lifting, but a few mental habits make you faster even without it.
+        </p>
+        <div class="space-y-4 mb-4">
+          <div class="rounded-xl bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 p-5">
+            <h3 class="text-lg font-bold text-teal-900 dark:text-teal-300 mb-2">Think like a searcher, not a writer</h3>
+            <p class="text-teal-800 dark:text-teal-200">People type lazy, weird things into Google. "Why does my cat stare at me" is way more common than "Why does my cat observe me." When you brainstorm answers, go for the most colloquial, everyday phrasing. Formal language rarely wins in autocomplete.</p>
+          </div>
+          <div class="rounded-xl bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 p-5">
+            <h3 class="text-lg font-bold text-teal-900 dark:text-teal-300 mb-2">Pay attention to the prompt structure</h3>
+            <p class="text-teal-800 dark:text-teal-200">If the prompt ends with a preposition — "How to get rid of..." — the answer is usually a concrete noun (ants, acne, mice). If it starts with "Why does..." the answer tends to be a verb (rain, hurt, bark). The grammar of the prompt heavily constrains what words fit naturally.</p>
+          </div>
+          <div class="rounded-xl bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 p-5">
+            <h3 class="text-lg font-bold text-teal-900 dark:text-teal-300 mb-2">Start with the most common completion</h3>
+            <p class="text-teal-800 dark:text-teal-200">The solver puts the highest-probability answer first for a reason. Even if it is wrong, the feedback from a common word eliminates more candidates than feedback from a niche word. Your first guess should test the most popular letters and patterns, not try to be clever.</p>
+          </div>
+          <div class="rounded-xl bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 p-5">
+            <h3 class="text-lg font-bold text-teal-900 dark:text-teal-300 mb-2">Use partial feedback aggressively</h3>
+            <p class="text-teal-800 dark:text-teal-200">A yellow letter tells you the answer contains that character somewhere else. Do not just avoid the position it was in — actively try placing it in other spots. Yellow letters are free information, and the solver uses them to cut the candidate list dramatically.</p>
+          </div>
+          <div class="rounded-xl bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 p-5">
+            <h3 class="text-lg font-bold text-teal-900 dark:text-teal-300 mb-2">Learn from the solver</h3>
+            <p class="text-teal-800 dark:text-teal-200">After each game, compare your instinctive guesses to what the solver suggested. You will start noticing patterns — like how "how to" prompts almost always lead to practical verbs, while "why do" prompts lead to observational ones. Build that intuition and you will need the solver less over time.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Common Searchle Categories</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+          Searchle prompts fall into a handful of categories. Knowing which one you are dealing with makes the answer easier to predict.
+        </p>
+        <div class="space-y-4 mb-4">
+          <div class="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-5">
+            <h3 class="text-lg font-bold text-amber-900 dark:text-amber-300 mb-2">"Why does my..." prompts</h3>
+            <p class="text-amber-800 dark:text-amber-200">These ask about common problems or odd behaviors. The answer is almost always a verb or a body part. "Why does my dog eat grass" and "Why does my back hurt" are classic examples. Think about what people complain about most often.</p>
+          </div>
+          <div class="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-5">
+            <h3 class="text-lg font-bold text-amber-900 dark:text-amber-300 mb-2">"How to make..." prompts</h3>
+            <p class="text-amber-800 dark:text-amber-200">Practical, how-to queries dominate this category. Food is common — pancakes, slime, bread — but you also see non-food items like money, friends, or a resume. The answer is typically a single concrete noun that people want to create.</p>
+          </div>
+          <div class="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-5">
+            <h3 class="text-lg font-bold text-amber-900 dark:text-amber-300 mb-2">"How to get rid of..." prompts</h3>
+            <p class="text-amber-800 dark:text-amber-200">People search for pest removal, skin fixes, and household problems. Ants, acne, mice, roaches, smells — these are the usual suspects. The answer is always something undesirable that people want gone.</p>
+          </div>
+          <div class="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-5">
+            <h3 class="text-lg font-bold text-amber-900 dark:text-amber-300 mb-2">"What is..." prompts</h3>
+            <p class="text-amber-800 dark:text-amber-200">Definition-seeking queries. The answer is usually a trending term, a financial concept, or a health condition. "What is inflation," "What is a palindrome," "What is gluten." These favor nouns that people hear about but cannot clearly define.</p>
+          </div>
+          <div class="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-5">
+            <h3 class="text-lg font-bold text-amber-900 dark:text-amber-300 mb-2">"Is it bad to..." prompts</h3>
+            <p class="text-amber-800 dark:text-amber-200">Health and habit anxiety drives these. "Is it bad to crack your knuckles," "Is it bad to sleep with socks on." The answer is an everyday action people feel guilty or uncertain about. Think small habits, not major life decisions.</p>
+          </div>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Once you recognize the category, you can predict the type of word that fills the blank. Combine that with the solver's frequency ranking and you have a serious advantage over pure guessing.
+        </p>
+      </div>
+    </section>
+
+    <div class="mt-12">
+      <FAQSection title="Searchle Solver FAQ" {faqs} class="py-0" />
+    </div>
+
+    <div class="mt-8 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 text-center space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Explore More Solvers</h2>
+      <div class="flex flex-wrap justify-center gap-3">
+        {#each solverLinks as link}
+          <a href={link.href} class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-xl font-semibold text-sm text-slate-800 dark:text-white shadow-sm border border-slate-200 dark:border-slate-700 hover:border-purple-400 transition-colors">
+            {link.label}
+          </a>
+        {/each}
+      </div>
     </div>
   </main>
 </div>
