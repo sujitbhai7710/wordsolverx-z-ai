@@ -91,6 +91,18 @@
     <Breadcrumbs />
   </div>
 
+  <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-red-100 bg-gradient-to-br from-red-50 via-white to-amber-50 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl">
+      <p class="inline-flex rounded-full bg-red-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-red-700">
+        Word Puzzle Helper
+      </p>
+      <h1 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl lg:text-5xl">Hangman Solver</h1>
+      <p class="mt-3 max-w-2xl text-lg text-slate-600 leading-relaxed">
+        Enter the letter pattern, mark wrong guesses and known letters, and get entropy-ranked word suggestions and the best next letter to try.
+      </p>
+    </div>
+  </section>
+
   <HangmanSolverClient />
 
   <article class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">

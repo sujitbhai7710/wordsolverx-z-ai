@@ -91,6 +91,18 @@
     <Breadcrumbs />
   </div>
 
+  <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-100 bg-gradient-to-br from-amber-50 via-white to-yellow-50 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl">
+      <p class="inline-flex rounded-full bg-amber-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+        Puzzle Solver
+      </p>
+      <h1 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl lg:text-5xl">Light Out Solver</h1>
+      <p class="mt-3 max-w-2xl text-lg text-slate-600 leading-relaxed">
+        Build any 2×2 to 5×5 Lights Out board, toggle cells, and get the exact optimal move sequence using Gaussian elimination over GF(2).
+      </p>
+    </div>
+  </section>
+
   <LightsOutSolverClient />
 
   <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">

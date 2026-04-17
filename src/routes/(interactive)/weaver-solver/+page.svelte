@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+  import FAQSection from '$lib/components/FAQSection.svelte';
+  import { generateFAQSchema, generateHowToSchema, generateBreadcrumbSchema } from '$lib/seo';
   import {
     WORDSOLVERX_WORD_LENGTHS,
     getWordLadderIndexClient,
@@ -146,39 +148,51 @@
     return classes;
   }
 
+  const faqs = [
+    {
+      question: 'What is Weaver?',
+      answer: 'Weaver is a daily word ladder game where you change one letter at a time to get from a start word to a target word. Every step must be a real word. The goal is to do it in as few steps as possible.',
+    },
+    {
+      question: 'How does the Weaver Solver work?',
+      answer: 'Type your start word and end word. The solver detects the word length, loads the right word list, and runs a breadth-first search to find every shortest path between the two words. Results appear automatically — no button needed.',
+    },
+    {
+      question: 'What word lengths does the solver support?',
+      answer: 'The solver handles 3 to 12 letter words. Both words must be the same length. Type them in and the correct word list loads automatically.',
+    },
+    {
+      question: 'Why does the solver show multiple paths?',
+      answer: 'Sometimes there are several routes of equal length between two words. The solver shows up to 5 shortest paths so you can pick the one that uses words you prefer.',
+    },
+    {
+      question: 'What happens when no path exists?',
+      answer: 'Some word pairs have no valid connection in the dictionary. If that happens, the solver tells you directly. It means there is no sequence of single-letter changes that connects those two words through real words.',
+    },
+    {
+      question: 'Is this the same algorithm as the Weaver game uses?',
+      answer: 'The solver uses bidirectional BFS, which is faster than a single-direction search. It explores from both ends simultaneously and stops when the two fronts meet. The result is always the true shortest path.',
+    },
+    {
+      question: 'Can I use this for any word ladder puzzle, not just Weaver?',
+      answer: 'Yes. The underlying algorithm works for any word ladder problem. If you have a word pair from a different game or puzzle book, just type them in. As long as both words are the same length and in the dictionary, the solver will find the path.',
+    },
+  ];
+
   const jsonLdSchema = JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'ProfessionalService',
-        name: 'Weaver Solver',
-        description: 'Professional solver for the Weaver word ladder game supporting 3-12 letter words.',
-        url: 'https://wordsolver.tech/weaver-solver',
-        areaServed: 'Worldwide',
-        serviceType: 'Puzzle Solving Service',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      },
-      {
-        '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'What is Weaver?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Weaver is a daily word game where you transform a start word into an end word by changing one letter at a time, with each step being a valid word.'
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'How does the Weaver Solver work?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'It finds the true shortest path between two words using one shared word ladder algorithm, ensuring you get a valid optimal solution.'
-            },
-          },
-        ],
-      },
+      generateFAQSchema(faqs),
+      generateHowToSchema('How to use the Weaver Solver', [
+        { name: 'Enter the start word', text: 'Type your starting word into the top input. It turns green when the solver recognizes it as a valid dictionary word.' },
+        { name: 'Enter the end word', text: 'Type the target word in the bottom input. Both words must be the same length between 3 and 12 letters.' },
+        { name: 'Wait for results', text: 'The solver detects the word length, loads the word list, and finds the shortest path automatically. No button press needed.' },
+        { name: 'Review the paths', text: 'Up to 5 shortest paths appear as letter grids. Green tiles show letters that match the target word at that position.' },
+      ]),
+      generateBreadcrumbSchema([
+        { name: 'Home', url: 'https://wordsolver.tech' },
+        { name: 'Weaver Solver', url: 'https://wordsolver.tech/weaver-solver' },
+      ]),
     ],
   });
 </script>
@@ -199,12 +213,22 @@
   {@html `<script type="application/ld+json">${jsonLdSchema}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100 flex flex-col items-center p-4 sm:p-6">
-  <header class="mb-6 text-center pt-6">
+<main class="min-h-screen bg-slate-50">
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <Breadcrumbs />
-    <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700">Weaver Solver</h1>
-    <p class="text-lg text-gray-600 mt-2">Type your start and end words. The solver auto-detects word length and finds the shortest path.</p>
-  </header>
+  </div>
+
+  <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 px-6 py-8 shadow-2xl">
+      <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">Word Ladder Game</p>
+      <h1 class="mt-4 text-4xl font-black text-white">Weaver Solver</h1>
+      <p class="mt-4 max-w-3xl text-lg text-white/80">
+        Type your start and end words. The solver auto-detects word length and finds the shortest path — no button needed.
+      </p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-5xl px-4 pb-4 sm:px-6 lg:px-8">
 
   {#if error}
     <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 max-w-md w-full text-center">
@@ -339,126 +363,119 @@
     </div>
   </div>
 
-  <footer class="mt-10 text-center text-gray-500 text-sm max-w-md w-full">
-    <div class="bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-md border border-gray-200 mb-8">
-      <h3 class="font-semibold text-gray-700 mb-2">How To Use</h3>
-      <p class="mb-3">Type your starting word and destination word. The solver auto-detects the word length and instantly finds the shortest path.</p>
-      <p class="mb-3">Both words must be the same length (3-12 letters) and valid English words.</p>
-      <p class="text-xs text-gray-500 mt-2">Inspired by the game Weaver.</p>
+  </div>
+
+  <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">What the Weaver game actually is</h2>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        Weaver gives you two words of the same length and asks you to get from one to the other by changing exactly one letter per step. Every intermediate word has to be real. COLD → CORD → WORD → WARD → WARM is a classic example — four steps, four valid words.
+      </p>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        The daily version picks one word pair. You try to beat it in fewer steps than the par. Some pairs have an obvious path. Others send you hunting through less common words before you find the right bridge.
+      </p>
+      <p class="text-slate-600 leading-relaxed">
+        The concept goes back to 1879. Lewis Carroll invented it and called them Doublets, published in Vanity Fair magazine. His first example: HEAD → HEAL → TEAL → TELL → TALL → TAIL. Same rule, same structure — just no leaderboard.
+      </p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">When the path isn't obvious</h2>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        Short words look easy. Three-letter pairs like CAT → DOG feel approachable, but CAT and DOG share no letters. You need a bridge word, then another, then another. CAT → BAT → BAD → BAG → BOG → DOG — five steps for what looked like a simple hop.
+      </p>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        Longer words have more letters to change but also more options at each step. A seven-letter word can swap any of seven positions, each producing a potential neighbor. The search space is bigger, but there are also more paths through it.
+      </p>
+      <p class="text-slate-600 leading-relaxed">
+        The hardest puzzles involve words with unusual letter patterns — lots of uncommon consonants, or vowel combinations that only appear in a few words. There might be only one valid intermediate word at a certain step, and if you don't know it, you're stuck.
+      </p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">How the solver finds the shortest path</h2>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        The solver uses bidirectional breadth-first search. It explores outward from both the start word and end word at the same time and stops the moment the two fronts meet. This is faster than searching from one end alone, especially for longer words.
+      </p>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        BFS guarantees the shortest path. It checks every path of length N before any path of length N+1. The first time a word appears in both frontiers, that's the meeting point — and you know it's optimal because no shorter path could have been missed.
+      </p>
+      <p class="text-slate-600 leading-relaxed">
+        The word graph is built by comparing every word of the target length to every other. Two words are connected if they differ by exactly one letter. For 4-letter words, that graph has tens of thousands of edges. The solver navigates it in under a second.
+      </p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">Patterns that actually help</h2>
+      <div class="space-y-5">
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center">1</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Work from both ends</h3>
+            <p class="text-slate-600 mt-1 text-sm">Think about what words are one step from your start, and what words are one step from your target. If any word appears on both lists, you've found a two-step path.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center">2</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Change vowels last</h3>
+            <p class="text-slate-600 mt-1 text-sm">Consonant swaps tend to preserve word meaning and stay in the dictionary. Changing the vowel often jumps into a different word family with fewer connections.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-violet-100 text-violet-700 font-bold flex items-center justify-center">3</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Know your three-letter words</h3>
+            <p class="text-slate-600 mt-1 text-sm">Short words like OAT, EAT, EAR, OAR, OAK form dense clusters. If your path goes through one of these, you often have several options for the next step.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center">4</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Avoid rare words as bridges</h3>
+            <p class="text-slate-600 mt-1 text-sm">A valid dictionary word isn't always useful. If only one other word connects to it, it's a dead end in disguise. Look for words with many neighbors.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center">5</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Use the solver to learn</h3>
+            <p class="text-slate-600 mt-1 text-sm">After you've tried a puzzle, look at the solver's path. Pay attention to which bridge words it chose. Those words tend to be highly connected — knowing them helps on future puzzles.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">Why some word pairs have no path</h2>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        Not every pair of same-length words is connected. The word graph can have disconnected components — islands of words that can only reach each other and not the broader network.
+      </p>
+      <p class="text-slate-600 mb-4 leading-relaxed">
+        Unusual words with uncommon letter patterns often end up isolated. They might have only one or two neighbors in the graph, and those neighbors might not connect back to the main component.
+      </p>
+      <p class="text-slate-600 leading-relaxed">
+        The daily Weaver game is designed to avoid this. Puzzle creators pick pairs from the connected core of the word graph. If the solver tells you no path exists, one of your words is probably spelled differently than expected, or it's not in the dictionary the solver uses.
+      </p>
+    </section>
+
+    <div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+      <FAQSection class="py-0" title="Weaver Solver FAQ" {faqs} />
     </div>
 
-    <!-- Content & FAQ Section -->
-    <section class="bg-white/90 backdrop-blur-sm p-6 rounded-xl shadow-md border border-gray-200 text-left mb-8">
-      <h2 class="text-2xl font-bold text-indigo-700 mb-4 text-center">Mastering the Word Ladder</h2>
-      <div class="prose prose-sm max-w-none text-gray-700">
-        <p class="mb-4">
-          Weaver is a captivating word game where your goal is to "weave" your way from a starting word to an ending word, changing only one letter at a time. Each intermediate step must be a valid word. It's a classic word ladder puzzle brought to the daily web game era.
-        </p>
-        <p class="mb-4">
-          Our <strong>Weaver Solver</strong> supports words from <em>3 to 12 letters</em>, using a breadth-first search algorithm to find the <em>shortest possible path</em> between any two words. This helps you solve even the trickiest daily puzzles in seconds.
-        </p>
-      </div>
-
-      <div class="mt-8 border-t border-gray-200 pt-6">
-        <h3 class="text-xl font-bold text-indigo-600 mb-4">Common Questions</h3>
-        <div class="space-y-4">
-          <div>
-            <h4 class="font-semibold text-gray-900">How do I use the solver?</h4>
-            <p class="text-sm text-gray-600 mt-1">
-              Type your start word and end word into the text fields. The solver automatically detects the word length and calculates the shortest path between them.
-            </p>
-          </div>
-          <div>
-            <h4 class="font-semibold text-gray-900">Why are some paths longer?</h4>
-            <p class="text-sm text-gray-600 mt-1">
-              Sometimes, direct connections are impossible because intermediate words don't exist. The solver must take a "detour" through other words to reach the destination, resulting in a longer ladder.
-            </p>
-          </div>
-          <div>
-            <h4 class="font-semibold text-gray-900">What word lengths are supported?</h4>
-            <p class="text-sm text-gray-600 mt-1">
-              The solver supports 3 to 12 letter words. Just type your words and the correct word list is loaded automatically.
-            </p>
-          </div>
-        </div>
+    <section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/word-ladder-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Word Ladder Solver</a>
+        <a href="/5-letter-wordle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Wordle Solver</a>
+        <a href="/squaredle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Squaredle Solver</a>
+        <a href="/boggle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Boggle Solver</a>
+        <a href="/hangman-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Hangman Solver</a>
       </div>
     </section>
-
-    <!-- SEO Content Section -->
-    <section class="space-y-8 mt-8">
-      <div class="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-md border border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Why Use a Weaver Solver?</h2>
-        <div class="prose prose-lg max-w-none text-gray-600">
-          <p class="mb-6 leading-relaxed">
-            Weaver puzzles can be deceptively difficult. While the concept is simple — change one letter at a time to transform one word into another — finding the optimal path requires exploring many possibilities. Some word pairs have obvious connections, while others require circuitous routes through unexpected intermediate words.
-          </p>
-          <p class="mb-6 leading-relaxed">
-            A Weaver solver eliminates the frustration of dead ends. Instead of manually trying different letter changes and hoping each result is a real word, the solver maps out all possible paths and shows you the shortest one. This is especially valuable for the daily puzzle, where you might encounter unfamiliar word pairs.
-          </p>
-          <p class="leading-relaxed">
-            Beyond just finding answers, the solver helps you understand word relationships. By seeing which words connect to which, you develop intuition about letter patterns and word families. This knowledge improves your performance in all word games, not just Weaver.
-          </p>
-        </div>
-      </div>
-
-      <div class="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-md border border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">How the Word Ladder Algorithm Works</h2>
-        <div class="prose prose-lg max-w-none text-gray-600">
-          <p class="mb-6 leading-relaxed">
-            The solver uses a bidirectional breadth-first search (BFS) algorithm. This means it explores from both the start word and end word simultaneously, meeting in the middle. This approach is significantly faster than searching from one direction only.
-          </p>
-          <p class="mb-6 leading-relaxed">
-            Here's how it works: First, the solver builds a graph where each word is a node, and edges connect words that differ by exactly one letter. When you enter a start and end word, the algorithm explores this graph to find the shortest path between them.
-          </p>
-          <p class="leading-relaxed">
-            The algorithm guarantees finding the shortest path because BFS explores all paths of length N before any paths of length N+1. When the two search fronts meet, we know we've found the optimal solution. The solver displays up to 5 different paths, all of the same minimum length, giving you options for how to approach the puzzle.
-          </p>
-        </div>
-      </div>
-
-      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-100">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Tips for Getting Better at Weaver</h2>
-        <div class="space-y-6 text-lg text-gray-600">
-          <p class="leading-relaxed">
-            Weaver rewards vocabulary and pattern recognition. Here are strategies to improve your game:
-          </p>
-          <ul class="space-y-4 ml-4">
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Look for common letter patterns</strong> — Words often connect through common patterns. If you need to change 'A' to 'E', look for words where that position commonly has either letter.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Work from both ends</strong> — Just like our algorithm, you can think about what words might connect to both the start and end. Meeting in the middle often reveals the path.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Know your word families</strong> — Words that rhyme or share common endings often connect. CAT → BAT → BAG → TAG is a simple example of following a word family.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Avoid dead ends</strong> — Some words have few connections. If you find yourself stuck, backtrack and try a different intermediate word with more connections.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Use the solver to learn</strong> — After solving (or when stuck), use the solver to see the optimal path. Analyze why certain words were chosen and apply that knowledge to future puzzles.
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-md border border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Understanding Word Ladder History</h2>
-        <div class="prose prose-lg max-w-none text-gray-600">
-          <p class="mb-6 leading-relaxed">
-            Word ladders have a rich history dating back to 1879, when Lewis Carroll (author of Alice in Wonderland) invented them. He called them "Doublets" and published them in Vanity Fair magazine. The concept was simple: transform one word into another by changing one letter at a time, with each intermediate step being a valid word.
-          </p>
-          <p class="mb-6 leading-relaxed">
-            Carroll's original example was transforming "HEAD" into "TAIL": HEAD → HEAL → TEAL → TELL → TALL → TAIL. This six-step transformation demonstrates the elegant simplicity of the puzzle — each step changes exactly one letter, and every intermediate word is meaningful.
-          </p>
-          <p class="leading-relaxed">
-            Modern Weaver games follow the same principle but add daily puzzle elements. Each day brings a new word pair to connect, and players compete to find the shortest path. Our solver helps you discover these optimal paths, whether you're stuck on today's puzzle or exploring the fascinating world of word transformations.
-          </p>
-        </div>
-      </div>
-    </section>
-  </footer>
-</div>
+  </div>
+</main>
 
 <style>
   .animate-fadeIn {

@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
+  import { generateFAQSchema, generateHowToSchema, generateBreadcrumbSchema } from '$lib/seo';
 
   interface CellConstraint {
     index: number;
@@ -175,34 +176,28 @@
   }
 
   const faqs = [
-    { question: 'How does the Waffle Solver work?', answer: 'Our solver uses a smart algorithm to test thousands of letter combinations against the dictionary to find the only solution that fits the grid constraints (green and yellow letters) in the fewest moves.' },
-    { question: 'Can I solve past Waffles?', answer: "Yes! Use the date picker next to the 'Auto Fill Today' button to load and solve Waffle puzzles from previous days." },
-    { question: 'Is it free to use?', answer: 'Absolutely. This Waffle Solver is 100% free and open for everyone to use daily.' },
-    { question: 'What do the colors mean?', answer: 'Green means the letter is in the correct spot. Yellow means the letter is in the word (row or column) but in the wrong spot. Gray/White means the letter is not in that specific word.' },
+    { question: 'How does the Waffle Solver work?', answer: 'Enter the letters from your Waffle grid and mark each cell green or yellow based on what the game shows. Click Solve, and the WASM engine tests every valid letter arrangement against the dictionary to find all solutions that fit.' },
+    { question: 'Can I solve past Waffles?', answer: "Yes. Use the date picker next to the 'Auto Fill Today' button to load and solve Waffle puzzles from any previous day." },
+    { question: 'Is it free to use?', answer: 'The Waffle Solver is completely free. No sign-up, no limits.' },
+    { question: 'What do the colors mean?', answer: 'Green means the letter is already in the correct position. Yellow means the letter belongs in that word (row or column) but is in the wrong spot. White or gray means the letter does not belong in that specific word.' },
+    { question: 'Why does the solver sometimes find more than one solution?', answer: 'Occasionally the grid constraints allow multiple valid letter arrangements. Each result shown satisfies all the color hints and uses only real English words. You can try all of them in the game.' },
+    { question: 'What does Auto Fill Today do?', answer: "Auto Fill Today fetches today's Waffle puzzle from the official Waffle API and fills the grid automatically, including starting colors. You skip manual entry entirely." },
+    { question: 'How many swaps does a perfect Waffle score take?', answer: 'Every Waffle puzzle is solvable in exactly 10 swaps, which earns a 5-star score. Each extra swap costs half a star. Knowing the target arrangement from the solver lets you plan the most efficient route.' },
   ];
 
-  const jsonLdSchema = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'ProfessionalService',
-        name: 'Waffle Solver',
-        description: 'High-performance solver for the daily Waffle word puzzle.',
-        url: 'https://wordsolver.tech/waffle-solver',
-        areaServed: 'Worldwide',
-        serviceType: 'Puzzle Solving Service',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      },
-      {
-        '@type': 'FAQPage',
-        mainEntity: faqs.map((faq) => ({
-          '@type': 'Question',
-          name: faq.question,
-          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-        })),
-      },
-    ],
-  });
+  const jsonLdSchema = JSON.stringify([
+    generateFAQSchema(faqs),
+    generateHowToSchema('How to use the Waffle Solver', [
+      { name: 'Fill the board', text: "Type the letters from your current Waffle grid into the input cells, or click 'Auto Fill Today' to load them automatically." },
+      { name: 'Set the colors', text: 'Click each cell to cycle through white, yellow, and green to match what the Waffle game shows you.' },
+      { name: 'Click Solve', text: 'The WASM engine evaluates every valid arrangement and returns all dictionary-valid solutions.' },
+      { name: 'Use the result', text: 'Pick a solution and plan your swaps to reach it in as few moves as possible — ideally 10 for a perfect score.' },
+    ]),
+    generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Waffle Solver', url: 'https://wordsolver.tech/waffle-solver' },
+    ]),
+  ]);
 
   const solverLinks = [
     { href: '/5-letter-wordle-solver', label: '5-Letter Wordle Solver' },
@@ -235,34 +230,23 @@
   </div>
 {/if}
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-950 py-12 px-4 sm:px-6">
-  <div class="max-w-4xl mx-auto space-y-12">
+<main class="min-h-screen bg-amber-50">
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <Breadcrumbs />
+  </div>
 
-    <!-- Header Section -->
-    <div class="text-center space-y-6">
-      <div class="flex justify-center mb-6">
-        <img
-          src="/waffle-solver.webp"
-          alt="Waffle Solver Featured"
-          width="150"
-          height="150"
-          class="rounded-3xl shadow-lg"
-        />
-      </div>
-      <h1 class="text-6xl font-black text-gray-900 dark:text-white tracking-tight sm:text-7xl">
-        Waffle <span class="text-amber-600">Solver</span>
-      </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-medium leading-relaxed">
-        The world's fastest Waffle helper. Solve any grid in milliseconds using our high-performance Rust engine.
-      </p>
+  <!-- Hero Banner -->
+  <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 px-6 py-8 shadow-2xl text-center space-y-4">
+      <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">Daily Word Puzzle</p>
+      <h1 class="text-4xl font-black text-white sm:text-5xl">Waffle Solver</h1>
+      <p class="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">Enter your Waffle grid, mark the colors, and get every valid solution in milliseconds. Auto-fill today's puzzle with one click.</p>
     </div>
+  </section>
 
-    <!-- Main Content Card -->
-    <div class="bg-white dark:bg-gray-900 rounded-[48px] shadow-2xl p-6 sm:p-14 border border-gray-100 dark:border-gray-800 relative overflow-hidden">
-      <div class="absolute top-0 right-0 p-8 opacity-5 dark:opacity-10 pointer-events-none">
-        <svg class="w-64 h-64 text-amber-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z" /></svg>
-      </div>
+  <!-- Interactive Component -->
+  <div class="mx-auto max-w-4xl px-4 pb-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-14 border border-gray-100 relative overflow-hidden">
 
       <!-- Input Grid Area -->
       <div class="flex flex-col items-center gap-6 relative z-10 w-full px-2">
@@ -296,7 +280,7 @@
       </div>
 
       <!-- Top Controls -->
-      <div class="flex flex-col items-center gap-6 relative z-10 pt-8 border-t border-gray-100 dark:border-gray-800 w-full max-w-2xl mx-auto">
+      <div class="flex flex-col items-center gap-6 relative z-10 pt-8 border-t border-gray-100 w-full max-w-2xl mx-auto">
         <p class="text-center text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">
           Load Puzzle Data
         </p>
@@ -310,17 +294,17 @@
             {loading ? 'Fetching...' : 'Auto Fill Today'} {!loading ? '🚀' : ''}
           </button>
 
-          <div class="flex items-center gap-1 bg-gray-50 dark:bg-gray-800/50 p-1 rounded-xl border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200">
             <input
               type="date"
               value={selectedDate}
               oninput={(e) => (selectedDate = (e.target as HTMLInputElement).value)}
-              class="bg-transparent border-none rounded-lg px-3 py-1.5 text-xs font-bold focus:ring-0 w-32 dark:text-gray-200"
+              class="bg-transparent border-none rounded-lg px-3 py-1.5 text-xs font-bold focus:ring-0 w-32"
             />
             <button
               onclick={() => fetchAndFill(`https://api.wafflegame.workers.dev/date/${selectedDate}`)}
               disabled={loading || !selectedDate}
-              class="px-4 py-1.5 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg font-bold text-xs shadow-sm transition-all active:scale-95 border border-gray-100 dark:border-gray-600"
+              class="px-4 py-1.5 bg-white hover:bg-gray-50 rounded-lg font-bold text-xs shadow-sm transition-all active:scale-95 border border-gray-100"
             >
               Load
             </button>
@@ -328,7 +312,7 @@
 
           <button
             onclick={clearGrid}
-            class="px-4 py-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-500 hover:text-red-500 rounded-xl font-bold text-sm transition-all flex items-center gap-2"
+            class="px-4 py-2.5 bg-gray-100 hover:bg-red-50 text-gray-500 hover:text-red-500 rounded-xl font-bold text-sm transition-all flex items-center gap-2"
           >
             🗑️ Reset
           </button>
@@ -351,21 +335,21 @@
 
       <!-- Solutions Display Area -->
       {#if solutions.length > 0}
-        <div bind:this={solutionsRef} class="mt-20 border-t-2 border-gray-100 dark:border-gray-800 pt-16">
+        <div bind:this={solutionsRef} class="mt-20 border-t-2 border-gray-100 pt-16">
           <div class="text-center mb-12">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-green-100 text-green-800 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
               Success
             </div>
-            <h3 class="text-4xl font-black text-gray-900 dark:text-white mb-2">
+            <h3 class="text-4xl font-black text-gray-900 mb-2">
               {solutions.length} Valid Solution{solutions.length !== 1 ? 's' : ''} Found
             </h3>
-            <p class="text-gray-500 dark:text-gray-400">All arrangements below satisfy the puzzle constraints.</p>
+            <p class="text-gray-500">All arrangements below satisfy the puzzle constraints.</p>
           </div>
 
           <div class="flex flex-wrap justify-center gap-12 sm:gap-16">
             {#each solutions as sol, idx}
               <div class="flex flex-col items-center gap-6">
-                <div class="inline-block p-4 sm:p-6 rounded-[24px] shadow-sm border-2 sm:border-4 ring-1 bg-green-50 dark:bg-green-900/10 border-green-100 dark:border-green-900/30 ring-green-200 dark:ring-gray-800/20">
+                <div class="inline-block p-4 sm:p-6 rounded-[24px] shadow-sm border-2 sm:border-4 ring-1 bg-green-50 border-green-100 ring-green-200">
                   <div class="grid grid-cols-5 gap-1.5 sm:gap-2">
                     {#each Array(5) as _, r}
                       {#each Array(5) as _, c}
@@ -387,7 +371,7 @@
                     {/each}
                   </div>
                 </div>
-                <span class="px-6 py-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl text-sm font-black uppercase tracking-widest">
+                <span class="px-6 py-2 bg-gray-100 text-gray-600 rounded-xl text-sm font-black uppercase tracking-widest">
                   Option #{idx + 1}
                 </span>
               </div>
@@ -396,181 +380,70 @@
         </div>
       {/if}
     </div>
+  </div>
 
-    <!-- SEO Content Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-8">
-      <div class="bg-white dark:bg-gray-900 p-12 rounded-[56px] shadow-sm border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
-        <h3 class="text-3xl font-black mb-8 flex items-center gap-4">
-          <span class="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-[24px]">📖</span>
-          How to Use
-        </h3>
-        <div class="space-y-8">
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 rounded-[18px] flex items-center justify-center font-black text-xl shadow-sm">1</div>
+  <!-- SEO Content -->
+  <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">How to Use the Waffle Solver</h2>
+      <div class="space-y-6">
+        {#each [
+          { n: 1, title: 'Fill the board', text: 'Type the 21 letters from your Waffle grid. Or click "Auto Fill Today" to fetch the current puzzle automatically — no manual entry needed.' },
+          { n: 2, title: 'Mark the colors', text: 'Click each cell to cycle through white, yellow, and green. Match exactly what the game shows you.' },
+          { n: 3, title: 'Click Solve', text: 'The WASM engine runs in your browser and checks every valid letter arrangement against a real English dictionary.' },
+          { n: 4, title: 'Plan your swaps', text: 'Each solution shows the target arrangement. Aim for 10 swaps or fewer to earn a 5-star score.' },
+        ] as step}
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm">{step.n}</div>
             <div>
-              <h4 class="font-black text-lg mb-1">Fill the Board</h4>
-              <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Type the letters currently visible in your Waffle puzzle grid. You can also use "Auto Fill Today" to get them instantly.</p>
+              <h3 class="font-semibold text-slate-900 mb-1">{step.title}</h3>
+              <p class="text-slate-600 leading-relaxed">{step.text}</p>
             </div>
           </div>
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 rounded-[18px] flex items-center justify-center font-black text-xl shadow-sm">2</div>
-            <div>
-              <h4 class="font-black text-lg mb-1">Mark the Hints</h4>
-              <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Click each cell to sync colors. Green means the letter is correct, Yellow means it's in the grid but wrong spot.</p>
-            </div>
-          </div>
-          <div class="flex gap-6">
-            <div class="flex-shrink-0 w-12 h-12 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 rounded-[18px] flex items-center justify-center font-black text-xl shadow-sm">3</div>
-            <div>
-              <h4 class="font-black text-lg mb-1">Execute Solver</h4>
-              <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Click "Solve". Our tool will find every possible dictionary-valid combination that fits your constraints.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white dark:bg-gray-900 p-12 rounded-[56px] shadow-sm border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
-        <h3 class="text-3xl font-black mb-8 flex items-center gap-4">
-          <span class="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-[24px]">🧇</span>
-          What is Waffle?
-        </h3>
-        <div class="space-y-6">
-          <div>
-            <h4 class="font-black text-xl text-gray-900 dark:text-white mb-3 leading-snug">A Daily Word Puzzle</h4>
-            <p class="text-gray-500 dark:text-gray-400 leading-relaxed">Waffle is a popular daily word game that looks like a crossword but plays like a logic puzzle. You are given a grid of letters (shaped like a waffle) and must swap them to form six valid words within 15 moves.</p>
-          </div>
-          <div>
-            <h4 class="font-black text-xl text-gray-900 dark:text-white mb-3 leading-snug">How to Play</h4>
-            <ul class="list-disc list-inside text-gray-500 dark:text-gray-400 leading-relaxed space-y-2">
-              <li>Drag and swap letters anywhere on the board.</li>
-              <li><strong>Green</strong> letters are in the correct position.</li>
-              <li><strong>Yellow</strong> letters are in the word (row or column) but wrong position.</li>
-              <li><strong>Grey</strong> letters (or white) are not in that specific word.</li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-black text-xl text-gray-900 dark:text-white mb-3 leading-snug">Winning Strategy</h4>
-            <p class="text-gray-500 dark:text-gray-400 leading-relaxed">Every Waffle puzzle is solvable in exactly 10 moves, earning you 5 stars. Our solver helps you find the target arrangement so you can achieve that perfect score.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-8">
-      <img
-        src="/waffle-solver7.webp"
-        alt="How to use Waffle Solver"
-        width="600"
-        height="400"
-        class="rounded-2xl shadow-md w-full"
-        loading="lazy"
-      />
-    </div>
-
-    <FAQSection title="Waffle Solver FAQ" {faqs} />
-
-    <!-- SEO Content Section -->
-    <section class="mt-12 space-y-12">
-      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Use a Waffle Solver?</h2>
-        <div class="prose prose-lg max-w-none text-gray-600">
-          <p class="mb-6 leading-relaxed">
-            Waffle is one of the most challenging word puzzles because it combines word knowledge with spatial reasoning. Unlike Wordle where you guess sequentially, Waffle requires you to rearrange letters across multiple intersecting words simultaneously. A solver helps you navigate this complexity by finding all valid arrangements that satisfy the puzzle constraints.
-          </p>
-          <p class="mb-6 leading-relaxed">
-            The game's unique mechanic — swapping letters anywhere on the board — creates thousands of possible arrangements. Most are invalid (they don't form real words), but many are valid. Our WASM-powered solver evaluates every possibility in milliseconds, showing you all solutions so you can choose the one that requires the fewest swaps.
-          </p>
-          <p class="leading-relaxed">
-            Beyond just finding answers, the solver helps you understand the puzzle's structure. By seeing all valid solutions, you learn which letter patterns are common and develop intuition for future puzzles. Many players use the solver as a learning tool, not just a shortcut.
-          </p>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">How Our Waffle Solver Works</h2>
-        <div class="prose prose-lg max-w-none text-gray-600">
-          <p class="mb-6 leading-relaxed">
-            The solver uses WebAssembly (WASM) for near-native performance. When you enter your puzzle state — the letters and their color hints — the solver generates all possible arrangements that match your constraints. Each arrangement is then validated against a comprehensive word dictionary.
-          </p>
-          <p class="mb-6 leading-relaxed">
-            The validation process checks all six words: three across and three down. Every word must be a valid English word from our dictionary. The solver also ensures that the letter counts match — if the puzzle has two 'E's, the solution must use exactly two 'E's in the same positions.
-          </p>
-          <p class="leading-relaxed">
-            What makes this solver special is its speed. The WASM engine can evaluate thousands of arrangements per second, delivering results almost instantly. This means you spend less time waiting and more time solving. The "Auto Fill Today" feature even fetches the current puzzle directly from the Waffle API, eliminating manual entry.
-          </p>
-        </div>
-      </div>
-
-      <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-3xl p-8 md:p-12 border border-amber-100">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Tips for Getting Better at Waffle</h2>
-        <div class="space-y-6 text-lg text-gray-600">
-          <p class="leading-relaxed">
-            Waffle rewards both vocabulary and strategy. Here are tips to improve your game:
-          </p>
-          <ul class="space-y-4 ml-4">
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Start with green letters</strong> — Green letters are already in the correct position. Build your strategy around these anchors, as they won't need to move.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Identify word patterns</strong> — Look at the green and yellow letters together. Often, you can identify which words they belong to based on common patterns.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Count letter frequencies</strong> — If you see two 'S's in the puzzle, they might both go at the ends of words. Letter frequency patterns can guide your swaps.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Work on one word at a time</strong> — Once you've identified a likely word, focus on getting its letters in place. This creates a ripple effect that helps solve adjacent words.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-gray-900">Use the solver to learn</strong> — After solving (or when stuck), use the solver to see the target arrangement. Compare it to your thought process and identify where you went wrong.
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding Waffle Scoring</h2>
-        <div class="prose prose-lg max-w-none text-gray-600">
-          <p class="mb-6 leading-relaxed">
-            Waffle uses a clever scoring system based on the number of swaps you make. Every puzzle is designed to be solvable in exactly 10 swaps, which earns you 5 stars (a perfect score). Each additional swap costs you half a star.
-          </p>
-          <div class="grid md:grid-cols-2 gap-6 not-prose mb-6">
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-gray-900 mb-2">⭐⭐⭐⭐⭐ 5 Stars</h3>
-              <p class="text-gray-600 text-sm">Solved in 10 swaps or fewer. This is the target for every puzzle and shows mastery.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-gray-900 mb-2">⭐⭐⭐⭐ 4 Stars</h3>
-              <p class="text-gray-600 text-sm">Solved in 11-12 swaps. Very good, but there was a more efficient path.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-gray-900 mb-2">⭐⭐⭐ 3 Stars</h3>
-              <p class="text-gray-600 text-sm">Solved in 13-14 swaps. Average performance. Review your swaps for inefficiencies.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-gray-900 mb-2">⭐⭐ or less</h3>
-              <p class="text-gray-600 text-sm">15+ swaps. Consider using the solver to understand the optimal path.</p>
-            </div>
-          </div>
-          <p class="leading-relaxed">
-            The solver helps you achieve perfect scores by showing you the target arrangement. Once you know where each letter should go, you can plan your swaps to reach the solution in exactly 10 moves.
-          </p>
-        </div>
+        {/each}
       </div>
     </section>
 
-    <!-- Internal Links Section -->
-    <div class="bg-gray-100 dark:bg-gray-800/50 p-8 sm:p-12 rounded-[40px] text-center space-y-8">
-      <h2 class="text-3xl font-black text-gray-900 dark:text-white">Explore More Solvers</h2>
-      <div class="flex flex-wrap justify-center gap-4">
-        {#each solverLinks as link}
-          <a href={link.href} class="px-6 py-3 bg-white dark:bg-gray-700 rounded-xl font-bold text-gray-800 dark:text-white shadow-sm hover:scale-105 transition-transform">
-            {link.label}
-          </a>
+    <section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">What Is Waffle?</h2>
+      <p class="text-slate-600 leading-relaxed mb-4">Waffle is a daily word game with a crossword-shaped grid. All 21 letters are already on the board — you swap them to form six valid 5-letter words: three across and three down. Each puzzle is solvable in exactly 10 swaps for a perfect score.</p>
+      <p class="text-slate-600 leading-relaxed mb-4">Green cells are already in the right position. Yellow cells belong in that row or column but are in the wrong spot. White or grey cells don't belong in that specific word.</p>
+      <p class="text-slate-600 leading-relaxed">The solver finds every letter arrangement that satisfies all color hints simultaneously. If the puzzle has multiple valid solutions, it shows all of them.</p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-amber-50 p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">Waffle Scoring</h2>
+      <p class="text-slate-600 leading-relaxed mb-6">Every puzzle is designed to be solvable in 10 swaps. Each extra swap above 10 costs half a star.</p>
+      <div class="grid sm:grid-cols-2 gap-4">
+        {#each [
+          { stars: '5 Stars', swaps: '10 swaps', desc: 'Perfect score. Every swap was optimal.' },
+          { stars: '4 Stars', swaps: '11–12 swaps', desc: 'Good, but one or two inefficient moves.' },
+          { stars: '3 Stars', swaps: '13–14 swaps', desc: 'Average. Review where you made extra swaps.' },
+          { stars: '2 Stars or less', swaps: '15+ swaps', desc: 'Use the solver to find the optimal path.' },
+        ] as row}
+          <div class="bg-white rounded-xl border border-slate-200 p-4">
+            <p class="font-semibold text-slate-900">{row.stars} — {row.swaps}</p>
+            <p class="text-slate-600 text-sm mt-1">{row.desc}</p>
+          </div>
         {/each}
       </div>
+    </section>
+
+    <div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+      <FAQSection class="py-0" {faqs} title="Waffle Solver FAQ" />
     </div>
+
+    <section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
+      <div class="flex flex-wrap justify-center gap-3">
+        {#each solverLinks as link}
+          <a href={link.href} class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">{link.label}</a>
+        {/each}
+      </div>
+    </section>
   </div>
-</div>
+</main>
 
 <style>
   @keyframes gradient {

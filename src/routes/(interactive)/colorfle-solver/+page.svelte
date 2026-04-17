@@ -1,6 +1,7 @@
 <script lang="ts">
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
+  import { generateBreadcrumbSchema } from '$lib/seo';
   import {
     COLORS,
     COLOR_NAMES,
@@ -194,6 +195,11 @@
         '@type': 'FAQPage',
         mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } }))
       },
+      generateBreadcrumbSchema([
+        { name: 'Home', url: 'https://wordsolver.tech' },
+        { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+        { name: 'Colorfle Solver', url: 'https://wordsolver.tech/colorfle-solver' }
+      ]),
       {
         '@type': 'HowTo',
         name: 'How to use the Colorfle solver',

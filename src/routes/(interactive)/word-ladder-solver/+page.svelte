@@ -264,28 +264,25 @@
 	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-violet-50 py-10 px-4 sm:px-6">
-	<div class="max-w-6xl mx-auto">
+<main class="min-h-screen bg-white">
+	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		<Breadcrumbs />
+	</div>
 
-		<section class="text-center mb-8">
-			<div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-violet-100 shadow-sm mb-5">
-				<div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center text-white shadow-sm">
-					<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h7M13 6h7M4 12h16M4 18h7M13 18h7" />
-					</svg>
-				</div>
-				<div class="text-left">
-					<p class="text-xs font-semibold uppercase tracking-[0.18em] text-violet-700">Mixed Answers</p>
-					<p class="text-sm text-slate-600">Different step counts in one result set</p>
-				</div>
-			</div>
-
-			<h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Word Ladder Solver</h1>
-			<p class="mt-3 max-w-3xl mx-auto text-lg text-slate-600">
-				Find the true shortest ladders that match Weaver, then get a mixed result set across multiple step counts with post-solve search and filtering.
+	<!-- Hero banner section -->
+	<section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+		<div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-violet-600 via-fuchsia-600 to-purple-700 px-6 py-8 text-white shadow-2xl sm:px-10 sm:py-12">
+			<p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 mb-4">
+				Word Puzzle Solver
 			</p>
-		</section>
+			<h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">Word Ladder Solver</h1>
+			<p class="text-lg text-white/80 max-w-2xl leading-relaxed">
+				Find the shortest path between any two words, changing one letter at a time. Mixed step counts, post-solve filters, and three dictionaries — including the same word list as Weaver.
+			</p>
+		</div>
+	</section>
+
+	<div class="max-w-6xl mx-auto px-4 sm:px-6">
 
 		<section class="rounded-[30px] border border-slate-200 bg-white/90 shadow-[0_20px_60px_rgba(15,23,42,0.08)] p-6 mb-6">
 			<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -673,8 +670,8 @@
 			</div>
 		{/if}
 
-		<article class="mt-10 space-y-10 max-w-4xl mx-auto">
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+	<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+		<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Lewis Carroll Invented Word Ladders in 1879</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					In December 1879, the mathematician and author Charles Dodgson — better known by his pen name Lewis Carroll — published a new word puzzle in Vanity Fair magazine. He called it "Doublets." The rules were simple: transform one word into another by changing one letter at a time, and every intermediate step had to be a real word.
@@ -703,7 +700,7 @@
 				</div>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Why Some Word Pairs Have No Solution</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					Not every word pair has a ladder connecting them. The most common reason is a dead end: you change a letter, land on a valid word, and then find that every possible next change produces nonsense. If every path from that word hits a dead end, the ladder is unsolvable.
@@ -719,7 +716,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">How Our Solver Finds Every Possible Path</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					The solver uses breadth-first search (BFS). BFS explores all 1-step words from the start word before any 2-step words, all 2-step words before any 3-step words, and so on. Because of this layer-by-layer approach, the first complete path BFS discovers from start to end is always the shortest possible path. No exceptions.
@@ -735,7 +732,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Three Dictionaries, Three Different Results</h2>
 				<p class="text-slate-600 leading-relaxed mb-5">
 					The dictionary you pick changes which words count as valid steps, and that changes which ladders exist. Here is how the three options differ:
@@ -759,7 +756,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">When Mixed Step Counts Reveal Better Paths</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					The shortest ladder between two words is not always the most interesting one. Consider COLD → WARM. The 4-step shortest path might go through CARD. A 5-step path might go through CORD → WORD → WARD → WARM — a route that strings together common, recognizable words instead of scraping by with obscure ones.
@@ -775,7 +772,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Solving Word Ladders by Hand</h2>
 				<div class="space-y-5">
 					<div class="flex gap-4">
@@ -816,9 +813,11 @@
 				</div>
 			</section>
 
-			<FAQSection title="Word Ladder Solver FAQ" {faqs} />
+			<div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+				<FAQSection class="py-0" title="Word Ladder Solver FAQ" {faqs} />
+			</div>
 
-			<section class="rounded-[30px] bg-slate-100 p-8 text-center space-y-6">
+			<section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
 				<h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
 				<div class="flex flex-wrap justify-center gap-3">
 					<a href="/weaver-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Weaver Solver</a>
@@ -829,6 +828,5 @@
 					<a href="/word-search-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Word Search Solver</a>
 				</div>
 			</section>
-		</article>
 	</div>
-</div>
+</main>

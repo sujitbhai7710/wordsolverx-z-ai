@@ -88,6 +88,19 @@
     <Breadcrumbs />
   </div>
 
+  <!-- Hero banner section -->
+  <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 px-6 py-8 text-white shadow-2xl sm:px-10 sm:py-12">
+      <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 mb-4">
+        Word Puzzle Solver
+      </p>
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">Squaredle Solver</h1>
+      <p class="text-lg text-white/80 max-w-2xl leading-relaxed">
+        Find every valid word path on any Squaredle board. Load today's official puzzle or paste a custom grid — the solver runs entirely in your browser.
+      </p>
+    </div>
+  </section>
+
   <SquaredleSolverClient />
 
   <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">

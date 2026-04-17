@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import FAQSection from '$lib/components/FAQSection.svelte';
+	import { generateFAQSchema, generateHowToSchema } from '$lib/seo';
 	import type { Artist, AttributeFeedback, FeedbackType, Guess } from '$lib/soundmap/types';
 
 	type SoundmapAlgorithm = Pick<
@@ -239,23 +240,48 @@
 		{
 			question: 'What is the Soundmap Solver?',
 			answer:
-				'Soundmap Solver is a free tool that helps you solve the Soundmap Artist Guesser game by filtering candidates based on game feedback.'
+				'Soundmap Solver is a free tool that helps you solve the Soundmap Artist Guesser game. You enter each artist you guess and mark the feedback the game gives you. The solver filters the full artist database and shows you which artists still fit.'
 		},
 		{
 			question: 'How does the feedback system work?',
 			answer:
-				'Mark each category as Correct, Close, Higher/Lower, or Earlier/Later based on the in-game clues. The solver instantly narrows the list.'
+				'For each attribute — debut year, popularity, members, genre, country, gender — click the feedback button to cycle through: Wrong, Correct, Close, and directional hints (Earlier/Later or Higher/Lower). Match what the game shows you, then add the guess.'
 		},
 		{
 			question: 'Does the solver work for every artist?',
 			answer:
-				'Yes. The solver includes a complete artist database and recalculates the best possible guesses every time you add feedback.'
+				'The solver includes the complete Soundmap artist database. Every time you add a guess with feedback, it recalculates all remaining candidates and suggests the best next guess.'
 		},
 		{
 			question: 'Is this tool free to use?',
-			answer: 'Yes, the Soundmap Solver is 100% free with no login required.'
-		}
+			answer: 'Yes, the Soundmap Solver is completely free with no login required.'
+		},
+		{
+			question: 'What does "Close" mean for country?',
+			answer: 'Close for the country attribute means the target artist is from a nearby region, not the exact same country as your guess. For example, guessing a French artist when the answer is Italian might return Close.'
+		},
+		{
+			question: 'What is the best first guess in Soundmap?',
+			answer: 'The solver calculates recommended first guesses based on which artists split the remaining candidate pool most evenly. These are shown in the Recommended First Guesses section when you have not yet added any guess.'
+		},
+		{
+			question: 'Why does my candidate count not go to 1?',
+			answer: 'If multiple artists share very similar attributes (same debut year, genre, country), the feedback you receive may not distinguish between them. Keep guessing the recommended artist to eliminate candidates one by one.'
+		},
 	];
+
+	const jsonLdSchema = JSON.stringify({
+		'@context': 'https://schema.org',
+		'@graph': [
+			generateFAQSchema(faqs),
+			generateHowToSchema('How to use the Soundmap Solver', [
+				{ name: 'Search for an artist', text: 'Type any artist name you guessed in the Soundmap game into the search box and select the correct match from the dropdown.' },
+				{ name: 'Set the feedback for each attribute', text: 'For each category shown — debut year, popularity, members, genre, country, gender — click the button to cycle through Wrong, Correct, Close, and directional hints until it matches what the game returned.' },
+				{ name: 'Add the guess', text: 'Click Add Guess. The solver instantly filters the candidate list to only artists that fit all the feedback you just entered.' },
+				{ name: 'Use the best next guess', text: 'If you have added at least one guess, the solver recommends the best next artist to maximize information. Click Use Guess to auto-fill it.' },
+			]),
+		],
+	});
 
 </script>
 
@@ -287,6 +313,7 @@
 		content="Free Soundmap solver with best-guess recommendations and instant candidate filtering."
 	/>
 	<link rel="canonical" href="https://wordsolver.tech/soundmap-solver" />
+	{@html `<script type="application/ld+json">${jsonLdSchema}</script>`}
 </svelte:head>
 
 <div class="soundmap-solver" class:dark={darkMode}>
@@ -749,7 +776,62 @@
 			</div>
 		</main>
 
-		<FAQSection {faqs} />
+		<div class="max-w-6xl mx-auto px-4 pb-12">
+			<FAQSection {faqs} />
+
+			<!-- SEO Content -->
+			<div class="space-y-8 mt-8">
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
+					<h2 class="text-2xl font-bold mb-5 text-gray-900 dark:text-white">What is Soundmap?</h2>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+						Soundmap is a daily music artist guessing game. You get a mystery artist and up to 8 guesses to identify them. After each guess, the game reveals how close you were across 6 attributes: debut year, Spotify popularity rank, number of members, genre, country of origin, and gender.
+					</p>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+						The game covers hundreds of artists across pop, rock, hip-hop, electronic, and other genres. Some are solo acts from the 1960s; others are modern bands or groups. The mix makes it genuinely hard without help.
+					</p>
+					<p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+						The solver tracks all 6 attributes simultaneously. After 2-3 guesses with accurate feedback, the candidate list typically drops to under 10 artists.
+					</p>
+				</div>
+
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
+					<h2 class="text-2xl font-bold mb-5 text-gray-900 dark:text-white">Reading the directional clues</h2>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+						Two attributes use directional hints instead of just right/wrong. Debut year shows Earlier or Later — if you guessed an artist who debuted in 1995 and you see Later, the target debuted after 1995. Popularity uses Higher or Lower — if you see Higher, the target artist ranks higher (lower number) in Spotify popularity than your guess.
+					</p>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+						Close for country means the same geographic region. Guessing a UK artist when the answer is Irish might return Close. Guessing an American when the answer is Canadian might also return Close.
+					</p>
+					<p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+						Members and gender are binary — Correct or Wrong. Genre uses Correct or Wrong too, though genre categories can be broad (Rock covers everything from indie to metal).
+					</p>
+				</div>
+
+				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
+					<h2 class="text-2xl font-bold mb-5 text-gray-900 dark:text-white">How the best-guess algorithm works</h2>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+						The solver calculates the best next guess by looking at all remaining candidates and testing each possible artist as a guess. For each test, it simulates every possible feedback outcome and counts how many candidates would survive each outcome.
+					</p>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+						The best guess is the one that produces the smallest average candidate pool across all possible outcomes. This is the minimax strategy — it minimizes the worst-case scenario. In practice, it usually halves the candidate pool or better with each guess.
+					</p>
+					<p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+						Recommended first guesses are pre-calculated before you start. They score well against the full artist database — typically resolving the puzzle in 3-4 guesses from a cold start.
+					</p>
+				</div>
+
+				<!-- Internal links -->
+				<div class="rounded-2xl bg-gray-100 dark:bg-gray-800 p-6 text-center">
+					<h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">More game solvers</h2>
+					<div class="flex flex-wrap justify-center gap-3">
+						<a href="/loldle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Loldle Solver</a>
+						<a href="/pokedle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Pokedle Solver</a>
+						<a href="/wordle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Wordle Solver</a>
+						<a href="/nerdle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Nerdle Solver</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		{#if showHelp}
 			<div class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">

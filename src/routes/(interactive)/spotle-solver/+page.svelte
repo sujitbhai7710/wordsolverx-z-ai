@@ -2,6 +2,7 @@
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import FAQSection from '$lib/components/FAQSection.svelte';
 	import { onMount } from 'svelte';
+	import { generateBreadcrumbSchema } from '$lib/seo';
 	import {
 		COUNTRY_NAMES,
 		GENDER_NAMES,
@@ -162,7 +163,12 @@
 					{ '@type': 'HowToStep', name: 'Set feedback colors', text: 'Tap each attribute button until it matches the Spotle feedback: green for exact match, yellow for close, gray for wrong.', position: 2 },
 					{ '@type': 'HowToStep', name: 'Add and repeat', text: 'Click Add Guess, then pick from the filtered remaining candidates for your next guess.', position: 3 }
 				]
-			}
+			},
+			generateBreadcrumbSchema([
+				{ name: 'Home', url: 'https://wordsolver.tech' },
+				{ name: 'Solver', url: 'https://wordsolver.tech/solver' },
+				{ name: 'Spotle Solver', url: 'https://wordsolver.tech/spotle-solver' }
+			])
 		]
 	})}</script>`}
 </svelte:head>

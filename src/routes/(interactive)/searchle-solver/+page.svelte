@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
+  import { generateBreadcrumbSchema } from '$lib/seo';
   import type { SearchleDailyPuzzle } from '$lib/searchle/daily';
   import {
     type SearchleFeedback,
@@ -354,7 +355,12 @@
           { '@type': 'HowToStep', name: 'Pick a suggested word', text: 'Click one of the entropy-ranked guesses, then set the letter feedback colors to match what Searchle showed you.', position: 2 },
           { '@type': 'HowToStep', name: 'Submit and repeat', text: 'Click Submit Guess, then repeat with the updated suggestions until the answer is found.', position: 3 }
         ]
-      }
+      },
+      generateBreadcrumbSchema([
+        { name: 'Home', url: 'https://wordsolver.tech' },
+        { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+        { name: 'Searchle Solver', url: 'https://wordsolver.tech/searchle-solver' }
+      ])
     ]
   })}</script>`}
 </svelte:head>

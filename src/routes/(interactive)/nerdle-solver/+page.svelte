@@ -422,7 +422,7 @@
 		}
 	];
 
-	const schemas = JSON.stringify([
+	const schemaItems = [
 		{
 			'@type': 'WebApplication',
 			name: 'Nerdle Solver',
@@ -449,11 +449,11 @@
 			'Solve Micro, Mini, Midi, Classic, and Maxi Nerdle with entropy-ranked suggestions and direct worker solving.',
 			'https://wordsolver.tech/nerdle-solver'
 		)
-	]);
+	];
 
 	const jsonLd = JSON.stringify({
 		'@context': 'https://schema.org',
-		'@graph': schemas
+		'@graph': schemaItems
 	});
 	const jsonLdScript = `<script type="application/ld+json">${jsonLd}<\/script>`;
 </script>
@@ -481,36 +481,26 @@
 	{@html jsonLdScript}
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-	<section class="bg-gradient-to-r from-green-600 to-emerald-600 py-14 shadow-lg">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-			<h1 class="text-4xl font-extrabold text-white sm:text-6xl tracking-tight">Nerdle Solver</h1>
-			<p class="mt-5 max-w-3xl mx-auto text-xl text-white/95 font-medium leading-relaxed">
-				Solve Micro, Mini, Midi, Classic, and Maxi Nerdle with the same original logic, direct worker requests, and a layout that matches the Wordle solver more closely.
+<main class="min-h-screen bg-white">
+	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+		<Breadcrumbs />
+	</div>
+
+	<!-- Hero banner section -->
+	<section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+		<div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-green-600 via-emerald-600 to-teal-700 px-6 py-8 text-white shadow-2xl sm:px-10 sm:py-12">
+			<p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 mb-4">
+				Math Puzzle Solver
 			</p>
-			<div class="mt-8 flex flex-wrap justify-center gap-4 text-sm font-bold text-green-100">
-				<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">5 Modes</span>
-				<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">Direct Worker Solve</span>
-				<span class="bg-white/10 px-4 py-2 rounded-full border border-white/20">No Frontend Equation Lists</span>
-			</div>
+			<h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">Nerdle Solver</h1>
+			<p class="text-lg text-white/80 max-w-2xl leading-relaxed">
+				Solve Micro, Mini, Midi, Classic, and Maxi Nerdle with entropy-ranked equation suggestions. Choose a mode, enter your guesses, and get the best next equation.
+			</p>
 		</div>
 	</section>
 
-	<div class="max-w-7xl mx-auto py-12 px-4">
-		<main class="max-w-2xl mx-auto">
-			<div class="mb-6">
-				<Breadcrumbs />
-			</div>
-
-			<div class="text-center mb-10">
-				<h2 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-600 via-emerald-500 to-teal-600 bg-clip-text text-transparent mb-3">
-					Nerdle Solver
-				</h2>
-				<p class="text-gray-600 text-lg">
-					Choose a mode, enter an equation, then tap the tiles to match the feedback from
-					Nerdle.
-				</p>
-			</div>
+	<div class="max-w-7xl mx-auto py-4 px-4">
+		<div class="max-w-2xl mx-auto">
 
 			{#if loadError}
 				<div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-red-700 shadow-sm">
@@ -829,29 +819,30 @@
 					{/if}
 				</div>
 			{/if}
-		</main>
+		</div>
+	</div>
 
-		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-			<article class="space-y-12">
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">What is Nerdle?</h2>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+	<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+		<article class="space-y-10">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">What is Nerdle?</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Nerdle is a daily math puzzle game launched in January 2022 by data scientist Richard Mann and his brother Marcus. The idea came from Richard's daughter, who wished Wordle existed for math. The result: instead of guessing a 5-letter word, you guess a complete mathematical equation.
 					</p>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						You get 6 guesses to find the hidden equation. After each guess, tiles change color to show how close you are. Green means the character is correct and in the right position. Purple (or sometimes shown as magenta) means the character exists in the equation but somewhere else. Black means that character does not appear at all. Sound familiar? It should — the feedback system works exactly like Wordle, except every "letter" is a digit or operator instead of an A through Z.
 					</p>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						The game is free at nerdlegame.com and resets daily at midnight UTC. There is no app to download — it runs in any browser. Since launch, Nerdle has built a community of over 1 million daily players, and the equation pool has expanded from the original 8-character Classic mode into five distinct modes.
 					</p>
-					<p class="text-gray-600 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						What makes Nerdle genuinely different from Wordle is the structure of the search space. In Wordle, every position is an independent letter. In Nerdle, positions are constrained by math — the equals sign must exist, both sides must compute to the same value, and operators have defined roles. This creates a tighter, more logical elimination process once you understand the rules.
 					</p>
 				</section>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">How Nerdle Feedback Works</h2>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">How Nerdle Feedback Works</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Every guess returns three types of colored feedback. Understanding what each color tells you — and what it does not tell you — is the difference between solving in 3 guesses and burning all 6.
 					</p>
 					<div class="space-y-4 mb-4">
@@ -874,14 +865,14 @@
 							</p>
 						</div>
 					</div>
-					<p class="text-gray-600 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						One subtlety that catches new players: the equals sign. In every mode, the answer contains exactly one "=". If your guess has "=" in the right spot and it turns green, you immediately know where the equation splits. If it turns purple, you know the equation has an equals sign but you placed it wrong — which constrains the answer length on each side.
 					</p>
 				</section>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">All Five Nerdle Modes Explained</h2>
-					<p class="text-gray-600 mb-6 leading-relaxed">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">All Five Nerdle Modes Explained</h2>
+					<p class="text-slate-600 mb-6 leading-relaxed">
 						Nerdle started with one mode — the 8-character Classic. As the community grew, the developers added shorter modes for quick sessions and a longer mode for players who wanted deeper puzzles. Each mode has a different equation pool size, which directly affects how much information each guess reveals.
 					</p>
 					<div class="space-y-4">
@@ -918,9 +909,9 @@
 					</div>
 				</section>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">Why Use a Nerdle Solver</h2>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">Why Use a Nerdle Solver</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						You can play Nerdle without any help. Plenty of people do. But the math-based search space creates specific situations where a solver saves you guesses you would otherwise waste.
 					</p>
 					<div class="space-y-4 mb-4">
@@ -951,25 +942,25 @@
 					</div>
 				</section>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">How Our Nerdle Solver Works</h2>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">How Our Nerdle Solver Works</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						This solver uses an entropy-based algorithm running on a dedicated worker. When you select a mode, the solver loads the full pool of valid equations for that mode. Every time you add a guess and set the feedback, the solver filters the pool and recalculates which remaining equation would reveal the most information on your next guess.
 					</p>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Here is what entropy means in practice. Say the remaining pool has 2,000 equations. The solver tests every single equation in that pool as a hypothetical next guess. For each one, it simulates all possible feedback patterns you might receive. An equation that produces 20 different feedback patterns and splits the 2,000 candidates into roughly equal groups scores high on entropy — because no matter what feedback you get, you eliminate a large chunk of the pool. An equation that produces only 4 patterns, with 1,800 candidates bunched into a single pattern, scores low — because you will probably get that common pattern and learn almost nothing.
 					</p>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						The solver ranks all equations by their entropy score and presents them with the top pick highlighted. You also see the remaining count and total pool size, so you know exactly how much progress each guess has made. The top suggestion is not always the answer — it is the equation that will narrow your search the most, which is what you want when you still have hundreds of candidates left.
 					</p>
-					<p class="text-gray-600 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						The worker processes your guesses server-side, which means the full equation pool stays off the client and your browser stays fast. After each calculation, you get back a ranked list of suggestions with entropy values you can compare. The entire cycle — enter feedback, click calculate, get results — takes under a second on most connections.
 					</p>
 				</section>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">Tips for Getting Better at Nerdle</h2>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Getting Better at Nerdle</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						The solver handles the computation, but understanding why it picks certain equations makes you a better player even when you are not using it.
 					</p>
 					<div class="space-y-4 mb-4">
@@ -1006,9 +997,9 @@
 					</div>
 				</section>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">Understanding Nerdle Equation Rules</h2>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">Understanding Nerdle Equation Rules</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Nerdle is stricter than it looks. Not every string of digits and operators counts as a valid equation. Knowing the exact rules prevents you from wasting guesses on things the game will reject.
 					</p>
 					<div class="space-y-4 mb-4">
@@ -1043,14 +1034,14 @@
 							</p>
 						</div>
 					</div>
-					<p class="text-gray-600 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						For Maxi mode specifically, parentheses and powers add two more rules: brackets must be properly paired and nested, and the power notation uses superscript characters for squared and cubed. The solver validates all of these rules automatically, so when you use a suggestion from the tool, you know it will be accepted by the game.
 					</p>
 				</section>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-4">Nerdle vs Wordle: Key Differences</h2>
-					<p class="text-gray-600 mb-4 leading-relaxed">
+				<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-3xl font-bold text-slate-900 mb-5">Nerdle vs Wordle: Key Differences</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Nerdle and Wordle share the same core mechanic — guess the hidden thing in 6 tries with colored feedback — but the differences in search space and constraints make them play very differently.
 					</p>
 					<div class="overflow-x-auto mb-4">
@@ -1101,45 +1092,25 @@
 							</tbody>
 						</table>
 					</div>
-					<p class="text-gray-600 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						The biggest strategic difference: Wordle positions are independent — any letter can go in any slot. Nerdle positions are mathematically coupled. If position 1 is "9" and position 2 is "*", then position 3 must be a digit (not an operator), and the product constrains what appears after the equals sign. This coupling means that in Nerdle, locking in 2-3 characters often determines the rest of the equation, while in Wordle you might need 4-5 correct letters before the answer becomes obvious.
 					</p>
 				</section>
+		</article>
 
-				<section class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-lg">
-					<h2 class="text-2xl font-bold text-gray-900 mb-6">Related Solvers</h2>
-					<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-						<a href="/wordle-solver" class="block rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 hover:border-green-300 hover:shadow-md transition-all">
-							<h3 class="font-bold text-gray-900">Wordle Solver</h3>
-							<p class="mt-1 text-sm text-gray-600">Solve 4-11 letter Wordle puzzles with entropy-ranked suggestions.</p>
-						</a>
-						<a href="/quordle-solver" class="block rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 hover:border-green-300 hover:shadow-md transition-all">
-							<h3 class="font-bold text-gray-900">Quordle Solver</h3>
-							<p class="mt-1 text-sm text-gray-600">Solve four Wordle puzzles at once with shared suggestions.</p>
-						</a>
-						<a href="/waffle-solver" class="block rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 hover:border-green-300 hover:shadow-md transition-all">
-							<h3 class="font-bold text-gray-900">Waffle Solver</h3>
-							<p class="mt-1 text-sm text-gray-600">Rearrange letters in a crossword grid to solve the Waffle puzzle.</p>
-						</a>
-						<a href="/boggle-solver" class="block rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 hover:border-green-300 hover:shadow-md transition-all">
-							<h3 class="font-bold text-gray-900">Boggle Solver</h3>
-							<p class="mt-1 text-sm text-gray-600">Find every valid word on your Boggle board from 3x3 to 10x10.</p>
-						</a>
-						<a href="/hangman-solver" class="block rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 hover:border-green-300 hover:shadow-md transition-all">
-							<h3 class="font-bold text-gray-900">Hangman Solver</h3>
-							<p class="mt-1 text-sm text-gray-600">Get the best next letter to guess based on remaining word patterns.</p>
-						</a>
-						<a href="/nerdle-answer-today" class="block rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 hover:border-green-300 hover:shadow-md transition-all">
-							<h3 class="font-bold text-gray-900">Nerdle Answer Today</h3>
-							<p class="mt-1 text-sm text-gray-600">View today's Nerdle answer and browse the recent archive.</p>
-						</a>
-					</div>
-				</section>
-			</article>
-
-			<div class="mt-12 rounded-3xl border border-gray-200 bg-white p-2 shadow-xl">
-				<FAQSection class="py-0" {faqs} title="Nerdle Solver FAQs" />
-			</div>
+		<div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+			<FAQSection class="py-0" {faqs} title="Nerdle Solver FAQs" />
 		</div>
+
+		<section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
+			<h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
+			<div class="flex flex-wrap justify-center gap-3">
+				<a href="/5-letter-wordle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Wordle Solver</a>
+				<a href="/waffle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Waffle Solver</a>
+				<a href="/boggle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Boggle Solver</a>
+				<a href="/hangman-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Hangman Solver</a>
+				<a href="/squaredle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Squaredle Solver</a>
+			</div>
+		</section>
 	</div>
-</div>
+</main>

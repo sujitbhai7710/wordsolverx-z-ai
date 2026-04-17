@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import FAQSection from '$lib/components/FAQSection.svelte';
-	import { generateFAQSchema, generateHowToSchema } from '$lib/seo';
+	import { generateFAQSchema, generateHowToSchema, generateBreadcrumbSchema } from '$lib/seo';
 	import { generateRandomBoggleBoard, solveBoggleBoard } from '$lib/boggle-client';
 
 	interface Position {
@@ -271,6 +271,11 @@
 				{ name: 'Choose a board size', text: 'Pick a grid size from 3x3 to 10x10. Standard Boggle uses 4x4.' },
 				{ name: 'Enter or generate letters', text: 'Type your board letters manually or click Random to generate a board with proper Boggle dice distribution.' },
 				{ name: 'Click Solve', text: 'The solver finds every valid word and shows them grouped by length, with scores and clickable paths.' }
+			]),
+			generateBreadcrumbSchema([
+				{ name: 'Home', url: 'https://wordsolver.tech' },
+				{ name: 'Solver', url: 'https://wordsolver.tech/solver' },
+				{ name: 'Boggle Solver', url: 'https://wordsolver.tech/boggle-solver' }
 			])
 		]
 	});
@@ -320,30 +325,26 @@
 	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 py-10 px-4 sm:px-6">
-	<div class="max-w-7xl mx-auto">
+<main class="min-h-screen bg-white">
+	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		<Breadcrumbs />
+	</div>
 
-		<section class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-8">
-			<div>
-				<div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-emerald-100 shadow-sm mb-4">
-					<div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-sm">
-						<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z" />
-						</svg>
-					</div>
-					<div>
-						<p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">Trie + DFS</p>
-						<p class="text-sm text-slate-600">Same Boggle solving logic from the source project, now client-side</p>
-					</div>
-				</div>
+	<!-- Hero banner section -->
+	<section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+		<div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-700 px-6 py-8 text-white shadow-2xl sm:px-10 sm:py-12">
+			<p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 mb-4">
+				Word Game Solver
+			</p>
+			<h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4">Boggle Solver</h1>
+			<p class="text-lg text-white/80 max-w-2xl leading-relaxed">
+				Find every valid word in any 3×3 to 10×10 Boggle board. Enter letters, generate a board, or load from a share URL — solved instantly in your browser.
+			</p>
+		</div>
+	</section>
 
-				<h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">Boggle Solver</h1>
-				<p class="mt-3 max-w-3xl text-lg text-slate-600">
-					Build or share a board, solve it instantly, and inspect every word path without leaving the default WordSolverX header and footer.
-				</p>
-			</div>
-
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 pb-8">
+		<div class="flex justify-end mb-4">
 			<button
 				type="button"
 				onclick={copyShareUrl}
@@ -357,7 +358,7 @@
 			>
 				{copiedUrl ? 'Copied URL' : 'Share Board URL'}
 			</button>
-		</section>
+		</div>
 
 		{#if statusMessage}
 			<div
@@ -635,8 +636,8 @@
 			</section>
 		{/if}
 
-		<article class="mt-10 space-y-10 max-w-4xl mx-auto">
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+		<article class="mt-10 space-y-10 max-w-5xl mx-auto">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">What is Boggle?</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					Boggle is a word search game that Allan Turoff invented in 1972 and Parker Brothers published (now Hasbro). You shake a tray of 16 lettered dice into a 4x4 grid, flip the three-minute timer, and write down every word you can find by connecting adjacent letters.
@@ -649,7 +650,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">How Boggle Scoring Works</h2>
 				<p class="text-slate-600 leading-relaxed mb-5">
 					Longer words score dramatically more. A single 8-letter word is worth the same as eleven 3-letter words. Here's the breakdown:
@@ -681,7 +682,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Why Most Players Miss Half the Board</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					Humans are pattern-matchers. We scan for common prefixes (RE-, UN-, IN-) and suffixes (-ING, -ED, -TION). That works fine for the obvious words. It fails for the weird ones.
@@ -694,7 +695,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">How This Boggle Solver Finds Every Word</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					The solver loads a dictionary of over 100,000 words into a trie — a tree structure where each branch is a letter and each complete path from root to leaf is a word. Then it runs depth-first search from every cell on the board.
@@ -707,7 +708,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Finding Words You Keep Missing</h2>
 				<div class="space-y-5">
 					<div class="flex gap-4">
@@ -741,7 +742,7 @@
 				</div>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Boggle Board Sizes: Which One to Pick</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					4x4 is the standard. It's what the physical game uses, it's what most people grew up playing, and it produces a good mix of short and long words in three minutes.
@@ -757,7 +758,7 @@
 				</p>
 			</section>
 
-			<section class="rounded-[30px] border border-slate-200 bg-white p-8 shadow-lg">
+			<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
 				<h2 class="text-3xl font-bold text-slate-900 mb-5">Classic Dice vs Revised Dice vs Random</h2>
 				<p class="text-slate-600 leading-relaxed mb-4">
 					When you click Random, the solver needs to pick letters somehow. It offers three methods:
@@ -781,9 +782,11 @@
 				</p>
 			</section>
 
-			<FAQSection title="Boggle Solver FAQ" {faqs} />
+			<div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+				<FAQSection class="py-0" title="Boggle Solver FAQ" {faqs} />
+			</div>
 
-			<section class="rounded-[30px] bg-slate-100 p-8 text-center space-y-6">
+			<section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
 				<h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
 				<div class="flex flex-wrap justify-center gap-3">
 					<a href="/5-letter-wordle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">5-Letter Wordle Solver</a>
@@ -794,4 +797,4 @@
 			</section>
 		</article>
 	</div>
-</div>
+</main>

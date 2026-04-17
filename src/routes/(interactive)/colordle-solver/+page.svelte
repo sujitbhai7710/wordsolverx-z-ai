@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
+  import { generateHowToSchema, generateBreadcrumbSchema } from '$lib/seo';
   import type { ColorData } from '$lib/colordle';
 
   type ColordleRuntime = Pick<
@@ -165,6 +166,18 @@
           acceptedAnswer: { '@type': 'Answer', text: faq.answer },
         })),
       },
+      generateHowToSchema('How to use the Colordle Solver', [
+        { name: 'Make your first guess in Colordle', text: 'Start with a broad color like Red, Blue, or Yellow. These span the color wheel and give you the most information about the target hue.' },
+        { name: 'Note the similarity percentage', text: 'Colordle tells you how close your guess is as a percentage. Higher means closer. Write down the color name and percentage.' },
+        { name: 'Enter your guess in the solver', text: 'Search for the color name in the solver input, select it from the dropdown, then type the similarity percentage in the second field.' },
+        { name: 'Click Filter Results', text: 'The solver narrows the candidate list to colors that would produce a similar similarity score to your guess.' },
+        { name: 'Pick the top candidate as your next guess', text: 'Choose a color from the filtered results, guess it in Colordle, then add the new percentage to the solver to filter again.' },
+      ]),
+      generateBreadcrumbSchema([
+        { name: 'Home', url: 'https://wordsolver.tech' },
+        { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+        { name: 'Colordle Solver', url: 'https://wordsolver.tech/colordle-solver' }
+      ]),
     ],
   });
 
