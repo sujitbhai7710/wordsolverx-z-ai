@@ -214,23 +214,22 @@
   })}</script>`}
 </svelte:head>
 
-<div class="bg-gray-50 min-h-screen py-12">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+<main class="min-h-screen bg-pink-50">
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <Breadcrumbs />
+  </div>
 
-    <section class="rounded-3xl bg-white shadow-sm border border-gray-200 p-8">
-      <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-pink-600">Colorfle Solver</p>
-          <h1 class="mt-3 text-4xl font-black text-gray-900">Solve Colorfle by Hex or Feedback</h1>
-          <p class="mt-4 max-w-3xl text-lg text-gray-600">
-            Pick a target color or paste a hex code to get the best matching three-color combination, then refine your guesses with green, yellow, and gray feedback.
-          </p>
-        </div>
+  <!-- Hero Banner -->
+  <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-pink-500 via-rose-500 to-fuchsia-500 px-6 py-8 shadow-2xl text-center space-y-4">
+      <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">Color Puzzle Solver</p>
+      <h1 class="text-4xl font-black text-white sm:text-5xl">Colorfle Solver</h1>
+      <p class="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">Paste your target hex or use the color picker to get matching three-color combinations. Refine with green, yellow, and gray feedback.</p>
+    </div>
+  </section>
 
-        <button type="button" class="rounded-xl border border-gray-300 px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50" onclick={resetSolver}>Reset Solver</button>
-      </div>
-    </section>
+  <!-- Interactive Component -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
     <section class="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
       <article class="rounded-3xl bg-white shadow-sm border border-gray-200 p-8 space-y-5">
@@ -368,6 +367,17 @@
       </article>
     </section>
 
-    <FAQSection title="Colorfle Solver FAQ" {faqs} />
+    <div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+      <FAQSection class="py-0" title="Colorfle Solver FAQ" {faqs} />
+    </div>
+
+    <section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
+      <h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
+      <div class="flex flex-wrap justify-center gap-3">
+        {#each solverLinks as link}
+          <a href={link.href} class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">{link.label}</a>
+        {/each}
+      </div>
+    </section>
   </div>
-</div>
+</main>

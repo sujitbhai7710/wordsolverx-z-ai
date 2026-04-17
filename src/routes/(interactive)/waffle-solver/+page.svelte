@@ -172,7 +172,7 @@
     if (!isInteractive) return 'bg-green-500 text-white border-green-600 shadow-sm';
     if (status === 'green') return 'bg-green-500 text-white border-green-600 shadow-lg shadow-green-500/30';
     if (status === 'yellow') return 'bg-amber-500 text-white border-amber-600 shadow-lg shadow-amber-500/30';
-    return 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-2 border-gray-200 dark:border-gray-700 shadow-sm hover:border-amber-400 dark:hover:border-amber-600';
+    return 'bg-white text-gray-900 border-2 border-gray-200 shadow-sm hover:border-amber-400';
   }
 
   const faqs = [
@@ -252,7 +252,7 @@
       <div class="flex flex-col items-center gap-6 relative z-10 w-full px-2">
         <div class="flex flex-col items-center gap-3">
           <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Input Pattern</span>
-          <div class="inline-block p-4 sm:p-6 rounded-[24px] shadow-sm border-2 sm:border-4 ring-1 bg-gray-50 dark:bg-gray-950 border-white dark:border-gray-900 ring-gray-200 dark:ring-gray-800">
+          <div class="inline-block p-4 sm:p-6 rounded-[24px] shadow-sm border-2 sm:border-4 ring-1 bg-gray-50 border-white ring-gray-200">
             <div class="grid grid-cols-5 gap-1.5 sm:gap-2">
               {#each Array(5) as _, r}
                 {#each Array(5) as _, c}
@@ -328,7 +328,7 @@
         >
           {solving ? 'Solving...' : 'Solve'}
         </button>
-        <p class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-tighter">
+        <p class="text-sm font-bold text-gray-400 uppercase tracking-tighter">
           {wasmReady ? 'Engine Standby • Client Side Execution' : 'Loading Neural Engine...'}
         </p>
       </div>

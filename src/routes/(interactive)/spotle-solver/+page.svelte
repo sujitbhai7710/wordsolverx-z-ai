@@ -173,28 +173,32 @@
 	})}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950 text-white">
-	<div class="max-w-7xl mx-auto px-4 py-8">
+<main class="min-h-screen bg-emerald-50">
+	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		<Breadcrumbs />
+	</div>
 
-		<header class="bg-gray-900/80 border border-gray-800 rounded-3xl p-6 md:p-8 mb-8">
-			<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+	<section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+		<div class="rounded-[2rem] border border-emerald-200/60 bg-gradient-to-br from-emerald-900 via-teal-800 to-green-900 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl">
+			<p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200">Spotify Daily Game</p>
+			<div class="mt-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
 				<div>
-					<p class="text-xs uppercase tracking-[0.2em] text-emerald-400">Spotify Daily Game</p>
-					<h1 class="text-4xl md:text-5xl font-black mt-2">Spotle Solver</h1>
-					<p class="text-gray-400 mt-2 max-w-2xl">
-						Search an artist, match the feedback colors and arrows, and filter the remaining candidates
-						in real time.
+					<h1 class="text-4xl font-black text-white md:text-5xl">Spotle Solver</h1>
+					<p class="mt-3 max-w-2xl text-emerald-100/80 text-lg">
+						Search an artist, match the feedback colors and arrows, and filter the remaining candidates in real time.
 					</p>
 				</div>
 				<a
 					href="/spotle-answer-today"
-					class="inline-flex items-center justify-center rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-black hover:bg-emerald-400"
+					class="inline-flex items-center justify-center rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-black hover:bg-emerald-300 shrink-0"
 				>
-					View Today&apos;s Answer
+					View Today's Answer
 				</a>
 			</div>
-		</header>
+		</div>
+	</section>
+
+	<div class="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
 
 		{#if !dataLoaded}
 			<div class="h-48 flex items-center justify-center text-gray-400">Loading Spotle data...</div>
@@ -452,166 +456,193 @@
 		{/if}
 	</div>
 
-	<section class="mt-12 space-y-10">
-		<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-6 sm:p-8">
-			<h2 class="text-2xl font-bold text-white mb-4">What is Spotle?</h2>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+	<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+		<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+			<h2 class="text-3xl font-bold text-slate-900 mb-5">What is Spotle?</h2>
+			<p class="text-slate-600 leading-relaxed mb-4">
 				Spotle is a daily music guessing game that works like Wordle for Spotify artists. You get 10 guesses to identify a mystery artist, and after each guess you receive feedback on six attributes: rank, debut year, genre, country, group size, and gender. The goal is to use that feedback to narrow down who the mystery artist is.
 			</p>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed mb-4">
 				The game pulls from roughly the top 1,000 Spotify artists, so you are dealing with artists people actually listen to — not obscure deep cuts. Taylor Swift, Drake, Bad Bunny, The Weeknd, Ed Sheeran. These names come up a lot, which means genre, rank, and country clues eliminate huge swaths of the pool fast.
 			</p>
-			<p class="text-gray-400 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed">
 				A new puzzle drops daily. Some days the answer is obvious after two guesses. Other days you burn through six guesses and still feel lost. The difference almost always comes down to how efficiently you use the feedback from each attribute.
 			</p>
-		</div>
+		</section>
 
-		<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-6 sm:p-8">
-			<h2 class="text-2xl font-bold text-white mb-4">How Spotle Feedback Works</h2>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+		<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+			<h2 class="text-3xl font-bold text-slate-900 mb-5">How Spotle Feedback Works</h2>
+			<p class="text-slate-600 leading-relaxed mb-6">
 				Every guess returns feedback on six attributes. Each attribute gets a color — green, yellow, or gray — and some attributes also show directional arrows. Here is what each signal means.
 			</p>
-			<div class="space-y-4 mb-4">
-				<div class="rounded-xl bg-emerald-900/20 border border-emerald-700 p-5">
-					<h3 class="text-lg font-bold text-emerald-400 mb-2">Green — Exact match</h3>
-					<p class="text-emerald-200">The attribute matches the mystery artist exactly. Same genre, same country, same gender. Green feedback is the strongest signal you can get — it locks in that attribute and eliminates every artist who does not share it.</p>
+			<div class="space-y-4 mb-6">
+				<div class="rounded-xl bg-emerald-50 border border-emerald-200 p-5">
+					<h3 class="text-lg font-bold text-emerald-700 mb-2">Green — Exact match</h3>
+					<p class="text-slate-600">The attribute matches the mystery artist exactly. Same genre, same country, same gender. Green feedback is the strongest signal you can get — it locks in that attribute and eliminates every artist who does not share it.</p>
 				</div>
-				<div class="rounded-xl bg-amber-900/20 border border-amber-700 p-5">
-					<h3 class="text-lg font-bold text-amber-400 mb-2">Yellow — Close but not exact</h3>
-					<p class="text-amber-200">The attribute is in the right neighborhood but not a perfect match. For numerical attributes like rank and debut year, yellow means the real value is nearby. For categorical attributes like genre, it means something related. Yellow narrows the range but does not pin it down.</p>
+				<div class="rounded-xl bg-amber-50 border border-amber-200 p-5">
+					<h3 class="text-lg font-bold text-amber-700 mb-2">Yellow — Close but not exact</h3>
+					<p class="text-slate-600">The attribute is in the right neighborhood but not a perfect match. For numerical attributes like rank and debut year, yellow means the real value is nearby. For categorical attributes like genre, it means something related. Yellow narrows the range but does not pin it down.</p>
 				</div>
-				<div class="rounded-xl bg-gray-800 border border-gray-700 p-5">
-					<h3 class="text-lg font-bold text-gray-300 mb-2">Gray — Wrong</h3>
-					<p class="text-gray-400">The attribute does not match at all. Different genre, different country, different gender. Gray feedback is just as useful as green — it tells you what the answer is not, which eliminates a lot of artists.</p>
+				<div class="rounded-xl bg-slate-100 border border-slate-200 p-5">
+					<h3 class="text-lg font-bold text-slate-700 mb-2">Gray — Wrong</h3>
+					<p class="text-slate-600">The attribute does not match at all. Different genre, different country, different gender. Gray feedback is just as useful as green — it tells you what the answer is not, which eliminates a lot of artists.</p>
 				</div>
 			</div>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed mb-4">
 				Numerical attributes — rank and debut year — also show arrows. An up arrow means the mystery artist's value is higher (higher rank number or later debut year). A down arrow means it is lower. These arrows are arguably the most powerful feedback in the game because they create hard numeric bounds on the answer.
 			</p>
-			<p class="text-gray-400 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed">
 				Combine the arrow direction with the color and you get precise constraints. Green on rank means you found the exact rank. Yellow with a down arrow on debut year means the mystery artist debuted slightly before your guess. Gray with an up arrow on rank means the answer is way lower on the chart. Each piece of feedback tightens the filter.
 			</p>
-		</div>
+		</section>
 
-		<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-6 sm:p-8">
-			<h2 class="text-2xl font-bold text-white mb-4">Why Use a Spotle Solver</h2>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+		<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+			<h2 class="text-3xl font-bold text-slate-900 mb-5">Why Use a Spotle Solver</h2>
+			<p class="text-slate-600 leading-relaxed mb-6">
 				Spotle gives you 10 guesses, which feels generous until you realize that 1,000 artists is a lot of ground to cover. A solver turns those 10 guesses from scattered stabs into a systematic elimination process.
 			</p>
-			<div class="space-y-4 mb-4">
-				<div class="rounded-xl bg-emerald-900/20 border border-emerald-700 p-5">
-					<h3 class="text-lg font-bold text-emerald-400 mb-2">Real-time filtering eliminates mental math</h3>
-					<p class="text-emerald-200">After each guess, you need to cross-reference six different attributes against 1,000 artists. That is 6,000 data points to track. The solver filters the entire pool instantly, so you see only the artists that match every single clue. No mental gymnastics required.</p>
+			<div class="space-y-4">
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white">1</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Real-time filtering eliminates mental math</h3>
+						<p class="text-slate-600">After each guess, you need to cross-reference six different attributes against 1,000 artists. That is 6,000 data points to track. The solver filters the entire pool instantly, so you see only the artists that match every single clue. No mental gymnastics required.</p>
+					</div>
 				</div>
-				<div class="rounded-xl bg-emerald-900/20 border border-emerald-700 p-5">
-					<h3 class="text-lg font-bold text-emerald-400 mb-2">Attribute overlap is hard to reason about</h3>
-					<p class="text-emerald-200">Knowing the genre is "Pop" and the country is "United States" narrows the pool significantly. But adding that the debut year is close to 2008 and the gender is "Female" — that intersection is where most people lose track. The solver handles multi-attribute intersections correctly every time.</p>
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white">2</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Attribute overlap is hard to reason about</h3>
+						<p class="text-slate-600">Knowing the genre is "Pop" and the country is "United States" narrows the pool significantly. But adding that the debut year is close to 2008 and the gender is "Female" — that intersection is where most people lose track. The solver handles multi-attribute intersections correctly every time.</p>
+					</div>
 				</div>
-				<div class="rounded-xl bg-emerald-900/20 border border-emerald-700 p-5">
-					<h3 class="text-lg font-bold text-emerald-400 mb-2">Arrow feedback creates numeric windows</h3>
-					<p class="text-emerald-200">When rank is yellow with a down arrow, the answer is somewhere in a narrow numeric window. Manually estimating that window and checking which artists fall inside it is tedious and error-prone. The solver computes exact ranges and shows you only qualifying artists.</p>
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white">3</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Arrow feedback creates numeric windows</h3>
+						<p class="text-slate-600">When rank is yellow with a down arrow, the answer is somewhere in a narrow numeric window. Manually estimating that window and checking which artists fall inside it is tedious and error-prone. The solver computes exact ranges and shows you only qualifying artists.</p>
+					</div>
 				</div>
-				<div class="rounded-xl bg-emerald-900/20 border border-emerald-700 p-5">
-					<h3 class="text-lg font-bold text-emerald-400 mb-2">Stop guessing the same artists twice</h3>
-					<p class="text-emerald-200">Without a tracker, it is easy to accidentally guess an artist you already tried or one whose attributes contradict earlier feedback. The solver keeps a clean guess history and only suggests candidates that are consistent with all previous clues.</p>
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white">4</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Stop guessing the same artists twice</h3>
+						<p class="text-slate-600">Without a tracker, it is easy to accidentally guess an artist you already tried or one whose attributes contradict earlier feedback. The solver keeps a clean guess history and only suggests candidates that are consistent with all previous clues.</p>
+					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 
-		<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-6 sm:p-8">
-			<h2 class="text-2xl font-bold text-white mb-4">How Our Spotle Solver Works</h2>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+		<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+			<h2 class="text-3xl font-bold text-slate-900 mb-5">How Our Spotle Solver Works</h2>
+			<p class="text-slate-600 leading-relaxed mb-4">
 				The solver loads the full Spotle artist dataset when the page opens. When you add a guess with feedback, it runs the filter function across every artist in the pool and removes any that contradict your clues. The remaining candidates are displayed as ranked suggestions.
 			</p>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed mb-4">
 				Each attribute is checked independently. For green feedback, the candidate must match that attribute exactly. For yellow, the candidate must be within the proximity threshold the game uses. For gray, the candidate must fall outside that threshold. Arrows add directional constraints — a "higher" arrow on rank means the mystery artist's rank number is larger than your guess's rank.
 			</p>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed mb-4">
 				All filters stack. If your first guess eliminates 600 artists and your second guess eliminates another 250 from the remaining 400, you are left with 150 candidates after just two guesses. Three or four well-chosen guesses typically narrow the pool to under 20 artists, and by that point the answer is usually obvious.
 			</p>
-			<p class="text-gray-400 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed">
 				The suggestions panel shows the top remaining candidates, sorted by relevance. Quick picks let you load popular artists instantly without searching. The entire workflow — search, set feedback, add guess, view results — runs locally in your browser with no server round trips.
 			</p>
-		</div>
+		</section>
 
-		<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-6 sm:p-8">
-			<h2 class="text-2xl font-bold text-white mb-4">Tips for Getting Better at Spotle</h2>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+		<section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
+			<h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Getting Better at Spotle</h2>
+			<p class="text-slate-600 leading-relaxed mb-6">
 				The solver does the filtering, but picking the right artists to guess first makes the process faster. Here are strategies that work.
 			</p>
-			<div class="space-y-4 mb-4">
-				<div class="rounded-xl bg-sky-900/20 border border-sky-700 p-5">
-					<h3 class="text-lg font-bold text-sky-400 mb-2">Start with artists you know well</h3>
-					<p class="text-sky-200">When you know an artist's attributes by heart — Drake is a Canadian male solo rapper who debuted around 2009 and ranks in the top 5 — you can set the feedback quickly and accurately. Familiarity reduces the chance of misreading the game's feedback, which is the most common way solvers go off track.</p>
+			<div class="space-y-4">
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">1</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Start with artists you know well</h3>
+						<p class="text-slate-600">When you know an artist's attributes by heart — Drake is a Canadian male solo rapper who debuted around 2009 and ranks in the top 5 — you can set the feedback quickly and accurately. Familiarity reduces the chance of misreading the game's feedback, which is the most common way solvers go off track.</p>
+					</div>
 				</div>
-				<div class="rounded-xl bg-sky-900/20 border border-sky-700 p-5">
-					<h3 class="text-lg font-bold text-sky-400 mb-2">Use rank and debut year as anchors</h3>
-					<p class="text-sky-200">These two attributes carry the most information because they are numerical. A yellow-and-arrow response on rank tells you the answer is within a specific range. Genre and country are categorical, which means they split the pool into chunks but do not create the same fine-grained narrowing. Prioritize guesses that give you clear rank and debut year signals.</p>
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">2</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Use rank and debut year as anchors</h3>
+						<p class="text-slate-600">These two attributes carry the most information because they are numerical. A yellow-and-arrow response on rank tells you the answer is within a specific range. Genre and country are categorical, which means they split the pool into chunks but do not create the same fine-grained narrowing. Prioritize guesses that give you clear rank and debut year signals.</p>
+					</div>
 				</div>
-				<div class="rounded-xl bg-sky-900/20 border border-sky-700 p-5">
-					<h3 class="text-lg font-bold text-sky-400 mb-2">Pay attention to genre + country combos</h3>
-					<p class="text-sky-200">Some genre-country pairs are rare. A Korean Pop artist from South Korea narrows things down fast. A Latin artist from Puerto Rico also has a short list. When you see green on genre or country, immediately think about which artists fit both — the intersection is usually small.</p>
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">3</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Pay attention to genre + country combos</h3>
+						<p class="text-slate-600">Some genre-country pairs are rare. A Korean Pop artist from South Korea narrows things down fast. A Latin artist from Puerto Rico also has a short list. When you see green on genre or country, immediately think about which artists fit both — the intersection is usually small.</p>
+					</div>
 				</div>
-				<div class="rounded-xl bg-sky-900/20 border border-sky-700 p-5">
-					<h3 class="text-lg font-bold text-sky-400 mb-2">Group size is an underrated filter</h3>
-					<p class="text-sky-200">Whether the artist is a solo act, a duo, or a group of 3+ eliminates a huge chunk of the pool. If you guess a solo artist and group size turns gray, you know the answer is a band or duo. That single piece of feedback removes hundreds of solo artists instantly.</p>
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">4</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Group size is an underrated filter</h3>
+						<p class="text-slate-600">Whether the artist is a solo act, a duo, or a group of 3+ eliminates a huge chunk of the pool. If you guess a solo artist and group size turns gray, you know the answer is a band or duo. That single piece of feedback removes hundreds of solo artists instantly.</p>
+					</div>
 				</div>
-				<div class="rounded-xl bg-sky-900/20 border border-sky-700 p-5">
-					<h3 class="text-lg font-bold text-sky-400 mb-2">Avoid narrow early guesses</h3>
-					<p class="text-sky-200">Guessing a niche artist first wastes a turn because you learn very little. An artist ranked #800 with an unusual genre and country gives you feedback that eliminates only a handful of similar artists. Start big — guess someone in the top 20 — and let the broad feedback do the heavy lifting before you zoom in.</p>
+				<div class="flex gap-4">
+					<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">5</div>
+					<div>
+						<h3 class="font-bold text-slate-900 mb-1">Avoid narrow early guesses</h3>
+						<p class="text-slate-600">Guessing a niche artist first wastes a turn because you learn very little. An artist ranked #800 with an unusual genre and country gives you feedback that eliminates only a handful of similar artists. Start big — guess someone in the top 20 — and let the broad feedback do the heavy lifting before you zoom in.</p>
+					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 
-		<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-6 sm:p-8">
-			<h2 class="text-2xl font-bold text-white mb-4">Understanding Spotle Artist Attributes</h2>
-			<p class="text-gray-400 mb-4 leading-relaxed">
+		<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+			<h2 class="text-3xl font-bold text-slate-900 mb-5">Understanding Spotle Artist Attributes</h2>
+			<p class="text-slate-600 leading-relaxed mb-6">
 				Every artist in the Spotle pool has six attributes. Each one filters the answer differently. Here is what each attribute tells you and how to use the feedback effectively.
 			</p>
-			<div class="space-y-4 mb-4">
-				<div class="rounded-xl bg-amber-900/20 border border-amber-700 p-5">
-					<h3 class="text-lg font-bold text-amber-400 mb-2">Rank</h3>
-					<p class="text-amber-200">The artist's position on the Spotify charts, numbered from 1 (most popular) downward. Rank is a numerical attribute, so it gives you arrow feedback — higher or lower — in addition to color. A green rank means you hit the exact number. A yellow rank with an up arrow means the answer ranks somewhere nearby but with a higher number. Use the arrow to create a numeric window: if your guess is rank #15 and the arrow points down, the answer is somewhere in the top 14.</p>
+			<div class="space-y-4 mb-6">
+				<div class="rounded-xl bg-amber-50 border border-amber-200 p-5">
+					<h3 class="text-lg font-bold text-amber-700 mb-2">Rank</h3>
+					<p class="text-slate-600">The artist's position on the Spotify charts, numbered from 1 (most popular) downward. Rank is a numerical attribute, so it gives you arrow feedback — higher or lower — in addition to color. A green rank means you hit the exact number. A yellow rank with an up arrow means the answer ranks somewhere nearby but with a higher number. Use the arrow to create a numeric window: if your guess is rank #15 and the arrow points down, the answer is somewhere in the top 14.</p>
 				</div>
-				<div class="rounded-xl bg-amber-900/20 border border-amber-700 p-5">
-					<h3 class="text-lg font-bold text-amber-400 mb-2">Debut Year</h3>
-					<p class="text-amber-200">The year the artist first appeared on Spotify's radar. Like rank, this is numerical and gives arrow feedback. If you guess an artist who debuted in 2015 and get a yellow with a down arrow, the answer debuted within a few years of 2015 but earlier. Debut year is especially useful for separating legacy artists (pre-2000) from modern ones (post-2010).</p>
+				<div class="rounded-xl bg-amber-50 border border-amber-200 p-5">
+					<h3 class="text-lg font-bold text-amber-700 mb-2">Debut Year</h3>
+					<p class="text-slate-600">The year the artist first appeared on Spotify's radar. Like rank, this is numerical and gives arrow feedback. If you guess an artist who debuted in 2015 and get a yellow with a down arrow, the answer debuted within a few years of 2015 but earlier. Debut year is especially useful for separating legacy artists (pre-2000) from modern ones (post-2010).</p>
 				</div>
-				<div class="rounded-xl bg-amber-900/20 border border-amber-700 p-5">
-					<h3 class="text-lg font-bold text-amber-400 mb-2">Genre</h3>
-					<p class="text-amber-200">The artist's primary genre classification — Pop, Hip-Hop, Latin, Rock, R&B, K-Pop, and so on. Genre is categorical, so it does not have arrows. Green means exact match. Yellow means a related genre (Pop and Dance-Pop, for example). Gray means a completely different genre. Green on genre is one of the most powerful clues because it eliminates roughly 80-90% of the pool immediately.</p>
+				<div class="rounded-xl bg-amber-50 border border-amber-200 p-5">
+					<h3 class="text-lg font-bold text-amber-700 mb-2">Genre</h3>
+					<p class="text-slate-600">The artist's primary genre classification — Pop, Hip-Hop, Latin, Rock, R&B, K-Pop, and so on. Genre is categorical, so it does not have arrows. Green means exact match. Yellow means a related genre (Pop and Dance-Pop, for example). Gray means a completely different genre. Green on genre is one of the most powerful clues because it eliminates roughly 80-90% of the pool immediately.</p>
 				</div>
-				<div class="rounded-xl bg-amber-900/20 border border-amber-700 p-5">
-					<h3 class="text-lg font-bold text-amber-400 mb-2">Country</h3>
-					<p class="text-amber-200">The artist's country of origin. United States, United Kingdom, Canada, South Korea, Puerto Rico, and Brazil are common. Like genre, this is categorical with no arrows. Green means same country. Yellow means a neighboring or culturally related country. Gray means a different region entirely. Combined with genre, country often identifies the answer within 10-20 candidates.</p>
+				<div class="rounded-xl bg-amber-50 border border-amber-200 p-5">
+					<h3 class="text-lg font-bold text-amber-700 mb-2">Country</h3>
+					<p class="text-slate-600">The artist's country of origin. United States, United Kingdom, Canada, South Korea, Puerto Rico, and Brazil are common. Like genre, this is categorical with no arrows. Green means same country. Yellow means a neighboring or culturally related country. Gray means a different region entirely. Combined with genre, country often identifies the answer within 10-20 candidates.</p>
 				</div>
-				<div class="rounded-xl bg-amber-900/20 border border-amber-700 p-5">
-					<h3 class="text-lg font-bold text-amber-400 mb-2">Group Size</h3>
-					<p class="text-amber-200">Whether the artist is a solo act, a duo, or a group with three or more members. This attribute has three possible values, making it a quick eliminator. If you guess a solo artist and group size turns green, the answer is also solo — that removes all bands and duos. If it turns gray, the answer is either a duo or a larger group, cutting the pool roughly in half.</p>
+				<div class="rounded-xl bg-amber-50 border border-amber-200 p-5">
+					<h3 class="text-lg font-bold text-amber-700 mb-2">Group Size</h3>
+					<p class="text-slate-600">Whether the artist is a solo act, a duo, or a group with three or more members. This attribute has three possible values, making it a quick eliminator. If you guess a solo artist and group size turns green, the answer is also solo — that removes all bands and duos. If it turns gray, the answer is either a duo or a larger group, cutting the pool roughly in half.</p>
 				</div>
-				<div class="rounded-xl bg-amber-900/20 border border-amber-700 p-5">
-					<h3 class="text-lg font-bold text-amber-400 mb-2">Gender</h3>
-					<p class="text-amber-200">Male, Female, or Mixed (for groups with members of different genders). Another categorical attribute with three values. Green on gender means you have the right category. Combined with group size, gender feedback tells you whether to look for a solo female, a male duo, a mixed group, and so on. Two guesses that nail both attributes can eliminate 70% of the pool.</p>
+				<div class="rounded-xl bg-amber-50 border border-amber-200 p-5">
+					<h3 class="text-lg font-bold text-amber-700 mb-2">Gender</h3>
+					<p class="text-slate-600">Male, Female, or Mixed (for groups with members of different genders). Another categorical attribute with three values. Green on gender means you have the right category. Combined with group size, gender feedback tells you whether to look for a solo female, a male duo, a mixed group, and so on. Two guesses that nail both attributes can eliminate 70% of the pool.</p>
 				</div>
 			</div>
-			<p class="text-gray-400 leading-relaxed">
+			<p class="text-slate-600 leading-relaxed">
 				No single attribute solves the puzzle on its own. The power comes from combining them. Each guess gives you six data points, and after two guesses you have twelve constraints working together. That is where the solver shines — it handles the combinatorial filtering that humans struggle to track mentally. Try it on your next daily Spotle and watch how fast the candidate pool shrinks.
 			</p>
-		</div>
-	</section>
+		</section>
 
-	<div class="mt-12">
-		<FAQSection title="Spotle Solver FAQ" {faqs} class="py-0" />
-	</div>
-
-	<div class="mt-8 bg-gray-900/70 border border-gray-800 rounded-3xl p-6 sm:p-8 text-center space-y-6">
-		<h2 class="text-2xl font-bold text-white">Explore More Solvers</h2>
-		<div class="flex flex-wrap justify-center gap-3">
-			{#each solverLinks as link}
-				<a href={link.href} class="px-5 py-2.5 bg-gray-800 rounded-xl font-semibold text-sm text-white border border-gray-700 hover:border-emerald-500 transition-colors">
-					{link.label}
-				</a>
-			{/each}
+		<div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
+			<FAQSection title="Spotle Solver FAQ" {faqs} class="py-0" />
 		</div>
+
+		<section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
+			<h2 class="text-2xl font-bold text-slate-900">More Solvers</h2>
+			<div class="flex flex-wrap justify-center gap-3">
+				{#each solverLinks as link}
+					<a href={link.href} class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">
+						{link.label}
+					</a>
+				{/each}
+			</div>
+		</section>
 	</div>
-</div>
+</main>

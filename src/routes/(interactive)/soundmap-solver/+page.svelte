@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import { browser } from '$app/environment';
 	import FAQSection from '$lib/components/FAQSection.svelte';
-	import { generateFAQSchema, generateHowToSchema } from '$lib/seo';
+	import { generateFAQSchema, generateHowToSchema, generateBreadcrumbSchema } from '$lib/seo';
 	import type { Artist, AttributeFeedback, FeedbackType, Guess } from '$lib/soundmap/types';
 
 	type SoundmapAlgorithm = Pick<
@@ -280,6 +281,10 @@
 				{ name: 'Add the guess', text: 'Click Add Guess. The solver instantly filters the candidate list to only artists that fit all the feedback you just entered.' },
 				{ name: 'Use the best next guess', text: 'If you have added at least one guess, the solver recommends the best next artist to maximize information. Click Use Guess to auto-fill it.' },
 			]),
+		generateBreadcrumbSchema([
+			{ name: 'Home', url: 'https://wordsolver.tech' },
+			{ name: 'Soundmap Solver', url: 'https://wordsolver.tech/soundmap-solver' },
+		]),
 		],
 	});
 
@@ -317,8 +322,20 @@
 </svelte:head>
 
 <div class="soundmap-solver" class:dark={darkMode}>
-	<div class="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white transition-colors duration-300">
-		<header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-gray-950/80 border-b dark:border-gray-800">
+	<div class="min-h-screen bg-green-50 text-gray-900 transition-colors duration-300">
+		<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+			<Breadcrumbs />
+		</div>
+
+		<section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
+			<div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 px-6 py-8 shadow-2xl text-center space-y-4">
+				<p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">Music Artist Puzzle</p>
+				<h1 class="text-4xl font-black text-white sm:text-5xl">Soundmap Solver</h1>
+				<p class="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">Search for an artist you guessed, set the feedback colors and arrows, and watch the candidate list narrow down in real time.</p>
+			</div>
+		</section>
+
+		<header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 border-b">
 			<div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
 				<div class="flex items-center gap-2">
 					<span class="w-6 h-6 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center">SM</span>
@@ -777,57 +794,57 @@
 		</main>
 
 		<div class="max-w-6xl mx-auto px-4 pb-12">
-			<FAQSection {faqs} />
+			<div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl"><FAQSection {faqs} /></div>
 
 			<!-- SEO Content -->
 			<div class="space-y-8 mt-8">
-				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
-					<h2 class="text-2xl font-bold mb-5 text-gray-900 dark:text-white">What is Soundmap?</h2>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+				<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-2xl font-bold mb-5 text-slate-900">What is Soundmap?</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Soundmap is a daily music artist guessing game. You get a mystery artist and up to 8 guesses to identify them. After each guess, the game reveals how close you were across 6 attributes: debut year, Spotify popularity rank, number of members, genre, country of origin, and gender.
 					</p>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						The game covers hundreds of artists across pop, rock, hip-hop, electronic, and other genres. Some are solo acts from the 1960s; others are modern bands or groups. The mix makes it genuinely hard without help.
 					</p>
-					<p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						The solver tracks all 6 attributes simultaneously. After 2-3 guesses with accurate feedback, the candidate list typically drops to under 10 artists.
 					</p>
 				</div>
 
-				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
-					<h2 class="text-2xl font-bold mb-5 text-gray-900 dark:text-white">Reading the directional clues</h2>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+				<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-2xl font-bold mb-5 text-slate-900">Reading the directional clues</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Two attributes use directional hints instead of just right/wrong. Debut year shows Earlier or Later — if you guessed an artist who debuted in 1995 and you see Later, the target debuted after 1995. Popularity uses Higher or Lower — if you see Higher, the target artist ranks higher (lower number) in Spotify popularity than your guess.
 					</p>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						Close for country means the same geographic region. Guessing a UK artist when the answer is Irish might return Close. Guessing an American when the answer is Canadian might also return Close.
 					</p>
-					<p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						Members and gender are binary — Correct or Wrong. Genre uses Correct or Wrong too, though genre categories can be broad (Rock covers everything from indie to metal).
 					</p>
 				</div>
 
-				<div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-8">
-					<h2 class="text-2xl font-bold mb-5 text-gray-900 dark:text-white">How the best-guess algorithm works</h2>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+				<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+					<h2 class="text-2xl font-bold mb-5 text-slate-900">How the best-guess algorithm works</h2>
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						The solver calculates the best next guess by looking at all remaining candidates and testing each possible artist as a guess. For each test, it simulates every possible feedback outcome and counts how many candidates would survive each outcome.
 					</p>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+					<p class="text-slate-600 mb-4 leading-relaxed">
 						The best guess is the one that produces the smallest average candidate pool across all possible outcomes. This is the minimax strategy — it minimizes the worst-case scenario. In practice, it usually halves the candidate pool or better with each guess.
 					</p>
-					<p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+					<p class="text-slate-600 leading-relaxed">
 						Recommended first guesses are pre-calculated before you start. They score well against the full artist database — typically resolving the puzzle in 3-4 guesses from a cold start.
 					</p>
 				</div>
 
 				<!-- Internal links -->
-				<div class="rounded-2xl bg-gray-100 dark:bg-gray-800 p-6 text-center">
-					<h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">More game solvers</h2>
+				<div class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">
+					<h2 class="text-2xl font-bold text-slate-900">More game solvers</h2>
 					<div class="flex flex-wrap justify-center gap-3">
-						<a href="/loldle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Loldle Solver</a>
-						<a href="/pokedle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Pokedle Solver</a>
-						<a href="/wordle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Wordle Solver</a>
-						<a href="/nerdle-solver" class="px-4 py-2 bg-white dark:bg-gray-700 rounded-xl font-semibold text-gray-800 dark:text-white shadow-sm hover:shadow-md transition-shadow text-sm">Nerdle Solver</a>
+						<a href="/loldle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Loldle Solver</a>
+						<a href="/pokedle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Pokedle Solver</a>
+						<a href="/wordle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Wordle Solver</a>
+						<a href="/nerdle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Nerdle Solver</a>
 					</div>
 				</div>
 			</div>
@@ -835,19 +852,19 @@
 
 		{#if showHelp}
 			<div class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-				<div class="max-w-2xl w-full bg-white dark:bg-gray-900 rounded-2xl p-6 relative">
-					<button
-						type="button"
-						onclick={() => (showHelp = false)}
-						class="absolute top-4 right-4 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-					>
-						X
-					</button>
-					<h2 class="text-2xl font-bold mb-2">How to Use Soundmap Solver</h2>
-					<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
-						Match each feedback color from the game and let the solver narrow the list.
-					</p>
-					<ol class="list-decimal list-inside space-y-2 text-sm text-gray-700 dark:text-gray-300">
+			<div class="max-w-2xl w-full bg-white rounded-2xl p-6 relative">
+				<button
+					type="button"
+					onclick={() => (showHelp = false)}
+					class="absolute top-4 right-4 text-gray-500 hover:text-gray-900"
+				>
+					X
+				</button>
+				<h2 class="text-2xl font-bold mb-2">How to Use Soundmap Solver</h2>
+				<p class="text-sm text-gray-500 mb-4">
+					Match each feedback color from the game and let the solver narrow the list.
+				</p>
+				<ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
 						<li>Search and select an artist you guessed in Soundmap.</li>
 						<li>Tap each feedback box to match the game&apos;s hints.</li>
 						<li>Add the guess to filter the candidate list instantly.</li>
