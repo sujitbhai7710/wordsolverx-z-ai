@@ -3,6 +3,7 @@ import { getWordleNumber, formatDate } from '$lib/utils';
 import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { WordleAnswer } from '$lib/api';
 import { generatePersonAuthorSchema } from '$lib/seo';
+import { getWordleDailyArticle } from '$lib/daily-article-content';
 import type { PageServerLoad } from './$types';
 
 interface TodayApiResponse extends WordleAnswer {
@@ -30,9 +31,11 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         recentAnswers.find((answer) => answer.date === (wordleData?.date ?? todayKey))?.social_image ||
         wordleData?.social_image ||
         'https://wordsolver.tech/wordsolverx.webp';
+    const generatedArticle = getWordleDailyArticle(wordleData?.date ?? todayKey);
     const normalizedWordleData = wordleData
         ? {
             ...wordleData,
+            content_guide: generatedArticle?.contentGuideHtml ?? wordleData.content_guide,
             social_image: directSocialImage,
             social_image_direct: directSocialImage
         }
@@ -96,6 +99,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         formattedDate,
         recentAnswers,
         directSocialImage,
+        generatedArticle,
         hintFaqs,
         schemas: JSON.stringify([faqSchema, articleSchema]),
         meta: {

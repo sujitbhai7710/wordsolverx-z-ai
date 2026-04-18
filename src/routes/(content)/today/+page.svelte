@@ -5,30 +5,30 @@
   let todayStr = $derived(data.todayStr);
 
   const games = [
-    { name: 'Wordle', href: '/wordle-answer-today', description: "Today's Wordle answer and hints.", color: 'from-green-500 to-emerald-600', icon: 'W' },
-    { name: 'Canuckle', href: '/canuckle-answer-today', description: "Today's Canuckle answer, puzzle number, and fact.", color: 'from-rose-500 to-red-600', icon: 'Ca' },
-    { name: 'Worldle', href: '/worldle-answer-today', description: "Today's Worldle country plus archive date lookup.", color: 'from-sky-500 to-blue-700', icon: 'Wr' },
-    { name: 'Betweenle', href: '/betweenle-answer-today', description: "Today's Betweenle answer with calendar archive lookup.", color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt' },
-    { name: 'Colorfle', href: '/colorfle-answer-today', description: "Today's Colorfle mixed color answer.", color: 'from-fuchsia-500 to-pink-600', icon: 'Cf' },
-    { name: 'Nerdle', href: '/nerdle-answer-today', description: "Today's Nerdle equation answer with archive links.", color: 'from-emerald-500 to-teal-600', icon: 'Nd' },
-    { name: 'Phoodle', href: '/phoodle-answer-today', description: "Today's food-themed puzzle answer.", color: 'from-orange-500 to-red-500', icon: 'Ph' },
-    { name: 'Quordle', href: '/quordle-answer-today', description: "All four Quordle answers today.", color: 'from-blue-500 to-indigo-600', icon: 'Q' },
-    { name: 'Colordle', href: '/colordle-answer-today', description: "Today's hex color answer.", color: 'from-pink-500 to-purple-600', icon: 'Cd' },
-    { name: 'Countryle', href: '/countryle-answer-today', description: "Today's Countryle country answer.", color: 'from-emerald-500 to-teal-600', icon: 'Cy' },
-    { name: 'Framed', href: '/framed-answer-today', description: "Today's Framed movie answers.", color: 'from-amber-500 to-orange-600', icon: 'Fr' },
-    { name: 'Semantle', href: '/semantle-answer-today', description: "Today's Semantle secret word.", color: 'from-cyan-500 to-teal-600', icon: 'Se' },
-    { name: 'Waffle', href: '/waffle-answer-today', description: "Today's Waffle grid solution.", color: 'from-amber-500 to-yellow-600', icon: 'Wf' },
-    { name: 'Globle', href: '/globle-answer-today', description: "Today's mystery country.", color: 'from-sky-500 to-blue-600', icon: 'Gb' },
-    { name: 'Narutodle', href: '/narutodle-answer-today', description: "Today's Naruto character.", color: 'from-orange-600 to-red-600', icon: 'Na' },
-    { name: 'Dotadle', href: '/dotadle-answer-today', description: "Today's Dota 2 hero.", color: 'from-red-600 to-rose-700', icon: 'Do' },
-    { name: 'LoLdle', href: '/loldle-answer-today', description: "Today's League champion.", color: 'from-violet-500 to-purple-700', icon: 'Lo' },
-    { name: 'Pokedle', href: '/pokedle-answer-today', description: "Today's Pokemon answer.", color: 'from-yellow-400 to-amber-500', icon: 'Pk' },
-    { name: 'Smashdle', href: '/smashdle-answer-today', description: "Today's Smash fighter.", color: 'from-red-500 to-pink-600', icon: 'Sm' },
-    { name: 'OnePiecedle', href: '/onepiecedle-answer-today', description: "Today's One Piece character.", color: 'from-blue-600 to-cyan-600', icon: 'Op' },
-    { name: 'Contexto', href: '/contexto-answer-today', description: "Today's Contexto answer.", color: 'from-violet-500 to-fuchsia-600', icon: 'Cx' },
-    { name: 'Searchle', href: '/searchle-answer-today', description: "Today's Searchle answer.", color: 'from-purple-500 to-pink-600', icon: 'Sr' },
-    { name: 'Phrazle', href: '/phrazle-answer-today', description: "Today's morning and afternoon phrases.", color: 'from-emerald-500 to-lime-600', icon: 'Pz' },
-    { name: 'Spotle', href: '/spotle-answer-today', description: "Today's Spotify artist answer.", color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
+    { name: 'Wordle', href: '/wordle-answer-today', description: "Hints first, answer when you're ready.", color: 'from-green-500 to-emerald-600', icon: 'W' },
+    { name: 'Canuckle', href: '/canuckle-answer-today', description: 'The daily answer, puzzle number, and the Canada fact.', color: 'from-rose-500 to-red-600', icon: 'Ca' },
+    { name: 'Worldle', href: '/worldle-answer-today', description: 'Today’s country plus a quick path into the archive.', color: 'from-sky-500 to-blue-700', icon: 'Wr' },
+    { name: 'Betweenle', href: '/betweenle-answer-today', description: 'The daily answer with archive dates that are easy to check.', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt' },
+    { name: 'Colorfle', href: '/colorfle-answer-today', description: 'Today’s blended color, without the extra hunting around.', color: 'from-fuchsia-500 to-pink-600', icon: 'Cf' },
+    { name: 'Nerdle', href: '/nerdle-answer-today', description: 'The current equation and a fast way to see older ones.', color: 'from-emerald-500 to-teal-600', icon: 'Nd' },
+    { name: 'Phoodle', href: '/phoodle-answer-today', description: 'Today’s food word and the clue trail around it.', color: 'from-orange-500 to-red-500', icon: 'Ph' },
+    { name: 'Quordle', href: '/quordle-answer-today', description: 'All four answers in one stop.', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
+    { name: 'Colordle', href: '/colordle-answer-today', description: 'The exact color, hex code, and a better daily write-up.', color: 'from-pink-500 to-purple-600', icon: 'Cd' },
+    { name: 'Countryle', href: '/countryle-answer-today', description: 'The daily country answer without the guesswork after the fact.', color: 'from-emerald-500 to-teal-600', icon: 'Cy' },
+    { name: 'Framed', href: '/framed-answer-today', description: 'Today’s movie answer when the stills weren’t enough.', color: 'from-amber-500 to-orange-600', icon: 'Fr' },
+    { name: 'Semantle', href: '/semantle-answer-today', description: 'The hidden word and a cleaner explanation of why it fits.', color: 'from-cyan-500 to-teal-600', icon: 'Se' },
+    { name: 'Waffle', href: '/waffle-answer-today', description: 'The finished grid for today’s puzzle.', color: 'from-amber-500 to-yellow-600', icon: 'Wf' },
+    { name: 'Globle', href: '/globle-answer-today', description: 'Today’s mystery country with the answer up front.', color: 'from-sky-500 to-blue-600', icon: 'Gb' },
+    { name: 'Narutodle', href: '/narutodle-answer-today', description: 'Today’s Naruto character, minus the digging.', color: 'from-orange-600 to-red-600', icon: 'Na' },
+    { name: 'Dotadle', href: '/dotadle-answer-today', description: 'The daily Dota hero and the page around it.', color: 'from-red-600 to-rose-700', icon: 'Do' },
+    { name: 'LoLdle', href: '/loldle-answer-today', description: 'Today’s League champion answer in one click.', color: 'from-violet-500 to-purple-700', icon: 'Lo' },
+    { name: 'Pokedle', href: '/pokedle-answer-today', description: 'The Pokemon answer for today, kept simple.', color: 'from-yellow-400 to-amber-500', icon: 'Pk' },
+    { name: 'Smashdle', href: '/smashdle-answer-today', description: 'Today’s Smash fighter, ready when you need it.', color: 'from-red-500 to-pink-600', icon: 'Sm' },
+    { name: 'OnePiecedle', href: '/onepiecedle-answer-today', description: 'Today’s One Piece character without the spoiler chase.', color: 'from-blue-600 to-cyan-600', icon: 'Op' },
+    { name: 'Contexto', href: '/contexto-answer-today', description: 'The answer and a faster way to confirm it.', color: 'from-violet-500 to-fuchsia-600', icon: 'Cx' },
+    { name: 'Searchle', href: '/searchle-answer-today', description: 'Today’s query answer, laid out clearly.', color: 'from-purple-500 to-pink-600', icon: 'Sr' },
+    { name: 'Phrazle', href: '/phrazle-answer-today', description: 'Both daily phrases, morning and afternoon.', color: 'from-emerald-500 to-lime-600', icon: 'Pz' },
+    { name: 'Spotle', href: '/spotle-answer-today', description: 'Today’s artist answer and the key details around it.', color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
   ];
 
 </script>
@@ -74,7 +74,7 @@
         Today's Answers
       </h1>
       <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300">
-        {todayStr} - Every daily puzzle answer in one place
+        {todayStr} - the pages people usually end up opening one by one
       </p>
     </div>
 
@@ -104,15 +104,15 @@
 
     <article class="mt-16 max-w-4xl mx-auto space-y-8">
       <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm">
-        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">Daily Answers in One Place</h2>
+        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">Why This Page Exists</h2>
         <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-          This page gathers the latest puzzle answers across WordSolverX so you do not need to check each game individually. Pick any card above to open the current answer page, see hints, and browse that game's archive if you need an older result.
+          This page is for the days when you already know which puzzle you want, but you do not want to bounce through menus to find the answer page. Pick a card, open the current page, and jump straight into the hints, answer, or archive.
         </p>
       </section>
       <section class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm">
-        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">What You Can Do Next</h2>
+        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">Use It Two Ways</h2>
         <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-          If you want to solve first and verify later, open the related solver from our tools hub. If you missed a day, check the archive pages for full history, answer calendars, and recent puzzle results.
+          If you still want to solve first, open the page for hints and then switch to the matching solver. If you missed a day, the archive links are the quickest way back to older results without guessing dates from memory.
         </p>
       </section>
     </article>

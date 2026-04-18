@@ -52,6 +52,7 @@
       formattedDate={data.formattedDate}
       pageContext="today"
       contentGuide={data.wordleData?.content_guide}
+      bonusHints={data.generatedArticle?.bonusHints ?? []}
       socialImage={data.directSocialImage}
       youtubeVideoUrl={data.wordleData?.youtube_video_url}
     />

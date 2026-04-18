@@ -12,6 +12,7 @@
     formattedDate,
     pageContext,
     contentGuide,
+    bonusHints = [],
     socialImage,
     youtubeVideoUrl,
   }: {
@@ -21,6 +22,7 @@
     formattedDate: string;
     pageContext: 'today' | 'archive';
     contentGuide?: string | null;
+    bonusHints?: string[];
     socialImage?: string | null;
     youtubeVideoUrl?: string | null;
   } = $props();
@@ -263,6 +265,27 @@
             {@html hintsHtml}
           </div>
         </div>
+      {/if}
+
+      {#if bonusHints.length > 0}
+        <section class="mb-8 max-w-3xl mx-auto rounded-3xl border border-emerald-100 bg-emerald-50/70 p-6 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-sm">
+              <span class="text-lg font-bold">+</span>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-600">Extra Hint Pass</p>
+              <h2 class="text-xl font-bold text-gray-900">Fresh hints if you still want one more nudge</h2>
+            </div>
+          </div>
+          <ul class="space-y-3">
+            {#each bonusHints as hint}
+              <li class="rounded-2xl bg-white px-4 py-3 text-sm leading-6 text-gray-700 shadow-sm ring-1 ring-emerald-100">
+                {hint}
+              </li>
+            {/each}
+          </ul>
+        </section>
       {/if}
 
       <!-- 3. YouTube Video -->

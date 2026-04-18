@@ -54,6 +54,10 @@ jobs:
       SOURCE_NAME: ${{ github.event.client_payload.source || github.event.inputs.source || (github.event_name == 'push' && format('push:{0}', github.ref_name)) || github.event.action || 'manual' }}
       PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev
       PUBLIC_BASE_URL: https://wordsolver.tech
+      NVIDIA_API_KEYS: ${{ secrets.NVIDIA_API_KEYS }}
+      NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      AGENT_ROUTER_TOKENS: ${{ secrets.AGENT_ROUTER_TOKENS }}
+      AGENT_ROUTER_TOKEN: ${{ secrets.AGENT_ROUTER_TOKEN }}
       INDEXING_ARTIFACT_DIR: artifacts/indexing
       INDEXING_REQUEST_TIMEOUT_MS: 10000
       SITEMAP_URL: https://wordsolver.tech/sitemap.xml

@@ -3,6 +3,7 @@ import {
 	type ColordleTodayPayload
 } from '$lib/colordle-date';
 import { colorDiff, hexToRgb, type RGB } from '$lib/colordle';
+import { getColordleDailyArticle } from '$lib/daily-article-content';
 import { format } from 'date-fns';
 import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import type { PageServerLoad } from './$types';
@@ -337,6 +338,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		last100Days,
 		actualDateKey
 	} = todayData;
+	const generatedArticle = getColordleDailyArticle(actualDateKey);
 
 	setHeaders({
 		'X-Puzzle-Date': actualDateKey
@@ -471,6 +473,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
 		last100Days,
 		schemas: jsonLd,
 		gameNarrative: generateGameNarrative(color),
+		generatedArticle,
 		meta: {
 			title: pageTitle,
 			description: pageDescription,
