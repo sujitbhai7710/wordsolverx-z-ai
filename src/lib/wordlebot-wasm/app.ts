@@ -654,20 +654,6 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					)
 					.join('') || '<li class="suggestion-item"><div class="score-note">No guesses available from the current state.</div></li>'}
 			</ol>
-			<div class="answers-section">
-				${response.likelyAnswers
-					.map(
-						(answers, index) => `
-							<details class="candidate-group" data-candidate-board="${index}">
-								<summary>${response.boardCount > 1 ? `Board ${index + 1}: ` : ''}${answers.length + response.unlikelyAnswers[index].length} possible words</summary>
-								<div class="candidate-columns" data-candidate-content="${index}">
-									<p class="score-note">Expand this section to load the candidate answer lists.</p>
-								</div>
-							</details>
-						`
-					)
-					.join('')}
-			</div>
 		`;
 
 		container.querySelectorAll<HTMLButtonElement>('.word-button').forEach((button) => {
@@ -680,25 +666,6 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 			});
 		});
 
-		container.querySelectorAll<HTMLDetailsElement>('[data-candidate-board]').forEach((group) => {
-			group.addEventListener('toggle', () => {
-				if (!group.open || group.dataset.loaded === 'true') {
-					return;
-				}
-
-				const boardIndex = Number(group.dataset.candidateBoard);
-				const content = group.querySelector<HTMLElement>(`[data-candidate-content="${boardIndex}"]`);
-				if (!content) {
-					return;
-				}
-
-				content.innerHTML = renderCandidateColumns(
-					response.likelyAnswers[boardIndex] ?? [],
-					response.unlikelyAnswers[boardIndex] ?? []
-				);
-				group.dataset.loaded = 'true';
-			});
-		});
 	}
 }
 
@@ -882,16 +849,6 @@ function formatSuggestionScore(
 	if (suggestion.wrong > 0) return `${((1 - suggestion.wrong) * 100).toFixed(2)}% solve rate`;
 	if (turnsSoFar === 0) return `${suggestion.average.toFixed(3)} guesses`;
 	return `${(suggestion.average - turnsSoFar).toFixed(3)} guesses left`;
-}
-
-function renderCandidateColumns(likelyAnswers: string[], unlikelyAnswers: string[]) {
-	const allWords = [...likelyAnswers, ...unlikelyAnswers];
-	return `
-		<div>
-			<p class="column-heading">All possible answers (${allWords.length})</p>
-			<p>${allWords.map(escapeHtml).join(', ') || 'None'}</p>
-		</div>
-	`;
 }
 
 function pluralizePossibility(count: number) {

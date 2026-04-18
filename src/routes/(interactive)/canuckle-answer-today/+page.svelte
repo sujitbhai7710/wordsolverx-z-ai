@@ -66,48 +66,51 @@
 {:else}
 	<div class="bg-[linear-gradient(180deg,#fff8f7_0%,#ffffff_42%,#f8fafc_100%)] min-h-screen font-sans">
 		<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-			<header class="text-center mb-10">
-				<h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 bg-clip-text text-transparent mb-4">
-					Canuckle Answer Today ({formattedDate})
-				</h1>
-				<p class="mx-auto max-w-3xl text-lg leading-8 text-gray-600">
-					Verified Canuckle word, puzzle number, and Canadian fact for <span class="font-semibold text-rose-600">{formattedDate}</span>.
-				</p>
-			</header>
 
-			<div class="mb-12 rounded-3xl border border-rose-100 bg-white p-6 shadow-lg">
-				<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-					<div>
-						<p class="text-sm font-semibold uppercase tracking-[0.24em] text-rose-600">Today&apos;s puzzle</p>
-						<h2 class="mt-2 text-2xl font-bold text-gray-900">Puzzle #{data.todayPuzzle.index}</h2>
-						<p class="mt-2 max-w-2xl text-sm leading-6 text-gray-600">
-							Today&apos;s verified Canuckle entry is ready, but the answer stays hidden until you open the reveal card below. The Canadian fact and answer now live in one place so the page stays spoiler-safe.
-						</p>
+			<section class="relative overflow-hidden rounded-[2rem] border border-rose-100 bg-[radial-gradient(ellipse_at_top_left,rgba(239,68,68,0.12),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(251,146,60,0.10),transparent_50%),linear-gradient(135deg,#ffffff_0%,#fff5f5_30%,#fff7ed_60%,#ffffff_100%)] p-8 shadow-[0_28px_80px_rgba(239,68,68,0.09)] sm:p-10">
+				<div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-rose-100/40 blur-2xl"></div>
+				<div class="absolute -left-12 bottom-0 h-36 w-36 rounded-full bg-amber-100/30 blur-2xl"></div>
+
+				<div class="relative">
+					<div class="flex items-center gap-3 mb-5">
+						<span class="inline-flex items-center rounded-full border border-rose-200 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-rose-600 shadow-sm">🍁 Daily Canuckle</span>
+						<span class="rounded-full bg-rose-600 px-3 py-1 text-xs font-bold text-white shadow-sm">Puzzle #{data.todayPuzzle.index}</span>
 					</div>
-					<div class="flex flex-wrap gap-3">
+
+					<h1 class="text-4xl font-black tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+						Canuckle Answer
+						<span class="bg-gradient-to-r from-rose-600 via-red-500 to-amber-500 bg-clip-text text-transparent">Today</span>
+					</h1>
+
+					<p class="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+						Verified answer, puzzle number, and Canadian fact for <span class="font-semibold text-rose-600">{formattedDate}</span>. The answer stays hidden until you choose to reveal it.
+					</p>
+
+					<div class="mt-8 flex flex-wrap gap-3">
 						<a
 							href="#today-answer-reveal"
-							class="inline-flex items-center justify-center rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-rose-500/25 transition hover:bg-rose-700 hover:shadow-lg"
+							class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-600 to-red-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-rose-500/25 transition hover:-translate-y-0.5 hover:shadow-xl"
 						>
+							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
 							Reveal Answer
 						</a>
 						<a
 							href="/canuckle-solver"
-							class="inline-flex items-center justify-center rounded-full border border-rose-200 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+							class="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white px-5 py-3 text-sm font-bold text-rose-700 shadow-sm transition hover:border-rose-300 hover:bg-rose-50"
 						>
 							Open Solver
 						</a>
 						<a
 							href="/canuckle-archive"
-							class="inline-flex items-center justify-center rounded-full border border-rose-200 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+							class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
 						>
 							Browse Archive
 						</a>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div class="mb-12" id="today-answer-reveal">
+			<div class="mt-10 mb-12" id="today-answer-reveal">
 				<WordlebotWasmClient config={{ pageType: 'canuckle-daily', visibleDateKey: data.visibleDateKey }} />
 			</div>
 

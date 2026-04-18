@@ -179,18 +179,18 @@
 	</div>
 
 	<section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
-		<div class="rounded-[2rem] border border-emerald-200/60 bg-gradient-to-br from-emerald-900 via-teal-800 to-green-900 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl">
-			<p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200">Spotify Daily Game</p>
+		<div class="rounded-[2rem] border border-emerald-200/60 bg-gradient-to-br from-emerald-600 via-teal-500 to-green-500 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl">
+			<p class="inline-flex rounded-full bg-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-50">Spotify Daily Game</p>
 			<div class="mt-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
 				<div>
 					<h1 class="text-4xl font-black text-white md:text-5xl">Spotle Solver</h1>
-					<p class="mt-3 max-w-2xl text-emerald-100/80 text-lg">
+					<p class="mt-3 max-w-2xl text-emerald-50/90 text-lg">
 						Search an artist, match the feedback colors and arrows, and filter the remaining candidates in real time.
 					</p>
 				</div>
 				<a
 					href="/spotle-answer-today"
-					class="inline-flex items-center justify-center rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-black hover:bg-emerald-300 shrink-0"
+					class="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 shrink-0 shadow-md"
 				>
 					View Today's Answer
 				</a>
@@ -201,12 +201,12 @@
 	<div class="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
 
 		{#if !dataLoaded}
-			<div class="h-48 flex items-center justify-center text-gray-400">Loading Spotle data...</div>
+			<div class="h-48 flex items-center justify-center text-slate-400">Loading Spotle data...</div>
 		{:else}
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 				<section class="lg:col-span-4 space-y-6">
-					<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-5">
-						<h2 class="text-lg font-semibold mb-4">Make a Guess</h2>
+					<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-lg">
+						<h2 class="text-lg font-semibold text-slate-800 mb-4">Make a Guess</h2>
 						<div class="relative mb-3">
 							<input
 								type="text"
@@ -218,10 +218,10 @@
 								}}
 								onfocus={() => (showDropdown = true)}
 								onblur={() => setTimeout(() => (showDropdown = false), 200)}
-								class="w-full h-11 rounded-xl bg-gray-800 border border-gray-700 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+								class="w-full h-11 rounded-xl bg-slate-50 border border-slate-300 px-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
 							/>
 							{#if showDropdown && searchResults.length > 0}
-								<div class="absolute z-20 w-full mt-2 bg-gray-900 border border-gray-700 rounded-2xl shadow-xl overflow-hidden">
+								<div class="absolute z-20 w-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden">
 									{#each searchResults as artist}
 										<button
 											type="button"
@@ -229,11 +229,11 @@
 												event.preventDefault();
 												selectArtist(artist);
 											}}
-											class="w-full px-3 py-2 flex items-center gap-3 hover:bg-gray-800 text-left"
+											class="w-full px-3 py-2 flex items-center gap-3 hover:bg-emerald-50 text-left"
 										>
 											<div class="min-w-0">
-												<p class="text-sm font-semibold truncate">{artist.artist}</p>
-												<p class="text-xs text-gray-400">#{artist.index + 1} - {artist.genre}</p>
+												<p class="text-sm font-semibold text-slate-800 truncate">{artist.artist}</p>
+												<p class="text-xs text-slate-500">#{artist.index + 1} - {artist.genre}</p>
 											</div>
 										</button>
 									{/each}
@@ -242,19 +242,19 @@
 						</div>
 
 						{#if selectedArtist}
-							<div class="bg-gray-800/80 border border-gray-700 rounded-2xl p-4 space-y-3">
+							<div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
 								<div class="flex items-center gap-3">
 									<div>
-										<p class="font-semibold">{selectedArtist.artist}</p>
-										<p class="text-xs text-gray-400">Tap colors to match your game</p>
+										<p class="font-semibold text-slate-800">{selectedArtist.artist}</p>
+										<p class="text-xs text-slate-500">Tap colors to match your game</p>
 									</div>
 								</div>
 
 								<div class="grid grid-cols-3 gap-2 text-xs">
 									{#each SPOTLE_ATTRIBUTES as attr}
-										<div class="bg-gray-900/70 border border-gray-700 rounded-xl p-2 text-center">
-											<p class="text-gray-400">{attr.shortLabel}</p>
-											<p class="font-semibold truncate">{attr.getDisplayValue(selectedArtist)}</p>
+										<div class="bg-white border border-slate-200 rounded-xl p-2 text-center shadow-sm">
+											<p class="text-slate-500">{attr.shortLabel}</p>
+											<p class="font-semibold text-slate-800 truncate">{attr.getDisplayValue(selectedArtist)}</p>
 											<button
 												type="button"
 												onclick={() => {
@@ -265,10 +265,10 @@
 												}}
 												class={`mt-1 w-full h-6 rounded-lg text-[10px] font-bold ${
 													currentFeedback[attr.key] === 'green'
-														? 'bg-emerald-500 text-black'
+														? 'bg-emerald-500 text-white'
 														: currentFeedback[attr.key] === 'yellow'
 															? 'bg-amber-400 text-black'
-															: 'bg-gray-700 text-gray-200'
+															: 'bg-slate-200 text-slate-600'
 												}`}
 											>
 												{currentFeedback[attr.key] === 'green'
@@ -290,10 +290,10 @@
 													}}
 													class={`mt-1 w-full h-5 rounded-lg text-[10px] font-semibold ${
 														currentFeedback[attr.arrowKey!] === 'up'
-															? 'bg-sky-500 text-black'
+															? 'bg-sky-500 text-white'
 															: currentFeedback[attr.arrowKey!] === 'down'
-																? 'bg-orange-500 text-black'
-																: 'bg-gray-700 text-gray-200'
+																? 'bg-orange-500 text-white'
+																: 'bg-slate-200 text-slate-600'
 													}`}
 												>
 													{currentFeedback[attr.arrowKey!] === 'up'
@@ -310,27 +310,27 @@
 								<button
 									type="button"
 									onclick={addGuess}
-									class="w-full rounded-xl bg-emerald-500 text-black font-semibold py-2 hover:bg-emerald-400"
+									class="w-full rounded-xl bg-emerald-500 text-white font-semibold py-2 hover:bg-emerald-600 shadow-md"
 								>
 									Add Guess
 								</button>
 							</div>
 						{/if}
 
-						<div class="mt-4 flex items-center justify-between text-xs text-gray-400">
+						<div class="mt-4 flex items-center justify-between text-xs text-slate-500">
 							<span>Guesses: {guesses.length}</span>
 							<button
 								type="button"
 								onclick={resetAll}
-								class="text-emerald-400 hover:text-emerald-300"
+								class="text-emerald-600 hover:text-emerald-700 font-medium"
 							>
 								Reset
 							</button>
 						</div>
 					</div>
 
-					<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-5">
-						<h3 class="text-sm font-semibold text-gray-300 mb-3">Quick Picks</h3>
+					<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-lg">
+						<h3 class="text-sm font-semibold text-slate-600 mb-3">Quick Picks</h3>
 						<div class="flex flex-wrap gap-2 text-xs">
 							{#each ['Drake', 'Taylor Swift', 'Bad Bunny', 'The Weeknd', 'Ed Sheeran', 'Beyonce'] as name}
 								{@const artist = artists.find((a) => a.artist === name)}
@@ -338,7 +338,7 @@
 									<button
 										type="button"
 										onclick={() => selectArtist(artist)}
-										class="px-3 py-1.5 rounded-full border border-gray-700 bg-gray-800 hover:bg-gray-700"
+										class="px-3 py-1.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 text-slate-700 transition-colors"
 									>
 										{name.split(' ')[0]}
 									</button>
@@ -349,46 +349,46 @@
 				</section>
 
 				<section class="lg:col-span-4 space-y-6">
-					<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-5">
+					<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-lg">
 						<div class="flex items-center justify-between mb-4">
-							<h2 class="text-lg font-semibold">Your Guesses</h2>
+							<h2 class="text-lg font-semibold text-slate-800">Your Guesses</h2>
 							{#if guesses.length > 0}
 								<button
 									type="button"
 									onclick={resetAll}
-									class="text-xs text-red-400 hover:text-red-300"
+									class="text-xs text-red-500 hover:text-red-600 font-medium"
 								>
 									Clear All
 								</button>
 							{/if}
 						</div>
 						{#if guesses.length === 0}
-							<p class="text-sm text-gray-400">Add guesses to start filtering.</p>
+							<p class="text-sm text-slate-400">Add guesses to start filtering.</p>
 						{:else}
 							<div class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
 								{#each guesses as guess, index}
-									<div class="bg-gray-800/80 border border-gray-700 rounded-2xl p-3">
+									<div class="bg-slate-50 border border-slate-200 rounded-2xl p-3">
 										<div class="flex items-center justify-between mb-2">
 											<div class="flex items-center gap-2">
 												<div>
-													<p class="text-sm font-semibold">{guess.artist.artist}</p>
-													<p class="text-[10px] text-gray-400">#{guess.artist.index + 1}</p>
+													<p class="text-sm font-semibold text-slate-800">{guess.artist.artist}</p>
+													<p class="text-[10px] text-slate-500">#{guess.artist.index + 1}</p>
 												</div>
 											</div>
 											<button
 												type="button"
 												onclick={() => (guesses = guesses.filter((_, i) => i !== index))}
-												class="text-xs text-red-400 hover:text-red-300"
+												class="text-xs text-red-500 hover:text-red-600"
 											>
 												Remove
 											</button>
 										</div>
 										<div class="grid grid-cols-3 gap-2 text-[10px]">
 											{#each SPOTLE_ATTRIBUTES as attr}
-												<div class="bg-gray-900/70 border border-gray-700 rounded-lg p-2 text-center">
-													<p class="text-gray-400">{attr.shortLabel}</p>
-													<p class="font-semibold">{attr.getDisplayValue(guess.artist)}</p>
-													<p class="mt-1 text-gray-300">
+												<div class="bg-white border border-slate-200 rounded-lg p-2 text-center shadow-sm">
+													<p class="text-slate-500">{attr.shortLabel}</p>
+													<p class="font-semibold text-slate-800">{attr.getDisplayValue(guess.artist)}</p>
+													<p class="mt-1 text-slate-600">
 														{guess.feedback[attr.key]}
 														{#if attr.hasArrow}
 															({guess.feedback[attr.arrowKey!]})
@@ -405,24 +405,24 @@
 				</section>
 
 				<section class="lg:col-span-4 space-y-6">
-					<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-5">
-						<h2 class="text-lg font-semibold mb-4">Best Suggestions</h2>
+					<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-lg">
+						<h2 class="text-lg font-semibold text-slate-800 mb-4">Best Suggestions</h2>
 						{#if remainingCandidates.length === 0}
-							<p class="text-sm text-gray-400">No matches found.</p>
+							<p class="text-sm text-slate-400">No matches found.</p>
 						{:else}
 							<div class="space-y-2">
 								{#each remainingCandidates.slice(0, 5) as artist, i}
 									<button
 										type="button"
 										onclick={() => selectArtist(artist)}
-										class="w-full flex items-center gap-3 bg-gray-800/80 border border-gray-700 rounded-2xl p-3 hover:bg-gray-700"
+										class="w-full flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-3 hover:bg-emerald-50 hover:border-emerald-300 transition-colors"
 									>
-										<div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs font-bold">
+										<div class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">
 											{i + 1}
 										</div>
 										<div class="min-w-0 text-left">
-											<p class="text-sm font-semibold truncate">{artist.artist}</p>
-											<p class="text-xs text-gray-400">
+											<p class="text-sm font-semibold text-slate-800 truncate">{artist.artist}</p>
+											<p class="text-xs text-slate-500">
 												#{artist.index + 1} - {artist.genre}
 											</p>
 										</div>
@@ -432,23 +432,23 @@
 						{/if}
 					</div>
 
-					<div class="bg-gray-900/70 border border-gray-800 rounded-3xl p-5">
-						<h3 class="text-sm font-semibold text-gray-300 mb-3">Remaining Candidates</h3>
+					<div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-lg">
+						<h3 class="text-sm font-semibold text-slate-600 mb-3">Remaining Candidates</h3>
 						{#if remainingCandidates.length <= 15}
 							<div class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
 								{#each remainingCandidates as artist}
 									<button
 										type="button"
 										onclick={() => selectArtist(artist)}
-										class="w-full flex items-center gap-2 bg-gray-800/70 border border-gray-700 rounded-xl p-2 hover:bg-gray-700"
+										class="w-full flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl p-2 hover:bg-emerald-50 hover:border-emerald-300 transition-colors"
 									>
-										<span class="text-xs font-medium truncate flex-1 text-left">{artist.artist}</span>
-										<span class="text-[10px] text-gray-400">#{artist.index + 1}</span>
+										<span class="text-xs font-medium truncate flex-1 text-left text-slate-700">{artist.artist}</span>
+										<span class="text-[10px] text-slate-400">#{artist.index + 1}</span>
 									</button>
 								{/each}
 							</div>
 						{:else}
-							<p class="text-sm text-gray-400">{remainingCandidates.length} candidates remaining.</p>
+							<p class="text-sm text-slate-500">{remainingCandidates.length} candidates remaining.</p>
 						{/if}
 					</div>
 				</section>
