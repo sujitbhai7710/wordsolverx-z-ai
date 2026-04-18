@@ -473,18 +473,18 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 			await solveAndRender(state, resultsContainer);
 		});
 
-		required<HTMLButtonElement>(target, '#undo-button').addEventListener('click', () => {
+		required<HTMLButtonElement>(target, '#undo-button').addEventListener('click', async () => {
 			state.turns.pop();
 			drawBoards(boardsContainer, state, storageKey, resultsContainer);
 			persistState(storageKey, state);
-			markResultsDirty(resultsContainer);
+			await solveAndRender(state, resultsContainer);
 		});
 
-		required<HTMLButtonElement>(target, '#reset-button').addEventListener('click', () => {
+		required<HTMLButtonElement>(target, '#reset-button').addEventListener('click', async () => {
 			state.turns = [];
 			drawBoards(boardsContainer, state, storageKey, resultsContainer);
 			persistState(storageKey, state);
-			markResultsDirty(resultsContainer);
+			await solveAndRender(state, resultsContainer);
 		});
 
 		guessInput.addEventListener('input', () => {
