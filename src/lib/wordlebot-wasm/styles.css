@@ -659,6 +659,11 @@ select:focus-visible,
   color: var(--muted-text);
 }
 
+.candidate-group-open {
+  border-top: 1px solid rgba(122, 92, 46, 0.09);
+  padding: 12px 0;
+}
+
 .candidate-columns {
   display: grid;
   gap: 12px;

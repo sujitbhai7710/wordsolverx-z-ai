@@ -639,7 +639,13 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 		const total = response.totalLikely + response.totalUnlikely;
 		const hasGuesses = state.turns.length > 0;
 		container.innerHTML = `
-			${hasGuesses ? `<h2 class="possibilities total">${total} possible word${total === 1 ? '' : 's'}</h2>` : ''}
+			${hasGuesses ? `
+				<h2 class="possibilities total">${total} possibilit${pluralizePossibility(total)}</h2>
+				<h3 class="possibilities separated">
+					${response.totalLikely} probable answer${response.totalLikely === 1 ? '' : 's'},
+					${response.totalUnlikely} unlikely possibilit${response.totalUnlikely === 1 ? 'y' : 'ies'}.
+				</h3>
+			` : ''}
 			<h3 class="mini-title">${hasGuesses ? 'Your best possible guesses are:' : 'Best starting words:'}</h3>
 			<ol class="suggestion-list">
 				${response.suggestions
@@ -658,14 +664,25 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 			${hasGuesses ? `<div class="answers-section">
 				${response.likelyAnswers
 					.map(
-						(answers, index) => `
-							<details class="candidate-group" data-candidate-board="${index}">
-								<summary>${response.boardCount > 1 ? `Board ${index + 1}: ` : ''}${answers.length + response.unlikelyAnswers[index].length} possible words</summary>
-								<div class="candidate-columns" data-candidate-content="${index}">
-									<p class="score-note">Expand this section to load the candidate answer lists.</p>
+						(answers, index) => {
+							const likely = answers;
+							const unlikely = response.unlikelyAnswers[index];
+							return `
+								<div class="candidate-group-open">
+									${response.boardCount > 1 ? `<p class="board-label">Board ${index + 1}: ${likely.length} probable, ${unlikely.length} unlikely</p>` : ''}
+									<div class="candidate-columns">
+										<div>
+											<p class="column-heading">Probable answers (${likely.length})</p>
+											<p>${likely.map(escapeHtml).join(', ') || 'None'}</p>
+										</div>
+										<div>
+											<p class="column-heading">Unlikely answers (${unlikely.length})</p>
+											<p>${unlikely.map(escapeHtml).join(', ') || 'None'}</p>
+										</div>
+									</div>
 								</div>
-							</details>
-						`
+							`;
+						}
 					)
 					.join('')}
 			</div>` : ''}
@@ -678,26 +695,6 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 				input.focus();
 				// Auto-submit the guess to the board
 				required<HTMLButtonElement>(target, '#add-guess').click();
-			});
-		});
-
-		container.querySelectorAll<HTMLDetailsElement>('[data-candidate-board]').forEach((group) => {
-			group.addEventListener('toggle', () => {
-				if (!group.open || group.dataset.loaded === 'true') {
-					return;
-				}
-
-				const boardIndex = Number(group.dataset.candidateBoard);
-				const content = group.querySelector<HTMLElement>(`[data-candidate-content="${boardIndex}"]`);
-				if (!content) {
-					return;
-				}
-
-				content.innerHTML = renderCandidateColumns(
-					response.likelyAnswers[boardIndex] ?? [],
-					response.unlikelyAnswers[boardIndex] ?? []
-				);
-				group.dataset.loaded = 'true';
 			});
 		});
 
@@ -884,16 +881,6 @@ function formatSuggestionScore(
 	if (suggestion.wrong > 0) return `${((1 - suggestion.wrong) * 100).toFixed(2)}% solve rate`;
 	if (turnsSoFar === 0) return `${suggestion.average.toFixed(3)} guesses`;
 	return `${(suggestion.average - turnsSoFar).toFixed(3)} guesses left`;
-}
-
-function renderCandidateColumns(likelyAnswers: string[], unlikelyAnswers: string[]) {
-	const allWords = [...likelyAnswers, ...unlikelyAnswers];
-	return `
-		<div>
-			<p class="column-heading">All possible answers (${allWords.length})</p>
-			<p>${allWords.map(escapeHtml).join(', ') || 'None'}</p>
-		</div>
-	`;
 }
 
 function pluralizePossibility(count: number) {
