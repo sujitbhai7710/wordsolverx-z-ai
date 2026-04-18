@@ -243,22 +243,7 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 		});
 
 		drawBoards(boardsContainer, state, storageKey, resultsContainer);
-		if (state.turns.length > 0) {
-			await solveAndRender(state, resultsContainer);
-		} else {
-			resultsContainer.innerHTML = `
-				<div class="empty-results-prompt">
-					<div class="empty-results-icon">
-						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-							<circle cx="11" cy="11" r="8"/>
-							<path d="m21 21-4.35-4.35"/>
-						</svg>
-					</div>
-					<p class="empty-results-title">Enter a guess to get started</p>
-					<p class="empty-results-hint">Type a word above, set the feedback colors, then press "calculate next guess" to see suggestions.</p>
-				</div>
-			`;
-		}
+		await solveAndRender(state, resultsContainer);
 	}
 
 	async function renderCanuckleDaily() {
@@ -652,9 +637,10 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 		if (destroyed) return;
 
 		const total = response.totalLikely + response.totalUnlikely;
+		const hasGuesses = state.turns.length > 0;
 		container.innerHTML = `
-			<h2 class="possibilities total">${total} possible word${total === 1 ? '' : 's'}</h2>
-			<h3 class="mini-title">Your best possible guesses are:</h3>
+			${hasGuesses ? `<h2 class="possibilities total">${total} possible word${total === 1 ? '' : 's'}</h2>` : ''}
+			<h3 class="mini-title">${hasGuesses ? 'Your best possible guesses are:' : 'Best starting words:'}</h3>
 			<ol class="suggestion-list">
 				${response.suggestions
 					.map(
@@ -669,6 +655,20 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					)
 					.join('') || '<li class="suggestion-item"><div class="score-note">No guesses available from the current state.</div></li>'}
 			</ol>
+			${hasGuesses ? `<div class="answers-section">
+				${response.likelyAnswers
+					.map(
+						(answers, index) => `
+							<details class="candidate-group" data-candidate-board="${index}">
+								<summary>${response.boardCount > 1 ? `Board ${index + 1}: ` : ''}${answers.length + response.unlikelyAnswers[index].length} possible words</summary>
+								<div class="candidate-columns" data-candidate-content="${index}">
+									<p class="score-note">Expand this section to load the candidate answer lists.</p>
+								</div>
+							</details>
+						`
+					)
+					.join('')}
+			</div>` : ''}
 		`;
 
 		container.querySelectorAll<HTMLButtonElement>('.word-button').forEach((button) => {
@@ -678,6 +678,26 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 				input.focus();
 				// Auto-submit the guess to the board
 				required<HTMLButtonElement>(target, '#add-guess').click();
+			});
+		});
+
+		container.querySelectorAll<HTMLDetailsElement>('[data-candidate-board]').forEach((group) => {
+			group.addEventListener('toggle', () => {
+				if (!group.open || group.dataset.loaded === 'true') {
+					return;
+				}
+
+				const boardIndex = Number(group.dataset.candidateBoard);
+				const content = group.querySelector<HTMLElement>(`[data-candidate-content="${boardIndex}"]`);
+				if (!content) {
+					return;
+				}
+
+				content.innerHTML = renderCandidateColumns(
+					response.likelyAnswers[boardIndex] ?? [],
+					response.unlikelyAnswers[boardIndex] ?? []
+				);
+				group.dataset.loaded = 'true';
 			});
 		});
 
@@ -864,6 +884,16 @@ function formatSuggestionScore(
 	if (suggestion.wrong > 0) return `${((1 - suggestion.wrong) * 100).toFixed(2)}% solve rate`;
 	if (turnsSoFar === 0) return `${suggestion.average.toFixed(3)} guesses`;
 	return `${(suggestion.average - turnsSoFar).toFixed(3)} guesses left`;
+}
+
+function renderCandidateColumns(likelyAnswers: string[], unlikelyAnswers: string[]) {
+	const allWords = [...likelyAnswers, ...unlikelyAnswers];
+	return `
+		<div>
+			<p class="column-heading">All possible answers (${allWords.length})</p>
+			<p>${allWords.map(escapeHtml).join(', ') || 'None'}</p>
+		</div>
+	`;
 }
 
 function pluralizePossibility(count: number) {
