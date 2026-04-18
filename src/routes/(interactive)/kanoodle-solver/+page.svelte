@@ -48,7 +48,7 @@
     },
   ];
 
-  const pageTitle = 'Best Kanoodle Solver and player';
+  const pageTitle = 'Kanoodle Solver — Solve Any Kanoodle Puzzle Online';
   const pageDescription =
     'Use the Kanoodle solver online with full board controls, hints, challenge mode, and copied solver logic. This noodle solver helps you fit 12 pieces onto a 5x11 grid directly in your browser.';
   const pageUrl = 'https://wordsolver.tech/kanoodle-solver';

@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import SemantleClues from '$lib/components/SemantleClues.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
@@ -107,7 +107,7 @@
             Here is how it works: you type a word, any word, and the game gives you a similarity score. A score of 100 means you have found the exact word. Lower scores mean you are getting warmer or colder, but not in a letter-by-letter way - in a meaning-by-meaning way. It is like playing a game of "hot or cold" with concepts instead of hidden objects.
           </p>
           <p class="text-lg text-gray-600 leading-relaxed">
-            What makes Semantle unique is that there is no limit on guesses. You can try hundreds of words if you need to. The challenge is not about running out of tries - it is about figuring out what direction to explore. If "dog" scores 15 and "cat" scores 20, you know you are heading toward animals. But if "philosophy" scores 35, suddenly you are in a completely different territory.
+            Semantle has no guess limit. You can try hundreds of words if you need to. The challenge is not about running out of tries - it is about figuring out what direction to explore. If "dog" scores 15 and "cat" scores 20, you know you are heading toward animals. But if "philosophy" scores 35, suddenly you are in a completely different territory.
           </p>
         </section>
 

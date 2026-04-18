@@ -37,7 +37,7 @@
           The game has multiple modes that test different aspects of your Naruto knowledge. Classic mode gives you character attributes to work with. Quote mode challenges you to identify who said a particular line. Eye mode tests your knowledge of the various dōjutsu (eye techniques) in the series. Jutsu mode asks you to name techniques from their descriptions. Each mode offers a different way to engage with the Naruto universe.
         </p>
         <p class="text-lg text-gray-600 leading-relaxed">
-          What makes Narutodle special is how it connects with the fandom. If you've watched Naruto, read the manga, or played the games, you have knowledge that can help you succeed. The game rewards deep familiarity with the series — knowing which characters come from which villages, which clans have which kekkei genkai, and which jutsu belong to which characters.
+          Narutodle connects directly with the fandom. If you've watched Naruto, read the manga, or played the games, you have knowledge that can help you succeed. The game rewards deep familiarity with the series — knowing which characters come from which villages, which clans have which kekkei genkai, and which jutsu belong to which characters.
         </p>
       </section>
 

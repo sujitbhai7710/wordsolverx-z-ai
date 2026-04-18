@@ -184,26 +184,7 @@
 						</div>
 					</div>
 
-					<div class="grid gap-3">
-						{#each config.chips as chip}
-							<div class="rounded-2xl border border-white/80 bg-white/85 px-5 py-4 text-sm font-semibold text-slate-700 shadow-sm">
-								{chip}
-							</div>
-						{/each}
 					</div>
-				</div>
-			</section>
-
-			<section class="mt-8 grid gap-4 md:grid-cols-3">
-				{#each config.howToSteps as step, index}
-					<article class="rounded-3xl border border-rose-100 bg-white p-6 shadow-sm">
-						<p class="text-sm font-bold uppercase tracking-[0.24em] text-rose-600">
-							Step {index + 1}
-						</p>
-						<h2 class="mt-3 text-xl font-black text-slate-900">{step.name}</h2>
-						<p class="mt-3 leading-7 text-slate-600">{step.text}</p>
-					</article>
-				{/each}
 			</section>
 		</div>
 
@@ -217,13 +198,18 @@
 			</div>
 
 			<article class="mt-10 space-y-8">
-				{#each config.sections as section}
-					<section class="rounded-[2rem] border border-rose-100 bg-white p-8 shadow-[0_20px_60px_rgba(148,163,184,0.10)]">
-						<h2 class="text-2xl font-black tracking-tight text-slate-900">{section.title}</h2>
-						<div class="mt-4 space-y-4 text-base leading-8 text-slate-600">
-							{#each section.paragraphs as paragraph}
-								<p>{paragraph}</p>
-							{/each}
+				{#each config.sections as section, i}
+					<section class="group relative overflow-hidden rounded-[2rem] border border-rose-100 bg-white p-8 shadow-[0_20px_60px_rgba(148,163,184,0.10)] transition-shadow hover:shadow-[0_24px_70px_rgba(239,68,68,0.12)]">
+						<div class="absolute -right-6 -top-6 h-24 w-24 rounded-full {i % 2 === 0 ? 'bg-rose-50' : 'bg-amber-50'} opacity-60"></div>
+						<div class="relative">
+							<p class="mb-2 text-xs font-bold uppercase tracking-[0.2em] {i % 2 === 0 ? 'text-rose-400' : 'text-amber-500'}">Section {i + 1}</p>
+							<h2 class="text-2xl font-black tracking-tight text-slate-900">{section.title}</h2>
+							<div class="mt-1 h-1 w-12 rounded-full {i % 2 === 0 ? 'bg-rose-300' : 'bg-amber-300'}"></div>
+							<div class="mt-5 space-y-4 text-base leading-8 text-slate-600">
+								{#each section.paragraphs as paragraph}
+									<p>{paragraph}</p>
+								{/each}
+							</div>
 						</div>
 					</section>
 				{/each}

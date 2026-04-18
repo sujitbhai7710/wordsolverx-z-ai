@@ -256,7 +256,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'With only ~200 possible answers, you can often narrow to the last few candidates in 2-3 guesses. The pool is small enough that one or two green tiles eliminate almost everything.'
       },
       {
-        question: 'What makes a good starting word in 3-letter Wordle?',
+        question: 'What is a good starting word in 3-letter Wordle?',
         answer: 'Use letter groups not full words — SLT, RTE, ERA, TAN, ATI. These cover common 3-letter combinations without wasting tiles on uncommon letters like Q, X, or Z.'
       },
       {
@@ -297,7 +297,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'You get fewer starting options but the pool is still big enough to get stuck. Two vowels matter more at 4 letters because you have less room to correct a wrong vowel placement.'
       },
       {
-        question: 'What makes a good starting word in 4-letter Wordle?',
+        question: 'What is a good starting word in 4-letter Wordle?',
         answer: 'LATE, ROPE, RATE, TALE, and NEAR are strong 4-letter starters. They hit common vowel-consonant patterns without wasting tiles on rare letters.'
       },
       {
@@ -379,7 +379,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'The vocabulary jump is significant. Many 6-letter answers are less everyday than 5-letter ones — the solver matters more because obscure words can trap you.'
       },
       {
-        question: 'What makes a good starting word in 6-letter Wordle?',
+        question: 'What is a good starting word in 6-letter Wordle?',
         answer: 'STARE, CRANE, RATES, TONES, and TRACE are strong 6-letter starters. They use common letters and give you good position coverage across six tiles.'
       },
       {
@@ -420,7 +420,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'The vocabulary requirement jumps. Many 7-letter answers are scientific, academic, or compound words that do not appear in everyday conversation. The solver helps you avoid dead ends.'
       },
       {
-        question: 'What makes a good starting word in 7-letter Wordle?',
+        question: 'What is a good starting word in 7-letter Wordle?',
         answer: 'TONERS, RAISES, AEROST, and SLOWER are solid 7-letter starters. Letter spread across all seven tiles matters more here because you have more ground to cover.'
       },
       {
@@ -461,7 +461,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'Eight tiles means eight positions to get right. The pool is full of complex vocabulary — scientific terms, compound words, legal words. The solver is close to mandatory here.'
       },
       {
-        question: 'What makes a good starting word in 8-letter Wordle?',
+        question: 'What is a good starting word in 8-letter Wordle?',
         answer: 'TRANCES, PENATES, NECTARS, and STRAIN are strong 8-letter starters. You need maximum letter diversity across 8 tiles — avoid repeating letters in your opener.'
       },
       {
@@ -502,7 +502,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'Nine tiles is a serious commitment. One green locks 1/9 of the answer — extremely informative — but finding that green requires good starting words because the pool is enormous.'
       },
       {
-        question: 'What makes a good starting word in 9-letter Wordle?',
+        question: 'What is a good starting word in 9-letter Wordle?',
         answer: 'NUCLEASE, RENDANCE, and CREDIANS are strong 9-letter starters. Letter spread is critical — with 9 tiles to cover, every duplicate letter is a wasted opportunity for information.'
       },
       {
@@ -543,7 +543,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'Ten tiles is a marathon. A single green tells you one-tenth of the answer immediately, but the pool is so large that you often go several guesses with only 1-2 confirmed letters.'
       },
       {
-        question: 'What makes a good starting word in 10-letter Wordle?',
+        question: 'What is a good starting word in 10-letter Wordle?',
         answer: 'CEASELESS, SALTATION, and NECTARINS are strong 10-letter starters. Maximize letter diversity — with 10 tiles, repeating any letter is a significant information loss.'
       },
       {
@@ -584,7 +584,7 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
         answer: 'Eleven tiles is the ultimate Wordle test. One green locks 1/11 of the word and eliminates ~91% of candidates for that position. But getting that green requires navigating 12,000 vocabulary options.'
       },
       {
-        question: 'What makes a good starting word in 11-letter Wordle?',
+        question: 'What is a good starting word in 11-letter Wordle?',
         answer: 'ABORTIONIZE, CHRONOLOGIES, and INTERNATION are strong 11-letter starters. Letter spread is critical — with 11 tiles, every duplicate is a wasted position and a lost clue.'
       },
       {
@@ -1201,7 +1201,7 @@ if (wordLength === 3) {
         ]
       },
       {
-        title: 'What makes a 6-letter green more informative than 5-letter',
+        title: 'Why a 6-letter green is more informative than 5-letter',
         paragraphs: [
           'One green tile at 6 letters locks in one-sixth of the answer and eliminates roughly 83% of the pool for that position. That is more informative than a 5-letter green (which eliminates 80%) because the constraint is tighter.',
           'Two greens at 6 letters narrows dramatically — typically to under 20 candidates. The longer the word, the more each confirmed letter tells you about the answer shape.',
@@ -1622,7 +1622,7 @@ if (wordLength === 3) {
       ]
     },
     {
-      title: `What makes ${title} unique`,
+      title: `How ${title} differs from standard Wordle`,
       paragraphs: [
           `This ${title} variant has its own particular rules and answer pool. The solver respects those rules and loads only the relevant word list for this game type.`,
           `Understanding the specific feedback mechanism and word constraints of ${title} helps you set accurate clues and get better suggestions from the solver.`

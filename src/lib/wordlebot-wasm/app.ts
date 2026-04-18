@@ -638,11 +638,7 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 
 		const total = response.totalLikely + response.totalUnlikely;
 		container.innerHTML = `
-			<h2 class="possibilities total">${total} possibilit${pluralizePossibility(total)}</h2>
-			<h3 class="possibilities separated">
-				${response.totalLikely} probable answer${response.totalLikely === 1 ? '' : 's'},
-				${response.totalUnlikely} unlikely possibilit${response.totalUnlikely === 1 ? 'y' : 'ies'}.
-			</h3>
+			<h2 class="possibilities total">${total} possible word${total === 1 ? '' : 's'}</h2>
 			<h3 class="mini-title">Your best possible guesses are:</h3>
 			<ol class="suggestion-list">
 				${response.suggestions
@@ -663,7 +659,7 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					.map(
 						(answers, index) => `
 							<details class="candidate-group" data-candidate-board="${index}">
-								<summary>${response.boardCount > 1 ? `Board ${index + 1}: ` : ''}${answers.length} probable, ${response.unlikelyAnswers[index].length} unlikely</summary>
+								<summary>${response.boardCount > 1 ? `Board ${index + 1}: ` : ''}${answers.length + response.unlikelyAnswers[index].length} possible words</summary>
 								<div class="candidate-columns" data-candidate-content="${index}">
 									<p class="score-note">Expand this section to load the candidate answer lists.</p>
 								</div>
@@ -889,14 +885,11 @@ function formatSuggestionScore(
 }
 
 function renderCandidateColumns(likelyAnswers: string[], unlikelyAnswers: string[]) {
+	const allWords = [...likelyAnswers, ...unlikelyAnswers];
 	return `
 		<div>
-			<p class="column-heading">Probable answers</p>
-			<p>${likelyAnswers.map(escapeHtml).join(', ') || 'None'}</p>
-		</div>
-		<div>
-			<p class="column-heading">Unlikely answers</p>
-			<p>${unlikelyAnswers.map(escapeHtml).join(', ') || 'None'}</p>
+			<p class="column-heading">All possible answers (${allWords.length})</p>
+			<p>${allWords.map(escapeHtml).join(', ') || 'None'}</p>
 		</div>
 	`;
 }

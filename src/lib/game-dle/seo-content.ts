@@ -1,4 +1,4 @@
-﻿import type { SolverGameKey } from './types';
+import type { SolverGameKey } from './types';
 
 export const gameDisplayNames: Record<SolverGameKey, string> = {
   loldle: 'Loldle',
@@ -24,16 +24,16 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
   loldle: {
     title: "Loldle Solver - Find Today's League of Legends Champion Answer",
     description: "Use our free Loldle solver to find today's League of Legends champion. Filter by gender, position, species, region, and more. Updated daily with all 170+ champions.",
-    introduction: [
-      "Loldle has taken the League of Legends community by storm, offering a daily puzzle that tests your knowledge of Runeterra's vast roster of champions. Whether you're a seasoned veteran who's been playing since Season 1 or a newer player just getting familiar with the roster, Loldle offers a fun daily challenge that keeps you coming back. The premise is simple yet addictive: guess the mystery champion of the day using clues about their attributes.",
-      "What makes Loldle particularly engaging is how it mirrors the Wordle formula that captivated millions, but adds layers of complexity suited to League's deep lore and mechanics. Each guess reveals information about how close you are, with color-coded feedback showing matches, partial matches, and incorrect attributes. But with over 160 champions and multiple attributes to consider, finding the answer can sometimes feel overwhelming.",
-      "That's where our Loldle solver comes in. This tool is designed to help streamline your guessing process without simply giving away the answer. Think of it as a strategic assistant that helps you eliminate impossibilities and zero in on the correct champion faster. Whether you're stuck after a few guesses or just want to optimize your solving strategy, this solver provides the edge you need."
-    ],
+introduction: [
+    "Loldle is a daily puzzle where you guess a League of Legends champion using attribute clues. Each guess gives you colored feedback: green for exact matches, yellow for partial matches, and red for wrong attributes. You get six tries per day, and the puzzle resets at midnight UTC.",
+    "The challenge comes from League's massive roster — over 170 champions, each with gender, positions, species, regions, and release year to consider. When you guess Ahri and get yellow for species, you know the answer shares at least one species trait. When you guess a 2013 champion and get 'lower' for release year, you've cut the entire modern era.",
+    "This solver helps you track what you know. Enter your guess and its feedback, and it filters the champion pool automatically. You still make the guesses — the solver just keeps track of which champions are still possible."
+  ],
     howToPlay: [
       { step: "Step 1: Make Your First Guess", description: "Start by typing any champion name into Loldle. Don't overthink this first guess - the goal is simply to gather information. Many players like starting with popular champions like Ahri, Yasuo, or Jinx since they cover common attributes that might match." },
       { step: "Step 2: Read the Feedback Carefully", description: "After each guess, Loldle shows you how each attribute compares to the mystery champion. Green means exact match, yellow (or orange) indicates partial match, and red means no match. For numerical values like release year, arrows indicate whether the answer is higher or lower." },
       { step: "Step 3: Enter Your Guess in the Solver", description: "Type your guessed champion name in our solver and select it. Then tap each attribute button to match the feedback colors from Loldle. This tells our solver what you learned from that guess." },
-      { step: "Step 4: Watch Candidates Narrow Down", description: "As you add more guesses with accurate feedback, our solver automatically filters the champion pool to only show possibilities that match all your criteria. The list shrinks with each accurate guess!" },
+      { step: "Step 4: Watch Candidates Narrow Down", description: "As you add more guesses with accurate feedback, our solver automatically filters the champion pool to only show possibilities that match all your criteria. The list shrinks with each accurate guess." },
       { step: "Step 5: Find the Answer", description: "When only a few candidates remain, pick one that seems likely and test it in Loldle. The suggested guess feature can help you choose strategically if you're unsure which remaining candidate to try." }
     ],
     tips: [
@@ -46,9 +46,9 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
     faqs: [
       { question: "What time does Loldle reset?", answer: "Loldle resets at midnight UTC (00:00 UTC) every day. This means everyone worldwide gets the same champion to guess each day, and a new champion becomes available at the same time globally. Players in different time zones will experience the reset at different local times - for example, it's 7 PM EST or 4 PM PST when the new daily challenge appears." },
       { question: "How many champions are in Loldle?", answer: "Loldle currently includes all playable champions from League of Legends, which is over 170 champions as of 2024. This includes the newest champion releases, with the game typically being updated within days of a new champion going live on the live servers. Our solver database is updated to include the latest champions." },
-      { question: "Can I play Loldle unlimited?", answer: "Yes! Loldle offers an unlimited mode where you can practice with random champions without the daily limit. This is perfect for improving your skills and learning the roster better. Our solver works equally well for both the daily challenge and unlimited mode." },
+      { question: "Can I play Loldle unlimited?", answer: "Yes! Loldle offers an unlimited mode where you can practice with random champions without the daily limit. Unlimited mode lets you test guesses against random champions without waiting for the daily reset. Our solver works equally well for both the daily challenge and unlimited mode." },
       { question: "What do the different colors mean in Loldle?", answer: "Green means the attribute matches exactly - for example, if Gender shows green, your guess has the same gender as the answer. Yellow (or amber) indicates a partial match, typically used for multi-value attributes where the answer shares at least one value with your guess. Red means no match at all. For numerical values, arrows show if the answer is higher or lower." },
-      { question: "Is using a Loldle solver cheating?", answer: "Not at all! Think of our solver as a note-taking tool that helps you organize information. You still need to understand the game's feedback and make strategic guesses. Many players use similar elimination strategies mentally - our tool just makes it easier to track. It's especially helpful for learning the roster and understanding champion attributes." },
+      { question: "Is using a Loldle solver cheating?", answer: "The solver tracks elimination logic you'd otherwise do on paper. You still make every guess — it just filters the list faster. You still need to understand the game's feedback and make strategic guesses. Many players use similar elimination strategies mentally - our tool just makes it easier to track. It's especially helpful for learning the roster and understanding champion attributes." },
       { question: "Why is my guess not showing up?", answer: "Make sure you're typing the champion name correctly. Some champions have specific names - for example, 'Lee Sin' not just 'Lee', and 'Dr. Mundo' or 'Mundo' both work. Our solver's search function will suggest matches as you type, making it easy to find the right champion." }
     ],
     strategies: [
@@ -62,11 +62,11 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
   dotadle: {
     title: "Dotadle Solver - Find Today's Dota 2 Hero Answer",
     description: "Solve today's Dotadle puzzle with our free hero solver. Filter Dota 2 heroes by attribute, lane, complexity, and more. Includes all 126+ heroes with accurate data.",
-    introduction: [
-      "Dotadle brings the wildly popular Wordle-style guessing format to Dota 2, challenging players to identify the mystery hero of the day using attribute-based clues. With over 120 heroes spanning nearly two decades of Dota history, this daily puzzle tests both your game knowledge and deductive reasoning skills in equal measure.",
-      "What sets Dotadle apart from similar games is the complexity of Dota's hero design. Each hero has unique combinations of primary attribute, lane positions, attack type, complexity rating, and species. The depth of Dota's lore means even veteran players can find themselves stumped when trying to recall whether a particular hero is Strength or Universal, or which exact lanes they can be played in.",
-      "Our Dotadle solver is specifically designed to handle this complexity. Rather than trying to mentally track which heroes match all your clues - an increasingly difficult task as you gather more information - our tool automatically filters the hero pool based on your feedback, letting you focus on strategy rather than memory."
-    ],
+introduction: [
+    "Dotadle is a daily Dota 2 hero guessing game. You get six tries to identify the mystery hero, and each guess returns color-coded feedback about attributes like primary attribute, lanes, complexity, and release year. The game covers all 120+ heroes from Dota 2.",
+    "Dota heroes have more attributes than most similar games — primary attribute, attack type, lanes, complexity rating, and release year all come into play. Guessing Pudge and getting yellow on lanes means the answer shares at least one lane. Guessing 2013 and getting 'lower' means the hero is older.",
+    "This solver takes your guesses and feedback and narrows down the hero pool. You still pick the champions — it just removes the ones that don't fit what you've already learned."
+  ],
     howToPlay: [
       { step: "Step 1: Choose an Opening Hero", description: "Your first guess in Dotadle sets the foundation for everything else. Pick a hero you know well and whose attributes you're confident about. Popular choices include heroes with distinctive attributes like Pudge ( universally recognized) or heroes that cover common attribute values." },
       { step: "Step 2: Analyze the Color Feedback", description: "Dotadle uses the familiar color system: green for exact matches, partial colors for close-but-not-exact matches, and red for no match. For numerical values like release year, pay attention to arrows indicating higher or lower." },
@@ -87,7 +87,7 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
       { question: "What's the difference between Dotadle Classic and other modes?", answer: "Dotadle Classic is the main daily guessing game where you identify a hero through attributes. Other modes may include guessing from ability icons, quotes, or visual clues. Our solver is optimized for Classic mode but the hero database applies to all modes." },
       { question: "Why do some heroes show multiple lanes?", answer: "Dota 2 heroes are flexible and many can be played in multiple positions. A hero like Spirit Breaker might be listed for Offlane, Support, and Roamer. When you see a partial match on lanes, it means the mystery hero shares at least one lane position with your guess." },
       { question: "How accurate is the complexity rating?", answer: "The complexity ratings (Easy, Medium, Hard) in Dotadle come from Valve's official hero classifications, designed to help new players understand which heroes are more straightforward to play. These are the same ratings shown in the Dota 2 client." },
-      { question: "Can I use this solver for unlimited Dotadle?", answer: "Absolutely! The solver works for both the daily challenge and unlimited practice modes. In unlimited mode, you can use the solver repeatedly to learn the hero pool and improve your guessing strategy for the daily challenge." }
+      { question: "Can I use this solver for unlimited Dotadle?", answer: "Yes. The solver works for both the daily challenge and unlimited practice modes. In unlimited mode, you can use the solver repeatedly to learn the hero pool and improve your guessing strategy for the daily challenge." }
     ],
     strategies: [
       "The Attribute Anchor Strategy: Start with heroes of each primary attribute to quickly determine if the answer is Strength, Agility, Intelligence, or Universal. A single green match here is incredibly valuable.",
@@ -100,11 +100,11 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
   pokedle: {
     title: "Pokedle Solver - Find Today's Pokemon Answer Fast",
     description: "Free Pokedle solver to find today's mystery Pokemon. Filter by type, habitat, color, evolution stage, height, and weight. All 151 original Pokemon included.",
-    introduction: [
-      "Pokedle brings the beloved Wordle formula to the Pokemon universe, tasking players with identifying a mystery Pokemon each day. While the concept seems simple - guess a Pokemon, see what matches - the depth of Pokemon data makes this a genuinely challenging puzzle that rewards deep franchise knowledge.",
-      "What makes Pokedle special is how it leverages decades of Pokemon data. From the original 151 to modern generations, each Pokemon has a unique combination of types, habitat preferences, color classification, physical dimensions, and evolution stage. For longtime fans, these attributes are second nature; for newer players, they offer an educational journey through Pokemon history.",
-      "Our Pokedle solver transforms this challenge from a memory test into a strategic exercise. Rather than frantically trying to recall whether Squirtle's weight is more or less than the mystery Pokemon, you can systematically eliminate possibilities and focus your mental energy on making educated guesses."
-    ],
+introduction: [
+    "Pokedle is a daily Pokemon guessing game using the original 151 Kanto Pokemon. You guess by name and get colored feedback on type, habitat, color, evolution stage, height, and weight. Six guesses per day, reset at midnight UTC.",
+    "The puzzle works because Pokemon have fixed attributes. Guessing Charizard and getting green on Type 1 means the answer is Fire. Getting yellow on Type 2 means it shares one type. A 'higher' on weight after guessing Pikachu (6kg) tells you the answer is heavier.",
+    "This solver tracks your feedback and removes Pokemon that don't match. You still pick which Pokemon to guess — it just shows you which ones are still in the running."
+  ],
     howToPlay: [
       { step: "Step 1: Pick a Starting Pokemon", description: "Choose a Pokemon you know well for your first guess. Many players start with starters (like Charizard or Blastoise) or favorites because they know these attributes by heart. The goal is gathering information, not getting lucky." },
       { step: "Step 2: Decode the Feedback", description: "Pokedle shows matches in colors: green for exact type match, partial colors for close attributes, and red for no match. For numbers like height and weight, arrows tell you if the answer is higher or lower than your guess." },
@@ -124,7 +124,7 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
       { question: "When does Pokedle reset with a new Pokemon?", answer: "Pokedle typically resets at midnight UTC (00:00 UTC) daily. Every player worldwide gets the same mystery Pokemon to identify each day. The synchronized timing creates a shared experience - you can compare strategies and guess counts with friends who played the same day." },
       { question: "What does 'None' mean for Type 2?", answer: "Many Pokemon only have one type - they're not dual-typed. When you see 'None' for Type 2, it means the Pokemon doesn't have a second type at all. This is actually useful information, as it immediately rules out all dual-typed Pokemon." },
       { question: "How are Pokemon colors determined?", answer: "Pokemon colors come from official Pokedex classifications, not visual appearance. For example, Bulbasaur is classified as 'Green' despite appearing blue-ish. These official categories are consistent across all Pokemon media and games." },
-      { question: "Can I play Pokedle more than once a day?", answer: "The daily challenge is limited to one mystery Pokemon per day, but many Pokedle sites offer unlimited practice modes. Our solver works for both daily and unlimited modes, making it a great practice tool." },
+      { question: "Can I play Pokedle more than once a day?", answer: "The daily challenge is limited to one mystery Pokemon per day, but many Pokedle sites offer unlimited practice modes. Our solver works for both daily and unlimited modes, — enter feedback, see filtered candidates." },
       { question: "Why isn't my Pokemon showing up in search?", answer: "Make sure you're spelling the Pokemon name correctly. Some Pokemon have names that are easy to misspell, like 'Pikachu' or 'Charizard.' Our solver suggests matches as you type, so you can click the correct name from the list." }
     ],
     strategies: [
@@ -138,11 +138,11 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
   smashdle: {
     title: "Smashdle Solver - Solve Super Smash Bros Character Puzzles",
     description: "Find today's Smashdle answer with our free character solver. Filter Super Smash Bros Ultimate fighters by universe, games, weight, jumps, species, and more.",
-    introduction: [
-      "Smashdle challenges Super Smash Bros fans to identify the mystery fighter each day, testing knowledge of Nintendo's massive crossover fighting game. With over 80 fighters spanning gaming history from Mario to Steve from Minecraft, the daily puzzle celebrates the incredible diversity of the Smash Bros roster.",
-      "What makes Smashdle particularly fascinating is how it reflects Nintendo's eclectic approach to fighter selection. Each character brings not just their game universe but a wealth of metadata: which Smash games they appeared in, their weight class, how many jumps they have, their platform of origin, and even their species. This creates a puzzle that rewards both Smash expertise and general gaming knowledge.",
-      "Our Smashdle solver handles all these attributes seamlessly. Whether you're trying to remember which fighters have 3 jumps or deducing a character from their universe, the solver filters possibilities automatically so you can focus on the fun part: solving the puzzle."
-    ],
+introduction: [
+    "Smashdle is a daily Super Smash Bros Ultimate guessing game. You have six tries to identify the mystery fighter based on universe, weight class, jump count, Smash game appearances, and species. It covers all 80+ fighters from the Switch roster.",
+    "Each fighter has a fixed set of attributes. Guessing Mario and getting green on universe confirms Nintendo. Getting yellow on weight means the answer overlaps in weight class. A 'not human' result on species immediately eliminates half the roster.",
+    "This solver accepts your guesses and feedback and narrows the fighter pool. You choose what to guess next — it just shows which fighters still match everything you've learned."
+  ],
     howToPlay: [
       { step: "Step 1: Choose Your Opening Fighter", description: "Start with a fighter you know well - most people pick main characters like Mario, Link, or Pikachu. What matters is that you're confident about their attributes, since accurate feedback is crucial for the solver to work." },
       { step: "Step 2: Interpret Smashdle's Clues", description: "Green means exact attribute match. For some attributes like Games, you might see partial matches (the answer appeared in some but not all the same Smash games). Red means no match. Numbers like weight show arrows for higher/lower." },
@@ -163,7 +163,7 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
       { question: "What do the game abbreviations mean?", answer: "SSB 64 is the original Nintendo 64 game, Melee is GameCube, Brawl is Wii, '3DS/Wii U' covers both versions, and Ultimate is Switch. Fighters added in Ultimate won't show earlier games in their history." },
       { question: "How is fighter weight determined?", answer: "Weight values in Smashdle come from Smash Ultimate's internal weight numbers, which affect how easily fighters are knocked back. Heavier fighters survive longer but are slower, while light fighters are agile but fragile. These range from about 60 (Pichu) to over 130 (Bowser)." },
       { question: "Why do some fighters show 'Downloadable' for availability?", answer: "Some fighters in Smash Ultimate were released as DLC (downloadable content) after the base game launch. Characters like Joker, Hero, Banjo & Kazooie, and Steve were added post-release and are marked as downloadable to distinguish them from base roster fighters." },
-      { question: "Can I use this solver for Smashdle practice modes?", answer: "Yes! The solver works for both daily challenges and any practice or unlimited modes Smashdle offers. It's a great way to learn the roster and improve your guessing strategy for the main daily puzzle." }
+      { question: "Can I use this solver for Smashdle practice modes?", answer: "Yes! The solver works for both daily challenges and any practice or unlimited modes Smashdle offers." }
     ],
     strategies: [
       "The Universe First Strategy: Since universes contain few fighters each, start with a character from a smaller franchise. Getting a universe match might immediately narrow to 3-4 possibilities.",
@@ -176,11 +176,11 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
   narutodle: {
     title: "Narutodle Solver - Find Today's Naruto Character Answer",
     description: "Solve today's Narutodle puzzle with our free character solver. Filter Naruto and Naruto Shippuden characters by village, rank, age, jutsu type, and more.",
-    introduction: [
-      "Narutodle brings the daily guessing format to the ninja world, challenging fans to identify characters from Naruto and Naruto Shippuden. With over 100 characters spanning the Hidden Villages, Akatsuki, and beyond, this puzzle tests your knowledge of one of anime's most beloved series.",
-      "What makes Narutodle particularly engaging is how it leverages Naruto's rich lore. Characters are defined by their village affiliations, ninja ranks, chakra natures, kekkei genkai, and even their debut chapters in the manga. For dedicated fans, these attributes tell stories - they remember when characters first appeared, their signature jutsu, and their roles in the ninja world.",
-      "Our Narutodle solver transforms the experience from a memory challenge into strategic deduction. Instead of mentally scrolling through every character trying to remember if they're from Konoha or Suna, you can systematically eliminate possibilities and focus on making informed guesses."
-    ],
+introduction: [
+    "Narutodle is a daily Naruto character guessing game. Six tries to identify the mystery ninja using clues about village, rank, age, debut chapter, and more. The roster spans Naruto and Naruto Shippuden — over 100 characters from Konoha to the Akatsuki.",
+    "The attributes are specific: village, rank, age, debut chapter, and chakra nature types. Guessing Kakashi and getting yellow on village means the answer is from a different hidden village. A 'higher' on debut chapter after guessing chapter 1 tells you the character appeared later in the manga.",
+    "This solver tracks your feedback and filters the character pool. You make the guesses — it just removes characters that don't fit your clues."
+  ],
     howToPlay: [
       { step: "Step 1: Start with a Main Character", description: "Begin with a character you know thoroughly - Naruto himself, Sasuke, Kakashi, or another prominent figure. You want accurate attribute knowledge for your first guess to maximize information gained." },
       { step: "Step 2: Read the Ninja Clues", description: "Narutodle's feedback uses colors: green for exact matches, partial for shared attributes, red for no match. For numbers like age or debut chapter, arrows indicate higher or lower than your guess." },
@@ -214,11 +214,11 @@ export const gameSolverSeoContent: Record<SolverGameKey, GameSEOContent> = {
   onepiecedle: {
     title: "Onepiecedle Solver - Find Today's One Piece Character",
     description: "Free Onepiecedle solver to find today's mystery character. Filter One Piece characters by crew, bounty, devil fruit, haki, origin sea, and more.",
-    introduction: [
-      "Onepiecedle invites One Piece fans into a daily guessing challenge featuring characters from Eiichiro Oda's legendary manga. With a cast spanning over two decades of storytelling, from the East Blue to the New World, identifying the mystery character tests both casual viewers and hardcore fans alike.",
-      "What makes Onepiecedle unique is the sheer depth of One Piece lore. Characters are defined by their crews and affiliations, their bounties (in the millions and billions of berries), their devil fruit powers, their mastery of haki, and even their heights and blood types. This is a puzzle that rewards encyclopedic knowledge of the Grand Line.",
-      "Our Onepiecedle solver transforms this challenge into manageable deduction. Rather than trying to remember which characters have bounties between 300 million and 500 million berries, you can systematically eliminate possibilities and watch the candidate pool shrink with each accurate guess."
-    ],
+introduction: [
+    "Onepiecedle is a daily One Piece character guessing game. Six tries to identify the mystery character based on crew, bounty, devil fruit type, haki, and origin sea. The roster spans the entire story from East Blue to the New World — over 120 characters.",
+    "One Piece characters have concrete attributes. Guessing Luffy and getting green on crew confirms Straw Hat. Getting yellow on devil fruit means the answer has a fruit that shares a type. A 'higher' on bounty after guessing a 100 million berry character means you're looking for a bigger threat.",
+    "This solver takes your feedback and narrows the character pool. You pick the next guess — it just shows which pirates are still possible."
+  ],
     howToPlay: [
       { step: "Step 1: Start with a Straw Hat", description: "Begin with a character you know intimately - Luffy, Zoro, Nami, or other Straw Hats are popular choices. Their bounties, abilities, and backstories are well-documented, making for reliable first guesses." },
       { step: "Step 2: Interpret Pirate Clues", description: "Onepiecedle uses color feedback: green for exact matches, partial for close attributes, red for no match. Bounties and heights show arrows indicating higher or lower values." },

@@ -206,7 +206,7 @@
 
 						<details class="group bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
 							<summary class="cursor-pointer p-5 flex items-center justify-between font-semibold text-gray-900 hover:bg-gray-100 transition-colors">
-								<span>What makes Canuckle different from Wordle?</span>
+								<span>How is Canuckle different from Wordle?</span>
 								<FiChevronDown class="text-gray-500 group-open:rotate-180 transition-transform" />
 							</summary>
 							<div class="p-5 pt-0 text-gray-600 leading-7">

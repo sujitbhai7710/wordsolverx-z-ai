@@ -41,7 +41,7 @@
           The game taps into decades of Pokémon history. Whether you started with Red and Blue in the 90s or picked up Pokémon Scarlet and Violet recently, your knowledge matters. Every Pokémon you've caught, every type matchup you've memorized, every Pokédex entry you've read — all of it helps you succeed.
         </p>
         <p class="text-lg text-gray-600 leading-relaxed">
-          What makes Pokedle special is how it celebrates the franchise's depth. The Pokémon world has always been about discovery and learning, and this game captures that spirit perfectly. Each day brings a new opportunity to test your expertise and maybe learn something new along the way.
+          Pokedle celebrates the franchise's depth. The Pokémon world has always been about discovery and learning, and this game captures that spirit perfectly. Each day brings a new opportunity to test your expertise and maybe learn something new along the way.
         </p>
       </section>
 

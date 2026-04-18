@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import GlobleCluesSection from '$lib/components/GlobleCluesSection.svelte';
   import {
@@ -104,7 +104,7 @@
         The game uses a color-coded hint system. When you guess a country, it lights up on the globe with a color that tells you how close you are. The hotter the color (red being the hottest), the closer you are to the mystery country. White or pale colors mean you're far away. It's like playing "hot or cold" with countries.
       </p>
       <p class="text-lg text-slate-600 leading-relaxed">
-        What makes Globle addictive is that it teaches you geography while you play. You might start by guessing major countries, but as you narrow down the region, you'll find yourself learning about countries you never knew existed. It's educational without feeling like a lesson.
+        Globle teaches you geography while you play. You might start by guessing major countries, but as you narrow down the region, you'll find yourself learning about countries you never knew existed. It's educational without feeling like a lesson.
       </p>
     </section>
 
@@ -114,7 +114,7 @@
       </h2>
       <div class="space-y-6 text-lg text-slate-600">
         <p class="leading-relaxed">
-          Playing Globle is simple to learn but can be challenging to master:
+          Playing Globle takes minutes to learn:
         </p>
         <div class="bg-slate-50 rounded-2xl p-6">
           <h3 class="text-xl font-bold text-slate-900 mb-3">Step 1: Make Your First Guess</h3>

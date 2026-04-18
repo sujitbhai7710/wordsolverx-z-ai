@@ -34,10 +34,10 @@
           Dotadle is a daily guessing game for Dota 2 players. If you've played Wordle, you'll recognize the concept — but instead of guessing words, you're guessing heroes from Valve's legendary MOBA. Each day brings a new mystery hero, and you use clues to narrow down who it might be.
         </p>
         <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-          The game taps into your Dota knowledge in a way that feels rewarding. Every match you've played, every hero you've tried, every ability you've seen — all of that experience becomes useful. Whether you're a seasoned veteran with thousands of hours or a relatively new player learning the ropes, Dotadle gives you a daily reason to think about the game's diverse hero roster.
+          The game taps into your Dota knowledge in a way that feels rewarding. Every match you've played, every hero you've tried, every ability you've seen — all of that experience becomes useful. Players at any skill level will find their Dota knowledge tested, Dotadle gives you a daily reason to think about the game's diverse hero roster.
         </p>
         <p class="text-lg text-gray-600 leading-relaxed">
-          What makes Dotadle particularly engaging is how it tests different kinds of knowledge. Some modes reward game mechanics knowledge, others test your familiarity with hero lore and voice lines, and some challenge your visual memory of loading screens and ability icons. It's a comprehensive test of your Dota expertise.
+          Dotadle tests different kinds of knowledge across its modes. Some modes reward game mechanics knowledge, others test your familiarity with hero lore and voice lines, and some challenge your visual memory of loading screens and ability icons. It covers your Dota knowledge from multiple angles.
         </p>
       </section>
 

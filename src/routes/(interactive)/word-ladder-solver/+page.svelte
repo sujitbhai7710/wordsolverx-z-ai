@@ -827,6 +827,7 @@
 					<a href="/5-letter-wordle-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">5-Letter Wordle Solver</a>
 					<a href="/word-search-solver" class="px-5 py-2.5 bg-white rounded-xl font-semibold text-slate-700 shadow-sm hover:shadow-md transition-shadow">Word Search Solver</a>
 				</div>
-			</section>
-	</div>
+</section>
+</div>
+</div>
 </main>

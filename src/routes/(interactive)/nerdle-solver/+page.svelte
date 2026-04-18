@@ -836,7 +836,7 @@
 						The game is free at nerdlegame.com and resets daily at midnight UTC. There is no app to download — it runs in any browser. Since launch, Nerdle has built a community of over 1 million daily players, and the equation pool has expanded from the original 8-character Classic mode into five distinct modes.
 					</p>
 					<p class="text-slate-600 leading-relaxed">
-						What makes Nerdle genuinely different from Wordle is the structure of the search space. In Wordle, every position is an independent letter. In Nerdle, positions are constrained by math — the equals sign must exist, both sides must compute to the same value, and operators have defined roles. This creates a tighter, more logical elimination process once you understand the rules.
+						Nerdle differs from Wordle in the structure of the search space. In Wordle, every position is an independent letter. In Nerdle, positions are constrained by math — the equals sign must exist, both sides must compute to the same value, and operators have defined roles. This creates a tighter, more logical elimination process once you understand the rules.
 					</p>
 				</section>
 

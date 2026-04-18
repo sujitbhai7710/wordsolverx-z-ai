@@ -40,10 +40,10 @@
           Smashdle is a daily guessing game for Super Smash Bros fans. If you've played Wordle, you'll recognize the concept — but instead of guessing words, you're guessing fighters from Nintendo's legendary crossover fighting game. Each day brings a new mystery character, and you use clues to narrow down who it might be.
         </p>
         <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-          The game taps into your Smash knowledge in a way that feels rewarding. Every match you've played, every fighter you've tried, every Final Smash you've seen — all of that experience becomes useful. Whether you're a competitive player who mains a specific character or a casual fan who enjoys the chaos, Smashdle gives you a daily reason to think about the massive roster.
+          The game taps into your Smash knowledge in a way that feels rewarding. Every match you've played, every fighter you've tried, every Final Smash you've seen — all of that experience becomes useful. From competitive mains to casual players, your Smash experience pays off, Smashdle gives you a daily reason to think about the massive roster.
         </p>
         <p class="text-lg text-gray-600 leading-relaxed">
-          What makes Smashdle particularly engaging is how it tests different kinds of knowledge. Some modes reward game mechanics knowledge, others test your familiarity with character designs and abilities, and some challenge your visual memory. It's a comprehensive test of your Smash expertise.
+          Smashdle tests different kinds of knowledge across its modes. Some modes reward game mechanics knowledge, others test your familiarity with character designs and abilities, and some challenge your visual memory. It covers your Smash knowledge from multiple angles.
         </p>
       </section>
 

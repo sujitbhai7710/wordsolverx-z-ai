@@ -1,7 +1,7 @@
 <script lang="ts">
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
-  import { generateBreadcrumbSchema } from '$lib/seo';
+  import { generateBreadcrumbSchema, generateFAQSchema, generateHowToSchema } from '$lib/seo';
   import {
     COLORS,
     COLOR_NAMES,
@@ -203,25 +203,18 @@ const faqs = [
         operatingSystem: 'Any',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
       },
-      {
-        '@type': 'FAQPage',
-        mainEntity: faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } }))
-      },
+      generateFAQSchema(faqs),
       generateBreadcrumbSchema([
         { name: 'Home', url: 'https://wordsolver.tech' },
         { name: 'Solver', url: 'https://wordsolver.tech/solver' },
         { name: 'Colorfle Solver', url: 'https://wordsolver.tech/colorfle-solver' }
       ]),
-      {
-        '@type': 'HowTo',
-        name: 'How to use the Colorfle solver',
-        step: [
-          { '@type': 'HowToStep', name: 'Enter the target hex', text: 'Type or paste the target hex code from Colorfle into the input field, or use the color picker to select it visually.', position: 1 },
-          { '@type': 'HowToStep', name: 'Review suggestions', text: 'Click Solve to see the top 5 three-color combinations that produce the closest match to your target.', position: 2 },
-          { '@type': 'HowToStep', name: 'Use a suggestion as a guess', text: 'Click "Use This" on any suggestion to add it as a guess. Then set the feedback colors (green, yellow, gray) for each source color by clicking the swatches.', position: 3 },
-          { '@type': 'HowToStep', name: 'Refine with feedback', text: 'After setting feedback on all three colors, click Refine. The solver filters out combinations that contradict your feedback and shows updated suggestions.', position: 4 }
-        ]
-      }
+      generateHowToSchema('How to use the Colorfle solver', [
+        { name: 'Enter the target hex', text: 'Type or paste the target hex code from Colorfle into the input field, or use the color picker to select it visually.' },
+        { name: 'Review suggestions', text: 'Click Solve to see the top 5 three-color combinations that produce the closest match to your target.' },
+        { name: 'Use a suggestion as a guess', text: 'Click "Use This" on any suggestion to add it as a guess. Then set the feedback colors (green, yellow, gray) for each source color by clicking the swatches.' },
+        { name: 'Refine with feedback', text: 'After setting feedback on all three colors, click Refine. The solver filters out combinations that contradict your feedback and shows updated suggestions.' }
+      ])
     ]
   })}</script>`}
 </svelte:head>

@@ -589,7 +589,7 @@
           The game drops a new puzzle every day. Some prompts are easy — "How to make..." probably leads to "pancakes" or "money." Others are surprisingly hard. When the prompt is "Why do people..." and the answer is "yawn," you realize how weird search behavior actually is.
         </p>
         <p class="text-slate-600 leading-relaxed">
-          What makes Searchle different from most word games is that you are not guessing from a dictionary. You are guessing from what millions of people actually type into Google. That makes the answers feel more human and more unpredictable than a standard word puzzle.
+          Searchle is not a dictionary game. You are guessing from what millions of people actually type into Google. The answers feel more human and more unpredictable than a standard word puzzle because real search queries drive the word list.
         </p>
       </div>
 

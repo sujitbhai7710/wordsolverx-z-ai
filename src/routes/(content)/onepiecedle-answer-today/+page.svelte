@@ -39,10 +39,10 @@
           OnePiecedle is a daily guessing game for One Piece fans. If you've played Wordle, you'll recognize the concept — but instead of guessing words, you're guessing characters from Eiichiro Oda's legendary manga and anime. Each day brings a new mystery character, and you use clues to narrow down who it might be.
         </p>
         <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-          The game taps into your One Piece knowledge in a way that feels rewarding. Every episode you've watched, every chapter you've read, every character you've come to know — all of that experience becomes useful. Whether you're a longtime fan who's been following since the East Blue Saga or a newer viewer catching up on the adventures, OnePiecedle gives you a daily reason to think about the vast world of One Piece.
+          The game taps into your One Piece knowledge in a way that feels rewarding. Every episode you've watched, every chapter you've read, every character you've come to know — all of that experience becomes useful. Fans who started with East Blue and newer viewers alike will find their knowledge tested on the adventures, OnePiecedle gives you a daily reason to think about the vast world of One Piece.
         </p>
         <p class="text-lg text-gray-600 leading-relaxed">
-          What makes OnePiecedle particularly engaging is how it tests different kinds of knowledge. Some modes reward lore knowledge, others test your familiarity with Devil Fruits and abilities, and some challenge your visual memory of Wanted Posters. It's a comprehensive test of your One Piece expertise.
+          OnePiecedle tests different kinds of knowledge across its modes. Some modes reward lore knowledge, others test your familiarity with Devil Fruits and abilities, and some challenge your visual memory of Wanted Posters. It covers your One Piece knowledge from multiple angles.
         </p>
       </section>
 
