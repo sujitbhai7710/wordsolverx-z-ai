@@ -124,55 +124,46 @@
   }
 
   const faqs = [
-    { question: 'What is the Colordle Solver?', answer: 'The Colordle Solver is a tool designed to help you solve the daily color-guessing game more efficiently. By entering your guesses and the similarity percentages you receive, the solver filters through a database of named colors to find the most likely answers.' },
-    { question: 'How accurate is the percentage calculation?', answer: 'Our solver uses the Delta E (CIE2000) standard in the LAB color space, which is the most widely accepted method for measuring color difference as perceived by the human eye. This matches the logic used in modern Colordle implementations.' },
-    { question: 'Is this solver cheating?', answer: "It's a utility for those who are stuck or simply want to learn more about how colors relate to each other. Many players use it as a learning tool to better understand hex codes and color similarities." },
-    { question: 'Where do you get the list of color names?', answer: 'We use an extensive open-source library of named colors, ensuring that most common and scientific color names used in games are accounted for.' },
-    { question: 'Can I use this solver on mobile?', answer: 'Yes! The Colordle Solver is fully responsive and works great on mobile devices, tablets, and desktops. The color cards and input fields are optimized for touch interactions.' },
-    { question: 'How many guesses does it usually take?', answer: 'With our solver, most users can find the answer in 2-4 guesses. The key is entering accurate percentage scores — even small decimal differences help the algorithm narrow down the correct color significantly.' },
+    { question: 'What is the Colordle Solver?', answer: 'You type in your guess (like "Sea Green") and the percentage Colordle gave you. The solver filters the color list to show only colors that would produce that same percentage. It saves you from manually cross-referencing hundreds of colors.' },
+    { question: 'How accurate is the percentage calculation?', answer: 'It uses Delta E CIE2000 in LAB color space — the same formula Colordle itself uses. A score of 85% from the solver means the same as 85% in the game.' },
+    { question: 'Is this solver cheating?', answer: "It's a utility, not cheating. Think of it like a crossword dictionary. If you want to learn how hex codes and color distance work, you'll pick that up naturally by using it." },
+    { question: 'Where do you get the list of color names?', answer: 'The list comes from a large open-source color database with thousands of named colors. It includes obscure names like Gamboge, Celadon, and Amaranth that Colordle actually uses.' },
+    { question: 'Can I use this solver on mobile?', answer: 'Yes. It works on phones, tablets, and desktop. The color grid is touch-friendly and the input fields are sized for mobile.' },
+    { question: 'How many guesses does it usually take?', answer: 'With the solver, most people get it in 2-3 guesses. Without help, it varies wildly — some colors are just harder to pin down if you don\'t know the specific name.' },
   ];
 
-  const jsonLdSchema = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebPage',
-        name: 'Ai Colordle Solver - Solve colordle within 2 attempts',
-        description: 'Interactive Colordle solver with similarity percentage filtering and color database matching.',
-        url: 'https://wordsolver.tech/colordle-solver'
-      },
-      {
-        '@type': 'WebApplication',
-        name: 'Colordle Solver',
-        description: 'Filter Colordle candidates by named color and similarity percentage.',
-        applicationCategory: 'Game',
-        operatingSystem: 'Any',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
-      },
-      {
-        '@type': 'ProfessionalService',
-        name: 'Colordle Solver',
-        description: 'Professional solver for the Colordle color-guessing game.',
-        url: 'https://wordsolver.tech/colordle-solver',
-        areaServed: 'Worldwide',
-        serviceType: 'Puzzle Solving Service',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      },
-      generateFAQSchema(faqs),
-      generateHowToSchema('How to use the Colordle Solver', [
-        { name: 'Make your first guess in Colordle', text: 'Start with a broad color like Red, Blue, or Yellow. These span the color wheel and give you the most information about the target hue.' },
-        { name: 'Note the similarity percentage', text: 'Colordle tells you how close your guess is as a percentage. Higher means closer. Write down the color name and percentage.' },
-        { name: 'Enter your guess in the solver', text: 'Search for the color name in the solver input, select it from the dropdown, then type the similarity percentage in the second field.' },
-        { name: 'Click Filter Results', text: 'The solver narrows the candidate list to colors that would produce a similar similarity score to your guess.' },
-        { name: 'Pick the top candidate as your next guess', text: 'Choose a color from the filtered results, guess it in Colordle, then add the new percentage to the solver to filter again.' },
-      ]),
-      generateBreadcrumbSchema([
-        { name: 'Home', url: 'https://wordsolver.tech' },
-        { name: 'Solver', url: 'https://wordsolver.tech/solver' },
-        { name: 'Colordle Solver', url: 'https://wordsolver.tech/colordle-solver' }
-      ]),
-    ],
-  });
+const jsonLdSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      name: 'Colordle Solver - Color Puzzle Helper',
+      description: 'Filter Colordle candidates by entering your guess and percentage score. Find the daily color answer faster.',
+      url: 'https://wordsolver.tech/colordle-solver'
+    },
+    {
+      '@type': 'WebApplication',
+      name: 'Colordle Solver',
+      description: 'Filter Colordle candidates by named color and similarity percentage.',
+      applicationCategory: 'Game',
+      operatingSystem: 'Any',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+    },
+    generateFAQSchema(faqs),
+    generateHowToSchema('How to use the Colordle Solver', [
+      { name: 'Make your first guess in Colordle', text: 'Start with a broad color like Red, Blue, or Yellow. These span the color wheel and give you the most information about the target hue.' },
+      { name: 'Note the similarity percentage', text: 'Colordle tells you how close your guess is as a percentage. Higher means closer. Write down the color name and percentage.' },
+      { name: 'Enter your guess in the solver', text: 'Search for the color name in the solver input, select it from the dropdown, then type the similarity percentage in the second field.' },
+      { name: 'Click Filter Results', text: 'The solver narrows the candidate list to colors that would produce a similar similarity score to your guess.' },
+      { name: 'Pick the top candidate as your next guess', text: 'Choose a color from the filtered results, guess it in Colordle, then add the new percentage to the solver to filter again.' },
+    ]),
+    generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://wordsolver.tech' },
+      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+      { name: 'Colordle Solver', url: 'https://wordsolver.tech/colordle-solver' }
+    ]),
+  ],
+});
 
   const steps = [
     { label: 'Step 1', text: 'Search and select a color name from the game' },
@@ -183,10 +174,10 @@
   const stepIcons = ['🔍', '⚡', '✓'];
 
   const howToSteps = [
-    { num: '1', text: 'Enter a color name like "Sky Blue" or a hex code like #87CEEB' },
-    { num: '2', text: 'Review the % similarity score — higher is closer to the target' },
-    { num: '3', text: 'Input your guesses into this solver to filter thousands of colors' },
-    { num: '4', text: 'Continue refining until you find the exact match!' },
+    { num: '1', text: 'Type a color name in the search box — "Sky Blue", "Coral", whatever you guessed in Colordle' },
+    { num: '2', text: 'Enter the percentage score Colordle gave you (the one below your guess, like "34%")' },
+    { num: '3', text: 'Hit Filter Results — the solver shows colors that would return that same percentage' },
+    { num: '4', text: 'Pick one from the filtered list as your next guess, then repeat until you hit 100%' },
   ];
 
   const moreLinks = [
@@ -196,8 +187,8 @@
 </script>
 
 <svelte:head>
-  <title>Ai Colordle Solver - solve in 2 attempts</title>
-  <meta name="description" content="Crack the daily Colordle puzzle with our free Colordle solver. Enter color guesses, add similarity percentages, and narrow the exact hex match in seconds." />
+  <title>Colordle Solver - Color Puzzle Helper</title>
+  <meta name="description" content="Enter your Colordle guess and percentage. The solver filters thousands of named colors to find candidates matching your score." />
   <meta name="keywords" content="Colordle Solver, Colordle Answer, Color Puzzle, Colordle Help, Colordle Cheat" />
   <link rel="canonical" href="https://wordsolver.tech/colordle-solver" />
   <meta property="og:title" content="Colordle Solver - Daily Color Puzzle Helper" />
@@ -440,22 +431,22 @@
   <!-- Content Sections -->
   <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
     <!-- What Is & How To Play -->
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
-      <div class="flex items-center gap-3 mb-5">
-        <div class="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center text-pink-600">
-          ℹ️
-        </div>
-        <h2 class="text-3xl font-bold text-slate-900 mb-5">What is Colordle?</h2>
-      </div>
-      <div class="space-y-3 text-slate-600 leading-relaxed">
-        <p>
-          <strong class="text-slate-900">Colordle</strong> is a minimalist daily color-guessing game that challenges players to identify a secret hex code. Inspired by the Wordle format, it replaces letters with colors.
-        </p>
-        <p>
-          Every day, a new mystery color is selected and your goal is to guess its exact shade by entering color names. After each guess, the game gives you a <strong class="text-slate-900">percentage score</strong> indicating how close your choice is — <strong class="text-pink-600">100%</strong> means you've cracked the code!
-        </p>
-      </div>
-    </section>
+<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+  <div class="flex items-center gap-3 mb-5">
+    <div class="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center text-pink-600">
+      ℹ️
+    </div>
+    <h2 class="text-3xl font-bold text-slate-900 mb-5">What is Colordle?</h2>
+  </div>
+  <div class="space-y-3 text-slate-600 leading-relaxed">
+    <p>
+      Colordle is a daily game where you guess a secret color. You type in a color name, and Colordle tells you how close you are with a percentage — 100% means you got it.
+    </p>
+    <p>
+      The tricky part: if you guess <span class="font-mono text-sm bg-gray-100 px-1 rounded">#3498db</span> and get 34% back, that number alone doesn't tell you much. Is the target brighter? More saturated? A different hue entirely? Without a way to cross-reference, you're guessing in the dark. The solver helps you filter the color list based on that percentage.
+    </p>
+  </div>
+</section>
 
     <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
       <div class="flex items-center gap-3 mb-5">
@@ -475,19 +466,19 @@
     </section>
 
     <!-- Why Use Section -->
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
-      <h2 class="text-3xl font-bold text-slate-900 mb-5">
-        ❓ Why Use a Colordle Helper?
-      </h2>
-      <div class="text-slate-600 leading-relaxed space-y-3">
-        <p>
-          With over <strong class="text-slate-900">30,000 named colors</strong> in modern digital palettes, finding the exact hex code manually is nearly impossible. Our solver uses the <strong class="text-slate-900">Delta E (CIE2000)</strong> algorithm — the gold standard for measuring perceptual color difference — to compute visual distance and eliminate wrong answers instantly.
-        </p>
-        <p>
-          Whether you want daily help or want to improve your color theory knowledge, this is the most accurate Colordle solver available online.
-        </p>
-      </div>
-    </section>
+<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+  <h2 class="text-3xl font-bold text-slate-900 mb-5">
+    Why Use a Colordle Helper?
+  </h2>
+  <div class="text-slate-600 leading-relaxed space-y-3">
+    <p>
+      Colordle has thousands of named colors. When you get 42% back on "Mauve" and 38% on "Dusty Rose," you can't manually cross-reference which one is closer. The solver does that work — it filters the list to show only colors that would return those percentage scores.
+    </p>
+    <p>
+      It's especially useful once you're under 50% and need to narrow down candidates quickly. You can also use it to learn how hex codes and color distance actually work.
+    </p>
+  </div>
+</section>
 
     <!-- FAQ Section -->
     <div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
@@ -506,99 +497,96 @@
 
     <!-- SEO Content Section -->
     <section class="space-y-10">
-      <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
-        <h2 class="text-3xl font-bold text-slate-900 mb-5">How Color Distance Calculation Works</h2>
-        <div class="prose prose-lg max-w-none text-slate-600">
-          <p class="mb-6 leading-relaxed">
-            Color perception is surprisingly complex. Two colors might look identical to one person but different to another. That's why Colordle and our solver use the Delta E (CIE2000) algorithm — a sophisticated formula that measures how different two colors appear to the human eye.
-          </p>
-          <p class="mb-6 leading-relaxed">
-            The calculation happens in the LAB color space, which was designed to be perceptually uniform. This means that a Delta E of 2.0 represents the same visual difference regardless of which colors you're comparing. The RGB and HEX color spaces we use on screens don't have this property — a small RGB change might be very visible in one color but invisible in another.
-          </p>
-          <p class="leading-relaxed">
-            When you enter a percentage score from Colordle, our solver converts it to a Delta E value and filters the color database to find colors that would produce similar scores. This mathematical approach is far more accurate than guessing based on color names or categories alone.
-          </p>
-        </div>
-      </div>
+<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+  <h2 class="text-3xl font-bold text-slate-900 mb-5">How Color Distance Calculation Works</h2>
+  <div class="prose prose-lg max-w-none text-slate-600">
+    <p class="mb-6 leading-relaxed">
+      Colordle uses Delta E CIE2000 to convert your percentage into a color distance value. A Delta E of 1.0 is roughly the smallest difference the human eye can detect. A Delta E of 10+ is a clearly different color. The percentage you see is derived from this distance.
+    </p>
+    <p class="mb-6 leading-relaxed">
+      The math happens in LAB color space, not RGB. RGB hex values aren't perceptually uniform — jumping from <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF0000</span> to <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF1100</span> (a change of 1) is invisible, but the same jump in a different color range might be obvious. LAB was designed to fix this. A Delta E of 5 means the same visual gap regardless of where in the color wheel you are.
+    </p>
+    <p class="leading-relaxed">
+      When you enter your percentage, the solver inverts the formula to find colors with a matching Delta E. It's not magic — it's just math doing the tedious cross-referencing for you.
+    </p>
+  </div>
+</div>
 
-      <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
-        <h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Getting Better at Colordle</h2>
-        <div class="space-y-6 text-lg text-slate-600">
-          <p class="leading-relaxed">
-            Colordle rewards color knowledge and strategic guessing. Here are tips to improve your game:
-          </p>
-          <ul class="space-y-4 ml-4">
-            <li class="leading-relaxed">
-              <strong class="text-slate-900">Start with primary and secondary colors</strong> — Colors like Red, Blue, Yellow, Green, Orange, and Purple are good starting points. They're evenly distributed around the color wheel and give you broad information.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-slate-900">Pay attention to saturation and brightness</strong> — A 50% match might mean you have the right hue but wrong saturation. Try brighter and darker versions of similar colors.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-slate-900">Learn color families</strong> — Colors cluster into families: warm (reds, oranges, yellows), cool (blues, greens, purples), neutrals (grays, browns, whites). Identify the family first, then narrow down.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-slate-900">Use the percentage strategically</strong> — A score above 70% means you're very close. A score below 30% means you're far away. Use this to decide whether to refine your current guess or try a completely different color.
-            </li>
-            <li class="leading-relaxed">
-              <strong class="text-slate-900">Learn color names</strong> — The more color names you know, the better. Colors like "Cerulean", "Chartreuse", "Burgundy", and "Teal" are common in Colordle and have specific hex values.
-            </li>
-          </ul>
-        </div>
-      </div>
+<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+  <h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Getting Better at Colordle</h2>
+  <div class="space-y-6 text-lg text-slate-600">
+    <ul class="space-y-4 ml-4">
+      <li class="leading-relaxed">
+        <strong class="text-slate-900">Start with primaries in separate guesses.</strong> If you get 20% on Red and 45% on Blue, the target is hue-adjacent to blue but not pure red. This costs you guesses but tells you the hue family fast. After 2-3 primaries, you know roughly where on the wheel you are.
+      </li>
+      <li class="leading-relaxed">
+        <strong class="text-slate-900">Percentage context matters.</strong> A 40% match on a muted color means something different than 40% on a saturated one. The solver handles this, but when you're guessing manually, keep in mind that low-saturation colors cluster together — a 40% on "Ash Grey" and 42% on "Silver" could both point to the same target.
+      </li>
+      <li class="leading-relaxed">
+        <strong class="text-slate-900">Use color families to narrow.</strong> If your target looks like a sunset color, focus on the oranges, corals, and yellow-greens. The solver filters by Delta E, but you can skip whole branches of the color list if you know the vibe you're looking for.
+      </li>
+      <li class="leading-relaxed">
+        <strong class="text-slate-900">Percentage thresholds are useful shortcuts.</strong> Above 60% means the target is in the same saturation and lightness range. Below 30% means look for something visually opposite. If you're stuck between 40-50%, try a guess with opposite saturation.
+      </li>
+      <li class="leading-relaxed">
+        <strong class="text-slate-900">Learn the weird color names.</strong> Colordle pulls from a large color list. Names that often trip people up: "Celadon" (a pale green), "Amaranth" (a pinkish red), "Gamboge" (a mustard yellow), "Vermilion" (a bright orange-red), "Saffron" (deep yellow). If you don't know them, you can't guess them.
+      </li>
+    </ul>
+  </div>
+</div>
 
-      <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
-        <h2 class="text-3xl font-bold text-slate-900 mb-5">Understanding Hex Color Codes</h2>
-        <div class="prose prose-lg max-w-none text-slate-600">
-          <p class="mb-6 leading-relaxed">
-            Every color in Colordle is represented by a hex code — a 6-character string like #FF5733 that defines the exact color. Understanding hex codes can help you make better guesses.
-          </p>
-          <div class="grid md:grid-cols-3 gap-6 not-prose mb-6">
-            <div class="bg-white p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-slate-900 mb-2">First 2 Characters (Red)</h3>
-              <p class="text-slate-600 text-sm">The first two characters control the red component. 00 is no red, FF is maximum red. Higher values mean more red in the color.</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-slate-900 mb-2">Middle 2 Characters (Green)</h3>
-              <p class="text-slate-600 text-sm">The middle two characters control green. 00 is no green, FF is maximum green. This affects how "warm" or "cool" a color appears.</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-slate-900 mb-2">Last 2 Characters (Blue)</h3>
-              <p class="text-slate-600 text-sm">The last two characters control blue. 00 is no blue, FF is maximum blue. Blue values strongly affect whether a color feels "warm" or "cool".</p>
-            </div>
-          </div>
-          <p class="leading-relaxed">
-            For example, #FF0000 is pure red, #00FF00 is pure green, #0000FF is pure blue, #FFFFFF is white, and #000000 is black. Colors like #FF5733 (a reddish-orange) have high red, moderate green, and low blue values.
-          </p>
-        </div>
+<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+  <h2 class="text-3xl font-bold text-slate-900 mb-5">Understanding Hex Color Codes</h2>
+  <div class="prose prose-lg max-w-none text-slate-600">
+    <p class="mb-6 leading-relaxed">
+      Every color in Colordle has a hex code like <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF6B6B</span>. Once you learn to read the pairs, you can make educated guesses.
+    </p>
+    <div class="grid md:grid-cols-3 gap-6 not-prose mb-6">
+      <div class="bg-white p-6 rounded-xl border border-gray-200">
+        <h3 class="font-bold text-slate-900 mb-2">First 2: Red</h3>
+        <p class="text-slate-600 text-sm">00 means no red, FF means red is maxed out. If your guess <span class="font-mono text-xs">#FF6B6B</span> returns 40% and the red pair is FF, you know red is already at full strength in the target.</p>
       </div>
+      <div class="bg-white p-6 rounded-xl border border-gray-200">
+        <h3 class="font-bold text-slate-900 mb-2">Middle 2: Green</h3>
+        <p class="text-slate-600 text-sm">Same idea — 00 is no green, FF is full green. A low green value often makes a color feel pinkish or purple-adjacent.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl border border-gray-200">
+        <h3 class="font-bold text-slate-900 mb-2">Last 2: Blue</h3>
+        <p class="text-slate-600 text-sm">Blue at 00 feels warm (orange tones). Blue at FF feels cool (purple or cyan tones). If you're getting low scores, check which pair is dragging you down.</p>
+      </div>
+    </div>
+    <p class="leading-relaxed">
+      Example: <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF6B6B</span> has max red (FF), medium green (6B = 107 in decimal), medium-low blue (6B). If you get 40% on this, and the solver says red is maxed — you'll want your next guess to also have FF in the first pair.
+    </p>
+  </div>
+</div>
 
-      <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
-        <h2 class="text-3xl font-bold text-slate-900 mb-5">Common Colordle Color Categories</h2>
-        <div class="prose prose-lg max-w-none text-slate-600">
-          <p class="mb-6 leading-relaxed">
-            Colordle answers tend to fall into several categories. Knowing these can help you make educated guesses:
-          </p>
-          <div class="grid md:grid-cols-2 gap-6 not-prose">
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-slate-900 mb-2">🎨 Named Colors</h3>
-              <p class="text-slate-600 text-sm">Common color names like Crimson, Navy, Teal, Coral, Olive. These are everyday colors most people recognize.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-slate-900 mb-2">🌸 Nature Colors</h3>
-              <p class="text-slate-600 text-sm">Colors named after natural things: Sky Blue, Forest Green, Sunset, Ocean, Sand. These often have specific, recognizable shades.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-slate-900 mb-2">🍇 Food Colors</h3>
-              <p class="text-slate-600 text-sm">Colors named after foods: Cherry, Lemon, Lime, Chocolate, Coffee. These evoke specific visual associations.</p>
-            </div>
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 class="font-bold text-slate-900 mb-2">💎 Gem Colors</h3>
-              <p class="text-slate-600 text-sm">Colors named after gems and minerals: Ruby, Sapphire, Emerald, Amber, Jade. These tend to be rich, saturated colors.</p>
-            </div>
-          </div>
-        </div>
+<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+  <h2 class="text-3xl font-bold text-slate-900 mb-5">Common Colordle Color Categories</h2>
+  <div class="prose prose-lg max-w-none text-slate-600">
+    <p class="mb-6 leading-relaxed">
+      Colordle draws from a large color list. Answers tend to cluster around these groups:
+    </p>
+    <div class="grid md:grid-cols-2 gap-6 not-prose">
+      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+        <h3 class="font-bold text-slate-900 mb-2">🎨 Desaturated Common Names</h3>
+        <p class="text-slate-600 text-sm">Colors like "Mauve", "Slate", "Taupe", "Sage". These are muted, low-saturation colors that are hard to pin down without the percentage. Often appear in the 40-60% range on first guesses.</p>
       </div>
+      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+        <h3 class="font-bold text-slate-900 mb-2">🌸 Pastel Variants</h3>
+        <p class="text-slate-600 text-sm">"Powder Blue", "Pale Rose", "Lavender Blush". These have high lightness and medium-low saturation. If you get a decent match on a saturated color and the target feels "light", try a pastel version.</p>
+      </div>
+      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+        <h3 class="font-bold text-slate-900 mb-2">🍇 Saturated Jewel Tones</h3>
+        <p class="text-slate-600 text-sm">"Cerulean", "Cobalt", "Vermilion", "Emerald". These are highly saturated and produce sharp percentage jumps. If you miss by 10% on cobalt, you're not close at all.</p>
+      </div>
+      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+        <h3 class="font-bold text-slate-900 mb-2">🟤 Earth Tones</h3>
+        <p class="text-slate-600 text-sm">"Umber", "Sienna", "Ochre", "Burnt Sienna". Brown-adjacent colors with low saturation and warm undertones. Often the hardest to distinguish from each other — a 5% difference might separate two earth tones.</p>
+      </div>
+    </div>
+  </div>
+</div>
     </section>
   </div>
 </main>
