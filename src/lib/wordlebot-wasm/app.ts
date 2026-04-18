@@ -159,7 +159,7 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 
 		target.innerHTML = `
 			<main class="solver-page">
-				<div class="${solverContainerClass}">
+				<div class="${solverContainerClass}" style="--word-length: ${state.wordLength}">
 					<section class="settings-card">
 						<div class="settings-grid">
 							<label>
@@ -223,7 +223,7 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 					</section>
 
 					<section id="results" class="results-panel">
-						<div class="loading-card">Calculating suggestions...</div>
+						<div class="loading-card"><div class="loading-spinner"></div>Calculating suggestions...</div>
 					</section>
 				</div>
 			</main>
@@ -243,7 +243,22 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 		});
 
 		drawBoards(boardsContainer, state, storageKey, resultsContainer);
-		await solveAndRender(state, resultsContainer);
+		if (state.turns.length > 0) {
+			await solveAndRender(state, resultsContainer);
+		} else {
+			resultsContainer.innerHTML = `
+				<div class="empty-results-prompt">
+					<div class="empty-results-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="11" cy="11" r="8"/>
+							<path d="m21 21-4.35-4.35"/>
+						</svg>
+					</div>
+					<p class="empty-results-title">Enter a guess to get started</p>
+					<p class="empty-results-hint">Type a word above, set the feedback colors, then press "calculate next guess" to see suggestions.</p>
+				</div>
+			`;
+		}
 	}
 
 	async function renderCanuckleDaily() {
@@ -621,7 +636,7 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
 
 	async function solveAndRender(state: SolverState, container: HTMLElement) {
 		container.classList.remove('results-stale');
-		container.innerHTML = '<div class="loading-card">Calculating suggestions...</div>';
+		container.innerHTML = '<div class="loading-card"><div class="loading-spinner"></div>Calculating suggestions...</div>';
 
 		const key = state.game === 'canuckle' ? 'canuckle' : `len${state.wordLength}`;
 		const solve = await getSolveFunction(key);
