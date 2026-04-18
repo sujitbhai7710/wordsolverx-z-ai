@@ -241,46 +241,371 @@ function buildSolverFaqs(game: WordlebotGameConfig, wordLength?: number) {
     ];
   }
 
-  if (game.slug === 'wordle' && wordLength) {
+  if (wordLength === 3) {
     return [
       {
-        question: `How does the ${wordLength}-letter Wordle solver work?`,
-        answer: `Type your guess, tap each tile to match the gray, yellow, or green result from your game, and the solver instantly filters the ${wordLength}-letter word list to show the best next guesses ranked by likelihood.`
+        question: 'How does the 3-letter Wordle solver work?',
+        answer: 'Type your 3-letter guess, tap each tile to match gray, yellow, or green, and the solver filters the ~200-word pool instantly, ranking candidates by letter frequency for 3-letter words.'
       },
       {
-        question: `Why does this page only show ${wordLength}-letter words?`,
-        answer: `${wordLength}-letter Wordle boards have a completely different answer pool from other lengths. Loading only the relevant words keeps the solver fast and the suggestions focused.`
+        question: 'Why does this page only show 3-letter words?',
+        answer: '3-letter Wordle has roughly 200 accepted answers. That is a completely different pool from 4 or 5 letters — loading only 3-letter words keeps the solver fast and the suggestions actually useful.'
       },
       {
-        question: `How does word length affect Wordle strategy?`,
-        answer:
-          'Shorter words (3-4 letters) give you faster feedback per guess but fewer possibilities to work with. Longer words (7-11 letters) have larger pools but also give more information per clue because each letter position is more constrained.'
+        question: 'Why is 3-letter Wordle faster than standard Wordle?',
+        answer: 'With only ~200 possible answers, you can often narrow to the last few candidates in 2-3 guesses. The pool is small enough that one or two green tiles eliminate almost everything.'
       },
       {
-        question: `Can I switch to a different word length on this page?`,
-        answer: `This page is dedicated to ${wordLength}-letter Wordle. Use the main solvers page to find solvers for other word lengths — each length has its own optimized word list.`
+        question: 'What makes a good starting word in 3-letter Wordle?',
+        answer: 'Use letter groups not full words — SLT, RTE, ERA, TAN, ATI. These cover common 3-letter combinations without wasting tiles on uncommon letters like Q, X, or Z.'
       },
       {
-        question: `What makes a good first guess in ${wordLength}-letter Wordle?`,
-        answer: `Words with common vowels and frequent consonants work well at any length. For 3-letter words try SLT/RTE patterns. For longer words the same CRANE-style logic applies — maximize letter frequency overlap with the answer pool.`
+        question: 'Does hard mode work differently on 3-letter Wordle?',
+        answer: 'Hard mode on 3 letters sounds easy but is trickier than it looks. One wrong green lock at position 1 or 3 can waste two guesses before you recover.'
       },
       {
-        question: `Does hard mode work with the ${wordLength}-letter solver?`,
-        answer:
-          'The solver does not enforce hard mode rules itself. You can use it alongside a hard mode game by manually respecting the requirement that confirmed clues must be used in subsequent guesses.'
+        question: 'How many possible 3-letter answers are there?',
+        answer: 'About 200 words in the standard 3-letter answer pool. That sounds small until you realize how many look similar — BAT, CAT, HAT, MAT, PAT, RAT, SAT.'
       },
       {
-        question: `How many possible answers are in the ${wordLength}-letter Wordle list?`,
-        answer: `The answer pool varies by length. 5-letter Wordle has roughly 2,300 accepted answers. Longer words have more combinations, which is why the filtering algorithm becomes more important as length increases.`
+        question: 'Can I use the 3-letter solver for daily Wordle?',
+        answer: 'Daily Wordle uses 5 letters, not 3. This solver is for custom 3-letter Wordle games. If you are playing a 3-letter variant, enter your 3-letter guess the same way.'
       },
       {
-        question: `Can I use the ${wordLength}-letter solver for daily Wordle?`,
-        answer:
-          'Regular Wordle uses 5 letters, but custom-length Wordle games use the same game rules — just different answer pools. Enter your guess and feedback the same way.'
+        question: 'What about duplicate letters in 3-letter words?',
+        answer: 'Some 3-letter words repeat a letter: SEE, ADD, ALL, EGG, OFF. These fool people because you expect all three positions to be different. The solver handles them correctly.'
       },
       {
-        question: `Does the solver work for the unlimited Play Again Wordle mode?`,
-        answer: `Yes. The unlimited mode uses the same answer pool as daily Wordle, so the solver works for both as long as you set the correct word length.`
+        question: 'Does the solver work for unlimited Play Again 3-letter mode?',
+        answer: 'Yes. Unlimited mode uses the same 3-letter answer pool as the daily game, so the solver works for both as long as you enter 3-letter guesses.'
+      }
+    ];
+  }
+
+  if (wordLength === 4) {
+    return [
+      {
+        question: 'How does the 4-letter Wordle solver work?',
+        answer: 'Type your 4-letter guess, set gray/yellow/green feedback on each tile, and the solver filters the ~500-word pool instantly, ranking by which words are both likely answers and good next moves.'
+      },
+      {
+        question: 'Why does this page only show 4-letter words?',
+        answer: '4-letter Wordle has roughly 500-600 accepted answers, a different pool from 3 or 5 letters. Loading only the relevant words keeps suggestions sharp and the interface fast.'
+      },
+      {
+        question: 'How is 4-letter Wordle different from 5-letter Wordle?',
+        answer: 'You get fewer starting options but the pool is still big enough to get stuck. Two vowels matter more at 4 letters because you have less room to correct a wrong vowel placement.'
+      },
+      {
+        question: 'What makes a good starting word in 4-letter Wordle?',
+        answer: 'LATE, ROPE, RATE, TALE, and NEAR are strong 4-letter starters. They hit common vowel-consonant patterns without wasting tiles on rare letters.'
+      },
+      {
+        question: 'How many possible 4-letter answers are there?',
+        answer: 'Roughly 500-600 words. That is big enough to get lost in but small enough that two good guesses often leave you with under 20 candidates.'
+      },
+      {
+        question: 'Does hard mode work differently on 4-letter Wordle?',
+        answer: 'Hard mode gets harder faster at 4 letters because locking in a wrong vowel costs you two of your four tiles. Double-check greens before committing in hard mode.'
+      },
+      {
+        question: 'Can I use the 4-letter solver for daily Wordle?',
+        answer: 'Daily Wordle is 5 letters. This page is for custom 4-letter games only. If your 4-letter variant follows standard Wordle rules, enter your guess and feedback the same way.'
+      },
+      {
+        question: 'What about duplicate letters at 4 letters?',
+        answer: 'PEEP, SEES, Anna — duplicate letters are more common at 4 letters than 3. The solver handles them correctly, but they trip people up when setting feedback manually.'
+      },
+      {
+        question: 'Does the solver work for unlimited Play Again 4-letter mode?',
+        answer: 'Yes. The unlimited mode uses the same 4-letter pool as the daily game. The solver is useful here because the pool is large enough to cause decision paralysis.'
+      }
+    ];
+  }
+
+  if (wordLength === 5) {
+    return [
+      {
+        question: 'How does the 5-letter Wordle solver work?',
+        answer: 'Type your guess, tap each tile to match gray, yellow, or green, and the solver filters the 2,300-word pool to show the best next guesses ranked by letter frequency and elimination power.'
+      },
+      {
+        question: 'Why does this page only show 5-letter words?',
+        answer: '5-letter Wordle is the standard format with about 2,300 accepted answers. This page loads that specific pool so you get relevant suggestions, not guesses from other word lengths.'
+      },
+      {
+        question: 'What is the best starting word for 5-letter Wordle?',
+        answer: 'CRANE is the classic because it hits five common letters with good position spread. SLATE and ADIEU are also strong — ADIEU is especially good if your variant uses more vowels.'
+      },
+      {
+        question: 'How does hard mode work with the 5-letter solver?',
+        answer: 'The solver does not enforce hard mode automatically. You can use it alongside a hard mode game — just manually make sure each new guess respects your confirmed green and yellow tiles.'
+      },
+      {
+        question: 'How many possible 5-letter answers are there?',
+        answer: 'About 2,300 accepted answers in the standard 5-letter Wordle list. That is large enough to need a solver when stuck, but small enough that good starting words get you far.'
+      },
+      {
+        question: 'What about duplicate letters at 5 letters?',
+        answer: 'TEETH,llama,PRESS — duplicate letters are surprisingly common at 5 letters. They fool people because you expect five different positions. The solver handles them correctly.'
+      },
+      {
+        question: 'Can I use this solver for daily Wordle?',
+        answer: 'Yes. Daily Wordle uses 5 letters, so this solver works for both the daily puzzle and unlimited Play Again mode. Enter your 5-letter guess and set the feedback the same way.'
+      },
+      {
+        question: 'Does the 5-letter solver work for Wordle variants?',
+        answer: 'Yes. Most Wordle variants (NYT Wordle, Dordle, Quordle, etc.) use 5-letter words. This solver works for any of them as long as you enter 5-letter guesses with correct feedback.'
+      },
+      {
+        question: 'How does letter frequency affect 5-letter strategy?',
+        answer: 'E, A, R, O, T, L, I are the most common 5-letter letters. Getting a green on any of these is valuable. Avoiding rare letters like Q, X, Z early helps you stay in the game.'
+      }
+    ];
+  }
+
+  if (wordLength === 6) {
+    return [
+      {
+        question: 'How does the 6-letter Wordle solver work?',
+        answer: 'Type your 6-letter guess, set clue colors on each tile, and the solver filters the ~4,000-word pool to show the strongest candidates ranked by how well they satisfy your current clues.'
+      },
+      {
+        question: 'Why does this page only show 6-letter words?',
+        answer: '6-letter Wordle has roughly 4,000 accepted answers — a much larger pool than 5-letter. Loading only the 6-letter list keeps the solver focused and suggestions relevant.'
+      },
+      {
+        question: 'How is 6-letter Wordle different from 5-letter Wordle?',
+        answer: 'The vocabulary jump is significant. Many 6-letter answers are less everyday than 5-letter ones — the solver matters more because obscure words can trap you.'
+      },
+      {
+        question: 'What makes a good starting word in 6-letter Wordle?',
+        answer: 'STARE, CRANE, RATES, TONES, and TRACE are strong 6-letter starters. They use common letters and give you good position coverage across six tiles.'
+      },
+      {
+        question: 'Does hard mode on 6 letters work differently?',
+        answer: 'Hard mode gets seriously challenging at 6 letters. Six positions of constraints interact — one wrong lock and you spend guesses satisfying it rather than solving.'
+      },
+      {
+        question: 'How many possible 6-letter answers are there?',
+        answer: 'About 4,000 words in the 6-letter answer pool. That is large enough that you will get stuck eventually without a solver to filter out non-answers.'
+      },
+      {
+        question: 'Can I use the 6-letter solver for daily Wordle?',
+        answer: 'Daily Wordle uses 5 letters, not 6. This page is for custom 6-letter Wordle games. If you are playing a 6-letter variant, enter your guess and feedback the same way.'
+      },
+      {
+        question: 'How does letter frequency change at 6 letters?',
+        answer: 'E, A, R, I, O, T, N, S, L, C are most common at 6 letters. The distribution shifts slightly from 5-letter — S and N appear more frequently in 6-letter answers.'
+      },
+      {
+        question: 'Does the solver work for unlimited Play Again 6-letter mode?',
+        answer: 'Yes. The unlimited mode uses the same 6-letter pool, so the solver works for both daily challenges and practice games at this length.'
+      }
+    ];
+  }
+
+  if (wordLength === 7) {
+    return [
+      {
+        question: 'How does the 7-letter Wordle solver work?',
+        answer: 'Type your 7-letter guess, tap tiles to gray/yellow/green, and the solver filters the ~5,000-word pool to rank candidates by how likely they are the answer given your clues.'
+      },
+      {
+        question: 'Why does this page only show 7-letter words?',
+        answer: '7-letter Wordle has roughly 5,000 accepted answers — a pool large enough that even two or three greens leaves dozens of candidates. The dedicated page keeps suggestions on target.'
+      },
+      {
+        question: 'How is 7-letter Wordle harder than shorter lengths?',
+        answer: 'The vocabulary requirement jumps. Many 7-letter answers are scientific, academic, or compound words that do not appear in everyday conversation. The solver helps you avoid dead ends.'
+      },
+      {
+        question: 'What makes a good starting word in 7-letter Wordle?',
+        answer: 'TONERS, RAISES, AEROST, and SLOWER are solid 7-letter starters. Letter spread across all seven tiles matters more here because you have more ground to cover.'
+      },
+      {
+        question: 'Does hard mode on 7 letters work differently?',
+        answer: 'Hard mode at 7 letters is genuinely difficult. Seven positions of confirmed clues must all be satisfied in every guess — one bad lock can consume multiple turns to fix.'
+      },
+      {
+        question: 'How many possible 7-letter answers are there?',
+        answer: 'About 5,000 words in the 7-letter pool. This is where the solver becomes genuinely useful — the pool is too large to track mentally and many words are obscure.'
+      },
+      {
+        question: 'Can I use the 7-letter solver for daily Wordle?',
+        answer: 'Daily Wordle uses 5 letters. This page is for custom 7-letter Wordle games only. Enter your 7-letter guess and set feedback the same way you would in any Wordle variant.'
+      },
+      {
+        question: 'How does a green tile at 7 letters compare to shorter lengths?',
+        answer: 'A single green at 7 letters is extremely informative — it locks one-seventh of the word and eliminates roughly 85% of the pool for that position. Longer words give more from each confirmed letter.'
+      },
+      {
+        question: 'Does the solver work for unlimited Play Again 7-letter mode?',
+        answer: 'Yes. The unlimited mode uses the same 7-letter answer pool, so the solver helps with both daily challenges and unlimited practice at this length.'
+      }
+    ];
+  }
+
+  if (wordLength === 8) {
+    return [
+      {
+        question: 'How does the 8-letter Wordle solver work?',
+        answer: 'Type your 8-letter guess, mark each tile with gray/yellow/green feedback, and the solver filters the ~6,000-word pool to show you the best candidates ranked by elimination value.'
+      },
+      {
+        question: 'Why does this page only show 8-letter words?',
+        answer: '8-letter Wordle has roughly 6,000 accepted answers — a pool where the solver is close to essential. No one can track cross-elimination across 8 positions mentally.'
+      },
+      {
+        question: 'How hard is 8-letter Wordle compared to shorter lengths?',
+        answer: 'Eight tiles means eight positions to get right. The pool is full of complex vocabulary — scientific terms, compound words, legal words. The solver is close to mandatory here.'
+      },
+      {
+        question: 'What makes a good starting word in 8-letter Wordle?',
+        answer: 'TRANCES, PENATES, NECTARS, and STRAIN are strong 8-letter starters. You need maximum letter diversity across 8 tiles — avoid repeating letters in your opener.'
+      },
+      {
+        question: 'Does hard mode on 8 letters work differently?',
+        answer: 'Hard mode at 8 letters is brutally difficult. Eight green/yellow locks must all be satisfied simultaneously — the solver can find candidates that meet all constraints, but you have to enter them manually.'
+      },
+      {
+        question: 'How many possible 8-letter answers are there?',
+        answer: 'About 6,000 words in the 8-letter pool. This is large enough that even three greens might leave 30+ candidates. The solver does what humans cannot — track 8-way simultaneous elimination.'
+      },
+      {
+        question: 'Can I use the 8-letter solver for daily Wordle?',
+        answer: 'Daily Wordle uses 5 letters. This page is for custom 8-letter Wordle games. If you are playing an 8-letter variant, the solver handles it correctly.'
+      },
+      {
+        question: 'How does letter frequency differ at 8 letters?',
+        answer: 'E, A, R, I, O, T, N, S, D, L are most common at 8 letters. C and U appear more frequently at this length than at 5 letters. The distribution is shifted by longer word morphology.'
+      },
+      {
+        question: 'Does the solver work for unlimited Play Again 8-letter mode?',
+        answer: 'Yes. The unlimited mode uses the same 8-letter pool. With 6,000 words in the pool, the solver is genuinely useful for both daily and unlimited modes.'
+      }
+    ];
+  }
+
+  if (wordLength === 9) {
+    return [
+      {
+        question: 'How does the 9-letter Wordle solver work?',
+        answer: 'Type your 9-letter guess, set gray/yellow/green on each tile, and the solver filters the ~8,000-word pool to show candidates that fit all your clues ranked by likelihood.'
+      },
+      {
+        question: 'Why does this page only show 9-letter words?',
+        answer: '9-letter Wordle has roughly 8,000 accepted answers. The solver is not optional at this length — the pool is too large and the clues are too complex to track manually.'
+      },
+      {
+        question: 'How hard is 9-letter Wordle compared to shorter lengths?',
+        answer: 'Nine tiles is a serious commitment. One green locks 1/9 of the answer — extremely informative — but finding that green requires good starting words because the pool is enormous.'
+      },
+      {
+        question: 'What makes a good starting word in 9-letter Wordle?',
+        answer: 'NUCLEASE, RENDANCE, and CREDIANS are strong 9-letter starters. Letter spread is critical — with 9 tiles to cover, every duplicate letter is a wasted opportunity for information.'
+      },
+      {
+        question: 'Does hard mode on 9 letters work differently?',
+        answer: 'Hard mode at 9 letters is one of the hardest Wordle formats. Nine locks of confirmed clues must all be satisfied simultaneously. Most players cannot do this mentally and rely on the solver.'
+      },
+      {
+        question: 'How many possible 9-letter answers are there?',
+        answer: 'About 8,000 words in the 9-letter pool. This is where manual solving truly breaks down — you need the solver to eliminate candidates across all nine positions simultaneously.'
+      },
+      {
+        question: 'Can I use the 9-letter solver for daily Wordle?',
+        answer: 'Daily Wordle uses 5 letters, not 9. This page is for custom 9-letter Wordle games. Enter your 9-letter guesses and feedback the same way.'
+      },
+      {
+        question: 'What kind of vocabulary appears in 9-letter answers?',
+        answer: 'Scientific terms, academic words, compound formations. The 9-letter pool skews heavily toward Latin and Greek roots. Without a solver, you waste guesses on obscure non-answers.'
+      },
+      {
+        question: 'Does the solver work for unlimited Play Again 9-letter mode?',
+        answer: 'Yes. The unlimited mode uses the same 9-letter pool. The solver helps both daily challenges and unlimited practice, where the large pool makes manual solving nearly impossible.'
+      }
+    ];
+  }
+
+  if (wordLength === 10) {
+    return [
+      {
+        question: 'How does the 10-letter Wordle solver work?',
+        answer: 'Type your 10-letter guess, tap tiles to set gray/yellow/green, and the solver filters the ~10,000-word pool to show candidates matching all your clues ranked by elimination power.'
+      },
+      {
+        question: 'Why does this page only show 10-letter words?',
+        answer: '10-letter Wordle has roughly 10,000 accepted answers. The solver is non-negotiable at this length — no human can reliably track 10-position elimination across a 10,000-word pool.'
+      },
+      {
+        question: 'How hard is 10-letter Wordle compared to shorter lengths?',
+        answer: 'Ten tiles is a marathon. A single green tells you one-tenth of the answer immediately, but the pool is so large that you often go several guesses with only 1-2 confirmed letters.'
+      },
+      {
+        question: 'What makes a good starting word in 10-letter Wordle?',
+        answer: 'CEASELESS, SALTATION, and NECTARINS are strong 10-letter starters. Maximize letter diversity — with 10 tiles, repeating any letter is a significant information loss.'
+      },
+      {
+        question: 'Does hard mode on 10 letters work differently?',
+        answer: 'Hard mode at 10 letters is extremely punishing. Ten confirmed locks must all be respected in every guess. Most players need the solver just to find valid hard mode candidates.'
+      },
+      {
+        question: 'How many possible 10-letter answers are there?',
+        answer: 'About 10,000 words in the 10-letter pool. This is beyond what any human can track mentally across ten simultaneous position constraints. The solver is the only practical tool.'
+      },
+      {
+        question: 'Can I use the 10-letter solver for daily Wordle?',
+        answer: 'Daily Wordle uses 5 letters, not 10. This page is for custom 10-letter Wordle games. The solver handles 10-letter variants correctly.'
+      },
+      {
+        question: 'What vocabulary dominates the 10-letter pool?',
+        answer: 'Scientific, legal, medical, and academic vocabulary dominates the 10-letter pool. Words like ABSOLUTELY, GOVERNMENT, POLITICIAN. Without a solver, you guess from thousands of obscure options.'
+      },
+      {
+        question: 'Does the solver work for unlimited Play Again 10-letter mode?',
+        answer: 'Yes. The unlimited mode uses the same 10-letter pool. With ~10,000 words to track, the solver is the only viable way to solve 10-letter Wordle efficiently.'
+      }
+    ];
+  }
+
+  if (wordLength === 11) {
+    return [
+      {
+        question: 'How does the 11-letter Wordle solver work?',
+        answer: 'Type your 11-letter guess, mark each tile gray/yellow/green, and the solver filters the ~12,000-word pool to show candidates that satisfy all your clues.'
+      },
+      {
+        question: 'Why does this page only show 11-letter words?',
+        answer: '11-letter Wordle has roughly 12,000 accepted answers — the solver is completely essential here. No one tracks 11-position constraints across 12,000 words mentally.'
+      },
+      {
+        question: 'How hard is 11-letter Wordle compared to shorter lengths?',
+        answer: 'Eleven tiles is the ultimate Wordle test. One green locks 1/11 of the word and eliminates ~91% of candidates for that position. But getting that green requires navigating 12,000 vocabulary options.'
+      },
+      {
+        question: 'What makes a good starting word in 11-letter Wordle?',
+        answer: 'ABORTIONIZE, CHRONOLOGIES, and INTERNATION are strong 11-letter starters. Letter spread is critical — with 11 tiles, every duplicate is a wasted position and a lost clue.'
+      },
+      {
+        question: 'Does hard mode on 11 letters work differently?',
+        answer: 'Hard mode at 11 letters is the hardest standard Wordle format. Eleven simultaneous locks must all be satisfied in every guess. The solver finds candidates that meet all constraints — you enter them manually.'
+      },
+      {
+        question: 'How many possible 11-letter answers are there?',
+        answer: 'About 12,000 words in the 11-letter pool. This is the largest common Wordle format and the one most in need of a solver. Manual tracking across 11 positions and 12,000 words is impossible.'
+      },
+      {
+        question: 'Can I use the 11-letter solver for daily Wordle?',
+        answer: 'Daily Wordle uses 5 letters, not 11. This page is for custom 11-letter Wordle games. The solver handles all standard 11-letter Wordle variants.'
+      },
+      {
+        question: 'What vocabulary dominates the 11-letter pool?',
+        answer: 'Legal, medical, scientific, and compound vocabulary dominates. Words like INTERNATIONALIZATION, UNCHARACTERISTIC. The pool is full of long complex formations — the solver filters out non-answers you would never guess.'
+      },
+      {
+        question: 'Does the solver work for unlimited Play Again 11-letter mode?',
+        answer: 'Yes. The unlimited mode uses the same 11-letter pool. With ~12,000 words and 11 simultaneous constraints, the solver is the only practical way to make progress at this length.'
       }
     ];
   }
@@ -634,70 +959,622 @@ function buildSolverSections(game: WordlebotGameConfig, wordLength?: number) {
     ];
   }
 
-  if (game.slug === 'wordle' && wordLength) {
+if (wordLength === 3) {
     return [
       {
-        title: `Why a ${wordLength}-letter solver is worth having`,
+        title: 'Why 3-letter Wordle is fast and furious',
         paragraphs: [
-          `Word lists behave very differently across word lengths. A ${wordLength}-letter board has its own answer pool that shares almost no candidates with 5-letter or 3-letter Wordle. Loading only the relevant words keeps the solver fast and the suggestions focused.`,
-          `The dedicated ${wordLength}-letter page opens directly into the right solver without requiring you to adjust settings first. This streamlines the workflow — you land on the correct word list immediately.`,
-          `Longer and shorter words also have different letter frequency patterns, so a solver optimized for ${wordLength} letters ranks candidates using the right statistical model for that length.`
+          'The 3-letter Wordle pool has roughly 200 accepted answers. That is tiny compared to 5-letter Wordle — but tiny does not mean easy. With only three tiles, every letter position matters more, and one wrong early guess can cost you.',
+          'You can often narrow to the last few candidates in two or three guesses because the pool is so small. One green tile at position 1 or 3 eliminates roughly 80% of the remaining pool immediately.',
+          'The trade-off is fewer starting options. You cannot use elaborate starting word strategies — you mostly look for letter groups that cover common patterns, not full valid words.'
         ]
       },
       {
-        title: `How ${wordLength}-letter Wordle is different from 5-letter Wordle`,
+        title: 'Why letter groups beat full words as starting guesses',
         paragraphs: [
-          'The answer pool size varies significantly by word length. Shorter words have far fewer possible answers, which means you can narrow down the list faster but you also have fewer good starting words to choose from.',
-          `Letter frequency patterns shift at different lengths. In 3-letter Wordle, the most common starting letters are S, R, T, L, and N. In ${wordLength}-letter Wordle, the same CRANE-style logic applies but with letter frequencies calculated specifically for ${wordLength}-letter words.`,
-          'Some starting words that work well at one length do not transfer to others. A word with good letter spread at 5 letters might be a poor choice at 9 letters because the longer pool behaves differently.'
+          'Standard starting words like CRANE do not work at 3 letters. There is no 3-letter word with the letter spread of CRANE. Instead, use letter groups — SLT, RTE, ERA, TAN, ATI — that cover frequent 3-letter combinations.',
+          'The goal is information, not validity. SLT gives you feedback on S, L, and T simultaneously. If two come back yellow, you know the answer has two of those letters in specific wrong positions.',
+          'Avoid Q, X, Z, and J as starting tiles. These letters appear in fewer than 5% of 3-letter answers. Wasting a guess on a Q-starting word is a common mistake at this length.'
         ]
       },
       {
-        title: `What makes a good first guess at ${wordLength} letters`,
+        title: 'The vowel hunt: getting to the answer in 3 guesses',
         paragraphs: [
-          'Letter frequency matters more at longer lengths because the answer pools are larger. Pick words with common vowels and frequent consonants to maximize your chance of getting feedback on multiple tiles.',
-          'Avoid rare letters like X, Z, Q, and J early unless you have a specific reason to include them. These letters appear in fewer answers and are more likely to waste a guess.',
-          `For 3-letter Wordle, try starting with words like SLT or RTE that use common letters in different positions. For ${wordLength} letters where ${wordLength} is 6 or more, prioritize words with diverse letter coverage across the word.`
+          'Most 3-letter answers contain at least one vowel — A, E, I, O, U, and sometimes Y. Getting a vowel confirmed early is the fastest path to narrowing the pool.',
+          'After one or two letter-group guesses, you often have 2-3 vowels confirmed as absent, present, or correct. This quickly eliminates all words that do not fit the vowel pattern.',
+          'The solver handles this automatically. Enter your letter-group guesses, set the feedback, and the solver shows you which ~200 words remain viable.'
         ]
       },
       {
-        title: `How the solver handles unusual word lengths`,
+        title: 'Duplicate letters trip people up at 3 letters',
         paragraphs: [
-          'The solver applies standard Wordle rules to whatever answer pool matches your chosen length. Gray means absent, yellow means misplaced, and green means correct in that position. The filtering logic is identical across all lengths.',
-          'The only difference is which word list gets loaded. A 9-letter solver loads the 9-letter answer pool, a 4-letter solver loads the 4-letter pool, and so on.',
-          'The solver ranks suggestions based on letter frequency within that specific length pool. This means the top recommendations at 9 letters are different from the top recommendations at 5 letters.'
+          'Words like SEE, ADD, ALL, EGG, and OFF repeat a letter. These fool players because you go in expecting three different tiles and get feedback suggesting two are the same.',
+          'When you set feedback for a duplicate-letter word, you mark both positions of the repeated letter individually. If one is green and one is gray, that tells you the letter appears once, not twice.',
+          'The solver knows which 3-letter words have duplicate letters and factors that into its elimination. You do not have to track it manually.'
         ]
       },
       {
-        title: 'Why word length affects solving difficulty',
+        title: 'How hard mode works at 3 letters',
         paragraphs: [
-          'Shorter words (3-4 letters) have smaller answer pools, which means you can often solve them in fewer guesses. The trade-off is that you have fewer starting words to choose from and less room to maneuver when you get stuck.',
-          'Longer words (7-8 letters) have larger answer pools, which means more ambiguity early in the game. However, each correct letter position in a longer word gives you more information because it constrains the answer more tightly.',
-          'Very long words (9-11 letters) have massive pools and very specific letter position constraints. A single green tile in a 10-letter word tells you a lot about what the answer looks like, but finding that green tile requires good starting word choices.'
+          'Hard mode at 3 letters sounds easier because there are only three positions to track. It is actually trickier than it looks — one wrong lock at position 1 or 3 is a significant portion of the word.',
+          'If you lock in a wrong letter at position 1 (it turns green but should be yellow), you spend the next two guesses trying to unlock it before making real progress.',
+          'The solver finds valid hard mode candidates that satisfy all your confirmed clues. You pick which one to play, and the solver ensures it is a valid answer given your locks.'
         ]
       },
       {
-        title: 'The hard mode consideration for custom lengths',
+        title: 'What makes the 3-letter pool different',
         paragraphs: [
-          'Hard mode requires that confirmed clues must be used in subsequent guesses. This means once you get a green or yellow on a letter, that letter must appear in the same position in all future guesses.',
-          'Hard mode is more forgiving on short words (3-4 letters) because there are fewer positions to track. On longer words (7+ letters), hard mode becomes significantly harder because confirmed letters must stay locked in their positions.',
-          'The solver does not enforce hard mode rules automatically. You can use it alongside a hard mode game by manually respecting the confirmed clues when you pick your next guess.'
+          'S, R, T, A, O, I, E, and N are the most common 3-letter letters. Words like PAT, SAT, TAN, RAN, and SON cover these well with minimal overlap.',
+          'The 3-letter pool is heavy on common words that people actually use. This means guesses feel more intuitive than at longer lengths, but also that similar-feeling words can be wildly different in the pool.',
+          'The solver filters the ~200-word pool to only show words that match your feedback. This is mostly useful when you have two confirmed letters and need to find all words that satisfy both.'
         ]
       },
       {
-        title: 'Strategy differences by word length',
+        title: 'The satisfaction of solving 3-letter quickly',
         paragraphs: [
-          'For 3-letter Wordle, focus on starting words with high-frequency S, R, T, and E placements. Avoid obscure 3-letter words that do not appear in the answer pool.',
-          'For 4-letter Wordle, pay attention to vowel placement. Four-letter words often have two vowels that need to be identified quickly. Starting words like LATE or ROPE work well.',
-          `For 5-letter Wordle, use the standard CRANE approach — common letters spread across different positions. For ${wordLength}-letter Wordle where ${wordLength} is 6 or more, maximize letter spread even more because longer words give you more tiles to cover.`
+          'A good 3-letter run solves in three or four guesses. The small pool means you often know the answer after two confirmed letters — the solver just helps you find it faster.',
+          'The solver is useful for eliminating non-answers quickly. When you have six grays and one green, the solver filters out the 150 words that cannot fit that pattern instantly.',
+          'The main value of the solver at 3 letters is confirming when you have narrowed to one or two candidates and want to double-check before committing.'
         ]
       },
       {
-        title: `What the ${wordLength}-letter answer pool looks like`,
+        title: 'Why bother with a solver for such a small pool',
         paragraphs: [
-          'The answer pool varies by length. 5-letter Wordle has roughly 2,300 accepted answers. Shorter lengths have fewer options, and longer lengths have significantly more.',
-          `For ${wordLength} letters, the answer pool size affects how quickly you can narrow down candidates. Smaller pools require fewer guesses to eliminate impossible words. Larger pools benefit more from the solver\'s filtering algorithm.`,
-          'The solver loads only the valid answers for your chosen length. It does not include obscure words that are not in the game\'s accepted answer list.'
+          'With only 200 words, some people skip the solver. That works until you get a complicated pattern — two confirmed letters in wrong positions, duplicate-letter ambiguity, or a gray-heavy board.',
+          'The solver is most useful when you are down to 5-10 candidates and cannot easily track which ones are eliminated by your feedback. It does the cross-referencing for you.',
+          'If you are on a winning streak and do not want to break it, the solver keeps you precise. One wrong feedback setting can eliminate the actual answer from your mental pool.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 4) {
+    return [
+      {
+        title: 'Why 4-letter Wordle feels like the awkward middle child',
+        paragraphs: [
+          '4-letter Wordle is caught between the speed of 3 letters and the depth of 5 letters. The answer pool has roughly 500-600 words — too big to solve by pure memory, too small to need heavy computational help.',
+          'Two vowels appear in most 4-letter words, which means the vowel hunt is more complex than 3-letter. Getting the right vowels in the right positions is usually the key to solving quickly.',
+          'The solver helps most when you have two vowels confirmed and need to figure out which of the remaining 300-400 candidates fit the consonant pattern.'
+        ]
+      },
+      {
+        title: 'The best starting words for 4-letter Wordle',
+        paragraphs: [
+          'LATE, ROPE, RATE, TALE, and NEAR are the CRANE equivalents for 4-letter. They cover common vowel-consonant patterns without repeating letters and without using rare consonants.',
+          'Avoid starting words with Q, X, Z, or J unless you have a specific reason. These letters are rare in 4-letter answers and waste a guess on information that could come from a more common letter.',
+          'The solver ranks starting words by letter frequency within the 4-letter pool specifically. What looks like a good starter for general English might not be optimal for 4-letter Wordle.'
+        ]
+      },
+      {
+        title: 'Vowel placement is the key strategy at 4 letters',
+        paragraphs: [
+          'Four-letter words almost always have two vowels. If your starting word has one vowel and you get mostly gray feedback, try a word with a different vowel before assuming vowels are absent.',
+          'When you find a vowel in the right position, lock it in and focus on the consonant pattern around it. The solver uses your vowel confirmations to filter the ~500-word pool instantly.',
+          'Hard mode at 4 letters is more punishing than it seems. A wrong vowel lock costs you two of four tiles — double-check before committing.'
+        ]
+      },
+      {
+        title: 'Duplicate letters at 4 letters: PEEP, SEES, Anna',
+        paragraphs: [
+          'Duplicate letters appear more often at 4 letters than 3. Words like PEEP, SEES, Anna, and BALL trip people up when setting feedback because you expect four different positions.',
+          'When you guess a word with duplicate letters and get mixed feedback, the solver handles the math. It knows that if one E is green and the other is gray, the answer has exactly one E.',
+          'The solver shows you which 4-letter words with duplicate letters are still viable given your feedback. You do not have to manually track the implications of each duplicate.'
+        ]
+      },
+      {
+        title: 'What the 4-letter answer pool looks like',
+        paragraphs: [
+          'About 500-600 accepted 4-letter words. This pool is large enough to get lost in when stuck, but small enough that two good guesses often leave under 20 candidates.',
+          'The pool skews toward common words — HAND, TREE, FIRE, GOLD. You probably know most of them, which means the solver is most useful when you are down to 10-15 words you cannot easily distinguish.',
+          'The solver filters non-answers from this pool. When you guess a word and it comes back invalid in your 4-letter game, the solver eliminates it from the candidate list automatically.'
+        ]
+      },
+      {
+        title: 'How hard mode changes at 4 letters',
+        paragraphs: [
+          'Hard mode at 4 letters requires satisfying four simultaneous locks. If you have a confirmed vowel at position 2 and a confirmed consonant at position 4, every guess must include both.',
+          'The constraint sounds simple for four tiles. In practice, it is easy to lock in a wrong letter and spend the next two guesses recovering. The solver helps you find valid hard mode candidates quickly.',
+          'The solver does not enforce hard mode — you pick guesses that respect your locks manually. But it only shows candidates that satisfy all confirmed clues, so you cannot accidentally pick an invalid word.'
+        ]
+      },
+      {
+        title: 'Letter bigrams at 4 letters',
+        paragraphs: [
+          'TH, HE, IN, ER, AN are the most common bigrams in 4-letter words. Words containing these bigrams appear more frequently as answers than words with rare bigrams like QJ or ZX.',
+          'Starting words that cover multiple common bigrams give you the most information per guess. STARE covers ST, TA, RE — three common bigrams in one guess.',
+          'The solver ranks candidates by how well their bigram patterns match the confirmed clues from your guesses.'
+        ]
+      },
+      {
+        title: 'When to use the solver at 4 letters',
+        paragraphs: [
+          'Most 4-letter games solve in 3-5 guesses without a solver if you start well. The solver becomes most useful when you have two confirmed letters in wrong positions and need to find all words that fit both constraints.',
+          'The solver is also helpful for avoiding duplicate-letter traps. If you have confirmed there are no duplicate letters and you have two yellows, the solver filters out all words that repeat a letter.',
+          'Use the solver when you have narrowed to 5-15 candidates and cannot easily see which one fits your remaining clues.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 5) {
+    return [
+      {
+        title: 'Why 5-letter is the canonical Wordle length',
+        paragraphs: [
+          '5-letter Wordle has roughly 2,300 accepted answers — the sweet spot between too few options (making it trivial) and too many (making it impossible without a solver).',
+          'The 2,300-word pool is large enough to require systematic elimination but small enough that good starting words get you most of the way. The solver handles the last mile.',
+          'This is the format the NYT Wordle uses, which means most strategy content, starting word discussions, and solver tools are optimized for 5 letters.'
+        ]
+      },
+      {
+        title: 'CRANE vs SLATE vs ADIEU: the starting word debate',
+        paragraphs: [
+          'CRANE has been the classic 5-letter starter for years because it hits five common letters (C, R, A, N, E) with good position spread. No letter repeats, no rare consonants.',
+          'SLATE is a strong alternative with S, L, A, T, E — four common letters and one less common (L). It performs similarly to CRANE in letter frequency analysis.',
+          'ADIEU is vowel-heavy (A, D, I, E, U — four vowels) which gives you fast vowel information but risks wasting a tile on U if the answer has few vowels. Use it when your variant seems vowel-rich.'
+        ]
+      },
+      {
+        title: 'Letter frequency patterns at 5 letters',
+        paragraphs: [
+          'E, A, R, O, T, L, I, S, N, C, U, are the most common 5-letter letters in roughly that order. Getting a green on E, A, or R is high-value because they appear in the majority of answers.',
+          'Rare letters like Q, X, Z, and J appear in fewer than 2% of 5-letter answers. Avoid starting with them unless you are guessing based on confirmed clue information.',
+          'The solver ranks candidates by letter frequency within the 5-letter pool specifically. This means the top suggestion after your first guess is optimized for 5-letter Wordle, not generic English.'
+        ]
+      },
+      {
+        title: 'Duplicate letters at 5 letters: TEETH, PRESS,llama',
+        paragraphs: [
+          'TEETH, PRESS,llama — duplicate letters are surprisingly common at 5 letters. They fool people because you expect five different positions and the mixed feedback (some green, some yellow) seems contradictory.',
+          'When you guess TEETH and get green-yellow-yellow-gray-gray, it means the first E is in the right position, the second and third E are in the word but wrong positions, and T and H are absent.',
+          'The solver handles duplicate letter math automatically. When you set feedback for a word with repeated letters, the solver knows to treat each tile independently based on the actual answer pattern.'
+        ]
+      },
+      {
+        title: 'Why hard mode at 5 letters gets seriously hard',
+        paragraphs: [
+          'Hard mode at 5 letters requires satisfying five simultaneous locks — confirmed greens in their exact positions and confirmed yellows somewhere else in the word. One wrong lock can waste multiple guesses.',
+          'The most common hard mode mistake is locking in a yellow as if it were green. A yellow means the letter is in the word but not in that position. Treating it as locked in the same spot breaks the puzzle.',
+          'The solver finds valid 5-letter words that satisfy all your hard mode locks. You pick which candidate to play — the solver just ensures it is a real answer that respects your constraints.'
+        ]
+      },
+      {
+        title: 'The 2,300-word pool and when to use the solver',
+        paragraphs: [
+          'With 2,300 answers, you can usually get to the last 10-20 candidates through good starting words and systematic elimination. The solver helps at the tail end when you cannot track the overlapping constraints mentally.',
+          'Two confirmed letters in the right positions (two greens) typically narrows the pool to under 50 candidates. Three greens narrows to under 10. The solver sorts those final candidates by likelihood.',
+          'Use the solver when you have two or more confirmed clues and cannot easily find all remaining words that satisfy them.'
+        ]
+      },
+      {
+        title: 'Strategy pivots in 5-letter Wordle',
+        paragraphs: [
+          'Early game: maximize information. Pick starting words that use common letters in diverse positions. CRANE or SLATE gives you the broadest feedback coverage.',
+          'Mid game: eliminate aggressively. Once you have confirmed letters, use the solver to find words that satisfy all constraints. Do not keep guessing randomly — let the elimination algorithm work.',
+          'Late game: when you have under 5 candidates, pick the one with the best letter frequency score. The solver ranks by this automatically.'
+        ]
+      },
+      {
+        title: 'Why 5 letters feels like the sweet spot',
+        paragraphs: [
+          'Five tiles is enough to have interesting letter position complexity but few enough that good starting words cover most of the information space. The game feels balanced.',
+          'The 5-letter answer pool aligns with the natural vocabulary size most English speakers have. You probably know most of the 2,300 answers, which means the game feels fair even when you lose.',
+          'The solver enhances the experience without breaking it. At 5 letters, you can still solve manually and feel the satisfaction — the solver just helps when you get genuinely stuck.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 6) {
+    return [
+      {
+        title: '6-letter Wordle: where things get serious',
+        paragraphs: [
+          'The 6-letter answer pool has roughly 4,000 words — almost double the 5-letter pool. This is where the vocabulary requirement jumps. Many answers are less everyday than their 5-letter cousins.',
+          'Words like STARE, TRACE, CRANE, RATES, and TONES are strong 6-letter starters. They use common letters without repeating, giving you broad feedback across six tiles.',
+          'The solver becomes genuinely useful at 6 letters because the pool is too large to track mentally when you have multiple confirmed clues.'
+        ]
+      },
+      {
+        title: 'The vocabulary jump at 6 letters',
+        paragraphs: [
+          'Beyond the common 6-letter words (STRANGE, SIMPLE, FATHER, MOTHER, BEFORE), the 6-letter pool includes scientific terms, compound words, and less familiar vocabulary that trips up even fluent speakers.',
+          'You cannot rely on pure vocabulary intuition at 6 letters the way you can at 5. The solver filters out non-answers, which matters more when the obscure words in the pool are less familiar.',
+          'When you guess a word and it is not in the answer pool, the solver eliminates it and shows you valid alternatives that fit your clues.'
+        ]
+      },
+      {
+        title: 'Letter frequency shifts at 6 letters',
+        paragraphs: [
+          'E, A, R, I, O, T, N, S, L, C are the most common 6-letter letters. S and N appear more frequently at 6 letters than at 5 — words ending in -ING, -ION, and -ISE are common.',
+          'Prefix and suffix patterns are more identifiable at 6 letters. Words starting with UN-, RE-, IN-, or ending with -ING, -ION, -OUS appear frequently. The solver factors this into candidate ranking.',
+          'Avoid rare letters early — Q, X, Z appear in fewer than 1% of 6-letter answers. Starting with Q without confirmed clue support wastes a guess on information you could get from E or A.'
+        ]
+      },
+      {
+        title: 'Hard mode at 6 letters is genuinely challenging',
+        paragraphs: [
+          'Six simultaneous locks of confirmed clues must all be satisfied in every guess. This is harder than it sounds — as you lock in more letters, fewer words satisfy all constraints simultaneously.',
+          'The most common hard mode failure at 6 letters is having two confirmed yellows that seem to contradict each other. They do not — the solver finds words where both can be true in different positions.',
+          'The solver helps you find valid hard mode candidates by filtering the 4,000-word pool to only words satisfying all your locks. You choose which candidate to play.'
+        ]
+      },
+      {
+        title: 'What makes a 6-letter green more informative than 5-letter',
+        paragraphs: [
+          'One green tile at 6 letters locks in one-sixth of the answer and eliminates roughly 83% of the pool for that position. That is more informative than a 5-letter green (which eliminates 80%) because the constraint is tighter.',
+          'Two greens at 6 letters narrows dramatically — typically to under 20 candidates. The longer the word, the more each confirmed letter tells you about the answer shape.',
+          'The solver sorts the final candidates by how well they match the remaining clue information, showing you the most likely answers first.'
+        ]
+      },
+      {
+        title: 'Why the solver matters more at 6 letters',
+        paragraphs: [
+          'With 4,000 words in the pool, the cross-elimination of multiple confirmed clues is too complex to do reliably in your head after the second or third guess.',
+          'The solver filters the full 4,000-word pool against your clues instantly. You see which words satisfy all your constraints, ranked by how likely they are the answer.',
+          'Even when you think you know the answer, the solver confirms. Running the solver with your final candidates shows you which word best fits all your clues.'
+        ]
+      },
+      {
+        title: 'Strategy for 6-letter Wordle',
+        paragraphs: [
+          'Starting words at 6 letters need maximum letter diversity across six tiles. Avoid duplicate letters in your opener — every tile should be giving you independent information.',
+          'Lock in confirmed letters fast. With six tiles, one wrong early lock is costly. Verify feedback twice before treating a clue as confirmed.',
+          'When stuck between 5-10 candidates, let the solver pick. It knows which of those remaining words have the best letter frequency match with the overall 6-letter pool.'
+        ]
+      },
+      {
+        title: 'What the 6-letter answer pool looks like',
+        paragraphs: [
+          'About 4,000 accepted 6-letter words. The pool includes common words (THOUGHT, PEOPLE, BETTER, THROUGH), scientific terms (PROTEIN, SULFATE, OXIDIZE), and compound words (SUNDAY, MAYBE, OUTSTEP).',
+          'The solver loads only the valid 6-letter answer list. Non-answers in your game get filtered out automatically when you set feedback.',
+          'This pool size is large enough that the solver is genuinely useful — but not so large that the game feels impossible. Most players solve in 4-6 guesses with good starting words.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 7) {
+    return [
+      {
+        title: '7-letter Wordle: advanced territory',
+        paragraphs: [
+          'The 7-letter answer pool has roughly 5,000 words. This is where the game shifts from casual vocabulary to something requiring more active word knowledge. Many 7-letter answers are less everyday.',
+          'Seven tiles means seven positions of confirmed clues in hard mode. The constraint stack is significant — one wrong lock in a seven-position word costs you more than in shorter lengths.',
+          'The solver is useful here because the pool is too large and the vocabulary too varied to track manually after 2-3 guesses.'
+        ]
+      },
+      {
+        title: 'The information density of a 7-letter green tile',
+        paragraphs: [
+          'One green tile at 7 letters locks 1/7 of the answer — about 86% elimination for that position. More importantly, it tells you the exact letter and exact position.',
+          'Two greens at 7 letters typically narrows to under 15 candidates. Three greens usually leaves fewer than 5. The solver sorts these final candidates by how well they match the remaining clue pattern.',
+          'A yellow tile at 7 letters is less immediately informative than green but still powerful — it tells you a letter belongs in the word, just not in that specific position.'
+        ]
+      },
+      {
+        title: 'Letter frequency and bigrams at 7 letters',
+        paragraphs: [
+          'E, A, R, I, O, T, N, S, L, U are most common at 7 letters. U appears more frequently at 7 letters than at 5 — words with QU-, -ING, -ION, and -OUS suffixes are common.',
+          'Seven-letter words often have identifiable prefixes and suffixes. UN-, RE-, IN-, IM-, BE-, DE- at the start and -ING, -ION, -OUS, -ITY, -MENT at the end appear frequently. The solver uses this pattern in candidate ranking.',
+          'Double vowels (AE, EA, OU, IA) appear more often in 7-letter words than shorter words. Words like DISEASE (EA), DISABLE (IS, AB), and EDUCATION (ED, UC, AT) show this.'
+        ]
+      },
+      {
+        title: 'Hard mode at 7 letters: one of the hardest variants',
+        paragraphs: [
+          'Seven confirmed locks must all be satisfied in every guess. As you lock in more letters, the intersection of valid answers shrinks dramatically.',
+          'The solver finds words from the ~5,000-word pool that satisfy all seven simultaneous constraints. It does not enforce hard mode — you pick which candidate to enter.',
+          'Most players break hard mode at 7 letters by accidentally violating a lock. The solver prevents this by only showing candidates that respect all confirmed clues.'
+        ]
+      },
+      {
+        title: 'Why 7 letters requires a systematic approach',
+        paragraphs: [
+          'With 5,000 words and seven positions to fill, intuition stops working after the first two guesses. You need systematic elimination to make progress.',
+          'Starting words at 7 letters should maximize letter diversity across all seven tiles. Avoid duplicate letters in your opener — every tile should give you independent information.',
+          'The solver handles the cross-referencing of all your clues against 5,000 words. You enter feedback, and it shows you the viable candidates ranked by likelihood.'
+        ]
+      },
+      {
+        title: 'What kind of vocabulary appears in 7-letter answers',
+        paragraphs: [
+          'The 7-letter pool includes compound words (SOMEDAY, SUNRISE, WALKBACK), -ING words (THINKING, READING, WRITING), and academic terms (CHEMIST, BIOLOGY, HISTORY).',
+          'Obscure words appear more at 7 letters than at 5. Without a solver, you waste guesses on words that are valid English but not in the answer list.',
+          'The solver filters to only accepted answers. When you guess a word that is not in the 7-letter answer pool, the solver marks it as eliminated and shows valid alternatives.'
+        ]
+      },
+      {
+        title: 'How the solver helps at 7 letters specifically',
+        paragraphs: [
+          'After two guesses with mixed feedback, you typically have 200-500 viable candidates remaining. The solver narrows these against all your clues simultaneously.',
+          'The solver also helps you avoid non-answers. When a word is valid English but not in the 7-letter answer list, the solver eliminates it and suggests similar valid answers.',
+          'Use the solver when you have confirmed letters and need to find all 7-letter words that satisfy those constraints — the manual cross-referencing is too slow at this pool size.'
+        ]
+      },
+      {
+        title: 'Strategy for 7-letter Wordle',
+        paragraphs: [
+          'Open with 7-letter words that have maximum letter diversity. TONERS, RAISES, SLOWER — these cover common bigrams across multiple positions without repeating letters.',
+          'Lock in greens fast. Seven tiles means a lot of ground to cover. One confirmed letter at the right position eliminates thousands of candidates immediately.',
+          'When stuck between candidates, let the solver pick. It knows which remaining words have the best overall letter frequency match with the 7-letter pool.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 8) {
+    return [
+      {
+        title: '8-letter Wordle: close to essential',
+        paragraphs: [
+          'The 8-letter answer pool has roughly 6,000 words. The solver is close to essential here — no one reliably tracks eight-position elimination across a 6,000-word pool mentally.',
+          'Eight tiles means eight simultaneous constraints in hard mode. The solver finds valid candidates that satisfy all eight locks, which is genuinely difficult to do manually.',
+          'Starting words at 8 letters need maximum diversity across all eight tiles. Any duplicate letter in your opener is a wasted position and lost information.'
+        ]
+      },
+      {
+        title: 'Starting words at 8 letters: specific examples',
+        paragraphs: [
+          'TRANCES, PENATES, NECTARS, STRAIN, and CRATONS are strong 8-letter starters. They cover common letter patterns without repeating and give you feedback across eight distinct tiles.',
+          'Avoid starting with Q at 8 letters unless you have confirmed clue support. Q almost always pairs with U, which means you are using two tiles to confirm one unit of information.',
+          'The solver ranks starting word candidates specifically for the 8-letter pool by letter frequency and position distribution, not generic English utility.'
+        ]
+      },
+      {
+        title: 'Why a single green tile at 8 letters is huge',
+        paragraphs: [
+          'One green at 8 letters eliminates roughly 87.5% of candidates for that position. More importantly, it tells you the exact letter and exact position in a pool of 6,000 words.',
+          'Two greens at 8 letters typically narrows to under 20 candidates. Three greens usually leaves fewer than 5. The solver sorts these remaining candidates by likelihood.',
+          'The solver is most useful when you have 2-3 confirmed letters and need to find which of the ~6,000-word pool satisfies all constraints simultaneously.'
+        ]
+      },
+      {
+        title: 'Hard mode at 8 letters is brutal',
+        paragraphs: [
+          'Eight locks of confirmed clues must be satisfied in every guess. This is one of the hardest Wordle formats — as you lock in letters, the valid candidate pool shrinks to almost nothing.',
+          'The solver finds 8-letter words from the ~6,000-word pool that satisfy all your locks. You choose which candidate to play — the solver just ensures it respects all your constraints.',
+          'Without the solver, finding valid hard mode candidates at 8 letters is nearly impossible after you have 3+ confirmed clues. The constraint intersection is too complex.'
+        ]
+      },
+      {
+        title: 'The 6,000-word pool and why it is different',
+        paragraphs: [
+          'The 8-letter pool is dominated by compound words, academic vocabulary, and technical terms. Words like ABSOLUTE, ALTHOUGH, BUSINESS, CHILDREN — common in writing but not always in active vocabulary.',
+          'You cannot rely on everyday vocabulary intuition at 8 letters. The solver matters because it filters non-answers, which you will hit more often at this length than at shorter lengths.',
+          'The solver loads only the valid 8-letter answer list. Guessing a word that is valid English but not an accepted answer gets eliminated, and the solver shows you valid alternatives.'
+        ]
+      },
+      {
+        title: 'Letter patterns at 8 letters',
+        paragraphs: [
+          'E, A, R, I, O, T, N, S, D, L are most common at 8 letters. Words with -TION, -ING, -NESS, -LY, -MENT, -OUS suffixes are prevalent. Words with RE-, IN-, IM-, UN- prefixes appear frequently.',
+          'Double consonants appear more at 8 letters than shorter lengths. Words like LETTER, SUCCESS, PROCESS show SS, TT, CC patterns. The solver handles these correctly.',
+          'The solver ranks remaining candidates by how well their letter patterns match the confirmed clues from your guesses.'
+        ]
+      },
+      {
+        title: 'Strategy for 8-letter Wordle',
+        paragraphs: [
+          'Maximize diversity across all eight tiles in your opener. TRANCES or STRAIN gives you eight distinct information points. Duplicate letters waste positions.',
+          'Get confirmed letters fast. With 6,000 words in the pool, one green locks a lot of information. Two greens narrows to under 20 candidates automatically.',
+          'Use the solver aggressively. At this pool size, manual elimination is unreliable after the second guess. Let the solver do the cross-referencing.'
+        ]
+      },
+      {
+        title: 'Why you need the solver at 8 letters more than shorter lengths',
+        paragraphs: [
+          'The 6,000-word pool is too large to track mentally. After two guesses with mixed feedback, you could have 500+ viable candidates — impossible to manually narrow.',
+          'The 8-letter constraint space is complex. The solver does in milliseconds what would take humans hours — cross-reference eight tiles of feedback against 6,000 words.',
+          'The solver also prevents you from guessing non-answers. When you are down to 10 candidates and can not easily distinguish them, the solver shows you which fits all your clues.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 9) {
+    return [
+      {
+        title: '9-letter Wordle: patience is mandatory',
+        paragraphs: [
+          'The 9-letter answer pool has roughly 8,000 words. The solver is nearly essential here — no one solves 9-letter Wordle mentally after the first couple of guesses.',
+          'Nine tiles give you enormous information from each confirmed letter — a green at 9 letters eliminates ~88.9% of candidates for that position. But getting that green requires navigating 8,000 vocabulary options.',
+          'Hard mode at 9 letters is one of the hardest standard Wordle formats. Nine simultaneous locks severely constrain valid candidates.'
+        ]
+      },
+      {
+        title: 'The massive pool: ~8,000 words',
+        paragraphs: [
+          'With 8,000 words in the 9-letter pool, manual solving is impractical after the second guess. The solver is the only tool that reliably cross-references nine-position feedback against this pool.',
+          'The 9-letter pool includes scientific terms (NUCLEASE, CHLORINE, PROTEASE), compound words, and complex formations. Many answers are not everyday vocabulary.',
+          'The solver filters non-answers automatically. When you guess a word not in the 9-letter answer list, it is eliminated and the solver shows valid alternatives.'
+        ]
+      },
+      {
+        title: 'Starting word strategy at 9 letters',
+        paragraphs: [
+          'NUCLEASE, RENDANCE, and CREDIANS are strong 9-letter starters. Letter diversity across all nine tiles is critical — with nine positions, any duplicate letter wastes a significant information opportunity.',
+          'Avoid Q, X, Z, and J unless you have confirmed clue support. These letters appear in fewer than 1% of 9-letter answers and waste valuable tile positions.',
+          'The solver ranks starting candidates by letter frequency within the 9-letter pool specifically, not by generic English utility.'
+        ]
+      },
+      {
+        title: 'The information value of nine tiles',
+        paragraphs: [
+          'A single green at 9 letters narrows one-ninth of the answer and eliminates ~88.9% of candidates for that position. Two greens typically leave under 20 candidates.',
+          'The constraint power of nine tiles is immense. One confirmed letter at the right position tells you more about the answer shape than at any shorter length.',
+          'The solver handles the complex cross-referencing. You enter feedback, it shows candidates that satisfy all nine simultaneous constraints from your clues.'
+        ]
+      },
+      {
+        title: 'Hard mode at 9 letters: one of the hardest formats',
+        paragraphs: [
+          'Nine simultaneous locks of confirmed clues must all be satisfied. As you lock in more letters, valid candidates become rare — the intersection of nine constraints against 8,000 words is tight.',
+          'The solver finds 9-letter words from the pool that satisfy all your locks. It does not enforce hard mode — you pick which valid candidate to enter next.',
+          'Without the solver, finding valid hard mode candidates at 9 letters is nearly impossible after three confirmed clues. The constraint intersection is too small.'
+        ]
+      },
+      {
+        title: 'Vocabulary in the 9-letter pool',
+        paragraphs: [
+          'The 9-letter pool is dominated by Latin and Greek-root words: NUCLEASE, CHLORINE, PROTEASE, GOVERNMENT, DEMOCRACY. The vocabulary is more academic than everyday.',
+          'Without a solver, you waste guesses on words that are valid English but not in the answer list. The solver filters to only accepted 9-letter answers.',
+          'The solver also helps you identify candidates when you have partial clue information. When you have 2-3 confirmed letters and need to find all 9-letter words that fit, the solver does it instantly.'
+        ]
+      },
+      {
+        title: 'How the solver handles the 9-letter pool',
+        paragraphs: [
+          'The solver cross-references all nine tiles of feedback against the full 8,000-word pool simultaneously. You enter your clues, it shows all candidates that satisfy them.',
+          'When you have narrowed to under 20 candidates, the solver sorts by likelihood using letter frequency data from the 9-letter pool specifically.',
+          'Use the solver early and often at 9 letters. Unlike shorter lengths, manual solving rarely catches up after the second guess.'
+        ]
+      },
+      {
+        title: 'Strategy for 9-letter Wordle',
+        paragraphs: [
+          'Start with maximum letter diversity across all nine positions. Every tile should give you independent information — no duplicates in your opener.',
+          'Get greens confirmed early. With 8,000 words and nine positions, one confirmed letter eliminates thousands of candidates immediately.',
+          'Use the solver as your primary tool, not a last resort. At this length, the solver is the only practical way to make systematic progress.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 10) {
+    return [
+      {
+        title: '10-letter Wordle: the marathon format',
+        paragraphs: [
+          'The 10-letter answer pool has roughly 10,000 words. The solver is non-negotiable here — no human can reliably track ten-position elimination across a 10,000-word pool.',
+          'Ten tiles gives you maximum constraint information from each confirmed letter, but the pool is so large that finding a green tile requires good starting word choices.',
+          'Hard mode at 10 letters is extremely punishing. Ten locks of confirmed clues severely limit valid candidates.'
+        ]
+      },
+      {
+        title: 'The enormous pool: ~10,000 words',
+        paragraphs: [
+          '10,000 words in the 10-letter pool is too large for manual tracking. After two guesses with mixed feedback, you could have 1,000+ viable candidates — completely impractical to narrow manually.',
+          'The solver cross-references all ten tiles of feedback against the full 10,000-word pool simultaneously. It shows candidates that satisfy all your constraints, ranked by likelihood.',
+          'Without the solver, 10-letter Wordle is essentially impossible to solve systematically. The solver does what humans cannot — track ten-way simultaneous constraint elimination across 10,000 words.'
+        ]
+      },
+      {
+        title: 'Starting word strategy at 10 letters',
+        paragraphs: [
+          'CEASELESS, SALTATION, and NECTARINS are strong 10-letter starters. Letter diversity across all ten tiles is critical — no duplicates, maximum coverage of common letter positions.',
+          'Avoid rare letters in your opener. Q, X, Z, J appear in fewer than 1% of 10-letter answers and waste valuable tile positions.',
+          'The solver ranks starting word candidates by letter frequency within the 10-letter pool. What looks like a good general starter might not be optimal for 10-letter Wordle specifically.'
+        ]
+      },
+      {
+        title: 'Hard mode at 10 letters: extremely difficult',
+        paragraphs: [
+          'Ten simultaneous locks must all be satisfied. This is one of the hardest Wordle formats in existence. As you lock in confirmed letters, valid candidates become extremely rare.',
+          'The solver finds 10-letter words that satisfy all your hard mode locks. It does not enforce hard mode — you pick which valid candidate to play. But it ensures every suggestion respects your constraints.',
+          'Without the solver, finding valid hard mode candidates at 10 letters after three confirmed clues is nearly impossible. The solver is essential here.'
+        ]
+      },
+      {
+        title: 'What the solver does at 10 letters that humans cannot',
+        paragraphs: [
+          'The solver instantly cross-references ten tiles of feedback against 10,000 words. You enter clues, it shows all valid candidates. This is what makes 10-letter Wordle solvable.',
+          'When you have 2-3 confirmed letters, the solver shows you which of the 10,000-word pool satisfies all those constraints simultaneously. You cannot do this manually.',
+          'The solver also filters out non-answers. When you guess a word not in the accepted 10-letter list, it is eliminated and the solver shows valid alternatives.'
+        ]
+      },
+      {
+        title: 'Letter patterns and frequency at 10 letters',
+        paragraphs: [
+          'E is dominant at ~12% frequency at 10 letters, followed by A, I, O, R, T, N, S. D, L, C also appear frequently. The distribution reflects the Latinate vocabulary of the 10-letter pool.',
+          'Prefixes like UN-, RE-, IN-, IM-, BE-, DE- and suffixes like -TION, -MENT, -NESS, -OUS, -ITY appear frequently. The solver uses these patterns in candidate ranking.',
+          'The solver ranks remaining candidates by how well their letter distributions match the confirmed clues from your guesses and the overall 10-letter frequency model.'
+        ]
+      },
+      {
+        title: 'Vocabulary in the 10-letter pool',
+        paragraphs: [
+          'The 10-letter pool is full of legal, medical, scientific, and academic vocabulary: GOVERNMENT, POLITICIAN, DEMOCRACY, ASTRONOMY, ATMOSPHERE. Many are compound formations.',
+          'Everyday vocabulary becomes rarer at 10 letters. Without a solver, you guess from thousands of obscure words that are valid English but not common knowledge.',
+          'The solver filters to only accepted 10-letter answers. It shows you candidates that are both valid and consistent with your clues, sorted by likelihood.'
+        ]
+      },
+      {
+        title: 'Strategy for 10-letter Wordle',
+        paragraphs: [
+          'The solver is non-negotiable. Use it from the first guess to get a read on the letter frequency patterns in the 10-letter pool. Do not try to solve manually.',
+          'Maximize letter diversity in your opener. CEASELESS or SALTATION gives you ten distinct information points. Every duplicate letter wastes a position.',
+          'Lock in greens as fast as possible. With 10,000 words and ten tiles, one confirmed letter eliminates thousands of candidates immediately. Two greens typically narrows to under 30.'
+        ]
+      }
+    ];
+  }
+
+  if (wordLength === 11) {
+    return [
+      {
+        title: '11-letter Wordle: the ultimate test',
+        paragraphs: [
+          'The 11-letter answer pool has roughly 12,000 words. The solver is completely essential here. No one tracks eleven-position elimination across 12,000 words mentally — it is not possible.',
+          'Eleven tiles means one green tells you 1/11 of the answer and eliminates ~91% of candidates for that position. But getting that green requires navigating 12,000 vocabulary options.',
+          'Hard mode at 11 letters is the hardest standard Wordle format. Eleven simultaneous locks severely restrict valid candidates.'
+        ]
+      },
+      {
+        title: 'The huge pool: ~12,000 words',
+        paragraphs: [
+          '12,000 words in the 11-letter pool is beyond what any human can track. After two guesses, you could have 2,000+ viable candidates — completely manual solving is impossible.',
+          'The solver cross-references all eleven tiles of feedback against the full 12,000-word pool in milliseconds. You enter clues, it shows all valid candidates that satisfy them.',
+          'Without the solver, 11-letter Wordle cannot be solved systematically. The solver is not helpful — it is the only way to make progress.'
+        ]
+      },
+      {
+        title: 'Starting word strategy at 11 letters',
+        paragraphs: [
+          'ABORTIONIZE, CHRONOLOGIES, and INTERNATION are strong 11-letter starters. These maximize letter diversity across all eleven positions with no duplicates.',
+          'Rare letters like Q, X, Z, J should be avoided in openers unless you have confirmed clue support. They appear in fewer than 1% of 11-letter answers and waste positions.',
+          'The solver ranks starting candidates by letter frequency within the 11-letter pool specifically. The patterns at 11 letters differ from shorter lengths.'
+        ]
+      },
+      {
+        title: 'Hard mode at 11 letters: the hardest Wordle format',
+        paragraphs: [
+          'Eleven simultaneous locks must all be satisfied in every guess. This is the hardest standard Wordle format. As you lock in letters, valid candidates become vanishingly rare.',
+          'The solver finds 11-letter words from the 12,000-word pool that satisfy all eleven locks. It ensures every suggestion respects your hard mode constraints.',
+          'Without the solver, finding valid hard mode candidates at 11 letters after four confirmed clues is essentially impossible. The constraint intersection is too tight.'
+        ]
+      },
+      {
+        title: 'The information equation at 11 letters',
+        paragraphs: [
+          'One green at 11 letters narrows 1/11 of the answer and eliminates ~91% of candidates for that position. That is the most constraint power per confirmed letter of any standard Wordle length.',
+          'Two greens typically narrows to under 30 candidates. Three greens usually leaves fewer than 5. The solver sorts these final candidates by likelihood.',
+          'The solver handles the complex cross-referencing. You enter eleven tiles of feedback, it shows all 12,000-word pool candidates that satisfy the full constraint set.'
+        ]
+      },
+      {
+        title: 'Vocabulary in the 11-letter pool',
+        paragraphs: [
+          'The 11-letter pool is dominated by long Latin and Greek formations: INTERNATIONALIZATION, UNCHARACTERISTIC, COMPREHENSIVE. These are not everyday vocabulary.',
+          'Legal, medical, scientific, and compound vocabulary dominates. Without the solver, you waste guesses on valid English words that are not in the accepted answer list.',
+          'The solver filters to only accepted 11-letter answers. It shows candidates that are both valid and consistent with your clues, sorted by how well they match the clue pattern.'
+        ]
+      },
+      {
+        title: 'How the solver works at 11 letters',
+        paragraphs: [
+          'The solver cross-references all eleven tiles of feedback against 12,000 words instantly. You enter your clues, it shows candidates satisfying all eleven constraints simultaneously.',
+          'At this length, you must use the solver from the beginning. Manual solving cannot keep up after the first guess — the candidate pool is too large to track mentally.',
+          'The solver also prevents guessing non-answers. When you are down to candidates and cannot distinguish them, the solver shows which fits all clues best.'
+        ]
+      },
+      {
+        title: 'Strategy for 11-letter Wordle',
+        paragraphs: [
+          'Use the solver from the very first guess. There is no manual alternative at this length. Let the solver show you candidates as you build up clue information.',
+          'Maximize letter diversity in your opener. ABORTIONIZE or CHRONOLOGIES covers eleven distinct positions with common letters — no duplicates, maximum information.',
+          'Lock in greens fast. With 12,000 words and eleven tiles, confirmed letters eliminate candidates at a massive rate. Two greens typically narrows to under 30 immediately.'
         ]
       }
     ];
