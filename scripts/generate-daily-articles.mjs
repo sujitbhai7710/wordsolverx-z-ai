@@ -1,4 +1,5 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { randomInt } from 'node:crypto';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -326,6 +327,15 @@ function shouldGenerateArticles() {
 
 function getSelectedEntries(groupName) {
   return TODAY_ARTICLE_REGISTRY.filter((entry) => entry.groups.includes(groupName));
+}
+
+function shuffleList(items) {
+  const next = [...items];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const swapIndex = randomInt(index + 1);
+    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+  }
+  return next;
 }
 
 async function readSkillText() {
@@ -736,7 +746,7 @@ function validateArticlePayload(game, payload, targetDate) {
     if (!html.includes("<h2>Today's Wordle Answer Revealed</h2>")) {
       throw new Error('Wordle HTML is missing the required reveal heading.');
     }
-    if (!html.includes(targetDate)) {
+    if (!html.includes(targetDate) && !html.includes(formatLongDate(targetDate))) {
       throw new Error('Wordle HTML does not include the target date.');
     }
     if (countWords(html) < 1000) {
@@ -799,25 +809,46 @@ function buildProviderConfigs() {
       models: ['glm-4.6'],
       apiKeys: parseKeyList(process.env.AGENT_ROUTER_TOKENS, process.env.AGENT_ROUTER_TOKEN)
     }
-  ].filter((provider) => provider.apiKeys.length > 0);
+  ]
+    .filter((provider) => provider.apiKeys.length > 0)
+    .map((provider) => ({
+      ...provider,
+      apiKeys: shuffleList(
+        provider.apiKeys.map((value, index) => ({
+          value,
+          label: `key${index + 1}`
+        }))
+      ),
+      keyCursor: provider.apiKeys.length > 0 ? randomInt(provider.apiKeys.length) : 0
+    }));
 }
 
-async function generateWithProviders({ game, prompt, targetDate, providers, laneIndex }) {
+function takeProviderKeyOrder(provider) {
+  if (!provider.apiKeys.length) {
+    return [];
+  }
+
+  const startOffset = provider.keyCursor % provider.apiKeys.length;
+  provider.keyCursor = (provider.keyCursor + 1) % provider.apiKeys.length;
+  return rotateList(provider.apiKeys, startOffset);
+}
+
+async function generateWithProviders({ game, prompt, targetDate, providers }) {
   const failures = [];
 
   for (const provider of providers) {
-    const rotatedKeys = rotateList(provider.apiKeys, laneIndex);
+    const rotatedKeys = takeProviderKeyOrder(provider);
 
     for (const model of provider.models) {
-      for (const [keyIndex, apiKey] of rotatedKeys.entries()) {
-        const keyLabel = `${provider.provider}:${model}:key${keyIndex + 1}`;
+      for (const apiKeyEntry of rotatedKeys) {
+        const keyLabel = `${provider.provider}:${model}:${apiKeyEntry.label}`;
 
         for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt += 1) {
           try {
             console.log(`Generating ${game} article with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS})`);
             const raw = await callChatCompletion({
               baseUrl: provider.baseUrl,
-              apiKey,
+              apiKey: apiKeyEntry.value,
               model,
               prompt
             });
@@ -978,8 +1009,7 @@ async function main() {
           game: 'wordle',
           prompt: buildWordlePrompt(skillText, wordleContext),
           targetDate,
-          providers,
-          laneIndex
+          providers
         });
 
         nextBundle.articles[entry.key] = {
@@ -998,8 +1028,7 @@ async function main() {
           game: 'colordle',
           prompt: buildColordlePrompt(skillText, colordleContext),
           targetDate,
-          providers,
-          laneIndex
+          providers
         });
 
         nextBundle.articles[entry.key] = {
@@ -1013,8 +1042,7 @@ async function main() {
           game: 'generic',
           prompt: buildGenericPrompt(skillText, entry, targetDate),
           targetDate,
-          providers,
-          laneIndex
+          providers
         });
 
         nextBundle.articles[entry.key] = {

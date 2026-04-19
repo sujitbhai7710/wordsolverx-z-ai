@@ -204,6 +204,8 @@ jobs:
           ENABLE_DAILY_ARTICLE_GENERATION: true
         shell: bash
         run: |
+          npm run data:update
+
           if [ "$ARTICLE_SCOPE" = "all-current-windows" ]; then
             node scripts/generate-daily-articles-batch.mjs
           else
