@@ -6,33 +6,43 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
-const workspaceRoot = path.resolve(projectRoot, '..');
 
 const outputPath = path.join(projectRoot, 'src', 'lib', 'generated', 'daily-articles.json');
-const skillPath = path.join(workspaceRoot, '.opencode', 'human-wiriting', 'SKILL.md');
+const skillPath = path.join(projectRoot, '.opencode', 'human-wiriting', 'SKILL.md');
 const colordleDataPath = path.join(projectRoot, 'static', 'colordle_data.json');
 
 const WORDLE_API_BASE_URL =
   process.env.WORDLE_API_BASE_URL ?? 'https://api.wordsolverx.workers.dev';
 const NVIDIA_BASE_URL = 'https://integrate.api.nvidia.com/v1';
 const AGENT_ROUTER_BASE_URL = 'https://agentrouter.org/v1';
-const DEFAULT_TIMEOUT_MS = 180000;
+const DEFAULT_TIMEOUT_MS = Number.parseInt(process.env.ARTICLE_REQUEST_TIMEOUT_MS ?? '90000', 10);
+const MAX_REQUEST_ATTEMPTS = Math.max(
+  1,
+  Number.parseInt(process.env.ARTICLE_MAX_ATTEMPTS ?? '3', 10) || 3
+);
+const MAX_CONCURRENCY = Math.max(
+  1,
+  Number.parseInt(process.env.ARTICLE_MAX_CONCURRENCY ?? '4', 10) || 4
+);
 
 const TODAY_ARTICLE_REGISTRY = [
   {
     key: 'wordle-answer-today',
     gameName: 'Wordle',
-    mode: 'wordle'
+    mode: 'wordle',
+    groups: ['site', 'main']
   },
   {
     key: 'colordle-answer-today',
     gameName: 'Colordle',
-    mode: 'colordle'
+    mode: 'colordle',
+    groups: ['site', 'main']
   },
   {
     key: 'betweenle-answer-today',
     gameName: 'Betweenle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes:
       'Daily geography-style puzzle page with answer, clue cards, solver links, and archive navigation.'
   },
@@ -40,6 +50,7 @@ const TODAY_ARTICLE_REGISTRY = [
     key: 'canuckle-answer-today',
     gameName: 'Canuckle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes:
       'Canadian Wordle-style answer page with reveal card, puzzle number, fact section, solver link, and archive link.'
   },
@@ -47,126 +58,147 @@ const TODAY_ARTICLE_REGISTRY = [
     key: 'colorfle-answer-today',
     gameName: 'Colorfle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily color-mixing answer page with clue sections and supporting solver/archive links.'
   },
   {
     key: 'contexto-answer-today',
     gameName: 'Contexto',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily semantic guessing page with hints, answer reveal, and archive support.'
   },
   {
     key: 'countryle-answer-today',
     gameName: 'Countryle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily country answer page with directional and comparison hints.'
   },
   {
     key: 'dotadle-answer-today',
     gameName: 'Dotadle',
     mode: 'generic',
+    groups: ['gamedle'],
     notes: 'Daily Dota answer page with multiple game modes and fan-focused trivia context.'
   },
   {
     key: 'framed-answer-today',
     gameName: 'Framed',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily movie answer page with archive and reveal-heavy browsing behavior.'
   },
   {
     key: 'globle-answer-today',
     gameName: 'Globle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily mystery country page with geography hints and archive links.'
   },
   {
     key: 'loldle-answer-today',
     gameName: 'LoLdle',
     mode: 'generic',
+    groups: ['gamedle'],
     notes: 'Daily League of Legends answer page with multiple modes and character-focused hints.'
   },
   {
     key: 'narutodle-answer-today',
     gameName: 'Narutodle',
     mode: 'generic',
+    groups: ['gamedle'],
     notes: 'Daily Naruto answer page with multiple trivia modes and answer sections.'
   },
   {
     key: 'nerdle-answer-today',
     gameName: 'Nerdle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily math puzzle answer page with equation-first solving guidance.'
   },
   {
     key: 'onepiecedle-answer-today',
     gameName: 'OnePiecedle',
     mode: 'generic',
+    groups: ['gamedle'],
     notes: 'Daily One Piece answer page with fan-oriented quiz modes.'
   },
   {
     key: 'phoodle-answer-today',
     gameName: 'Phoodle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily food-word answer page with hints, answer reveal, and recent history.'
   },
   {
     key: 'phrazle-answer-today',
     gameName: 'Phrazle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily phrase page with morning and afternoon answers.'
   },
   {
     key: 'pokedle-answer-today',
     gameName: 'Pokedle',
     mode: 'generic',
+    groups: ['gamedle'],
     notes: 'Daily Pokemon answer page with multiple themed modes and fan-readable explanations.'
   },
   {
     key: 'quordle-answer-today',
     gameName: 'Quordle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily multi-board word page with several modes like classic, chill, extreme, sequence, rescue, and weekly.'
   },
   {
     key: 'searchle-answer-today',
     gameName: 'Searchle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily search-query answer page with prompt-style hints and archive links.'
   },
   {
     key: 'semantle-answer-today',
     gameName: 'Semantle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily semantic-word page with clue widgets and answer explanation.'
   },
   {
     key: 'smashdle-answer-today',
     gameName: 'Smashdle',
     mode: 'generic',
+    groups: ['gamedle'],
     notes: 'Daily Smash Bros answer page with multiple modes and trivia sections.'
   },
   {
     key: 'spotle-answer-today',
     gameName: 'Spotle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily music artist answer page with archive support and music-game context.'
   },
   {
     key: 'sportle-answer-today',
     gameName: 'Sportle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily sports-themed answer page.'
   },
   {
     key: 'waffle-answer-today',
     gameName: 'Waffle',
     mode: 'generic',
+    groups: ['waffle'],
     notes: 'Daily grid-word answer page with solved layout and supporting explanation.'
   },
   {
     key: 'worldle-answer-today',
     gameName: 'Worldle',
     mode: 'generic',
+    groups: ['site', 'main'],
     notes: 'Daily country silhouette page with geography clues and archive lookup.'
   }
 ];
@@ -181,26 +213,50 @@ function parseKeyList(...values) {
   return [...new Set(keys)];
 }
 
-function getTargetDate(now = new Date()) {
-  if (process.env.TARGET_DATE) {
-    return process.env.TARGET_DATE;
-  }
-
+function getVisibleDateForBoundary(now, { hourUtc, minuteUtc, visibleOffsetDays = 0 }) {
   const boundary = Date.UTC(
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate(),
-    16,
-    30,
+    hourUtc,
+    minuteUtc,
     0,
     0
   );
-  const visibleOffset = now.getTime() >= boundary ? 1 : 0;
+  const visibleOffset = now.getTime() >= boundary ? visibleOffsetDays : visibleOffsetDays - 1;
   const targetDate = new Date(
     Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + visibleOffset)
   );
 
   return targetDate.toISOString().slice(0, 10);
+}
+
+function getTargetDate(groupName = 'site', now = new Date()) {
+  if (process.env.TARGET_DATE) {
+    return process.env.TARGET_DATE;
+  }
+
+  if (groupName === 'gamedle') {
+    return getVisibleDateForBoundary(now, {
+      hourUtc: 6,
+      minuteUtc: 2,
+      visibleOffsetDays: 0
+    });
+  }
+
+  if (groupName === 'waffle') {
+    return getVisibleDateForBoundary(now, {
+      hourUtc: 0,
+      minuteUtc: 1,
+      visibleOffsetDays: 0
+    });
+  }
+
+  return getVisibleDateForBoundary(now, {
+    hourUtc: 16,
+    minuteUtc: 30,
+    visibleOffsetDays: 1
+  });
 }
 
 function formatLongDate(dateKey) {
@@ -244,6 +300,32 @@ function sanitizeModelJson(raw) {
   }
 
   return JSON.parse(candidate.slice(firstBrace, lastBrace + 1));
+}
+
+function rotateList(items, offset) {
+  if (!items.length) {
+    return items;
+  }
+
+  const normalizedOffset = ((offset % items.length) + items.length) % items.length;
+  if (normalizedOffset === 0) {
+    return items;
+  }
+
+  return [...items.slice(normalizedOffset), ...items.slice(0, normalizedOffset)];
+}
+
+function getGenerationGroupName() {
+  const raw = String(process.env.GROUP_NAME ?? 'site').trim().toLowerCase();
+  return raw || 'site';
+}
+
+function shouldGenerateArticles() {
+  return String(process.env.ENABLE_DAILY_ARTICLE_GENERATION ?? 'false').toLowerCase() === 'true';
+}
+
+function getSelectedEntries(groupName) {
+  return TODAY_ARTICLE_REGISTRY.filter((entry) => entry.groups.includes(groupName));
 }
 
 async function readSkillText() {
@@ -547,6 +629,44 @@ function buildGenericPrompt(skillText, entry, targetDate) {
   ].join('\n');
 }
 
+function extractMessageContent(choice) {
+  if (typeof choice === 'string') {
+    return choice;
+  }
+
+  if (Array.isArray(choice)) {
+    return choice
+      .map((item) => {
+        if (typeof item === 'string') {
+          return item;
+        }
+        if (typeof item?.text === 'string') {
+          return item.text;
+        }
+        if (typeof item?.content === 'string') {
+          return item.content;
+        }
+        if (typeof item?.value === 'string') {
+          return item.value;
+        }
+        return '';
+      })
+      .join('')
+      .trim();
+  }
+
+  if (choice && typeof choice === 'object') {
+    if (typeof choice.content === 'string') {
+      return choice.content;
+    }
+    if (typeof choice.text === 'string') {
+      return choice.text;
+    }
+  }
+
+  return '';
+}
+
 async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS);
@@ -564,6 +684,9 @@ async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
         model,
         temperature: 0.6,
         max_tokens: 4096,
+        response_format: {
+          type: 'json_object'
+        },
         messages: [
           {
             role: 'system',
@@ -585,14 +708,9 @@ async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
     }
 
     const payload = JSON.parse(raw);
-    const choice = payload?.choices?.[0]?.message?.content;
-
-    if (typeof choice === 'string') {
-      return choice;
-    }
-
-    if (Array.isArray(choice)) {
-      return choice.map((item) => item?.text ?? item?.content ?? '').join('').trim();
+    const content = extractMessageContent(payload?.choices?.[0]?.message?.content);
+    if (content) {
+      return content;
     }
 
     throw new Error('Model response did not include a usable message content field.');
@@ -667,8 +785,8 @@ function validateArticlePayload(game, payload, targetDate) {
   };
 }
 
-async function generateWithProviders({ game, prompt, targetDate }) {
-  const providers = [
+function buildProviderConfigs() {
+  return [
     {
       provider: 'nvidia',
       baseUrl: NVIDIA_BASE_URL,
@@ -682,42 +800,45 @@ async function generateWithProviders({ game, prompt, targetDate }) {
       apiKeys: parseKeyList(process.env.AGENT_ROUTER_TOKENS, process.env.AGENT_ROUTER_TOKEN)
     }
   ].filter((provider) => provider.apiKeys.length > 0);
+}
 
-  if (providers.length === 0) {
-    return null;
-  }
-
+async function generateWithProviders({ game, prompt, targetDate, providers, laneIndex }) {
   const failures = [];
 
   for (const provider of providers) {
-    for (const model of provider.models) {
-      for (const [index, apiKey] of provider.apiKeys.entries()) {
-        const keyLabel = `${provider.provider}:${model}:key${index + 1}`;
-        try {
-          console.log(`Generating ${game} article with ${keyLabel}`);
-          const raw = await callChatCompletion({
-            baseUrl: provider.baseUrl,
-            apiKey,
-            model,
-            prompt
-          });
-          const parsed = sanitizeModelJson(raw);
-          const validated = validateArticlePayload(game, parsed, targetDate);
+    const rotatedKeys = rotateList(provider.apiKeys, laneIndex);
 
-          return {
-            ...validated,
-            meta: {
-              provider: provider.provider,
+    for (const model of provider.models) {
+      for (const [keyIndex, apiKey] of rotatedKeys.entries()) {
+        const keyLabel = `${provider.provider}:${model}:key${keyIndex + 1}`;
+
+        for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt += 1) {
+          try {
+            console.log(`Generating ${game} article with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS})`);
+            const raw = await callChatCompletion({
+              baseUrl: provider.baseUrl,
+              apiKey,
               model,
-              fallbackUsed: provider.provider !== 'nvidia',
-              generatedAt: new Date().toISOString(),
-              wordCount: countWords(validated.contentGuideHtml ?? validated.articleHtml ?? '')
-            }
-          };
-        } catch (error) {
-          const message = error instanceof Error ? error.message : String(error);
-          failures.push(`${keyLabel} -> ${message}`);
-          console.warn(`Failed with ${keyLabel}: ${message}`);
+              prompt
+            });
+            const parsed = sanitizeModelJson(raw);
+            const validated = validateArticlePayload(game, parsed, targetDate);
+
+            return {
+              ...validated,
+              meta: {
+                provider: provider.provider,
+                model,
+                fallbackUsed: provider.provider !== 'nvidia' || model !== 'minimaxai/minimax-m2.7',
+                generatedAt: new Date().toISOString(),
+                wordCount: countWords(validated.contentGuideHtml ?? validated.articleHtml ?? '')
+              }
+            };
+          } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            failures.push(`${keyLabel} [attempt ${attempt}] -> ${message}`);
+            console.warn(`Failed with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS}): ${message}`);
+          }
         }
       }
     }
@@ -742,21 +863,61 @@ async function readExistingBundle() {
   }
 }
 
-function stripArticlesForDate(articles, targetDate) {
+function stripArticlesForDateAndKeys(articles, targetDate, selectedKeys) {
   return Object.fromEntries(
-    Object.entries(articles).filter(([, article]) => article?.date !== targetDate)
+    Object.entries(articles).filter(
+      ([articleKey, article]) => !(selectedKeys.has(articleKey) && article?.date === targetDate)
+    )
+  );
+}
+
+async function writeBundle(bundle) {
+  await mkdir(path.dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, `${JSON.stringify(bundle, null, 2)}\n`, 'utf8');
+}
+
+async function runConcurrent(entries, concurrency, worker) {
+  const total = Math.min(concurrency, entries.length);
+  let cursor = 0;
+
+  await Promise.all(
+    Array.from({ length: total }, (_, laneIndex) =>
+      (async () => {
+        while (true) {
+          const currentIndex = cursor;
+          cursor += 1;
+
+          if (currentIndex >= entries.length) {
+            return;
+          }
+
+          await worker(entries[currentIndex], laneIndex);
+        }
+      })()
+    )
   );
 }
 
 async function main() {
-  const targetDate = getTargetDate();
-  const skillText = await readSkillText();
-  const existingBundle = await readExistingBundle();
-  const hasProviders =
-    parseKeyList(process.env.NVIDIA_API_KEYS, process.env.NVIDIA_API_KEY).length > 0 ||
-    parseKeyList(process.env.AGENT_ROUTER_TOKENS, process.env.AGENT_ROUTER_TOKEN).length > 0;
+  const groupName = getGenerationGroupName();
 
-  if (!hasProviders) {
+  if (!shouldGenerateArticles()) {
+    console.log(`Daily article generation skipped because ENABLE_DAILY_ARTICLE_GENERATION is false for group ${groupName}.`);
+    return;
+  }
+
+  const selectedEntries = getSelectedEntries(groupName);
+  if (!selectedEntries.length) {
+    console.log(`No daily article entries are assigned to group ${groupName}.`);
+    return;
+  }
+
+  const targetDate = getTargetDate(groupName);
+  console.log(`Preparing daily articles for group ${groupName} using target date ${targetDate}.`);
+
+  const providers = buildProviderConfigs();
+  const existingBundle = await readExistingBundle();
+  if (!providers.length) {
     console.warn('No NVIDIA or AgentRouter keys were provided. Keeping the existing daily article bundle.');
     if (!existingBundle.generatedAt) {
       console.warn('No existing article bundle was found yet. The frontend will fall back to built-in content.');
@@ -764,6 +925,7 @@ async function main() {
     return;
   }
 
+  const skillText = await readSkillText();
   if (!skillText) {
     console.warn('Human writing skill is unavailable. Keeping the existing daily article bundle.');
     return;
@@ -772,106 +934,110 @@ async function main() {
   let wordleContext = null;
   let colordleContext = null;
 
-  try {
-    wordleContext = await getWordleContext(targetDate);
-  } catch (error) {
-    console.warn(`Unable to prepare Wordle article context for ${targetDate}:`, error);
-  }
-
-  try {
-    colordleContext = await getColordleContext(targetDate);
-  } catch (error) {
-    console.warn(`Unable to prepare Colordle article context for ${targetDate}:`, error);
-  }
-
-  const generatedEntries = [];
-  const failedEntries = [];
-
-  for (const entry of TODAY_ARTICLE_REGISTRY) {
+  if (selectedEntries.some((entry) => entry.mode === 'wordle')) {
     try {
-      let generatedEntry;
+      wordleContext = await getWordleContext(targetDate);
+    } catch (error) {
+      console.warn(`Unable to prepare Wordle article context for ${targetDate}:`, error);
+    }
+  }
+
+  if (selectedEntries.some((entry) => entry.mode === 'colordle')) {
+    try {
+      colordleContext = await getColordleContext(targetDate);
+    } catch (error) {
+      console.warn(`Unable to prepare Colordle article context for ${targetDate}:`, error);
+    }
+  }
+
+  const selectedKeys = new Set(selectedEntries.map((entry) => entry.key));
+  const nextBundle = {
+    generatedAt: new Date().toISOString(),
+    articles: stripArticlesForDateAndKeys(existingBundle.articles, targetDate, selectedKeys)
+  };
+
+  await writeBundle(nextBundle);
+
+  const failedEntries = [];
+  const concurrency = Math.min(
+    MAX_CONCURRENCY,
+    selectedEntries.length,
+    Math.max(...providers.map((provider) => provider.apiKeys.length))
+  );
+
+  await runConcurrent(selectedEntries, concurrency, async (entry, laneIndex) => {
+    try {
+      let article;
 
       if (entry.mode === 'wordle') {
         if (!wordleContext) {
           throw new Error('Wordle context was not available.');
         }
 
-        const article = await generateWithProviders({
+        article = await generateWithProviders({
           game: 'wordle',
           prompt: buildWordlePrompt(skillText, wordleContext),
-          targetDate
+          targetDate,
+          providers,
+          laneIndex
         });
 
-        generatedEntry = [
-          entry.key,
-          {
-            articleKey: entry.key,
-            game: 'wordle',
-            date: targetDate,
-            articleHtml: article.contentGuideHtml,
-            ...article
-          }
-        ];
+        nextBundle.articles[entry.key] = {
+          articleKey: entry.key,
+          game: 'wordle',
+          date: targetDate,
+          articleHtml: article.contentGuideHtml,
+          ...article
+        };
       } else if (entry.mode === 'colordle') {
         if (!colordleContext) {
           throw new Error('Colordle context was not available.');
         }
 
-        const article = await generateWithProviders({
+        article = await generateWithProviders({
           game: 'colordle',
           prompt: buildColordlePrompt(skillText, colordleContext),
-          targetDate
+          targetDate,
+          providers,
+          laneIndex
         });
 
-        generatedEntry = [
-          entry.key,
-          {
-            articleKey: entry.key,
-            game: 'colordle',
-            date: targetDate,
-            ...article
-          }
-        ];
+        nextBundle.articles[entry.key] = {
+          articleKey: entry.key,
+          game: 'colordle',
+          date: targetDate,
+          ...article
+        };
       } else {
-        const article = await generateWithProviders({
+        article = await generateWithProviders({
           game: 'generic',
           prompt: buildGenericPrompt(skillText, entry, targetDate),
-          targetDate
+          targetDate,
+          providers,
+          laneIndex
         });
 
-        generatedEntry = [
-          entry.key,
-          {
-            articleKey: entry.key,
-            date: targetDate,
-            title: article.title,
-            summary: article.summary,
-            articleHtml: article.articleHtml,
-            meta: article.meta
-          }
-        ];
+        nextBundle.articles[entry.key] = {
+          articleKey: entry.key,
+          date: targetDate,
+          title: article.title,
+          summary: article.summary,
+          articleHtml: article.articleHtml,
+          bonusHints: article.bonusHints,
+          meta: article.meta
+        };
       }
 
-      generatedEntries.push(generatedEntry);
+      nextBundle.generatedAt = new Date().toISOString();
+      await writeBundle(nextBundle);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       failedEntries.push(`${entry.key}: ${message}`);
       console.warn(`Skipping article generation for ${entry.key}: ${message}`);
+      nextBundle.generatedAt = new Date().toISOString();
+      await writeBundle(nextBundle);
     }
-  }
-
-  const mergedArticles = {
-    ...stripArticlesForDate(existingBundle.articles, targetDate),
-    ...Object.fromEntries(generatedEntries)
-  };
-
-  const nextBundle = {
-    generatedAt: new Date().toISOString(),
-    articles: mergedArticles
-  };
-
-  await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, `${JSON.stringify(nextBundle, null, 2)}\n`, 'utf8');
+  });
 
   if (failedEntries.length > 0) {
     console.warn(
@@ -880,7 +1046,7 @@ async function main() {
   }
 
   console.log(
-    `Daily articles ready for ${targetDate} across ${generatedEntries.length} today pages.`
+    `Daily articles ready for ${targetDate} across ${selectedEntries.length - failedEntries.length}/${selectedEntries.length} routes in group ${groupName}.`
   );
 }
 

@@ -43,9 +43,21 @@
     </section>
 
     <section class="grid gap-5 sm:grid-cols-2">
-      {#each data.entries as entry}
-        <FramedAnswerCard game={entry.game} answer={entry.answer} puzzleNumber={entry.puzzleNumber} />
-      {/each}
+      {#if data.hasExactEntries}
+        {#each data.entries as entry}
+          <FramedAnswerCard game={entry.game} answer={entry.answer} puzzleNumber={entry.puzzleNumber} />
+        {/each}
+      {:else}
+        <div class="sm:col-span-2 rounded-3xl border border-amber-200 bg-amber-50 p-6 text-amber-950">
+          <h2 class="text-2xl font-black">Today&apos;s Framed answers are not stored yet</h2>
+          <p class="mt-3 text-base text-amber-900">
+            The saved dataset does not have the exact Framed entries for {data.formattedDate} yet. This page now waits for the correct date instead of silently showing an older answer set.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="/framed-archive" class="inline-flex items-center rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-black hover:bg-amber-400">Browse Archive</a>
+          </div>
+        </div>
+      {/if}
     </section>
 
     <AuthorCard

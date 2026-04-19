@@ -10,6 +10,7 @@ const projectRoot = path.resolve(__dirname, '..');
 const outputPath = path.join(projectRoot, 'static', 'framed_data.json');
 const REFERENCE_DATE = new Date('2026-04-02T00:00:00Z');
 const CONCURRENCY = 8;
+const LOOKAHEAD_DAYS = 1;
 
 const GAME_TYPES = [
   { key: 'daily', label: 'Framed Classic', referencePuzzle: 1483, color: '#e50914', gradient: 'from-red-600 to-red-900' },
@@ -28,6 +29,12 @@ function toDateKey(date) {
 
 function getCurrentUtcDate() {
   return normalizeUtcDate(new Date());
+}
+
+function addUtcDays(date, days) {
+  const next = normalizeUtcDate(date);
+  next.setUTCDate(next.getUTCDate() + days);
+  return next;
 }
 
 function getPuzzleNumber(referencePuzzle, date) {
@@ -127,6 +134,7 @@ function buildEmptyDataset() {
 async function main() {
   const existing = (await readJsonIfPresent(outputPath)) ?? buildEmptyDataset();
   const today = getCurrentUtcDate();
+  const fetchThroughDate = addUtcDays(today, LOOKAHEAD_DAYS);
   const failedTargets = [];
 
   for (const game of GAME_TYPES) {
@@ -140,9 +148,9 @@ async function main() {
     };
 
     const entryByPuzzle = new Map((modePayload.entries ?? []).map((entry) => [entry.puzzleNumber, entry]));
-    const latestPuzzleNumber = getPuzzleNumber(game.referencePuzzle, today);
+    const latestPuzzleNumber = getPuzzleNumber(game.referencePuzzle, fetchThroughDate);
     const currentMax = Math.max(0, ...entryByPuzzle.keys());
-    const startPuzzleNumber = entryByPuzzle.size >= latestPuzzleNumber && currentMax > 0 ? Math.max(1, currentMax - 1) : 1;
+    const startPuzzleNumber = currentMax > 0 ? Math.max(1, currentMax - 1) : 1;
     const missingPuzzleNumbers = [];
 
     for (let puzzleNumber = startPuzzleNumber; puzzleNumber <= latestPuzzleNumber; puzzleNumber += 1) {
@@ -220,7 +228,9 @@ async function main() {
     0
   );
 
-  console.log(`Framed dataset ready with ${totalEntries} entries across ${GAME_TYPES.length} modes.`);
+  console.log(
+    `Framed dataset ready with ${totalEntries} entries across ${GAME_TYPES.length} modes through ${toDateKey(fetchThroughDate)}.`
+  );
 }
 
 main().catch((error) => {

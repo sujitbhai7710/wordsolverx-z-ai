@@ -1,6 +1,6 @@
 name: Publish Pages
 
-run-name: Publish Pages (${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}${{ (github.event.client_payload.target_date || github.event.inputs.target_date) && format(' {0}', github.event.client_payload.target_date || github.event.inputs.target_date) || '' }})
+run-name: Publish Pages (${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_mode == 'generate-articles-only' && format('articles {0}', github.event.inputs.article_scope) || github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}${{ (github.event.client_payload.target_date || github.event.inputs.target_date) && format(' {0}', github.event.client_payload.target_date || github.event.inputs.target_date) || '' }})
 
 on:
   push:
@@ -14,6 +14,22 @@ on:
       - pages-publish-requested
   workflow_dispatch:
     inputs:
+      workflow_mode:
+        description: Run a normal deploy or only generate daily articles
+        required: false
+        default: deploy
+        type: choice
+        options:
+          - deploy
+          - generate-articles-only
+      article_scope:
+        description: For article-only runs, use the selected group or all current windows
+        required: false
+        default: all-current-windows
+        type: choice
+        options:
+          - all-current-windows
+          - current-group
       group:
         description: What to publish
         required: false
@@ -44,13 +60,15 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     concurrency:
       group: pages-publish-${{ github.ref_name || 'detached' }}-${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}-${{ github.event.client_payload.target_date || github.event.inputs.target_date || 'default' }}
       cancel-in-progress: true
     env:
       GROUP_NAME: ${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}
       TARGET_DATE: ${{ github.event.client_payload.target_date || github.event.inputs.target_date || '' }}
+      WORKFLOW_MODE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_mode || 'deploy' }}
+      ARTICLE_SCOPE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.article_scope || 'disabled' }}
       SOURCE_NAME: ${{ github.event.client_payload.source || github.event.inputs.source || (github.event_name == 'push' && format('push:{0}', github.ref_name)) || github.event.action || 'manual' }}
       PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev
       PUBLIC_BASE_URL: https://wordsolver.tech
@@ -58,6 +76,10 @@ jobs:
       NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
       AGENT_ROUTER_TOKENS: ${{ secrets.AGENT_ROUTER_TOKENS }}
       AGENT_ROUTER_TOKEN: ${{ secrets.AGENT_ROUTER_TOKEN }}
+      ENABLE_DAILY_ARTICLE_GENERATION: ${{ github.event_name == 'repository_dispatch' || github.event_name == 'schedule' }}
+      ARTICLE_MAX_CONCURRENCY: 4
+      ARTICLE_MAX_ATTEMPTS: 3
+      ARTICLE_REQUEST_TIMEOUT_MS: 90000
       INDEXING_ARTIFACT_DIR: artifacts/indexing
       INDEXING_REQUEST_TIMEOUT_MS: 10000
       SITEMAP_URL: https://wordsolver.tech/sitemap.xml
@@ -82,6 +104,7 @@ jobs:
 
       - name: Resolve Canary Path
         id: canary_path
+        if: env.WORKFLOW_MODE != 'generate-articles-only'
         shell: bash
         run: |
           case "$GROUP_NAME" in
@@ -94,7 +117,7 @@ jobs:
 
       - name: Skip If Canary Already Current
         id: canary
-        if: env.GROUP_NAME != 'gamedle' && env.TARGET_DATE != '' && steps.canary_path.outputs.path != ''
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && env.GROUP_NAME != 'gamedle' && env.TARGET_DATE != '' && steps.canary_path.outputs.path != ''
         env:
           CANARY_PATH: ${{ steps.canary_path.outputs.path }}
         shell: bash
@@ -167,16 +190,36 @@ jobs:
           NODE
 
       - name: Stop Duplicate Publish
-        if: steps.canary.outputs.skip == 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip == 'true'
         run: |
           echo "Canary already shows $TARGET_DATE at ${{ steps.canary.outputs.base_url }}. No deploy needed."
 
       - name: Install Dependencies
-        if: steps.canary.outputs.skip != 'true'
+        if: env.WORKFLOW_MODE == 'generate-articles-only' || steps.canary.outputs.skip != 'true'
         run: npm ci --prefer-offline --no-audit
 
+      - name: Generate Daily Articles Only
+        if: env.WORKFLOW_MODE == 'generate-articles-only'
+        env:
+          ENABLE_DAILY_ARTICLE_GENERATION: true
+        shell: bash
+        run: |
+          if [ "$ARTICLE_SCOPE" = "all-current-windows" ]; then
+            node scripts/generate-daily-articles-batch.mjs
+          else
+            node scripts/generate-daily-articles.mjs
+          fi
+
+      - name: Upload Generated Article Bundle
+        if: env.WORKFLOW_MODE == 'generate-articles-only'
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-articles-${{ github.run_id }}
+          path: src/lib/generated/daily-articles.json
+          if-no-files-found: error
+
       - name: Materialize IndexNow Verification Key
-        if: steps.canary.outputs.skip != 'true' && env.HAS_INDEXNOW_KEY == 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true' && env.HAS_INDEXNOW_KEY == 'true'
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
         shell: bash
@@ -184,19 +227,19 @@ jobs:
           printf '%s' "$INDEXNOW_KEY" > "static/${INDEXNOW_KEY}.txt"
 
       - name: Deploy Cloudflare Pages
-        if: steps.canary.outputs.skip != 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npm run deploy:pages
 
       - name: Prepare Indexing Targets
-        if: steps.canary.outputs.skip != 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true'
         id: indexing_targets
         run: node scripts/seo/prepare-indexing-targets.mjs
 
       - name: Authenticate Google Search Console
-        if: steps.canary.outputs.skip != 'true' && env.HAS_GOOGLE_SEARCH_CONSOLE == 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true' && env.HAS_GOOGLE_SEARCH_CONSOLE == 'true'
         id: google_auth
         uses: google-github-actions/auth@v3
         with:
@@ -206,7 +249,7 @@ jobs:
           access_token_scopes: https://www.googleapis.com/auth/webmasters
 
       - name: Run Post-Deploy SEO Requests In Parallel
-        if: steps.canary.outputs.skip != 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true'
         continue-on-error: true
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
@@ -216,13 +259,13 @@ jobs:
         run: node scripts/seo/run-post-deploy-seo.mjs
 
       - name: Write Indexing Summary
-        if: steps.canary.outputs.skip != 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true'
         env:
           INDEXING_TARGETS_PATH: ${{ steps.indexing_targets.outputs.targets_path }}
         run: node scripts/seo/write-indexing-summary.mjs
 
       - name: Upload Indexing Report
-        if: steps.canary.outputs.skip != 'true'
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: indexing-report-${{ github.run_id }}

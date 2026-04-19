@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-10T16:48:10.391Z",
+  "updatedAt": "2026-04-19T14:55:20.587Z",
   "games": {
     "canuckle": {
       "needsRetry": false,
@@ -9,6 +9,14 @@
       "lastFailureMessage": null,
       "latestDate": "2026-04-15",
       "puzzleCount": 1432
+    },
+    "framed": {
+      "needsRetry": false,
+      "lastRunAt": "2026-04-19T14:55:20.586Z",
+      "lastSuccessAt": "2026-04-19T14:55:20.586Z",
+      "lastFailureAt": null,
+      "lastFailureMessage": null,
+      "failedTargets": []
     }
   }
 }

@@ -13,11 +13,13 @@ export const prerender = true;
 export const load = () => {
   const targetDateKey = getMainDailyDateKey();
   const entries = getTodayFramedEntries(targetDateKey);
-  const dateKey = entries[0]?.date ?? targetDateKey;
-  const formattedDate = formatFramedDate(new Date(`${dateKey}T00:00:00Z`));
-  const currentMonth = new Date(`${dateKey}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+  const hasExactEntries = entries.length === 4;
+  const formattedDate = formatFramedDate(new Date(`${targetDateKey}T00:00:00Z`));
+  const currentMonth = new Date(`${targetDateKey}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
   const pageTitle = `Framed Answer Today - ${currentMonth} - Updated`;
-  const pageDescription = `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from the static archive dataset.`;
+  const pageDescription = hasExactEntries
+    ? `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from the saved dataset.`
+    : `Check whether the Framed answers for ${formattedDate} are ready yet, then use the archive if you need older saved movie titles.`;
   const pageUrl = 'https://wordsolver.tech/framed-answer-today';
 
   const schemas = JSON.stringify([
@@ -36,7 +38,9 @@ export const load = () => {
     generateFAQSchema([
       {
         question: `What are the Framed answers for ${formattedDate}?`,
-        answer: entries.length > 0 ? `The page lists today's saved Framed answers for ${entries.map((entry) => entry.game.label).join(', ')}.` : 'The page shows the latest saved Framed answers from the static dataset.'
+        answer: hasExactEntries
+          ? `The page lists today's saved Framed answers for ${entries.map((entry) => entry.game.label).join(', ')}.`
+          : 'Today\'s exact Framed answers are not stored in the dataset yet. Check back shortly or use the archive for older saved dates.'
       },
       {
         question: 'Which Framed modes are included?',
@@ -51,6 +55,8 @@ export const load = () => {
 
   return {
     entries,
+    hasExactEntries,
+    targetDateKey,
     formattedDate,
     schemas,
     meta: {
