@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
 	import AuthorCard from '$lib/components/AuthorCard.svelte';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import FAQSection from '$lib/components/FAQSection.svelte';
@@ -7,19 +7,25 @@
 		PRESTON_HAYES_AUTHOR_IMAGE,
 		PRESTON_HAYES_AUTHOR_NAME
 	} from '$lib/authors';
-	import type { SpotleArtist, SpotleAnswer } from '$lib/spotle';
+	import type { SpotleAnswer, SpotleArtist } from '$lib/spotle';
 
 	let { data }: {
 		data: {
-			todayStr: string;
 			todayFormatted: string;
 			todayAnswer: SpotleAnswer | null;
 			todayArtist: SpotleArtist | null;
-			artists: SpotleArtist[];
-			answers: SpotleAnswer[];
+			last30Days: {
+				date: string;
+				dayNumber: number;
+				artistName: string;
+				track: string | null;
+				soundcloudUrl: string | null;
+				artist: SpotleArtist | null;
+			}[];
 			faqItems: { question: string; answer: string }[];
 			schemaJson: string;
 			meta: { title: string; description: string; keywords?: string };
+			stats: { totalArtists: number; totalAnswers: number; lastSyncedAt: string | null };
 			labels: { countryNames: Record<string, string>; genderNames: Record<string, string> };
 		};
 	} = $props();
@@ -27,18 +33,26 @@
 	const todayFormatted = $derived(data.todayFormatted);
 	const todayAnswer = $derived(data.todayAnswer);
 	const todayArtist = $derived(data.todayArtist);
-	const artists = $derived(data.artists);
-	const answers = $derived(data.answers);
+	const last30Days = $derived(data.last30Days);
 	const faqItems = $derived(data.faqItems);
 	const schemaJson = $derived(data.schemaJson);
 	const meta = $derived(data.meta);
+	const stats = $derived(data.stats);
 	const labels = $derived(data.labels);
+
+	function toSpotifyArtistUrl(uri?: string): string | null {
+		if (!uri?.startsWith('spotify:artist:')) {
+			return null;
+		}
+
+		return `https://open.spotify.com/artist/${uri.replace('spotify:artist:', '')}`;
+	}
 </script>
 
 <svelte:head>
 	<title>{meta.title}</title>
 	<meta name="description" content={meta.description} />
-	<meta name="keywords" content={meta.keywords ?? 'spotle answer today, spotle answer, spotle hint, spotle hint today'} />
+	<meta name="keywords" content={meta.keywords ?? 'spotle answer today, spotle answer, spotle hint, spotle artist today'} />
 	<link rel="canonical" href="https://wordsolver.tech/spotle-answer-today" />
 	<meta property="og:title" content={meta.title} />
 	<meta property="og:description" content={meta.description} />
@@ -51,107 +65,195 @@
 	{@html `<script type="application/ld+json">${schemaJson}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
-	<div class="max-w-6xl mx-auto">
+<div class="min-h-screen bg-[linear-gradient(180deg,#f4fff8_0%,#ffffff_40%,#f8fafc_100%)] px-4 py-10 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-6xl">
 		<Breadcrumbs />
 
-		<header class="text-center mb-10">
-			<p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">Spotle Answer</p>
-			<h1 class="text-4xl sm:text-5xl font-black text-gray-900 mt-3">
-				Spotle Hints and Answer for Today ({todayFormatted})
-			</h1>
-			<p class="text-lg text-gray-500 mt-3">{todayFormatted}</p>
+		<header class="relative overflow-hidden rounded-[2rem] border border-emerald-100 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(20,184,166,0.16),transparent_30%),linear-gradient(135deg,#ffffff_0%,#ecfdf5_55%,#f0fdfa_100%)] p-8 shadow-[0_28px_80px_rgba(16,185,129,0.10)] sm:p-10">
+			<div class="absolute -right-10 top-0 h-32 w-32 rounded-full bg-emerald-200/40 blur-3xl"></div>
+			<div class="absolute -left-10 bottom-0 h-28 w-28 rounded-full bg-teal-200/40 blur-3xl"></div>
+			<div class="relative">
+				<p class="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-600">Daily Spotle</p>
+				<h1 class="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
+					Spotle Answer Today
+				</h1>
+				<p class="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
+					Today&apos;s verified artist, music details, and archive context for <span class="font-semibold text-emerald-700">{todayFormatted}</span>.
+				</p>
+
+				<div class="mt-7 flex flex-wrap gap-3">
+					<a
+						href="#spotle-answer-card"
+						class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/20 transition hover:-translate-y-0.5 hover:shadow-xl"
+					>
+						View Today&apos;s Artist
+					</a>
+					<a
+						href="/spotle-archive"
+						class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-5 py-3 text-sm font-bold text-emerald-700 shadow-sm transition hover:bg-emerald-50"
+					>
+						Open Spotle Archive
+					</a>
+					<a
+						href="/spotle-solver"
+						class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-50"
+					>
+						Use Spotle Solver
+					</a>
+				</div>
+			</div>
 		</header>
 
-		<section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-			<div class="lg:col-span-2 bg-white border border-gray-200 rounded-3xl shadow-lg p-6">
-				<h2 class="text-2xl font-bold text-gray-900 mb-4">Today&apos;s Artist</h2>
-				{#if todayArtist}
-					<div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
-						<div class="flex-1">
-							<p class="text-sm font-semibold text-emerald-600">Day #{todayAnswer?.dayNumber}</p>
-							<h3 class="text-3xl font-black text-gray-900 mt-2">{todayArtist.artist}</h3>
-							<p class="text-gray-500 mt-1">
-								{labels.countryNames[todayArtist.country] ?? todayArtist.country.toUpperCase()} - {todayArtist.genre}
+		<section id="spotle-answer-card" class="mt-10 grid gap-6 lg:grid-cols-[1.4fr_0.8fr]">
+			<div class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-lg">
+				<h2 class="text-2xl font-black text-slate-900">Today&apos;s Spotle artist</h2>
+
+				{#if todayArtist && todayAnswer}
+					<p class="mt-4 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
+						Day #{todayAnswer.dayNumber}
+					</p>
+					<h3 class="mt-2 text-4xl font-black text-slate-900">{todayArtist.artist}</h3>
+					<p class="mt-3 text-lg text-slate-600">
+						{labels.countryNames[todayArtist.country] ?? todayArtist.country.toUpperCase()} · {todayArtist.genre}
+					</p>
+
+					<div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+						<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+							<p class="text-xs uppercase tracking-[0.16em] text-slate-500">Rank</p>
+							<p class="mt-2 text-xl font-bold text-slate-900">#{todayArtist.index + 1}</p>
+						</div>
+						<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+							<p class="text-xs uppercase tracking-[0.16em] text-slate-500">Debut Year</p>
+							<p class="mt-2 text-xl font-bold text-slate-900">{todayArtist.debut_album_year}</p>
+						</div>
+						<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+							<p class="text-xs uppercase tracking-[0.16em] text-slate-500">Group Size</p>
+							<p class="mt-2 text-xl font-bold text-slate-900">
+								{todayArtist.group_size === 1 ? 'Solo' : `${todayArtist.group_size} members`}
 							</p>
-							<div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4 text-sm">
-								<div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
-									<p class="text-xs text-gray-500">Rank</p>
-									<p class="font-semibold text-gray-900">#{todayArtist.index + 1}</p>
-								</div>
-								<div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
-									<p class="text-xs text-gray-500">Debut</p>
-									<p class="font-semibold text-gray-900">{todayArtist.debut_album_year}</p>
-								</div>
-								<div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
-									<p class="text-xs text-gray-500">Group</p>
-									<p class="font-semibold text-gray-900">
-										{todayArtist.group_size === 1 ? 'Solo' : `${todayArtist.group_size} members`}
-									</p>
-								</div>
-								<div class="bg-gray-50 border border-gray-200 rounded-xl p-3">
-									<p class="text-xs text-gray-500">Gender</p>
-									<p class="font-semibold text-gray-900">
-										{labels.genderNames[todayArtist.gender] ?? todayArtist.gender}
-									</p>
-								</div>
-							</div>
+						</div>
+						<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+							<p class="text-xs uppercase tracking-[0.16em] text-slate-500">Gender</p>
+							<p class="mt-2 text-xl font-bold text-slate-900">
+								{labels.genderNames[todayArtist.gender] ?? todayArtist.gender}
+							</p>
+						</div>
+						<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:col-span-2">
+							<p class="text-xs uppercase tracking-[0.16em] text-slate-500">Featured Track</p>
+							<p class="mt-2 text-xl font-bold text-slate-900">
+								{todayAnswer.track || todayArtist.track_name || 'Track info not stored yet'}
+							</p>
 						</div>
 					</div>
-				{:else}
-					<div class="text-gray-500">
-						Answer not available for today right now. Please check back later.
+
+					<div class="mt-6 flex flex-wrap gap-3">
+						{#if todayAnswer.soundcloudUrl}
+							<a
+								href={todayAnswer.soundcloudUrl}
+								target="_blank"
+								rel="noreferrer"
+								class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
+							>
+								Listen on SoundCloud
+							</a>
+						{/if}
+						{#if toSpotifyArtistUrl(todayArtist.uri)}
+							<a
+								href={toSpotifyArtistUrl(todayArtist.uri) ?? '#'}
+								target="_blank"
+								rel="noreferrer"
+								class="inline-flex items-center rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+							>
+								Open Artist Profile
+							</a>
+						{/if}
 					</div>
+				{:else}
+					<p class="mt-4 text-base leading-7 text-slate-600">
+						Today&apos;s Spotle artist is not available in the stored dataset yet. The archive page will still help you browse older dates while the next refresh lands.
+					</p>
 				{/if}
 			</div>
 
-			<div class="bg-white border border-gray-200 rounded-3xl shadow-lg p-6">
-				<h3 class="text-xl font-bold text-gray-900 mb-3">Quick Stats</h3>
-				<div class="space-y-3 text-sm text-gray-600">
-					<div class="flex items-center justify-between">
-						<span>Total Artists</span>
-						<span class="font-semibold text-gray-900">{artists.length}</span>
+			<div class="space-y-6">
+				<div class="rounded-[2rem] bg-gradient-to-br from-emerald-600 to-teal-700 p-6 text-white shadow-lg shadow-emerald-500/25">
+					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100">Dataset status</p>
+					<div class="mt-5 space-y-3 text-sm">
+						<div class="flex items-center justify-between gap-4">
+							<span>Total Artists</span>
+							<span class="font-bold">{stats.totalArtists}</span>
+						</div>
+						<div class="flex items-center justify-between gap-4">
+							<span>Total Stored Answers</span>
+							<span class="font-bold">{stats.totalAnswers}</span>
+						</div>
+						<div class="flex items-center justify-between gap-4">
+							<span>Last Sync</span>
+							<span class="text-right font-bold">
+								{stats.lastSyncedAt ? new Date(stats.lastSyncedAt).toLocaleString('en-US') : 'Not recorded'}
+							</span>
+						</div>
 					</div>
-					<div class="flex items-center justify-between">
-						<span>Total Answers</span>
-						<span class="font-semibold text-gray-900">{answers.length}</span>
-					</div>
-					<div class="flex items-center justify-between">
-						<span>Latest Day</span>
-						<span class="font-semibold text-gray-900">#{todayAnswer?.dayNumber ?? '-'}</span>
-					</div>
+				</div>
+
+				<div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+					<h3 class="text-xl font-black text-slate-900">What changed here</h3>
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						This page now carries the richer Spotle source details when they are available, including the featured track and music links, while still keeping the layout image-free.
+					</p>
 				</div>
 			</div>
 		</section>
 
-		<section class="bg-white border border-gray-200 rounded-3xl shadow-lg p-6 mb-12">
-			<h2 class="text-2xl font-bold text-gray-900">Need an older Spotle answer?</h2>
-			<p class="mt-3 text-gray-600">
-				Older artist answers now live on the dedicated Spotle archive page instead of this today page.
+		<section class="mt-10 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+			<h2 class="text-2xl font-black text-slate-900">Recent Spotle answers</h2>
+			<p class="mt-3 text-base leading-7 text-slate-600">
+				The newest 30 stored Spotle answers, with extra music details shown when the source has them.
 			</p>
-			<div class="mt-5 flex flex-wrap gap-3">
-				<a
-					href="/spotle-archive"
-					class="inline-flex items-center rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
-				>
-					Open Spotle Archive
-				</a>
-				<a
-					href="/spotle-solver"
-					class="inline-flex items-center rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-				>
-					Open Spotle Solver
-				</a>
+
+			<div class="mt-6 grid gap-3 md:grid-cols-2">
+				{#each last30Days as entry}
+					<div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
+						<div class="flex items-start justify-between gap-4">
+							<div class="min-w-0">
+								<p class="text-sm font-semibold text-slate-500">{entry.date}</p>
+								<p class="mt-1 text-xl font-black text-slate-900">{entry.artistName}</p>
+								<p class="mt-1 text-sm text-slate-600">
+									Day #{entry.dayNumber}
+									{#if entry.artist}
+										· {labels.countryNames[entry.artist.country] ?? entry.artist.country.toUpperCase()}
+									{/if}
+								</p>
+								{#if entry.track}
+									<p class="mt-3 text-sm text-slate-700">Track: <span class="font-semibold">{entry.track}</span></p>
+								{/if}
+							</div>
+							{#if entry.soundcloudUrl}
+								<a
+									href={entry.soundcloudUrl}
+									target="_blank"
+									rel="noreferrer"
+									class="shrink-0 rounded-full border border-emerald-200 px-3 py-1 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50"
+								>
+									Play
+								</a>
+							{/if}
+						</div>
+					</div>
+				{/each}
 			</div>
 		</section>
 
-		<FAQSection title="Spotle Answers FAQ (Last 30 Days)" faqs={faqItems} />
-    <div class="mt-12">
-      <AuthorCard
-        name={PRESTON_HAYES_AUTHOR_NAME}
-        image={PRESTON_HAYES_AUTHOR_IMAGE}
-        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
-      />
-    </div>	</div>
-</div>
+		<div class="mt-10">
+			<FAQSection title="Spotle Answer FAQ" faqs={faqItems} />
+		</div>
 
+		<div class="mt-12">
+			<AuthorCard
+				name={PRESTON_HAYES_AUTHOR_NAME}
+				image={PRESTON_HAYES_AUTHOR_IMAGE}
+				description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+			/>
+		</div>
+	</div>
+</div>

@@ -26,6 +26,7 @@
     { name: 'Searchle Answer Today', href: '/searchle-answer-today', color: 'from-purple-500 to-pink-600', icon: 'Se' },
     { name: 'Phrazle Answer Today', href: '/phrazle-answer-today', color: 'from-emerald-500 to-lime-600', icon: 'Ph' },
     { name: 'Spotle Answer Today', href: '/spotle-answer-today', color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
+    { name: 'Worgle Answer Today', href: '/worgle-answer-today', color: 'from-slate-700 to-slate-900', icon: 'Wo' },
   ];
 
   const solverTools = [

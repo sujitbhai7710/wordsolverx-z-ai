@@ -70,12 +70,21 @@ export interface SpotleArtist {
 	gender: string;
 	group_size: number;
 	debut_album_year: number;
+	track_name?: string;
+	uri?: string;
+	image_uri?: string;
+	song_uri?: string;
+	song_image_uri?: string;
+	embedded_track?: string;
 }
 
 export interface SpotleAnswer {
 	date: string;
 	dayNumber: number;
 	artist: string;
+	track?: string;
+	image?: string;
+	soundcloudUrl?: string;
 }
 
 export interface SpotleData {
@@ -85,6 +94,8 @@ export interface SpotleData {
 		startDate: string;
 		totalArtists: number;
 		totalAnswers: number;
+		lastSyncedAt?: string;
+		source?: string;
 	};
 }
 

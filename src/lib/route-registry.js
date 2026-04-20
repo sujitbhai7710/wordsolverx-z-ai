@@ -21,6 +21,7 @@ export const TODAY_STATIC_ROUTES = [
   '/semantle-answer-today',
   '/smashdle-answer-today',
   '/spotle-answer-today',
+  '/worgle-answer-today',
   '/waffle-answer-today',
   '/wordle-answer-today',
   '/worldle-answer-today'
@@ -105,6 +106,7 @@ export const ARCHIVE_STATIC_ROUTES = [
   '/searchle-archive',
   '/semantle-archive',
   '/spotle-archive',
+  '/worgle-archive',
   '/waffle-archive',
   '/wordle-answer-archive',
   '/worldle-archive'

@@ -34,8 +34,11 @@ import {
 	getDisplayDateLabel,
 	isValidWorldleDate
 } from '$lib/worldle/logic';
+import { getWorgleEntryForDateKey, type WorgleArchiveEntry } from '$lib/worgle';
 import type { WorldleCity, WorldleCountry, WorldleCountryDetailsMap } from '$lib/worldle/types';
 import spotleData from '../../static/spotle_data.json';
+import worgleArchiveData from '../../static/worgle_archive.json';
+import worgleSolutionsData from '../../static/worgle_solutions.json';
 
 export const ARCHIVE_GAMES = [
 	'wordle',
@@ -50,6 +53,7 @@ export const ARCHIVE_GAMES = [
 	'semantle',
 	'spotle',
 	'waffle',
+	'worgle',
 	'worldle'
 ] as const;
 
@@ -300,6 +304,8 @@ function getSpotleArchiveData(dateKey: string | null) {
 					}),
 					dayNumber: selectedAnswer.dayNumber,
 					artistName: selectedAnswer.artist,
+					track: selectedAnswer.track ?? null,
+					soundcloudUrl: selectedAnswer.soundcloudUrl ?? null,
 					artist: selectedArtist
 				}
 			: null
@@ -348,6 +354,31 @@ function getWorldleArchiveData(dateKey: string | null) {
 	};
 }
 
+function getWorgleArchiveData(dateKey: string | null) {
+	const archive = worgleArchiveData as WorgleArchiveEntry[];
+	const solutions = worgleSolutionsData as string[];
+	const availableDateStrings = archive.map((entry) => entry.date).sort();
+	const selectedDateKey = dateKey && availableDateStrings.includes(dateKey) ? dateKey : null;
+	const selectedWorgle = selectedDateKey
+		? getWorgleEntryForDateKey(selectedDateKey, archive, solutions)
+		: null;
+
+	return {
+		availableDateStrings,
+		selectedDateKey,
+		selectedWorgle: selectedWorgle
+			? {
+					...selectedWorgle,
+					formattedDate: new Date(`${selectedWorgle.date}T00:00:00`).toLocaleDateString('en-US', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric'
+					})
+				}
+			: null
+	};
+}
+
 export async function getArchiveRouteResponse(
 	game: ArchiveGame,
 	options: ArchiveLookupOptions
@@ -380,6 +411,8 @@ export async function getArchiveRouteResponse(
 			return getSpotleArchiveData(options.dateKey);
 		case 'waffle':
 			return getWaffleArchiveData(options.dateKey);
+		case 'worgle':
+			return getWorgleArchiveData(options.dateKey);
 		case 'worldle':
 			return getWorldleArchiveData(options.dateKey);
 	}

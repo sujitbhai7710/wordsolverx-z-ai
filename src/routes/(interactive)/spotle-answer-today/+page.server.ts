@@ -6,9 +6,9 @@ import {
 	GENDER_NAMES,
 	formatSpotleDate,
 	parseSpotleDate,
-	type SpotleData,
-	type SpotleAnswer,
 	type SpotleArtist,
+	type SpotleAnswer,
+	type SpotleData
 } from '$lib/spotle';
 import { getPuzzleDateForGame } from '$lib/puzzle-window';
 
@@ -16,7 +16,17 @@ interface SpotleDay {
 	date: string;
 	dayNumber: number;
 	artistName: string;
+	track: string | null;
+	soundcloudUrl: string | null;
 	artist: SpotleArtist | null;
+}
+
+function getArtistByName(artists: SpotleArtist[], artistName: string | undefined): SpotleArtist | null {
+	if (!artistName) {
+		return null;
+	}
+
+	return artists.find((artist) => artist.artist.toLowerCase() === artistName.toLowerCase()) ?? null;
 }
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
@@ -31,11 +41,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	const todayAnswer = answers.find((entry) => entry.date === todayStr) ?? latestAnswer;
 	const displayDate = todayAnswer?.date ?? todayStr;
 	const displayDateObject = parseSpotleDate(displayDate);
-	const todayArtist =
-		todayAnswer?.artist
-			? artists.find((artist) => artist.artist.toLowerCase() === todayAnswer.artist.toLowerCase()) ??
-			  null
-			: null;
+	const todayArtist = getArtistByName(artists, todayAnswer?.artist);
 
 	setHeaders({
 		'X-Puzzle-Date': displayDate,
@@ -50,23 +56,35 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		if (!answer) {
 			continue;
 		}
-		const artist =
-			artists.find((entry) => entry.artist.toLowerCase() === answer.artist.toLowerCase()) ?? null;
+
 		last30Days.push({
 			date: dateStr,
 			dayNumber: answer.dayNumber,
 			artistName: answer.artist,
-			artist
+			track: answer.track ?? null,
+			soundcloudUrl: answer.soundcloudUrl ?? null,
+			artist: getArtistByName(artists, answer.artist)
 		});
 	}
 
-	const faqItems = last30Days.map((entry) => {
-		const formattedDate = format(parseSpotleDate(entry.date), 'MMMM d, yyyy');
-		return {
-			question: `What was the Spotle answer on ${formattedDate}?`,
-			answer: `The Spotle answer for ${formattedDate} was ${entry.artistName}. This was Day #${entry.dayNumber}.`
-		};
-	});
+	const faqItems = [
+		{
+			question: `What is the Spotle answer for ${format(displayDateObject, 'MMMM d, yyyy')}?`,
+			answer: todayAnswer
+				? `The Spotle answer for ${format(displayDateObject, 'MMMM d, yyyy')} is ${todayAnswer.artist}. This is Day #${todayAnswer.dayNumber}.`
+				: `The Spotle answer for ${format(displayDateObject, 'MMMM d, yyyy')} has not been stored in the dataset yet.`
+		},
+		{
+			question: 'Where can I check older Spotle answers?',
+			answer:
+				'Open the Spotle archive page to browse older artist answers by date with the same profile details shown on this page.'
+		},
+		{
+			question: 'Does this page show extra Spotle info besides the artist?',
+			answer:
+				'Yes. When the source provides it, this page also shows the featured track, SoundCloud link, rank, country, genre, debut year, and group details.'
+		}
+	];
 
 	const faqSchema = {
 		'@context': 'https://schema.org',
@@ -82,8 +100,9 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	const currentMonth = format(displayDateObject, 'MMMM');
 	const metaTitle = `Spotle Answer Today - ${currentMonth} - Updated`;
 	const metaDescription =
-		`Get Spotle hints and the confirmed Spotle answer for today, ${todayFormatted}${todayArtist ? `. Today's artist is ${todayArtist.artist}` : ''}. Use the dedicated Spotle archive page for older artist answers.`;
-	const metaKeywords = `spotle answer today, spotle answer, spotle hint, spotle hint today, spotle answer for ${todayFormatted}`;
+		`Get the Spotle answer for ${todayFormatted}${todayArtist ? `, including artist details for ${todayArtist.artist}` : ''}${todayAnswer?.track ? ` and the featured track ${todayAnswer.track}` : ''}.`;
+	const metaKeywords =
+		`spotle answer today, spotle answer, spotle archive, spotle artist today, spotle hints ${todayFormatted}`;
 
 	const breadcrumbSchema = {
 		'@context': 'https://schema.org',
@@ -127,10 +146,10 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	return {
 		todayStr,
 		todayFormatted,
-		todayAnswer,
+		todayAnswer: todayAnswer as SpotleAnswer | null,
 		todayArtist,
 		artists,
-		answers,
+		answers: activeAnswers,
 		last30Days,
 		faqItems,
 		schemaJson: JSON.stringify([webPageSchema, breadcrumbSchema, faqSchema]),
@@ -138,6 +157,11 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			title: metaTitle,
 			description: metaDescription,
 			keywords: metaKeywords
+		},
+		stats: {
+			totalArtists: artists.length,
+			totalAnswers: activeAnswers.length,
+			lastSyncedAt: data?.metadata?.lastSyncedAt ?? null
 		},
 		labels: {
 			countryNames: COUNTRY_NAMES,

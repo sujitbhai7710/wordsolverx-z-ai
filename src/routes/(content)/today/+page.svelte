@@ -29,6 +29,7 @@
     { name: 'Searchle', href: '/searchle-answer-today', description: 'Today’s query answer, laid out clearly.', color: 'from-purple-500 to-pink-600', icon: 'Sr' },
     { name: 'Phrazle', href: '/phrazle-answer-today', description: 'Both daily phrases, morning and afternoon.', color: 'from-emerald-500 to-lime-600', icon: 'Pz' },
     { name: 'Spotle', href: '/spotle-answer-today', description: 'Today’s artist answer and the key details around it.', color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
+    { name: 'Worgle', href: '/worgle-answer-today', description: 'The daily Worgle answer with the live puzzle number and archive link.', color: 'from-slate-700 to-slate-900', icon: 'Wo' },
   ];
 
 </script>

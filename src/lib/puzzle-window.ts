@@ -17,6 +17,7 @@ export type PuzzleGame =
 	| 'searchle'
 	| 'phrazle'
 	| 'spotle'
+	| 'worgle'
 	| 'dotadle'
 	| 'loldle'
 	| 'narutodle'
@@ -164,6 +165,11 @@ export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
 		boundaryMinuteUtc: 30,
 		visibleDateOffsetDays: 1
 	},
+	worgle: {
+		group: 'main',
+		timezone: 'IST',
+		sourceReadiness: 'deterministic'
+	},
 	dotadle: {
 		group: 'gamedle',
 		timezone: 'worker-latest',
@@ -223,6 +229,7 @@ export const TODAY_ROUTE_GAME_MAP: Record<string, PuzzleGame> = {
 	'/searchle-answer-today': 'searchle',
 	'/phrazle-answer-today': 'phrazle',
 	'/spotle-answer-today': 'spotle',
+	'/worgle-answer-today': 'worgle',
 	'/dotadle-answer-today': 'dotadle',
 	'/loldle-answer-today': 'loldle',
 	'/narutodle-answer-today': 'narutodle',
@@ -244,7 +251,8 @@ export const ARCHIVE_ROUTE_GAME_MAP: Record<string, PuzzleGame> = {
 	'/contexto-archive': 'contexto',
 	'/searchle-archive': 'searchle',
 	'/phrazle-archive': 'phrazle',
-	'/spotle-archive': 'spotle'
+	'/spotle-archive': 'spotle',
+	'/worgle-archive': 'worgle'
 };
 
 export const LONG_CACHE_STATIC_PATHS = new Set([
@@ -291,6 +299,8 @@ export const LONG_CACHE_STATIC_PATHS = new Set([
 	'/searchle-solver',
 	'/soundmap-solver',
 	'/spotle-solver',
+	'/worgle-answer-today',
+	'/worgle-archive',
 	'/weaver-solver',
 	'/worldle-solver',
 	'/betweenle-solver',

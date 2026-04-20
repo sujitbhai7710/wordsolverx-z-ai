@@ -19,6 +19,7 @@
     { name: 'Contexto', href: '/contexto-archive', description: 'Semantic answer words and game dates', color: 'from-violet-500 to-fuchsia-600', icon: 'Cx', shadow: 'shadow-violet-500/20' },
     { name: 'Phrazle', href: '/phrazle-archive', description: 'Morning and afternoon phrase archive', color: 'from-emerald-500 to-lime-600', icon: 'Pz', shadow: 'shadow-emerald-500/20' },
     { name: 'Spotle', href: '/spotle-archive', description: 'Spotify artist answer history', color: 'from-emerald-600 to-teal-600', icon: 'Sp', shadow: 'shadow-emerald-500/20' },
+    { name: 'Worgle', href: '/worgle-archive', description: 'Deterministic daily answer history with puzzle numbers', color: 'from-slate-700 to-slate-900', icon: 'Wo', shadow: 'shadow-slate-500/20' },
   ];
 
   const archiveItemList = archives.map((archive, index) => ({

@@ -24,6 +24,7 @@ export type TodayArticleKey =
   | 'smashdle-answer-today'
   | 'spotle-answer-today'
   | 'sportle-answer-today'
+  | 'worgle-answer-today'
   | 'waffle-answer-today'
   | 'wordle-answer-today'
   | 'worldle-answer-today';
