@@ -133,6 +133,75 @@ function buildSortedArchive(archive) {
   );
 }
 
+function buildArchiveEntry(dateKey, country, scrapedAt = new Date().toISOString()) {
+  const date = parseDateKey(dateKey);
+
+  return {
+    gameNumber: getGameNumber(date),
+    date: dateKey,
+    apiDate: formatApiDate(date),
+    country: {
+      id: country.id,
+      country: country.country,
+      continent: country.continent,
+      hemisphere: country.hemisphere,
+      population: country.population,
+      avgTemperature: country.avgTemperature,
+      surface: country.surface,
+      coordinates: country.coordinates,
+      density: country.density,
+      PIB: country.PIB,
+      percentOfRenewableE: country.percentOfRenewableE,
+      co2Total: country.co2Total,
+      coastlineLength: country.coastlineLength,
+      maxAltitude: country.maxAltitude,
+      rankingFifa: country.rankingFifa,
+      footballMatches: country.footballMatches,
+      mapsUrl: country.mapsUrl
+    },
+    scrapedAt
+  };
+}
+
+function getArchiveDateKeys(archive) {
+  return Object.keys(archive)
+    .filter((key) => /^\d{4}-\d{2}-\d{2}$/.test(key))
+    .sort();
+}
+
+function getArchiveLatestDateKey(archive) {
+  return getArchiveDateKeys(archive).at(-1) ?? null;
+}
+
+function addUtcDays(date, offset) {
+  const next = new Date(date);
+  next.setUTCDate(next.getUTCDate() + offset);
+  return next;
+}
+
+function buildRefreshDates(archiveSeed, todayDate) {
+  const normalizedTodayDate = parseDateKey(toDateKey(todayDate));
+  const latestStoredDateKey = getArchiveLatestDateKey(archiveSeed);
+  const latestStoredDate = latestStoredDateKey
+    ? parseDateKey(latestStoredDateKey)
+    : addUtcDays(normalizedTodayDate, -1);
+  const startDate = addUtcDays(latestStoredDate, 1);
+  const datesToRefresh = [];
+
+  for (
+    let cursor = new Date(startDate);
+    cursor.getTime() <= normalizedTodayDate.getTime();
+    cursor = addUtcDays(cursor, 1)
+  ) {
+    datesToRefresh.push(toDateKey(cursor));
+  }
+
+  return {
+    latestStoredDateKey,
+    datesToRefresh
+  };
+}
+
 async function main() {
   const countriesPayload = await loadCountriesPayload();
   const archiveSeed = await loadArchivePayload();
@@ -143,12 +212,14 @@ async function main() {
   const failedDates = [];
 
   const todayDate = getCurrentJstDate();
+  const todayKey = toDateKey(todayDate);
+  const { latestStoredDateKey, datesToRefresh } = buildRefreshDates(archive, todayDate);
 
-  for (let offset = 7; offset >= 0; offset -= 1) {
-    const date = new Date(todayDate);
-    date.setUTCDate(date.getUTCDate() - offset);
-    const dateKey = toDateKey(date);
+  console.log(
+    `Refreshing Countryle archive from ${latestStoredDateKey ?? 'no saved date'} toward ${todayKey} across ${datesToRefresh.length} date(s).`
+  );
 
+  for (const dateKey of datesToRefresh) {
     try {
       const countryId = await fetchCountryleCountryId(dateKey);
       const country = countryById.get(countryId);
@@ -157,31 +228,7 @@ async function main() {
         continue;
       }
 
-      archive[dateKey] = {
-        gameNumber: getGameNumber(date),
-        date: dateKey,
-        apiDate: formatApiDate(date),
-        country: {
-          id: country.id,
-          country: country.country,
-          continent: country.continent,
-          hemisphere: country.hemisphere,
-          population: country.population,
-          avgTemperature: country.avgTemperature,
-          surface: country.surface,
-          coordinates: country.coordinates,
-          density: country.density,
-          PIB: country.PIB,
-          percentOfRenewableE: country.percentOfRenewableE,
-          co2Total: country.co2Total,
-          coastlineLength: country.coastlineLength,
-          maxAltitude: country.maxAltitude,
-          rankingFifa: country.rankingFifa,
-          footballMatches: country.footballMatches,
-          mapsUrl: country.mapsUrl
-        },
-        scrapedAt: new Date().toISOString()
-      };
+      archive[dateKey] = buildArchiveEntry(dateKey, country);
     } catch (error) {
       failedDates.push(dateKey);
       console.warn(`Failed to refresh Countryle entry for ${dateKey}:`, error instanceof Error ? error.message : String(error));
@@ -189,7 +236,7 @@ async function main() {
   }
 
   const sortedArchive = buildSortedArchive(archive);
-  const todayKey = toDateKey(todayDate);
+  const archiveLatestDateKey = getArchiveLatestDateKey(sortedArchive);
   const todayEntry = sortedArchive[todayKey] ?? sortedArchive[Object.keys(sortedArchive)[0]] ?? null;
   const todayPayload = todayEntry
     ? {
@@ -211,25 +258,32 @@ async function main() {
     await writeFile(todayPath, `${JSON.stringify(todayPayload, null, 2)}\n`, 'utf8');
   }
 
-  if (failedDates.length > 0) {
+  const missingDates = datesToRefresh.filter((dateKey) => !sortedArchive[dateKey]);
+  const needsRetry = failedDates.length > 0 || missingDates.length > 0;
+
+  if (needsRetry) {
     await markUpdateFailure(
       projectRoot,
       'countryle',
-      `Failed to refresh ${failedDates.length} Countryle date${failedDates.length === 1 ? '' : 's'}.`,
+      `Countryle archive is incomplete for ${missingDates.length} date(s) and ${failedDates.length} fetch attempt(s) failed.`,
       {
         failedDates,
+        missingDates,
+        latestArchiveDate: archiveLatestDateKey,
         latestDate: todayPayload?.date ?? todayKey
       }
     );
   } else {
     await markUpdateSuccess(projectRoot, 'countryle', {
       failedDates: [],
+      missingDates: [],
+      latestArchiveDate: archiveLatestDateKey,
       latestDate: todayPayload?.date ?? todayKey
     });
   }
 
   console.log(
-    `Countryle dataset ready with ${Object.keys(sortedArchive).length} archive entries through ${todayPayload?.date ?? 'unknown'}.`
+    `Countryle dataset ready with ${Object.keys(sortedArchive).length} archive entries. Archive through ${archiveLatestDateKey ?? 'unknown'}; today payload ${todayPayload?.date ?? 'unknown'}; missing requested dates: ${missingDates.length}.`
   );
 }
 

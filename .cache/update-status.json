@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-19T14:55:20.587Z",
+  "updatedAt": "2026-04-20T18:51:16.656Z",
   "games": {
     "canuckle": {
       "needsRetry": false,
@@ -17,6 +17,17 @@
       "lastFailureAt": null,
       "lastFailureMessage": null,
       "failedTargets": []
+    },
+    "countryle": {
+      "needsRetry": false,
+      "lastRunAt": "2026-04-20T18:51:16.656Z",
+      "lastFailureAt": null,
+      "lastFailureMessage": null,
+      "failedDates": [],
+      "missingDates": [],
+      "latestArchiveDate": "2026-04-21",
+      "latestDate": "2026-04-21",
+      "lastSuccessAt": "2026-04-20T18:51:16.656Z"
     }
   }
 }

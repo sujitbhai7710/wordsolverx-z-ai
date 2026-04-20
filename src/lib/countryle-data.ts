@@ -47,9 +47,18 @@ function toTodayPayload(entry: CountryleArchiveEntry): CountryleTodayPayload {
 
 export function getCountryleToday(targetDateKey?: string): CountryleTodayPayload | null {
   if (targetDateKey) {
-    const matchingDate = getCountryleArchiveDates().find((dateKey) => dateKey <= targetDateKey);
-    if (matchingDate) {
-      return toTodayPayload(archiveData[matchingDate]);
+    const exactArchiveMatch = archiveData[targetDateKey];
+    if (exactArchiveMatch) {
+      return toTodayPayload(exactArchiveMatch);
+    }
+
+    if (todayData?.country?.country && todayData.date <= targetDateKey) {
+      return todayData;
+    }
+
+    const matchingArchiveDate = getCountryleArchiveDates().find((dateKey) => dateKey <= targetDateKey);
+    if (matchingArchiveDate) {
+      return toTodayPayload(archiveData[matchingArchiveDate]);
     }
   }
 
