@@ -16,7 +16,7 @@ const WORDLE_API_BASE_URL =
   process.env.WORDLE_API_BASE_URL ?? 'https://api.wordsolverx.workers.dev';
 const NVIDIA_BASE_URL = 'https://integrate.api.nvidia.com/v1';
 const AGENT_ROUTER_BASE_URL = 'https://agentrouter.org/v1';
-const DEFAULT_TIMEOUT_MS = Number.parseInt(process.env.ARTICLE_REQUEST_TIMEOUT_MS ?? '90000', 10);
+const DEFAULT_TIMEOUT_MS = Number.parseInt(process.env.ARTICLE_REQUEST_TIMEOUT_MS ?? '120000', 10);
 const MAX_REQUEST_ATTEMPTS = Math.max(
   1,
   Number.parseInt(process.env.ARTICLE_MAX_ATTEMPTS ?? '3', 10) || 3
@@ -25,6 +25,11 @@ const MAX_CONCURRENCY = Math.max(
   1,
   Number.parseInt(process.env.ARTICLE_MAX_CONCURRENCY ?? '4', 10) || 4
 );
+const MAX_OUTPUT_TOKENS = Math.max(
+  512,
+  Number.parseInt(process.env.ARTICLE_MAX_OUTPUT_TOKENS ?? '3200', 10) || 3200
+);
+const LOG_SNIPPET_LIMIT = 220;
 
 const TODAY_ARTICLE_REGISTRY = [
   {
@@ -285,6 +290,18 @@ function countWords(html) {
   return text.split(' ').length;
 }
 
+function truncateForLog(value, limit = LOG_SNIPPET_LIMIT) {
+  const text = String(value ?? '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!text) {
+    return '';
+  }
+
+  return text.length > limit ? `${text.slice(0, limit - 1)}…` : text;
+}
+
 function sanitizeModelJson(raw) {
   const text = String(raw ?? '').trim();
   if (!text) {
@@ -297,7 +314,9 @@ function sanitizeModelJson(raw) {
   const lastBrace = candidate.lastIndexOf('}');
 
   if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) {
-    throw new Error('Model response did not contain a JSON object.');
+    throw new Error(
+      `Model response did not contain a JSON object. Snippet: ${truncateForLog(candidate)}`
+    );
   }
 
   return JSON.parse(candidate.slice(firstBrace, lastBrace + 1));
@@ -473,24 +492,47 @@ function getHueFamilyFromHex(hex) {
 async function getColordleContext(targetDate) {
   const raw = await readFile(colordleDataPath, 'utf8');
   const dataset = JSON.parse(raw);
-  const entry = Array.isArray(dataset.entries)
-    ? dataset.entries.find((candidate) => candidate.date === targetDate)
-    : null;
+  const entries = Array.isArray(dataset.entries) ? dataset.entries : [];
+  const exactEntry = entries.find((candidate) => candidate.date === targetDate) ?? null;
+
+  let entry = exactEntry;
+  let actualDate = targetDate;
+  let fallbackReason = null;
+
+  if (!entry && entries.length > 0) {
+    const latestOnOrBefore = [...entries]
+      .reverse()
+      .find((candidate) => candidate.date <= targetDate);
+
+    if (latestOnOrBefore) {
+      entry = latestOnOrBefore;
+      actualDate = latestOnOrBefore.date;
+      fallbackReason = 'after-end';
+    } else {
+      entry = entries[0];
+      actualDate = entry.date;
+      fallbackReason = 'before-start';
+    }
+  }
 
   if (!entry?.color?.name || !entry?.color?.hex) {
     throw new Error(`Missing Colordle entry for ${targetDate}.`);
   }
 
   return {
-    date: targetDate,
-    formattedDate: formatLongDate(targetDate),
+    requestedDate: targetDate,
+    requestedFormattedDate: formatLongDate(targetDate),
+    date: actualDate,
+    formattedDate: formatLongDate(actualDate),
+    exactMatch: actualDate === targetDate,
+    fallbackReason,
     dayNum: entry.dayNum ?? null,
     colorName: String(entry.color.name),
     colorHex: String(entry.color.hex).toUpperCase(),
     hueFamily: getHueFamilyFromHex(String(entry.color.hex)),
-    recentColors: Array.isArray(dataset.entries)
-      ? dataset.entries
-          .filter((candidate) => candidate.date <= targetDate)
+    recentColors: entries.length
+      ? entries
+          .filter((candidate) => candidate.date <= actualDate)
           .slice(-5)
           .reverse()
           .map((candidate) => ({
@@ -693,7 +735,7 @@ async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
       body: JSON.stringify({
         model,
         temperature: 0.6,
-        max_tokens: 4096,
+        max_tokens: MAX_OUTPUT_TOKENS,
         response_format: {
           type: 'json_object'
         },
@@ -724,9 +766,34 @@ async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
     }
 
     throw new Error('Model response did not include a usable message content field.');
+  } catch (error) {
+    if (error?.name === 'AbortError') {
+      throw new Error(`Request timed out after ${DEFAULT_TIMEOUT_MS}ms.`);
+    }
+
+    throw error;
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function summarizeProviders(providers) {
+  return providers
+    .map(
+      (provider) =>
+        `${provider.provider} models=${provider.models.join(',')} keys=${provider.apiKeys.map((entry) => entry.label).join(',')}`
+    )
+    .join(' | ');
+}
+
+function summarizeArticle(article) {
+  const html = article.contentGuideHtml ?? article.articleHtml ?? '';
+  return {
+    title: String(article.title ?? '').trim(),
+    wordCount: countWords(html),
+    summaryWords: countWords(article.summary ?? ''),
+    bonusHintCount: Array.isArray(article.bonusHints) ? article.bonusHints.length : 0
+  };
 }
 
 function validateArticlePayload(game, payload, targetDate) {
@@ -833,7 +900,7 @@ function takeProviderKeyOrder(provider) {
   return rotateList(provider.apiKeys, startOffset);
 }
 
-async function generateWithProviders({ game, prompt, targetDate, providers }) {
+async function generateWithProviders({ game, prompt, targetDate, providers, routeKey, laneIndex }) {
   const failures = [];
 
   for (const provider of providers) {
@@ -844,8 +911,11 @@ async function generateWithProviders({ game, prompt, targetDate, providers }) {
         const keyLabel = `${provider.provider}:${model}:${apiKeyEntry.label}`;
 
         for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt += 1) {
+          const startedAt = Date.now();
           try {
-            console.log(`Generating ${game} article with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS})`);
+            console.log(
+              `[lane ${laneIndex + 1}] [${routeKey}] Generating ${game} article with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS})`
+            );
             const raw = await callChatCompletion({
               baseUrl: provider.baseUrl,
               apiKey: apiKeyEntry.value,
@@ -854,6 +924,12 @@ async function generateWithProviders({ game, prompt, targetDate, providers }) {
             });
             const parsed = sanitizeModelJson(raw);
             const validated = validateArticlePayload(game, parsed, targetDate);
+            const articleSummary = summarizeArticle(validated);
+            const elapsedMs = Date.now() - startedAt;
+
+            console.log(
+              `[lane ${laneIndex + 1}] [${routeKey}] Success with ${keyLabel} in ${elapsedMs}ms (words=${articleSummary.wordCount}, summaryWords=${articleSummary.summaryWords}, hints=${articleSummary.bonusHintCount}, title="${truncateForLog(articleSummary.title, 120)}")`
+            );
 
             return {
               ...validated,
@@ -868,7 +944,9 @@ async function generateWithProviders({ game, prompt, targetDate, providers }) {
           } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             failures.push(`${keyLabel} [attempt ${attempt}] -> ${message}`);
-            console.warn(`Failed with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS}): ${message}`);
+            console.warn(
+              `[lane ${laneIndex + 1}] [${routeKey}] Failed with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS}): ${message}`
+            );
           }
         }
       }
@@ -962,12 +1040,23 @@ async function main() {
     return;
   }
 
+  console.log(
+    `Article generation settings: concurrency=${MAX_CONCURRENCY}, timeoutMs=${DEFAULT_TIMEOUT_MS}, maxAttempts=${MAX_REQUEST_ATTEMPTS}, maxOutputTokens=${MAX_OUTPUT_TOKENS}.`
+  );
+  console.log(`Configured providers: ${summarizeProviders(providers)}`);
+  console.log(
+    `Selected ${selectedEntries.length} route(s) for group ${groupName}: ${selectedEntries.map((entry) => entry.key).join(', ')}`
+  );
+
   let wordleContext = null;
   let colordleContext = null;
 
   if (selectedEntries.some((entry) => entry.mode === 'wordle')) {
     try {
       wordleContext = await getWordleContext(targetDate);
+      console.log(
+        `Prepared Wordle context for requested date ${targetDate}: answer=${wordleContext.solutionUpper}, puzzle=${wordleContext.wordleNumber ?? 'unknown'}, recentAnswers=${wordleContext.recentAnswers.length}.`
+      );
     } catch (error) {
       console.warn(`Unable to prepare Wordle article context for ${targetDate}:`, error);
     }
@@ -976,6 +1065,9 @@ async function main() {
   if (selectedEntries.some((entry) => entry.mode === 'colordle')) {
     try {
       colordleContext = await getColordleContext(targetDate);
+      console.log(
+        `Prepared Colordle context for requested date ${targetDate}: actualDate=${colordleContext.date}, exactMatch=${colordleContext.exactMatch}, fallbackReason=${colordleContext.fallbackReason ?? 'none'}, color=${colordleContext.colorName} ${colordleContext.colorHex}.`
+      );
     } catch (error) {
       console.warn(`Unable to prepare Colordle article context for ${targetDate}:`, error);
     }
@@ -990,15 +1082,23 @@ async function main() {
   await writeBundle(nextBundle);
 
   const failedEntries = [];
+  const completedEntries = [];
   const concurrency = Math.min(
     MAX_CONCURRENCY,
     selectedEntries.length,
     Math.max(...providers.map((provider) => provider.apiKeys.length))
   );
 
+  console.log(`Running article generation with ${concurrency} concurrent lane(s).`);
+
   await runConcurrent(selectedEntries, concurrency, async (entry, laneIndex) => {
     try {
       let article;
+      let articleDate = targetDate;
+
+      console.log(
+        `[lane ${laneIndex + 1}] [${entry.key}] Starting route generation (mode=${entry.mode}, requestedDate=${targetDate}).`
+      );
 
       if (entry.mode === 'wordle') {
         if (!wordleContext) {
@@ -1009,7 +1109,9 @@ async function main() {
           game: 'wordle',
           prompt: buildWordlePrompt(skillText, wordleContext),
           targetDate,
-          providers
+          providers,
+          routeKey: entry.key,
+          laneIndex
         });
 
         nextBundle.articles[entry.key] = {
@@ -1024,17 +1126,21 @@ async function main() {
           throw new Error('Colordle context was not available.');
         }
 
+        articleDate = colordleContext.date;
+
         article = await generateWithProviders({
           game: 'colordle',
           prompt: buildColordlePrompt(skillText, colordleContext),
-          targetDate,
-          providers
+          targetDate: articleDate,
+          providers,
+          routeKey: entry.key,
+          laneIndex
         });
 
         nextBundle.articles[entry.key] = {
           articleKey: entry.key,
           game: 'colordle',
-          date: targetDate,
+          date: articleDate,
           ...article
         };
       } else {
@@ -1042,7 +1148,9 @@ async function main() {
           game: 'generic',
           prompt: buildGenericPrompt(skillText, entry, targetDate),
           targetDate,
-          providers
+          providers,
+          routeKey: entry.key,
+          laneIndex
         });
 
         nextBundle.articles[entry.key] = {
@@ -1056,21 +1164,35 @@ async function main() {
         };
       }
 
+      completedEntries.push(
+        `${entry.key} -> articleDate=${articleDate}, provider=${article.meta?.provider ?? 'unknown'}, model=${article.meta?.model ?? 'unknown'}, words=${article.meta?.wordCount ?? 0}`
+      );
+      console.log(`[lane ${laneIndex + 1}] [${entry.key}] Saved article for ${articleDate}.`);
       nextBundle.generatedAt = new Date().toISOString();
       await writeBundle(nextBundle);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       failedEntries.push(`${entry.key}: ${message}`);
-      console.warn(`Skipping article generation for ${entry.key}: ${message}`);
+      console.warn(`[lane ${laneIndex + 1}] [${entry.key}] Skipping article generation: ${message}`);
       nextBundle.generatedAt = new Date().toISOString();
       await writeBundle(nextBundle);
     }
   });
 
+  if (completedEntries.length > 0) {
+    console.log('Successful daily article routes:');
+    for (const line of completedEntries) {
+      console.log(`- ${line}`);
+    }
+  }
+
   if (failedEntries.length > 0) {
     console.warn(
       `Daily article generation finished with ${failedEntries.length} skipped route(s). The site will still deploy and those pages will simply hide the article block for ${targetDate}.`
     );
+    for (const line of failedEntries) {
+      console.warn(`- ${line}`);
+    }
   }
 
   console.log(

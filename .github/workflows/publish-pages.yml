@@ -79,7 +79,8 @@ jobs:
       ENABLE_DAILY_ARTICLE_GENERATION: ${{ github.event_name == 'repository_dispatch' || github.event_name == 'schedule' }}
       ARTICLE_MAX_CONCURRENCY: 4
       ARTICLE_MAX_ATTEMPTS: 3
-      ARTICLE_REQUEST_TIMEOUT_MS: 90000
+      ARTICLE_REQUEST_TIMEOUT_MS: 120000
+      ARTICLE_MAX_OUTPUT_TOKENS: 3200
       INDEXING_ARTIFACT_DIR: artifacts/indexing
       INDEXING_REQUEST_TIMEOUT_MS: 10000
       SITEMAP_URL: https://wordsolver.tech/sitemap.xml
