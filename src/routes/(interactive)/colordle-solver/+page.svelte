@@ -206,14 +206,14 @@ const jsonLdSchema = JSON.stringify({
   {@html `<script type="application/ld+json">${jsonLdSchema}</script>`}
 </svelte:head>
 
-<main class="min-h-screen bg-pink-50">
+<main class="min-h-screen bg-slate-50">
   <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <Breadcrumbs />
   </div>
 
   <!-- Hero Banner -->
   <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
-    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-pink-500 via-rose-500 to-purple-500 px-6 py-8 shadow-2xl text-center space-y-4">
+    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-teal-700 to-teal-900 px-6 py-8 shadow-2xl text-center space-y-4">
       <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white">Daily Color Puzzle</p>
       <h1 class="text-4xl font-black text-white sm:text-5xl">Colordle Solver</h1>
       <p class="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">Enter color guesses and their similarity percentages. The solver filters named colors by Delta E distance to find the exact daily answer.</p>
@@ -224,7 +224,7 @@ const jsonLdSchema = JSON.stringify({
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
     {#if loading}
       <div class="flex justify-center items-center py-20">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
       </div>
     {:else if loadingError}
       <div class="max-w-2xl mx-auto rounded-2xl border border-red-200 bg-red-50 px-6 py-5 text-center text-red-700 shadow-sm">
@@ -235,21 +235,21 @@ const jsonLdSchema = JSON.stringify({
         <!-- Left Panel: Input + History -->
         <div class="lg:col-span-5 space-y-5">
           <!-- Input Card -->
-          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+          <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
             <div class="flex items-center gap-3 mb-6">
-              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-600 to-teal-700 flex items-center justify-center text-white">
                 🔍
               </div>
               <div>
-                <h2 class="text-lg font-bold text-gray-900">Enter Guess Data</h2>
-                <p class="text-xs text-gray-500">Search a color, then enter the % score</p>
+                <h2 class="text-lg font-bold text-slate-900">Enter Guess Data</h2>
+                <p class="text-xs text-slate-500">Search a color, then enter the % score</p>
               </div>
             </div>
 
             <div class="space-y-4">
               <!-- Color Name Input -->
               <div class="relative">
-                <label for="colorNameInput" class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Color Name</label>
+                <label for="colorNameInput" class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 block">Color Name</label>
                 <div class="relative">
                   <input
                     id="colorNameInput"
@@ -257,7 +257,7 @@ const jsonLdSchema = JSON.stringify({
                     value={guessInput}
                     oninput={(e) => handleGuessInput((e.target as HTMLInputElement).value)}
                     placeholder="e.g. Flax, Sky Blue, Coral"
-                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 pr-12 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-900 placeholder-gray-400 transition-all"
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 pr-12 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-slate-900 placeholder-slate-400 transition-all"
                   />
                   {#if selectedGuess}
                     <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
@@ -265,26 +265,26 @@ const jsonLdSchema = JSON.stringify({
                         class="w-7 h-7 rounded-lg border-2 border-white shadow-sm"
                         style="background-color: {selectedGuess.hex}"
                       ></div>
-                      <span class="text-green-500">✓</span>
+                      <span class="text-teal-500">✓</span>
                     </div>
                   {/if}
                 </div>
 
                 <!-- Suggestions Dropdown -->
                 {#if suggestions.length > 0}
-                  <div class="absolute z-30 w-full mt-2 bg-white border border-gray-200 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
+                  <div class="absolute z-30 w-full mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
                     {#each suggestions as s}
                       <button
                         onclick={() => handleSelectFromSuggestion(s)}
-                        class="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors flex items-center gap-3 border-b border-gray-100 last:border-0"
+                        class="w-full text-left px-4 py-3 hover:bg-slate-50 transition-colors flex items-center gap-3 border-b border-slate-100 last:border-0"
                       >
                         <div
-                          class="w-7 h-7 rounded-lg border border-gray-200 shrink-0 shadow-sm"
+                          class="w-7 h-7 rounded-lg border border-slate-200 shrink-0 shadow-sm"
                           style="background-color: {s.hex}"
                         ></div>
                         <div class="flex-1 min-w-0">
-                          <span class="text-sm font-medium text-gray-800 truncate block">{s.name}</span>
-                          <span class="text-xs text-gray-400 font-mono">{s.hex}</span>
+                          <span class="text-sm font-medium text-slate-800 truncate block">{s.name}</span>
+                          <span class="text-xs text-slate-400 font-mono">{s.hex}</span>
                         </div>
                       </button>
                     {/each}
@@ -294,7 +294,7 @@ const jsonLdSchema = JSON.stringify({
 
               <!-- Percentage Input -->
               <div>
-                <label for="similarityInput" class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5 block">Similarity %</label>
+                <label for="similarityInput" class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5 block">Similarity %</label>
                 <input
                   id="similarityInput"
                   type="number"
@@ -302,7 +302,7 @@ const jsonLdSchema = JSON.stringify({
                   value={percentageInput}
                   oninput={(e) => (percentageInput = (e.target as HTMLInputElement).value)}
                   placeholder="e.g. 50.18"
-                  class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-900 placeholder-gray-400 font-mono transition-all"
+                  class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-slate-900 placeholder-slate-400 font-mono transition-all"
                   onkeydown={(e) => { if ((e as KeyboardEvent).key === 'Enter') handleAddStep(); }}
                 />
               </div>
@@ -311,7 +311,7 @@ const jsonLdSchema = JSON.stringify({
               <button
                 onclick={handleAddStep}
                 disabled={!selectedGuess || !percentageInput || processing}
-                class="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl shadow-lg shadow-pink-500/20 hover:shadow-pink-500/30 disabled:shadow-none transition-all flex items-center justify-center gap-2"
+                class="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 disabled:from-slate-300 disabled:to-slate-300 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl shadow-lg shadow-teal-500/20 hover:shadow-teal-500/30 disabled:shadow-none transition-all flex items-center justify-center gap-2"
               >
                 {#if processing}
                   <span class="flex items-center gap-2"><span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> Calculating...</span>
@@ -324,9 +324,9 @@ const jsonLdSchema = JSON.stringify({
 
           <!-- Guess History -->
           {#if history.length > 0}
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
               <div class="flex items-center justify-between mb-4">
-                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
                   📚 Guess History
                 </h3>
                 <button onclick={handleReset} class="text-xs text-red-500 hover:text-red-600 flex items-center gap-1 font-semibold px-2.5 py-1 rounded-lg hover:bg-red-50 transition-colors">
@@ -335,23 +335,23 @@ const jsonLdSchema = JSON.stringify({
               </div>
               <div class="space-y-2">
                 {#each history as item, idx}
-                  <div class="bg-gray-50 border border-gray-100 rounded-xl p-3 flex items-center justify-between group">
+                  <div class="bg-slate-50 border border-slate-100 rounded-xl p-3 flex items-center justify-between group">
                     <div class="flex items-center gap-3">
                       <div class="relative">
                         <div
                           class="w-9 h-9 rounded-lg border-2 border-white shadow-sm"
                           style="background-color: {item.guess.hex}"
                         ></div>
-                        <span class="absolute -top-1 -left-1 w-4 h-4 rounded-full bg-gray-700 text-white text-[10px] font-bold flex items-center justify-center">{idx + 1}</span>
+                        <span class="absolute -top-1 -left-1 w-4 h-4 rounded-full bg-slate-700 text-white text-[10px] font-bold flex items-center justify-center">{idx + 1}</span>
                       </div>
                       <div>
-                        <div class="font-semibold text-sm text-gray-900">{item.guess.name}</div>
-                        <div class="text-xs text-gray-400 font-mono">{item.guess.hex}</div>
+                        <div class="font-semibold text-sm text-slate-900">{item.guess.name}</div>
+                        <div class="text-xs text-slate-400 font-mono">{item.guess.hex}</div>
                       </div>
                     </div>
                     <div class="flex items-center gap-2">
-                      <span class="font-mono text-sm font-bold text-pink-600 bg-pink-50 px-2.5 py-1 rounded-lg">{item.percent}%</span>
-                      <button onclick={() => handleRemoveHistoryItem(idx)} class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all p-1" title="Remove">
+                      <span class="font-mono text-sm font-bold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-lg">{item.percent}%</span>
+                      <button onclick={() => handleRemoveHistoryItem(idx)} class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-500 transition-all p-1" title="Remove">
                         ✕
                       </button>
                     </div>
@@ -364,20 +364,20 @@ const jsonLdSchema = JSON.stringify({
 
         <!-- Right Panel: Candidates -->
         <div class="lg:col-span-7">
-          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 h-full flex flex-col">
+          <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 h-full flex flex-col">
             <div class="flex items-center justify-between mb-6">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-600 to-teal-700 flex items-center justify-center text-white">
                   ✓
                 </div>
                 <div>
-                  <h2 class="text-lg font-bold text-gray-900">Possible Solutions</h2>
-                  <p class="text-xs text-gray-500">Click any color to use it as your next guess</p>
+                  <h2 class="text-lg font-bold text-slate-900">Possible Solutions</h2>
+                  <p class="text-xs text-slate-500">Click any color to use it as your next guess</p>
                 </div>
               </div>
               <span class="px-3 py-1.5 rounded-full text-sm font-bold font-mono {candidates.length <= 10
-                ? 'bg-green-100 text-green-700'
-                : 'bg-gray-100 text-gray-600'}">
+                ? 'bg-teal-100 text-teal-700'
+                : 'bg-slate-100 text-slate-600'}">
                 {candidates.length}
               </span>
             </div>
@@ -385,10 +385,10 @@ const jsonLdSchema = JSON.stringify({
             <div class="flex-1 overflow-y-auto max-h-[700px] pr-1">
               {#if candidates.length === 0}
                 <div class="h-48 flex flex-col items-center justify-center text-center">
-                  <div class="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center text-3xl mb-4">🎨</div>
-                  <p class="text-gray-500 font-medium">No matching colors found</p>
-                  <p class="text-sm text-gray-400 mt-1">Double-check your percentages or reset to start over</p>
-                  <button onclick={handleReset} class="mt-4 text-sm font-semibold text-pink-600 hover:text-pink-700 flex items-center gap-1">
+                  <div class="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center text-3xl mb-4">🎨</div>
+                  <p class="text-slate-500 font-medium">No matching colors found</p>
+                  <p class="text-sm text-slate-400 mt-1">Double-check your percentages or reset to start over</p>
+                  <button onclick={handleReset} class="mt-4 text-sm font-semibold text-teal-600 hover:text-pink-700 flex items-center gap-1">
                     ↻ Reset Solver
                   </button>
                 </div>
@@ -397,16 +397,16 @@ const jsonLdSchema = JSON.stringify({
                   {#each candidates.slice(0, displayLimit) as c}
                     <button
                       onclick={() => handleSelectFromSuggestion(c)}
-                      class="group bg-white border border-gray-200 hover:border-pink-300 rounded-xl p-3 cursor-pointer transition-all hover:shadow-lg hover:-translate-y-0.5 text-left"
+                      class="group bg-white border border-slate-200 hover:border-teal-300 rounded-xl p-3 cursor-pointer transition-all hover:shadow-lg hover:-translate-y-0.5 text-left"
                     >
                       <div
                         class="w-full aspect-square rounded-lg mb-2.5 shadow-inner border border-black/5 group-hover:shadow-md transition-shadow"
                         style="background-color: {c.hex}"
                       ></div>
-                       <div class="text-sm font-semibold truncate text-center text-gray-800 group-hover:text-pink-600 transition-colors">
+                       <div class="text-sm font-semibold truncate text-center text-slate-800 group-hover:text-teal-600 transition-colors">
                         {c.name}
                       </div>
-                      <div class="text-xs text-center text-gray-400 font-mono mt-0.5">
+                      <div class="text-xs text-center text-slate-400 font-mono mt-0.5">
                         {c.hex}
                       </div>
                     </button>
@@ -417,7 +417,7 @@ const jsonLdSchema = JSON.stringify({
                   <div class="mt-6 flex justify-center">
                     <button
                       onclick={() => (displayLimit += 20)}
-                      class="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl font-semibold text-sm transition-all group"
+                      class="flex items-center gap-2 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-semibold text-sm transition-all group"
                     >
                       ▼ Show More ({candidates.length - displayLimit} remaining)
                     </button>
@@ -434,9 +434,9 @@ const jsonLdSchema = JSON.stringify({
   <!-- Content Sections -->
   <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
     <!-- What Is & How To Play -->
-<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+<section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
   <div class="flex items-center gap-3 mb-5">
-    <div class="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center text-pink-600">
+    <div class="w-10 h-10 rounded-xl bg-teal-100 flex items-center justify-center text-teal-600">
       ℹ️
     </div>
     <h2 class="text-3xl font-bold text-slate-900 mb-5">What is Colordle?</h2>
@@ -446,14 +446,14 @@ const jsonLdSchema = JSON.stringify({
       Colordle is a daily game where you guess a secret color. You type in a color name, and Colordle tells you how close you are with a percentage — 100% means you got it.
     </p>
     <p>
-      The tricky part: if you guess <span class="font-mono text-sm bg-gray-100 px-1 rounded">#3498db</span> and get 34% back, that number alone doesn't tell you much. Is the target brighter? More saturated? A different hue entirely? Without a way to cross-reference, you're guessing in the dark. The solver helps you filter the color list based on that percentage.
+      The tricky part: if you guess <span class="font-mono text-sm bg-slate-100 px-1 rounded">#3498db</span> and get 34% back, that number alone doesn't tell you much. Is the target brighter? More saturated? A different hue entirely? Without a way to cross-reference, you're guessing in the dark. The solver helps you filter the color list based on that percentage.
     </p>
   </div>
 </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
       <div class="flex items-center gap-3 mb-5">
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600">
+        <div class="w-10 h-10 rounded-xl bg-teal-100 flex items-center justify-center text-teal-600">
           📚
         </div>
         <h2 class="text-3xl font-bold text-slate-900 mb-5">How to Play</h2>
@@ -461,7 +461,7 @@ const jsonLdSchema = JSON.stringify({
       <ul class="space-y-3 text-slate-600 leading-relaxed">
         {#each howToSteps as step}
           <li class="flex gap-3 items-start">
-            <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-pink-500 to-purple-600 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">{step.num}</span>
+            <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-600 to-teal-700 text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">{step.num}</span>
             <span>{step.text}</span>
           </li>
         {/each}
@@ -469,7 +469,7 @@ const jsonLdSchema = JSON.stringify({
     </section>
 
     <!-- Why Use Section -->
-<section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+<section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
   <h2 class="text-3xl font-bold text-slate-900 mb-5">
     Why Use a Colordle Helper?
   </h2>
@@ -500,14 +500,14 @@ const jsonLdSchema = JSON.stringify({
 
     <!-- SEO Content Section -->
     <section class="space-y-10">
-<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+<div class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
   <h2 class="text-3xl font-bold text-slate-900 mb-5">How Color Distance Calculation Works</h2>
   <div class="prose prose-lg max-w-none text-slate-600">
     <p class="mb-6 leading-relaxed">
       Colordle uses Delta E CIE2000 to convert your percentage into a color distance value. A Delta E of 1.0 is roughly the smallest difference the human eye can detect. A Delta E of 10+ is a clearly different color. The percentage you see is derived from this distance.
     </p>
     <p class="mb-6 leading-relaxed">
-      The math happens in LAB color space, not RGB. RGB hex values aren't perceptually uniform — jumping from <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF0000</span> to <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF1100</span> (a change of 1) is invisible, but the same jump in a different color range might be obvious. LAB was designed to fix this. A Delta E of 5 means the same visual gap regardless of where in the color wheel you are.
+      The math happens in LAB color space, not RGB. RGB hex values aren't perceptually uniform — jumping from <span class="font-mono text-sm bg-slate-100 px-1 rounded">#FF0000</span> to <span class="font-mono text-sm bg-slate-100 px-1 rounded">#FF1100</span> (a change of 1) is invisible, but the same jump in a different color range might be obvious. LAB was designed to fix this. A Delta E of 5 means the same visual gap regardless of where in the color wheel you are.
     </p>
     <p class="leading-relaxed">
       When you enter your percentage, the solver inverts the formula to find colors with a matching Delta E. It's not magic — it's just math doing the tedious cross-referencing for you.
@@ -515,7 +515,7 @@ const jsonLdSchema = JSON.stringify({
   </div>
 </div>
 
-<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+<div class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
   <h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Getting Better at Colordle</h2>
   <div class="space-y-6 text-lg text-slate-600">
     <ul class="space-y-4 ml-4">
@@ -538,52 +538,52 @@ const jsonLdSchema = JSON.stringify({
   </div>
 </div>
 
-<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+<div class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
   <h2 class="text-3xl font-bold text-slate-900 mb-5">Understanding Hex Color Codes</h2>
   <div class="prose prose-lg max-w-none text-slate-600">
     <p class="mb-6 leading-relaxed">
-      Every color in Colordle has a hex code like <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF6B6B</span>. Once you learn to read the pairs, you can make educated guesses.
+      Every color in Colordle has a hex code like <span class="font-mono text-sm bg-slate-100 px-1 rounded">#FF6B6B</span>. Once you learn to read the pairs, you can make educated guesses.
     </p>
     <div class="grid md:grid-cols-3 gap-6 not-prose mb-6">
-      <div class="bg-white p-6 rounded-xl border border-gray-200">
+      <div class="bg-white p-6 rounded-xl border border-slate-200">
         <h3 class="font-bold text-slate-900 mb-2">First 2: Red</h3>
         <p class="text-slate-600 text-sm">00 means no red, FF means red is maxed out. If your guess <span class="font-mono text-xs">#FF6B6B</span> returns 40% and the red pair is FF, you know red is already at full strength in the target.</p>
       </div>
-      <div class="bg-white p-6 rounded-xl border border-gray-200">
+      <div class="bg-white p-6 rounded-xl border border-slate-200">
         <h3 class="font-bold text-slate-900 mb-2">Middle 2: Green</h3>
         <p class="text-slate-600 text-sm">Same idea — 00 is no green, FF is full green. A low green value often makes a color feel pinkish or purple-adjacent.</p>
       </div>
-      <div class="bg-white p-6 rounded-xl border border-gray-200">
+      <div class="bg-white p-6 rounded-xl border border-slate-200">
         <h3 class="font-bold text-slate-900 mb-2">Last 2: Blue</h3>
         <p class="text-slate-600 text-sm">Blue at 00 feels warm (orange tones). Blue at FF feels cool (purple or cyan tones). If you're getting low scores, check which pair is dragging you down.</p>
       </div>
     </div>
     <p class="leading-relaxed">
-      Example: <span class="font-mono text-sm bg-gray-100 px-1 rounded">#FF6B6B</span> has max red (FF), medium green (6B = 107 in decimal), medium-low blue (6B). If you get 40% on this, and the solver says red is maxed — you'll want your next guess to also have FF in the first pair.
+      Example: <span class="font-mono text-sm bg-slate-100 px-1 rounded">#FF6B6B</span> has max red (FF), medium green (6B = 107 in decimal), medium-low blue (6B). If you get 40% on this, and the solver says red is maxed — you'll want your next guess to also have FF in the first pair.
     </p>
   </div>
 </div>
 
-<div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+<div class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
   <h2 class="text-3xl font-bold text-slate-900 mb-5">Common Colordle Color Categories</h2>
   <div class="prose prose-lg max-w-none text-slate-600">
     <p class="mb-6 leading-relaxed">
       Colordle draws from a large color list. Answers tend to cluster around these groups:
     </p>
     <div class="grid md:grid-cols-2 gap-6 not-prose">
-      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
         <h3 class="font-bold text-slate-900 mb-2">🎨 Desaturated Common Names</h3>
         <p class="text-slate-600 text-sm">Colors like "Mauve", "Slate", "Taupe", "Sage". These are muted, low-saturation colors that are hard to pin down without the percentage. Often appear in the 40-60% range on first guesses.</p>
       </div>
-      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
         <h3 class="font-bold text-slate-900 mb-2">🌸 Pastel Variants</h3>
         <p class="text-slate-600 text-sm">"Powder Blue", "Pale Rose", "Lavender Blush". These have high lightness and medium-low saturation. If you get a decent match on a saturated color and the target feels "light", try a pastel version.</p>
       </div>
-      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
         <h3 class="font-bold text-slate-900 mb-2">🍇 Saturated Jewel Tones</h3>
         <p class="text-slate-600 text-sm">"Cerulean", "Cobalt", "Vermilion", "Emerald". These are highly saturated and produce sharp percentage jumps. If you miss by 10% on cobalt, you're not close at all.</p>
       </div>
-      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
         <h3 class="font-bold text-slate-900 mb-2">🟤 Earth Tones</h3>
         <p class="text-slate-600 text-sm">"Umber", "Sienna", "Ochre", "Burnt Sienna". Brown-adjacent colors with low saturation and warm undertones. Often the hardest to distinguish from each other — a 5% difference might separate two earth tones.</p>
       </div>

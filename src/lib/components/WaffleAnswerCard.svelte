@@ -64,20 +64,20 @@
   }
 
   function getColorClass(color: string) {
-    if (color === 'green') return 'bg-green-500 dark:bg-green-600 text-white';
+    if (color === 'green') return 'bg-teal-500 dark:bg-teal-600 text-white';
     if (color === 'yellow') return 'bg-amber-500 dark:bg-amber-600 text-white';
-    return 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100';
+    return 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100';
   }
 
   let solutionGrid = $derived(solution ? buildGrid(solution) : []);
 </script>
 
 {#if loading}
-  <div class="animate-pulse h-96 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+  <div class="animate-pulse h-96 bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
 {:else if !solution || solution.length !== 21}
   <div class="text-red-500">Invalid Waffle Data</div>
 {:else}
-  <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+  <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-700">
     <div class="p-6 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-b border-amber-100 dark:border-amber-900/30 text-center">
       <h2 class="text-2xl font-bold text-amber-900 dark:text-amber-400">Waffle Puzzle Solution</h2>
       <p class="text-amber-700 dark:text-amber-300 opacity-80 text-sm">{format(date, 'MMMM d, yyyy')}</p>
@@ -88,7 +88,7 @@
         {@const puzzleGrid = buildGrid(puzzle)}
         <div class="flex flex-col items-center">
           <h3 class="text-lg font-bold mb-4 text-amber-800 dark:text-amber-400">Starting Puzzle Grid</h3>
-          <div class="grid grid-cols-5 gap-2 sm:gap-3 p-4 bg-amber-100 dark:bg-gray-900 rounded-xl border-4 border-amber-200 dark:border-amber-900/50">
+          <div class="grid grid-cols-5 gap-2 sm:gap-3 p-4 bg-amber-100 dark:bg-slate-900 rounded-xl border-4 border-amber-200 dark:border-amber-900/50">
             {#each puzzleGrid as row, rIdx}
               {#each row as cell, cIdx}
                 {@const globalIdx = getGlobalIdx(rIdx, cIdx)}
@@ -108,11 +108,11 @@
 
       <div class="flex flex-col items-center">
         <h3 class="text-lg font-bold mb-4 text-amber-800 dark:text-amber-400">Solved Grid (The Answer)</h3>
-        <div class="grid grid-cols-5 gap-2 sm:gap-3 p-4 bg-amber-100 dark:bg-gray-900 rounded-xl border-4 border-amber-200 dark:border-amber-900/50">
+        <div class="grid grid-cols-5 gap-2 sm:gap-3 p-4 bg-amber-100 dark:bg-slate-900 rounded-xl border-4 border-amber-200 dark:border-amber-900/50">
           {#each solutionGrid as row, rIdx}
             {#each row as cell, cIdx}
               {#if cell !== ''}
-                <div class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center text-xl sm:text-2xl rounded-lg shadow-sm bg-green-500 dark:bg-green-600 text-white font-bold transition-all duration-300 hover:scale-105 cursor-default">
+                <div class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center text-xl sm:text-2xl rounded-lg shadow-sm bg-teal-500 dark:bg-teal-600 text-white font-bold transition-all duration-300 hover:scale-105 cursor-default">
                   {cell.toUpperCase()}
                 </div>
               {:else}
@@ -124,8 +124,8 @@
       </div>
     </div>
 
-    <div class="bg-gray-50 dark:bg-gray-900/50 p-4 text-center border-t border-gray-100 dark:border-gray-700">
-      <p class="text-sm text-gray-500 dark:text-gray-400">All words are arranged correctly in the solved grid!</p>
+    <div class="bg-slate-50 dark:bg-slate-900/50 p-4 text-center border-t border-slate-100 dark:border-slate-700">
+      <p class="text-sm text-slate-500 dark:text-slate-400">All words are arranged correctly in the solved grid!</p>
     </div>
   </div>
 {/if}

@@ -62,82 +62,124 @@
   {@html `<script type="application/ld+json">${JSON.stringify(aboutSchemas)}</script>`}
 </svelte:head>
 
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
   <Breadcrumbs />
 
-  <div class="text-center mb-12">
-    <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+  <!-- Page header -->
+  <div class="mb-10">
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-slate-50 tracking-tight leading-[1.1]">
       About WordSolverX
     </h1>
-    <p class="mt-4 max-w-3xl text-xl text-gray-600 dark:text-gray-300 mx-auto">
-      WordSolverX is an independent puzzle resource built to make daily answers, archives, guides,
-      and solver tools easier to find and easier to use.
+    <p class="mt-3 text-lg text-slate-500 dark:text-slate-400 max-w-2xl">
+      An independent puzzle resource built for people who play daily games and want answers, tools, and archives without the noise.
     </p>
   </div>
 
-  <div class="bg-white dark:bg-gray-800 shadow overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
-    <div class="px-6 py-8 sm:p-10">
-      <div class="prose prose-green dark:prose-invert max-w-none">
-        <h2>What WordSolverX Covers</h2>
-        <p>
-          We publish a growing collection of daily puzzle answer pages, answer archives, and solver
-          tools for Wordle and other popular word and trivia games. The goal is simple: help players
-          quickly find accurate information, learn better solving strategies, and get back to the
-          games they enjoy.
-        </p>
+  <!-- Content -->
+  <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20">
 
-        <h2 class="mt-8">What You Will Find Here</h2>
-        <ul>
-          <li>Daily answer pages for puzzle games we track across the site</li>
-          <li>Archive pages to help players look up past answers and puzzle history</li>
-          <li>Wordle solver tools, including all wordle solver resources for different word lengths</li>
-          <li>Game-specific solver pages for supported puzzles</li>
-          <li>Guides, tips, and strategy content for improving puzzle play</li>
-        </ul>
+    <h2 class="text-slate-900 dark:text-slate-50">What WordSolverX Is</h2>
 
-        <h2 class="mt-8">How We Update the Site</h2>
-        <p>
-          WordSolverX is updated as new tools, games, and content are added across the site. We
-          refresh pages when puzzle formats change, when solver tools improve, and when players flag
-          corrections or outdated information.
-        </p>
-        <p>
-          If you spot an error, want a new puzzle added, or have feedback about how a page works,
-          you can reach us at
-          <a
-            href="mailto:wordsolverx@gmail.com"
-            class="text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300"
-            >wordsolverx@gmail.com</a
-          >.
-        </p>
+    <p>
+      WordSolverX is a website that publishes daily puzzle answers, maintains answer archives, and provides solver tools for Wordle and 20+ other daily puzzle games. It's independent — not affiliated with The New York Times, any game publisher, or any puzzle platform. It exists because the existing options for finding puzzle answers were either slow, ad-heavy, inaccurate, or all three.
+    </p>
+    <p>
+      The site covers three categories of content. First, daily answer pages — one for each game we track — that show today's answer immediately, no clicks required. Second, solver tools that let you work through a puzzle interactively instead of just reading the solution. Third, archives that let you look up any past answer by date, going back months or years depending on the game.
+    </p>
+    <p>
+      Everything is free. There's no sign-up, no premium tier, no paywall. The site makes money through display advertising, which is kept to a level that doesn't interfere with the actual content. If the ads get in the way, that's a bug, not a feature — and you can tell us about it on the contact page.
+    </p>
 
-        <h2 class="mt-8">Independent Site Notice</h2>
-        <p>
-          WordSolverX is an independent website. We are not affiliated with The New York Times or
-          with the official publishers of the puzzle games covered on this site unless a page clearly
-          states otherwise. Wordle and other game names, logos, and trademarks belong to their
-          respective owners.
-        </p>
+    <h2 class="text-slate-900 dark:text-slate-50">What You'll Find Here</h2>
 
-        <h2 class="mt-8">Why WordSolverX Exists</h2>
-        <p>
-          Puzzle players often need one place for quick answers, archives, and tools without jumping
-          through multiple websites. WordSolverX is designed to be that single resource - fast,
-          readable, and focused on useful puzzle help.
-        </p>
+    <p>
+      The site is organized around four main sections, each accessible from the navigation above:
+    </p>
 
-        <section id="preston-hayes" class="mt-10 scroll-mt-28">
-          <h2>About Preston Hayes</h2>
-          <p>
-            Preston Hayes is the credited author behind our daily answer pages and archive updates.
-            His work focuses on making each puzzle page clear, trustworthy, and easy to skim when
-            readers need a quick answer or a fast archive lookup.
-          </p>
-        </section>
-      </div>
-    </div>
+    <p><strong>Today's Answers</strong> — A grid of every game we cover, each linking to its answer-today page. If you know which game you need, this is the fastest way there. Each answer page shows the answer first, followed by optional hints and a daily article with context about the specific puzzle.</p>
+
+    <p><strong>Solver Tools</strong> — 44 tools (and growing) for different puzzle types. The Wordle solver alone covers nine different word lengths (3 through 11 letters). Beyond that, there are solvers for Quordle, Nerdle, Betweenle, Worldle, Phoodle, Waffle, Boggle, Hangman, Minesweeper, Kanoodle, and a long list of character-guessing games (LoLdle, Pokedle, Smashdle, Narutodle, Dotadle, Onepiecedle). Each solver runs in your browser using WebAssembly where needed, so there's no waiting for server responses.</p>
+
+    <p><strong>Archives</strong> — Historical answer data for 18 games. The Wordle archive goes back to June 2021. Quordle, Nerdle, Phoodle, and most other games have similarly deep histories. Each archive page has a date picker or scrollable list, so you can find any specific day's answer without guessing at URLs or scrolling through hundreds of results.</p>
+
+    <p><strong>Guides</strong> — Strategy content for the most popular games. Not generic "try common letters" advice, but specific, game-by-game breakdowns of how the mechanics work, where most players make mistakes, and how to improve. Each guide links to the relevant solver tool so you can practice immediately.</p>
+
+    <h2 class="text-slate-900 dark:text-slate-50">How the Site Works Technically</h2>
+
+    <p>
+      WordSolverX is built on SvelteKit and deployed on Cloudflare Pages. If you're not a developer, none of this matters to you — the site should just work fast. If you are a developer, here's the architecture at a high level:
+    </p>
+    <p>
+      Daily answer pages are statically generated at build time. The puzzle date calculation happens during the build, not in the browser, so the date shown on each page is baked into the HTML. This means answer pages load essentially instantly because there's no JavaScript that needs to execute before the content is visible.
+    </p>
+    <p>
+      Interactive solver tools use a combination of client-side JavaScript and WebAssembly. The 5-letter Wordle solver, for instance, compiles the entire filtering algorithm to WASM so it runs in your browser without server round-trips. The word list for each solver is bundled at build time and loaded on demand. For games that require real-time data (like Squaredle, which generates a new board daily from an API), we use Cloudflare edge functions.
+    </p>
+    <p>
+      The card filtering system — the search bars on the homepage, today page, and solver page — runs entirely in vanilla JavaScript defined in app.html. It filters visible cards based on a data attribute match against your search query. No frameworks, no virtual DOM diffing, just fast DOM manipulation. This was a deliberate choice: the filter needs to work on every page including statically generated ones, and a framework-independent approach guarantees that.
+    </p>
+
+    <h2 class="text-slate-900 dark:text-slate-50">Which Games We Cover</h2>
+
+    <p>
+      The game list grows as new puzzles gain enough daily players to justify coverage. As of this writing, we track answers and provide tools for:
+    </p>
+    <p>
+      Word games: Wordle (3-11 letters), Canuckle, Betweenle, Quordle, Octordle, Dordle, Phrazle, Semantle, Contexto, Worgle, and various Wordle variants (Hardle, Warmle, Woodle, Wordle Peaks, Xordle, Fibble, Spotle Wordle).
+    </p>
+    <p>
+      Non-word puzzles: Nerdle (all modes), Colordle, Colorfle, Waffle, Squaredle, Boggle, Hangman, Minesweeper, Kanoodle, Lights Out, Word Ladder, and Weaver.
+    </p>
+    <p>
+      Geography and trivia: Worldle, Globle, Countryle, Framed (movies), Spotle (music artists), Searchle (autocomplete), and Soundmap (artist guessing).
+    </p>
+    <p>
+      Character guessing: LoLdle (League of Legends), Pokedle (Pokemon), Smashdle (Super Smash Bros.), Narutodle (Naruto), Dotadle (Dota 2), and Onepiecedle (One Piece).
+    </p>
+
+    <h2 class="text-slate-900 dark:text-slate-50">How Answers Are Sourced</h2>
+
+    <p>
+      Answer data comes from each game's own source material. For Wordle, we decode the official answer list embedded in the game's client-side JavaScript. For Nerdle, we pull from the equation database. For geography games, we track the country selection algorithms. For character-guessing games, we maintain databases of all possible characters with their attributes.
+    </p>
+    <p>
+      This means our answers are always in sync with the official games. When Wordle's answer list was modified by the New York Times (removing words like "SLAVE" and "WHORE"), our data reflected those changes immediately because we decode the current list at build time. We don't rely on manual updates or user submissions for core answer data — the source of truth is always the game itself.
+    </p>
+    <p>
+      For games where the answer source is an API that we can't decode from the client side (like Contexto, which uses a proprietary word embedding model), we use automated scripts that fetch the daily answer at the appropriate time and store it for our pages. These scripts run as part of the build process, so the answer is available by the time the page is served.
+    </p>
+
+    <h2 class="text-slate-900 dark:text-slate-50">Independent Status</h2>
+
+    <p>
+      WordSolverX is not affiliated with The New York Times, the original Wordle creator (Josh Wardle), or the publishers of any of the games covered on this site. We don't have special access to game data, we don't receive compensation from game publishers, and we don't have any editorial relationship with them.
+    </p>
+    <p>
+      Puzzle names, logos, and trademarks referenced on this site belong to their respective owners. We use them for identification and reference purposes only — not to imply endorsement or affiliation. If a game publisher objects to our coverage, we'll work with them to find a reasonable solution.
+    </p>
+
+    <h2 class="text-slate-900 dark:text-slate-50">Accuracy and Corrections</h2>
+
+    <p>
+      We aim for 100% accuracy on every answer page. When we fall short — and it does happen occasionally, usually because a game changed its answer source without notice — we want to know about it. The fastest way to report a wrong answer is through the contact page. Include the game name, the date, the answer we showed, and the correct answer. We'll verify and fix it, usually within a day.
+    </p>
+    <p>
+      Solver tools can also produce incorrect results if the word list is outdated or if a game has changed its rules. If a solver suggests words that aren't valid guesses in the game you're playing, that's a bug we need to fix. Same process: contact page, details about what went wrong, and we'll investigate.
+    </p>
+
+    <section id="preston-hayes" class="scroll-mt-20">
+      <h2 class="text-slate-900 dark:text-slate-50">About Preston Hayes</h2>
+
+      <p>
+        Preston Hayes is the credited author behind our daily answer pages and puzzle content. His work focuses on making each page clear, accurate, and genuinely useful — not just keyword-stuffed for search engines. The daily articles attached to answer pages, the strategy guides, and the archive descriptions all reflect his approach: give players what they came for, then add value if they want to keep reading.
+      </p>
+      <p>
+        Preston's content philosophy is straightforward: the answer comes first, context comes second, and neither should be buried under ads, pop-ups, or unnecessary prose. If a reader opens a Wordle answer page and gets what they need in under three seconds, the page has done its job. Everything below the fold is bonus.
+      </p>
+    </section>
   </div>
 
+  <!-- Author card -->
   <div class="mt-10">
     <AuthorCard
       name={PRESTON_HAYES_AUTHOR_NAME}

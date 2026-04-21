@@ -38,7 +38,7 @@
   });
 </script>
 
-<div class="bg-gradient-to-br from-purple-50 via-indigo-50 to-pink-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 rounded-3xl shadow-xl overflow-hidden border border-purple-100 dark:border-purple-900/30 max-w-lg mx-auto">
+<div class="bg-gradient-to-br from-purple-50 via-indigo-50 to-pink-50 dark:from-slate-800 dark:via-slate-800 dark:to-slate-900 rounded-3xl shadow-xl overflow-hidden border border-purple-100 dark:border-purple-900/30 max-w-lg mx-auto">
   <!-- Header -->
   <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 p-6 text-white">
     <div class="flex items-center gap-3 mb-2">
@@ -51,50 +51,50 @@
   <!-- Clues Grid -->
   <div class="p-6 space-y-4">
     <div class="grid grid-cols-2 gap-4">
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-purple-100 dark:border-purple-800/30 hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-purple-100 dark:border-purple-800/30 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400 mb-2">
           <FiHash class="text-lg" />
           <span class="text-xs font-semibold uppercase tracking-wider">Letters</span>
         </div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{letterCount}</p>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{letterCount}</p>
       </div>
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-indigo-100 dark:border-indigo-800/30 hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-indigo-100 dark:border-indigo-800/30 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 mb-2">
           <FiType class="text-lg" />
           <span class="text-xs font-semibold uppercase tracking-wider">Vowels</span>
         </div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{vowelCount}</p>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{vowelCount}</p>
       </div>
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-pink-100 dark:border-pink-800/30 hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-pink-100 dark:border-pink-800/30 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-2 text-pink-600 dark:text-pink-400 mb-2">
           <span class="text-xs font-semibold uppercase tracking-wider">Starts With</span>
         </div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{startLetter}</p>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{startLetter}</p>
       </div>
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-rose-100 dark:border-rose-800/30 hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-rose-100 dark:border-rose-800/30 hover:shadow-md transition-shadow">
         <div class="flex items-center gap-2 text-rose-600 dark:text-rose-400 mb-2">
           <span class="text-xs font-semibold uppercase tracking-wider">Ends With</span>
         </div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{endLetter}</p>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{endLetter}</p>
       </div>
     </div>
 
     {#if !loading && definition}
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-amber-100 dark:border-amber-800/30">
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-amber-100 dark:border-amber-800/30">
         <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-2">
           <FiBookOpen class="text-lg" />
           <span class="text-xs font-semibold uppercase tracking-wider">Meaning Hint</span>
         </div>
-        <p class="text-gray-700 dark:text-gray-300 text-sm italic">"{definition}"</p>
+        <p class="text-slate-700 dark:text-slate-300 text-sm italic">"{definition}"</p>
       </div>
     {/if}
 
     <!-- Color Preview -->
-    <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-gray-200 dark:border-gray-600">
-      <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-3">
+    <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-600">
+      <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400 mb-3">
         <span class="text-xs font-semibold uppercase tracking-wider">Color Preview</span>
       </div>
-      <div class="h-16 w-full rounded-xl shadow-inner border border-gray-200 dark:border-gray-600" style="background-color: {colorHex}"></div>
+      <div class="h-16 w-full rounded-xl shadow-inner border border-slate-200 dark:border-slate-600" style="background-color: {colorHex}"></div>
     </div>
 
     <button
@@ -109,11 +109,11 @@
     </button>
 
     {#if showAnswer}
-      <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800/50">
+      <div class="bg-gradient-to-r from-teal-50 to-teal-50 dark:from-teal-900/20 dark:to-teal-900/20 rounded-2xl p-6 border border-teal-200 dark:border-teal-800/50">
         <div class="text-center">
-          <p class="text-sm text-green-600 dark:text-green-400 font-semibold uppercase tracking-wider mb-2">Today's Answer</p>
-          <h3 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-1">{colorName}</h3>
-          <p class="font-mono text-lg text-gray-600 dark:text-gray-400">({colorHex})</p>
+          <p class="text-sm text-teal-600 dark:text-teal-400 font-semibold uppercase tracking-wider mb-2">Today's Answer</p>
+          <h3 class="text-3xl font-extrabold text-slate-900 dark:text-slate-50 mb-1">{colorName}</h3>
+          <p class="font-mono text-lg text-slate-600 dark:text-slate-400">({colorHex})</p>
         </div>
       </div>
     {/if}

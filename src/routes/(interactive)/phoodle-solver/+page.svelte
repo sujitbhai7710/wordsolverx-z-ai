@@ -95,7 +95,7 @@
 
   <!-- Hero banner section -->
   <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
-    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-emerald-500 via-green-600 to-teal-700 px-6 py-8 text-white shadow-2xl sm:px-10 sm:py-12">
+    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-teal-500 via-teal-600 to-teal-700 px-6 py-8 text-white shadow-2xl sm:px-10 sm:py-12">
       <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 mb-4">
         Wordle Variant Solver
       </p>
@@ -139,14 +139,14 @@
       <h2 class="text-3xl font-bold text-slate-900 mb-5">Best Opening Words for Phoodle</h2>
       <div class="space-y-5">
         <div class="flex gap-4">
-          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">1</span>
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">1</span>
           <div>
             <h3 class="font-bold text-slate-900">STEAK — the strongest opener</h3>
             <p class="text-slate-600 mt-1 text-sm">Tests S, T, E, A, and K — four of the most common food-word letters. It's a valid Phoodle answer, so it could hit on guess one.</p>
           </div>
         </div>
         <div class="flex gap-4">
-          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-green-100 text-green-700 font-bold flex items-center justify-center">2</span>
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">2</span>
           <div>
             <h3 class="font-bold text-slate-900">SPICE — high-coverage alternative</h3>
             <p class="text-slate-600 mt-1 text-sm">Covers S, P, I, C, E. P and C appear in PASTA, CREAM, PEACH, CHILI, SCOOP, and CRISP — worth testing early.</p>

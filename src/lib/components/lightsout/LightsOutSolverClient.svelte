@@ -110,15 +110,15 @@
 </script>
 
 <section class="relative overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_32%),linear-gradient(180deg,#f8fffc_0%,#f6fbff_50%,#eef7ff_100%)] px-4 pb-16 pt-6 sm:px-6 lg:px-8">
-  <div class="pointer-events-none absolute inset-x-0 top-0 mx-auto h-72 max-w-5xl rounded-full bg-emerald-200/30 blur-3xl"></div>
+  <div class="pointer-events-none absolute inset-x-0 top-0 mx-auto h-72 max-w-5xl rounded-full bg-teal-200/30 blur-3xl"></div>
 
   <div class="relative mx-auto max-w-6xl">
     <div class="mx-auto max-w-5xl space-y-6">
       <div class="space-y-6">
-        <div class="rounded-[2rem] border border-emerald-100 bg-white/85 p-6 shadow-[0_24px_80px_rgba(15,118,110,0.12)] backdrop-blur sm:p-8">
+        <div class="rounded-[2rem] border border-teal-100 bg-white/85 p-6 shadow-[0_24px_80px_rgba(15,118,110,0.12)] backdrop-blur sm:p-8">
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="max-w-2xl">
-              <p class="inline-flex rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              <p class="inline-flex rounded-full bg-teal-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">
                 Classic grid puzzle
               </p>
               <h2 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Light Out Solver</h2>
@@ -131,7 +131,7 @@
               <label class="grid gap-2 text-sm font-semibold text-slate-700">
                 Board size
                 <select
-                  class="h-11 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-900 outline-none transition focus:border-emerald-400"
+                  class="h-11 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-900 outline-none transition focus:border-teal-400"
                   bind:value={gridSize}
                   onchange={handleGridSizeChange}
                 >
@@ -154,7 +154,7 @@
 
           <div class="mt-6 flex flex-wrap gap-3">
             <button
-              class={`inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold transition ${!editMode ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/25' : 'border border-slate-200 bg-white text-slate-700 hover:border-emerald-200 hover:text-emerald-700'}`}
+              class={`inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold transition ${!editMode ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/25' : 'border border-slate-200 bg-white text-slate-700 hover:border-teal-200 hover:text-teal-700'}`}
               onclick={() => (editMode = false)}
               type="button"
             >
@@ -168,7 +168,7 @@
               Edit puzzle
             </button>
             <button
-              class="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/20 transition hover:translate-y-[-1px]"
+              class="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-teal-600 via-teal-600 to-cyan-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-teal-500/20 transition hover:translate-y-[-1px]"
               onclick={handleSolve}
               type="button"
             >
@@ -248,7 +248,7 @@
                 This board cannot be solved from the current state.
               </div>
             {:else if solution !== undefined && solution.length === 0}
-              <div class="mt-6 rounded-3xl border border-emerald-200 bg-emerald-50 p-5 text-sm font-semibold text-emerald-800">
+              <div class="mt-6 rounded-3xl border border-teal-200 bg-teal-50 p-5 text-sm font-semibold text-teal-800">
                 Everything is already off. You are done.
               </div>
             {:else if solution && solution.length > 0}
@@ -292,9 +292,9 @@
           <aside class="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-[0_24px_70px_rgba(14,165,233,0.08)]">
             <h3 class="text-xl font-bold text-slate-900">How to use it</h3>
             <div class="mt-5 space-y-4">
-              <div class="rounded-2xl bg-emerald-50 p-4">
-                <p class="text-sm font-semibold text-emerald-800">1. Pick your board</p>
-                <p class="mt-2 text-sm leading-7 text-emerald-900/80">Choose a size from 2x2 up to 5x5, or click Random puzzle to generate a fresh board instantly.</p>
+              <div class="rounded-2xl bg-teal-50 p-4">
+                <p class="text-sm font-semibold text-teal-800">1. Pick your board</p>
+                <p class="mt-2 text-sm leading-7 text-teal-900/80">Choose a size from 2x2 up to 5x5, or click Random puzzle to generate a fresh board instantly.</p>
               </div>
               <div class="rounded-2xl bg-sky-50 p-4">
                 <p class="text-sm font-semibold text-sky-800">2. Choose the editing mode</p>

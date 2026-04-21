@@ -91,10 +91,10 @@
     .slice(0, 10);
 </script>
 
-<section class="mt-16 border-t border-gray-200 dark:border-gray-700 pt-12 max-w-4xl mx-auto px-4">
+<section class="mt-16 border-t border-slate-200 dark:border-slate-700 pt-12 max-w-4xl mx-auto px-4">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
     <div>
-      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2">
         <span class="text-2xl">TD</span> Today's Game Answers
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -102,11 +102,11 @@
           <a
             href={link.href}
             class="flex items-center gap-3 p-3 rounded-xl border transition-all {currentGame === link.name.split(' ')[0]
-              ? 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800 pointer-events-none'
-              : 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 hover:border-green-400 dark:hover:border-green-600 hover:shadow-sm'}"
+              ? 'bg-teal-50 border-teal-200 dark:bg-teal-900/20 dark:border-teal-800 pointer-events-none'
+              : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm'}"
           >
-            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-xs font-bold text-gray-700 dark:bg-gray-700 dark:text-gray-200">{link.icon}</span>
-            <span class="font-medium {currentGame === link.name.split(' ')[0] ? 'text-green-700 dark:text-green-400' : 'text-gray-700 dark:text-gray-300'}">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">{link.icon}</span>
+            <span class="font-medium {currentGame === link.name.split(' ')[0] ? 'text-teal-700 dark:text-teal-400' : 'text-slate-700 dark:text-slate-300'}">
               {link.name}
             </span>
           </a>
@@ -115,25 +115,25 @@
     </div>
 
     <div>
-      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2">
         <span class="text-2xl">AR</span> Past Solutions Archive
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {#each archiveLinks as link}
           <a
             href={link.href}
-            class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"
+            class="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-sm"
           >
-            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-xs font-bold text-gray-700 dark:bg-gray-700 dark:text-gray-200">{link.icon}</span>
-            <span class="text-gray-700 dark:text-gray-300 font-medium">{link.name}</span>
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">{link.icon}</span>
+            <span class="text-slate-700 dark:text-slate-300 font-medium">{link.name}</span>
           </a>
         {/each}
       </div>
     </div>
   </div>
 
-  <div class="mt-12 text-center p-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/10 dark:to-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
-    <p class="text-gray-700 dark:text-gray-300 font-medium leading-relaxed">
+  <div class="mt-12 text-center p-6 bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/10 dark:to-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
+    <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
       Stuck on a tricky puzzle?
       <a href="/5-letter-wordle-solver" class="text-blue-700 dark:text-blue-300 hover:underline mx-1 font-bold">Try our 5-Letter Wordle Solver</a>
       to filter clues fast, rank next guesses, and move into the right 3 to 11 letter Wordle page when you need a different board size.

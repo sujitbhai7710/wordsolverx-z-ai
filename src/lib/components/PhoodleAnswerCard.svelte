@@ -20,8 +20,8 @@
 
 <div class="mb-12">
   <!-- Clues Section -->
-  <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-lg mb-8">
-    <h2 class="text-2xl font-black text-gray-900 mb-6 flex items-center gap-3">
+  <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg mb-8">
+    <h2 class="text-2xl font-black text-slate-900 mb-6 flex items-center gap-3">
       <span class="w-2 h-8 bg-orange-500 rounded-full inline-block"></span>
       Phoodle clues for {dayText}
     </h2>
@@ -29,15 +29,15 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
       <div class="p-4 bg-orange-50 rounded-2xl border border-orange-100">
         <p class="text-orange-600 text-xs font-bold uppercase tracking-wider mb-1">Length</p>
-        <p class="text-gray-900 font-bold text-lg">{word.length} Letters</p>
+        <p class="text-slate-900 font-bold text-lg">{word.length} Letters</p>
       </div>
       <div class="p-4 bg-orange-50 rounded-2xl border border-orange-100">
         <p class="text-orange-600 text-xs font-bold uppercase tracking-wider mb-1">Starts With</p>
-        <p class="text-gray-900 font-bold text-lg">{word[0].toUpperCase()}</p>
+        <p class="text-slate-900 font-bold text-lg">{word[0].toUpperCase()}</p>
       </div>
       <div class="p-4 bg-orange-50 rounded-2xl border border-orange-100">
         <p class="text-orange-600 text-xs font-bold uppercase tracking-wider mb-1">Ends With</p>
-        <p class="text-gray-900 font-bold text-lg">{word[word.length - 1].toUpperCase()}</p>
+        <p class="text-slate-900 font-bold text-lg">{word[word.length - 1].toUpperCase()}</p>
       </div>
     </div>
 
@@ -70,13 +70,13 @@
       <p class="text-orange-600 text-sm font-bold uppercase tracking-widest mb-4">The Answer {isYesterday ? 'Was' : 'Is'}</p>
       <div class="flex justify-center flex-wrap gap-2 mb-6">
         {#each upperWord.split('') as letter, i}
-          <div class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-2xl md:text-3xl font-black text-white shadow-lg shadow-green-200 transform animate-bounce" style="animation-delay: {i * 100}ms">
+          <div class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center text-2xl md:text-3xl font-black text-white shadow-lg shadow-teal-200 transform animate-bounce" style="animation-delay: {i * 100}ms">
             {letter}
           </div>
         {/each}
       </div>
       {#if description}
-        <p class="text-gray-700 text-lg max-w-lg mx-auto leading-relaxed font-medium">{description}</p>
+        <p class="text-slate-700 text-lg max-w-lg mx-auto leading-relaxed font-medium">{description}</p>
       {/if}
       {#if recipe_name}
         <div class="mt-6 inline-block px-5 py-2.5 bg-white rounded-full text-orange-700 text-sm font-bold shadow-sm border border-orange-100 italic">

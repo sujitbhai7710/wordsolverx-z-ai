@@ -27,18 +27,18 @@
 
 <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 prose dark:prose-invert prose-green lg:prose-lg">
   <section class="mb-12">
-    <h1 class="text-4xl font-black text-gray-900 dark:text-white mb-6">Play {wordLength} Letter Wordle Daily</h1>
-    <p class="lead text-xl text-gray-600 dark:text-gray-300">
+    <h1 class="text-4xl font-black text-slate-900 dark:text-slate-50 mb-6">Play {wordLength} Letter Wordle Daily</h1>
+    <p class="lead text-xl text-slate-600 dark:text-slate-300">
       Challenge your vocabulary and logic skills with our free <strong>{wordLength}-letter word puzzle</strong>. 
       Whether you are a wordsmith or just looking for a fun daily brain teaser, our {wordLength}-letter variant offers the perfect level of difficulty!
     </p>
   </section>
 
-  <section class="mb-12 bg-gray-50 dark:bg-gray-800/50 p-8 rounded-2xl border border-gray-100 dark:border-gray-700">
-    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+  <section class="mb-12 bg-slate-50 dark:bg-slate-800/50 p-8 rounded-2xl border border-slate-100 dark:border-slate-700">
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
       <span class="text-3xl">🎮</span> How to Play
     </h2>
-    <ul class="space-y-3 text-gray-700 dark:text-gray-300 list-disc pl-5">
+    <ul class="space-y-3 text-slate-700 dark:text-slate-300 list-disc pl-5">
       <li>Guess the hidden <strong>{wordLength}-letter word</strong> in 6 attempts or less.</li>
       <li>Each guess must be a valid {wordLength}-letter word in the dictionary.</li>
       <li>Hit the enter button to submit your guess.</li>
@@ -47,28 +47,28 @@
     
     <div class="mt-6 flex flex-col gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 flex items-center justify-center bg-green-500 text-white font-bold rounded">W</div>
-        <p class="text-sm dark:text-gray-300"><strong>W</strong> is in the word and in the correct spot.</p>
+        <div class="w-10 h-10 flex items-center justify-center bg-teal-500 text-white font-bold rounded">W</div>
+        <p class="text-sm dark:text-slate-300"><strong>W</strong> is in the word and in the correct spot.</p>
       </div>
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 flex items-center justify-center bg-yellow-500 text-white font-bold rounded">O</div>
-        <p class="text-sm dark:text-gray-300"><strong>O</strong> is in the word but in the wrong spot.</p>
+        <p class="text-sm dark:text-slate-300"><strong>O</strong> is in the word but in the wrong spot.</p>
       </div>
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 flex items-center justify-center bg-gray-500 text-white font-bold rounded">R</div>
-        <p class="text-sm dark:text-gray-300"><strong>R</strong> is not in the word in any spot.</p>
+        <div class="w-10 h-10 flex items-center justify-center bg-slate-500 text-white font-bold rounded">R</div>
+        <p class="text-sm dark:text-slate-300"><strong>R</strong> is not in the word in any spot.</p>
       </div>
     </div>
   </section>
 
   <section class="mb-12">
-    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
       <span class="text-3xl">💡</span> Strategy and Tips
     </h2>
-    <p class="text-gray-700 dark:text-gray-300 mb-4">
+    <p class="text-slate-700 dark:text-slate-300 mb-4">
       Mastering the {wordLength}-letter Wordle requires a mix of strategy and a good vocabulary. Here are some tips to help you maintain your winning streak:
     </p>
-    <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+    <ul class="space-y-2 text-slate-700 dark:text-slate-300">
       <li><strong>Start strong:</strong> Begin with a word that has many vowels (A, E, I, O, U) and common consonants (R, S, T, L, N).</li>
       <li><strong>Eliminate efficiently:</strong> Unless you are playing on Hard Mode, use your second guess to eliminate as many new letters as possible.</li>
       <li><strong>Watch for duplicates:</strong> Remember that letters can appear more than once!</li>

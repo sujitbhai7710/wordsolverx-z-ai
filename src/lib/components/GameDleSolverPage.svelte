@@ -409,21 +409,21 @@
 	function getFeedbackColorClass(state: FeedbackState): string {
 		switch (state) {
 			case 'green':
-				return 'bg-green-50 border-green-400 shadow-sm';
+				return 'bg-teal-50 border-teal-400 shadow-sm';
 			case 'yellow_up':
 			case 'yellow_down':
 				return 'bg-amber-50 border-amber-400 shadow-sm';
 			case 'red':
 				return 'bg-red-50 border-red-400 shadow-sm';
 			default:
-				return 'bg-gray-50 border-gray-200';
+				return 'bg-slate-50 border-slate-200';
 		}
 	}
 
 	function getFeedbackButtonClass(state: FeedbackState): string {
 		switch (state) {
 			case 'green':
-				return 'bg-green-500 hover:bg-green-600 text-white border-green-600';
+				return 'bg-teal-500 hover:bg-teal-600 text-white border-teal-600';
 			case 'yellow_up':
 				return 'bg-amber-400 hover:bg-amber-500 text-black border-amber-500';
 			case 'yellow_down':
@@ -431,7 +431,7 @@
 			case 'red':
 				return 'bg-red-500 hover:bg-red-600 text-white border-red-600';
 			default:
-				return 'bg-gray-100 hover:bg-gray-200 text-gray-600 border-gray-300';
+				return 'bg-slate-100 hover:bg-slate-200 text-slate-600 border-slate-300';
 		}
 	}
 
@@ -505,7 +505,7 @@
 			<div class="flex flex-wrap items-center justify-between gap-4 mb-5">
 				<div>
 					<p
-						class="inline-flex items-center rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs font-semibold uppercase tracking-wide"
+						class="inline-flex items-center rounded-full bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold uppercase tracking-wide"
 					>
 						Solver Tool
 					</p>

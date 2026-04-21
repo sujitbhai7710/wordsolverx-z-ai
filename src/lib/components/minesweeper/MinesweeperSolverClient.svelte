@@ -287,7 +287,7 @@
     }
 
     if (cell.state === 'greenFlag') {
-      return 'border-emerald-500 bg-gradient-to-br from-emerald-100 to-emerald-200';
+      return 'border-teal-500 bg-gradient-to-br from-teal-100 to-teal-200';
     }
 
     if (cell.state === 'safe') {
@@ -391,7 +391,7 @@
             class={`rounded-xl px-6 py-3 font-bold text-white shadow-xl transition-all duration-300 ${
               isSolving
                 ? 'cursor-not-allowed bg-slate-500'
-                : 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:scale-105 hover:from-emerald-600 hover:to-teal-600'
+                : 'bg-gradient-to-r from-teal-500 to-teal-500 hover:scale-105 hover:from-teal-600 hover:to-teal-600'
             }`}
             disabled={isSolving}
             onclick={handleSolve}
@@ -532,29 +532,29 @@
           <div class="grid gap-4 text-sm text-slate-300 sm:grid-cols-2">
             <div class="space-y-2">
               <p class="flex items-start gap-2">
-                <span class="text-emerald-400">1.</span>
+                <span class="text-teal-400">1.</span>
                 Set the board size and number of mines to match your game.
               </p>
               <p class="flex items-start gap-2">
-                <span class="text-emerald-400">2.</span>
+                <span class="text-teal-400">2.</span>
                 Click a tool, then click board cells to enter numbers or mark flags.
               </p>
               <p class="flex items-start gap-2">
-                <span class="text-emerald-400">3.</span>
+                <span class="text-teal-400">3.</span>
                 Right-click any cell to quickly toggle a mine flag.
               </p>
             </div>
             <div class="space-y-2">
               <p class="flex items-start gap-2">
-                <span class="text-emerald-400">4.</span>
+                <span class="text-teal-400">4.</span>
                 Use Find Next Move to reveal definite safe squares and mines.
               </p>
               <p class="flex items-start gap-2">
-                <span class="text-emerald-400">5.</span>
+                <span class="text-teal-400">5.</span>
                 Green markers are safe squares. Red markers are mines.
               </p>
               <p class="flex items-start gap-2">
-                <span class="text-emerald-400">6.</span>
+                <span class="text-teal-400">6.</span>
                 A <span class="font-bold text-amber-400">?</span> marks the cells with the highest safety probability when no forced move exists.
               </p>
             </div>

@@ -205,7 +205,7 @@
               <span class="text-base font-semibold text-slate-900">Letters in word, unknown position</span>
               <input
                 bind:value={includedLetters}
-                class="h-12 rounded-2xl border-2 border-slate-200 px-4 font-mono text-base text-slate-900 outline-none transition focus:border-emerald-400"
+                class="h-12 rounded-2xl border-2 border-slate-200 px-4 font-mono text-base text-slate-900 outline-none transition focus:border-teal-400"
                 oninput={() => (includedLetters = includedLetters.toLowerCase().replace(/[^a-z]/g, ''))}
                 placeholder="e.g. ae"
                 spellcheck="false"
@@ -252,7 +252,7 @@
           {/if}
 
           {#if helperMessage}
-            <div class="mt-5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
+            <div class="mt-5 rounded-2xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm font-medium text-teal-800">
               {helperMessage}
             </div>
           {/if}
@@ -314,7 +314,7 @@
                   <div class="mt-4 flex max-h-72 flex-wrap gap-2 overflow-y-auto pr-1">
                     {#each result.wordFrequencies as wordFreq, index}
                       <button
-                        class={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-mono font-semibold transition ${index === 0 ? 'bg-violet-100 text-violet-700' : copiedWord === wordFreq.word ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-700 hover:bg-orange-100 hover:text-orange-700'}`}
+                        class={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-mono font-semibold transition ${index === 0 ? 'bg-violet-100 text-violet-700' : copiedWord === wordFreq.word ? 'bg-teal-500 text-white' : 'bg-slate-100 text-slate-700 hover:bg-orange-100 hover:text-orange-700'}`}
                         onclick={() => copyWord(wordFreq.word)}
                         type="button"
                       >
@@ -360,8 +360,8 @@
               <p class="text-sm font-semibold text-rose-700">2. Exclude wrong letters</p>
               <p class="mt-2 text-sm leading-7 text-slate-600">Wrong guesses are removed from all blank positions so the candidate list narrows quickly.</p>
             </div>
-            <div class="rounded-2xl bg-emerald-50 p-4">
-              <p class="text-sm font-semibold text-emerald-700">3. Use included letters</p>
+            <div class="rounded-2xl bg-teal-50 p-4">
+              <p class="text-sm font-semibold text-teal-700">3. Use included letters</p>
               <p class="mt-2 text-sm leading-7 text-slate-600">If you know a letter exists but not its position, add it here so the solver keeps only valid words.</p>
             </div>
           </div>

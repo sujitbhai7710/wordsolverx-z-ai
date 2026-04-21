@@ -140,9 +140,9 @@
     let classes = `${getSizeClasses(currentLength)} border-2 flex items-center justify-center font-bold uppercase transition-all duration-150 ease-in-out rounded-xl shadow-sm`;
 
     if (letter === targetWord[charIndex]) {
-      classes += ' bg-green-500 text-white border-green-600';
+      classes += ' bg-teal-500 text-white border-teal-600';
     } else {
-      classes += ' bg-gray-200 text-gray-800 border-gray-300';
+      classes += ' bg-slate-200 text-slate-800 border-slate-300';
     }
 
     return classes;
@@ -233,11 +233,11 @@
   {#if error}
     <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 max-w-md w-full text-center">
       <p class="text-red-600 font-medium">{error}</p>
-      <p class="mt-2 text-gray-500 text-sm">Please try refreshing the page.</p>
+      <p class="mt-2 text-slate-500 text-sm">Please try refreshing the page.</p>
     </div>
   {/if}
 
-  <div class="bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl p-6 sm:p-8 w-full max-w-md sm:max-w-lg lg:max-w-3xl xl:max-w-5xl border border-gray-200 transition-all duration-300">
+  <div class="bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl p-6 sm:p-8 w-full max-w-md sm:max-w-lg lg:max-w-3xl xl:max-w-5xl border border-slate-200 transition-all duration-300">
     <!-- Starting Word Section -->
     <div class="mb-6">
       <div class="flex items-center justify-center mb-3">
@@ -256,7 +256,7 @@
           placeholder="e.g. cold"
           class="w-full max-w-sm text-center text-2xl sm:text-3xl font-bold uppercase tracking-[0.3em] py-4 px-6 border-2 rounded-xl shadow-inner outline-none transition-all duration-200
             {startWordInvalid ? 'border-red-400 bg-red-50/50 text-red-600 focus:ring-2 focus:ring-red-300' :
-             startWordValid ? 'border-green-400 bg-green-50/50 text-green-700 focus:ring-2 focus:ring-green-300' :
+             startWordValid ? 'border-teal-400 bg-teal-50/50 text-teal-700 focus:ring-2 focus:ring-teal-300' :
              'border-indigo-300 bg-indigo-50/50 text-indigo-600 focus:ring-2 focus:ring-indigo-400'}"
           autocomplete="off"
           autocorrect="off"
@@ -275,7 +275,7 @@
     {#if isLoading}
       <div class="flex justify-center my-4">
         <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
-        <span class="ml-3 text-gray-500">Loading {detectedLength}-letter words...</span>
+        <span class="ml-3 text-slate-500">Loading {detectedLength}-letter words...</span>
       </div>
     {/if}
 
@@ -283,9 +283,9 @@
     {#if resultPaths.length > 0}
       <div class="my-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {#each resultPaths as path, pathIdx}
-          <div class="p-4 bg-gray-50 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] h-full flex flex-col">
-            <h3 class="text-center font-semibold text-blue-600 mb-3 pb-2 border-b border-gray-200">
-              Path {pathIdx + 1} <span class="text-gray-500 text-sm">({path.length - 1} step{path.length - 1 === 1 ? '' : 's'})</span>
+          <div class="p-4 bg-slate-50 rounded-lg shadow-md border border-slate-200 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] h-full flex flex-col">
+            <h3 class="text-center font-semibold text-blue-600 mb-3 pb-2 border-b border-slate-200">
+              Path {pathIdx + 1} <span class="text-slate-500 text-sm">({path.length - 1} step{path.length - 1 === 1 ? '' : 's'})</span>
             </h3>
             <div class="space-y-2 flex-grow flex flex-col justify-center">
               {#each path.slice(1) as word, stepIndex}
@@ -303,7 +303,7 @@
                 </div>
               {/each}
             </div>
-            <div class="mt-2 pt-2 border-t border-gray-200 text-center text-xs text-gray-500">
+            <div class="mt-2 pt-2 border-t border-slate-200 text-center text-xs text-slate-500">
               {path[0]} -&gt; {path[path.length - 1]}
             </div>
           </div>
@@ -332,11 +332,11 @@
     <!-- Destination Word Section -->
     <div class="mt-6">
       <div class="flex items-center justify-center mb-3">
-        <div class="h-px bg-gradient-to-r from-transparent via-green-300 to-transparent w-1/4 mr-4"></div>
-        <h2 class="text-center text-lg font-medium text-green-700 px-4 py-1 rounded-full bg-green-50 border border-green-100">
+        <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent w-1/4 mr-4"></div>
+        <h2 class="text-center text-lg font-medium text-teal-700 px-4 py-1 rounded-full bg-teal-50 border border-teal-100">
           Destination Word
         </h2>
-        <div class="h-px bg-gradient-to-r from-transparent via-green-300 to-transparent w-1/4 ml-4"></div>
+        <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent w-1/4 ml-4"></div>
       </div>
       <div class="flex justify-center">
         <input
@@ -347,8 +347,8 @@
           placeholder="e.g. warm"
           class="w-full max-w-sm text-center text-2xl sm:text-3xl font-bold uppercase tracking-[0.3em] py-4 px-6 border-2 rounded-xl shadow-inner outline-none transition-all duration-200
             {endWordInvalid ? 'border-red-400 bg-red-50/50 text-red-600 focus:ring-2 focus:ring-red-300' :
-             endWordValid ? 'border-green-400 bg-green-50/50 text-green-700 focus:ring-2 focus:ring-green-300' :
-             'border-green-300 bg-green-50/50 text-green-700 focus:ring-2 focus:ring-green-400'}"
+             endWordValid ? 'border-teal-400 bg-teal-50/50 text-teal-700 focus:ring-2 focus:ring-teal-300' :
+             'border-teal-300 bg-teal-50/50 text-teal-700 focus:ring-2 focus:ring-teal-400'}"
           autocomplete="off"
           autocorrect="off"
           autocapitalize="off"

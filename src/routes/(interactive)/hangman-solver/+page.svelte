@@ -92,8 +92,8 @@
   </div>
 
   <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
-    <div class="rounded-[2rem] border border-red-100 bg-gradient-to-br from-red-50 via-white to-amber-50 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl">
-      <p class="inline-flex rounded-full bg-red-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-red-700">
+    <div class="rounded-[2rem] border border-red-100 bg-gradient-to-br from-teal-50 to-teal-100 px-6 py-8 sm:px-10 sm:py-10 shadow-2xl">
+      <p class="inline-flex rounded-full bg-teal-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">
         Word Puzzle Helper
       </p>
       <h1 class="mt-4 text-3xl font-black text-slate-900 sm:text-4xl lg:text-5xl">Hangman Solver</h1>
@@ -106,7 +106,7 @@
   <HangmanSolverClient />
 
   <article class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">What is Hangman?</h2>
       <p class="text-slate-600 leading-relaxed mb-4">
         Hangman is a word-guessing game that dates back to the Victorian era. One person picks a word, the other guesses letters one at a time. Every wrong guess adds a body part to a stick figure — head, torso, arms, legs. Six or seven wrong guesses and the figure is complete. You lose.
@@ -119,7 +119,7 @@
       </p>
     </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">Why E Is Always Your Best First Guess</h2>
       <p class="text-slate-600 leading-relaxed mb-4">
         E shows up in 12.7% of all English text. That's not a guess — it's measured across millions of words. The next four most common letters are T (9.1%), A (8.2%), O (7.5%), and I (7.0%). Combined, these five letters cover nearly half of all letter positions.
@@ -132,7 +132,7 @@
       </p>
     </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">How Entropy-Based Solving Beats Random Guessing</h2>
       <p class="text-slate-600 leading-relaxed mb-4">
         Imagine you're staring at _A_E and you have 12 possible words left: CAKE, CANE, CARE, CASE, CAVE, DARE, FARE, GATE, GAVE, HAZE, LACE, and RATE. Guessing R seems obvious because it appears in 3 of these words. But guessing C appears in 5. C splits the group more evenly.
@@ -145,7 +145,7 @@
       </p>
     </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">Hangman Strategy Changes by Word Length</h2>
       <p class="text-slate-600 leading-relaxed mb-4">
         A 3-letter pattern like ___ might match 1,000 words. A 7-letter pattern like _______ matches 10,000+. Short words are harder because there are fewer positions for letters to appear in, so each guess carves away less of the list.
@@ -158,7 +158,7 @@
       </p>
     </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">Common Patterns That Trip People Up</h2>
       <div class="grid gap-4 md:grid-cols-2">
         <div class="rounded-xl bg-slate-50 p-5">
@@ -180,7 +180,7 @@
       </div>
     </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">How Our Hangman Solver Works</h2>
       <p class="text-slate-600 leading-relaxed mb-4">
         You enter your word pattern (using blanks for unknown letters), any letters you've already guessed wrong, and any letters you know are in the word somewhere. The solver sends this to a web worker that filters its dictionary and returns two things: a ranked list of candidate words and the single best letter to guess next.
@@ -204,6 +204,64 @@
       <p class="text-slate-600 leading-relaxed">
         The one thing it can't do: guess words that aren't in its dictionary. If the answer is a proper noun or a technical term, you're on your own.
       </p>
+    </section>
+
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">How to Play Hangman</h2>
+      <div class="space-y-4">
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">1</span>
+          <div>
+            <h3 class="font-bold text-slate-900">One person picks a word, the other guesses letters</h3>
+            <p class="text-slate-600 mt-1 text-sm">The word picker writes down blank spaces for each letter. The guesser calls out letters one at a time. If the letter is in the word, the picker fills in every blank where that letter appears. If not, the guesser loses one life.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">2</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Wrong guesses add body parts to the stick figure</h3>
+            <p class="text-slate-600 mt-1 text-sm">The traditional version uses 6 wrong guesses: head, body, left arm, right arm, left leg, right leg. Some versions add more parts (hands, feet, face details) for 7-10 wrong guesses. Digital versions usually stick with 6.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">3</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Win by completing the word before the figure is finished</h3>
+            <p class="text-slate-600 mt-1 text-sm">If the guesser fills in every letter before running out of lives, they win. The challenge escalates with word length — short 3-letter words have fewer candidates per position, making each wrong guess more costly than in a 7-letter word.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">Why Players Use a Hangman Solver</h2>
+      <p class="text-slate-600 leading-relaxed mb-4">
+        Hangman is a guessing game, but it is a guessing game with a mathematically optimal strategy. If you know which letter appears in the most remaining candidates, that letter is always your best next guess. The problem: humans cannot track hundreds of possible words in their heads. The solver does it instantly.
+      </p>
+      <p class="text-slate-600 leading-relaxed mb-4">
+        Some people use the solver because they are stuck mid-game and running out of lives. Others use it as a learning tool — they play a few rounds with the solver open, then try applying the same letter frequency logic on their own. After 20-30 rounds, most players notice they guess E, T, A, O, and I first without even thinking about it.
+      </p>
+      <p class="text-slate-600 leading-relaxed">
+        There is no shame in using it. Hangman has existed for over 150 years, and people have been using word lists and dictionaries as aids for almost as long. The solver just makes it faster.
+      </p>
+    </section>
+
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">Hangman vs Similar Word Games</h2>
+      <div class="space-y-4">
+        <div class="bg-slate-50 rounded-xl p-5">
+          <h3 class="font-bold text-slate-900 mb-2">Hangman vs Wordle</h3>
+          <p class="text-slate-600 text-sm">Wordle reveals structural information about every letter (position and presence) after each guess. Hangman only tells you whether a letter exists. Wordle is about deduction with full information; Hangman is about guessing with partial information. The information asymmetry makes Hangman fundamentally harder in the early rounds because you learn almost nothing from a wrong guess.</p>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-5">
+          <h3 class="font-bold text-slate-900 mb-2">Hangman vs Wheel of Fortune</h3>
+          <p class="text-slate-600 text-sm">Same core mechanic — guess letters to reveal a hidden word — but Wheel of Fortune adds a spinning wheel for money and prizes. The guessing strategy is similar, but Wheel of Fortune rewards you for guessing consonants first (you win money) while Hangman has no reward structure. Both games favor vowels early and consonants mid-game.</p>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-5">
+          <h3 class="font-bold text-slate-900 mb-2">Hangman vs Spelling Bee</h3>
+          <p class="text-slate-600 text-sm">The NYT Spelling Bee gives you a set of letters and asks you to form words using those letters, with one letter that must appear in every word. Hangman starts from the opposite direction — you know nothing about the letters and must discover them. Both reward vocabulary knowledge, but Spelling Bee is creative (forming words from a set) while Hangman is deductive (eliminating wrong letters).</p>
+        </div>
+      </div>
     </section>
 
     <section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">

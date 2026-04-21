@@ -17,11 +17,11 @@
 
 	function getCellClass(index: number) {
 		const state = correctness[index];
-		let colorClass = 'bg-gray-200 border-gray-300';
+		let colorClass = 'bg-slate-200 border-slate-300';
 
-		if (state === 1) colorClass = 'bg-gray-400 border-gray-500 text-white';
+		if (state === 1) colorClass = 'bg-slate-400 border-slate-500 text-white';
 		if (state === 2) colorClass = 'bg-yellow-400 border-yellow-500 text-white shadow-lg';
-		if (state === 3) colorClass = 'bg-green-500 border-green-600 text-white shadow-xl';
+		if (state === 3) colorClass = 'bg-teal-500 border-teal-600 text-white shadow-xl';
 
 		return colorClass;
 	}

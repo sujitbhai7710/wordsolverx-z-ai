@@ -151,7 +151,7 @@
   </div>
 
   <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
-    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 px-6 py-8 shadow-2xl">
+    <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-teal-700 to-teal-900 px-6 py-8 shadow-2xl">
       <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">Geography Game</p>
@@ -174,7 +174,7 @@
           {#if countryMatches.length > 0 && !selectedCountry}
             <div class="mt-3 rounded-2xl border border-slate-200 overflow-hidden">
               {#each countryMatches as country}
-                <button type="button" class="w-full border-b border-gray-200 px-4 py-3 text-left text-sm text-slate-700 hover:bg-slate-50 last:border-b-0" onclick={() => selectCountry(country)}>
+                <button type="button" class="w-full border-b border-slate-200 px-4 py-3 text-left text-sm text-slate-700 hover:bg-slate-50 last:border-b-0" onclick={() => selectCountry(country)}>
                   <span class="font-semibold">{country.country}</span>
                   <span class="ml-2 text-slate-500">{country.continent}</span>
                 </button>
@@ -199,7 +199,7 @@
           <div>
             <p class="text-sm font-semibold text-slate-700">Hemisphere</p>
             <div class="mt-2 flex gap-2">
-              <button type="button" class={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold ${hemisphereDiff === 'EQUAL' ? 'bg-emerald-600 text-white' : 'border border-slate-300 text-slate-700'}`} onclick={() => (hemisphereDiff = 'EQUAL')}>Same</button>
+              <button type="button" class={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold ${hemisphereDiff === 'EQUAL' ? 'bg-teal-600 text-white' : 'border border-slate-300 text-slate-700'}`} onclick={() => (hemisphereDiff = 'EQUAL')}>Same</button>
               <button type="button" class={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold ${hemisphereDiff === 'DIFFERENT' ? 'bg-rose-600 text-white' : 'border border-slate-300 text-slate-700'}`} onclick={() => (hemisphereDiff = 'DIFFERENT')}>Different</button>
             </div>
           </div>
@@ -207,7 +207,7 @@
           <div>
             <p class="text-sm font-semibold text-slate-700">Continent</p>
             <div class="mt-2 flex gap-2">
-              <button type="button" class={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold ${continentHit ? 'bg-emerald-600 text-white' : 'border border-slate-300 text-slate-700'}`} onclick={() => (continentHit = true)}>Same</button>
+              <button type="button" class={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold ${continentHit ? 'bg-teal-600 text-white' : 'border border-slate-300 text-slate-700'}`} onclick={() => (continentHit = true)}>Same</button>
               <button type="button" class={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold ${!continentHit ? 'bg-rose-600 text-white' : 'border border-slate-300 text-slate-700'}`} onclick={() => (continentHit = false)}>Different</button>
             </div>
           </div>
@@ -244,7 +244,7 @@
           </div>
         </div>
 
-        <button type="button" class="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-500 disabled:opacity-50" onclick={addHint} disabled={!selectedCountry}>Add Clue</button>
+        <button type="button" class="rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white hover:bg-teal-500 disabled:opacity-50" onclick={addHint} disabled={!selectedCountry}>Add Clue</button>
       </article>
 
       <article class="rounded-3xl bg-white shadow-sm border border-slate-200 p-8 space-y-6">
@@ -302,7 +302,7 @@
   </section>
 
   <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
         <h2 class="text-3xl font-bold text-slate-900 mb-5">What is Countryle?</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
           Countryle is a daily geography guessing game. You guess a country and get five clues back: hemisphere, continent, average temperature, population, and compass direction. The goal is to identify the mystery country in as few guesses as possible.
@@ -315,7 +315,7 @@
         </p>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
         <h2 class="text-3xl font-bold text-slate-900 mb-5">Why Two Guesses Usually Crack It</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
           Guess Turkey first. You get five clues. Hemisphere — same or different, which immediately cuts the field in half. Continent — same or different, which either confirms Eurasia or eliminates it. Temperature, population, and direction further constrain the answer.
@@ -328,19 +328,19 @@
         </p>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
         <h2 class="text-3xl font-bold text-slate-900 mb-5">The Best Countries to Guess First</h2>
         <div class="grid gap-4 md:grid-cols-3 mb-5">
-          <div class="rounded-2xl bg-emerald-50 border border-emerald-200 p-5">
-            <h3 class="font-bold text-emerald-800 mb-2">Turkey</h3>
+          <div class="rounded-2xl bg-teal-50 border border-teal-200 p-5">
+            <h3 class="font-bold text-teal-800 mb-2">Turkey</h3>
             <p class="text-sm text-slate-600">Straddles Europe and Asia. Moderate temperature. Large population. Central position makes the direction arrow highly informative — it points toward most of the world's countries.</p>
           </div>
-          <div class="rounded-2xl bg-emerald-50 border border-emerald-200 p-5">
-            <h3 class="font-bold text-emerald-800 mb-2">Algeria</h3>
+          <div class="rounded-2xl bg-teal-50 border border-teal-200 p-5">
+            <h3 class="font-bold text-teal-800 mb-2">Algeria</h3>
             <p class="text-sm text-slate-600">North Africa. Northern hemisphere. Hot climate. Medium-large population. The direction clue from Algeria cleanly separates Africa + Europe from Asia + the Americas.</p>
           </div>
-          <div class="rounded-2xl bg-emerald-50 border border-emerald-200 p-5">
-            <h3 class="font-bold text-emerald-800 mb-2">Kazakhstan</h3>
+          <div class="rounded-2xl bg-teal-50 border border-teal-200 p-5">
+            <h3 class="font-bold text-teal-800 mb-2">Kazakhstan</h3>
             <p class="text-sm text-slate-600">Central Asia. Cold winters. Large land area. Eastern hemisphere. Its position makes the compass direction split Asia into clear sub-regions on the first guess.</p>
           </div>
         </div>
@@ -349,7 +349,7 @@
         </p>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
         <h2 class="text-3xl font-bold text-slate-900 mb-5">How Our Countryle Solver Ranks Countries</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
           After you add a clue, the solver filters the country list to only those that match every hint you've entered. Then it scores each remaining country based on how well it satisfies all the constraints simultaneously.
@@ -362,7 +362,7 @@
         </p>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
         <h2 class="text-3xl font-bold text-slate-900 mb-5">Understanding Each Clue Type</h2>
         <div class="space-y-5">
           <div class="rounded-2xl bg-slate-50 p-5">
@@ -388,7 +388,7 @@
         </div>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-gradient-to-br from-white to-slate-50 p-8 shadow-lg">
+      <section class="border border-slate-200 bg-gradient-to-br from-white to-slate-50 rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
         <h2 class="text-3xl font-bold text-slate-900 mb-5">When the Direction Arrow Points the Wrong Way</h2>
         <p class="text-slate-600 leading-relaxed mb-4">
           The most common mistake in Countryle: reading the compass direction backward. The arrow points from your guess toward the answer — not from the answer toward your guess.
@@ -399,6 +399,67 @@
         <p class="text-slate-600 leading-relaxed">
           This trips up roughly half of new players. If your results keep getting worse instead of better, check whether you've been reading the direction clue in reverse.
         </p>
+      </section>
+
+      <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
+        <h2 class="text-3xl font-bold text-slate-900 mb-5">How to Play Countryle</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          Countryle is a daily geography guessing game. Each day, a mystery country is chosen. You guess a country, and the game gives you five pieces of feedback. Your goal is to identify the mystery country in as few guesses as possible, typically 3-4 with good strategy.
+        </p>
+        <div class="space-y-4 mb-4">
+          <div class="flex gap-4">
+            <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">1</span>
+            <div>
+              <h3 class="font-bold text-slate-900">Guess any country from the full list</h3>
+              <p class="text-slate-600 mt-1 text-sm">Type a country name in the search box and select it. The database includes every country and territory that Countryle uses — over 200 options. Your guess does not have to be from the answer list; the game accepts any recognized country.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">2</span>
+            <div>
+              <h3 class="font-bold text-slate-900">Enter the five feedback clues from the game</h3>
+              <p class="text-slate-600 mt-1 text-sm">Set hemisphere (same or different), continent (same or different), temperature (hotter, a bit hotter, same, a bit colder, colder), population (larger, a bit larger, same, a bit smaller, smaller), and compass direction (8 directions). Match exactly what Countryle showed you for that guess.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">3</span>
+            <div>
+              <h3 class="font-bold text-slate-900">Add the clue and watch the candidate list shrink</h3>
+              <p class="text-slate-600 mt-1 text-sm">Each clue eliminates a chunk of the candidate list. Hemisphere alone cuts roughly in half. Continent narrows further. After two well-chosen guesses, the list typically drops to 3-5 countries. The third guess is usually the answer.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
+        <h2 class="text-3xl font-bold text-slate-900 mb-5">Why Players Use a Countryle Solver</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          Five clues per guess creates a dense information structure. After two guesses, you might have 10+ data points across hemisphere, continent, temperature, population, and direction. Mentally processing all of those at once is difficult — which hemisphere is the answer in? Which continent? Is it hotter or colder? The solver filters the list instantly and shows you the ranked matches.
+        </p>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          Temperature and population clues are particularly tricky because "a bit hotter" and "a bit larger" use fuzzy thresholds. The solver handles these percentage-based comparisons exactly as the original game does, so you get the same filtering results you would get by checking each country manually — but thousands of times faster.
+        </p>
+        <p class="text-slate-600 leading-relaxed">
+          Some players use the solver to learn which opening guesses produce the best information. After trying different first countries, they discover that central continental countries like Turkey and Kazakhstan consistently narrow the field faster than edge countries like Iceland or New Zealand.
+        </p>
+      </section>
+
+      <section class="border border-slate-200 bg-white rounded-xl p-6 shadow-[0_1px_3px_rgb(0_0_0/0.04)]">
+        <h2 class="text-3xl font-bold text-slate-900 mb-5">Countryle vs Similar Geography Games</h2>
+        <div class="space-y-4">
+          <div class="bg-slate-50 rounded-xl p-5">
+            <h3 class="font-bold text-slate-900 mb-2">Countryle vs Worldle</h3>
+            <p class="text-slate-600 text-sm">Countryle gives you five structured clues; Worldle gives you two vague ones (distance and direction). Countryle's structured feedback eliminates countries much faster — after two guesses, you are typically down to 3-5 candidates. Worldle often leaves 10-20 candidates after the same number of guesses because its distance/direction clues are less precise.</p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-5">
+            <h3 class="font-bold text-slate-900 mb-2">Countryle vs Globle</h3>
+            <p class="text-slate-600 text-sm">Globle uses a progressive zoom map approach — the map starts fully zoomed out and gets closer as you guess correctly. This visual feedback makes it easier to play without a solver because you can see the highlighted region shrinking. Countryle has no visual component — it is purely text-based clues.</p>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-5">
+            <h3 class="font-bold text-slate-900 mb-2">Countryle vs Flagle</h3>
+            <p class="text-slate-600 text-sm">Flagle tests flag knowledge — you see a country's flag and guess the country. No geographic reasoning required, just visual recognition. Countryle is the opposite — no visual element at all, pure geographic reasoning. Different skill sets, different players tend to prefer one over the other.</p>
+          </div>
+        </div>
       </section>
 
       <section class="rounded-3xl bg-slate-100 p-8 text-center space-y-6">

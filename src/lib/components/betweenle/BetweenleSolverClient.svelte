@@ -208,8 +208,8 @@
           {/if}
 
           {#if result.isSolved && result.suggestionWord}
-            <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-5 text-center dark:border-emerald-900/40 dark:bg-emerald-950/30">
-              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">Solved</p>
+            <div class="rounded-2xl border border-teal-200 bg-teal-50 px-4 py-5 text-center dark:border-teal-900/40 dark:bg-teal-950/30">
+              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-teal-700 dark:text-teal-300">Solved</p>
               <p class="mt-3 text-4xl font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{result.suggestionWord}</p>
             </div>
           {/if}

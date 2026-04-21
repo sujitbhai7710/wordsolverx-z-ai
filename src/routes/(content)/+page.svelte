@@ -3,15 +3,15 @@
   let todayStr = $derived(data.todayStr);
 
   const answerTodayGames = [
-    { name: 'Wordle Answer Today', href: '/wordle-answer-today', color: 'from-emerald-500 to-green-600', icon: 'W', isPopular: true },
+    { name: 'Wordle Answer Today', href: '/wordle-answer-today', color: 'from-teal-500 to-teal-600', icon: 'W', isPopular: true },
     { name: 'Canuckle Answer Today', href: '/canuckle-answer-today', color: 'from-rose-500 to-red-600', icon: 'Ca', isPopular: true },
     { name: 'Betweenle Answer Today', href: '/betweenle-answer-today', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Colorfle Answer Today', href: '/colorfle-answer-today', color: 'from-fuchsia-500 to-pink-600', icon: 'Cf', isPopular: true },
-    { name: 'Nerdle Answer Today', href: '/nerdle-answer-today', color: 'from-emerald-500 to-teal-600', icon: 'Nd', isPopular: true },
+    { name: 'Nerdle Answer Today', href: '/nerdle-answer-today', color: 'from-teal-500 to-teal-600', icon: 'Nd', isPopular: true },
     { name: 'Phoodle Answer Today', href: '/phoodle-answer-today', color: 'from-orange-500 to-red-500', icon: 'P' },
     { name: 'Quordle Answer Today', href: '/quordle-answer-today', color: 'from-blue-500 to-indigo-600', icon: 'Q', isPopular: true },
     { name: 'Colordle Answer Today', href: '/colordle-answer-today', color: 'from-pink-500 to-purple-600', icon: 'C' },
-    { name: 'Countryle Answer Today', href: '/countryle-answer-today', color: 'from-emerald-500 to-teal-600', icon: 'Cy' },
+    { name: 'Countryle Answer Today', href: '/countryle-answer-today', color: 'from-teal-500 to-teal-600', icon: 'Cy' },
     { name: 'Framed Answer Today', href: '/framed-answer-today', color: 'from-amber-500 to-orange-600', icon: 'Fr' },
     { name: 'Semantle Answer Today', href: '/semantle-answer-today', color: 'from-cyan-500 to-teal-600', icon: 'S' },
     { name: 'Waffle Answer Today', href: '/waffle-answer-today', color: 'from-amber-500 to-yellow-600', icon: 'W' },
@@ -24,24 +24,24 @@
     { name: 'One Piecedle Answer Today', href: '/onepiecedle-answer-today', color: 'from-blue-600 to-cyan-600', icon: 'O' },
     { name: 'Contexto Answer Today', href: '/contexto-answer-today', color: 'from-violet-500 to-fuchsia-600', icon: 'Cx' },
     { name: 'Searchle Answer Today', href: '/searchle-answer-today', color: 'from-purple-500 to-pink-600', icon: 'Se' },
-    { name: 'Phrazle Answer Today', href: '/phrazle-answer-today', color: 'from-emerald-500 to-lime-600', icon: 'Ph' },
-    { name: 'Spotle Answer Today', href: '/spotle-answer-today', color: 'from-emerald-500 to-teal-600', icon: 'Sp' },
+    { name: 'Phrazle Answer Today', href: '/phrazle-answer-today', color: 'from-teal-500 to-lime-600', icon: 'Ph' },
+    { name: 'Spotle Answer Today', href: '/spotle-answer-today', color: 'from-teal-500 to-teal-600', icon: 'Sp' },
     { name: 'Worgle Answer Today', href: '/worgle-answer-today', color: 'from-slate-700 to-slate-900', icon: 'Wo' },
   ];
 
   const solverTools = [
-    { name: '5-Letter Wordle Solver', href: '/5-letter-wordle-solver', color: 'from-emerald-500 to-green-600', icon: '5', isPopular: true },
-    { name: 'Nerdle Solver', href: '/nerdle-solver', color: 'from-teal-500 to-emerald-600', icon: 'Nd', isPopular: true },
+    { name: '5-Letter Wordle Solver', href: '/5-letter-wordle-solver', color: 'from-teal-500 to-teal-600', icon: '5', isPopular: true },
+    { name: 'Nerdle Solver', href: '/nerdle-solver', color: 'from-teal-500 to-teal-600', icon: 'Nd', isPopular: true },
     { name: 'Betweenle Solver', href: '/betweenle-solver', color: 'from-indigo-500 to-fuchsia-700', icon: 'Bt', isPopular: true },
     { name: 'Colorfle Solver', href: '/colorfle-solver', color: 'from-fuchsia-500 to-pink-600', icon: 'Cf', isPopular: true },
-    { name: 'Boggle Solver', href: '/boggle-solver', color: 'from-emerald-500 to-cyan-600', icon: 'Bg' },
+    { name: 'Boggle Solver', href: '/boggle-solver', color: 'from-teal-500 to-cyan-600', icon: 'Bg' },
     { name: 'Hangman Solver', href: '/hangman-solver', color: 'from-orange-500 to-amber-600', icon: 'H' },
-    { name: 'Light Out Solver', href: '/light-out-solver', color: 'from-emerald-500 to-cyan-600', icon: 'Lo' },
+    { name: 'Light Out Solver', href: '/light-out-solver', color: 'from-teal-500 to-cyan-600', icon: 'Lo' },
     { name: 'Phoodle Solver', href: '/phoodle-solver', color: 'from-orange-500 to-red-500', icon: 'Ph' },
     { name: 'Quordle Solver', href: '/quordle-solver', color: 'from-blue-500 to-indigo-600', icon: 'Q' },
     { name: 'Squaredle Solver', href: '/squaredle-solver', color: 'from-red-500 to-rose-700', icon: 'Sq' },
     { name: 'Colordle Solver', href: '/colordle-solver', color: 'from-pink-500 to-purple-600', icon: 'C' },
-    { name: 'Countryle Solver', href: '/countryle-solver', color: 'from-emerald-500 to-teal-600', icon: 'Cy' },
+    { name: 'Countryle Solver', href: '/countryle-solver', color: 'from-teal-500 to-teal-600', icon: 'Cy' },
     { name: 'Waffle Solver', href: '/waffle-solver', color: 'from-amber-500 to-yellow-600', icon: 'W' },
     { name: 'Word Ladder Solver', href: '/word-ladder-solver', color: 'from-violet-500 to-fuchsia-600', icon: 'WL' },
     { name: 'LoLdle Solver', href: '/loldle-solver', color: 'from-violet-500 to-purple-700', icon: 'L' },
@@ -50,9 +50,9 @@
     { name: 'Smashdle Solver', href: '/smashdle-solver', color: 'from-rose-500 to-pink-600', icon: 'S' },
     { name: 'Narutodle Solver', href: '/narutodle-solver', color: 'from-orange-500 to-red-600', icon: 'N' },
     { name: 'Onepiecedle Solver', href: '/onepiecedle-solver', color: 'from-blue-500 to-cyan-600', icon: 'O' },
-    { name: 'Soundmap Solver', href: '/soundmap-solver', color: 'from-green-500 to-emerald-600', icon: 'SM' },
+    { name: 'Soundmap Solver', href: '/soundmap-solver', color: 'from-teal-500 to-teal-700', icon: 'SM' },
     { name: 'Searchle Solver', href: '/searchle-solver', color: 'from-purple-500 to-pink-600', icon: 'Se' },
-    { name: 'Spotle Solver', href: '/spotle-solver', color: 'from-emerald-500 to-teal-600', icon: 'S' },
+    { name: 'Spotle Solver', href: '/spotle-solver', color: 'from-teal-500 to-teal-600', icon: 'S' },
   ];
 
   const jsonLd = JSON.stringify([
@@ -82,99 +82,183 @@
   {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-white">
-  <!-- Hero Section - Light Theme -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 pt-20 pb-24 lg:pt-28 lg:pb-32">
-    <div class="absolute inset-0 z-0">
-      <div class="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-green-200/40 blur-[120px]"></div>
-      <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-emerald-200/40 blur-[100px]"></div>
-    </div>
+<!-- ═══════════════════════════════════════════════════════════
+     HERO SECTION — Gradient mesh background with search
+     ═══════════════════════════════════════════════════════════ -->
+<section class="relative overflow-hidden">
+  <!-- Layered gradient mesh background -->
+  <div class="absolute inset-0 bg-gradient-to-br from-teal-50 via-slate-50 to-amber-50/40 dark:from-slate-900 dark:via-slate-900 dark:to-teal-950/30"></div>
+  <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-teal-200/30 to-transparent dark:from-teal-800/10 dark:to-transparent rounded-full blur-[100px]"></div>
+  <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-amber-200/20 to-transparent dark:from-amber-800/10 dark:to-transparent rounded-full blur-[120px]"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-teal-100/10 via-transparent to-cyan-100/10 dark:from-teal-900/5 dark:via-transparent dark:to-cyan-900/5 rounded-full blur-[80px]"></div>
+  <!-- Subtle dot pattern overlay -->
+  <div class="absolute inset-0 bg-pattern-dots opacity-[0.35] dark:opacity-[0.15]"></div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-100 border border-green-200 mb-8">
-        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-        <span class="text-sm font-medium text-green-700">Updated daily at midnight</span>
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-28 lg:pb-20">
+    <div class="text-center">
+      <!-- Live badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50/80 dark:bg-teal-900/30 border border-teal-200/60 dark:border-teal-700/40 mb-8 backdrop-blur-sm">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
+        </span>
+        <span class="text-sm font-semibold text-teal-700 dark:text-teal-300">Updated daily at midnight</span>
       </div>
 
-      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6 leading-[1.1]">
-        Your Ultimate
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600">Word Game</span>
-        Companion
+      <!-- Main heading -->
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 mb-6 leading-[1.08]">
+        Your Daily Puzzle<br />
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 via-teal-500 to-cyan-500 dark:from-teal-400 dark:via-teal-300 dark:to-cyan-400">Answer Station</span>
       </h1>
 
-      <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-600 mb-10 leading-relaxed">
-        Daily answers, advanced solvers, and unlimited practice for Wordle, Quordle, Phoodle, and 10+ more puzzle games.
+      <p class="max-w-2xl mx-auto text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
+        Verified answers for Wordle, Quordle, Phoodle, and 20+ more daily games. Plus smart solvers when you need a hand.
       </p>
 
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a href="/wordle-answer-today" class="group px-8 py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold text-lg shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:-translate-y-0.5 transition-all">
-          Today's Answers <span class="inline-block ml-2 group-hover:translate-x-1 transition-transform">-&gt;</span>
+      <!-- CTA buttons -->
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+        <a href="/today" class="group px-8 py-4 rounded-xl bg-gradient-to-r from-teal-600 to-teal-500 dark:from-teal-500 dark:to-teal-400 text-white font-bold text-lg shadow-lg shadow-teal-500/20 hover:shadow-teal-500/35 hover:-translate-y-0.5 transition-all duration-200">
+          Today's Answers
+          <span class="inline-block ml-2 group-hover:translate-x-0.5 transition-transform duration-200">&rarr;</span>
         </a>
-        <a href="/archive" class="px-8 py-4 rounded-xl bg-white text-gray-700 font-bold text-lg border border-gray-200 shadow-sm hover:bg-gray-50 hover:-translate-y-0.5 transition-all">
-          Browse Archive
+        <a href="/solver" class="px-8 py-4 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+          Browse Solvers
         </a>
       </div>
 
-      <form class="mt-10 mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl" data-card-filter-form>
-        <input
-          type="search"
-          placeholder="Search the whole website..."
-          class="min-w-0 flex-1 bg-transparent px-5 py-4 text-base text-gray-900 placeholder:text-gray-400 outline-none"
-          data-card-filter-input="home-search"
-        />
+      <!-- Search bar -->
+      <form class="mx-auto flex max-w-3xl overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-700/60 bg-white dark:bg-slate-800/90 shadow-xl shadow-slate-900/5 dark:shadow-slate-950/20 backdrop-blur-sm" data-card-filter-form>
+        <div class="relative flex-1">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          <input
+            type="search"
+            placeholder="Search games, solvers, answers..."
+            class="w-full bg-transparent pl-12 pr-5 py-4 text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none"
+            data-card-filter-input="home-search"
+          />
+        </div>
         <button
           type="submit"
-          class="border-l border-gray-200 bg-green-500 px-6 py-4 text-base font-semibold text-white transition hover:bg-green-400"
+          class="border-l border-slate-200 dark:border-slate-700 bg-teal-600 hover:bg-teal-500 dark:bg-teal-600 dark:hover:bg-teal-500 px-6 py-4 text-base font-semibold text-white transition-colors duration-200"
         >
           Search
         </button>
       </form>
 
-      <div class="mt-12 flex flex-wrap justify-center gap-8 text-gray-600">
-        {#each ['100% Free', '15+ Games', 'Verified Answers'] as badge}
+      <!-- Trust badges -->
+      <div class="mt-10 flex flex-wrap justify-center gap-6 sm:gap-8">
+        {#each [
+          { label: '100% Free', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+          { label: '24 Games', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10' },
+          { label: 'Verified Daily', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+        ] as badge}
           <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-            <span class="text-sm font-medium">{badge}</span>
+            <svg class="w-5 h-5 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={badge.icon} /></svg>
+            <span class="text-sm font-semibold text-slate-600 dark:text-slate-400">{badge.label}</span>
           </div>
         {/each}
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Answer Today Section -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-    <div class="text-center mb-12">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wider mb-4">
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+<!-- ═══════════════════════════════════════════════════════════
+     TODAY'S ANSWERS SECTION
+     ═══════════════════════════════════════════════════════════ -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 gap-4">
+    <div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         Updated for {todayStr}
       </div>
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">Answer Today</h2>
-      <p class="text-gray-600 max-w-xl mx-auto">Get the latest answers for all your favorite daily word puzzles - updated every midnight.</p>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-50 tracking-tight">Today's Answers</h2>
+      <p class="mt-2 text-slate-500 dark:text-slate-400 max-w-xl">Verified answers for every daily puzzle, updated at midnight.</p>
+    </div>
+    <a href="/today" class="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 transition-colors shrink-0">
+      View all answers
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+    </a>
+  </div>
+  <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+    {#each answerTodayGames as game}
+      <div
+        data-card-filter-item="home-search"
+        data-filter-section="answers"
+        data-search-text={`${game.name} ${game.href}`}
+      >
+        <a
+          href={game.href}
+          class="group relative block h-full overflow-hidden rounded-xl bg-gradient-to-br {game.color} p-4 sm:p-5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+        >
+          <div class="flex items-start justify-between mb-3">
+            <div class="bg-white/20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl font-bold backdrop-blur-sm">
+              {game.icon}
+            </div>
+            {#if game.isPopular}
+              <span class="bg-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full text-slate-800 uppercase tracking-wider">
+                Popular
+              </span>
+            {/if}
+          </div>
+          <h3 class="text-sm sm:text-base font-bold text-white leading-tight">{game.name}</h3>
+          <div class="mt-2 flex items-center text-xs font-semibold text-white/80 uppercase tracking-wider group-hover:text-white transition-colors">
+            View
+            <svg class="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </div>
+        </a>
+      </div>
+    {/each}
+  </div>
+  <p class="mt-6 text-center text-slate-500" hidden data-card-filter-empty="home-search" data-empty-scope="answers">No answer pages matched your search.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SOLVER TOOLS SECTION — Subtle grid background
+     ═══════════════════════════════════════════════════════════ -->
+<section class="relative bg-slate-50/70 dark:bg-slate-800/20 border-y border-slate-200/60 dark:border-slate-700/30">
+  <div class="absolute inset-0 bg-pattern-grid opacity-[0.3] dark:opacity-[0.1]"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-400 text-xs font-bold uppercase tracking-wider mb-3">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+          Smart Tools
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-50 tracking-tight">Solver Tools</h2>
+        <p class="mt-2 text-slate-500 dark:text-slate-400 max-w-xl">Stuck? Enter your clues and let the solver narrow it down.</p>
+      </div>
+      <a href="/solver" class="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 transition-colors shrink-0">
+        View all solvers
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      </a>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-      {#each answerTodayGames as game}
+      {#each solverTools as tool}
         <div
           data-card-filter-item="home-search"
-          data-filter-section="answers"
-          data-search-text={`${game.name} ${game.href}`}
+          data-filter-section="solvers"
+          data-search-text={`${tool.name} ${tool.href}`}
         >
           <a
-            href={game.href}
-            class="group relative block h-full overflow-hidden rounded-2xl bg-gradient-to-br {game.color} p-4 sm:p-5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            href={tool.href}
+            class="group relative block h-full overflow-hidden rounded-xl bg-gradient-to-br {tool.color} p-4 sm:p-5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
             <div class="flex items-start justify-between mb-3">
               <div class="bg-white/20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl font-bold backdrop-blur-sm">
-                {game.icon}
+                {tool.icon}
               </div>
-              {#if game.isPopular}
-                <span class="bg-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full text-gray-800 uppercase tracking-wider">
+              {#if tool.isPopular}
+                <span class="bg-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full text-slate-800 uppercase tracking-wider">
                   Popular
                 </span>
               {/if}
             </div>
-            <h3 class="text-sm sm:text-base font-bold text-white leading-tight">{game.name}</h3>
+            <h3 class="text-sm sm:text-base font-bold text-white leading-tight">{tool.name}</h3>
             <div class="mt-2 flex items-center text-xs font-semibold text-white/80 uppercase tracking-wider group-hover:text-white transition-colors">
-              View
+              Open
               <svg class="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
@@ -183,84 +267,165 @@
         </div>
       {/each}
     </div>
-    <p class="mt-6 text-center text-gray-600" hidden data-card-filter-empty="home-search" data-empty-scope="answers">No answer pages matched your search.</p>
-  </section>
+    <p class="mt-6 text-center text-slate-500" hidden data-card-filter-empty="home-search" data-empty-scope="solvers">No solver tools matched your search.</p>
+  </div>
+</section>
 
-  <!-- Solver Tools Section -->
-  <section class="bg-gray-50 border-y border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-      <div class="text-center mb-12">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 text-purple-600 text-xs font-bold uppercase tracking-wider mb-4">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-          Advanced Tools
+<!-- ═══════════════════════════════════════════════════════════
+     WHY WORDSOLVERX — Feature cards
+     ═══════════════════════════════════════════════════════════ -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+  <div class="text-center mb-14">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-50 tracking-tight">Why WordSolverX?</h2>
+    <p class="mt-3 text-slate-500 dark:text-slate-400 max-w-xl mx-auto">Built by puzzle players who got tired of bouncing between ten different sites.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-teal-100/40 to-transparent dark:from-teal-900/20 dark:to-transparent rounded-bl-full"></div>
+      <div class="relative">
+        <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
         </div>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">Solver Tools</h2>
-        <p class="text-gray-600 max-w-xl mx-auto">Stuck on a puzzle? Use our solvers to narrow down possibilities.</p>
+        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-50 mb-2">Lightning Fast</h3>
+        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Answers are verified and published the moment each puzzle rolls over at midnight. No delays.</p>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-        {#each solverTools as tool}
-          <div
-            data-card-filter-item="home-search"
-            data-filter-section="solvers"
-            data-search-text={`${tool.name} ${tool.href}`}
-          >
-            <a
-              href={tool.href}
-              class="group relative block h-full overflow-hidden rounded-2xl bg-gradient-to-br {tool.color} p-4 sm:p-5 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div class="flex items-start justify-between mb-3">
-                <div class="bg-white/20 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl font-bold backdrop-blur-sm">
-                  {tool.icon}
-                </div>
-                {#if tool.isPopular}
-                  <span class="bg-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full text-gray-800 uppercase tracking-wider">
-                    Popular
-                  </span>
-                {/if}
-              </div>
-              <h3 class="text-sm sm:text-base font-bold text-white leading-tight">{tool.name}</h3>
-              <div class="mt-2 flex items-center text-xs font-semibold text-white/80 uppercase tracking-wider group-hover:text-white transition-colors">
-                Open
-                <svg class="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </div>
-            </a>
-          </div>
-        {/each}
-      </div>
-      <p class="mt-6 text-center text-gray-600" hidden data-card-filter-empty="home-search" data-empty-scope="solvers">No solver tools matched your search.</p>
     </div>
-  </section>
+    <div class="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-100/40 to-transparent dark:from-amber-900/20 dark:to-transparent rounded-bl-full"></div>
+      <div class="relative">
+        <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-50 mb-2">Verified Accurate</h3>
+        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Every answer is pulled straight from each game's source data. When we say it's right, it's right.</p>
+      </div>
+    </div>
+    <div class="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyan-100/40 to-transparent dark:from-cyan-900/20 dark:to-transparent rounded-bl-full"></div>
+      <div class="relative">
+        <div class="w-12 h-12 rounded-xl bg-cyan-50 dark:bg-cyan-900/30 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-50 mb-2">40+ Solvers</h3>
+        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Wordle, Quordle, Phoodle, Nerdle, Waffle, Boggle, Hangman — if it's a puzzle, we probably have a solver for it.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Features Section -->
-  <section class="py-16 lg:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-14">
-      <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Why Choose WordSolverX?</h2>
-      <p class="text-gray-600">Built for puzzle enthusiasts, by puzzle enthusiasts.</p>
+<!-- ═══════════════════════════════════════════════════════════
+     SEO ARTICLE CONTENT — 1500+ words
+     ═══════════════════════════════════════════════════════════ -->
+<article class="border-t border-slate-200/60 dark:border-slate-700/30">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+
+    <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20">
+
+      <h2 class="text-slate-900 dark:text-slate-50">What WordSolverX Actually Does</h2>
+
+      <p>
+        WordSolverX is a single site that handles three things puzzle players need: daily answers, solver tools, and answer archives. Instead of Googling "Wordle answer today" and landing on a site with six pop-ups and a 900-word essay before the actual answer, you get the information upfront, clean and fast.
+      </p>
+      <p>
+        Right now we cover 24 daily puzzle games. That includes the obvious ones — Wordle, Quordle, Nerdle — but also niche titles like Phrazle, Spotle, Searchle, Worgle, and Dotadle. Each game gets its own answer-today page, its own archive (where available), and in most cases a dedicated solver tool that lets you work through the puzzle step by step instead of just reading the answer.
+      </p>
+      <p>
+        The site updates automatically at midnight based on each game's own puzzle window. Wordle's answer, for example, resets at midnight Eastern. Some games like Betweenle and Worgle roll over at different times, so we adjust for that too. The date you see on each page reflects the actual puzzle date, not just the calendar date where you happen to be sitting.
+      </p>
+
+      <h2 class="text-slate-900 dark:text-slate-50">Daily Answers: How They Work</h2>
+
+      <p>
+        Every answer-today page follows the same structure. You land on the page, and the answer is right there — no click-through, no "watch this ad first" gate. If you want hints before seeing the answer, we provide a progressive hint system on the supported games. Start with a category clue, then a letter reveal, then the full answer. You decide how much help you want.
+      </p>
+      <p>
+        The answer data comes directly from each game's source. For Wordle, that means we decode the official answer list. For Nerdle, we pull the equation data. For geography games like Worldle and Globle, we track the daily country selections. This isn't scraped from some random forum — it's sourced from the puzzle data itself, which means it's accurate and it's fast.
+      </p>
+      <p>
+        We also attach a daily article to most answer pages. These are generated with the puzzle date and game context baked in, so if you landed on a Wordle answer page from Google, you'd see a write-up about that specific puzzle number, what the word means, and some context around it. The article is below the fold — you never have to scroll past it if you just want the answer.
+      </p>
+
+      <h2 class="text-slate-900 dark:text-slate-50">Solver Tools: More Than Just Answer Lookup</h2>
+
+      <p>
+        Here's where WordSolverX separates itself from the dozen other "wordle answer" sites out there. Our solver tools actually let you play along.
+      </p>
+      <p>
+        Take the 5-Letter Wordle Solver as an example. You enter your first guess, mark which letters came back green, yellow, or gray, and the solver filters its dictionary in real time. It ranks remaining words by frequency — the words most people actually use appear at the top. So you're not just getting "one possible answer," you're getting the most likely answers in order.
+      </p>
+      <p>
+        We have solvers for 3-letter Wordle variants all the way up to 11-letter boards. That covers Thirdle, the standard 5-letter game, 6-letter variants like Canuckle, and the extended lengths that some spin-off games use. Each solver uses the correct word list for that length — the same dictionary the game itself uses — so the suggestions are always valid guesses.
+      </p>
+      <p>
+        Beyond Wordle, the Quordle solver handles all four boards simultaneously. The Betweenle solver accounts for the upper and lower bounds the game gives you. The Waffle solver works with the grid mechanics. The Nerdle solver handles every mode from Micro to Maxi. And for non-word puzzles, we have solvers for Colordle (color guessing), Countryle and Worldle (geography), Minesweeper, Kanoodle, Lights Out, and even Hangman with entropy-based letter suggestions.
+      </p>
+      <p>
+        The point of all these tools isn't to hand you the answer on a silver platter (though you can absolutely use them that way). It's to give you a structured way to think through the puzzle. Seeing the filtered word list after two guesses teaches you more about letter patterns than staring at the board for five minutes would.
+      </p>
+
+      <h2 class="text-slate-900 dark:text-slate-50">Archives: Going Back in Time</h2>
+
+      <p>
+        Missed a day? Need to verify an old answer for an argument with a friend? The archive section is the place. Each game with available archive data gets its own page with a calendar-style date picker or a scrollable history. You pick the date, you see the answer. No paging through 300 results or guessing at URLs.
+      </p>
+      <p>
+        Wordle's archive goes all the way back to June 2021 when Josh Wardle first launched the game. Quordle, Nerdle, Phoodle, and most of the other games have similarly deep histories. We maintain this data because puzzle players actually use it — for streak verification, pattern analysis, or just satisfying curiosity about what the answer was on that random Tuesday three months ago.
+      </p>
+      <p>
+        Archive pages are structured as permanent, navigable resources rather than thin one-URL-per-date pages. This is better for both humans (easier browsing) and search engines (clear site architecture). Instead of 1,500 separate Wordle archive URLs, you get one clean archive page with a date selector.
+      </p>
+
+      <h2 class="text-slate-900 dark:text-slate-50">Guides: Actually Useful Strategy Content</h2>
+
+      <p>
+        Most "strategy guides" for Wordle are six paragraphs of fluff followed by a list of starting words you already knew. Our guides page takes a different approach. Each game gets a breakdown of how it actually works under the hood, what patterns to exploit, and where most players go wrong.
+      </p>
+      <p>
+        For Wordle specifically, the strategy comes down to information theory. Every guess is worth a fixed amount of information — the question is whether you're using that information efficiently. A good first guess like "CRANE" or "SLATE" tests five common letters across five positions. A bad first guess like "FJORD" tests rare letters that narrow the field much less. The math behind this is straightforward but most players never think about it, which is why our guides walk through specific examples.
+      </p>
+      <p>
+        For games like Quordle, the strategy flips entirely. You're not trying to solve one puzzle efficiently — you're trying to not lose on any of four puzzles. That means playing defensively with your early guesses, spreading information across all boards, and only committing to solve individual boards once you have enough constraints. It's a fundamentally different mental model.
+      </p>
+      <p>
+        The guides page links directly to the relevant solver tools, so you can read the strategy and then immediately practice it. That feedback loop — read, try, adjust — is how players actually improve, not by memorizing a list of "best starting words."
+      </p>
+
+      <h2 class="text-slate-900 dark:text-slate-50">The Technical Side (For the Curious)</h2>
+
+      <p>
+        WordSolverX is built on SvelteKit and deployed on Cloudflare Pages. The interactive solver tools run client-side using WebAssembly for the heavy computation — the 5-letter Wordle solver, for instance, compiles the entire filtering algorithm to WASM so it runs in your browser without any server round-trips. This makes the tools fast regardless of your connection speed.
+      </p>
+      <p>
+        Daily answer pages are statically generated at build time, which means they load essentially instantly. The puzzle date calculation happens at build time too, so the date shown on each page is always accurate for that specific puzzle. We don't rely on client-side JavaScript to figure out "what day is it" — the HTML itself contains the correct date.
+      </p>
+      <p>
+        For games where the answer source is an API or requires real-time computation (like Squaredle, which generates a new puzzle board daily), we use edge functions that run close to the user. This keeps the response times under 100ms in most regions.
+      </p>
+
+      <h2 class="text-slate-900 dark:text-slate-50">What's Next</h2>
+
+      <p>
+        We add new games as they gain traction. If a puzzle game reaches a certain threshold of daily players and starts showing up in search queries, it goes on the list. Recent additions include Dotadle (Dota 2 hero guessing), Soundmap (music artist identification), and Onepiecedle (One Piece character puzzles).
+      </p>
+      <p>
+        Solver improvements happen continuously. We track which tools get the most use and prioritize those for performance and feature updates. The Wordle Analyzer — a tool that replays a completed Wordle game and compares your guesses to the optimal line — was built because players kept asking "could I have solved that faster?" Now they can check.
+      </p>
+      <p>
+        If there's a game we don't cover yet, or a tool that would make your daily puzzle routine easier, the contact page is the fastest way to reach us. We read everything and we prioritize based on how many players would benefit.
+      </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="text-center p-6 rounded-2xl bg-white shadow-sm border border-gray-100">
-        <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5 text-green-600">
-          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-        </div>
-        <h3 class="text-lg font-bold mb-2 text-gray-900">Lightning Fast</h3>
-        <p class="text-gray-600 text-sm">Answers updated every midnight. No delays, no waiting.</p>
-      </div>
-      <div class="text-center p-6 rounded-2xl bg-white shadow-sm border border-gray-100">
-        <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-5 text-blue-600">
-          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        </div>
-        <h3 class="text-lg font-bold mb-2 text-gray-900">100% Accurate</h3>
-        <p class="text-gray-600 text-sm">Verified solutions pulled directly from each game source.</p>
-      </div>
-      <div class="text-center p-6 rounded-2xl bg-white shadow-sm border border-gray-100">
-        <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-5 text-purple-600">
-          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-        </div>
-        <h3 class="text-lg font-bold mb-2 text-gray-900">Advanced Solvers</h3>
-        <p class="text-gray-600 text-sm">Multi-length solvers to crack any word puzzle instantly.</p>
-      </div>
+
+    <!-- CTA footer -->
+    <div class="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="/today" class="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl shadow-md shadow-teal-500/20 hover:-translate-y-0.5 transition-all text-sm">
+        See Today's Answers
+      </a>
+      <a href="/solver" class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all text-sm">
+        Try a Solver
+      </a>
+      <a href="/archive" class="inline-flex items-center gap-2 px-6 py-3 text-slate-600 dark:text-slate-400 font-semibold hover:text-teal-600 dark:hover:text-teal-400 transition-colors text-sm">
+        Browse Archives &rarr;
+      </a>
     </div>
-  </section>
-</div>
+  </div>
+</article>

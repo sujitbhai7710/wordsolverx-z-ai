@@ -17,7 +17,7 @@
 
 	function getTileClasses(color?: AnalyzerColor) {
 		if (color === 'c') {
-			return 'border-green-600 bg-green-500 text-white';
+			return 'border-teal-600 bg-teal-500 text-white';
 		}
 
 		if (color === 'p') {

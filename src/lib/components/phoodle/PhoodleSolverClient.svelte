@@ -46,7 +46,7 @@
   const RESULT_CLASS: Record<LetterResult, string> = {
     absent: 'bg-slate-400 border-slate-500 text-white',
     present: 'bg-amber-400 border-amber-500 text-slate-900',
-    correct: 'bg-emerald-500 border-emerald-600 text-white'
+    correct: 'bg-teal-500 border-teal-600 text-white'
   };
 
   const RESULT_EMOJI: Record<LetterResult, string> = {
@@ -340,7 +340,7 @@
           <div class="mt-6 flex flex-wrap gap-4 text-xs font-semibold text-slate-500">
             <div class="flex items-center gap-2"><span class="h-3 w-3 rounded bg-slate-400"></span>Absent</div>
             <div class="flex items-center gap-2"><span class="h-3 w-3 rounded bg-amber-400"></span>Wrong spot</div>
-            <div class="flex items-center gap-2"><span class="h-3 w-3 rounded bg-emerald-500"></span>Correct</div>
+            <div class="flex items-center gap-2"><span class="h-3 w-3 rounded bg-teal-500"></span>Correct</div>
           </div>
         </section>
       </div>
@@ -376,7 +376,7 @@
                     <div>
                       <p class="font-mono text-lg font-bold uppercase tracking-[0.18em] text-slate-900">{suggestion.word}</p>
                       {#if suggestion.is_possible_answer}
-                        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Likely answer</p>
+                        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-teal-700">Likely answer</p>
                       {/if}
                     </div>
                   </div>

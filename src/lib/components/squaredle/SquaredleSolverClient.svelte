@@ -224,7 +224,7 @@
     </div>
 
     {#if isOfficialPuzzle && !result}
-      <div class="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-800 shadow-sm">
+      <div class="rounded-3xl border border-teal-200 bg-teal-50 px-5 py-4 text-sm text-teal-800 shadow-sm">
         Today's official Squaredle puzzle is loaded: {officialWordCount} words plus {officialBonusCount} bonus words.
       </div>
     {/if}

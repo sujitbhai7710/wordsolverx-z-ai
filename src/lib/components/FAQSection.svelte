@@ -16,19 +16,19 @@
 </script>
 
 <section class={`w-full ${className}`}>
-	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-		<h2 class="text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-8">
+	<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+		<h2 class="text-2xl font-extrabold text-slate-900 dark:text-slate-50 mb-6 tracking-tight">
 			{title}
 		</h2>
-		<div class="space-y-4">
+		<div class="space-y-2">
 			{#each faqs as faq}
-				<details class="group bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg">
-					<summary class="list-none cursor-pointer px-6 py-4 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-green-500 [&::-webkit-details-marker]:hidden">
-						<span class="text-lg font-semibold text-gray-900 dark:text-white">
+				<details class="group rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden">
+					<summary class="list-none cursor-pointer px-5 py-4 flex justify-between items-center gap-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+						<span class="text-[0.9375rem] font-semibold text-slate-800 dark:text-slate-200">
 							{faq.question}
 						</span>
 						<svg
-							class="w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform duration-200 group-open:rotate-180"
+							class="w-4 h-4 text-slate-400 dark:text-slate-500 transition-transform duration-200 shrink-0 group-open:rotate-180"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke="currentColor"
@@ -36,8 +36,8 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 						</svg>
 					</summary>
-					<div class="px-6 pb-4 text-gray-700 dark:text-gray-300">
-						<p class="leading-relaxed">{faq.answer}</p>
+					<div class="px-5 pb-4 pt-0 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">
+						<p class="pt-3">{faq.answer}</p>
 					</div>
 				</details>
 			{/each}

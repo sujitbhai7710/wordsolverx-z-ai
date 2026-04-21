@@ -34,24 +34,24 @@
             {@render fallback(caughtError)}
         {:else}
             <!-- Default Fallback UI -->
-            <div class="min-h-[50vh] flex flex-col items-center justify-center p-6 text-center bg-gray-50 dark:bg-gray-900 rounded-2xl border border-red-100 dark:border-red-900/30 shadow-sm m-4">
+            <div class="min-h-[50vh] flex flex-col items-center justify-center p-6 text-center bg-slate-50 dark:bg-slate-900 rounded-2xl border border-red-100 dark:border-red-900/30 shadow-sm m-4">
                 <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
                     <span class="text-3xl">⚠️</span>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Something went wrong</h2>
-                <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-2">Something went wrong</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 max-w-md">
                     We've encountered an unexpected issue while rendering this part of the page. Our team has been notified.
                 </p>
                 <div class="flex gap-3">
                     <button 
                         onclick={() => window.location.reload()} 
-                        class="px-5 py-2.5 bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-gray-900 font-semibold rounded-xl transition-colors"
+                        class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-semibold rounded-xl transition-colors"
                     >
                         Refresh Page
                     </button>
                     <button 
                         onclick={resetError} 
-                        class="px-5 py-2.5 bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 font-semibold rounded-xl transition-colors"
+                        class="px-5 py-2.5 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-50 border border-slate-200 dark:border-slate-700 font-semibold rounded-xl transition-colors"
                     >
                         Try Again
                     </button>

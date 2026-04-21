@@ -32,7 +32,7 @@
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
-<main class="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50 to-blue-100">
+<main class="min-h-screen bg-slate-50">
   <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
     <Breadcrumbs />
 
@@ -107,27 +107,169 @@
       <FAQSection faqs={data.faqEntries} title="Worldle Answers For The Last 10 Days" />
     </div>
 
-    <article class="mt-10 grid gap-6 lg:grid-cols-2">
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">How Worldle works</p>
-        <h2 class="mt-2 text-2xl font-bold text-slate-900">A geography puzzle with daily country clues</h2>
-        <p class="mt-4 text-base leading-7 text-slate-600">
-          Worldle gives you a country silhouette each day and asks you to guess the hidden country. Every incorrect guess returns a distance in kilometers, a direction arrow, and a proximity percentage. Those clues tell you how far your guess is from the target and in which direction to move next.
+    <article class="mt-10 space-y-8">
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+        <h2 class="text-3xl font-black tracking-tight text-slate-900">What is Worldle?</h2>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          Worldle is a daily geography puzzle where you guess a hidden country based on its outline shape. Each day, the game presents a silhouette and gives you six attempts to name the correct country. After every wrong guess, Worldle returns three pieces of feedback: the distance in kilometers between your guess and the target, a directional arrow pointing toward the answer, and a proximity percentage that shows how close you are. Those three data points make each guess progressively more informative, turning a seemingly impossible task into a solvable logic puzzle.
         </p>
-        <p class="mt-4 text-base leading-7 text-slate-600">
-          This page shows today&apos;s answer once you are ready to reveal it. If you need to verify an older puzzle, use the Worldle archive instead of a dated slug page.
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The game was created in early 2022 by a French developer and quickly went viral among geography enthusiasts and casual players alike. It capitalized on the same daily-puzzle format that made Wordle a household name, but swapped words for maps. The concept is simple enough that anyone can play — even people who haven't looked at a map in years — but challenging enough that perfect scores feel genuinely earned. You do not need to be a geography expert to enjoy Worldle, but knowing your continents, major countries, and rough locations gives you a serious advantage.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          Worldle draws from a database of every internationally recognized country and territory. That means the answer pool is enormous — over 190 possible answers — which keeps the game fresh for months of daily play. Unlike word games where you might see the same answer within a year, Worldle's rotation is large enough that repeat encounters are rare. The daily puzzle resets at midnight UTC, and each puzzle is assigned a sequential Worldle number that players use to track their progress and discuss answers online.
         </p>
       </section>
 
-      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Why this page helps</p>
-        <h2 class="mt-2 text-2xl font-bold text-slate-900">Use the answer page without leaving WordSolverX</h2>
-        <p class="mt-4 text-base leading-7 text-slate-600">
-          The Worldle answer page uses the same shared WordSolverX layout as the rest of the site, so it stays fast, simple, and easy to navigate. It is designed like an article for search visibility, but it still works like a practical answer tool.
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+        <h2 class="text-3xl font-black tracking-tight text-slate-900">How Worldle Works</h2>
+        <div class="mt-6 space-y-6">
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">The Silhouette</h3>
+            <p class="text-base leading-7 text-slate-600">
+              Each puzzle starts with a country silhouette — just the outline shape with no labels, no borders with neighbors, and no geographic context. The silhouette is oriented in its standard map position, so you can use cardinal direction to narrow down possibilities. Countries with highly distinctive shapes (like Italy, Chile, or Japan) are significantly easier to identify than countries with more generic or irregular outlines.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Distance, Direction, and Proximity</h3>
+            <p class="text-base leading-7 text-slate-600">
+              Every incorrect guess triggers a feedback triple. The distance tells you the straight-line kilometers between your guess and the target. The arrow tells you which direction the target sits relative to your guess — north, south, east, west, or any diagonal. The proximity percentage shows how close you are on a 0-100 scale, where 100 means you have found the answer. If you guess Brazil and the target is Argentina, you might see "1,200 km → 85%." That tells you you are very close and heading south.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Six Guesses</h3>
+            <p class="text-base leading-7 text-slate-600">
+              You get six attempts per puzzle, the same number Wordle grants. With smart guessing — starting broad with a continental guess, then narrowing based on the distance and direction feedback — most puzzles can be solved in 3 to 4 guesses. The difficulty spikes when the answer is a small country in a region with many neighbors, like a microstate in Europe or a small African nation surrounded by similarly-sized countries.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Daily Reset at Midnight UTC</h3>
+            <p class="text-base leading-7 text-slate-600">
+              Worldle resets at 00:00 UTC every day. The hero section of this page shows "Updates at 00:00 UTC" to keep that timing clear. Unlike some games that use local midnight, Worldle uses a single global reset, which means the puzzle changes at the same instant for every player on Earth. This page tracks that schedule and always displays the current day's answer.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+        <h2 class="text-3xl font-black tracking-tight text-slate-900">Today's Worldle Answer — What This Page Shows</h2>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          This page displays the verified answer for Worldle #{data.todayAnswer.worldleNumber}, dated {data.formattedTodayDate}. The country card above shows the country name, its flag, and geographic details pulled directly from our database. You can verify the answer against the official game at any time — the data on this page stays synchronized with the active Worldle puzzle.
         </p>
-        <p class="mt-4 text-base leading-7 text-slate-600">
-          If you want to solve the puzzle instead of revealing it, use the Worldle Solver. It runs in the browser and filters countries from the same base dataset used for the answer and archive views.
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          If you want to solve the puzzle yourself before seeing the answer, scroll down to use the Worldle Solver. It runs entirely in your browser and lets you filter countries by continent, population, and other attributes to narrow down possibilities without revealing the answer. The solver and the answer page use the same country dataset, so the filtering results always align with the actual answer pool.
         </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The FAQ section below covers the last 10 days of Worldle answers, which is useful if you missed a day and want to catch up quickly. For a complete historical record, the Worldle Archive page stores every past answer with dates, country names, and Worldle numbers. The archive is searchable and filterable, so you can find any specific puzzle by number or date.
+        </p>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+        <h2 class="text-3xl font-black tracking-tight text-slate-900">Strategy Tips for Worldle</h2>
+        <div class="mt-6 grid gap-6 sm:grid-cols-2">
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Start with a continental guess</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Your first guess should identify the continent, not the country. Guess a large country in the region where you think the silhouette belongs — Brazil for South America, Russia for Asia, DR Congo for Africa. The distance feedback will tell you whether you are on the right continent or need to pivot. A wrong continent wastes a guess, so aim wide first.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Use the proximity percentage aggressively</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              The proximity percentage is your most precise tool. A reading above 80% means you are very close — usually within one or two countries. Between 50% and 80% means you are in the right region but not adjacent. Below 50% means you are probably on the wrong continent or hemisphere. Let the percentage guide every subsequent guess.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Learn country shapes by region</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Silhouette recognition improves fast with practice. After a week of daily play, you will start recognizing the outlines of major countries automatically. Focus on the tricky ones: small African nations, Central Asian countries, Caribbean islands, and European microstates. These are the ones that cost players extra guesses.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Pay attention to scale</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Worldle displays every silhouette at the same zoom level, which means you can compare sizes directly. If the silhouette is tiny, the answer is likely a small country or island nation. If it spans most of the frame, you are looking at a large country like Russia, Canada, or Brazil. Size is one of the most underrated clues in the game.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Follow the direction arrow literally</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              The direction arrow points from your guess toward the target country. If it points southwest, the answer is southwest of wherever you guessed. This is straightforward for landlocked guesses but gets trickier across oceans. If you guess Australia and the arrow points northeast, the answer could be in Southeast Asia or the Pacific Islands.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Use the Worldle Solver for tough puzzles</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              When you are down to your last two guesses and cannot decide between neighboring countries, open the Worldle Solver. Filter by continent, then sort by bordering countries. Cross-referencing the solver's filters with the distance and direction feedback usually isolates the correct answer quickly.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+        <h2 class="text-3xl font-black tracking-tight text-slate-900">Worldle vs Other Geography Games</h2>
+        <div class="mt-6 grid gap-6 sm:grid-cols-2">
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Worldle vs Globle</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Globle shows a full world map and colors countries based on proximity as you guess. Worldle shows only a silhouette and returns numeric distance data. Globle is more visual and intuitive. Worldle is more analytical and requires you to interpret numbers. Both test geography knowledge, but Worldle demands stronger spatial reasoning.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Worldle vs Flagle</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Flagle shows a country's flag and you guess the country. Worldle shows a silhouette and you guess the country. Flagle tests flag recognition. Worldle tests shape recognition. They sound similar but exercise completely different knowledge. Some players are excellent at one and terrible at the other.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Worldle vs Geodle</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Geodle combines word-game and geography elements. Worldle is pure geography. Geodle might ask you to guess a capital city or a landmark. Worldle always asks for a country. If you want focused country-identification practice, Worldle is the more consistent choice.
+            </p>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-6">
+            <h3 class="text-lg font-bold text-slate-900">Who is Worldle best for?</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Travelers, geography teachers, map enthusiasts, and anyone who enjoys learning about the world. Worldle has broad appeal because it does not require specialist knowledge — just a rough sense of where countries are. It is also an excellent teaching tool. Many teachers use Worldle in classrooms to build basic geographic literacy in students of all ages.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60">
+        <h2 class="text-3xl font-black tracking-tight text-slate-900">Frequently Asked Questions About Worldle</h2>
+        <div class="mt-6 space-y-6">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">What time does Worldle reset?</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Worldle resets at midnight UTC (Coordinated Universal Time). That is 7:00 PM Eastern, 4:00 PM Pacific, and 5:30 AM IST the next day. Because it uses a single global timezone, every player in the world sees the new puzzle at exactly the same moment. This page tracks the UTC schedule and always displays the current day's answer.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">How many countries are in the Worldle answer pool?</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Worldle uses every internationally recognized country and territory — over 190 possible answers. That makes the rotation significantly larger than most word games. With 190+ answers and one puzzle per day, it takes well over six months for the full cycle to complete. You can play daily for a year and still encounter mostly fresh answers.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Does Worldle include overseas territories?</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              The answer pool focuses on sovereign nations, but some versions include dependent territories like Greenland, French Guiana, or Puerto Rico. If the silhouette looks unfamiliar and does not match any country you know, consider that it might be a territory rather than an independent nation. This page lists the exact answer name so there is never ambiguity.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">What counts as a good Worldle score?</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Solving in 1 or 2 guesses is exceptional and usually means the silhouette was unmistakable. Solving in 3 guesses is strong. Most players average 3 to 4 guesses per puzzle. If you are consistently solving in 4 or fewer, you are above average. Needing all 6 guesses usually means the answer was a small, oddly-shaped country in a crowded region like West Africa or Central Europe.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Can I use this page to cheat?</h3>
+            <p class="mt-2 text-base leading-7 text-slate-600">
+              Technically, yes. The answer is visible on this page without any gate. But most people who visit this page have already tried the puzzle and either failed or want to verify their answer. If you have not played yet, close this tab, open Worldle, and give it an honest attempt first. The game is more satisfying when you earn the answer yourself.
+            </p>
+          </div>
+        </div>
       </section>
     </article>
 

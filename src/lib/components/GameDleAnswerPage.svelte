@@ -46,7 +46,7 @@
     modes,
     modeConfig,
     regions = [
-      { key: 'america', label: 'America', flag: 'US', accent: 'bg-emerald-500' },
+      { key: 'america', label: 'America', flag: 'US', accent: 'bg-teal-500' },
       { key: 'europe', label: 'Europe', flag: 'EU', accent: 'bg-teal-500' }
     ],
     gridCols = 'grid-cols-1 md:grid-cols-2',
@@ -246,12 +246,12 @@
   {@html `<script type="application/ld+json">${resolvedSchemaJson}</script>`}
 </svelte:head>
 
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen bg-slate-100">
   <div class="bg-white shadow-sm">
     <div class="max-w-6xl mx-auto px-4 py-10">
-      <h1 class="text-4xl font-extrabold text-gray-900">{pageHeading}</h1>
+      <h1 class="text-4xl font-extrabold text-slate-900">{pageHeading}</h1>
       {#if dateStr}
-        <p class="mt-2 text-lg text-gray-600">{dateStr}</p>
+        <p class="mt-2 text-lg text-slate-600">{dateStr}</p>
       {/if}
     </div>
   </div>
@@ -261,9 +261,9 @@
       <div class={`grid ${gridCols} gap-6`}>
         {#each Array(modes.length) as _}
           <div class="animate-pulse rounded-2xl bg-white p-6">
-            <div class="mx-auto mb-4 h-12 w-12 rounded-full bg-gray-200"></div>
-            <div class="mx-auto mb-4 h-4 w-1/2 rounded bg-gray-200"></div>
-            <div class="mx-auto h-8 w-3/4 rounded bg-gray-200"></div>
+            <div class="mx-auto mb-4 h-12 w-12 rounded-full bg-slate-200"></div>
+            <div class="mx-auto mb-4 h-4 w-1/2 rounded bg-slate-200"></div>
+            <div class="mx-auto h-8 w-3/4 rounded bg-slate-200"></div>
           </div>
         {/each}
       </div>
@@ -283,7 +283,7 @@
         <div class="mb-12">
           <div class="mb-6 flex items-center gap-3">
             <div class={`h-8 w-1 rounded-full ${region.accent}`}></div>
-            <h2 class="text-2xl font-bold text-gray-800">{region.flag} {gameTitle} {region.label} Answers</h2>
+            <h2 class="text-2xl font-bold text-slate-800">{region.flag} {gameTitle} {region.label} Answers</h2>
           </div>
           <div class={`grid ${gridCols} gap-6`}>
             {#each modes as mode}
@@ -296,10 +296,10 @@
                     {cfg.icon}
                   </div>
                 </div>
-                <h3 class="mb-4 text-center font-medium text-gray-600">{cfg.name}</h3>
+                <h3 class="mb-4 text-center font-medium text-slate-600">{cfg.name}</h3>
                 {#if content}
                   <div class="mb-4 text-center">
-                    <p class="text-3xl font-bold text-gray-800">{content.champion_name}</p>
+                    <p class="text-3xl font-bold text-slate-800">{content.champion_name}</p>
                   </div>
                   <div class="flex items-center justify-between border-t pt-3 text-sm">
                     <div class="flex items-center gap-1.5 text-orange-500">
@@ -312,25 +312,25 @@
                         data-copy-value={content.champion_name}
                         data-copy-default="Copy"
                         data-copy-success="Copied"
-                        class="text-gray-600 transition-colors hover:text-gray-800"
+                        class="text-slate-600 transition-colors hover:text-slate-800"
                         title="Copy answer"
                       >
                         Copy
                       </button>
-                      <span class="flex items-center gap-1 text-green-500">
-                        <span class="h-2 w-2 rounded-full bg-green-500"></span>
+                      <span class="flex items-center gap-1 text-teal-500">
+                        <span class="h-2 w-2 rounded-full bg-teal-500"></span>
                         Live
                       </span>
                     </div>
                   </div>
                   {#if content.yesterday}
                     <div class="mt-3 border-t border-dashed pt-3 text-center">
-                      <span class="text-xs text-gray-500">Yesterday: </span>
-                      <span class="text-sm font-medium text-gray-700">{content.yesterday}</span>
+                      <span class="text-xs text-slate-500">Yesterday: </span>
+                      <span class="text-sm font-medium text-slate-700">{content.yesterday}</span>
                     </div>
                   {/if}
                 {:else}
-                  <div class="py-4 text-center text-gray-500">No data available</div>
+                  <div class="py-4 text-center text-slate-500">No data available</div>
                 {/if}
               </div>
             {/each}
@@ -353,12 +353,12 @@
   </div>
 
   <div class="max-w-6xl mx-auto px-4 py-12">
-    <h2 class="mb-6 text-center text-xl font-bold text-gray-800">More Games</h2>
+    <h2 class="mb-6 text-center text-xl font-bold text-slate-800">More Games</h2>
     <div class={`grid grid-cols-2 ${crossLinkColsClass} gap-4`}>
       {#each crossLinks as link}
         <a href={link.href} class="rounded-xl bg-white p-4 text-center shadow-sm transition-shadow hover:shadow-md">
           <span class="mb-2 block text-3xl">{link.icon}</span>
-          <span class="font-medium text-gray-700">{link.label}</span>
+          <span class="font-medium text-slate-700">{link.label}</span>
         </a>
       {/each}
     </div>

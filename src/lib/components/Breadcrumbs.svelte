@@ -1,87 +1,83 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import FiHome from '$lib/components/icons/FiHome.svelte';
-  import FiChevronRight from '$lib/components/icons/FiChevronRight.svelte';
+	import { page } from '$app/stores';
+	import FiHome from '$lib/components/icons/FiHome.svelte';
+	import FiChevronRight from '$lib/components/icons/FiChevronRight.svelte';
 
-  // Use store value directly - $page gives reactive access in Svelte 5
-  let pathname = $derived($page.url.pathname);
+	let pathname = $derived($page.url.pathname);
+	let pathSegments = $derived(pathname.split('/').filter((segment: string) => segment !== ''));
 
-  // Split the pathname into segments
-  let pathSegments = $derived(pathname.split('/').filter((segment: string) => segment !== ''));
+	let breadcrumbItems = $derived(
+		pathSegments.map((segment: string, index: number) => {
+			const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+			let name = segment
+				.split('-')
+				.map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+				.join(' ');
 
-  // Generate breadcrumb items
-  let breadcrumbItems = $derived(
-    pathSegments.map((segment: string, index: number) => {
-      const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
-      let name = segment
-        .split('-')
-        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+			if (name === 'All Wordle Solver') name = 'All Wordle Solver';
+			if (name.includes('Wordle Answer For')) {
+				name = name.replace('Wordle Answer For', 'Wordle Answer');
+			}
 
-      if (name === 'All Wordle Solver') name = 'All Wordle Solver';
-      if (name.includes('Wordle Answer For')) {
-        name = name.replace('Wordle Answer For', 'Wordle Answer');
-      }
+			return { name, href, isLast: index === pathSegments.length - 1 };
+		})
+	);
 
-      return { name, href, isLast: index === pathSegments.length - 1 };
-    })
-  );
-
-  let schemaJson = $derived(JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://wordsolver.tech',
-      },
-      ...breadcrumbItems.map((item: { name: string; href: string }, index: number) => ({
-        '@type': 'ListItem',
-        position: index + 2,
-        name: item.name,
-        item: `https://wordsolver.tech${item.href}`,
-      })),
-    ],
-  }));
+	let schemaJson = $derived(JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: [
+			{
+				'@type': 'ListItem',
+				position: 1,
+				name: 'Home',
+				item: 'https://wordsolver.tech',
+			},
+			...breadcrumbItems.map((item: { name: string; href: string }, index: number) => ({
+				'@type': 'ListItem',
+				position: index + 2,
+				name: item.name,
+				item: `https://wordsolver.tech${item.href}`,
+			})),
+		],
+	}));
 </script>
 
 <svelte:head>
-  {#if pathname !== '/'}
-    {@html `<script type="application/ld+json">${schemaJson}</script>`}
-  {/if}
+	{#if pathname !== '/'}
+		{@html `<script type="application/ld+json">${schemaJson}</script>`}
+	{/if}
 </svelte:head>
 
 {#if pathname !== '/'}
-  <nav class="flex mb-6 text-sm font-medium overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide" aria-label="Breadcrumb">
-    <ol class="inline-flex items-center space-x-1 md:space-x-2">
-      <li class="inline-flex items-center">
-        <a
-          href="/"
-          class="inline-flex items-center text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 transition-colors"
-        >
-          <FiHome class="mr-2 h-4 w-4" />
-          Home
-        </a>
-      </li>
-      {#each breadcrumbItems as item}
-        <li class="flex items-center">
-          <FiChevronRight class="h-4 w-4 text-gray-500 dark:text-gray-400 mx-1" />
-          {#if item.isLast}
-            <span class="text-gray-900 dark:text-gray-100 font-bold ml-1 md:ml-2">
-              {item.name}
-            </span>
-          {:else}
-            <a
-              href={item.href}
-              class="text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 transition-colors ml-1 md:ml-2"
-            >
-              {item.name}
-            </a>
-          {/if}
-        </li>
-      {/each}
-    </ol>
-  </nav>
+	<nav class="flex mb-6 text-sm overflow-x-auto whitespace-nowrap pb-1" aria-label="Breadcrumb">
+		<ol class="inline-flex items-center space-x-1.5">
+			<li class="inline-flex items-center">
+				<a
+					href="/"
+					class="inline-flex items-center text-slate-400 hover:text-teal-600 dark:text-slate-500 dark:hover:text-teal-400 transition-colors"
+				>
+					<FiHome class="mr-1.5 h-3.5 w-3.5" />
+					<span class="font-medium">Home</span>
+				</a>
+			</li>
+			{#each breadcrumbItems as item}
+				<li class="flex items-center">
+					<FiChevronRight class="h-3 w-3 text-slate-300 dark:text-slate-600 mx-0.5" />
+					{#if item.isLast}
+						<span class="text-slate-900 dark:text-slate-100 font-semibold ml-0.5">
+							{item.name}
+						</span>
+					{:else}
+						<a
+							href={item.href}
+							class="text-slate-400 hover:text-teal-600 dark:text-slate-500 dark:hover:text-teal-400 transition-colors ml-0.5"
+						>
+							{item.name}
+						</a>
+					{/if}
+				</li>
+			{/each}
+		</ol>
+	</nav>
 {/if}

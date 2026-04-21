@@ -23,36 +23,36 @@
 
 {#if data.error || !data.puzzle}
 <main class="max-w-3xl mx-auto px-4 py-12">
-  <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm">
-    <h1 class="mb-4 text-3xl font-bold text-gray-900">Unable to Load Waffle Right Now</h1>
-    <p class="text-gray-600">Please refresh in a moment.</p>
+  <div class="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+    <h1 class="mb-4 text-3xl font-bold text-slate-900">Unable to Load Waffle Right Now</h1>
+    <p class="text-slate-600">Please refresh in a moment.</p>
   </div>
 </main>
 {:else}
 <main class="max-w-3xl mx-auto px-4 py-8">
   <div class="mb-8">
     <a href="/" class="text-blue-600 hover:text-blue-800 mb-4 inline-block">&larr; Back to Home</a>
-    <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+    <div class="flex items-center space-x-2 text-sm text-slate-500 mb-2">
       <a href="/waffle-archive" class="hover:underline">Waffle Archive</a>
       <span>&bull;</span>
       <span>{data.formattedDate}</span>
     </div>
 
     <div class="flex items-center gap-3 mb-2">
-      <h1 class="text-4xl font-bold text-gray-900">Waffle Answer Today ({data.formattedDate})</h1>
+      <h1 class="text-4xl font-bold text-slate-900">Waffle Answer Today ({data.formattedDate})</h1>
       <div class="flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-800 rounded-lg font-bold text-sm">
         <FiHash class="w-3.5 h-3.5" />
         <span>#{data.number}</span>
       </div>
     </div>
-    <p class="text-xl text-gray-600">Here are the solutions for today's Waffle puzzle ({data.formattedDate}).</p>
+    <p class="text-xl text-slate-600">Here are the solutions for today's Waffle puzzle ({data.formattedDate}).</p>
   </div>
 
-  <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-8">
+  <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 mb-8">
     <WaffleAnswerCard puzzle={data.puzzle} solution={data.solution} date={data.date} />
 
     <div class="mt-8">
-      <h3 class="text-xl font-bold text-gray-900 border-b-2 border-amber-200 pb-2 mb-6 flex items-center gap-2">
+      <h3 class="text-xl font-bold text-slate-900 border-b-2 border-amber-200 pb-2 mb-6 flex items-center gap-2">
         <FiHash class="text-amber-500" />
         Word Definitions
       </h3>
@@ -66,14 +66,14 @@
           <div class="space-y-4">
             {#each data.words.slice(0, 3) as word}
               {@const def = data.definitions.find((d: any) => d.word.toLowerCase() === word.toLowerCase())}
-              <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
                 <div class="flex items-baseline gap-2 mb-1">
-                  <span class="text-lg font-black text-gray-900 uppercase tracking-tight">{word}</span>
+                  <span class="text-lg font-black text-slate-900 uppercase tracking-tight">{word}</span>
                   {#if def?.type}
                     <span class="text-[10px] font-bold text-amber-500 italic">({def.type})</span>
                   {/if}
                 </div>
-                <p class="text-gray-600 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
+                <p class="text-slate-600 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
               </div>
             {/each}
           </div>
@@ -87,14 +87,14 @@
           <div class="space-y-4">
             {#each data.words.slice(3, 6) as word}
               {@const def = data.definitions.find((d: any) => d.word.toLowerCase() === word.toLowerCase())}
-              <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
                 <div class="flex items-baseline gap-2 mb-1">
-                  <span class="text-lg font-black text-gray-900 uppercase tracking-tight">{word}</span>
+                  <span class="text-lg font-black text-slate-900 uppercase tracking-tight">{word}</span>
                   {#if def?.type}
                     <span class="text-[10px] font-bold text-amber-500 italic">({def.type})</span>
                   {/if}
                 </div>
-                <p class="text-gray-600 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
+                <p class="text-slate-600 text-sm leading-snug">{def?.definition || 'No definition available.'}</p>
               </div>
             {/each}
           </div>
@@ -104,11 +104,11 @@
   </div>
 
   <div class="flex justify-between items-center mb-12">
-    <a href={data.prevSlug} class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+    <a href={data.prevSlug} class="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors">
       &larr; Previous Waffle
     </a>
     {#if data.showNext}
-      <a href={data.nextSlug} class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+      <a href={data.nextSlug} class="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors">
         Next Waffle &rarr;
       </a>
     {/if}
@@ -116,84 +116,156 @@
 
   <!-- SEO Content Section -->
   <article class="space-y-8 mb-12">
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
-      <h2 class="text-3xl font-bold text-gray-900 mb-6">
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">
         What is Waffle?
       </h2>
-      <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-        Waffle is a word puzzle that gives you all the letters upfront — but they're scrambled. Your job is to swap letters around until you've formed six correct words: three across and three down, crossword-style. The grid is shaped like a waffle, which is where the game gets its name.
+      <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        Waffle is a daily word puzzle that hands you all the letters upfront — but scrambled across a crossword-style grid. Your job is to swap letters around until six correct words emerge: three across and three down. The grid is shaped like a waffle, which is where the game gets its name. Each day at midnight, a brand-new puzzle goes live with a fresh set of words and a fresh arrangement of letters to untangle.
       </p>
-      <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-        Unlike Wordle where you're guessing from scratch, Waffle gives you everything you need to solve the puzzle right from the start. The challenge isn't figuring out what letters to use — it's figuring out where each letter belongs. Some letters are already in the correct position (shown in green), while others need to be swapped.
+      <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        Unlike Wordle where you guess from scratch with zero information, Waffle gives you everything you need right from move one. The challenge is not figuring out what letters to use — it is figuring out where each letter belongs. Some letters are already locked into the correct position (marked in teal), while others are in the wrong spot and need to be swapped. Every letter you see on the board belongs to one of the six words. Nothing is wasted, nothing is extra.
       </p>
-      <p class="text-lg text-gray-600 leading-relaxed">
-        The game tracks how many swaps you make, and the goal is to solve it in 15 moves or fewer. Every puzzle is solvable within that limit, but finding the optimal path requires careful thinking about which letters go where.
+      <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        The game tracks every swap you make and grades you on efficiency. The gold standard is solving the puzzle in 10 swaps or fewer. The game grants you a maximum of 15 swaps before the round ends, and every single daily puzzle is solvable within that window. Some puzzles can even be cracked in 5 to 7 swaps if you spot the right moves early. Finding that optimal path is what keeps people coming back day after day.
+      </p>
+      <p class="text-lg text-slate-600 leading-relaxed">
+        Waffle launched in early 2022 as part of the massive wave of Wordle-inspired daily games. While most of those clones stuck to the "guess a five-letter word" formula, Waffle carved out its own space by combining crossword logic with swap-based mechanics. The result is a puzzle that feels familiar at first glance but plays completely differently from anything else in the daily-game category.
       </p>
     </section>
 
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
-      <h2 class="text-3xl font-bold text-gray-900 mb-6">
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">
         How to Play Waffle
       </h2>
-      <div class="space-y-6 text-lg text-gray-600">
+      <div class="space-y-6 text-lg text-slate-600">
         <p class="leading-relaxed">
-          Playing Waffle is straightforward once you understand the basics:
+          Playing Waffle is straightforward once you understand the color system and the swap mechanic. Here is a breakdown of how each element works:
         </p>
-        <div class="bg-gray-50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 1: Analyze the Grid</h3>
-          <p class="text-gray-600">
-            Look at the starting grid. Green letters are already correct — don't move these. Yellow letters are in the word but wrong position. Gray letters don't belong in that word at all.
+        <div class="bg-slate-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Step 1: Read the Color Codes</h3>
+          <p class="text-slate-600">
+            Teal (green) letters are already correct — they sit in the right word and the right position. Do not touch these. Letters that are in the correct word but the wrong slot are highlighted differently depending on the version you play. Gray or blank letters belong elsewhere entirely. The color system tells you exactly what needs to move and what should stay put.
           </p>
         </div>
-        <div class="bg-gray-50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 2: Identify Fixed Letters</h3>
-          <p class="text-gray-600">
-            Green letters are your anchors. They tell you exactly which letters belong in which positions. Use these as your starting point for figuring out the rest of the words.
+        <div class="bg-slate-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Step 2: Lock In Your Anchors</h3>
+          <p class="text-slate-600">
+            Teal letters are your anchors. They tell you exactly which positions are already solved. Use these as reference points for building out the rest of the words. For example, if you know the second letter of an across word is "A" and the second letter of a down word is "T," those two crossing points are locked in. Everything else radiates outward from those fixed positions.
           </p>
         </div>
-        <div class="bg-gray-50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 3: Plan Your Swaps</h3>
-          <p class="text-gray-600">
-            Before making any moves, think through which letters need to go where. Each swap affects two positions, so consider the ripple effects. Sometimes the obvious swap isn't the best one.
+        <div class="bg-slate-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Step 3: Pick a Letter and Swap It</h3>
+          <p class="text-slate-600">
+            Click a letter, then click where you want it to go. The two letters swap positions. Each swap counts as one move, regardless of which letters are involved. Think of it like a chess move — once you commit, you cannot undo it. That means you should have a reason for every swap you make. Random clicking burns through your 15 moves fast.
           </p>
         </div>
-        <div class="bg-gray-50 rounded-2xl p-6">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">Step 4: Solve Efficiently</h3>
-          <p class="text-gray-600">
-            The goal is 15 swaps or fewer. If you're careful, most puzzles can be solved in 10-12 moves. Rush and you might find yourself running out of moves.
+        <div class="bg-slate-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Step 4: Watch the Colors Update</h3>
+          <p class="text-slate-600">
+            After each swap, the grid recalculates the color coding. A letter that was gray might turn teal if it landed in the right spot. A letter that was in the wrong position might now show as correct. Use this feedback to plan your next move. The color changes tell you whether your swap helped or hurt.
+          </p>
+        </div>
+        <div class="bg-slate-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Step 5: Solve Before You Run Out of Swaps</h3>
+          <p class="text-slate-600">
+            You get 15 swaps total. Most daily puzzles can be solved in 10 to 12 moves if you think before you click. The best players consistently finish in 7 to 9 swaps by identifying the correct sequence early. If you hit 15 swaps without solving, the game reveals the answer and you can try again tomorrow.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
-      <h2 class="text-3xl font-bold text-gray-900 mb-6">
-        Tips for Solving Waffle Faster
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">
+        Today's Waffle Answer — What You See on This Page
       </h2>
-      <div class="space-y-6 text-lg text-gray-600">
+      <div class="space-y-4 text-lg text-slate-600">
+        <p class="leading-relaxed">
+          This page displays the complete solution for today's Waffle puzzle, including all six words, their definitions, and the puzzle number. The answer card at the top of the page shows the solved grid with every letter in its correct position. Below that, you will find definitions for each word, organized into "Across" and "Down" categories to match the crossword layout.
+        </p>
+        <p class="leading-relaxed">
+          The puzzle number helps you track where you are in the sequence. Waffle puzzles are numbered sequentially, so puzzle #500 follows #499 and so on. If you missed a day, you can use the Previous and Next navigation buttons to browse through the archive and catch up on puzzles you skipped. The archive goes back through every puzzle since the game launched.
+        </p>
+        <p class="leading-relaxed">
+          Word definitions are pulled from a dictionary source and include the part of speech where available. This makes the page useful not just for getting the answer but for actually learning the words. Some Waffle solutions include less common words — seeing the definition helps you remember them for future puzzles and for general vocabulary building.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">
+        Strategy Tips for Solving Waffle Faster
+      </h2>
+      <div class="space-y-6 text-lg text-slate-600">
         <div class="grid md:grid-cols-2 gap-6">
           <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Start with Crossings</h3>
-            <p class="text-gray-600">
-              Letters that appear in both across and down words are crucial. Getting these right helps you solve two words at once. Focus on intersection points first.
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Start with the Crossings</h3>
+            <p class="text-slate-600">
+              Letters that sit at intersection points — where an across word meets a down word — are the most powerful positions on the board. Getting a crossing letter right simultaneously locks in a position for two different words. Focus your attention on those shared cells before worrying about the edges. One correct crossing can cascade into solving two words at once.
             </p>
           </div>
           <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Think Crossword-Style</h3>
-            <p class="text-gray-600">
-              The words interlock like a mini crossword. If you're stuck on one word, try solving a crossing word instead. Sometimes the answer reveals itself through the intersections.
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Think Like a Crossword Solver</h3>
+            <p class="text-slate-600">
+              The words interlock the same way a mini crossword does. If you are stuck on one across word, look at the down words that cross it. Sometimes solving the down word first gives you enough letters to figure out the across word without making extra swaps. The crossword logic is your most powerful tool.
             </p>
           </div>
           <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Avoid Unnecessary Swaps</h3>
-            <p class="text-gray-600">
-              Every swap counts. Don't move letters just to see what happens. Plan ahead and make each swap purposeful. The best solvers think several moves ahead.
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Never Swap a Teal Letter</h3>
+            <p class="text-slate-600">
+              This sounds obvious, but it happens more than you think. In the heat of solving, players sometimes click a teal letter by accident, wasting a swap and breaking a correct position. Double-check every move before you commit. If a letter is teal, leave it alone no matter what.
             </p>
           </div>
           <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Use Our Waffle Solver</h3>
-            <p class="text-gray-600">
-              If you're completely stuck, our Waffle Solver can show you the solution. It's great for learning how the pieces fit together and improving your solving skills.
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Plan Two or Three Moves Ahead</h3>
+            <p class="text-slate-600">
+              The best Waffle players do not swap and react — they plan a sequence of moves before clicking anything. Think about which letters need to move, where they need to go, and what the board will look like after each swap. If you can visualize two or three swaps in advance, you will consistently solve puzzles in under 10 moves.
+            </p>
+          </div>
+          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Use Process of Elimination</h3>
+            <p class="text-slate-600">
+              Once you have solved one or two words, the remaining unsolved words have fewer possible letter combinations. Use the process of elimination — if you know that "A" and "T" are already placed, and a word needs five letters, you only need to figure out the remaining three positions. The puzzle gets easier as you solve more words, not harder.
+            </p>
+          </div>
+          <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-100">
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Use the Waffle Solver When Stuck</h3>
+            <p class="text-slate-600">
+              If you are completely blocked and cannot see a path forward, the Waffle Solver on WordSolverX can show you the solution step by step. It is a learning tool as much as a shortcut — seeing how the solver sequences its swaps teaches you patterns you can apply to future puzzles.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">
+        Waffle vs Other Daily Word Games
+      </h2>
+      <div class="space-y-6 text-lg text-slate-600">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Waffle vs Wordle</h3>
+            <p class="text-slate-600">
+              Wordle gives you a blank slate and asks you to guess a single five-letter word in six tries. Waffle gives you a scrambled grid and asks you to rearrange letters into six words in 15 swaps. Wordle tests vocabulary and letter-pattern recognition. Waffle tests spatial reasoning and planning. Both are daily, both are addictive, but they exercise different cognitive skills entirely.
+            </p>
+          </div>
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Waffle vs Crossword Puzzles</h3>
+            <p class="text-slate-600">
+              Traditional crosswords give you clues and you fill in words from scratch. Waffle gives you all the letters and you rearrange them. Crosswords test general knowledge and vocabulary breadth. Waffle tests logical thinking and pattern recognition. A strong crossword solver might struggle with Waffle at first because the skill set is different — you are not recalling words, you are deducing placements.
+            </p>
+          </div>
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Waffle vs Spelling Bee</h3>
+            <p class="text-slate-600">
+              Spelling Bee asks you to find as many words as possible from a set of seven letters. Waffle asks you to arrange a specific set of letters into exactly six predetermined words. Spelling Bee is open-ended and creative. Waffle is closed-ended and analytical. If you enjoy the satisfaction of finding order in chaos, Waffle delivers that feeling more reliably.
+            </p>
+          </div>
+          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Who Is Waffle Best For?</h3>
+            <p class="text-slate-600">
+              Waffle appeals most to people who enjoy puzzles with clear, deterministic solutions. If you like Sudoku, chess puzzles, or logic grids, Waffle will feel right at home in your daily routine. It does not reward luck or wide vocabulary — it rewards careful analysis and efficient planning. That makes it one of the most skill-based daily word games available right now.
             </p>
           </div>
         </div>
@@ -201,19 +273,40 @@
     </section>
 
     <section class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-8 border border-amber-100">
-      <h2 class="text-3xl font-bold text-gray-900 mb-6">
-        Why Waffle is So Satisfying
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">
+        Frequently Asked Questions About Waffle
       </h2>
-      <div class="space-y-4 text-lg text-gray-600">
-        <p class="leading-relaxed">
-          There's something deeply satisfying about watching a scrambled grid transform into perfect words. Each swap brings you closer to the solution, and when the last letter clicks into place, it feels like completing a puzzle where everything just makes sense.
-        </p>
-        <p class="leading-relaxed">
-          The game also rewards careful thinking over quick guessing. You can stare at the grid for five minutes before making your first move, and that's perfectly fine. In fact, the best players often spend more time thinking than swapping.
-        </p>
-        <p class="leading-relaxed">
-          Plus, Waffle has a unique visual appeal. The grid looks like a crossword, but the swapping mechanic makes it feel more like a sliding puzzle. It's a word game that also satisfies that urge to organize and arrange things perfectly.
-        </p>
+      <div class="space-y-6 text-lg text-slate-600">
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">What time does the daily Waffle reset?</h3>
+          <p class="leading-relaxed">
+            The daily Waffle puzzle resets at midnight in your local timezone. As soon as the clock strikes twelve, the previous day's puzzle disappears and a new one loads. There is no way to go back and play a missed puzzle through the official game — which is exactly why this page and the Waffle Archive exist. We store every answer so you can catch up anytime.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Can every Waffle puzzle be solved in 15 swaps?</h3>
+          <p class="leading-relaxed">
+            Yes. Every daily Waffle puzzle is guaranteed solvable within the 15-swap limit. The puzzle generator ensures this during creation. Most puzzles can be solved in 10 to 12 swaps with decent strategy, and the easiest ones crack in 5 to 7. If you find yourself needing all 15 swaps, the puzzle is on the harder end of the difficulty spectrum — not impossible.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">How many words are in each Waffle puzzle?</h3>
+          <p class="leading-relaxed">
+            Every standard Waffle puzzle contains exactly six words: three reading across and three reading down, arranged in a crossword-style grid. Each word is typically five letters long, and the words intersect at shared letters. The grid contains 30 total cells, but because of the crossing positions, only about 20 to 22 unique letter positions need to be correct — the rest overlap.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Does Waffle use the same word list as Wordle?</h3>
+          <p class="leading-relaxed">
+            No. Waffle uses its own curated word list. While there is overlap — common English words appear in both — Waffle's list includes some words that Wordle would never use, and vice versa. Waffle prioritizes words that work well in a crossword grid, meaning words with common letters and standard patterns are preferred over obscure entries.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">What counts as a good Waffle score?</h3>
+          <p class="leading-relaxed">
+            Solving in 10 swaps or fewer is considered excellent. Anything under 7 swaps is elite-level and puts you in the top tier of Waffle players. The average solver finishes in about 11 to 13 swaps. If you consistently land under 10, you have genuinely mastered the game's core mechanics.
+          </p>
+        </div>
       </div>
     </section>
   </article>

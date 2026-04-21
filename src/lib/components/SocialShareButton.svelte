@@ -27,7 +27,7 @@
   href={shareLink}
   target="_blank"
   rel="noopener noreferrer"
-  class="flex items-center justify-center p-3 sm:p-4 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600 rounded-xl transition-all hover:scale-105 hover:shadow-md group relative"
+  class="flex items-center justify-center p-3 sm:p-4 bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 rounded-xl transition-all hover:scale-105 hover:shadow-md group relative"
   aria-label="Share on {platformName}"
 >
   {#if platform === 'twitter'}
@@ -51,7 +51,7 @@
   {:else if platform === 'threads'}
     <span class="text-black dark:text-white"><svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.187.408-2.26 1.33-3.014.88-.72 2.082-1.126 3.456-1.187 1.005-.043 1.95.053 2.826.29-.052-.672-.236-1.217-.556-1.627-.44-.563-1.132-.864-2.065-.9l-.096-.003c-.72 0-1.73.2-2.37.876l-1.456-1.378c1.058-1.113 2.479-1.618 3.826-1.618l.136.003c1.517.058 2.723.598 3.583 1.606.765.898 1.196 2.099 1.284 3.57.56.148 1.074.356 1.54.626 1.082.627 1.932 1.558 2.472 2.7.752 1.588.953 3.97-.718 6.603-1.803 2.834-4.87 3.87-8.227 3.89z" /></svg></span>
   {/if}
-  <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+  <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-slate-900 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
     {platformName}
   </span>
 </a>

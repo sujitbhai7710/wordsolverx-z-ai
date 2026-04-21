@@ -220,6 +220,71 @@
       </p>
     </section>
 
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">How to Play Betweenle</h2>
+      <div class="space-y-4">
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center">1</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Guess any 5-letter word to start</h3>
+            <p class="text-slate-600 mt-1 text-sm">The game accepts any valid English word. You don't need to think strategically on your first guess — just pick a word near the middle of the alphabet. "MOUNT," "LEVEL," or "NIGHT" are solid choices because they split the dictionary roughly in half, giving you maximum information from a single guess.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-purple-100 text-purple-700 font-bold flex items-center justify-center">2</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Read the direction and temperature</h3>
+            <p class="text-slate-600 mt-1 text-sm">After each guess, the game tells you whether the answer comes alphabetically before or after your guess and shows a temperature percentage. "After" with a high temperature means you are very close to the answer. "Before" with a low temperature means you are far away within the current range.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-fuchsia-100 text-fuchsia-700 font-bold flex items-center justify-center">3</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Narrow the range with each guess</h3>
+            <p class="text-slate-600 mt-1 text-sm">Each guess creates a new boundary. After two or three guesses you have a tight alphabetical window. The solver picks the optimal next word within that window based on your temperature percentages, so you converge faster than guessing random words in the range.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">4</span>
+          <div>
+            <h3 class="font-bold text-slate-900">Solve it in as few guesses as possible</h3>
+            <p class="text-slate-600 mt-1 text-sm">There is no guess limit in Betweenle, but your result summary shows how many guesses it took. Most players aim for 5-7. With the solver, you can usually nail it in 4-5. The game resets daily at midnight.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">Why Players Use a Betweenle Solver</h2>
+      <p class="text-slate-600 leading-relaxed mb-4">
+        Betweenle seems simple — just guess words and follow the arrow. But the challenge grows fast after the first two or three guesses. Once you have a range like "FLAME to FREED," there are dozens of valid 5-letter words in between, and manually listing them is tedious. The temperature percentages help, but translating a percentage into an exact word position requires you to know where words fall in the dictionary alphabetically. Most people don't have that memorized.
+      </p>
+      <p class="text-slate-600 leading-relaxed mb-4">
+        The solver handles this by using the actual game word list. When you enter "FLAME" as your top bound and "FREED" as your bottom bound with a 65% temperature, it knows exactly which words exist between those two and which one is closest to the 65% mark. No manual scanning, no guessing, no risk of picking a word that doesn't exist.
+      </p>
+      <p class="text-slate-600 leading-relaxed">
+        Some players use the solver from the very first guess. Others play 2-3 rounds on their own to understand the range, then open the solver when the candidate list gets too large to track. Either approach works. The solver updates instantly as you add or change information, so it's useful at any stage of the puzzle.
+      </p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+      <h2 class="text-3xl font-bold text-slate-900 mb-5">Betweenle vs Similar Word Games</h2>
+      <div class="space-y-4">
+        <div class="bg-slate-50 rounded-xl p-5">
+          <h3 class="font-bold text-slate-900 mb-2">Betweenle vs Wordle</h3>
+          <p class="text-slate-600 text-sm">Wordle gives you letter-level feedback (green, yellow, gray) that eliminates specific words. Betweenle gives you range-level feedback (before/after, temperature) that eliminates broad alphabetical chunks. Wordle is about precise deduction; Betweenle is about binary search. Wordle reveals what letters are in the answer, Betweenle reveals where the answer sits in the dictionary. Both are solvable in 6 guesses with optimal play, but the information structure is completely different.</p>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-5">
+          <h3 class="font-bold text-slate-900 mb-2">Betweenle vs Contexto</h3>
+          <p class="text-slate-600 text-sm">Contexto ranks all words by semantic similarity to the answer using a neural network. You guess words and get a rank number — closer to #1 means closer in meaning. Betweenle uses pure alphabetical distance. Contexto rewards vocabulary and pattern recognition; Betweenle rewards knowing how words are ordered in the dictionary. A person who reads a lot can be great at Contexto. A person who knows the alphabet can be great at Betweenle.</p>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-5">
+          <h3 class="font-bold text-slate-900 mb-2">Betweenle vs Searchle</h3>
+          <p class="text-slate-600 text-sm">Searchle combines Wordle-style letter feedback with alphabetical ranking. You get both green/yellow/gray tiles AND a numeric position score. Searchle is arguably the hardest variant because it requires managing two different feedback systems at once. Betweenle is simpler — just follow the arrow and temperature. If you find Searchle overwhelming, Betweenle is a good stepping stone because it uses only one feedback dimension.</p>
+        </div>
+      </div>
+    </section>
+
     <div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl">
       <FAQSection class="py-0" {faqs} title="Betweenle Solver FAQs" />
     </div>

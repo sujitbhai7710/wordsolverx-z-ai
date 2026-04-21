@@ -400,7 +400,7 @@
 					<div class="flex flex-wrap items-center gap-4 text-lg mt-4">
 						<span class="font-mono font-bold text-violet-700">{result.startWord}</span>
 						<span class="text-slate-400">-></span>
-						<span class="font-mono font-bold text-emerald-700">{result.endWord}</span>
+						<span class="font-mono font-bold text-teal-700">{result.endWord}</span>
 						<span class="text-slate-500">({result.solutions.length} answers shown)</span>
 					</div>
 
@@ -625,7 +625,7 @@
 																<span
 																	class={`inline-flex w-7 h-8 items-center justify-center rounded ${
 																		charIndex === changeIndex
-																			? 'bg-emerald-100 text-emerald-700 border border-emerald-300 font-bold'
+																			? 'bg-teal-100 text-teal-700 border border-teal-300 font-bold'
 																			: 'text-slate-800'
 																	}`}
 																>
@@ -643,14 +643,14 @@
 										{/if}
 									{/each}
 
-									<div class="flex items-center gap-3 p-3 rounded-2xl bg-emerald-50 border border-emerald-200">
-										<div class="w-9 h-9 rounded-full bg-white border border-emerald-200 flex items-center justify-center font-bold text-emerald-700">
+									<div class="flex items-center gap-3 p-3 rounded-2xl bg-teal-50 border border-teal-200">
+										<div class="w-9 h-9 rounded-full bg-white border border-teal-200 flex items-center justify-center font-bold text-teal-700">
 											T
 										</div>
-										<span class="font-mono text-xl font-bold text-emerald-700">
+										<span class="font-mono text-xl font-bold text-teal-700">
 											{detailedSolution[detailedSolution.length - 1]}
 										</span>
-										<span class="px-3 py-1 rounded-full bg-white border border-emerald-200 text-xs font-semibold text-emerald-700">
+										<span class="px-3 py-1 rounded-full bg-white border border-teal-200 text-xs font-semibold text-teal-700">
 											Target
 										</span>
 									</div>
@@ -695,7 +695,7 @@
 						<span class="text-violet-400">→</span>
 						<span class="px-3 py-2 rounded-xl bg-white border border-violet-200 font-mono text-sm text-slate-700">TALL</span>
 						<span class="text-violet-400">→</span>
-						<span class="px-3 py-2 rounded-xl bg-white border border-emerald-200 font-mono text-sm font-bold text-emerald-700">TAIL</span>
+						<span class="px-3 py-2 rounded-xl bg-white border border-teal-200 font-mono text-sm font-bold text-teal-700">TAIL</span>
 					</div>
 				</div>
 			</section>

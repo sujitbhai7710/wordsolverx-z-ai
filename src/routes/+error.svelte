@@ -7,7 +7,7 @@
 	let message = $derived(page.error?.message || 'Page not found');
 	
 	const gameLinks = [
-		{ name: '5-Letter Wordle Solver', url: '/5-letter-wordle-solver', icon: '📝', color: 'from-green-500 to-emerald-600' },
+		{ name: '5-Letter Wordle Solver', url: '/5-letter-wordle-solver', icon: '📝', color: 'from-teal-500 to-teal-700' },
 		{ name: 'Quordle Solver', url: '/quordle-solver', icon: '🔢', color: 'from-blue-500 to-indigo-600' },
 		{ name: 'Phoodle Answer', url: '/phoodle-answer-today', icon: '🍳', color: 'from-orange-400 to-red-500' },
 		{ name: 'Semantle Answer', url: '/semantle-answer-today', icon: '🧠', color: 'from-purple-500 to-fuchsia-600' }
@@ -22,7 +22,7 @@
 
 <div class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-950">
 	<!-- Animated Background Elements -->
-	<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl rounded-blob animate-blob"></div>
+	<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl rounded-blob animate-blob"></div>
 	<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
 	<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
 
@@ -34,7 +34,7 @@
 		<div class="glass-card rounded-3xl p-8 sm:p-12 text-center border border-white/10 shadow-2xl backdrop-blur-xl bg-slate-900/60 overflow-hidden relative">
 			
 			<!-- Decorative Top Border Glow -->
-			<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 opacity-80"></div>
+			<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 opacity-80"></div>
 
 			<!-- Error Status Code -->
 			<div class="relative inline-block mb-6">
@@ -42,7 +42,7 @@
 					{status}
 				</h1>
 				<!-- Floating glitch effect behind number -->
-				<div class="absolute inset-0 text-8xl sm:text-9xl font-black text-green-500/30 blur-sm mix-blend-screen transform -translate-x-1 translate-y-1 select-none pointer-events-none" aria-hidden="true">
+				<div class="absolute inset-0 text-8xl sm:text-9xl font-black text-teal-500/30 blur-sm mix-blend-screen transform -translate-x-1 translate-y-1 select-none pointer-events-none" aria-hidden="true">
 					{status}
 				</div>
 				<div class="absolute inset-0 text-8xl sm:text-9xl font-black text-purple-500/30 blur-sm mix-blend-screen transform translate-x-1 -translate-y-1 select-none pointer-events-none" aria-hidden="true">

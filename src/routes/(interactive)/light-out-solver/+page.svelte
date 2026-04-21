@@ -145,7 +145,7 @@
       </p>
     </section>
 
-    <section class="rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-8 shadow-lg">
+    <section class="rounded-3xl border border-teal-100 bg-gradient-to-br from-teal-50 to-white p-8 shadow-lg">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">The Chase-the-Lights Method You Can Use by Hand</h2>
       <p class="text-slate-600 leading-relaxed mb-4">
         You don't need a solver if you know the chase-the-lights technique. It works like this:

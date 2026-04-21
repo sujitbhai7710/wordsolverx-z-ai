@@ -25,7 +25,7 @@
   }
 
   const colorMap: Record<string, string> = {
-    classic: 'bg-emerald-500', sequence: 'bg-violet-500', chill: 'bg-blue-500',
+    classic: 'bg-teal-500', sequence: 'bg-violet-500', chill: 'bg-blue-500',
     extreme: 'bg-red-500', rescue: 'bg-amber-500', weekly: 'bg-pink-500'
   };
 </script>
@@ -35,9 +35,9 @@
 {:else}
   <div class="space-y-12">
     <div class="text-center mb-16">
-      <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-4">Today&apos;s Quordle Puzzle Hints & Solutions</h2>
-      <div class="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
-      <p class="mt-4 text-gray-500 font-medium uppercase tracking-[0.2em] text-xs">Scroll down for all game modes</p>
+      <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-4">Today&apos;s Quordle Puzzle Hints & Solutions</h2>
+      <div class="w-24 h-1 bg-teal-600 mx-auto rounded-full"></div>
+      <p class="mt-4 text-slate-500 font-medium uppercase tracking-[0.2em] text-xs">Scroll down for all game modes</p>
     </div>
 
     {#each [
@@ -49,46 +49,46 @@
       { title: 'Weekly', words: data.w, type: 'weekly', num: data.wN }
     ] as mode}
       {#if mode.words && mode.words.length > 0}
-        {@const accentColor = colorMap[mode.type] || 'bg-gray-500'}
+        {@const accentColor = colorMap[mode.type] || 'bg-slate-500'}
         {@const textColor = accentColor.replace('bg-', 'text-')}
         {@const vowelCountTotal = mode.words.reduce((acc: number, w: string) => acc + countVowels(w), 0)}
         {@const doubleLetterCount = mode.words.filter(hasDoubleLetters).length}
         {@const startingLetters = mode.words.map((w: string) => w[0]).join(', ')}
 
         <div class="mb-16 scroll-mt-20" id="mode-{mode.type}">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 uppercase tracking-tight flex items-center gap-3">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-tight flex items-center gap-3">
             <span class="w-2 h-8 rounded-full {accentColor}"></span>
             {mode.title} Hints for {mode.num}
           </h2>
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8">
-            <p class="text-gray-600 dark:text-gray-400 mb-8 italic">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700 p-8">
+            <p class="text-slate-600 dark:text-slate-400 mb-8 italic">
               Are you struggling to solve today&apos;s {mode.title.toLowerCase()}? Here are some useful hints.
             </p>
             <div class="space-y-8">
               <div>
-                <div class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                <div class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2">
                   <span class="{accentColor} text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">Q1</span>
                   How many vowels are in today&apos;s {mode.title.toLowerCase()} words?
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 pl-10">
+                <p class="text-slate-600 dark:text-slate-400 pl-10">
                   There are a total of <span class="font-bold {textColor}">{vowelCountTotal} vowels</span> across the four words.
                 </p>
               </div>
               <div>
-                <div class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                <div class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2">
                   <span class="{accentColor} text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">Q2</span>
                   How many double letters are there?
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 pl-10">
+                <p class="text-slate-600 dark:text-slate-400 pl-10">
                   {doubleLetterCount === 0 ? "None of today's words contain double letters." : `There are ${doubleLetterCount} words with double letters.`}
                 </p>
               </div>
               <div>
-                <div class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                <div class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2">
                   <span class="{accentColor} text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">Q3</span>
                   Starting letters?
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 pl-10">
+                <p class="text-slate-600 dark:text-slate-400 pl-10">
                   The starting letters are: <span class="font-bold tracking-widest {textColor}">{startingLetters}</span>.
                 </p>
               </div>
@@ -98,7 +98,7 @@
           <div class="mt-8 text-center">
             <button
               onclick={() => (viewAnswers = { ...viewAnswers, [mode.type]: !viewAnswers[mode.type] })}
-              class="bg-gray-900 dark:bg-white dark:text-gray-900 text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform shadow-lg"
+              class="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform shadow-lg"
             >
               {viewAnswers[mode.type] ? 'Hide Answers' : `Show ${mode.title} Answers`}
             </button>
@@ -107,8 +107,8 @@
           {#if viewAnswers[mode.type]}
             <div class="mt-12">
               <div class="text-center mb-8">
-                <div class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{mode.title} Answers for {mode.num}</div>
-                <p class="text-gray-500 dark:text-gray-400">
+                <div class="text-2xl font-bold text-slate-900 dark:text-white mb-2">{mode.title} Answers for {mode.num}</div>
+                <p class="text-slate-500 dark:text-slate-400">
                   {#if mounted}for {format(date, 'EEEE, MMMM d, yyyy')}{/if}
                 </p>
               </div>

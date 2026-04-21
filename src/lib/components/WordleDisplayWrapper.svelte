@@ -60,8 +60,8 @@
 
   let solutionText = $derived.by(() => {
     const lw = wordleWord.toLowerCase();
-    if (pageContext === 'archive') return `The word <span class="font-semibold text-green-600 dark:text-green-400">"${lw}"</span> was the solution for the Wordle puzzle on ${formattedDate}.`;
-    return `The word <span class="font-semibold text-green-600 dark:text-green-400">"${lw}"</span> is the solution for today's Wordle puzzle.`;
+    if (pageContext === 'archive') return `The word <span class="font-semibold text-teal-600 dark:text-teal-400">"${lw}"</span> was the solution for the Wordle puzzle on ${formattedDate}.`;
+    return `The word <span class="font-semibold text-teal-600 dark:text-teal-400">"${lw}"</span> is the solution for today's Wordle puzzle.`;
   });
 
   let comeBackText = $derived.by(() => {
@@ -113,9 +113,9 @@
         btn.className = 'pronunciation-btn';
         btn.setAttribute('aria-label', 'Listen to pronunciation');
         btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
-        btn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:none;background:#10b981;color:white;cursor:pointer;margin-left:8px;vertical-align:middle;transition:all 0.2s;flex-shrink:0;';
-        btn.onmouseenter = () => { btn.style.background = '#059669'; btn.style.transform = 'scale(1.1)'; };
-        btn.onmouseleave = () => { btn.style.background = '#10b981'; btn.style.transform = 'scale(1)'; };
+        btn.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:none;background:#0d9488;color:white;cursor:pointer;margin-left:8px;vertical-align:middle;transition:all 0.2s;flex-shrink:0;';
+        btn.onmouseenter = () => { btn.style.background = '#0f766e'; btn.style.transform = 'scale(1.1)'; };
+        btn.onmouseleave = () => { btn.style.background = '#0d9488'; btn.style.transform = 'scale(1)'; };
         btn.onclick = () => {
           pronounceWord(wordleWord);
           btn.style.transform = 'scale(0.9)';
@@ -205,13 +205,13 @@
 </script>
 
 {#if !wordleWord}
-  <div class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl mx-auto text-center border border-gray-200 dark:border-gray-700">
+  <div class="mt-12 bg-white dark:bg-slate-800 rounded-lg shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 max-w-3xl mx-auto text-center border border-slate-200 dark:border-slate-700">
     <svg class="mx-auto h-16 w-16 text-yellow-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
     </svg>
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Solution Not Available</h1>
-    <div class="prose prose-green dark:prose-invert max-w-none">
-      <p class="text-gray-600 dark:text-gray-300">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Solution Not Available</h1>
+    <div class="prose prose-slate dark:prose-invert max-w-none">
+      <p class="text-slate-600 dark:text-slate-300">
         We're unable to retrieve the Wordle solution for {pageContext === 'archive' ? formattedDate : pageContext} at the moment. Please check back later.
       </p>
     </div>
@@ -220,8 +220,8 @@
   <div class="relative">
     <!-- Decorative background -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      <div class="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-green-200 to-green-300 dark:from-green-900 dark:to-green-800 rounded-full opacity-20 blur-3xl"></div>
-      <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-blue-200 to-blue-300 dark:from-blue-900 dark:to-blue-800 rounded-full opacity-20 blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-gradient-to-br from-teal-200 to-teal-300 dark:from-teal-900 dark:to-teal-800 rounded-full opacity-20 blur-3xl"></div>
+      <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-amber-200 to-amber-300 dark:from-amber-900 dark:to-amber-800 rounded-full opacity-20 blur-3xl"></div>
     </div>
 
     <div class="relative z-10">
@@ -245,14 +245,14 @@
 
       <!-- Page intro/Title -->
       <div class="mb-8 text-center max-w-2xl mx-auto px-4">
-        <p class="text-sm font-medium text-green-600 dark:text-green-400 uppercase tracking-wide mb-1">
+        <p class="text-sm font-medium text-teal-600 dark:text-teal-400 uppercase tracking-wide mb-1">
           {pageContext === 'today' ? 'Daily Answer' : 'Wordle Answer'}
         </p>
-        <h1 class="mb-3 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
+        <h1 class="mb-3 text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white">
           {pageContext === 'today' ? pageTitle : `Wordle Answer for ${formattedDate}`}
         </h1>
         {#if !contentGuide}
-          <p class="text-base md:text-lg text-gray-600 dark:text-gray-400">
+          <p class="text-base md:text-lg text-slate-600 dark:text-slate-400">
             Explore hints and reveal the answer one letter at a time.
           </p>
         {/if}
@@ -260,27 +260,27 @@
 
       <!-- 2. Hints Section (from contentGuide) -->
       {#if hintsHtml}
-        <div class="mb-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8 max-w-3xl mx-auto border border-gray-200 dark:border-gray-700">
-          <div class="prose prose-green dark:prose-invert max-w-none">
+        <div class="mb-8 bg-white dark:bg-slate-800 rounded-lg shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8 max-w-3xl mx-auto border border-slate-200 dark:border-slate-700">
+          <div class="prose prose-slate dark:prose-invert max-w-none">
             {@html hintsHtml}
           </div>
         </div>
       {/if}
 
       {#if bonusHints.length > 0}
-        <section class="mb-8 max-w-3xl mx-auto rounded-3xl border border-emerald-100 bg-emerald-50/70 p-6 shadow-sm">
+        <section class="mb-8 max-w-3xl mx-auto rounded-xl border border-teal-200 dark:border-teal-800/40 bg-teal-50/70 dark:bg-teal-900/20 p-6 shadow-sm">
           <div class="flex items-center gap-3 mb-3">
-            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-sm">
+            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-600 text-white shadow-sm">
               <span class="text-lg font-bold">+</span>
             </div>
             <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-600">Extra Hint Pass</p>
-              <h2 class="text-xl font-bold text-gray-900">Fresh hints if you still want one more nudge</h2>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700 dark:text-teal-300">Extra Hint Pass</p>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Fresh hints if you still want one more nudge</h2>
             </div>
           </div>
           <ul class="space-y-3">
             {#each bonusHints as hint}
-              <li class="rounded-2xl bg-white px-4 py-3 text-sm leading-6 text-gray-700 shadow-sm ring-1 ring-emerald-100">
+              <li class="rounded-2xl bg-white dark:bg-slate-800 px-4 py-3 text-sm leading-6 text-slate-700 dark:text-slate-300 shadow-sm ring-1 ring-teal-200 dark:ring-teal-800/40">
                 {hint}
               </li>
             {/each}
@@ -302,8 +302,8 @@
 
       <!-- Social Share Bar -->
       <div class="mt-6 max-w-3xl mx-auto" style="min-height:106px">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 px-4 py-4">
-          <p class="text-center text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">Share with friends</p>
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700 px-4 py-4">
+          <p class="text-center text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Share with friends</p>
           <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
             {#each socialPlatforms as platform}
               <SocialShareButton {platform} url={currentUrl} title={pageTitle} />
@@ -314,9 +314,9 @@
 
       <!-- 5. Reveal & Analysis -->
       {#if revealHtml || analysisHtml}
-        <div class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8 max-w-3xl mx-auto border border-gray-200 dark:border-gray-700">
+        <div class="mt-12 bg-white dark:bg-slate-800 rounded-lg shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8 max-w-3xl mx-auto border border-slate-200 dark:border-slate-700">
           {#if revealHtml}
-            <div class="prose prose-green dark:prose-invert max-w-none transition-all duration-700 overflow-hidden {isRevealed ? 'max-h-[500px] opacity-100 mb-8 pb-8 border-b border-gray-100 dark:border-gray-700' : 'max-h-0 opacity-0'}">
+            <div class="prose prose-slate dark:prose-invert max-w-none transition-all duration-700 overflow-hidden {isRevealed ? 'max-h-[500px] opacity-100 mb-8 pb-8 border-b border-slate-100 dark:border-slate-700' : 'max-h-0 opacity-0'}">
               {@html revealHtml}
             </div>
           {/if}
@@ -324,7 +324,7 @@
           {#if analysisHtml}
             <div
               bind:this={analysisEl}
-              class="prose prose-green dark:prose-invert max-w-none wordle-analysis-content"
+              class="prose prose-slate dark:prose-invert max-w-none wordle-analysis-content"
             >
               {@html analysisHtml}
             </div>
@@ -332,8 +332,8 @@
 
           <!-- Social Share - visible when revealed -->
           {#if isRevealed}
-            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 animate-fade-in">
-              <p class="text-center text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Share this solution</p>
+            <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 animate-fade-in">
+              <p class="text-center text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">Share this solution</p>
               <div class="flex flex-wrap justify-center gap-3">
                 {#each socialPlatforms as platform}
                   <SocialShareButton {platform} url={currentUrl} title={pageTitle} />
@@ -346,51 +346,51 @@
 
       <!-- 6. Fallback "About" Section (no contentGuide) -->
       {#if !contentGuide}
-        <div class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8 max-w-3xl mx-auto border border-gray-200 dark:border-gray-700 transition-all duration-500">
+        <div class="mt-12 bg-white dark:bg-slate-800 rounded-lg shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8 max-w-3xl mx-auto border border-slate-200 dark:border-slate-700 transition-all duration-500">
           <div class="flex items-center mb-4">
-            <div class="flex-shrink-0 bg-gray-100 dark:bg-gray-700 rounded-full p-2.5 mr-4">
-              <svg class="h-6 w-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex-shrink-0 bg-slate-100 dark:bg-slate-700 rounded-full p-2.5 mr-4">
+              <svg class="h-6 w-6 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{aboutTitle}</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">{aboutTitle}</h2>
           </div>
 
-          <div class="prose prose-green dark:prose-invert max-w-none transition-all duration-500 {isRevealed ? 'opacity-100 blur-0' : 'opacity-40 blur-sm select-none'}">
-            <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300">
+          <div class="prose prose-slate dark:prose-invert max-w-none transition-all duration-500 {isRevealed ? 'opacity-100 blur-0' : 'opacity-40 blur-sm select-none'}">
+            <p class="text-base sm:text-lg text-slate-700 dark:text-slate-300">
               {@html isRevealed
                 ? solutionText.replace(wordleWord.toLowerCase(), wordleWord.toUpperCase())
                 : solutionText.replace(wordleWord.toLowerCase(), '?????')}
             </p>
-            <p class="mt-4 text-base sm:text-lg text-gray-700 dark:text-gray-300">
+            <p class="mt-4 text-base sm:text-lg text-slate-700 dark:text-slate-300">
               This answer is for {#if wordleData?.days_since_launch}<span class="font-medium">Day {wordleData.days_since_launch}</span>{:else}{pageContext}{/if}, released on {formattedDate}. {comeBackText}
             </p>
           </div>
 
           <!-- Stats Grid -->
-          <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center transition-all duration-500 {isRevealed ? 'opacity-100' : 'opacity-40 blur-sm'}">
+          <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center transition-all duration-500 {isRevealed ? 'opacity-100' : 'opacity-40 blur-sm'}">
             <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Day</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">{wordleData?.days_since_launch}</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Day</p>
+              <p class="text-lg font-semibold text-slate-900 dark:text-white">{wordleData?.days_since_launch}</p>
             </div>
             <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Letters</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">{wordleWord.length}</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Letters</p>
+              <p class="text-lg font-semibold text-slate-900 dark:text-white">{wordleWord.length}</p>
             </div>
             <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Vowels</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">{vowelCount}</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Vowels</p>
+              <p class="text-lg font-semibold text-slate-900 dark:text-white">{vowelCount}</p>
             </div>
             <div>
-              <p class="text-sm text-gray-500 dark:text-gray-400">Consonants</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">{consonantCount}</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Consonants</p>
+              <p class="text-lg font-semibold text-slate-900 dark:text-white">{consonantCount}</p>
             </div>
           </div>
 
           <!-- Social Share - visible when revealed -->
           {#if isRevealed}
-            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 animate-fade-in">
-              <p class="text-center text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Share this solution</p>
+            <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 animate-fade-in">
+              <p class="text-center text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">Share this solution</p>
               <div class="flex flex-wrap justify-center gap-3">
                 {#each socialPlatforms as platform}
                   <SocialShareButton {platform} url={currentUrl} title={pageTitle} />
@@ -433,6 +433,6 @@
   :global(.faq-content-inner) { padding: 0 20px 16px 20px; color: #374151; font-size: 14.5px; line-height: 1.65; }
   :global(.dark .faq-content-inner) { color: #d1d5db; }
   :global(.faq-content-inner p) { margin: 0; }
-  :global(.faq-item-open .faq-trigger) { background: #ecfdf5; }
-  :global(.dark .faq-item-open .faq-trigger) { background: #064e3b; }
+  :global(.faq-item-open .faq-trigger) { background: #f0fdfa; }
+  :global(.dark .faq-item-open .faq-trigger) { background: #134e4a; }
 </style>

@@ -426,7 +426,7 @@
         {/if}
 
         <header class="mb-8 text-center">
-          <h2 class="bg-gradient-to-r from-emerald-500 via-sky-500 to-fuchsia-500 bg-clip-text text-4xl font-black text-transparent sm:text-5xl">Kanoodle Pro</h2>
+          <h2 class="bg-gradient-to-r from-teal-500 via-sky-500 to-fuchsia-500 bg-clip-text text-4xl font-black text-transparent sm:text-5xl">Kanoodle Pro</h2>
           <p class="mt-3 text-base text-slate-500 dark:text-slate-400">Drag pieces to solve the puzzle</p>
         </header>
 
@@ -472,7 +472,7 @@
         {/if}
 
         {#if message}
-          <div class={`rounded-2xl border px-4 py-4 text-center text-sm font-semibold shadow-lg ${gameWon ? 'border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-900/40 dark:bg-emerald-950/20 dark:text-emerald-300' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900'}`}>
+          <div class={`rounded-2xl border px-4 py-4 text-center text-sm font-semibold shadow-lg ${gameWon ? 'border-teal-300 bg-teal-50 text-teal-700 dark:border-teal-900/40 dark:bg-teal-950/20 dark:text-teal-300' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900'}`}>
             {message}
           </div>
         {/if}
@@ -559,7 +559,7 @@
         <div class="mx-auto grid w-full max-w-4xl grid-cols-2 gap-3 lg:grid-cols-4">
           <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving} onclick={checkBoard} type="button">Check</button>
           <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving || unplacedPieces.length === 0} onclick={hint} type="button">Hint</button>
-          <button class="w-full rounded-2xl bg-gradient-to-r from-emerald-500 to-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-lg disabled:opacity-60" disabled={isSolving} onclick={quickSolve} type="button">Quick Solve</button>
+          <button class="w-full rounded-2xl bg-gradient-to-r from-teal-500 to-sky-600 px-4 py-3 text-sm font-semibold text-white shadow-lg disabled:opacity-60" disabled={isSolving} onclick={quickSolve} type="button">Quick Solve</button>
           <button class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900" disabled={isSolving} onclick={findAllSolutions} type="button">Find All Solutions</button>
           <label class="col-span-2 w-full rounded-2xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold shadow-sm lg:col-span-1 dark:border-slate-700 dark:bg-slate-900">
             <select bind:value={puzzlePrefill} class="w-full bg-transparent outline-none">
@@ -575,7 +575,7 @@
         <section class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-xl dark:border-slate-700 dark:bg-slate-900">
           <div class="grid gap-6 lg:grid-cols-2">
             <div>
-              <h2 class="bg-gradient-to-r from-emerald-500 via-sky-500 to-fuchsia-500 bg-clip-text text-2xl font-black text-transparent">
+              <h2 class="bg-gradient-to-r from-teal-500 via-sky-500 to-fuchsia-500 bg-clip-text text-2xl font-black text-transparent">
                 Noodle Solver
               </h2>
               <p class="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">The Ultimate Brain Puzzle</p>

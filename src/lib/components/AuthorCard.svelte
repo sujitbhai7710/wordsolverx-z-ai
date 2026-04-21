@@ -11,11 +11,11 @@
 </script>
 
 <section
-  class="mx-auto w-full max-w-4xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900"
+  class="mx-auto w-full max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900"
   aria-labelledby="author-heading"
 >
   <div class="flex items-start gap-4 p-5 sm:gap-6 sm:p-7">
-    <div class="shrink-0 rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-sky-50 p-2 shadow-sm ring-1 ring-black/5 dark:from-emerald-950/30 dark:via-gray-900 dark:to-sky-950/30 dark:ring-white/10">
+    <div class="shrink-0 rounded-3xl bg-gradient-to-br from-teal-50 via-white to-sky-50 p-2 shadow-sm ring-1 ring-black/5 dark:from-teal-950/30 dark:via-slate-900 dark:to-sky-950/30 dark:ring-white/10">
       <img
         src={image}
         alt={name}
@@ -26,13 +26,13 @@
     </div>
 
     <div class="min-w-0 flex-1">
-      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-600 dark:text-emerald-400">
+      <p class="text-xs font-semibold uppercase tracking-[0.28em] text-teal-600 dark:text-teal-400">
         Author
       </p>
-      <h2 id="author-heading" class="mt-2 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white md:text-3xl">
+      <h2 id="author-heading" class="mt-2 text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 md:text-3xl">
         {name}
       </h2>
-      <p class="mt-3 max-w-3xl text-base leading-7 text-gray-600 dark:text-gray-300 md:text-lg">
+      <p class="mt-3 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300 md:text-lg">
         {description}
       </p>
     </div>

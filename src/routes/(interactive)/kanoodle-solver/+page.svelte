@@ -113,12 +113,12 @@
   </div>
 
   <section class="mx-auto max-w-5xl px-4 pb-8 sm:px-6 lg:px-8">
-    <div class="rounded-[2rem] bg-gradient-to-br from-emerald-600 via-sky-600 to-fuchsia-700 px-6 py-8 text-white shadow-2xl shadow-emerald-500/20 sm:px-8 sm:py-10">
-      <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-50">
+    <div class="rounded-[2rem] bg-gradient-to-br from-teal-600 via-sky-600 to-fuchsia-700 px-6 py-8 text-white shadow-2xl shadow-teal-500/20 sm:px-8 sm:py-10">
+      <p class="inline-flex rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-teal-50">
         Online puzzle tool
       </p>
       <h1 class="mt-5 text-4xl font-black tracking-tight sm:text-5xl">Kanoodle Solver</h1>
-      <p class="mt-4 max-w-3xl text-base leading-8 text-emerald-50/90 sm:text-lg">
+      <p class="mt-4 max-w-3xl text-base leading-8 text-teal-50/90 sm:text-lg">
         This Kanoodle solver is built for players who want a fast way to test placements, get hints, and solve the full 12-piece board online. If you searched for a noodle solver, this page gives you the same practical tool experience with a playable board and instant solver actions.
       </p>
     </div>
@@ -170,7 +170,7 @@
       <h2 class="text-3xl font-bold text-slate-900 mb-5">Tips for Getting Better at Kanoodle</h2>
       <div class="space-y-5">
         <div class="flex gap-4">
-          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center">1</span>
+          <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center">1</span>
           <div>
             <h3 class="font-bold text-slate-900">Place big pieces first</h3>
             <p class="text-slate-600 mt-1 text-sm">The 4- and 5-cell pieces have fewer valid positions. Place them while the board is mostly empty. Save the 1- and 2-cell pieces for last — they fit almost anywhere.</p>

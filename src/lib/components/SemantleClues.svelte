@@ -87,70 +87,70 @@
   });
 </script>
 
-<div class="bg-gradient-to-br from-purple-50 via-indigo-50 to-violet-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 rounded-3xl shadow-xl overflow-hidden border border-purple-100 dark:border-purple-900/30 max-w-lg mx-auto">
-  <div class="bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 p-6 text-white">
+<div class="bg-slate-50 dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] overflow-hidden border border-slate-200 dark:border-slate-700 max-w-lg mx-auto">
+  <div class="bg-gradient-to-r from-teal-600 to-teal-700 p-6 text-white">
     <div class="flex items-center gap-3 mb-2"><FiEye class="text-2xl" /><h2 class="text-xl font-bold">Hints & Clues</h2></div>
-    <p class="text-purple-100 text-sm">Use these clues to guess before revealing the answer!</p>
+    <p class="text-teal-100 text-sm">Use these clues to guess before revealing the answer!</p>
   </div>
 
   <div class="p-6 space-y-4">
     <div class="grid grid-cols-2 gap-4">
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-purple-100 dark:border-purple-800/30">
-        <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400 mb-2"><FiHash class="text-lg" /><span class="text-xs font-semibold uppercase tracking-wider">Letters</span></div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{letterCount}</p>
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-600">
+        <div class="flex items-center gap-2 text-teal-600 dark:text-teal-400 mb-2"><FiHash class="text-lg" /><span class="text-xs font-semibold uppercase tracking-wider">Letters</span></div>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{letterCount}</p>
       </div>
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-indigo-100 dark:border-indigo-800/30">
-        <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 mb-2"><FiType class="text-lg" /><span class="text-xs font-semibold uppercase tracking-wider">Vowels</span></div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{vowelCount}</p>
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-600">
+        <div class="flex items-center gap-2 text-teal-600 dark:text-teal-400 mb-2"><FiType class="text-lg" /><span class="text-xs font-semibold uppercase tracking-wider">Vowels</span></div>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{vowelCount}</p>
       </div>
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-violet-100 dark:border-violet-800/30">
-        <div class="flex items-center gap-2 text-violet-600 dark:text-violet-400 mb-2"><span class="text-xs font-semibold uppercase tracking-wider">Starts With</span></div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{startLetter}</p>
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-600">
+        <div class="flex items-center gap-2 text-teal-600 dark:text-teal-400 mb-2"><span class="text-xs font-semibold uppercase tracking-wider">Starts With</span></div>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{startLetter}</p>
       </div>
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-fuchsia-100 dark:border-fuchsia-800/30">
-        <div class="flex items-center gap-2 text-fuchsia-600 dark:text-fuchsia-400 mb-2"><span class="text-xs font-semibold uppercase tracking-wider">Ends With</span></div>
-        <p class="text-3xl font-bold text-gray-900 dark:text-white">{endLetter}</p>
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-600">
+        <div class="flex items-center gap-2 text-teal-600 dark:text-teal-400 mb-2"><span class="text-xs font-semibold uppercase tracking-wider">Ends With</span></div>
+        <p class="text-3xl font-bold text-slate-900 dark:text-slate-50">{endLetter}</p>
       </div>
     </div>
 
     {#if !loading && definition}
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-amber-100 dark:border-amber-800/30">
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-amber-100 dark:border-amber-800/30">
         <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-2"><FiBookOpen class="text-lg" /><span class="text-xs font-semibold uppercase tracking-wider">Definition Hint</span></div>
-        <p class="text-gray-700 dark:text-gray-300 text-sm italic">"{definition}"</p>
+        <p class="text-slate-700 dark:text-slate-300 text-sm italic">"{definition}"</p>
       </div>
     {/if}
 
     {#if !loading && rhymes.length > 0}
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-pink-100 dark:border-pink-800/30">
-        <div class="flex items-center gap-2 text-pink-600 dark:text-pink-400 mb-2"><FiMusic class="text-lg" /><span class="text-xs font-semibold uppercase tracking-wider">Rhymes With</span></div>
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-600">
+        <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-2"><FiMusic class="text-lg" /><span class="text-xs font-semibold uppercase tracking-wider">Rhymes With</span></div>
         <div class="flex flex-wrap gap-2">
           {#each rhymes as rhyme}
-            <span class="px-3 py-1 bg-pink-50 dark:bg-pink-900/20 text-pink-700 dark:text-pink-300 rounded-full text-sm font-medium">{rhyme}</span>
+            <span class="px-3 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded-full text-sm font-medium">{rhyme}</span>
           {/each}
         </div>
       </div>
     {/if}
 
     {#if !loading && synonyms.length > 0}
-      <div class="bg-white dark:bg-gray-700/50 rounded-2xl p-4 shadow-sm border border-emerald-100 dark:border-emerald-800/30">
-        <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 mb-2"><span class="text-xs font-semibold uppercase tracking-wider">Similar Words</span></div>
+      <div class="bg-white dark:bg-slate-700/50 rounded-2xl p-4 shadow-sm border border-teal-100 dark:border-teal-800/30">
+        <div class="flex items-center gap-2 text-teal-600 dark:text-teal-400 mb-2"><span class="text-xs font-semibold uppercase tracking-wider">Similar Words</span></div>
         <div class="flex flex-wrap gap-2">
           {#each synonyms as syn}
-            <span class="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium">{syn}</span>
+            <span class="px-3 py-1 bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300 rounded-full text-sm font-medium">{syn}</span>
           {/each}
         </div>
       </div>
     {/if}
 
-    <button onclick={() => (showAnswer = !showAnswer)} class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-violet-600 hover:from-purple-700 hover:via-indigo-700 hover:to-violet-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2">
+    <button onclick={() => (showAnswer = !showAnswer)} class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2">
       {#if showAnswer}<FiChevronUp class="text-xl" /> Hide Answer{:else}<FiChevronDown class="text-xl" /> Reveal Answer{/if}
     </button>
 
     {#if showAnswer}
-      <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800/50">
+      <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-6 border border-teal-200 dark:border-teal-800/50">
         <div class="text-center">
-          <p class="text-sm text-green-600 dark:text-green-400 font-semibold uppercase tracking-wider mb-2">Puzzle #{puzzleNumber} Answer</p>
-          <h3 class="text-3xl font-extrabold text-gray-900 dark:text-white uppercase tracking-widest">{word}</h3>
+          <p class="text-sm text-teal-600 dark:text-teal-400 font-semibold uppercase tracking-wider mb-2">Puzzle #{puzzleNumber} Answer</p>
+          <h3 class="text-3xl font-extrabold text-slate-900 dark:text-slate-50 uppercase tracking-widest">{word}</h3>
         </div>
       </div>
     {/if}

@@ -19,17 +19,17 @@
 </script>
 
 {#if article?.articleHtml}
-  <section class="mt-12 rounded-3xl border border-gray-100 bg-white p-8 shadow-lg">
-    <p class="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-600">{eyebrow}</p>
-    <h2 class="mt-2 text-3xl font-bold text-gray-900">
+  <section class="mt-12 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
+    <p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600">{eyebrow}</p>
+    <h2 class="mt-2 text-3xl font-bold text-slate-900">
       {article.title || fallbackTitle}
     </h2>
     {#if article.summary || fallbackSummary}
-      <p class="mt-4 text-lg leading-8 text-gray-600">
+      <p class="mt-4 text-lg leading-8 text-slate-600">
         {article.summary || fallbackSummary}
       </p>
     {/if}
-    <div class="prose prose-lg mt-6 max-w-none prose-headings:scroll-mt-28 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-a:text-emerald-600">
+    <div class="prose prose-lg mt-6 max-w-none prose-headings:scroll-mt-28 prose-h2:text-slate-900 prose-h3:text-slate-900 prose-p:text-slate-600 prose-li:text-slate-600 prose-a:text-teal-600">
       {@html article.articleHtml}
     </div>
   </section>

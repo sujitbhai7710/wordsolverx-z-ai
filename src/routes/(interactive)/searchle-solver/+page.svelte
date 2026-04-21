@@ -292,7 +292,7 @@
   function getStateColor(state: LetterState) {
     switch (state) {
       case 'correct':
-        return 'bg-green-500 text-white border-green-500';
+        return 'bg-teal-500 text-white border-teal-500';
       case 'partial':
         return 'bg-yellow-500 text-white border-yellow-500';
       case 'absent':
@@ -467,19 +467,19 @@
     {/if}
 
     {#if isSolved && guesses.length > 0}
-      <div class="mb-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0 shadow-xl rounded-2xl">
+      <div class="mb-6 bg-gradient-to-r from-teal-500 to-teal-700 text-white border-0 shadow-xl rounded-2xl">
         <div class="py-8 text-center">
           <h2 class="text-xl font-bold mb-2">Solved</h2>
           <p class="font-mono text-4xl uppercase tracking-[0.2em] font-bold mb-2">
             {guesses[guesses.length - 1].word}
           </p>
-          <p class="text-green-100 mb-4">
+          <p class="text-teal-100 mb-4">
             Completed in {guesses.length} {guesses.length === 1 ? 'guess' : 'guesses'}
           </p>
           <button
             type="button"
             onclick={handleReset}
-            class="bg-white text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg"
+            class="bg-white text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-lg"
           >
             New Puzzle
           </button>
@@ -495,7 +495,7 @@
             {#each guesses as guess}
               <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100">
                 <span class="font-mono font-bold uppercase">{guess.word}</span>
-                <span class={guess.isCorrect ? 'text-green-500' : 'text-red-500'}>
+                <span class={guess.isCorrect ? 'text-teal-500' : 'text-red-500'}>
                   {guess.isCorrect ? 'OK' : 'X'}
                 </span>
               </div>
@@ -519,12 +519,12 @@
               type="button"
               onclick={() => selectWord(suggestion.word)}
               disabled={currentGuess === suggestion.word}
-              class={`flex flex-col items-center p-3 rounded-xl font-mono text-center transition-all ${currentGuess === suggestion.word ? 'bg-purple-100 ring-2 ring-purple-400' : 'bg-slate-50 hover:bg-purple-50'} ${index === 0 ? 'ring-1 ring-green-400' : ''}`}
+              class={`flex flex-col items-center p-3 rounded-xl font-mono text-center transition-all ${currentGuess === suggestion.word ? 'bg-purple-100 ring-2 ring-purple-400' : 'bg-slate-50 hover:bg-purple-50'} ${index === 0 ? 'ring-1 ring-teal-400' : ''}`}
             >
               <span class="text-lg font-bold uppercase">{suggestion.word}</span>
               <span class="text-xs text-slate-500">{suggestion.score}%</span>
               {#if suggestion.category === 'answer'}
-                <span class="mt-1 text-xs bg-green-500 text-white px-2 py-0.5 rounded-full">High Chances</span>
+                <span class="mt-1 text-xs bg-teal-500 text-white px-2 py-0.5 rounded-full">High Chances</span>
               {/if}
             </button>
           {/each}
@@ -599,9 +599,9 @@
           After each guess, Searchle gives you letter-by-letter feedback — same idea as Wordle. Each character in your guess gets one of three colors: green, yellow, or gray.
         </p>
         <div class="space-y-4 mb-4">
-          <div class="rounded-xl bg-green-50 border border-green-200 p-5">
-            <h3 class="text-lg font-bold text-green-900 mb-2">Green — Correct letter, correct spot</h3>
-            <p class="text-green-800">The letter is in the answer and in the right position. If you guess "stare" and the "s" turns green, the answer starts with "s." Lock it in and work from there.</p>
+          <div class="rounded-xl bg-teal-50 border border-teal-200 p-5">
+            <h3 class="text-lg font-bold text-teal-900 mb-2">Green — Correct letter, correct spot</h3>
+            <p class="text-teal-800">The letter is in the answer and in the right position. If you guess "stare" and the "s" turns green, the answer starts with "s." Lock it in and work from there.</p>
           </div>
           <div class="rounded-xl bg-yellow-50 border border-yellow-200 p-5">
             <h3 class="text-lg font-bold text-yellow-900 mb-2">Yellow — Right letter, wrong spot</h3>

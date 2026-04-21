@@ -69,7 +69,7 @@
 
 <SiteDefaultsHead />
 
-<div class="site-shell min-h-screen flex flex-col bg-white">
+<div class="site-shell min-h-screen flex flex-col bg-white dark:bg-slate-900">
 	<ErrorBoundary>
 		<Navigation />
 		<main class="site-main flex-grow">

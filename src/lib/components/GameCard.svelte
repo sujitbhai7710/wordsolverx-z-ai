@@ -1,71 +1,68 @@
 <script lang="ts">
-  let {
-    name,
-    href,
-    description,
-    color,
-    icon,
-    isPopular = false,
-    disabled = false,
-    actionText = 'Play Now',
-  }: {
-    name: string;
-    href: string;
-    description: string;
-    color: string;
-    icon: string;
-    isPopular?: boolean;
-    disabled?: boolean;
-    actionText?: string;
-  } = $props();
+	let {
+		name,
+		href,
+		description,
+		color,
+		icon,
+		isPopular = false,
+		disabled = false,
+		actionText = 'View',
+	}: {
+		name: string;
+		href: string;
+		description: string;
+		color: string;
+		icon: string;
+		isPopular?: boolean;
+		disabled?: boolean;
+		actionText?: string;
+	} = $props();
 
-  function handleClick(e: MouseEvent) {
-    if (disabled) e.preventDefault();
-  }
+	function handleClick(e: MouseEvent) {
+		if (disabled) e.preventDefault();
+	}
 </script>
 
 <a
-  {href}
-  class="group relative z-0 block h-full w-full isolate overflow-hidden rounded-2xl shadow-lg transform-gpu hover:z-10 hover:shadow-2xl [transition-property:transform,box-shadow] duration-300 hover:-translate-y-1 {disabled ? 'opacity-75 cursor-default' : ''}"
-  onclick={handleClick}
+	{href}
+	class="group relative z-0 block h-full w-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-[0_1px_3px_rgb(0_0_0/0.04)] hover:shadow-[0_8px_24px_rgb(0_0_0/0.08)] dark:hover:shadow-[0_8px_24px_rgb(0_0_0/0.3)] [transition-property:transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 {disabled ? 'opacity-60 cursor-default' : ''}"
+	onclick={handleClick}
 >
-  <div class="pointer-events-none absolute inset-0 bg-gradient-to-br {color} opacity-90 transition-opacity duration-300 group-hover:opacity-100"></div>
+	<div class="pointer-events-none absolute inset-0 bg-gradient-to-br {color} opacity-[0.07] transition-opacity duration-300 group-hover:opacity-[0.12]"></div>
 
-  <!-- Shine Effect -->
-  <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:translate-x-full [transition-property:transform,opacity] duration-1000 transform-gpu"></div>
+	<div class="relative p-5 h-full flex flex-col justify-between">
+		<div>
+			<div class="flex justify-between items-start mb-3">
+				<div class="bg-gradient-to-br {color} p-2.5 rounded-lg shadow-[0_2px_8px_rgb(0_0_0/0.1)] text-white text-xl font-bold">
+					{icon}
+				</div>
+				{#if isPopular}
+					<span class="bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border border-amber-200 dark:border-amber-800">
+						Popular
+					</span>
+				{/if}
+			</div>
 
-  <div class="relative p-6 h-full flex flex-col justify-between">
-    <div>
-      <div class="flex justify-between items-start mb-4">
-        <div class="bg-white/20 p-3 rounded-xl backdrop-blur-sm shadow-inner text-white text-2xl font-bold">
-          {icon}
-        </div>
-        {#if isPopular}
-          <span class="bg-white text-xs font-bold px-2 py-1 rounded-full text-gray-800 shadow-sm uppercase tracking-wider">
-            Popular
-          </span>
-        {/if}
-      </div>
+			<h2 class="text-lg font-bold text-slate-900 dark:text-slate-50 mb-1.5 tracking-tight">{name}</h2>
+			<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+				{description}
+			</p>
+		</div>
 
-      <h2 class="text-2xl font-bold text-white mb-2 tracking-tight">{name}</h2>
-      <p class="text-white/80 text-sm leading-relaxed font-medium">
-        {description}
-      </p>
-    </div>
-
-    <div class="mt-8">
-      {#if !disabled}
-        <div class="inline-flex items-center text-sm font-bold text-white uppercase tracking-wider group-hover:underline decoration-2 underline-offset-4">
-          {actionText}
-          <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </div>
-      {:else}
-        <div class="inline-block bg-black/20 rounded-lg px-3 py-1 text-xs font-bold text-white uppercase tracking-wider">
-          Coming Soon
-        </div>
-      {/if}
-    </div>
-  </div>
+		<div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+			{#if !disabled}
+				<div class="inline-flex items-center text-xs font-semibold text-teal-600 dark:text-teal-400 uppercase tracking-wider group-hover:text-teal-700 dark:hover:text-teal-300 transition-colors">
+					{actionText}
+					<svg class="w-3.5 h-3.5 ml-1.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+					</svg>
+				</div>
+			{:else}
+				<div class="inline-block bg-slate-100 dark:bg-slate-700 rounded-md px-2.5 py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+					Coming Soon
+				</div>
+			{/if}
+		</div>
+	</div>
 </a>

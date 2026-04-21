@@ -82,7 +82,7 @@
 
 	function getNoticeClasses(tone: NoticeTone) {
 		if (tone === 'success') {
-			return 'border-emerald-200 bg-emerald-50 text-emerald-800';
+			return 'border-teal-200 bg-teal-50 text-teal-800';
 		}
 
 		if (tone === 'warning') {
@@ -487,9 +487,9 @@
 </script>
 
 <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-	<div class="overflow-hidden rounded-[2rem] border border-emerald-100 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_42%),linear-gradient(135deg,#f8fffc_0%,#f0fdf9_45%,#eff6ff_100%)] p-8 shadow-[0_28px_90px_-42px_rgba(15,118,110,0.45)]">
+	<div class="overflow-hidden rounded-[2rem] border border-teal-100 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_42%),linear-gradient(135deg,#f8fffc_0%,#f0fdf9_45%,#eff6ff_100%)] p-8 shadow-[0_28px_90px_-42px_rgba(15,118,110,0.45)]">
 		<div class="max-w-3xl">
-			<p class="text-sm font-black uppercase tracking-[0.3em] text-emerald-700">Wordle Analyzer</p>
+			<p class="text-sm font-black uppercase tracking-[0.3em] text-teal-700">Wordle Analyzer</p>
 			<h1 class="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
 				Replay a finished Wordle and grade every move.
 			</h1>
@@ -498,7 +498,7 @@
 				check hard mode discipline, and see how many answers survived after every play.
 			</p>
 			<div class="mt-6 flex flex-wrap gap-3 text-sm font-semibold text-slate-700">
-				<span class="rounded-full border border-emerald-200 bg-white/80 px-4 py-2">Spoiler-safe share links</span>
+				<span class="rounded-full border border-teal-200 bg-white/80 px-4 py-2">Spoiler-safe share links</span>
 				<span class="rounded-full border border-sky-200 bg-white/80 px-4 py-2">AI turn comparison</span>
 				<span class="rounded-full border border-amber-200 bg-white/80 px-4 py-2">Hard mode rule checks</span>
 			</div>
@@ -527,7 +527,7 @@
 							maxlength="5"
 							autocomplete="off"
 							spellcheck="false"
-							class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-center text-2xl font-black uppercase tracking-[0.35em] text-slate-900 outline-none transition focus:border-emerald-400 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+							class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-center text-2xl font-black uppercase tracking-[0.35em] text-slate-900 outline-none transition focus:border-teal-400 focus:bg-white focus:ring-4 focus:ring-teal-100"
 						/>
 					</label>
 				{/each}
@@ -541,13 +541,13 @@
 						onchange={() => {
 							hardModeInput = !hardModeInput;
 						}}
-						class="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-400"
+						class="h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-400"
 					/>
 					This game used hard mode
 				</label>
 
 				<div class="flex flex-wrap gap-3">
-					<button type="submit" class="rounded-full bg-slate-900 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-700">
+					<button type="submit" class="rounded-full bg-slate-900 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-white transition hover:bg-teal-700">
 						Analyze Game
 					</button>
 					<button type="button" onclick={loadExample} class="rounded-full border border-slate-200 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-slate-700 transition hover:border-sky-300 hover:bg-sky-50">
@@ -573,7 +573,7 @@
 				Reveal it only if you want to see the final answer and full turn-by-turn analysis.
 			</p>
 			<div class="mt-6 flex flex-wrap gap-3">
-				<button onclick={revealSharedAnalysis} class="rounded-full bg-slate-900 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-700">
+				<button onclick={revealSharedAnalysis} class="rounded-full bg-slate-900 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-white transition hover:bg-teal-700">
 					Reveal Analysis
 				</button>
 				<button onclick={resetToBlankPage} class="rounded-full border border-amber-300 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-slate-700 transition hover:bg-amber-100">
@@ -620,7 +620,7 @@
 			</div>
 
 			<div class="flex flex-wrap gap-3">
-				<button onclick={copyShareLink} class="rounded-full bg-emerald-600 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-700">
+				<button onclick={copyShareLink} class="rounded-full bg-teal-600 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-white transition hover:bg-teal-700">
 					Copy Link
 				</button>
 				<button onclick={copyEmojiRecap} class="rounded-full border border-slate-200 px-5 py-3 text-sm font-black uppercase tracking-[0.2em] text-slate-700 transition hover:border-sky-300 hover:bg-sky-50">
@@ -652,8 +652,8 @@
 						</div>
 
 						<div class="mt-6 grid gap-6 xl:grid-cols-2">
-							<div class="rounded-[1.5rem] border border-emerald-200 bg-emerald-50/60 p-5">
-								<p class="text-sm font-black uppercase tracking-[0.2em] text-emerald-700">You Played</p>
+							<div class="rounded-[1.5rem] border border-teal-200 bg-teal-50/60 p-5">
+								<p class="text-sm font-black uppercase tracking-[0.2em] text-teal-700">You Played</p>
 								<div class="mt-4">
 									<GuessTiles word={turn.user.guess} colors={turn.user.colors} />
 								</div>

@@ -149,7 +149,7 @@
   }
 
   const colorMap: Record<string, { bg: string; text: string; border: string; ring: string; gradient: string; hover: string; badge: string }> = {
-    emerald: { bg: 'bg-emerald-50 dark:bg-emerald-950/30', text: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-200 dark:border-emerald-800', ring: 'ring-emerald-500', gradient: 'from-emerald-500 to-teal-600', hover: 'hover:bg-emerald-100 dark:hover:bg-emerald-900/40', badge: 'bg-emerald-500' },
+    emerald: { bg: 'bg-teal-50 dark:bg-teal-950/30', text: 'text-teal-600 dark:text-teal-400', border: 'border-teal-200 dark:border-teal-800', ring: 'ring-teal-500', gradient: 'from-teal-500 to-teal-600', hover: 'hover:bg-teal-100 dark:hover:bg-teal-900/40', badge: 'bg-teal-500' },
     blue: { bg: 'bg-blue-50 dark:bg-blue-950/30', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-200 dark:border-blue-800', ring: 'ring-blue-500', gradient: 'from-blue-500 to-indigo-600', hover: 'hover:bg-blue-100 dark:hover:bg-blue-900/40', badge: 'bg-blue-500' },
     purple: { bg: 'bg-purple-50 dark:bg-purple-950/30', text: 'text-purple-600 dark:text-purple-400', border: 'border-purple-200 dark:border-purple-800', ring: 'ring-purple-500', gradient: 'from-purple-500 to-violet-600', hover: 'hover:bg-purple-100 dark:hover:bg-purple-900/40', badge: 'bg-purple-500' },
     orange: { bg: 'bg-orange-50 dark:bg-orange-950/30', text: 'text-orange-600 dark:text-orange-400', border: 'border-orange-200 dark:border-orange-800', ring: 'ring-orange-500', gradient: 'from-orange-500 to-amber-600', hover: 'hover:bg-orange-100 dark:hover:bg-orange-900/40', badge: 'bg-orange-500' },
@@ -167,7 +167,7 @@
   );
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
     <!-- Hero Header -->
     <header class="text-center mb-10">
@@ -177,7 +177,7 @@
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r {colors.gradient} bg-clip-text text-transparent mb-3 tracking-tight">
         {gameName} Archive
       </h1>
-      <p class="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+      <p class="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
         {description || `Browse the complete history of all ${gameName} answers`}
       </p>
       <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full {colors.bg} {colors.text} text-sm font-semibold">
@@ -189,16 +189,16 @@
     <!-- Controls Bar -->
     <div class="max-w-[40rem] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
       <!-- View Toggle -->
-      <div class="inline-flex bg-white dark:bg-gray-800 rounded-xl p-1 shadow-sm border border-gray-200 dark:border-gray-700">
+      <div class="inline-flex bg-white dark:bg-slate-800 rounded-xl p-1 shadow-sm border border-slate-200 dark:border-slate-700">
         <button
           onclick={() => viewMode = 'calendar'}
-          class="px-4 py-2 rounded-lg text-sm font-semibold transition-all {viewMode === 'calendar' ? `bg-gradient-to-r ${colors.gradient} text-white shadow-md` : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'}"
+          class="px-4 py-2 rounded-lg text-sm font-semibold transition-all {viewMode === 'calendar' ? `bg-gradient-to-r ${colors.gradient} text-white shadow-md` : 'text-slate-500 hover:text-slate-700 dark:text-slate-400'}"
         >
           📅 Calendar
         </button>
         <button
           onclick={() => viewMode = 'list'}
-          class="px-4 py-2 rounded-lg text-sm font-semibold transition-all {viewMode === 'list' ? `bg-gradient-to-r ${colors.gradient} text-white shadow-md` : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'}"
+          class="px-4 py-2 rounded-lg text-sm font-semibold transition-all {viewMode === 'list' ? `bg-gradient-to-r ${colors.gradient} text-white shadow-md` : 'text-slate-500 hover:text-slate-700 dark:text-slate-400'}"
         >
           📋 List
         </button>
@@ -206,46 +206,46 @@
 
       <!-- Search -->
       <div class="relative w-full sm:w-72">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
           type="text"
           bind:value={searchQuery}
           placeholder="Search by date or puzzle #..."
-          class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:outline-none focus:ring-2 {colors.ring}/50 transition-shadow"
+          class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 {colors.ring}/50 transition-shadow"
         />
       </div>
     </div>
 
     <!-- Calendar View -->
     {#if viewMode === 'calendar' && !searchQuery.trim()}
-      <div class="max-w-[40rem] mx-auto bg-white dark:bg-gray-800/80 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm">
+      <div class="max-w-[40rem] mx-auto bg-white dark:bg-slate-800/80 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden backdrop-blur-sm">
         <!-- Month Navigation -->
-        <div class="flex items-center justify-between px-4 py-3 sm:px-5 sm:py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r {colors.bg}">
+        <div class="flex items-center justify-between px-4 py-3 sm:px-5 sm:py-4 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r {colors.bg}">
           <button
             aria-label="Previous Month"
             onclick={prevMonth}
             disabled={isPrevDisabled}
-            class="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-gray-700/60 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            class="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            <svg class="w-5 h-5 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
           </button>
           <div class="text-center">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">{format(currentMonth, 'MMMM yyyy')}</h2>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-slate-50">{format(currentMonth, 'MMMM yyyy')}</h2>
           </div>
           <button
             aria-label="Next Month"
             onclick={nextMonth}
             disabled={isNextDisabled}
-            class="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-gray-700/60 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            class="p-2 rounded-lg hover:bg-white/60 dark:hover:bg-slate-700/60 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-5 h-5 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
 
         <!-- Quick Month Jump -->
-        <div class="px-4 py-3 sm:px-5 border-b border-gray-100 dark:border-gray-700 overflow-x-auto">
+        <div class="px-4 py-3 sm:px-5 border-b border-slate-100 dark:border-slate-700 overflow-x-auto">
           <div class="flex gap-1.5 min-w-max">
             {#each availableMonths.slice(0, 12) as m}
               <button
@@ -253,7 +253,7 @@
                 class="px-3 py-1.5 text-xs font-medium rounded-lg transition-all {
                   m.date.getMonth() === currentMonth.getMonth() && m.date.getFullYear() === currentMonth.getFullYear()
                     ? `bg-gradient-to-r ${colors.gradient} text-white shadow-sm`
-                    : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700'
                 }"
               >
                 {m.label}
@@ -267,7 +267,7 @@
           <!-- Day Headers -->
           <div class="grid grid-cols-7 gap-1 sm:gap-1.5 mb-2">
             {#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as day}
-              <div class="text-center text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider py-2">{day}</div>
+              <div class="text-center text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-2">{day}</div>
             {/each}
           </div>
 
@@ -288,7 +288,7 @@
                   class="relative aspect-square flex flex-col items-center justify-center rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 {colors.hover} {colors.border} border group cursor-pointer {isSelected ? `ring-2 ${colors.ring}` : ''}"
                   title="{gameName} #{puzzle.dayNum} - {format(day, 'MMMM d, yyyy')}"
                 >
-                  <span class="text-sm sm:text-base text-gray-900 dark:text-white">{format(day, 'd')}</span>
+                  <span class="text-sm sm:text-base text-slate-900 dark:text-slate-50">{format(day, 'd')}</span>
                   <span class="text-[9px] sm:text-[10px] {colors.text} font-bold opacity-70 group-hover:opacity-100">#{puzzle.dayNum}</span>
                   {#if isToday}
                     <span class="absolute top-1 right-1 w-2 h-2 rounded-full {colors.badge} animate-pulse"></span>
@@ -296,7 +296,7 @@
                 </a>
               {:else}
                 <div class="aspect-square flex items-center justify-center rounded-xl text-sm {
-                  isCurrentMonth ? (isFuture ? 'text-gray-300 dark:text-gray-600' : 'text-gray-400 dark:text-gray-600') : 'text-gray-200 dark:text-gray-700'
+                  isCurrentMonth ? (isFuture ? 'text-slate-300 dark:text-slate-600' : 'text-slate-400 dark:text-slate-600') : 'text-slate-200 dark:text-slate-700'
                 }">
                   {format(day, 'd')}
                 </div>
@@ -306,7 +306,7 @@
         </div>
 
         <!-- Legend -->
-        <div class="px-6 py-3 border-t border-gray-100 dark:border-gray-700 flex flex-wrap items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+        <div class="px-6 py-3 border-t border-slate-100 dark:border-slate-700 flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
           <div class="flex items-center gap-1.5">
             <div class="w-4 h-4 rounded {colors.bg} {colors.border} border"></div>
             <span>Has answer</span>
@@ -316,7 +316,7 @@
             <span>Today</span>
           </div>
           <div class="flex items-center gap-1.5">
-            <div class="w-4 h-4 rounded bg-gray-100 dark:bg-gray-800"></div>
+            <div class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800"></div>
             <span>No data</span>
           </div>
         </div>
@@ -324,9 +324,9 @@
 
     <!-- List View / Search Results -->
     {:else}
-      <div class="max-w-[40rem] mx-auto bg-white dark:bg-gray-800/80 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden backdrop-blur-sm">
-        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r {colors.bg}">
-          <h2 class="font-bold text-gray-900 dark:text-white">
+      <div class="max-w-[40rem] mx-auto bg-white dark:bg-slate-800/80 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden backdrop-blur-sm">
+        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r {colors.bg}">
+          <h2 class="font-bold text-slate-900 dark:text-slate-50">
             {#if searchQuery.trim()}
               Search Results ({filteredPuzzles.length}{filteredPuzzles.length === 50 ? '+' : ''})
             {:else}
@@ -334,7 +334,7 @@
             {/if}
           </h2>
         </div>
-        <div class="divide-y divide-gray-100 dark:divide-gray-700 max-h-[600px] overflow-y-auto">
+        <div class="divide-y divide-slate-100 dark:divide-slate-700 max-h-[600px] overflow-y-auto">
           {#each filteredPuzzles as puzzle}
             <a
               href={puzzle.href}
@@ -346,17 +346,17 @@
                   #{puzzle.dayNum}
                 </span>
                 <div>
-                  <p class="font-semibold text-gray-900 dark:text-white text-sm group-hover:underline">{gameName} #{puzzle.dayNum}</p>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">{puzzle.formatted}</p>
+                  <p class="font-semibold text-slate-900 dark:text-slate-50 text-sm group-hover:underline">{gameName} #{puzzle.dayNum}</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">{puzzle.formatted}</p>
                 </div>
               </div>
-              <svg class="w-4 h-4 text-gray-400 group-hover:{colors.text} transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 text-slate-400 group-hover:{colors.text} transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>
             </a>
           {/each}
           {#if filteredPuzzles.length === 0}
-            <div class="px-6 py-12 text-center text-gray-400 dark:text-gray-500">
+            <div class="px-6 py-12 text-center text-slate-400 dark:text-slate-500">
               <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
@@ -370,7 +370,7 @@
 
     <!-- Back to Archives -->
     <div class="mt-8 text-center">
-      <a href="/archive" class="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors">
+      <a href="/archive" class="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Back to All Archives
       </a>

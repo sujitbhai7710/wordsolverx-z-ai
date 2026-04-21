@@ -96,7 +96,7 @@
 
 <ArchiveCalendar
   gameName="Colordle"
-  gameColor="indigo"
+  gameColor="teal"
   gameIcon="Cd"
   {startDate}
   {availableDates}
@@ -106,38 +106,103 @@
   onSelectDate={handleDateSelect}
 />
 
-<section id="archive-answer" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 scroll-mt-28">
+<section id="archive-answer" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 scroll-mt-28">
   {#if data.selectedColordle}
-    <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
+    <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
       <div class="mb-8 text-center">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600 dark:text-indigo-300">Selected archive date</p>
-        <h2 class="mt-3 text-3xl font-black text-gray-900 dark:text-white">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600 dark:text-teal-400">Selected archive date</p>
+        <h2 class="mt-3 text-3xl font-black text-slate-900 dark:text-slate-50">
           Colordle answer for {data.selectedColordle.formattedDate}
         </h2>
       </div>
       <ColorClues colorName={data.selectedColordle.color.name} colorHex={data.selectedColordle.color.hex} />
     </div>
   {:else if loadError}
-    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-center shadow-sm dark:border-rose-900/40 dark:bg-rose-950/20">
+    <div class="rounded-xl border border-rose-200 bg-rose-50 p-8 text-center dark:border-rose-800/40 dark:bg-rose-950/20">
       <h2 class="text-2xl font-bold text-rose-900 dark:text-rose-100">We couldn't load that Colordle date</h2>
       <p class="mt-3 text-rose-700 dark:text-rose-200">{loadError}</p>
     </div>
   {:else if isLoading}
-    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Loading Colordle archive data...</h2>
-      <p class="mt-3 text-gray-600 dark:text-gray-300">
+    <div class="rounded-xl border border-slate-200 bg-white p-8 text-center dark:border-slate-700 dark:bg-slate-800">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50">Loading Colordle archive data...</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
         Preparing the archive calendar and selected color answer for this page.
       </p>
     </div>
   {:else}
-    <div class="rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-sm dark:border-gray-800 dark:bg-gray-900/70">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Choose a color date from the archive</h2>
-      <p class="mt-3 text-gray-600 dark:text-gray-300">
+    <div class="rounded-xl border border-slate-200 bg-white p-8 text-center dark:border-slate-700 dark:bg-slate-800">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50">Choose a color date from the archive</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">
         Pick any archived Colordle date above to reveal the exact color name and hex code on this page.
       </p>
     </div>
   {/if}
 </section>
 
+<!-- SEO Article Section -->
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+  <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
+    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Colordle Archive Matters</h2>
+    <div class="prose prose-slate dark:prose-invert max-w-none">
+      <p>
+        The Colordle archive offers a comprehensive history of every daily color-guessing puzzle since the game launched in August 2023. Unlike traditional word games, Colordle challenges players to identify specific colors by name and hex code, testing knowledge of color theory, naming conventions, and visual perception. The archive preserves the complete record of every puzzle, making it an invaluable tool for players who want to study color patterns and improve their guessing accuracy over time.
+      </p>
+      <p>
+        Color naming is a surprisingly complex domain. The human eye can distinguish millions of distinct colors, but our vocabulary for describing them is far more limited. Colordle draws from a curated list of named colors that span the full spectrum, from common terms like red, blue, and green to more specific names like cerise, chartreuse, and periwinkle. The archive reveals which color names appear most frequently, how the difficulty of daily puzzles varies based on the specificity of the color name, and which regions of the color wheel tend to produce the most challenging puzzles.
+      </p>
+      <p>
+        For designers, web developers, and anyone working in visual media, the Colordle archive doubles as an educational resource. Each entry pairs a color name with its corresponding hex code, building practical knowledge of the color naming systems used in CSS, graphic design, and digital art. Regular archive browsing reinforces the connection between visual perception and technical color specification.
+      </p>
 
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Colordle Answers Work</h3>
+      <p>
+        Each Colordle puzzle presents players with a target color and challenges them to guess its name through a series of clues. The game provides feedback on each guess, indicating how close the guessed color is to the target in terms of hue, saturation, and brightness. Players typically have a limited number of guesses to identify the correct color name from the game's curated answer list.
+      </p>
+      <p>
+        The answer list in Colordle consists of named colors with corresponding hex codes. Each daily puzzle selects one color from this pool, and the archive records both the name and the hex code for every past solution. The deterministic nature of the puzzle system means that each date maps to exactly one answer, making the archive a reliable and complete reference that players can trust.
+      </p>
+      <p>
+        Colordle draws from standardized color naming conventions, including CSS named colors, X11 color names, and extended color vocabularies used in design tools. Some answers correspond to well-known colors that most people would recognize immediately, while others test deeper knowledge of niche color terminology. The archive shows the full range of this spectrum, from the obvious to the obscure.
+      </p>
 
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Colordle Answers</h3>
+      <p>
+        The Colordle archive contains many puzzles that stumped even experienced players. Colors with ambiguous names that could describe several similar hues, very dark or very light colors where hue differences are hard to perceive, and colors that exist at the boundary between two named regions of the spectrum have all proven particularly challenging. These difficult entries often generate lively discussion in the Colordle community and provide excellent learning opportunities.
+      </p>
+      <p>
+        Patterns in the archive show that certain color families appear more frequently than others. Warm colors like reds, oranges, and yellows tend to be well-represented, as do the various shades of blue and green. Less common entries in the purple, pink, and brown ranges sometimes catch players off guard, especially when the specific shade is quite different from what the color name might suggest to a casual thinker.
+      </p>
+
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Colordle Archive</h3>
+      <p>
+        Use the calendar interface above to navigate to any date and view the Colordle answer for that day. Each archive entry displays the color name and hex code, along with visual color clues that show the exact shade. You can browse by month, jump to specific dates, or simply explore past puzzles to build your color knowledge systematically.
+      </p>
+
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What is the difference between Colordle and Colorfle?</h4>
+      <p>
+        While both games involve colors, they work differently. Colordle asks players to guess a specific color name based on clues and hex code information, while Colorfle presents color-blending challenges where players work with source colors and target hex values. The Colordle archive focuses on named color answers.
+      </p>
+
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the Colordle archive include the hex code for every answer?</h4>
+      <p>
+        Yes. Every entry in the Colordle archive includes both the color name and the precise hex code, allowing you to see exactly what shade each puzzle solution represents.
+      </p>
+
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How can I improve at guessing Colordle colors?</h4>
+      <p>
+        Studying the archive regularly helps you build familiarity with named colors and their hex values. Pay attention to colors you missed and learn the hex codes for colors that fall at the boundaries between common names. Over time, your ability to associate visual colors with their technical names will improve significantly.
+      </p>
+
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are Colordle answers sourced from standard color naming systems?</h4>
+      <p>
+        Yes. Colordle draws from standardized color naming conventions used in web development and design, including CSS named colors and extended color vocabularies. The archive reflects this standardized approach to color naming.
+      </p>
+
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Is the Colordle archive updated daily?</h4>
+      <p>
+        The archive is updated daily as new Colordle puzzles are released. New entries appear automatically, ensuring complete coverage from the game's launch date to the present day.
+      </p>
+    </div>
+  </div>
+</article>

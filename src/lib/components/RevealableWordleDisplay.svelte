@@ -32,16 +32,16 @@
   let isAllRevealed = $derived(revealedIndices.size === word.length);
 </script>
 
-<div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8 border border-gray-200 dark:border-gray-700 transform transition-all hover:shadow-xl">
+<div class="max-w-3xl mx-auto bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 sm:p-8 border border-slate-200 dark:border-slate-700 transform transition-all hover:shadow-xl">
   <div class="text-center mb-6">
     <div class="relative inline-block">
-      <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50">
         Wordle answer for {date}
       </h2>
-      <div class="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-green-500 to-blue-500 rounded-full"></div>
+      <div class="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-teal-400 via-teal-500 to-blue-500 rounded-full"></div>
     </div>
     {#if days_since_launch}
-      <p class="text-gray-500 dark:text-gray-400 mt-2">
+      <p class="text-slate-500 dark:text-slate-400 mt-2">
         Day {days_since_launch} since launch
       </p>
     {/if}
@@ -80,11 +80,11 @@
           <span>Show Answer</span>
         </div>
       </button>
-      <div class="mt-4 text-sm text-gray-500 dark:text-gray-400 opacity-80">
+      <div class="mt-4 text-sm text-slate-500 dark:text-slate-400 opacity-80">
         Click individual tiles to reveal one letter at a time
       </div>
     {:else}
-      <div class="inline-flex items-center gap-2 px-6 py-3 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full font-bold">
+      <div class="inline-flex items-center gap-2 px-6 py-3 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 rounded-full font-bold">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
         <span>Answer Revealed</span>
       </div>
