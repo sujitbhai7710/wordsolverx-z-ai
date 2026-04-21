@@ -73,7 +73,7 @@
         headline: data.meta.title,
         description: data.meta.description,
         mainEntityOfPage: data.meta.canonical,
-        image: 'https://wordsolver.tech/wordsolverx.webp',
+        image: 'https://wordsolver.tech/images/betweenle-answer-today.webp',
         keywords: data.meta.keywords,
         datePublished: `${data.todayAnswer.date}T00:00:00Z`,
         dateModified: `${data.todayAnswer.date}T00:00:00Z`,
@@ -86,7 +86,7 @@
           name: 'WordSolverX',
           logo: {
             '@type': 'ImageObject',
-            url: 'https://wordsolver.tech/wordsolverx.webp',
+            url: 'https://wordsolver.tech/images/betweenle-answer-today.webp',
           },
         },
       },
@@ -122,12 +122,12 @@
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content={data.meta.canonical} />
-  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta property="og:image" content="https://wordsolver.tech/images/betweenle-answer-today.webp" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/betweenle-answer-today.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 

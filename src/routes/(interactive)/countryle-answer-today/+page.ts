@@ -74,7 +74,7 @@ export const load = () => {
       description: pageDescription,
       keywords: 'countryle answer today, countryle answer, countryle archive, countryle solver, countryle country today',
       canonical: pageUrl,
-      featuredImage: '/wordsolverx.webp'
+      featuredImage: '/images/countryle-answer-today.webp'
     }
   };
 };

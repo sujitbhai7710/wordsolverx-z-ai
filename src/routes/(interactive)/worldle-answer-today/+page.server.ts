@@ -58,7 +58,7 @@ export const load: PageServerLoad = async () => {
       name: 'WordSolverX',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://wordsolver.tech/wordsolverx.webp',
+        url: 'https://wordsolver.tech/images/worldle-answer-today.webp',
       },
     },
     mainEntityOfPage: {

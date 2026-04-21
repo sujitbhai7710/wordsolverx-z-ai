@@ -130,6 +130,7 @@
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wordsolver.tech/spotle-solver" />
         <meta property="og:site_name" content="WordSolverX" />
+        <meta property="og:image" content="https://wordsolver.tech/images/spotle-solver.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         {@html `<script type="application/ld+json">${JSON.stringify({
                 '@context': 'https://schema.org',

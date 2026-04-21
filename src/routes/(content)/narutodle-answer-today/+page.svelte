@@ -24,7 +24,7 @@
       { '@type': 'Question', name: 'Does Narutodle include Boruto characters?', acceptedAnswer: { '@type': 'Answer', text: 'Narutodle primarily focuses on characters from the original Naruto and Naruto Shippuden series.' } },
       { '@type': 'Question', name: 'Is Narutodle free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Narutodle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'Narutodle Answer Today', description: 'Get the confirmed Narutodle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/narutodle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
+    { '@type': 'Article', headline: 'Narutodle Answer Today', description: 'Get the confirmed Narutodle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/narutodle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/images/narutodle-answer-today.webp' } } },
   ]};
 </script>
 

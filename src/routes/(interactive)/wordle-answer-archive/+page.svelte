@@ -86,9 +86,11 @@
   <meta property="og:description" content="Complete history of every Wordle answer. Browse by calendar or search by date." />
   <meta property="og:url" content="https://wordsolver.tech/wordle-answer-archive" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://wordsolver.tech/images/wordle-answer-archive.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Wordle Answer Archive - All Past Solutions | WordSolverX" />
   <meta name="twitter:description" content="Complete history of every Wordle answer with calendar view." />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/wordle-answer-archive.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",

@@ -217,6 +217,7 @@
   <meta property="og:url" content="https://wordsolver.tech/waffle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://wordsolver.tech/images/waffle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Waffle Solver" />
   <meta name="twitter:description" content="Solve today's Waffle puzzle instantly." />

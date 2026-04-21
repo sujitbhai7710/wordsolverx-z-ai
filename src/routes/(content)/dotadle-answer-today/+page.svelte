@@ -24,7 +24,7 @@
       { '@type': 'Question', name: 'Can I play Dotadle on mobile?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Dotadle is a browser-based game that works on mobile devices and desktop browsers.' } },
       { '@type': 'Question', name: 'Does Dotadle cost money?', acceptedAnswer: { '@type': 'Answer', text: 'No, Dotadle is completely free to play.' } },
     ]},
-    { '@type': 'Article', headline: 'Dotadle Answer Today', description: 'Get the confirmed Dotadle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/dotadle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
+    { '@type': 'Article', headline: 'Dotadle Answer Today', description: 'Get the confirmed Dotadle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/dotadle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/images/dotadle-answer-today.webp' } } },
   ]};
 </script>
 

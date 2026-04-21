@@ -61,6 +61,7 @@
         <meta property="og:description" content={data.meta.description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wordsolver.tech/worgle-answer-today" />
+        <meta property="og:image" content="https://wordsolver.tech/images/worgle-answer-today.webp" />
 </svelte:head>
 
 <div class="min-h-screen bg-slate-50 px-4 py-10 sm:px-6 lg:px-8">

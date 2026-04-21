@@ -199,10 +199,11 @@ const jsonLdSchema = JSON.stringify({
   <meta property="og:url" content="https://wordsolver.tech/colordle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://wordsolver.tech/images/colordle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Colordle Solver" />
   <meta name="twitter:description" content="Filter Colordle guesses by percentage similarity and find the exact color match with WordSolverX." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/colordle-solver.webp" />
   {@html `<script type="application/ld+json">${jsonLdSchema}</script>`}
 </svelte:head>
 

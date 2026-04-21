@@ -1,4 +1,4 @@
-import { formatFramedDate, getTodayFramedEntries } from '$lib/framed';
+import { formatFramedDate, getTodayFramedEntries, getLatestFramedDateKey } from '$lib/framed';
 import { getMainDailyDateKey } from '$lib/main-daily-date';
 import {
   generateBreadcrumbSchema,
@@ -12,11 +12,24 @@ export const prerender = true;
 
 export const load = () => {
   const targetDateKey = getMainDailyDateKey();
-  const entries = getTodayFramedEntries(targetDateKey);
-  const hasExactEntries = entries.length === 4;
-  const formattedDate = formatFramedDate(new Date(`${targetDateKey}T00:00:00Z`));
-  const currentMonth = new Date(`${targetDateKey}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
-  const pageTitle = `Framed Answer Today - ${currentMonth} - Updated`;
+  let entries = getTodayFramedEntries(targetDateKey);
+  let hasExactEntries = entries.length === 4;
+
+  // Fallback: if today's date has no data, use the latest available date
+  let displayDateKey = targetDateKey;
+  if (!hasExactEntries) {
+    const latestKey = getLatestFramedDateKey();
+    if (latestKey) {
+      displayDateKey = latestKey;
+      entries = getTodayFramedEntries(latestKey);
+    }
+  }
+
+  const formattedDate = formatFramedDate(new Date(`${displayDateKey}T00:00:00Z`));
+  const currentMonth = new Date(`${displayDateKey}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+  const pageTitle = hasExactEntries
+    ? `Framed Answer Today (${formattedDate}) | Archive`
+    : `Framed Answer Today - ${currentMonth} - Updated`;
   const pageDescription = hasExactEntries
     ? `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from the saved dataset.`
     : `Check whether the Framed answers for ${formattedDate} are ready yet, then use the archive if you need older saved movie titles.`;
@@ -56,7 +69,7 @@ export const load = () => {
   return {
     entries,
     hasExactEntries,
-    targetDateKey,
+    targetDateKey: displayDateKey,
     formattedDate,
     schemas,
     meta: {
@@ -64,7 +77,7 @@ export const load = () => {
       description: pageDescription,
       keywords: 'framed answers today, framed answer today, framed archive, one frame answer, titleshot answer, poster answer',
       canonical: pageUrl,
-      featuredImage: '/wordsolverx.webp'
+      featuredImage: '/images/framed-answer-today.webp'
     }
   };
 };

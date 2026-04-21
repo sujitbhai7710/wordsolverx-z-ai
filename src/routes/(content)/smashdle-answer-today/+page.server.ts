@@ -43,7 +43,7 @@ export const load: PageServerLoad = async ({ fetch, setHeaders }) => {
     const dateStr = result.dateStr;
     try {
         const seoDate = formatSeoDate(latestDate);
-        const featuredImage = 'https://wordsolver.tech/smashdle-answer-today.webp';
+        const featuredImage = 'https://wordsolver.tech/images/smashdle-answer-today.webp';
         const uniqueNames = Array.from(new Set(
             answers
                 .map((answer) => parseContent(answer.json_content).champion_name?.trim())

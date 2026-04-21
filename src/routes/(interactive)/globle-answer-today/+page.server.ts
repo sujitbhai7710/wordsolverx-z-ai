@@ -14,7 +14,7 @@ export const load: PageServerLoad = async () => {
 
     const { country, formattedDate, date } = data;
     const currentMonth = format(today, 'MMMM');
-    const featuredImage = 'https://wordsolver.tech/globle-answer-today.webp';
+    const featuredImage = 'https://wordsolver.tech/images/globle-answer-today.webp';
     const pageTitle = `Globle Answer Today - ${currentMonth} - Updated`;
     const pageDescription = `Get Globle hints and the confirmed Globle answer for ${formattedDate}. The country is ${country.name}, with continent, subregion, flag, and map clues plus the full Globle answer for ${formattedDate}.`;
     const pageKeywords = `globle answer today, globle answer, globle hint, globle hint today, globle answer for ${formattedDate}`;

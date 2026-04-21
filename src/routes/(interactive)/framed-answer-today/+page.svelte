@@ -38,7 +38,7 @@
             Today's saved movie titles for Framed Classic, One Frame, Titleshot, and Poster.
           </p>
         </div>
-        <a href="/framed-archive" class="inline-flex items-center rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-black hover:bg-amber-400">Browse Archive</a>
+        <a href="/framed-archive" class="inline-flex items-center rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white hover:bg-amber-600">Browse Archive</a>
       </div>
     </section>
 
@@ -54,7 +54,7 @@
             The saved dataset does not have the exact Framed entries for {data.formattedDate} yet. This page now waits for the correct date instead of silently showing an older answer set.
           </p>
           <div class="mt-5 flex flex-wrap gap-3">
-            <a href="/framed-archive" class="inline-flex items-center rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-black hover:bg-amber-400">Browse Archive</a>
+            <a href="/framed-archive" class="inline-flex items-center rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white hover:bg-amber-600">Browse Archive</a>
           </div>
         </div>
       {/if}

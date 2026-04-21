@@ -472,7 +472,9 @@
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wordsolver.tech/nerdle-solver" />
+        <meta property="og:image" content="https://wordsolver.tech/images/nerdle-solver.webp" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://wordsolver.tech/images/nerdle-solver.webp" />
         <meta name="twitter:title" content="Nerdle Solver All Modes" />
         <meta
                 name="twitter:description"

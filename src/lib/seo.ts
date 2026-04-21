@@ -125,9 +125,34 @@ export interface SchemaPerson {
     name: string;
     url?: string;
     image?: string;
+    jobTitle?: string;
+    description?: string;
+    knowsAbout?: string[];
 }
 
-// Generate Organization Schema
+export interface SchemaArticle {
+    '@context': string;
+    '@type': 'Article';
+    headline: string;
+    description: string;
+    url: string;
+    image?: string;
+    datePublished: string;
+    dateModified: string;
+    author: SchemaPerson;
+    publisher: {
+        '@type': 'Organization';
+        name: string;
+        url: string;
+        logo?: {
+            '@type': 'ImageObject';
+            url: string;
+        };
+    };
+    mainEntityOfPage?: string;
+}
+
+// Generate Organization Schema (E-E-A-T enhanced)
 export function generateOrganizationSchema(): SchemaOrganization {
     return {
         '@context': 'https://schema.org',
@@ -136,6 +161,52 @@ export function generateOrganizationSchema(): SchemaOrganization {
         url: 'https://wordsolver.tech',
         logo: 'https://wordsolver.tech/wordsolverx.webp',
         sameAs: SOCIAL_PROFILE_URLS,
+    };
+}
+
+// Generate Article Schema (E-E-A-T + Google Discover)
+export function generateArticleSchema(config: {
+    headline: string;
+    description: string;
+    url: string;
+    image?: string;
+    datePublished?: string;
+    dateModified?: string;
+    authorName?: string;
+    authorImage?: string;
+    authorJobTitle?: string;
+    authorDescription?: string;
+    authorKnowsAbout?: string[];
+}): SchemaArticle {
+    const today = new Date().toISOString().split('T')[0];
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: config.headline,
+        description: config.description,
+        url: config.url,
+        ...(config.image && { image: config.image }),
+        datePublished: config.datePublished || today,
+        dateModified: config.dateModified || today,
+        author: {
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: config.authorName || 'Preston Hayes',
+            ...(config.authorImage && { image: config.authorImage }),
+            ...(config.authorJobTitle && { jobTitle: config.authorJobTitle }),
+            ...(config.authorDescription && { description: config.authorDescription }),
+            ...(config.authorKnowsAbout && { knowsAbout: config.authorKnowsAbout }),
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'WordSolverX',
+            url: 'https://wordsolver.tech',
+            logo: {
+                '@type': 'ImageObject',
+                url: 'https://wordsolver.tech/wordsolverx.webp',
+            },
+        },
+        mainEntityOfPage: config.url,
     };
 }
 
@@ -298,11 +369,13 @@ export function generateSearchActionSchema(
     };
 }
 
-// Generate Person Schema
+// Generate Person Schema (E-E-A-T enhanced)
 export function generatePersonAuthorSchema(
     name: string,
     url?: string,
-    image?: string
+    image?: string,
+    jobTitle?: string,
+    knowsAbout?: string[]
 ): SchemaPerson {
     return {
         '@context': 'https://schema.org',
@@ -310,6 +383,8 @@ export function generatePersonAuthorSchema(
         name,
         ...(url && { url }),
         ...(image && { image }),
+        ...(jobTitle && { jobTitle }),
+        ...(knowsAbout && { knowsAbout }),
     };
 }
 

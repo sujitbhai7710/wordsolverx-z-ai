@@ -30,10 +30,11 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://wordsolver.tech/phoodle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
+  <meta property="og:image" content="https://wordsolver.tech/images/phoodle-answer-today.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/phoodle-answer-today.webp" />
   <meta name="news_keywords" content={data.meta?.keywords ?? 'phoodle answer today, phoodle answer, phoodle hint, phoodle hint today'} />
   <link rel="canonical" href="https://wordsolver.tech/phoodle-answer-today" />
   {@html `<script type="application/ld+json">${pageSchema}</script>`}

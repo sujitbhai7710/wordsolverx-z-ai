@@ -85,11 +85,11 @@
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
-  <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta property="og:image" content="https://wordsolver.tech/images/worldle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/worldle-solver.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 

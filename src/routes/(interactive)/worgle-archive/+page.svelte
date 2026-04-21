@@ -116,7 +116,7 @@
                                         <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Puzzle #{data.selectedWorgle.puzzle}</p>
                                         <div class="mt-4 flex flex-wrap gap-2">
                                                 {#each data.selectedWorgle.word.toUpperCase().split('') as letter}
-                                                        <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-slate-900 text-lg font-black text-white">
+                                                        <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-slate-900 text-lg font-black text-white dark:bg-white/10 dark:text-slate-100 dark:border dark:border-slate-600">
                                                                 {letter}
                                                         </div>
                                                 {/each}

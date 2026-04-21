@@ -316,6 +316,7 @@
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wordsolver.tech/boggle-solver" />
+        <meta property="og:image" content="https://wordsolver.tech/images/boggle-solver.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Boggle Solver" />
         <meta

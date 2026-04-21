@@ -19,12 +19,12 @@
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://wordsolver.tech/globle-answer-today" />
-  <meta property="og:image" content={data.meta.featuredImage ?? 'https://wordsolver.tech/wordsolverx.webp'} />
+  <meta property="og:image" content={data.meta.featuredImage ?? 'https://wordsolver.tech/images/globle-answer-today.webp'} />
   <meta property="og:image:alt" content={`Globle hints and answer for ${data.formattedDate}`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
-  <meta name="twitter:image" content={data.meta.featuredImage ?? 'https://wordsolver.tech/wordsolverx.webp'} />
+  <meta name="twitter:image" content={data.meta.featuredImage ?? 'https://wordsolver.tech/images/globle-answer-today.webp'} />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 

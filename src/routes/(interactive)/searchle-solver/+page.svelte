@@ -322,6 +322,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolver.tech/searchle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
+  <meta property="og:image" content="https://wordsolver.tech/images/searchle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://wordsolver.tech/searchle-solver" />
   {@html `<script type="application/ld+json">${JSON.stringify({

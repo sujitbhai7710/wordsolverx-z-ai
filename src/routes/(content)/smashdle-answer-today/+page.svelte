@@ -30,7 +30,7 @@
       { '@type': 'Question', name: 'When does Smashdle reset?', acceptedAnswer: { '@type': 'Answer', text: 'Smashdle resets daily at midnight UTC.' } },
       { '@type': 'Question', name: 'Is Smashdle free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Smashdle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'Smashdle Answer Today', description: 'Get the confirmed Smashdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/smashdle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } } },
+    { '@type': 'Article', headline: 'Smashdle Answer Today', description: 'Get the confirmed Smashdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/smashdle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/images/smashdle-answer-today.webp' } } },
   ]};
 </script>
 

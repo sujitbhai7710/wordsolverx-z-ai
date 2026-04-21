@@ -120,8 +120,15 @@ export function getFramedEntriesForDate(dateKey: string): Array<FramedEntry & { 
   }).filter((entry): entry is FramedEntry & { game: FramedGameConfig } => entry !== null);
 }
 
+export function getLatestFramedDateKey(): string | null {
+  const dates = getFramedAvailableDates();
+  return dates.length > 0 ? dates[0] : null;
+}
+
 export function getTodayFramedEntries(dateKey?: string): Array<FramedEntry & { game: FramedGameConfig }> {
   if (!dateKey) {
+    const latestKey = getLatestFramedDateKey();
+    if (latestKey) return getFramedEntriesForDate(latestKey);
     return [];
   }
 

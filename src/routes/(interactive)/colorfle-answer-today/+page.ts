@@ -71,7 +71,7 @@ export const load = () => {
       description: pageDescription,
       keywords: 'colorfle answer today, colorfle answer, colorfle archive, colorfle solver, colorfle hex answer',
       canonical: pageUrl,
-      featuredImage: '/wordsolverx.webp'
+      featuredImage: '/images/colorfle-answer-today.webp'
     }
   };
 };

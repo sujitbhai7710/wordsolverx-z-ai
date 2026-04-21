@@ -12,7 +12,7 @@
   let { data } = $props();
   let historySearch = $state('');
 
-  const featuredImage = $derived(data.meta?.featuredImage ?? '/colordle-answer-today.webp');
+  const featuredImage = $derived(data.meta?.featuredImage ?? '/images/colordle-answer-today.webp');
   const historyEntries = $derived(data.last100Days ?? []);
   const requestedDateLabel = $derived(data.requestedFormattedDate ?? data.formattedDate ?? 'today');
   const answerDateLabel = $derived(data.formattedDate ?? requestedDateLabel);

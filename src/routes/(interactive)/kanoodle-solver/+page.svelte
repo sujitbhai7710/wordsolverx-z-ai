@@ -99,11 +99,11 @@
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
-  <meta property="og:image" content="https://wordsolver.tech/kanoodle-og.png" />
+  <meta property="og:image" content="https://wordsolver.tech/images/kanoodle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://wordsolver.tech/kanoodle-og.png" />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/kanoodle-solver.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 

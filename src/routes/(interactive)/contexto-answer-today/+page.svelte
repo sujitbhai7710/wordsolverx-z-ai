@@ -121,6 +121,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wordsolver.tech/contexto-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
+  <meta property="og:image" content="https://wordsolver.tech/images/contexto-answer-today.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={metaTitle} />
   <meta name="twitter:description" content={pageDescription} />

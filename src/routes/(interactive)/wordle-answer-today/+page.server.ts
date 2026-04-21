@@ -30,7 +30,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         wordleData?.social_image_direct ||
         recentAnswers.find((answer) => answer.date === (wordleData?.date ?? todayKey))?.social_image ||
         wordleData?.social_image ||
-        'https://wordsolver.tech/wordsolverx.webp';
+        'https://wordsolver.tech/images/wordle-answer-today.webp';
     const generatedArticle = getWordleDailyArticle(wordleData?.date ?? todayKey);
     const normalizedWordleData = wordleData
         ? {
@@ -81,7 +81,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         datePublished: new Date(normalizedWordleData?.date || today).toISOString(),
         dateModified: new Date(normalizedWordleData?.date || today).toISOString(),
         author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolver.tech/about#preston-hayes', 'https://wordsolver.tech/auther-wordsolverx.webp'),
-        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } },
+        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/images/wordle-answer-today.webp' } },
         description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/wordle-answer-today' },
     };

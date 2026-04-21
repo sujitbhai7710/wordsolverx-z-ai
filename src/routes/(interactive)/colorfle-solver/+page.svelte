@@ -183,10 +183,11 @@ const faqs = [
   <meta property="og:url" content="https://wordsolver.tech/colorfle-solver" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
+  <meta property="og:image" content="https://wordsolver.tech/images/colorfle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Colorfle Solver" />
   <meta name="twitter:description" content="A static Colorfle solver for target hex matching and feedback-based elimination." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/colorfle-solver.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [

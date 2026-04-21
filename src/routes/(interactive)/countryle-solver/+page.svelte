@@ -138,10 +138,11 @@
   <meta property="og:url" content="https://wordsolver.tech/countryle-solver" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
+  <meta property="og:image" content="https://wordsolver.tech/images/countryle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Countryle Solver" />
   <meta name="twitter:description" content="A static Countryle solver with exact clue filtering and ranked matches." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolver.tech/images/countryle-solver.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 
