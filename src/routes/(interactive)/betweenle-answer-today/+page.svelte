@@ -194,7 +194,7 @@
 
         {#if !showAnswer}
           <button
-            class="mt-5 inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800"
+            class="mt-5 inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800 dark:bg-amber-600 dark:hover:bg-amber-500"
             onclick={() => (showAnswer = true)}
             type="button"
           >
@@ -246,7 +246,7 @@
       <div class="mt-8 grid gap-3 sm:grid-cols-3">
         <a
           href="/betweenle-solver"
-          class="rounded-2xl bg-slate-900 px-5 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-slate-800"
+          class="rounded-2xl bg-slate-900 px-5 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-slate-800 dark:bg-amber-600 dark:hover:bg-amber-500"
         >
           Betweenle Solver
         </a>

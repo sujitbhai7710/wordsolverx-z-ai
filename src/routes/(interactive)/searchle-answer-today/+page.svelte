@@ -173,7 +173,7 @@
       <div class="mt-5 flex flex-wrap gap-3">
         <a
           href="/searchle-archive"
-          class="inline-flex items-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-700"
+          class="inline-flex items-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-amber-600 dark:hover:bg-amber-500"
         >
           Open Searchle Archive
         </a>

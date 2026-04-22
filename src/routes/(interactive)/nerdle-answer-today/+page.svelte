@@ -82,7 +82,7 @@
                                         </div>
                                         <a
                                                 href="/nerdle-solver"
-                                                class="inline-flex items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+                                                class="inline-flex items-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-amber-600 dark:hover:bg-amber-500"
                                         >
                                                 Use Nerdle Solver
                                         </a>

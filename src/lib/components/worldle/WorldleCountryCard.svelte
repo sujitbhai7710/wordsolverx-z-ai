@@ -135,7 +135,7 @@
 
       <div class="mt-6 grid gap-3">
         <a
-          class="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-sky-800 transition hover:bg-sky-50"
+          class="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-sky-800 transition hover:bg-sky-50 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
           href={`https://en.wikipedia.org/wiki/${encodeURIComponent(answer.country.name)}`}
           rel="noopener noreferrer"
           target="_blank"

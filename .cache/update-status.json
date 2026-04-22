@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-04-20T18:51:16.656Z",
+  "updatedAt": "2026-04-22T01:12:36.805Z",
   "games": {
     "canuckle": {
       "needsRetry": false,
-      "lastRunAt": "2026-04-10T16:48:10.389Z",
-      "lastSuccessAt": "2026-04-10T16:48:10.389Z",
+      "lastRunAt": "2026-04-22T01:12:36.804Z",
+      "lastSuccessAt": "2026-04-22T01:12:36.804Z",
       "lastFailureAt": null,
       "lastFailureMessage": null,
-      "latestDate": "2026-04-15",
-      "puzzleCount": 1432
+      "latestDate": "2026-04-24",
+      "puzzleCount": 1441
     },
     "framed": {
       "needsRetry": false,
-      "lastRunAt": "2026-04-19T14:55:20.586Z",
-      "lastSuccessAt": "2026-04-19T14:55:20.586Z",
+      "lastRunAt": "2026-04-22T01:12:27.403Z",
+      "lastSuccessAt": "2026-04-22T01:12:27.403Z",
       "lastFailureAt": null,
       "lastFailureMessage": null,
       "failedTargets": []

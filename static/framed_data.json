@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-19T14:55:20.584Z",
+  "generatedAt": "2026-04-22T01:12:27.397Z",
   "referenceDate": "2026-04-02",
   "modes": {
     "daily": {
@@ -8,8 +8,23 @@
       "color": "#e50914",
       "gradient": "from-red-600 to-red-900",
       "referencePuzzle": 1483,
-      "latestPuzzleNumber": 1501,
+      "latestPuzzleNumber": 1504,
       "entries": [
+        {
+          "date": "2026-04-23",
+          "puzzleNumber": 1504,
+          "answer": "I Still Know What You Did Last Summer"
+        },
+        {
+          "date": "2026-04-22",
+          "puzzleNumber": 1503,
+          "answer": "The Hobbit: The Battle of the Five Armies"
+        },
+        {
+          "date": "2026-04-21",
+          "puzzleNumber": 1502,
+          "answer": "Waterworld"
+        },
         {
           "date": "2026-04-20",
           "puzzleNumber": 1501,
@@ -7523,8 +7538,23 @@
       "color": "#6366f1",
       "gradient": "from-violet-500 to-purple-700",
       "referencePuzzle": 486,
-      "latestPuzzleNumber": 504,
+      "latestPuzzleNumber": 507,
       "entries": [
+        {
+          "date": "2026-04-23",
+          "puzzleNumber": 507,
+          "answer": "The Dark Knight"
+        },
+        {
+          "date": "2026-04-22",
+          "puzzleNumber": 506,
+          "answer": "Saw"
+        },
+        {
+          "date": "2026-04-21",
+          "puzzleNumber": 505,
+          "answer": "The Big Short"
+        },
         {
           "date": "2026-04-20",
           "puzzleNumber": 504,
@@ -10053,8 +10083,23 @@
       "color": "#f59e0b",
       "gradient": "from-amber-500 to-orange-600",
       "referencePuzzle": 302,
-      "latestPuzzleNumber": 320,
+      "latestPuzzleNumber": 323,
       "entries": [
+        {
+          "date": "2026-04-23",
+          "puzzleNumber": 323,
+          "answer": "Lincoln"
+        },
+        {
+          "date": "2026-04-22",
+          "puzzleNumber": 322,
+          "answer": "Cujo"
+        },
+        {
+          "date": "2026-04-21",
+          "puzzleNumber": 321,
+          "answer": "The Great Muppet Caper"
+        },
         {
           "date": "2026-04-20",
           "puzzleNumber": 320,
@@ -11663,8 +11708,23 @@
       "color": "#10b981",
       "gradient": "from-emerald-500 to-teal-700",
       "referencePuzzle": 252,
-      "latestPuzzleNumber": 270,
+      "latestPuzzleNumber": 273,
       "entries": [
+        {
+          "date": "2026-04-23",
+          "puzzleNumber": 273,
+          "answer": "You've Got Mail"
+        },
+        {
+          "date": "2026-04-22",
+          "puzzleNumber": 272,
+          "answer": "Black Panther"
+        },
+        {
+          "date": "2026-04-21",
+          "puzzleNumber": 271,
+          "answer": "Life of Pi"
+        },
         {
           "date": "2026-04-20",
           "puzzleNumber": 270,
