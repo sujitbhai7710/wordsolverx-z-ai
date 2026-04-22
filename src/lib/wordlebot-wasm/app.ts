@@ -703,22 +703,8 @@ async function getDatasetForGame(game: WordlebotGameSlug, length: number) {
         }
 
         // Load only the specific length dataset instead of the full 2.9MB bundle
-        const data = await getWordDataForLength(length);
-        return data;
-}
-
-// Cache per-length datasets to avoid re-importing
-const perLengthCache: Record<string, Promise<SolverDataset>> = {};
-
-async function getWordDataForLength(length: number): Promise<SolverDataset> {
-        const key = String(length);
-        if (!perLengthCache[key]) {
-                perLengthCache[key] = import(
-                        /* @vite-ignore */
-                        `./assets/generated/per-length/word-data-len${length}.json`
-                ).then((module) => module.default as SolverDataset);
-        }
-        return perLengthCache[key];
+        const { getWordDataForLength: loadLen } = await import('./assets/generated/per-length/index.js');
+        return loadLen(length);
 }
 
 // Keep original for backward compatibility (used by canuckle-archive)
