@@ -272,20 +272,7 @@ select:focus-visible,
   box-shadow: none;
 }
 
-.canuckle-summary-card .canuckle-source-note {
-  position: relative;
-  z-index: 1;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  color: #94a3b8;
-  font-size: 0.82rem;
-  line-height: 1.5;
-}
 
-.canuckle-summary-card .canuckle-source-note strong {
-  color: #64748b;
-}
 
 .canuckle-archive-container {
   width: min(920px, calc(100vw - 12px));
@@ -855,8 +842,7 @@ select:focus-visible,
 }
 
 .canuckle-label,
-.canuckle-meta,
-.canuckle-source-note {
+.canuckle-meta {
   margin: 0;
   color: var(--muted-text);
 }
@@ -878,10 +864,7 @@ select:focus-visible,
   flex-wrap: wrap;
 }
 
-.canuckle-source-note {
-  margin-top: 14px;
-  line-height: 1.45;
-}
+
 
 /* ── Canuckle Daily: Story / Clue Card ── */
 .canuckle-story-card {

@@ -274,11 +274,6 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
                                                                 <a class="canuckle-action-btn secondary" href="${getCanucklePagePath('solver')}">Open solver</a>
                                                         </div>
                                                 </div>
-                                                <p class="canuckle-source-note">
-                                                        Source: <strong>${escapeHtml(data.source.collections.puzzles)}</strong>,
-                                                        <strong>${escapeHtml(data.source.collections.words)}</strong>,
-                                                        version ${escapeHtml(data.source.version)}.
-                                                </p>
                                         </section>
 
                                         <section class="canuckle-story-card">
