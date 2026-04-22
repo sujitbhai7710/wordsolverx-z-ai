@@ -12,23 +12,23 @@
   } = $props();
 </script>
 
-<article class="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-lg shadow-black/20 transition-transform hover:-translate-y-1">
+<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
   <div class={`h-1.5 bg-gradient-to-r ${game.gradient}`}></div>
   <div class="p-5">
     <div class="flex items-start justify-between gap-4">
       <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">{game.label}</p>
-        <h3 class="mt-3 text-xl font-black text-white">{answer}</h3>
-        <p class="mt-2 text-sm text-zinc-400">{game.description}</p>
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">{game.label}</p>
+        <h3 class="mt-2 text-xl font-bold text-slate-900">{answer}</h3>
+        <p class="mt-1.5 text-sm text-slate-500 leading-relaxed">{game.description}</p>
       </div>
-      <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5 text-xl">
+      <span class="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-xl">
         {game.emoji}
       </span>
     </div>
 
-    <div class="mt-5 flex items-center justify-between border-t border-zinc-800 pt-4 text-sm">
-      <span class="text-zinc-500">Puzzle</span>
-      <span class="font-mono font-semibold text-zinc-200">#{puzzleNumber}</span>
+    <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3.5 text-sm">
+      <span class="text-slate-400 font-medium">Puzzle</span>
+      <span class="rounded-md bg-slate-50 px-2 py-0.5 font-mono font-semibold text-slate-700 border border-slate-100">#{puzzleNumber}</span>
     </div>
   </div>
 </article>

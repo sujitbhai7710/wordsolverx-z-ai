@@ -168,16 +168,16 @@ select:focus-visible,
   box-shadow: 0 10px 24px rgba(220, 38, 38, 0.2);
 }
 
-/* ── Canuckle Daily: Premium Dark Summary Card ── */
+/* ── Canuckle Daily: Premium Light Summary Card ── */
 .canuckle-summary-card {
   padding: 24px 28px;
   margin-bottom: 16px;
   border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
   position: relative;
   overflow: hidden;
 }
@@ -190,7 +190,7 @@ select:focus-visible,
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(220, 38, 38, 0.12), transparent 70%);
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.04), transparent 70%);
   pointer-events: none;
 }
 
@@ -202,7 +202,7 @@ select:focus-visible,
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.1), transparent 70%);
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.04), transparent 70%);
   pointer-events: none;
 }
 
@@ -213,7 +213,7 @@ select:focus-visible,
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(248, 113, 113, 0.9);
+  color: #dc2626;
   margin: 0;
 }
 
@@ -225,14 +225,14 @@ select:focus-visible,
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.04em;
-  color: #ffffff;
+  color: #0f172a;
 }
 
 .canuckle-summary-card .canuckle-meta {
   position: relative;
   z-index: 1;
   margin: 0;
-  color: rgba(226, 232, 240, 0.65);
+  color: #64748b;
   font-size: 0.95rem;
 }
 
@@ -250,25 +250,25 @@ select:focus-visible,
   color: #0f172a;
   background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
   border: 1px solid rgba(245, 158, 11, 0.4);
-  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
   transition: all 180ms ease;
 }
 
 .canuckle-action-btn:hover {
   background: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%);
-  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.3);
   transform: translateY(-1px);
 }
 
 .canuckle-action-btn.secondary {
-  color: rgba(226, 232, 240, 0.9);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #475569;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: none;
 }
 
 .canuckle-action-btn.secondary:hover {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.07);
   box-shadow: none;
 }
 
@@ -277,14 +277,14 @@ select:focus-visible,
   z-index: 1;
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  color: rgba(148, 163, 184, 0.7);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  color: #94a3b8;
   font-size: 0.82rem;
   line-height: 1.5;
 }
 
 .canuckle-summary-card .canuckle-source-note strong {
-  color: rgba(203, 213, 225, 0.85);
+  color: #64748b;
 }
 
 .canuckle-archive-container {
@@ -889,11 +889,11 @@ select:focus-visible,
   gap: 18px;
   padding: 28px;
   border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(160deg, #0f172a 0%, #1e293b 40%, #172033 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: linear-gradient(160deg, #ffffff 0%, #f8fafc 40%, #f1f5f9 100%);
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 4px 16px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.03);
   position: relative;
   overflow: hidden;
 }
@@ -906,7 +906,7 @@ select:focus-visible,
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(220, 38, 38, 0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.03), transparent 70%);
   pointer-events: none;
 }
 
@@ -922,7 +922,7 @@ select:focus-visible,
 
 .canuckle-story-note {
   margin: 0;
-  color: rgba(148, 163, 184, 0.75);
+  color: #64748b;
   font-size: 0.92rem;
   line-height: 1.5;
 }
@@ -932,7 +932,7 @@ select:focus-visible,
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #f87171;
+  color: #dc2626;
 }
 
 .canuckle-story-card .mini-title,
@@ -941,7 +941,7 @@ select:focus-visible,
   margin: 0;
   font-size: 1.3rem;
   font-weight: 800;
-  color: #f1f5f9;
+  color: #0f172a;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
@@ -951,18 +951,18 @@ select:focus-visible,
   z-index: 1;
   padding: 20px 22px;
   border-radius: 18px;
-  border: 1px solid rgba(220, 38, 38, 0.15);
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(15, 23, 42, 0.5) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  color: rgba(226, 232, 240, 0.88);
- font-size: 0.95rem;
+  border: 1px solid rgba(220, 38, 38, 0.1);
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.04) 0%, rgba(248, 250, 252, 0.8) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: #334155;
+  font-size: 0.95rem;
   line-height: 1.7;
 }
 
 .canuckle-fact a {
-  color: #fbbf24;
+  color: #dc2626;
   text-decoration: underline;
-  text-decoration-color: rgba(251, 191, 36, 0.3);
+  text-decoration-color: rgba(220, 38, 38, 0.3);
 }
 
 .canuckle-reveal-card {
@@ -970,10 +970,10 @@ select:focus-visible,
   z-index: 1;
   margin: 0;
   padding: 0;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(220, 38, 38, 0.12);
   border-radius: 20px;
-  background: linear-gradient(180deg, rgba(220, 38, 38, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%);
-  box-shadow: 0 12px 28px rgba(220, 38, 38, 0.1);
+  background: linear-gradient(180deg, rgba(220, 38, 38, 0.04) 0%, rgba(248, 250, 252, 0.9) 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
@@ -984,14 +984,14 @@ select:focus-visible,
   justify-content: space-between;
   gap: 14px;
   padding: 20px;
-  color: #f1f5f9;
+  color: #0f172a;
   font-weight: 700;
   cursor: pointer;
   transition: background 180ms ease;
 }
 
 .canuckle-reveal-card summary:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .canuckle-reveal-card summary::-webkit-details-marker {
@@ -1010,7 +1010,7 @@ select:focus-visible,
 .canuckle-reveal-hint {
   font-size: 0.92rem;
   font-weight: 500;
-  color: rgba(148, 163, 184, 0.7);
+  color: #64748b;
 }
 
 .canuckle-reveal-toggle {
@@ -1030,15 +1030,15 @@ select:focus-visible,
 }
 
 .canuckle-reveal-card[open] .canuckle-reveal-toggle {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: rgba(248, 113, 113, 0.9);
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #dc2626;
   box-shadow: none;
 }
 
 .canuckle-answer-wrap {
   padding: 0 20px 20px;
-  border-top: 1px solid rgba(220, 38, 38, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .canuckle-answer {
@@ -1046,8 +1046,7 @@ select:focus-visible,
   font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #fbbf24;
-  text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+  color: #0f172a;
 }
 
 .canuckle-when-open {
