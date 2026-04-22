@@ -23,7 +23,6 @@ export const TODAY_STATIC_ROUTES = [
   '/spotle-answer-today',
   '/worgle-answer-today',
   '/waffle-answer-today',
-  '/wordle-answer-today',
   '/worldle-answer-today'
 ];
 
@@ -87,8 +86,7 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/8-letter-wordle-solver',
   '/9-letter-wordle-solver',
   '/10-letter-wordle-solver',
-  '/11-letter-wordle-solver',
-  '/12-letter-wordle-solver'
+  '/11-letter-wordle-solver'
 ];
 
 export const ARCHIVE_STATIC_ROUTES = [
