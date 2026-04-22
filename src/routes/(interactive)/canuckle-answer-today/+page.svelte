@@ -60,30 +60,33 @@
       <Breadcrumbs />
 
       <!-- Hero Section -->
-      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-        <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+      <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-8 shadow-xl ring-1 ring-white/10">
+        <!-- Decorative background accents -->
+        <div class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-amber-500/10 blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-teal-500/10 blur-3xl"></div>
+        <div class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div class="flex flex-wrap items-center gap-3 mb-1">
-              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-600">Canuckle Answer Today</p>
-              <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">Puzzle #{data.todayPuzzle.index}</span>
+              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-400">Canuckle Answer Today</p>
+              <span class="rounded-full border border-amber-500/30 bg-amber-500/15 px-3 py-1 text-xs font-bold text-amber-300">Puzzle #{data.todayPuzzle.index}</span>
             </div>
-            <h1 class="mt-3 text-4xl font-black text-slate-900">Canuckle Answer Today ({formattedDate})</h1>
-            <p class="mt-4 max-w-3xl text-lg text-slate-600">
+            <h1 class="mt-3 text-4xl font-black text-white">Canuckle Answer Today ({formattedDate})</h1>
+            <p class="mt-4 max-w-3xl text-lg text-slate-300">
               Verified answer, puzzle number, and Canadian fact for today&apos;s Canuckle puzzle. The answer stays hidden until you choose to reveal it.
             </p>
           </div>
           <div class="flex flex-wrap gap-3 lg:flex-shrink-0">
             <a
               href="#today-answer-reveal"
-              class="inline-flex items-center rounded-xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white hover:bg-amber-600"
+              class="inline-flex items-center rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-amber-500/25 transition-all hover:shadow-amber-500/40 hover:brightness-110"
             >
               <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
               Reveal Answer
             </a>
-            <a href="/canuckle-solver" class="inline-flex items-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+            <a href="/canuckle-solver" class="inline-flex items-center rounded-xl border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20">
               Open Solver
             </a>
-            <a href="/canuckle-archive" class="inline-flex items-center rounded-xl border-2 border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100">
+            <a href="/canuckle-archive" class="inline-flex items-center rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-300 backdrop-blur-sm transition-all hover:bg-white/10 hover:text-white">
               Browse Archive
             </a>
           </div>
@@ -91,7 +94,7 @@
       </section>
 
       <!-- E-E-A-T Trust Box -->
-      <section class="grid grid-cols-2 md:grid-cols-4 divide-x divide-slate-200 rounded-3xl border border-slate-200 bg-white shadow-sm">
+      <section class="grid grid-cols-2 md:grid-cols-4 divide-x divide-slate-200 rounded-3xl border border-slate-200 bg-white shadow-sm ring-2 ring-slate-900/10">
         <div class="flex items-center gap-3 px-4 py-5 sm:px-5">
           <svg class="h-5 w-5 flex-shrink-0 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
           <div>
@@ -123,32 +126,62 @@
       </section>
 
       <!-- Reveal Section -->
-      <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm" id="today-answer-reveal">
-        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-600 mb-4">Today&apos;s Answer</p>
-        <WordlebotWasmClient config={{ pageType: 'canuckle-daily', visibleDateKey: data.visibleDateKey }} />
+      <section id="today-answer-reveal">
+        <div class="relative rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-[2px] shadow-2xl">
+          <!-- Gradient border shimmer -->
+          <div class="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-500/30 via-teal-400/20 to-amber-500/30 p-[1px]"></div>
+          <div class="relative rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-8">
+            <!-- Inner glow accents -->
+            <div class="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-amber-500/8 blur-3xl"></div>
+            <div class="pointer-events-none absolute -bottom-24 -left-24 h-48 w-48 rounded-full bg-teal-500/8 blur-3xl"></div>
+            <div class="relative z-10">
+              <div class="mb-6 flex items-center gap-3">
+                <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/20">
+                  <svg class="h-4 w-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </div>
+                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-400">Today&apos;s Answer</p>
+              </div>
+              <!-- Subtle divider line -->
+              <div class="mb-6 h-px bg-gradient-to-r from-transparent via-slate-600/50 to-transparent"></div>
+              <WordlebotWasmClient config={{ pageType: 'canuckle-daily', visibleDateKey: data.visibleDateKey }} />
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Yesterday's Answer -->
       {#if data.yesterdayData}
-        <section class="rounded-2xl border border-amber-200 bg-amber-50 p-6">
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-amber-600 mb-2">Yesterday&apos;s Answer</p>
-          <p class="text-lg text-slate-900">
-            Yesterday&apos;s word was <strong class="text-slate-900">{data.yesterdayData.answer.toUpperCase()}</strong>
-            <span class="ml-2 text-sm text-slate-500">(Puzzle #{data.yesterdayData.index})</span>
+        <section class="rounded-2xl border border-slate-700/50 bg-gradient-to-r from-slate-900 to-slate-800 p-6 shadow-lg ring-1 ring-white/5">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400 mb-2">Yesterday&apos;s Answer</p>
+          <p class="text-lg text-white">
+            Yesterday&apos;s word was <strong class="text-amber-400 font-black">{data.yesterdayData.answer.toUpperCase()}</strong>
+            <span class="ml-2 text-sm text-slate-400">(Puzzle #{data.yesterdayData.index})</span>
           </p>
         </section>
       {/if}
 
-      <!-- Featured Image Placeholder -->
-      <div class="rounded-3xl border border-slate-200 bg-slate-100 overflow-hidden" style="aspect-ratio:21/9">
-        <div class="h-full w-full flex items-center justify-center text-slate-400 text-sm">
-          <!-- Placeholder: Replace with your own webp image -->
-          <div class="text-center">
-            <svg class="mx-auto h-12 w-12 mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            <p>Featured Image</p>
-            <p class="text-xs mt-1 text-slate-300">Add canuckle-answer-today.webp to /static/images/</p>
+      <!-- Featured Image / Dark Gradient Banner -->
+      <div class="rounded-3xl overflow-hidden relative" style="aspect-ratio:21/9">
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950"></div>
+        <div class="pointer-events-none absolute -right-1/4 top-1/2 h-3/4 w-1/2 -translate-y-1/2 rounded-full bg-amber-500/10 blur-3xl"></div>
+        <div class="pointer-events-none absolute -left-1/4 top-1/2 h-3/4 w-1/2 -translate-y-1/2 rounded-full bg-teal-500/10 blur-3xl"></div>
+        <!-- Subtle grid pattern overlay -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+        <div class="relative z-10 h-full w-full flex flex-col items-center justify-center text-center px-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="inline-block h-1 w-8 rounded-full bg-amber-500/60"></span>
+            <span class="inline-block h-1 w-4 rounded-full bg-amber-500/40"></span>
+            <span class="inline-block h-1 w-2 rounded-full bg-amber-500/20"></span>
+          </div>
+          <p class="text-2xl sm:text-3xl font-black text-white tracking-tight">Daily Canadian Word Puzzle</p>
+          <p class="mt-2 text-sm text-slate-400">Solve · Reveal · Learn Canadian Facts</p>
+          <div class="mt-4 flex items-center gap-2">
+            <span class="inline-block h-2 w-2 rounded-full bg-teal-400 animate-pulse"></span>
+            <span class="text-xs font-medium text-slate-500">Live — Puzzle #{data.todayPuzzle.index} Active</span>
           </div>
         </div>
+        <!-- Bottom fade border -->
+        <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent"></div>
       </div>
 
       <!-- Article Content -->

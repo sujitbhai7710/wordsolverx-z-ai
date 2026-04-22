@@ -323,7 +323,7 @@
 </svelte:head>
 
 <div class="soundmap-solver" class:dark={darkMode}>
-        <div class="min-h-screen bg-teal-50 text-slate-900 transition-colors duration-300">
+        <div class="min-h-screen bg-teal-50 text-slate-900 dark:text-slate-100 transition-colors duration-300">
                 <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                         <Breadcrumbs />
                 </div>
@@ -336,7 +336,7 @@
                         </div>
                 </section>
 
-                <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 border-b">
+                <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b dark:border-slate-700">
                         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                                 <div class="flex items-center gap-2">
                                         <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 flex items-center justify-center">SM</span>
