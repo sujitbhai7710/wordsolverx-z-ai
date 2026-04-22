@@ -222,9 +222,9 @@ const jsonLdSchema = JSON.stringify({
   </section>
 
   <!-- Main Solver Area -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12" style="min-height: 800px;">
     {#if loading}
-      <div class="flex justify-center items-center py-20">
+      <div class="flex justify-center items-center" style="min-height: 800px;">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
       </div>
     {:else if loadingError}

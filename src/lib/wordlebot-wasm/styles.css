@@ -151,6 +151,7 @@ select:focus-visible,
 .solver-container {
   width: min(470px, calc(100vw - 12px));
   padding: 16px 0 36px;
+  min-height: 600px;
 }
 
 .wordle-solver-container {

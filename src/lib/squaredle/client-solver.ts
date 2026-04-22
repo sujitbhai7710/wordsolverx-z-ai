@@ -112,7 +112,7 @@ export async function loadDictionary(onProgress?: (progress: number) => void): P
   wordScores = new Map();
 
   let processed = 0;
-  const CHUNK_SIZE = 10000;
+  const CHUNK_SIZE = 3000;
   for (let i = 0; i < words.length; i++) {
     const word = words[i];
     for (let j = 1; j < word.length; j += 1) {
@@ -121,7 +121,7 @@ export async function loadDictionary(onProgress?: (progress: number) => void): P
     wordScores.set(word, calculateWordScore(word));
     processed += 1;
 
-    if (onProgress && processed % 50000 === 0) {
+    if (onProgress && processed % 30000 === 0) {
       onProgress(Math.round((processed / words.length) * 100));
     }
 

@@ -534,14 +534,14 @@
                         </div>
                 </section>
 
-                <section class="rounded-3xl border border-slate-200 bg-white shadow-lg p-5 md:p-6 mb-8" style="min-height: 340px;">
+                <section class="rounded-3xl border border-slate-200 bg-white shadow-lg p-5 md:p-6 mb-8" style="min-height: 580px;">
                         {#if loading}
-                                <div class="h-52 flex flex-col items-center justify-center gap-3">
+                                <div class="h-[540px] flex flex-col items-center justify-center gap-3">
                                         <div class="w-10 h-10 rounded-full border-4 border-slate-300 border-t-slate-700 animate-spin"></div>
                                         <p class="text-sm text-slate-600">Loading {config.name} characters...</p>
                                 </div>
                         {:else if errorMessage}
-                                <div class="h-52 flex flex-col items-center justify-center gap-3">
+                                <div class="h-[540px] flex flex-col items-center justify-center gap-3">
                                         <p class="text-red-600 font-medium">{errorMessage}</p>
                                         <button
                                                 type="button"

@@ -120,12 +120,12 @@
                         window.__wordsolverxLoadAnalytics = loadAnalytics;
 
                         if ('requestIdleCallback' in window) {
-                                window.requestIdleCallback(loadAnalytics, { timeout: 2000 });
+                                window.requestIdleCallback(loadAnalytics, { timeout: 5000 });
                         } else {
                                 window.addEventListener(
                                         'load',
                                         function () {
-                                                window.setTimeout(loadAnalytics, 0);
+                                                window.setTimeout(loadAnalytics, 3000);
                                         },
                                         { once: true }
                                 );

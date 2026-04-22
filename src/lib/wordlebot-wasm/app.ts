@@ -15,9 +15,8 @@ import type {
         WordlebotGameSlug
 } from './types';
 
-let wordDataPromise: Promise<{ lengths: Record<string, SolverDataset> }> | null = null;
-let canuckleDataPromise: Promise<CanuckleData> | null = null;
 const solverFnCache = new Map<string, (request: unknown) => unknown>();
+let canuckleDataPromise: Promise<CanuckleData> | null = null;
 
 function required<T extends Element>(root: ParentNode, selector: string) {
         const node = root.querySelector(selector);
@@ -702,19 +701,9 @@ async function getDatasetForGame(game: WordlebotGameSlug, length: number) {
                 return data.solver;
         }
 
-        // Load only the specific length dataset instead of the full 2.9MB bundle
-        const { getWordDataForLength: loadLen } = await import('./assets/generated/per-length/index.js');
-        return loadLen(length);
-}
-
-// Keep original for backward compatibility (used by canuckle-archive)
-async function getWordData() {
-        if (!wordDataPromise) {
-                wordDataPromise = import('./assets/generated/word-data.json').then(
-                        (module) => module.default as { lengths: Record<string, SolverDataset> }
-                );
-        }
-        return wordDataPromise;
+        // Fetch only the specific length dataset from static assets (87-510KB vs 2.96MB bundle)
+        const { getWordDataForLength } = await import('./assets/generated/per-length/index.js');
+        return getWordDataForLength(length);
 }
 
 async function getSolveFunction(key: string) {
