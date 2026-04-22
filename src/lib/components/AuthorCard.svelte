@@ -19,6 +19,8 @@
       <img
         src={image}
         alt={name}
+        width="96"
+        height="96"
         class="h-20 w-20 rounded-full object-cover shadow-md sm:h-24 sm:w-24"
         loading="lazy"
         decoding="async"

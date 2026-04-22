@@ -83,6 +83,8 @@
         <img
           src={featuredImage}
           alt={`Colordle answer today featured image for ${answerDateLabel}`}
+          width="1200"
+          height="630"
           class="h-auto w-full object-cover"
           loading="eager"
           fetchpriority="high"

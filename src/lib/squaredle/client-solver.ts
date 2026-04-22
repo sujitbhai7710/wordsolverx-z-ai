@@ -112,15 +112,22 @@ export async function loadDictionary(onProgress?: (progress: number) => void): P
   wordScores = new Map();
 
   let processed = 0;
-  for (const word of words) {
-    for (let i = 1; i < word.length; i += 1) {
-      prefixSet.add(word.slice(0, i));
+  const CHUNK_SIZE = 10000;
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    for (let j = 1; j < word.length; j += 1) {
+      prefixSet.add(word.slice(0, j));
     }
     wordScores.set(word, calculateWordScore(word));
     processed += 1;
 
     if (onProgress && processed % 50000 === 0) {
       onProgress(Math.round((processed / words.length) * 100));
+    }
+
+    // Yield to main thread every CHUNK_SIZE words to prevent blocking
+    if (processed % CHUNK_SIZE === 0) {
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
     }
   }
 

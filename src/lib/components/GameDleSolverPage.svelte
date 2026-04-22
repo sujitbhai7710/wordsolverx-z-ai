@@ -534,7 +534,7 @@
                         </div>
                 </section>
 
-                <section class="rounded-3xl border border-slate-200 bg-white shadow-lg p-5 md:p-6 mb-8">
+                <section class="rounded-3xl border border-slate-200 bg-white shadow-lg p-5 md:p-6 mb-8" style="min-height: 340px;">
                         {#if loading}
                                 <div class="h-52 flex flex-col items-center justify-center gap-3">
                                         <div class="w-10 h-10 rounded-full border-4 border-slate-300 border-t-slate-700 animate-spin"></div>
