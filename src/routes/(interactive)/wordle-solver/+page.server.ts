@@ -1,6 +1,8 @@
-import { redirect } from '@sveltejs/kit';
+import { getWordleLengthPageConfig } from '$lib/wordlebot-wasm/route-config';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	throw redirect(301, '/5-letter-wordle-solver');
+	return {
+		config: getWordleLengthPageConfig(5)
+	};
 };

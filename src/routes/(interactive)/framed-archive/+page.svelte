@@ -1,20 +1,61 @@
 <script lang="ts">
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FramedAnswerCard from '$lib/components/FramedAnswerCard.svelte';
-  import { formatFramedDate, getFramedAvailableDates, getFramedEntriesForDate } from '$lib/framed';
+  import type { FramedEntry, FramedGameConfig } from '$lib/framed';
 
-  const availableDates = getFramedAvailableDates();
-  let selectedDate = $state(availableDates[0] ?? '');
-  const entries = $derived(selectedDate ? getFramedEntriesForDate(selectedDate) : []);
+  type ArchiveEntry = FramedEntry & { game: FramedGameConfig };
+
+  let { data: pageData } = $props<{
+    data: {
+      availableDates: string[];
+      selectedDate: string;
+      entries: ArchiveEntry[];
+    };
+  }>();
+
+  const { availableDates, selectedDate: initialSelectedDate, entries: initialEntries } = (() => pageData)();
+  let selectedDate = $state(initialSelectedDate);
+  let entries = $state<ArchiveEntry[]>(initialEntries);
+  let archiveLoading = $state(false);
+  let archiveError = $state<string | null>(null);
   const formattedDate = $derived(
-    selectedDate ? formatFramedDate(new Date(`${selectedDate}T00:00:00Z`)) : ''
+    selectedDate
+      ? new Date(`${selectedDate}T00:00:00Z`).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          timeZone: 'UTC'
+        })
+      : ''
   );
+
+  async function updateSelectedDate(date: string) {
+    if (!date || date === selectedDate) return;
+    selectedDate = date;
+    archiveLoading = true;
+    archiveError = null;
+
+    try {
+      const response = await fetch(`/api/framed/archive?date=${encodeURIComponent(date)}`);
+      if (!response.ok) {
+        throw new Error(`Failed to load archive entries: ${response.status}`);
+      }
+      const payload = (await response.json()) as { entries?: ArchiveEntry[] };
+      entries = payload.entries ?? [];
+    } catch {
+      entries = [];
+      archiveError = 'Could not load that archive date. Please try another date.';
+    } finally {
+      archiveLoading = false;
+    }
+  }
 
   function moveSelection(offset: number) {
     const index = availableDates.indexOf(selectedDate);
     const nextIndex = index + offset;
     if (nextIndex >= 0 && nextIndex < availableDates.length) {
-      selectedDate = availableDates[nextIndex];
+      void updateSelectedDate(availableDates[nextIndex]);
     }
   }
 </script>
@@ -65,14 +106,24 @@
         value={selectedDate}
         min={availableDates[availableDates.length - 1]}
         max={availableDates[0]}
-        onchange={(event) => (selectedDate = (event.currentTarget as HTMLInputElement).value)}
+        onchange={(event) => void updateSelectedDate((event.currentTarget as HTMLInputElement).value)}
       />
     </section>
 
     <section class="grid gap-5 sm:grid-cols-2">
-      {#each entries as entry}
-        <FramedAnswerCard game={entry.game} answer={entry.answer} puzzleNumber={entry.puzzleNumber} />
-      {/each}
+      {#if archiveLoading}
+        <div class="rounded-xl border border-slate-200 bg-white p-6 text-center text-slate-600 sm:col-span-2 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+          Loading answers...
+        </div>
+      {:else if archiveError}
+        <div class="rounded-xl border border-red-200 bg-red-50 p-6 text-center text-red-700 sm:col-span-2">
+          {archiveError}
+        </div>
+      {:else}
+        {#each entries as entry}
+          <FramedAnswerCard game={entry.game} answer={entry.answer} puzzleNumber={entry.puzzleNumber} />
+        {/each}
+      {/if}
     </section>
 
     <!-- SEO Article Section -->

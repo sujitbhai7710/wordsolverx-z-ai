@@ -1,0 +1,4259 @@
+[
+  {
+    "id": "unused-javascript",
+    "title": "Reduce unused JavaScript",
+    "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+    "occurrences": 202,
+    "routes": [
+      {
+        "route": "/squaredle-solver",
+        "strategy": "mobile",
+        "score": 49,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 61,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/terms-of-service",
+        "strategy": "desktop",
+        "score": 64,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/canuckle-solver",
+        "strategy": "mobile",
+        "score": 65,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 150,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/9-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 65,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64316
+      },
+      {
+        "route": "/hangman-solver",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/canuckle",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64316
+      },
+      {
+        "route": "/soundmap-solver",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/wordle-solver",
+        "strategy": "mobile",
+        "score": 68,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/spotle-solver",
+        "strategy": "mobile",
+        "score": 69,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 69,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64185
+      },
+      {
+        "route": "/canuckle-archive",
+        "strategy": "mobile",
+        "score": 70,
+        "displayValue": "Est savings of 89 KiB",
+        "savingsMs": 150,
+        "savingsBytes": 91523
+      },
+      {
+        "route": "/spotle-wordle-solver",
+        "strategy": "desktop",
+        "score": 70,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/narutodle-solver",
+        "strategy": "mobile",
+        "score": 71,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/weaver-solver",
+        "strategy": "mobile",
+        "score": 71,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 450,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/canuckle-answer-today",
+        "strategy": "mobile",
+        "score": 72,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/disclaimer",
+        "strategy": "mobile",
+        "score": 73,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/countryle-answer-today",
+        "strategy": "mobile",
+        "score": 73,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 600,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/searchle-archive",
+        "strategy": "desktop",
+        "score": 73,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64051
+      },
+      {
+        "route": "/9-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 74,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/squaredle-solver",
+        "strategy": "desktop",
+        "score": 75,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/8-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 75,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/warmle-solver",
+        "strategy": "desktop",
+        "score": 76,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/quordle-solver",
+        "strategy": "desktop",
+        "score": 77,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/7-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 77,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/10-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 77,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/quordle-archive",
+        "strategy": "mobile",
+        "score": 77,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 600,
+        "savingsBytes": 64170
+      },
+      {
+        "route": "/colordle-solver",
+        "strategy": "mobile",
+        "score": 78,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/soundmap-solver",
+        "strategy": "desktop",
+        "score": 78,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/betweenle-solver",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 450,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/woodle-solver",
+        "strategy": "desktop",
+        "score": 79,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64164
+      },
+      {
+        "route": "/6-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64370
+      },
+      {
+        "route": "/11-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/spotle-answer-today",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/5-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 80,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64168
+      },
+      {
+        "route": "/quordle-answer-today",
+        "strategy": "mobile",
+        "score": 80,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/wordle-answer-archive",
+        "strategy": "mobile",
+        "score": 80,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 300,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/dordle-solver",
+        "strategy": "mobile",
+        "score": 81,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/waffle-answer-today",
+        "strategy": "mobile",
+        "score": 81,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/thirdle-solver",
+        "strategy": "desktop",
+        "score": 82,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/dotadle-solver",
+        "strategy": "desktop",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/quordle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/hardle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/warmle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 62 KiB",
+        "savingsMs": null,
+        "savingsBytes": 63034
+      },
+      {
+        "route": "/xordle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64051
+      },
+      {
+        "route": "/fibble-solver",
+        "strategy": "desktop",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64170
+      },
+      {
+        "route": "/searchle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/waffle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/smashdle-answer-today",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64370
+      },
+      {
+        "route": "/canuckle-solver",
+        "strategy": "desktop",
+        "score": 84,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/fibble-solver",
+        "strategy": "mobile",
+        "score": 84,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64170
+      },
+      {
+        "route": "/spotle-wordle-solver",
+        "strategy": "mobile",
+        "score": 84,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/countryle-archive",
+        "strategy": "mobile",
+        "score": 84,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/",
+        "strategy": "desktop",
+        "score": 85,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/4-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 85,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/loldle-answer-today",
+        "strategy": "mobile",
+        "score": 85,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64299
+      },
+      {
+        "route": "/canuckle-answer-today",
+        "strategy": "desktop",
+        "score": 86,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/privacy-policy",
+        "strategy": "mobile",
+        "score": 86,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/thirdle-solver",
+        "strategy": "mobile",
+        "score": 86,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/contact",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/octordle-solver",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64187
+      },
+      {
+        "route": "/hardle-solver",
+        "strategy": "desktop",
+        "score": 87,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/colordle-answer-today",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64504
+      },
+      {
+        "route": "/worgle-answer-today",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64187
+      },
+      {
+        "route": "/minesweeper-solver",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/canuckle-archive",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": "Est savings of 90 KiB",
+        "savingsMs": null,
+        "savingsBytes": 91810
+      },
+      {
+        "route": "/smashdle-solver",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/phrazle-answer-today",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/quordle-answer-today",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/phrazle-archive",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/nerdle-solver",
+        "strategy": "desktop",
+        "score": 89,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/worldle-answer-today",
+        "strategy": "mobile",
+        "score": 89,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64387
+      },
+      {
+        "route": "/contexto-archive",
+        "strategy": "mobile",
+        "score": 89,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/onepiecedle-solver",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/phoodle-solver",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/betweenle-answer-today",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/colordle-solver",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/loldle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64054
+      },
+      {
+        "route": "/nerdle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/pokedle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/woodle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/word-ladder-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/wordle-analyzer",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64387
+      },
+      {
+        "route": "/colorfle-answer-today",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64316
+      },
+      {
+        "route": "/loldle-answer-today",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64387
+      },
+      {
+        "route": "/phoodle-answer-today",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64316
+      },
+      {
+        "route": "/pokedle-answer-today",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/framed-archive",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 62 KiB",
+        "savingsMs": null,
+        "savingsBytes": 63425
+      },
+      {
+        "route": "/phrazle-archive",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/worgle-archive",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/dotadle-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/light-out-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/minesweeper-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64168
+      },
+      {
+        "route": "/octordle-solver",
+        "strategy": "desktop",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/w-peaks-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64504
+      },
+      {
+        "route": "/worldle-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/7-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/contexto-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/dotadle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/framed-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/globle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/narutodle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64370
+      },
+      {
+        "route": "/nerdle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/globle-archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/worgle-archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/worldle-archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/boggle-solver",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/countryle-solver",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64187
+      },
+      {
+        "route": "/guides",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/kanoodle-solver",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/canuckle",
+        "strategy": "desktop",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/8-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64299
+      },
+      {
+        "route": "/today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64033
+      },
+      {
+        "route": "/onepiecedle-answer-today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/pokedle-answer-today",
+        "strategy": "desktop",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64370
+      },
+      {
+        "route": "/searchle-answer-today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/semantle-answer-today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/nerdle-archive",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64170
+      },
+      {
+        "route": "/searchle-archive",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/semantle-archive",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/about",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/colorfle-solver",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 62 KiB",
+        "savingsMs": null,
+        "savingsBytes": 63848
+      },
+      {
+        "route": "/terms-of-service",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/colorfle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/colordle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/phoodle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/waffle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/colorfle-answer-today",
+        "strategy": "desktop",
+        "score": 95,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/countryle-answer-today",
+        "strategy": "desktop",
+        "score": 95,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/spotle-archive",
+        "strategy": "mobile",
+        "score": 95,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/kanoodle-solver",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/wordle-solver",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/worldle-solver",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/waffle-answer-today",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64370
+      },
+      {
+        "route": "/framed-archive",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/weaver-solver",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/6-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/globle-archive",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/waffle-archive",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64170
+      },
+      {
+        "route": "/dordle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/w-peaks-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64317
+      },
+      {
+        "route": "/xordle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/smashdle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64187
+      },
+      {
+        "route": "/wordle-analyzer",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/5-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/framed-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/globle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/narutodle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/semantle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/smashdle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/spotle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64170
+      },
+      {
+        "route": "/nerdle-archive",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/phoodle-archive",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/wordle-answer-archive",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/betweenle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/colorfle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/contact",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/countryle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64370
+      },
+      {
+        "route": "/disclaimer",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64522
+      },
+      {
+        "route": "/hangman-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/light-out-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/loldle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64169
+      },
+      {
+        "route": "/narutodle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/onepiecedle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/phoodle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64316
+      },
+      {
+        "route": "/pokedle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/privacy-policy",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/searchle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/spotle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/waffle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64299
+      },
+      {
+        "route": "/word-ladder-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/4-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/10-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/11-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64316
+      },
+      {
+        "route": "/today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/betweenle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/colordle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/contexto-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64033
+      },
+      {
+        "route": "/dotadle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64505
+      },
+      {
+        "route": "/nerdle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/onepiecedle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": 80,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/phoodle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/phrazle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/searchle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/worgle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64300
+      },
+      {
+        "route": "/colordle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/contexto-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64170
+      },
+      {
+        "route": "/quordle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64186
+      },
+      {
+        "route": "/spotle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/worldle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64187
+      },
+      {
+        "route": "/about",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64385
+      },
+      {
+        "route": "/boggle-solver",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64168
+      },
+      {
+        "route": "/guides",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64387
+      },
+      {
+        "route": "/worldle-answer-today",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64506
+      },
+      {
+        "route": "/colorfle-archive",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64523
+      },
+      {
+        "route": "/countryle-archive",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64317
+      },
+      {
+        "route": "/semantle-archive",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": "Est savings of 63 KiB",
+        "savingsMs": null,
+        "savingsBytes": 64370
+      }
+    ],
+    "strategies": {
+      "mobile": 101,
+      "desktop": 101
+    },
+    "totalSavingsMs": 3340,
+    "totalSavingsBytes": 13063051,
+    "codeAreas": [
+      {
+        "name": "Content layout without client JS",
+        "files": [
+          "src/routes/(content)/+layout.svelte",
+          "src/content.css"
+        ],
+        "recommendedFix": "Keep content routes CSR-free, shrink shared content CSS, and avoid adding client-only components to answer/article pages.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Archive and static dataset pages",
+        "files": [
+          "src/lib/archive-data.ts",
+          "src/lib/archive-client.ts",
+          "src/lib/components/ArchiveCalendar.svelte"
+        ],
+        "recommendedFix": "Keep archive landing content light and lazy-load large history datasets only when a specific archive is opened or searched.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordlebot WASM solver pages",
+        "files": [
+          "src/lib/components/wordlebot/WordlebotWasmClient.svelte",
+          "src/lib/wordlebot-wasm/app.ts",
+          "src/lib/wordlebot-wasm/assets/generated/per-length/index.ts"
+        ],
+        "recommendedFix": "Lazy-load solver datasets/WASM after first paint or user interaction, and avoid calculating starting suggestions during initial page load.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Spotle dataset pages",
+        "files": [
+          "src/routes/(interactive)/spotle-solver/+page.svelte",
+          "src/routes/(interactive)/spotle-archive/+page.svelte",
+          "src/routes/(interactive)/spotle-answer-today/+page.server.ts",
+          "static/spotle_data.json"
+        ],
+        "recommendedFix": "Avoid bundling Spotle data into page JS/HTML; fetch the JSON lazily and cache it with stable static headers.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Squaredle dictionary loading",
+        "files": [
+          "src/routes/(interactive)/squaredle-solver/+page.svelte",
+          "src/lib/components/squaredle/SquaredleSolverClient.svelte",
+          "src/lib/squaredle/client-solver.ts",
+          "static/squaredle/words_alpha.txt.gz"
+        ],
+        "recommendedFix": "Do not load the full Squaredle dictionary on mount; defer it until the user loads today or clicks solve, and prefer compressed static delivery.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordle analyzer worker data",
+        "files": [
+          "src/routes/(interactive)/wordle-analyzer/+page.svelte",
+          "src/lib/components/wordle-analyzer/WordleAnalyzerClient.svelte",
+          "src/lib/workers/wordle-analyzer.worker.ts",
+          "static/data/wordle-analyzer/word-data.json"
+        ],
+        "recommendedFix": "Start analyzer worker and fetch analyzer datasets only when the user begins analysis, not during initial render.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "render-blocking-insight",
+    "title": "Render blocking requests",
+    "description": "Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.",
+    "occurrences": 202,
+    "routes": [
+      {
+        "route": "/squaredle-solver",
+        "strategy": "mobile",
+        "score": 49,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 61,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/terms-of-service",
+        "strategy": "desktop",
+        "score": 64,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle-solver",
+        "strategy": "mobile",
+        "score": 65,
+        "displayValue": "Est savings of 40 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/9-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 65,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/hangman-solver",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/soundmap-solver",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-solver",
+        "strategy": "mobile",
+        "score": 68,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-solver",
+        "strategy": "mobile",
+        "score": 69,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 69,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle-archive",
+        "strategy": "mobile",
+        "score": 70,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-wordle-solver",
+        "strategy": "desktop",
+        "score": 70,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/narutodle-solver",
+        "strategy": "mobile",
+        "score": 71,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/weaver-solver",
+        "strategy": "mobile",
+        "score": 71,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle-answer-today",
+        "strategy": "mobile",
+        "score": 72,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/disclaimer",
+        "strategy": "mobile",
+        "score": 73,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/countryle-answer-today",
+        "strategy": "mobile",
+        "score": 73,
+        "displayValue": "Est savings of 110 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-archive",
+        "strategy": "desktop",
+        "score": 73,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/9-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 74,
+        "displayValue": "Est savings of 110 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/squaredle-solver",
+        "strategy": "desktop",
+        "score": 75,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/8-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 75,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/warmle-solver",
+        "strategy": "desktop",
+        "score": 76,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-solver",
+        "strategy": "desktop",
+        "score": 77,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/7-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 77,
+        "displayValue": "Est savings of 120 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/10-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 77,
+        "displayValue": "Est savings of 100 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-archive",
+        "strategy": "mobile",
+        "score": 77,
+        "displayValue": "Est savings of 10 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colordle-solver",
+        "strategy": "mobile",
+        "score": 78,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/soundmap-solver",
+        "strategy": "desktop",
+        "score": 78,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/betweenle-solver",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/woodle-solver",
+        "strategy": "desktop",
+        "score": 79,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/6-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/11-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-answer-today",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/5-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 80,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-answer-today",
+        "strategy": "mobile",
+        "score": 80,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-answer-archive",
+        "strategy": "mobile",
+        "score": 80,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/dordle-solver",
+        "strategy": "mobile",
+        "score": 81,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/waffle-answer-today",
+        "strategy": "mobile",
+        "score": 81,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/thirdle-solver",
+        "strategy": "desktop",
+        "score": 82,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/dotadle-solver",
+        "strategy": "desktop",
+        "score": 83,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/hardle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 110 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/warmle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/xordle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "Est savings of 110 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/fibble-solver",
+        "strategy": "desktop",
+        "score": 83,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/waffle-solver",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/smashdle-answer-today",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle-solver",
+        "strategy": "desktop",
+        "score": 84,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/fibble-solver",
+        "strategy": "mobile",
+        "score": 84,
+        "displayValue": "Est savings of 120 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-wordle-solver",
+        "strategy": "mobile",
+        "score": 84,
+        "displayValue": "Est savings of 120 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/countryle-archive",
+        "strategy": "mobile",
+        "score": 84,
+        "displayValue": "Est savings of 10 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/",
+        "strategy": "desktop",
+        "score": 85,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/4-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 85,
+        "displayValue": "Est savings of 110 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/loldle-answer-today",
+        "strategy": "mobile",
+        "score": 85,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle-answer-today",
+        "strategy": "desktop",
+        "score": 86,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/privacy-policy",
+        "strategy": "mobile",
+        "score": 86,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/thirdle-solver",
+        "strategy": "mobile",
+        "score": 86,
+        "displayValue": "Est savings of 110 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/contact",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/octordle-solver",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/hardle-solver",
+        "strategy": "desktop",
+        "score": 87,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colordle-answer-today",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worgle-answer-today",
+        "strategy": "mobile",
+        "score": 87,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/minesweeper-solver",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle-archive",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/smashdle-solver",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phrazle-answer-today",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-answer-today",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phrazle-archive",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/nerdle-solver",
+        "strategy": "desktop",
+        "score": 89,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worldle-answer-today",
+        "strategy": "mobile",
+        "score": 89,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/contexto-archive",
+        "strategy": "mobile",
+        "score": 89,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/onepiecedle-solver",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phoodle-solver",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/betweenle-answer-today",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colordle-solver",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/loldle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/nerdle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/pokedle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/woodle-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 120 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/word-ladder-solver",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-analyzer",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colorfle-answer-today",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/loldle-answer-today",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phoodle-answer-today",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/pokedle-answer-today",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/framed-archive",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 10 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phrazle-archive",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worgle-archive",
+        "strategy": "desktop",
+        "score": 91,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/dotadle-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/light-out-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/minesweeper-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/octordle-solver",
+        "strategy": "desktop",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/w-peaks-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 120 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worldle-solver",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/7-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/contexto-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/dotadle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/framed-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/globle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/narutodle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/nerdle-answer-today",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/globle-archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worgle-archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worldle-archive",
+        "strategy": "mobile",
+        "score": 92,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/boggle-solver",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/countryle-solver",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 20 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/guides",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/kanoodle-solver",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle",
+        "strategy": "desktop",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/8-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/onepiecedle-answer-today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/pokedle-answer-today",
+        "strategy": "desktop",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-answer-today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/semantle-answer-today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/nerdle-archive",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 0 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-archive",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/semantle-archive",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/about",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colorfle-solver",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/terms-of-service",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colorfle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colordle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phoodle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/waffle-archive",
+        "strategy": "mobile",
+        "score": 94,
+        "displayValue": "Est savings of 150 ms",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colorfle-answer-today",
+        "strategy": "desktop",
+        "score": 95,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/countryle-answer-today",
+        "strategy": "desktop",
+        "score": 95,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-archive",
+        "strategy": "mobile",
+        "score": 95,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/kanoodle-solver",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-solver",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worldle-solver",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/waffle-answer-today",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/framed-archive",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/weaver-solver",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/6-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/globle-archive",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/waffle-archive",
+        "strategy": "desktop",
+        "score": 97,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/dordle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/w-peaks-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/xordle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/smashdle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-analyzer",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/5-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/framed-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/globle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/narutodle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/semantle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/smashdle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/nerdle-archive",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phoodle-archive",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-answer-archive",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/betweenle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colorfle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/contact",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/countryle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/disclaimer",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/hangman-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/light-out-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/loldle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/narutodle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/onepiecedle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phoodle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/pokedle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/privacy-policy",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/waffle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/word-ladder-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/4-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/10-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/11-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/betweenle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colordle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/contexto-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/dotadle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/nerdle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/onepiecedle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phoodle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phrazle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worgle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colordle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/contexto-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worldle-archive",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/about",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/boggle-solver",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/guides",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/worldle-answer-today",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/colorfle-archive",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/countryle-archive",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/semantle-archive",
+        "strategy": "desktop",
+        "score": 100,
+        "displayValue": null,
+        "savingsMs": null,
+        "savingsBytes": null
+      }
+    ],
+    "strategies": {
+      "mobile": 101,
+      "desktop": 101
+    },
+    "totalSavingsMs": 0,
+    "totalSavingsBytes": 0,
+    "codeAreas": [
+      {
+        "name": "Content layout without client JS",
+        "files": [
+          "src/routes/(content)/+layout.svelte",
+          "src/content.css"
+        ],
+        "recommendedFix": "Keep content routes CSR-free, shrink shared content CSS, and avoid adding client-only components to answer/article pages.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Archive and static dataset pages",
+        "files": [
+          "src/lib/archive-data.ts",
+          "src/lib/archive-client.ts",
+          "src/lib/components/ArchiveCalendar.svelte"
+        ],
+        "recommendedFix": "Keep archive landing content light and lazy-load large history datasets only when a specific archive is opened or searched.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordlebot WASM solver pages",
+        "files": [
+          "src/lib/components/wordlebot/WordlebotWasmClient.svelte",
+          "src/lib/wordlebot-wasm/app.ts",
+          "src/lib/wordlebot-wasm/assets/generated/per-length/index.ts"
+        ],
+        "recommendedFix": "Lazy-load solver datasets/WASM after first paint or user interaction, and avoid calculating starting suggestions during initial page load.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Spotle dataset pages",
+        "files": [
+          "src/routes/(interactive)/spotle-solver/+page.svelte",
+          "src/routes/(interactive)/spotle-archive/+page.svelte",
+          "src/routes/(interactive)/spotle-answer-today/+page.server.ts",
+          "static/spotle_data.json"
+        ],
+        "recommendedFix": "Avoid bundling Spotle data into page JS/HTML; fetch the JSON lazily and cache it with stable static headers.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Squaredle dictionary loading",
+        "files": [
+          "src/routes/(interactive)/squaredle-solver/+page.svelte",
+          "src/lib/components/squaredle/SquaredleSolverClient.svelte",
+          "src/lib/squaredle/client-solver.ts",
+          "static/squaredle/words_alpha.txt.gz"
+        ],
+        "recommendedFix": "Do not load the full Squaredle dictionary on mount; defer it until the user loads today or clicks solve, and prefer compressed static delivery.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordle analyzer worker data",
+        "files": [
+          "src/routes/(interactive)/wordle-analyzer/+page.svelte",
+          "src/lib/components/wordle-analyzer/WordleAnalyzerClient.svelte",
+          "src/lib/workers/wordle-analyzer.worker.ts",
+          "static/data/wordle-analyzer/word-data.json"
+        ],
+        "recommendedFix": "Start analyzer worker and fetch analyzer datasets only when the user begins analysis, not during initial render.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mainthread-work-breakdown",
+    "title": "Minimize main-thread work",
+    "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)",
+    "occurrences": 13,
+    "routes": [
+      {
+        "route": "/squaredle-solver",
+        "strategy": "mobile",
+        "score": 49,
+        "displayValue": "3.8 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 61,
+        "displayValue": "16.7 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/terms-of-service",
+        "strategy": "desktop",
+        "score": 64,
+        "displayValue": "3.2 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/9-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 65,
+        "displayValue": "4.9 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/soundmap-solver",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": "5.2 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-solver",
+        "strategy": "mobile",
+        "score": 69,
+        "displayValue": "3.8 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 69,
+        "displayValue": "24.6 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-wordle-solver",
+        "strategy": "desktop",
+        "score": 70,
+        "displayValue": "2.3 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/narutodle-solver",
+        "strategy": "mobile",
+        "score": 71,
+        "displayValue": "2.5 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-archive",
+        "strategy": "desktop",
+        "score": 73,
+        "displayValue": "2.6 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/squaredle-solver",
+        "strategy": "desktop",
+        "score": 75,
+        "displayValue": "3.3 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/soundmap-solver",
+        "strategy": "desktop",
+        "score": 78,
+        "displayValue": "2.6 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/smashdle-answer-today",
+        "strategy": "mobile",
+        "score": 83,
+        "displayValue": "2.2 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      }
+    ],
+    "strategies": {
+      "mobile": 6,
+      "desktop": 7
+    },
+    "totalSavingsMs": 0,
+    "totalSavingsBytes": 0,
+    "codeAreas": [
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordlebot WASM solver pages",
+        "files": [
+          "src/lib/components/wordlebot/WordlebotWasmClient.svelte",
+          "src/lib/wordlebot-wasm/app.ts",
+          "src/lib/wordlebot-wasm/assets/generated/per-length/index.ts"
+        ],
+        "recommendedFix": "Lazy-load solver datasets/WASM after first paint or user interaction, and avoid calculating starting suggestions during initial page load.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Spotle dataset pages",
+        "files": [
+          "src/routes/(interactive)/spotle-solver/+page.svelte",
+          "src/routes/(interactive)/spotle-archive/+page.svelte",
+          "src/routes/(interactive)/spotle-answer-today/+page.server.ts",
+          "static/spotle_data.json"
+        ],
+        "recommendedFix": "Avoid bundling Spotle data into page JS/HTML; fetch the JSON lazily and cache it with stable static headers.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "layout-shifts",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Squaredle dictionary loading",
+        "files": [
+          "src/routes/(interactive)/squaredle-solver/+page.svelte",
+          "src/lib/components/squaredle/SquaredleSolverClient.svelte",
+          "src/lib/squaredle/client-solver.ts",
+          "static/squaredle/words_alpha.txt.gz"
+        ],
+        "recommendedFix": "Do not load the full Squaredle dictionary on mount; defer it until the user loads today or clicks solve, and prefer compressed static delivery.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Content layout without client JS",
+        "files": [
+          "src/routes/(content)/+layout.svelte",
+          "src/content.css"
+        ],
+        "recommendedFix": "Keep content routes CSR-free, shrink shared content CSS, and avoid adding client-only components to answer/article pages.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Archive and static dataset pages",
+        "files": [
+          "src/lib/archive-data.ts",
+          "src/lib/archive-client.ts",
+          "src/lib/components/ArchiveCalendar.svelte"
+        ],
+        "recommendedFix": "Keep archive landing content light and lazy-load large history datasets only when a specific archive is opened or searched.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "layout-shifts",
+    "title": "Avoid large layout shifts",
+    "description": "These are the largest layout shifts observed on the page. Each table item represents a single layout shift, and shows the element that shifted the most. Below each item are possible root causes that led to the layout shift. Some of these layout shifts may not be included in the CLS metric value due to [windowing](https://web.dev/articles/cls#what_is_cls). [Learn how to improve CLS](https://web.dev/articles/optimize-cls)",
+    "occurrences": 9,
+    "routes": [
+      {
+        "route": "/spotle-solver",
+        "strategy": "mobile",
+        "score": 69,
+        "displayValue": "2 layout shifts found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/narutodle-solver",
+        "strategy": "mobile",
+        "score": 71,
+        "displayValue": "1 layout shift found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-answer-today",
+        "strategy": "mobile",
+        "score": 79,
+        "displayValue": "1 layout shift found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-answer-today",
+        "strategy": "mobile",
+        "score": 80,
+        "displayValue": "2 layout shifts found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle-archive",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": "2 layout shifts found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/smashdle-solver",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": "1 layout shift found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/quordle-answer-today",
+        "strategy": "desktop",
+        "score": 88,
+        "displayValue": "2 layout shifts found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/nerdle-solver",
+        "strategy": "desktop",
+        "score": 89,
+        "displayValue": "2 layout shifts found",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/onepiecedle-solver",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": "1 layout shift found",
+        "savingsMs": null,
+        "savingsBytes": null
+      }
+    ],
+    "strategies": {
+      "mobile": 6,
+      "desktop": 3
+    },
+    "totalSavingsMs": 0,
+    "totalSavingsBytes": 0,
+    "codeAreas": [
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "layout-shifts",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordlebot WASM solver pages",
+        "files": [
+          "src/lib/components/wordlebot/WordlebotWasmClient.svelte",
+          "src/lib/wordlebot-wasm/app.ts",
+          "src/lib/wordlebot-wasm/assets/generated/per-length/index.ts"
+        ],
+        "recommendedFix": "Lazy-load solver datasets/WASM after first paint or user interaction, and avoid calculating starting suggestions during initial page load.",
+        "triggeredByAudits": [
+          "layout-shifts",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Archive and static dataset pages",
+        "files": [
+          "src/lib/archive-data.ts",
+          "src/lib/archive-client.ts",
+          "src/lib/components/ArchiveCalendar.svelte"
+        ],
+        "recommendedFix": "Keep archive landing content light and lazy-load large history datasets only when a specific archive is opened or searched.",
+        "triggeredByAudits": [
+          "layout-shifts",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Spotle dataset pages",
+        "files": [
+          "src/routes/(interactive)/spotle-solver/+page.svelte",
+          "src/routes/(interactive)/spotle-archive/+page.svelte",
+          "src/routes/(interactive)/spotle-answer-today/+page.server.ts",
+          "static/spotle_data.json"
+        ],
+        "recommendedFix": "Avoid bundling Spotle data into page JS/HTML; fetch the JSON lazily and cache it with stable static headers.",
+        "triggeredByAudits": [
+          "layout-shifts",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bootup-time",
+    "title": "Reduce JavaScript execution time",
+    "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/).",
+    "occurrences": 9,
+    "routes": [
+      {
+        "route": "/squaredle-solver",
+        "strategy": "mobile",
+        "score": 49,
+        "displayValue": "3.1 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "mobile",
+        "score": 61,
+        "displayValue": "16.3 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/terms-of-service",
+        "strategy": "desktop",
+        "score": 64,
+        "displayValue": "1.5 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/soundmap-solver",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": "1.7 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-solver",
+        "strategy": "mobile",
+        "score": 69,
+        "displayValue": "1.3 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/3-letter-wordle-solver",
+        "strategy": "desktop",
+        "score": 69,
+        "displayValue": "24.3 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-wordle-solver",
+        "strategy": "desktop",
+        "score": 70,
+        "displayValue": "1.4 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-archive",
+        "strategy": "desktop",
+        "score": 73,
+        "displayValue": "1.3 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/squaredle-solver",
+        "strategy": "desktop",
+        "score": 75,
+        "displayValue": "2.6 s",
+        "savingsMs": null,
+        "savingsBytes": null
+      }
+    ],
+    "strategies": {
+      "mobile": 4,
+      "desktop": 5
+    },
+    "totalSavingsMs": 0,
+    "totalSavingsBytes": 0,
+    "codeAreas": [
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordlebot WASM solver pages",
+        "files": [
+          "src/lib/components/wordlebot/WordlebotWasmClient.svelte",
+          "src/lib/wordlebot-wasm/app.ts",
+          "src/lib/wordlebot-wasm/assets/generated/per-length/index.ts"
+        ],
+        "recommendedFix": "Lazy-load solver datasets/WASM after first paint or user interaction, and avoid calculating starting suggestions during initial page load.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Spotle dataset pages",
+        "files": [
+          "src/routes/(interactive)/spotle-solver/+page.svelte",
+          "src/routes/(interactive)/spotle-archive/+page.svelte",
+          "src/routes/(interactive)/spotle-answer-today/+page.server.ts",
+          "static/spotle_data.json"
+        ],
+        "recommendedFix": "Avoid bundling Spotle data into page JS/HTML; fetch the JSON lazily and cache it with stable static headers.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "layout-shifts",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Squaredle dictionary loading",
+        "files": [
+          "src/routes/(interactive)/squaredle-solver/+page.svelte",
+          "src/lib/components/squaredle/SquaredleSolverClient.svelte",
+          "src/lib/squaredle/client-solver.ts",
+          "static/squaredle/words_alpha.txt.gz"
+        ],
+        "recommendedFix": "Do not load the full Squaredle dictionary on mount; defer it until the user loads today or clicks solve, and prefer compressed static delivery.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Content layout without client JS",
+        "files": [
+          "src/routes/(content)/+layout.svelte",
+          "src/content.css"
+        ],
+        "recommendedFix": "Keep content routes CSR-free, shrink shared content CSS, and avoid adding client-only components to answer/article pages.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Archive and static dataset pages",
+        "files": [
+          "src/lib/archive-data.ts",
+          "src/lib/archive-client.ts",
+          "src/lib/components/ArchiveCalendar.svelte"
+        ],
+        "recommendedFix": "Keep archive landing content light and lazy-load large history datasets only when a specific archive is opened or searched.",
+        "triggeredByAudits": [
+          "mainthread-work-breakdown",
+          "bootup-time",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "image-delivery-insight",
+    "title": "Improve image delivery",
+    "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/performance/insights/image-delivery)",
+    "occurrences": 5,
+    "routes": [
+      {
+        "route": "/phrazle-answer-today",
+        "strategy": "mobile",
+        "score": 88,
+        "displayValue": "Est savings of 28 KiB",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-answer-today",
+        "strategy": "mobile",
+        "score": 93,
+        "displayValue": "Est savings of 28 KiB",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/spotle-answer-today",
+        "strategy": "desktop",
+        "score": 98,
+        "displayValue": "Est savings of 29 KiB",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/phrazle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 29 KiB",
+        "savingsMs": null,
+        "savingsBytes": null
+      },
+      {
+        "route": "/searchle-answer-today",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 29 KiB",
+        "savingsMs": null,
+        "savingsBytes": null
+      }
+    ],
+    "strategies": {
+      "mobile": 2,
+      "desktop": 3
+    },
+    "totalSavingsMs": 0,
+    "totalSavingsBytes": 0,
+    "codeAreas": [
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight",
+          "image-delivery-insight"
+        ]
+      },
+      {
+        "name": "Spotle dataset pages",
+        "files": [
+          "src/routes/(interactive)/spotle-solver/+page.svelte",
+          "src/routes/(interactive)/spotle-archive/+page.svelte",
+          "src/routes/(interactive)/spotle-answer-today/+page.server.ts",
+          "static/spotle_data.json"
+        ],
+        "recommendedFix": "Avoid bundling Spotle data into page JS/HTML; fetch the JSON lazily and cache it with stable static headers.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight",
+          "image-delivery-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "redirects",
+    "title": "Avoid multiple page redirects",
+    "description": "Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://developer.chrome.com/docs/lighthouse/performance/redirects/).",
+    "occurrences": 4,
+    "routes": [
+      {
+        "route": "/canuckle",
+        "strategy": "mobile",
+        "score": 67,
+        "displayValue": "Est savings of 760 ms",
+        "savingsMs": 755,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-solver",
+        "strategy": "mobile",
+        "score": 68,
+        "displayValue": "Est savings of 760 ms",
+        "savingsMs": 755,
+        "savingsBytes": null
+      },
+      {
+        "route": "/canuckle",
+        "strategy": "desktop",
+        "score": 93,
+        "displayValue": "Est savings of 210 ms",
+        "savingsMs": 206,
+        "savingsBytes": null
+      },
+      {
+        "route": "/wordle-solver",
+        "strategy": "desktop",
+        "score": 96,
+        "displayValue": "Est savings of 210 ms",
+        "savingsMs": 206,
+        "savingsBytes": null
+      }
+    ],
+    "strategies": {
+      "mobile": 2,
+      "desktop": 2
+    },
+    "totalSavingsMs": 1922,
+    "totalSavingsBytes": 0,
+    "codeAreas": [
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "redirects",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      },
+      {
+        "name": "Wordlebot WASM solver pages",
+        "files": [
+          "src/lib/components/wordlebot/WordlebotWasmClient.svelte",
+          "src/lib/wordlebot-wasm/app.ts",
+          "src/lib/wordlebot-wasm/assets/generated/per-length/index.ts"
+        ],
+        "recommendedFix": "Lazy-load solver datasets/WASM after first paint or user interaction, and avoid calculating starting suggestions during initial page load.",
+        "triggeredByAudits": [
+          "redirects",
+          "unused-javascript",
+          "render-blocking-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unminified-javascript",
+    "title": "Minify JavaScript",
+    "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn how to minify JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/).",
+    "occurrences": 2,
+    "routes": [
+      {
+        "route": "/phoodle-solver",
+        "strategy": "mobile",
+        "score": 90,
+        "displayValue": "Est savings of 6 KiB",
+        "savingsMs": null,
+        "savingsBytes": 6004
+      },
+      {
+        "route": "/phoodle-solver",
+        "strategy": "desktop",
+        "score": 99,
+        "displayValue": "Est savings of 6 KiB",
+        "savingsMs": null,
+        "savingsBytes": 6004
+      }
+    ],
+    "strategies": {
+      "mobile": 1,
+      "desktop": 1
+    },
+    "totalSavingsMs": 0,
+    "totalSavingsBytes": 12008,
+    "codeAreas": [
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "unminified-javascript",
+          "render-blocking-insight"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cache-insight",
+    "title": "Use efficient cache lifetimes",
+    "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache).",
+    "occurrences": 1,
+    "routes": [
+      {
+        "route": "/framed-archive",
+        "strategy": "mobile",
+        "score": 91,
+        "displayValue": "Est savings of 0 KiB",
+        "savingsMs": null,
+        "savingsBytes": null
+      }
+    ],
+    "strategies": {
+      "mobile": 1,
+      "desktop": 0
+    },
+    "totalSavingsMs": 0,
+    "totalSavingsBytes": 0,
+    "codeAreas": [
+      {
+        "name": "Shared interactive layout and hydration",
+        "files": [
+          "src/routes/(interactive)/+layout.svelte",
+          "src/lib/components/Navigation.svelte",
+          "src/lib/components/Footer.svelte",
+          "src/lib/utils/performance.ts"
+        ],
+        "recommendedFix": "Reduce shared client-side layout work, keep analytics/performance observers gated, and avoid hydrating shared UI on pages that do not need it.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight",
+          "cache-insight"
+        ]
+      },
+      {
+        "name": "Archive and static dataset pages",
+        "files": [
+          "src/lib/archive-data.ts",
+          "src/lib/archive-client.ts",
+          "src/lib/components/ArchiveCalendar.svelte"
+        ],
+        "recommendedFix": "Keep archive landing content light and lazy-load large history datasets only when a specific archive is opened or searched.",
+        "triggeredByAudits": [
+          "unused-javascript",
+          "render-blocking-insight",
+          "cache-insight"
+        ]
+      }
+    ]
+  }
+]

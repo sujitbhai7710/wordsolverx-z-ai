@@ -33,7 +33,7 @@
         let selectedArtist = $state<Artist | null>(null);
         let guesses = $state<Guess[]>([]);
         let currentFeedback = $state<AttributeFeedback>({ ...defaultFeedback });
-        let solverLoading = $state(true);
+        let solverLoading = $state(false);
         let runtimeError = $state<string | null>(null);
         let darkMode = $state(true);
         let showBestGuess = $state(true);
@@ -70,6 +70,9 @@
         async function ensureSoundmapRuntime(): Promise<SoundmapRuntime | null> {
                 if (soundmapRuntime) return soundmapRuntime;
 
+                solverLoading = true;
+                runtimeError = null;
+
                 try {
                         const runtime = await loadSoundmapRuntime();
                         soundmapRuntime = runtime;
@@ -80,6 +83,12 @@
                         return null;
                 } finally {
                         solverLoading = false;
+                }
+        }
+
+        function prepareSoundmapRuntime() {
+                if (!soundmapRuntime && !solverLoading) {
+                        void ensureSoundmapRuntime();
                 }
         }
 
@@ -200,24 +209,10 @@
         }
 
         onMount(() => {
-                void ensureSoundmapRuntime();
-
                 if (browser) {
                         const saved = localStorage.getItem('soundmap-dark-mode');
                         if (saved !== null) darkMode = saved === 'true';
                 }
-
-                const guideSequence: Array<'debut' | 'popularity' | 'country'> = [
-                        'debut',
-                        'popularity',
-                        'country'
-                ];
-                let guideIndex = 0;
-                const guideInterval = window.setInterval(() => {
-                        const field = guideSequence[guideIndex % guideSequence.length];
-                        runGuideStep(field);
-                        guideIndex += 1;
-                }, 900);
 
                 const handleClickOutside = (event: MouseEvent) => {
                         if (searchRef && !searchRef.contains(event.target as Node)) {
@@ -226,7 +221,6 @@
                 };
                 document.addEventListener('mousedown', handleClickOutside);
                 return () => {
-                        window.clearInterval(guideInterval);
                         document.removeEventListener('mousedown', handleClickOutside);
                 };
         });
@@ -566,15 +560,19 @@
                                 <div class="space-y-4">
                                         <div class="relative" bind:this={searchRef}>
                                                 <input
-                                                        type="text"
-                                                        placeholder="Search for an artist..."
-                                                        value={searchQuery}
-                                                        disabled={solverLoading || !!runtimeError}
-                                                        oninput={(event) => {
-                                                                searchQuery = (event.currentTarget as HTMLInputElement).value;
-                                                                showDropdown = true;
-                                                        }}
-                                                        onfocus={() => (showDropdown = true)}
+                                                type="text"
+                                                placeholder="Search for an artist..."
+                                                value={searchQuery}
+                                                disabled={!!runtimeError}
+                                                oninput={(event) => {
+                                                        prepareSoundmapRuntime();
+                                                        searchQuery = (event.currentTarget as HTMLInputElement).value;
+                                                        showDropdown = true;
+                                                }}
+                                                onfocus={() => {
+                                                        prepareSoundmapRuntime();
+                                                        showDropdown = true;
+                                                }}
                                                         class="w-full h-11 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                                                 />
                                                 {#if showDropdown && filteredArtists.length > 0}

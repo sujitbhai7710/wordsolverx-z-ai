@@ -3,4 +3,7 @@
 @plugin "@tailwindcss/typography";
 
 @source "./routes/(interactive)/**/*.{html,js,svelte,ts}";
-@source "./lib/**/*.{html,js,svelte,ts}";
+@source "./lib/components/**/*.{html,js,svelte,ts}";
+@source "./lib/styles/**/*.{html,js,svelte,ts,css}";
+@source "./lib/wordlebot-wasm/**/*.{html,js,svelte,ts,css}";
+@source "./lib/game-dle/**/*.{html,js,svelte,ts}";

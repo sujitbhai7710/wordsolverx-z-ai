@@ -1,7 +1,28 @@
 <script lang="ts">
-  import { BETWEENLE_WORDS } from '$lib/betweenle/data';
-  import { computeBetweenleSuggestion } from '$lib/betweenle/logic';
   import { WORD_GAMES_BETWEENLE_UNLIMITED_URL } from '$lib/word-games-links';
+  import type { BetweenleSolverResult } from '$lib/betweenle/types';
+
+  type BetweenleRuntime = {
+    words: string[];
+    computeBetweenleSuggestion: typeof import('$lib/betweenle/logic').computeBetweenleSuggestion;
+  };
+
+  const EMPTY_RESULT: BetweenleSolverResult = {
+    suggestionWord: '',
+    remaining: 0,
+    boundTopIdx: 0,
+    boundBottomIdx: 0,
+    effectiveTopWord: '',
+    effectiveBottomWord: '',
+    suggestionIdx: 0,
+    useDistance: false,
+    isSolved: false,
+    closerTo: '',
+    topDist: -1,
+    bottomDist: -1,
+  };
+
+  let betweenleRuntimePromise: Promise<BetweenleRuntime> | null = null;
 
   let topWord = $state('');
   let bottomWord = $state('');
@@ -10,29 +31,70 @@
   let showSuggestion = $state(false);
   let copiedWord = $state('');
   let copyFeedback = $state(false);
+  let runtimeLoading = $state(false);
+  let betweenleRuntime = $state<BetweenleRuntime | null>(null);
 
   let result = $derived.by(() =>
-    computeBetweenleSuggestion(topWord, bottomWord, topDistance, bottomDistance)
+    betweenleRuntime
+      ? betweenleRuntime.computeBetweenleSuggestion(topWord, bottomWord, topDistance, bottomDistance)
+      : EMPTY_RESULT
   );
+  let possibleWords = $derived.by(() =>
+    betweenleRuntime ? betweenleRuntime.words.slice(result.boundTopIdx, result.boundBottomIdx + 1) : []
+  );
+
+  function loadBetweenleRuntime(): Promise<BetweenleRuntime> {
+    if (!betweenleRuntimePromise) {
+      betweenleRuntimePromise = Promise.all([
+        import('$lib/betweenle/data'),
+        import('$lib/betweenle/logic')
+      ]).then(([dataModule, logicModule]) => ({
+        words: dataModule.BETWEENLE_WORDS,
+        computeBetweenleSuggestion: logicModule.computeBetweenleSuggestion
+      }));
+    }
+    return betweenleRuntimePromise;
+  }
+
+  async function ensureBetweenleRuntime(): Promise<BetweenleRuntime | null> {
+    if (betweenleRuntime) return betweenleRuntime;
+
+    runtimeLoading = true;
+    try {
+      betweenleRuntime = await loadBetweenleRuntime();
+      return betweenleRuntime;
+    } finally {
+      runtimeLoading = false;
+    }
+  }
+
+  async function startSolving(): Promise<void> {
+    await ensureBetweenleRuntime();
+    scrollToId('betweenle-solver-panel');
+  }
 
   function updateTopWord(value: string): void {
     topWord = value.toLowerCase().slice(0, 5);
     showSuggestion = false;
+    void ensureBetweenleRuntime();
   }
 
   function updateBottomWord(value: string): void {
     bottomWord = value.toLowerCase().slice(0, 5);
     showSuggestion = false;
+    void ensureBetweenleRuntime();
   }
 
   function updateTopDistance(value: string): void {
     topDistance = value;
     showSuggestion = false;
+    void ensureBetweenleRuntime();
   }
 
   function updateBottomDistance(value: string): void {
     bottomDistance = value;
     showSuggestion = false;
+    void ensureBetweenleRuntime();
   }
 
   function handleTopWordInput(event: Event): void {
@@ -108,10 +170,10 @@
       <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
         <button
           class="rounded-xl bg-white px-6 py-3 text-sm font-bold text-slate-900 transition-transform hover:scale-[1.02]"
-          onclick={() => scrollToId('betweenle-solver-panel')}
+          onclick={() => void startSolving()}
           type="button"
         >
-          Start Solving
+          {runtimeLoading ? 'Loading...' : 'Start Solving'}
         </button>
         <button
           class="rounded-xl border border-white/15 bg-white/10 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
@@ -155,6 +217,7 @@
                 placeholder="Top word from game"
                 value={topWord}
                 oninput={handleTopWordInput}
+                onfocus={() => void ensureBetweenleRuntime()}
               />
               <input
                 id="betweenle-top-distance"
@@ -167,6 +230,7 @@
                 step="0.1"
                 value={topDistance}
                 oninput={handleTopDistanceInput}
+                onfocus={() => void ensureBetweenleRuntime()}
               />
             </div>
             <p class="text-xs text-slate-500 dark:text-slate-400">Word and distance shown above your guess in the game</p>
@@ -182,6 +246,7 @@
                 placeholder="Bottom word from game"
                 value={bottomWord}
                 oninput={handleBottomWordInput}
+                onfocus={() => void ensureBetweenleRuntime()}
               />
               <input
                 id="betweenle-bottom-distance"
@@ -194,6 +259,7 @@
                 step="0.1"
                 value={bottomDistance}
                 oninput={handleBottomDistanceInput}
+                onfocus={() => void ensureBetweenleRuntime()}
               />
             </div>
             <p class="text-xs text-slate-500 dark:text-slate-400">Word and distance shown below your guess in the game</p>
@@ -243,7 +309,7 @@
             <div class="space-y-3">
               <p class="text-sm font-semibold text-slate-900 dark:text-white">Possible words ({result.remaining})</p>
               <div class="flex max-h-40 flex-wrap gap-2 overflow-y-auto">
-                {#each BETWEENLE_WORDS.slice(result.boundTopIdx, result.boundBottomIdx + 1) as word}
+                {#each possibleWords as word}
                   <button
                     class={`rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] ${
                       word === result.suggestionWord
@@ -264,10 +330,13 @@
             {#if result.remaining > 1 && !showSuggestion}
               <button
                 class="flex-1 rounded-2xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 px-5 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-[1.01]"
-                onclick={() => (showSuggestion = true)}
+                onclick={async () => {
+                  await ensureBetweenleRuntime();
+                  showSuggestion = true;
+                }}
                 type="button"
               >
-                Solve
+                {runtimeLoading ? 'Loading...' : 'Solve'}
               </button>
             {/if}
             <button

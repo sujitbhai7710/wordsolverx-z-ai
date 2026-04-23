@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import {
     fetchTodayPuzzle,
     getDictionarySize,
@@ -18,7 +17,7 @@
 
   let gridSize = 5;
   let grid = createEmptyGrid(5);
-  let isLoadingDict = true;
+  let isLoadingDict = false;
   let dictProgress = 0;
   let dictSize = 0;
   let isSolving = false;
@@ -100,14 +99,37 @@
     return grid.some((row) => row.some((cell) => cell.trim() !== ''));
   }
 
+  async function ensureDictionaryLoaded() {
+    if (isDictionaryLoaded()) {
+      dictSize = getDictionarySize();
+      return true;
+    }
+
+    isLoadingDict = true;
+    dictProgress = 0;
+    errorMessage = '';
+
+    try {
+      await loadDictionary((progress) => {
+        dictProgress = progress;
+      });
+      dictSize = getDictionarySize();
+      return true;
+    } catch (error) {
+      errorMessage = error instanceof Error ? error.message : 'Failed to load Squaredle dictionary.';
+      return false;
+    } finally {
+      isLoadingDict = false;
+    }
+  }
+
   async function solveBoard(officialOnly = false) {
-    if (!isDictionaryLoaded()) {
-      errorMessage = 'Dictionary is still loading.';
+    if (!hasLetters()) {
+      errorMessage = 'Enter some letters in the grid first.';
       return;
     }
 
-    if (!hasLetters()) {
-      errorMessage = 'Enter some letters in the grid first.';
+    if (!(await ensureDictionaryLoaded())) {
       return;
     }
 
@@ -177,18 +199,6 @@
     return `grid-template-columns: repeat(${size}, minmax(0, 1fr));`;
   }
 
-  onMount(async () => {
-    try {
-      await loadDictionary((progress) => {
-        dictProgress = progress;
-      });
-      dictSize = getDictionarySize();
-    } catch (error) {
-      errorMessage = error instanceof Error ? error.message : 'Failed to load Squaredle dictionary.';
-    } finally {
-      isLoadingDict = false;
-    }
-  });
 </script>
 
 <section class="relative overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(239,68,68,0.14),_transparent_36%),linear-gradient(180deg,#fff7f7_0%,#ffffff_42%,#fffafa_100%)] px-4 pb-16 pt-6 sm:px-6 lg:px-8">
@@ -215,6 +225,9 @@
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-red-600">Dictionary status</p>
           {#if isLoadingDict}
             <p class="mt-3 text-sm font-medium text-slate-600">Loading dictionary... {dictProgress}%</p>
+          {:else if dictSize === 0}
+            <p class="mt-3 text-2xl font-black text-slate-900">On demand</p>
+            <p class="mt-1 text-sm text-slate-600">dictionary loads when you solve</p>
           {:else}
             <p class="mt-3 text-2xl font-black text-slate-900">{dictSize.toLocaleString()}</p>
             <p class="mt-1 text-sm text-slate-600">words available for local solving</p>

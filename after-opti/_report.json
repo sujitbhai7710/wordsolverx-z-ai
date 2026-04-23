@@ -1,0 +1,523 @@
+{
+  "summary": {
+    "totalPagesScanned": 101,
+    "mobileTests": 100,
+    "desktopTests": 101,
+    "mobileAvg": 93,
+    "desktopAvg": 99,
+    "mobileMedian": 93,
+    "desktopMedian": 100,
+    "mobile90plus": 92,
+    "desktop90plus": 100,
+    "mobileBelow70": 0,
+    "desktopBelow70": 0
+  },
+  "worstMobile": [
+    {
+      "page": "quordle-answer-today",
+      "score": 80,
+      "LCP": 2872,
+      "TBT": 0,
+      "bytes": 200
+    },
+    {
+      "page": "spotle-answer-today",
+      "score": 80,
+      "LCP": 3156,
+      "TBT": 0,
+      "bytes": 317
+    },
+    {
+      "page": "canuckle",
+      "score": 88,
+      "LCP": 3038,
+      "TBT": 0,
+      "bytes": 191
+    },
+    {
+      "page": "colordle-answer-today",
+      "score": 88,
+      "LCP": 3334,
+      "TBT": 0,
+      "bytes": 199
+    },
+    {
+      "page": "wordle-solver",
+      "score": 88,
+      "LCP": 2859,
+      "TBT": 0,
+      "bytes": 203
+    },
+    {
+      "page": "narutodle-solver",
+      "score": 89,
+      "LCP": 2556,
+      "TBT": 0,
+      "bytes": 193
+    },
+    {
+      "page": "onepiecedle-solver",
+      "score": 89,
+      "LCP": 2585,
+      "TBT": 0,
+      "bytes": 194
+    },
+    {
+      "page": "phoodle-solver",
+      "score": 89,
+      "LCP": 3183,
+      "TBT": 0,
+      "bytes": 278
+    },
+    {
+      "page": "smashdle-solver",
+      "score": 90,
+      "LCP": 2438,
+      "TBT": 0,
+      "bytes": 192
+    },
+    {
+      "page": "10-letter-wordle-solver",
+      "score": 91,
+      "LCP": 2564,
+      "TBT": 0,
+      "bytes": 202
+    },
+    {
+      "page": "4-letter-wordle-solver",
+      "score": 91,
+      "LCP": 2583,
+      "TBT": 0,
+      "bytes": 202
+    },
+    {
+      "page": "7-letter-wordle-solver",
+      "score": 91,
+      "LCP": 2564,
+      "TBT": 0,
+      "bytes": 200
+    },
+    {
+      "page": "8-letter-wordle-solver",
+      "score": 91,
+      "LCP": 2564,
+      "TBT": 0,
+      "bytes": 200
+    },
+    {
+      "page": "9-letter-wordle-solver",
+      "score": 91,
+      "LCP": 2564,
+      "TBT": 0,
+      "bytes": 201
+    },
+    {
+      "page": "betweenle-answer-today",
+      "score": 91,
+      "LCP": 2851,
+      "TBT": 0,
+      "bytes": 231
+    }
+  ],
+  "worstDesktop": [
+    {
+      "page": "quordle-answer-today",
+      "score": 88,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 202
+    },
+    {
+      "page": "nerdle-solver",
+      "score": 90,
+      "LCP": 686,
+      "TBT": 0,
+      "bytes": 188
+    },
+    {
+      "page": "spotle-answer-today",
+      "score": 98,
+      "LCP": 864,
+      "TBT": 0,
+      "bytes": 349
+    },
+    {
+      "page": "betweenle-answer-today",
+      "score": 99,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 229
+    },
+    {
+      "page": "boggle-solver",
+      "score": 99,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 184
+    },
+    {
+      "page": "colordle-archive",
+      "score": 99,
+      "LCP": 706,
+      "TBT": 0,
+      "bytes": 183
+    },
+    {
+      "page": "colordle-solver",
+      "score": 99,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 178
+    },
+    {
+      "page": "colorfle-answer-today",
+      "score": 99,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 193
+    },
+    {
+      "page": "colorfle-archive",
+      "score": 99,
+      "LCP": 706,
+      "TBT": 0,
+      "bytes": 179
+    },
+    {
+      "page": "colorfle-solver",
+      "score": 99,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 190
+    },
+    {
+      "page": "countryle-solver",
+      "score": 99,
+      "LCP": 716,
+      "TBT": 0,
+      "bytes": 208
+    },
+    {
+      "page": "dotadle-answer-today",
+      "score": 99,
+      "LCP": 724,
+      "TBT": 0,
+      "bytes": 58
+    },
+    {
+      "page": "dotadle-solver",
+      "score": 99,
+      "LCP": 744,
+      "TBT": 0,
+      "bytes": 192
+    },
+    {
+      "page": "framed-answer-today",
+      "score": 99,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 213
+    },
+    {
+      "page": "globle-answer-today",
+      "score": 99,
+      "LCP": 715,
+      "TBT": 0,
+      "bytes": 178
+    }
+  ],
+  "bestMobile": [
+    {
+      "page": "minesweeper-solver",
+      "score": 95
+    },
+    {
+      "page": "soundmap-solver",
+      "score": 95
+    },
+    {
+      "page": "terms-of-service",
+      "score": 95
+    },
+    {
+      "page": "about",
+      "score": 94
+    },
+    {
+      "page": "archive",
+      "score": 94
+    },
+    {
+      "page": "canuckle-solver",
+      "score": 94
+    },
+    {
+      "page": "colordle-archive",
+      "score": 94
+    },
+    {
+      "page": "colordle-solver",
+      "score": 94
+    },
+    {
+      "page": "colorfle-archive",
+      "score": 94
+    },
+    {
+      "page": "colorfle-solver",
+      "score": 94
+    }
+  ],
+  "bestDesktop": [
+    {
+      "page": "10-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "11-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "3-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "4-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "5-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "6-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "7-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "8-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "9-letter-wordle-solver",
+      "score": 100
+    },
+    {
+      "page": "about",
+      "score": 100
+    }
+  ],
+  "comparisons": {
+    "improved": 82,
+    "worsened": 5,
+    "unchanged": 13,
+    "topImprovements": [
+      {
+        "page": "squaredle-solver",
+        "before": 47,
+        "after": 93,
+        "delta": 46,
+        "beforeLCP": 7871,
+        "afterLCP": 2585,
+        "beforeTBT": 1118,
+        "afterTBT": 0
+      },
+      {
+        "page": "3-letter-wordle-solver",
+        "before": 61,
+        "after": 92,
+        "delta": 31,
+        "beforeLCP": 2564,
+        "afterLCP": 2437,
+        "beforeTBT": 10020,
+        "afterTBT": 0
+      },
+      {
+        "page": "phoodle-archive",
+        "before": 63,
+        "after": 94,
+        "delta": 31,
+        "beforeLCP": 2651,
+        "afterLCP": 2414,
+        "beforeTBT": 1168.5000000000005,
+        "afterTBT": 0
+      },
+      {
+        "page": "canuckle-solver",
+        "before": 65,
+        "after": 94,
+        "delta": 29,
+        "beforeLCP": 6230,
+        "afterLCP": 2438,
+        "beforeTBT": 134,
+        "afterTBT": 0
+      },
+      {
+        "page": "hangman-solver",
+        "before": 67,
+        "after": 92,
+        "delta": 25,
+        "beforeLCP": 3371,
+        "afterLCP": 2905,
+        "beforeTBT": 762,
+        "afterTBT": 0
+      },
+      {
+        "page": "canuckle-archive",
+        "before": 70,
+        "after": 93,
+        "delta": 23,
+        "beforeLCP": 4874,
+        "afterLCP": 2557,
+        "beforeTBT": 117,
+        "afterTBT": 0
+      },
+      {
+        "page": "9-letter-wordle-solver",
+        "before": 69,
+        "after": 91,
+        "delta": 22,
+        "beforeLCP": 2585,
+        "afterLCP": 2564,
+        "beforeTBT": 987.9999999999995,
+        "afterTBT": 0
+      },
+      {
+        "page": "contexto-answer-today",
+        "before": 71,
+        "after": 93,
+        "delta": 22,
+        "beforeLCP": 2594,
+        "afterLCP": 2560,
+        "beforeTBT": 823.5,
+        "afterTBT": 0
+      },
+      {
+        "page": "canuckle-answer-today",
+        "before": 72,
+        "after": 93,
+        "delta": 21,
+        "beforeLCP": 4951,
+        "afterLCP": 2585,
+        "beforeTBT": 115,
+        "afterTBT": 0
+      },
+      {
+        "page": "disclaimer",
+        "before": 73,
+        "after": 94,
+        "delta": 21,
+        "beforeLCP": 2422,
+        "afterLCP": 2475,
+        "beforeTBT": 969,
+        "afterTBT": 0
+      },
+      {
+        "page": "canuckle",
+        "before": 70,
+        "after": 88,
+        "delta": 18,
+        "beforeLCP": 5350,
+        "afterLCP": 3038,
+        "beforeTBT": 49.5,
+        "afterTBT": 0
+      },
+      {
+        "page": "narutodle-solver",
+        "before": 71,
+        "after": 89,
+        "delta": 18,
+        "beforeLCP": 2587,
+        "afterLCP": 2556,
+        "beforeTBT": 715,
+        "afterTBT": 0
+      },
+      {
+        "page": "globle-archive",
+        "before": 77,
+        "after": 94,
+        "delta": 17,
+        "beforeLCP": 4322,
+        "afterLCP": 2408,
+        "beforeTBT": 175,
+        "afterTBT": 0
+      },
+      {
+        "page": "colordle-solver",
+        "before": 78,
+        "after": 94,
+        "delta": 16,
+        "beforeLCP": 4101,
+        "afterLCP": 2437,
+        "beforeTBT": 126,
+        "afterTBT": 0
+      },
+      {
+        "page": "worldle-answer-today",
+        "before": 76,
+        "after": 92,
+        "delta": 16,
+        "beforeLCP": 4427,
+        "afterLCP": 2585,
+        "beforeTBT": 189,
+        "afterTBT": 0
+      }
+    ],
+    "topRegressions": [
+      {
+        "page": "betweenle-solver",
+        "before": 92,
+        "after": 91,
+        "delta": -1,
+        "beforeLCP": 2589,
+        "afterLCP": 2556,
+        "beforeTBT": 101,
+        "afterTBT": 0
+      },
+      {
+        "page": "onepiecedle-solver",
+        "before": 90,
+        "after": 89,
+        "delta": -1,
+        "beforeLCP": 2437,
+        "afterLCP": 2585,
+        "beforeTBT": 87,
+        "afterTBT": 0
+      },
+      {
+        "page": "phoodle-solver",
+        "before": 90,
+        "after": 89,
+        "delta": -1,
+        "beforeLCP": 2889,
+        "afterLCP": 3183,
+        "beforeTBT": 131,
+        "afterTBT": 0
+      },
+      {
+        "page": "word-ladder-solver",
+        "before": 94,
+        "after": 93,
+        "delta": -1,
+        "beforeLCP": 2429,
+        "afterLCP": 2556,
+        "beforeTBT": 104,
+        "afterTBT": 0
+      },
+      {
+        "page": "worgle-answer-today",
+        "before": 94,
+        "after": 93,
+        "delta": -1,
+        "beforeLCP": 2440,
+        "afterLCP": 2585,
+        "beforeTBT": 77,
+        "afterTBT": 0
+      }
+    ],
+    "avgDelta": 7
+  }
+}

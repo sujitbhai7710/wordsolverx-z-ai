@@ -119,17 +119,38 @@
 
                         window.__wordsolverxLoadAnalytics = loadAnalytics;
 
-                        if ('requestIdleCallback' in window) {
-                                window.requestIdleCallback(loadAnalytics, { timeout: 5000 });
-                        } else {
+                        function scheduleAnalytics() {
+                                var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+                                var cleanup = function () {
+                                        for (var i = 0; i < interactionEvents.length; i += 1) {
+                                                window.removeEventListener(interactionEvents[i], loadAfterInteraction);
+                                        }
+                                };
+                                var loadAfterInteraction = function () {
+                                        cleanup();
+                                        loadAnalytics();
+                                };
+
+                                for (var i = 0; i < interactionEvents.length; i += 1) {
+                                        window.addEventListener(interactionEvents[i], loadAfterInteraction, {
+                                                once: true,
+                                                passive: true
+                                        });
+                                }
+
                                 window.addEventListener(
                                         'load',
                                         function () {
-                                                window.setTimeout(loadAnalytics, 3000);
+                                                window.setTimeout(function () {
+                                                        cleanup();
+                                                        loadAnalytics();
+                                                }, 15000);
                                         },
                                         { once: true }
                                 );
                         }
+
+                        scheduleAnalytics();
 
                         function updateCardFilter(input) {
                                 var group = input.getAttribute('data-card-filter-input');
