@@ -219,13 +219,6 @@ jobs:
             node scripts/generate-daily-articles.mjs
           fi
 
-      - name: Generate Daily Articles Before Deploy
-        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true' && env.ENABLE_DAILY_ARTICLE_GENERATION == 'true'
-        shell: bash
-        run: |
-          npm run data:update
-          node scripts/generate-daily-articles.mjs
-
       - name: Upload Generated Article Bundle
         if: env.WORKFLOW_MODE == 'generate-articles-only'
         uses: actions/upload-artifact@v4
