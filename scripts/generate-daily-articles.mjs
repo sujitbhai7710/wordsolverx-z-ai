@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { randomInt } from 'node:crypto';
 import path from 'node:path';
 import process from 'node:process';
@@ -8,7 +8,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
 
-const outputPath = path.join(projectRoot, 'src', 'lib', 'generated', 'daily-articles.json');
+const generatedDirPath = path.join(projectRoot, 'src', 'lib', 'generated');
+const outputPath = path.join(generatedDirPath, 'daily-articles.json');
+const perRouteStoreDirPath = path.join(generatedDirPath, 'artiples');
 const skillPath = path.join(projectRoot, '.opencode', 'human-wiriting', 'SKILL.md');
 const colordleDataPath = path.join(projectRoot, 'static', 'colordle_data.json');
 
@@ -28,6 +30,10 @@ const MAX_CONCURRENCY = Math.max(
 const MAX_OUTPUT_TOKENS = Math.max(
   512,
   Number.parseInt(process.env.ARTICLE_MAX_OUTPUT_TOKENS ?? '3200', 10) || 3200
+);
+const MAX_STORED_DATES_PER_ROUTE = Math.max(
+  1,
+  Number.parseInt(process.env.ARTICLE_MAX_STORED_DATES_PER_ROUTE ?? '45', 10) || 45
 );
 const LOG_SNIPPET_LIMIT = 220;
 
@@ -972,12 +978,175 @@ async function readExistingBundle() {
   }
 }
 
-function stripArticlesForDateAndKeys(articles, targetDate, selectedKeys) {
-  return Object.fromEntries(
-    Object.entries(articles).filter(
-      ([articleKey, article]) => !(selectedKeys.has(articleKey) && article?.date === targetDate)
-    )
+function isRecord(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function toDateKey(value) {
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return null;
+  }
+
+  return trimmed;
+}
+
+function sanitizeByDateMap(byDate) {
+  if (!isRecord(byDate)) {
+    return {};
+  }
+
+  const sortedDateKeys = Object.keys(byDate)
+    .map((key) => toDateKey(key))
+    .filter(Boolean)
+    .sort((a, b) => b.localeCompare(a))
+    .slice(0, MAX_STORED_DATES_PER_ROUTE);
+
+  const trimmed = {};
+  for (const dateKey of sortedDateKeys) {
+    const article = byDate[dateKey];
+    if (isRecord(article)) {
+      trimmed[dateKey] = article;
+    }
+  }
+
+  return trimmed;
+}
+
+function routeStorePathForKey(routeKey) {
+  return path.join(perRouteStoreDirPath, `${routeKey}.json`);
+}
+
+function normalizeRouteStore(routeKey, parsed) {
+  const safeRouteKey =
+    typeof parsed?.articleKey === 'string' && parsed.articleKey.trim().length > 0
+      ? parsed.articleKey.trim()
+      : routeKey;
+
+  return {
+    articleKey: safeRouteKey,
+    generatedAt: typeof parsed?.generatedAt === 'string' ? parsed.generatedAt : null,
+    byDate: sanitizeByDateMap(parsed?.byDate)
+  };
+}
+
+async function readRouteStore(routeKey) {
+  try {
+    const raw = await readFile(routeStorePathForKey(routeKey), 'utf8');
+    const parsed = JSON.parse(raw);
+    return normalizeRouteStore(routeKey, parsed);
+  } catch {
+    return {
+      articleKey: routeKey,
+      generatedAt: null,
+      byDate: {}
+    };
+  }
+}
+
+async function writeRouteStore(routeKey, routeStore) {
+  await mkdir(perRouteStoreDirPath, { recursive: true });
+  await writeFile(
+    routeStorePathForKey(routeKey),
+    `${JSON.stringify(normalizeRouteStore(routeKey, routeStore), null, 2)}\n`,
+    'utf8'
   );
+}
+
+async function readAllRouteStores() {
+  const stores = new Map();
+
+  try {
+    const files = await readdir(perRouteStoreDirPath, { withFileTypes: true });
+    for (const file of files) {
+      if (!file.isFile() || !file.name.endsWith('.json')) {
+        continue;
+      }
+
+      const routeKey = file.name.slice(0, -'.json'.length);
+      if (!routeKey) {
+        continue;
+      }
+
+      const store = await readRouteStore(routeKey);
+      stores.set(routeKey, store);
+    }
+  } catch {
+    return stores;
+  }
+
+  return stores;
+}
+
+async function seedRouteStoresFromBundle(bundle, routeStores) {
+  let seededCount = 0;
+
+  for (const [routeKey, article] of Object.entries(bundle?.articles ?? {})) {
+    const articleDate = toDateKey(article?.date);
+    if (!articleDate || !isRecord(article)) {
+      continue;
+    }
+
+    const existingStore = routeStores.get(routeKey) ?? (await readRouteStore(routeKey));
+    if (!isRecord(existingStore.byDate[articleDate])) {
+      existingStore.byDate[articleDate] = article;
+      existingStore.byDate = sanitizeByDateMap(existingStore.byDate);
+      existingStore.generatedAt = new Date().toISOString();
+      await writeRouteStore(routeKey, existingStore);
+      seededCount += 1;
+    }
+
+    routeStores.set(routeKey, existingStore);
+  }
+
+  return seededCount;
+}
+
+function buildBundleFromRouteStores(routeStores) {
+  const articles = {};
+  let generatedAt = null;
+
+  for (const [routeKey, store] of routeStores.entries()) {
+    const latestDate = Object.keys(store.byDate).sort((a, b) => b.localeCompare(a))[0];
+    if (latestDate && isRecord(store.byDate[latestDate])) {
+      articles[routeKey] = store.byDate[latestDate];
+    }
+
+    if (typeof store.generatedAt === 'string' && (!generatedAt || store.generatedAt > generatedAt)) {
+      generatedAt = store.generatedAt;
+    }
+  }
+
+  return {
+    generatedAt,
+    articles
+  };
+}
+
+async function writeBundleFromRouteStores(routeStores) {
+  const bundle = buildBundleFromRouteStores(routeStores);
+  await writeBundle(bundle);
+  return bundle;
+}
+
+async function persistRouteArticle(routeStores, routeKey, article) {
+  const routeStore = routeStores.get(routeKey) ?? (await readRouteStore(routeKey));
+  const articleDate = toDateKey(article?.date);
+  if (!articleDate) {
+    throw new Error(`Cannot persist article for ${routeKey} because date is missing.`);
+  }
+
+  routeStore.articleKey = routeKey;
+  routeStore.byDate[articleDate] = article;
+  routeStore.byDate = sanitizeByDateMap(routeStore.byDate);
+  routeStore.generatedAt = new Date().toISOString();
+
+  await writeRouteStore(routeKey, routeStore);
+  routeStores.set(routeKey, routeStore);
 }
 
 async function writeBundle(bundle) {
@@ -1009,26 +1178,36 @@ async function runConcurrent(entries, concurrency, worker) {
 
 async function main() {
   const groupName = getGenerationGroupName();
+  const selectedEntries = getSelectedEntries(groupName);
+  const targetDate = getTargetDate(groupName);
+  const existingBundle = await readExistingBundle();
+  const routeStores = await readAllRouteStores();
+  const seededCount = await seedRouteStoresFromBundle(existingBundle, routeStores);
+
+  if (seededCount > 0) {
+    console.log(`Seeded ${seededCount} persisted route file(s) from the existing daily article bundle.`);
+  }
+
+  await writeBundleFromRouteStores(routeStores);
 
   if (!shouldGenerateArticles()) {
-    console.log(`Daily article generation skipped because ENABLE_DAILY_ARTICLE_GENERATION is false for group ${groupName}.`);
+    console.log(
+      `Daily article generation skipped because ENABLE_DAILY_ARTICLE_GENERATION is false for group ${groupName}. Rebuilt bundle from persisted route files.`
+    );
     return;
   }
 
-  const selectedEntries = getSelectedEntries(groupName);
   if (!selectedEntries.length) {
     console.log(`No daily article entries are assigned to group ${groupName}.`);
     return;
   }
 
-  const targetDate = getTargetDate(groupName);
   console.log(`Preparing daily articles for group ${groupName} using target date ${targetDate}.`);
 
   const providers = buildProviderConfigs();
-  const existingBundle = await readExistingBundle();
   if (!providers.length) {
-    console.warn('No NVIDIA or AgentRouter keys were provided. Keeping the existing daily article bundle.');
-    if (!existingBundle.generatedAt) {
+    console.warn('No NVIDIA or AgentRouter keys were provided. Kept previously persisted per-route daily articles.');
+    if (!buildBundleFromRouteStores(routeStores).generatedAt) {
       console.warn('No existing article bundle was found yet. The frontend will fall back to built-in content.');
     }
     return;
@@ -1073,16 +1252,9 @@ async function main() {
     }
   }
 
-  const selectedKeys = new Set(selectedEntries.map((entry) => entry.key));
-  const nextBundle = {
-    generatedAt: new Date().toISOString(),
-    articles: stripArticlesForDateAndKeys(existingBundle.articles, targetDate, selectedKeys)
-  };
-
-  await writeBundle(nextBundle);
-
   const failedEntries = [];
   const completedEntries = [];
+  let persistenceQueue = Promise.resolve();
   const concurrency = Math.min(
     MAX_CONCURRENCY,
     selectedEntries.length,
@@ -1114,13 +1286,18 @@ async function main() {
           laneIndex
         });
 
-        nextBundle.articles[entry.key] = {
+        const routeArticle = {
           articleKey: entry.key,
           game: 'wordle',
           date: targetDate,
           articleHtml: article.contentGuideHtml,
           ...article
         };
+        persistenceQueue = persistenceQueue.then(async () => {
+          await persistRouteArticle(routeStores, entry.key, routeArticle);
+          await writeBundleFromRouteStores(routeStores);
+        });
+        await persistenceQueue;
       } else if (entry.mode === 'colordle') {
         if (!colordleContext) {
           throw new Error('Colordle context was not available.');
@@ -1137,12 +1314,17 @@ async function main() {
           laneIndex
         });
 
-        nextBundle.articles[entry.key] = {
+        const routeArticle = {
           articleKey: entry.key,
           game: 'colordle',
           date: articleDate,
           ...article
         };
+        persistenceQueue = persistenceQueue.then(async () => {
+          await persistRouteArticle(routeStores, entry.key, routeArticle);
+          await writeBundleFromRouteStores(routeStores);
+        });
+        await persistenceQueue;
       } else {
         article = await generateWithProviders({
           game: 'generic',
@@ -1153,7 +1335,7 @@ async function main() {
           laneIndex
         });
 
-        nextBundle.articles[entry.key] = {
+        const routeArticle = {
           articleKey: entry.key,
           date: targetDate,
           title: article.title,
@@ -1162,22 +1344,26 @@ async function main() {
           bonusHints: article.bonusHints,
           meta: article.meta
         };
+        persistenceQueue = persistenceQueue.then(async () => {
+          await persistRouteArticle(routeStores, entry.key, routeArticle);
+          await writeBundleFromRouteStores(routeStores);
+        });
+        await persistenceQueue;
       }
 
       completedEntries.push(
         `${entry.key} -> articleDate=${articleDate}, provider=${article.meta?.provider ?? 'unknown'}, model=${article.meta?.model ?? 'unknown'}, words=${article.meta?.wordCount ?? 0}`
       );
       console.log(`[lane ${laneIndex + 1}] [${entry.key}] Saved article for ${articleDate}.`);
-      nextBundle.generatedAt = new Date().toISOString();
-      await writeBundle(nextBundle);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       failedEntries.push(`${entry.key}: ${message}`);
       console.warn(`[lane ${laneIndex + 1}] [${entry.key}] Skipping article generation: ${message}`);
-      nextBundle.generatedAt = new Date().toISOString();
-      await writeBundle(nextBundle);
     }
   });
+
+  await persistenceQueue;
+  await writeBundleFromRouteStores(routeStores);
 
   if (completedEntries.length > 0) {
     console.log('Successful daily article routes:');
