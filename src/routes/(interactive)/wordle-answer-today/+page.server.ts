@@ -12,6 +12,8 @@ interface TodayApiResponse extends WordleAnswer {
     social_image_direct?: string;
 }
 
+const STATIC_WORDLE_TODAY_IMAGE = 'https://wordsolver.tech/Wordle-Answer-today.webp';
+
 export const load: PageServerLoad = async ({ setHeaders }) => {
     const today = getPuzzleDateForGame('wordle');
     const todayKey = format(today, 'yyyy-MM-dd');
@@ -26,11 +28,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     }
 
     const recentAnswers = wordleData?.recent_answers || [];
-    const directSocialImage =
-        wordleData?.social_image_direct ||
-        recentAnswers.find((answer) => answer.date === (wordleData?.date ?? todayKey))?.social_image ||
-        wordleData?.social_image ||
-        'https://wordsolver.tech/wordsolverx.webp';
+    const directSocialImage = STATIC_WORDLE_TODAY_IMAGE;
     const generatedArticle = getWordleDailyArticle(wordleData?.date ?? todayKey);
     const normalizedWordleData = wordleData
         ? {

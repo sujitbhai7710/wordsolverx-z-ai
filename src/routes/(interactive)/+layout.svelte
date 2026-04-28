@@ -1,6 +1,8 @@
 <script lang="ts">
         import '../../interactive.css';
+        import { browser } from '$app/environment';
         import { onMount } from 'svelte';
+        import { tick } from 'svelte';
         import { page } from '$app/stores';
         import Navigation from '$lib/components/Navigation.svelte';
         import Footer from '$lib/components/Footer.svelte';
@@ -17,6 +19,8 @@
         import type { TodayArticleKey } from '$lib/daily-article-content';
 
         let { children } = $props();
+        let pageContentEl: HTMLElement | null = null;
+        let generatedArticleEl: HTMLDivElement | null = null;
         const handledInline = new Set(['wordle-answer-today', 'colordle-answer-today']);
         const mainScheduleRoutes = new Set([
                 'canuckle-answer-today',
@@ -54,6 +58,25 @@
                 return null;
         });
 
+        async function placeGeneratedArticleBlock() {
+                if (!browser || !layoutArticleKey || !layoutArticleDate || !pageContentEl || !generatedArticleEl) {
+                        return;
+                }
+
+                await tick();
+
+                const firstStaticArticle = pageContentEl.querySelector('article');
+                const authorSection = pageContentEl.querySelector('section[aria-labelledby="author-heading"]');
+                const anchor = firstStaticArticle ?? authorSection;
+
+                if (anchor?.parentElement) {
+                        anchor.parentElement.insertBefore(generatedArticleEl, anchor);
+                        return;
+                }
+
+                pageContentEl.appendChild(generatedArticleEl);
+        }
+
         onMount(() => {
                 if (import.meta.env.DEV || $page.url.searchParams.has('perfDebug')) {
                         PerformanceMonitor.init();
@@ -65,6 +88,10 @@
                         AnalyticsTracker.trackPageView($page.url.pathname);
                 }
         });
+
+        $effect(() => {
+                void placeGeneratedArticleBlock();
+        });
 </script>
 
 <SiteDefaultsHead />
@@ -73,9 +100,11 @@
         <ErrorBoundary>
                 <Navigation />
                 <main class="site-main flex-grow">
-                        {@render children()}
+                        <div bind:this={pageContentEl}>
+                                {@render children()}
+                        </div>
                         {#if layoutArticleKey && layoutArticleDate}
-                                <div class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+                                <div bind:this={generatedArticleEl} class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
                                         <GeneratedTodayArticle articleKey={layoutArticleKey} articleDate={layoutArticleDate} />
                                 </div>
                         {/if}
