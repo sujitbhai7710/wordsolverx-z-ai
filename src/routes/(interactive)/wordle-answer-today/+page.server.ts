@@ -12,9 +12,10 @@ interface TodayApiResponse extends WordleAnswer {
     social_image_direct?: string;
 }
 
+const SITE_URL = 'https://wordsolverx.com';
 const STATIC_WORDLE_TODAY_IMAGE_PATH = '/Wordle-Answer-today.webp';
 
-export const load: PageServerLoad = async ({ setHeaders, url }) => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
     const today = getPuzzleDateForGame('wordle');
     const todayKey = format(today, 'yyyy-MM-dd');
     const fallbackNumber = getWordleNumber(today);
@@ -28,7 +29,11 @@ export const load: PageServerLoad = async ({ setHeaders, url }) => {
     }
 
     const recentAnswers = wordleData?.recent_answers || [];
-    const directSocialImage = new URL(STATIC_WORDLE_TODAY_IMAGE_PATH, url.origin).toString();
+    // This page is prerendered, so using url.origin would resolve to
+    // http://sveltekit-prerender during the build. Keep the in-page image relative
+    // and use an absolute production URL only for metadata.
+    const directSocialImage = STATIC_WORDLE_TODAY_IMAGE_PATH;
+    const socialImageUrl = `${SITE_URL}${STATIC_WORDLE_TODAY_IMAGE_PATH}`;
     const generatedArticle = getWordleDailyArticle(wordleData?.date ?? todayKey);
     const normalizedWordleData = wordleData
         ? {
@@ -83,7 +88,6 @@ export const load: PageServerLoad = async ({ setHeaders, url }) => {
         mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/wordle-answer-today' },
     };
 
-    const socialImageUrl = directSocialImage;
     const currentMonth = format(today, 'MMMM');
     const pageTitle = `Wordle Answer Today - ${currentMonth} - Updated`;
     const pageDescription = `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. See the full solution for Wordle #${wordleNumber}, plus clue details and recent answers.`;
