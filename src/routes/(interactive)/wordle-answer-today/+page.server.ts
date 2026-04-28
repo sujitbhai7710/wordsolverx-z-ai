@@ -12,9 +12,9 @@ interface TodayApiResponse extends WordleAnswer {
     social_image_direct?: string;
 }
 
-const STATIC_WORDLE_TODAY_IMAGE = 'https://wordsolver.tech/Wordle-Answer-today.webp';
+const STATIC_WORDLE_TODAY_IMAGE_PATH = '/Wordle-Answer-today.webp';
 
-export const load: PageServerLoad = async ({ setHeaders }) => {
+export const load: PageServerLoad = async ({ setHeaders, url }) => {
     const today = getPuzzleDateForGame('wordle');
     const todayKey = format(today, 'yyyy-MM-dd');
     const fallbackNumber = getWordleNumber(today);
@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     }
 
     const recentAnswers = wordleData?.recent_answers || [];
-    const directSocialImage = STATIC_WORDLE_TODAY_IMAGE;
+    const directSocialImage = new URL(STATIC_WORDLE_TODAY_IMAGE_PATH, url.origin).toString();
     const generatedArticle = getWordleDailyArticle(wordleData?.date ?? todayKey);
     const normalizedWordleData = wordleData
         ? {
@@ -77,10 +77,10 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         headline: `Wordle Hints and Answer for Today (${formattedDate})`,
         datePublished: new Date(normalizedWordleData?.date || today).toISOString(),
         dateModified: new Date(normalizedWordleData?.date || today).toISOString(),
-        author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolver.tech/about#preston-hayes', 'https://wordsolver.tech/auther-wordsolverx.webp'),
-        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/wordsolverx.webp' } },
+        author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolverx.com/about#preston-hayes', 'https://wordsolverx.com/auther-wordsolverx.webp'),
+        publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } },
         description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
-        mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/wordle-answer-today' },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/wordle-answer-today' },
     };
 
     const socialImageUrl = directSocialImage;

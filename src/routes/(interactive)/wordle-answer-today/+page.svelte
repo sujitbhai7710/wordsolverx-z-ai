@@ -22,12 +22,12 @@
   <meta name="description" content={data.meta.description} />
   <meta name="keywords" content={data.meta.keywords ?? 'wordle answer today, wordle answer, wordle hint, wordle hint today'} />
   <meta name="news_keywords" content="wordle, wordle answer, wordle today, nyt wordle, daily word puzzle" />
-  <link rel="canonical" href="https://wordsolver.tech/wordle-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/wordle-answer-today" />
   <meta property="og:title" content={data.meta.title} />
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:image" content={data.meta.socialImage} />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://wordsolver.tech/wordle-answer-today" />
+  <meta property="og:url" content="https://wordsolverx.com/wordle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
@@ -38,7 +38,7 @@
     '@type': 'WebPage',
     name: data.meta.title,
     description: data.meta.description,
-    url: 'https://wordsolver.tech/wordle-answer-today'
+    url: 'https://wordsolverx.com/wordle-answer-today'
   })}</script>`}
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
