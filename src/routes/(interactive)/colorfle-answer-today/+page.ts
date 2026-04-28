@@ -2,7 +2,7 @@ import {
   buildColorfleAnswerPayload,
   getColorfleArchiveEntries
 } from '$lib/colorfle';
-import { getMainDailyDate } from '$lib/main-daily-date';
+import { getPuzzleDateForGame } from '$lib/puzzle-window';
 import {
   generateBreadcrumbSchema,
   generateFAQSchema,
@@ -22,7 +22,7 @@ function formatDate(date: Date): string {
 }
 
 export const load = () => {
-  const today = getMainDailyDate();
+  const today = getPuzzleDateForGame('colorfle');
   const formattedDate = formatDate(today);
   const answer = buildColorfleAnswerPayload(today, 0);
   const recentEntries = getColorfleArchiveEntries(10, today).slice(1);
@@ -30,7 +30,7 @@ export const load = () => {
   const currentMonth = today.toLocaleDateString('en-US', { month: 'long' });
   const pageTitle = `Colorfle Answer Today - ${currentMonth} - Updated`;
   const pageDescription = `Get today's Colorfle answer for ${formattedDate}. Colorfle shows a target color and you guess the three colors that mix to create it. See the exact answer hex, source colors, and weights.`;
-  const pageUrl = 'https://wordsolver.tech/colorfle-answer-today';
+  const pageUrl = 'https://wordsolverx.com/colorfle-answer-today';
 
   const schemas = JSON.stringify([
     generateWebPageSchema('Colorfle Answer Today', pageDescription, pageUrl),
@@ -41,8 +41,8 @@ export const load = () => {
       { name: 'Use the solver or archive', text: 'Open the solver to work backward from a color or browse older Colorfle entries in the archive.' }
     ]),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Today', url: 'https://wordsolver.tech/today' },
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Today', url: 'https://wordsolverx.com/today' },
       { name: 'Colorfle Answer Today', url: pageUrl }
     ]),
     generateFAQSchema([

@@ -258,57 +258,25 @@ export function mountWordlebotApp(target: HTMLElement, config: WordlebotAppPageC
                         return;
                 }
 
-                target.innerHTML = `
-                        <main class="solver-page">
-                                <div class="solver-container canuckle-daily-container">
-                                        <section class="canuckle-summary-card">
-                                                <div class="canuckle-summary-grid">
-                                                        <div>
-                                                                <p class="canuckle-label">Current puzzle</p>
-                                                                <h2 class="canuckle-number">#${today.index}</h2>
-                                                                <p class="canuckle-meta">${escapeHtml(formatCanuckleDate(today.date))}</p>
-                                                        </div>
-                                                        <div class="canuckle-actions">
-                                                                <a class="canuckle-action-btn" href="${getCanucklePagePath('archive')}">Browse archive</a>
-                                                                <a class="canuckle-action-btn secondary" href="${getCanucklePagePath('solver')}">Open solver</a>
-                                                        </div>
-                                                </div>
-                                        </section>
+						target.innerHTML = `
+							<main class="solver-page">
+								<div class="solver-container canuckle-daily-container">
+									<div class="canuckle-plain">
+										<h2 class="canuckle-h2">Puzzle #${today.index}</h2>
+										<p class="canuckle-date">${escapeHtml(formatCanuckleDate(today.date))}</p>
 
-                                        <section class="canuckle-story-card">
-                                                <div class="canuckle-story-head">
-                                                        <p class="canuckle-kicker">Verified daily fact</p>
-                                                        <h2 class="canuckle-story-title">Today's Canuckle Clue Card</h2>
-                                                        <p class="canuckle-story-note">
-                                                                The fact stays visible, but the answer stays hidden until you choose to reveal it.
-                                                        </p>
-                                                </div>
-                                                <div class="canuckle-fact">${renderCanuckleFact(today)}</div>
-                                                <details class="canuckle-reveal-card">
-                                                        <summary>
-                                                                <div class="canuckle-reveal-copy">
-                                                                        <span class="canuckle-reveal-title">Reveal today's answer</span>
-                                                                        <span class="canuckle-reveal-hint">
-                                                                                <span class="canuckle-when-closed">Spoiler hidden until you tap.</span>
-                                                                                <span class="canuckle-when-open">Answer revealed. Tap again to hide it.</span>
-                                                                        </span>
-                                                                </div>
-                                                                <span class="canuckle-reveal-toggle">
-                                                                        <span class="canuckle-when-closed">Show</span>
-                                                                        <span class="canuckle-when-open">Hide</span>
-                                                                </span>
-                                                        </summary>
-                                                        <div class="canuckle-answer-wrap">
-                                                                <p class="canuckle-answer">${escapeHtml(today.answer.toUpperCase())}</p>
-                                                                <p class="canuckle-answer-note">
-                                                                        Puzzle #${today.index} - ${escapeHtml(formatCanuckleDate(today.date))}
-                                                                </p>
-                                                        </div>
-                                                </details>
-                                        </section>
-                                </div>
-                        </main>
-                `;
+										<h3 class="canuckle-h3">Answer</h3>
+										<div class="canuckle-answer-reveal">
+											<p class="canuckle-answer-word">${escapeHtml(today.answer.toUpperCase())}</p>
+											<p class="canuckle-answer-note">Puzzle #${today.index} · ${escapeHtml(formatCanuckleDate(today.date))}</p>
+										</div>
+
+										<h3 class="canuckle-h3">Canadian Fact</h3>
+										<div class="canuckle-fact-text">${renderCanuckleFact(today)}</div>
+									</div>
+								</div>
+							</main>
+						`;
         }
 
         async function renderCanuckleArchive() {

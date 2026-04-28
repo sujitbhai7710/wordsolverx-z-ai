@@ -158,8 +158,8 @@ export function generateOrganizationSchema(): SchemaOrganization {
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'WordSolverX',
-        url: 'https://wordsolver.tech',
-        logo: 'https://wordsolver.tech/wordsolverx.webp',
+        url: 'https://wordsolverx.com',
+        logo: 'https://wordsolverx.com/wordsolverx.webp',
         sameAs: SOCIAL_PROFILE_URLS,
     };
 }
@@ -200,10 +200,10 @@ export function generateArticleSchema(config: {
         publisher: {
             '@type': 'Organization',
             name: 'WordSolverX',
-            url: 'https://wordsolver.tech',
+            url: 'https://wordsolverx.com',
             logo: {
                 '@type': 'ImageObject',
-                url: 'https://wordsolver.tech/wordsolverx.webp',
+                url: 'https://wordsolverx.com/wordsolverx.webp',
             },
         },
         mainEntityOfPage: config.url,
@@ -491,7 +491,7 @@ export function generateMetaTags(config: MetaTagsConfig): Record<string, string>
         description,
         keywords = [],
         canonicalUrl,
-        ogImage = 'https://wordsolver.tech/wordsolverx.webp',
+        ogImage = 'https://wordsolverx.com/wordsolverx.webp',
         twitterCard = 'summary_large_image',
     } = config;
 

@@ -16,7 +16,7 @@
   <title>{data.meta?.title ?? 'Semantle Answer Today'}</title>
   <meta name="description" content={data.meta?.description ?? ''} />
   <meta name="news_keywords" content={data.meta?.keywords ?? 'semantle answer today, semantle answer, semantle hint, semantle hint today'} />
-  <link rel="canonical" href="https://wordsolver.tech/semantle-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/semantle-answer-today" />
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
   {/if}
@@ -101,7 +101,7 @@
       <!-- Comprehensive SEO Article -->
       <article class="mt-12 space-y-8">
         <!-- What is Semantle? -->
-        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
             What Is Semantle?
           </h2>
@@ -120,7 +120,7 @@
         </section>
 
         <!-- How Semantle Works -->
-        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
             How Semantle Works: Scoring, Similarity, and the Daily Cycle
           </h2>
@@ -172,7 +172,7 @@
         </section>
 
         <!-- Past Semantle Answers -->
-        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
             Past Semantle Answers: Archives and Word Patterns
           </h2>
@@ -188,7 +188,7 @@
         </section>
 
         <!-- Tips for Semantle -->
-        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
             Semantle Strategy: Solving Puzzles Faster
           </h2>
@@ -238,7 +238,7 @@
         </section>
 
         <!-- Semantle Statistics -->
-        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
             Semantle Statistics: Understanding the Game's Difficulty
           </h2>
@@ -275,7 +275,7 @@
         </section>
 
         <!-- FAQ -->
-        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+        <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
             Semantle FAQ: Common Questions from Players
           </h2>

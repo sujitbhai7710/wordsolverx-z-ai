@@ -12,9 +12,9 @@ export const AUTHORS = [
 ];
 
 export const PRESTON_HAYES_AUTHOR_NAME = 'Preston Hayes';
-export const PRESTON_HAYES_AUTHOR_URL = 'https://wordsolver.tech/about#preston-hayes';
+export const PRESTON_HAYES_AUTHOR_URL = 'https://wordsolverx.com/about#preston-hayes';
 export const PRESTON_HAYES_AUTHOR_IMAGE = '/auther-wordsolverx.webp';
-export const PRESTON_HAYES_AUTHOR_IMAGE_URL = 'https://wordsolver.tech/auther-wordsolverx.webp';
+export const PRESTON_HAYES_AUTHOR_IMAGE_URL = 'https://wordsolverx.com/auther-wordsolverx.webp';
 export const PRESTON_HAYES_AUTHOR_DESCRIPTION =
     'Preston Hayes writes clear daily answer guides and archive pages for WordSolverX, helping readers find the right solution quickly.';
 
@@ -28,7 +28,7 @@ export function getAuthorForGame(gameName: string): string {
 export function getAuthorProfileUrl(authorName: string): string {
     // In a real app, this would link to an author bio page
     // For now, we can link to the about page or just return a hash
-    return `https://wordsolver.tech/about#${authorName.toLowerCase().replace(' ', '-')}`;
+    return `https://wordsolverx.com/about#${authorName.toLowerCase().replace(' ', '-')}`;
 }
 
 export function getPrestonHayesAuthorSchema() {

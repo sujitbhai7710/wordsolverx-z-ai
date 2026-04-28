@@ -13,7 +13,7 @@
         const pageTitle = 'Wordle Analyzer - Replay and Grade Every Move';
         const pageDescription =
                 'Paste a finished Wordle, see turn-by-turn AI comparison, check hard mode discipline, and generate spoiler-safe share links. Analyze every guess after the answer is known.';
-        const pageUrl = 'https://wordsolver.tech/wordle-analyzer';
+        const pageUrl = 'https://wordsolverx.com/wordle-analyzer';
 
         const faqs = [
                 {
@@ -83,8 +83,8 @@
                         keywords: ['wordle analyzer', 'wordle replay', 'wordle review', 'wordle hard mode checker']
                 },
                 generateBreadcrumbSchema([
-                        { name: 'Home', url: 'https://wordsolver.tech' },
-                        { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+                        { name: 'Home', url: 'https://wordsolverx.com' },
+                        { name: 'Solver', url: 'https://wordsolverx.com/solver' },
                         { name: 'Wordle Analyzer', url: pageUrl }
                 ]),
                 generateWebPageSchema('Wordle Analyzer', pageDescription, pageUrl)
@@ -103,7 +103,7 @@
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:image" content="https://wordsolver.tech/images/wordle-analyzer.webp" />
+        <meta property="og:image" content="https://wordsolverx.com/images/wordle-analyzer.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />

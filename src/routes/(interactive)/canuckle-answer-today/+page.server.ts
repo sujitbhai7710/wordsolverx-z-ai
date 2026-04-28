@@ -194,9 +194,9 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolver.tech' },
-                                { '@type': 'ListItem', position: 2, name: 'Game Answers', item: 'https://wordsolver.tech/game-answers' },
-                                { '@type': 'ListItem', position: 3, name: 'Canuckle Answer Today', item: 'https://wordsolver.tech/canuckle-answer-today' }
+                                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolverx.com' },
+                                { '@type': 'ListItem', position: 2, name: 'Game Answers', item: 'https://wordsolverx.com/game-answers' },
+                                { '@type': 'ListItem', position: 3, name: 'Canuckle Answer Today', item: 'https://wordsolverx.com/canuckle-answer-today' }
                         ]
                 },
                 {
@@ -208,11 +208,11 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
                         author: {
                                 '@type': 'Person',
                                 name: 'Preston Hayes',
-                                image: 'https://wordsolver.tech/auther-wordsolverx.webp',
-                                url: 'https://wordsolver.tech/about#preston-hayes'
+                                image: 'https://wordsolverx.com/auther-wordsolverx.webp',
+                                url: 'https://wordsolverx.com/about#preston-hayes'
                         },
                         publisher: { '@type': 'Organization', name: 'WordSolverX' },
-                        mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/canuckle-answer-today' },
+                        mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/canuckle-answer-today' },
                         description: pageDescription,
                         image: ['/images/canuckle-answer-today.webp']
                 }

@@ -79,7 +79,7 @@
   let error = $derived(data?.error ?? null);
   let dateStr = $derived(data?.dateStr ?? '');
 
-  let canonicalUrl = $derived(`https://wordsolver.tech/${gameKey}-answer-today`);
+  let canonicalUrl = $derived(`https://wordsolverx.com/${gameKey}-answer-today`);
   let seoDate = $derived(dateStr ? dateStr.replace(/^[^,]+,\s*/, '') : '');
   let publishedDate = $derived(answers[0]?.date ?? '');
   let pageTitle = $derived(
@@ -96,7 +96,7 @@
     data?.meta?.keywords ??
       `${gameKey} answer today, ${gameKey} answer, ${gameKey} hint, ${gameKey} hint today${seoDate ? `, ${gameKey} answer for ${seoDate}` : ''}`
   );
-  let pageImage = $derived(data?.meta?.featuredImage ?? 'https://wordsolver.tech/wordsolverx.webp');
+  let pageImage = $derived(data?.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp');
   let crossLinkColsClass = $derived(crossLinks.length > 4 ? 'md:grid-cols-5' : 'md:grid-cols-4');
 
   function normalizeStructuredData(input: unknown): unknown {
@@ -194,8 +194,8 @@
     },
     author: generatePersonAuthorSchema(
       'Preston Hayes',
-      'https://wordsolver.tech/about#preston-hayes',
-      'https://wordsolver.tech/auther-wordsolverx.webp'
+      'https://wordsolverx.com/about#preston-hayes',
+      'https://wordsolverx.com/auther-wordsolverx.webp'
     ),
     publisher: {
       '@type': 'Organization',
@@ -248,7 +248,7 @@
 
 <div class="min-h-screen bg-slate-100">
   <div class="bg-white shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 py-10">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-10">
       <h1 class="text-4xl font-extrabold text-slate-900">{pageHeading}</h1>
       {#if dateStr}
         <p class="mt-2 text-lg text-slate-600">{dateStr}</p>
@@ -256,7 +256,7 @@
     </div>
   </div>
 
-  <div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="max-w-6xl mx-auto px-3 sm:px-4 py-8">
     {#if loading}
       <div class={`grid ${gridCols} gap-6`}>
         {#each Array(modes.length) as _}
@@ -338,7 +338,7 @@
         </div>
       {/each}
 
-      <div class="mb-12 rounded-3xl bg-white p-8 shadow-sm md:p-12">
+      <div class="mb-12">
         {@render seoContent()}
       </div>
 
@@ -352,7 +352,7 @@
     {/if}
   </div>
 
-  <div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="max-w-6xl mx-auto px-3 sm:px-4 py-12">
     <h2 class="mb-6 text-center text-xl font-bold text-slate-800">More Games</h2>
     <div class={`grid grid-cols-2 ${crossLinkColsClass} gap-4`}>
       {#each crossLinks as link}

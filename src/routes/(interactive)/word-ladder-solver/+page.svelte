@@ -221,7 +221,7 @@
                                 name: 'Word Ladder Solver',
                                 description:
                                         'Find mixed word ladder paths with manual answer limits and post-solve filters for words and steps.',
-                                url: 'https://wordsolver.tech/word-ladder-solver',
+                                url: 'https://wordsolverx.com/word-ladder-solver',
                                 applicationCategory: 'GameApplication',
                                 offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
                         },
@@ -234,8 +234,8 @@
                                 { name: 'Filter the results', text: 'Use the step-count buttons to see only paths of a certain length, or type a word in the search box to find paths that pass through it.' }
                         ]),
                         generateBreadcrumbSchema([
-                                { name: 'Home', url: 'https://wordsolver.tech' },
-                                { name: 'Word Ladder Solver', url: 'https://wordsolver.tech/word-ladder-solver' }
+                                { name: 'Home', url: 'https://wordsolverx.com' },
+                                { name: 'Word Ladder Solver', url: 'https://wordsolverx.com/word-ladder-solver' }
                         ])
                 ]
         });
@@ -247,15 +247,15 @@
                 name="description"
                 content="Find mixed word ladder paths, search results by word, filter by steps after solving, and use manual answer limits with Our Word List, OWL2, or SOWPODS."
         />
-        <link rel="canonical" href="https://wordsolver.tech/word-ladder-solver" />
+        <link rel="canonical" href="https://wordsolverx.com/word-ladder-solver" />
         <meta property="og:title" content="Word Ladder Solver" />
         <meta
                 property="og:description"
                 content="Solve word ladders with mixed step counts plus post-solve word and step filters."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wordsolver.tech/word-ladder-solver" />
-        <meta property="og:image" content="https://wordsolver.tech/images/word-ladder-solver.webp" />
+        <meta property="og:url" content="https://wordsolverx.com/word-ladder-solver" />
+        <meta property="og:image" content="https://wordsolverx.com/images/word-ladder-solver.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Word Ladder Solver" />
         <meta

@@ -40,7 +40,7 @@ export const load: PageServerLoad = async () => {
   const pageDescription = `Get Worldle hints and the confirmed Worldle answer for today, ${formattedTodayDate}. Today's country is ${todayAnswer.country.name}, with a direct link to the full Worldle archive for older puzzles.`;
   const pageKeywords = `worldle answer today, worldle answer, worldle hint, worldle hint today, worldle answer for ${formattedTodayDate}`;
 
-  const pageUrl = 'https://wordsolver.tech/worldle-answer-today';
+  const pageUrl = 'https://wordsolverx.com/worldle-answer-today';
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -58,7 +58,7 @@ export const load: PageServerLoad = async () => {
       name: 'WordSolverX',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://wordsolver.tech/images/worldle-answer-today.webp',
+        url: 'https://wordsolverx.com/images/worldle-answer-today.webp',
       },
     },
     mainEntityOfPage: {
@@ -86,8 +86,8 @@ export const load: PageServerLoad = async () => {
     ]),
     generateSoftwareApplicationSchema('Worldle Answer Today', 'UtilitiesApplication'),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Today', url: 'https://wordsolver.tech/today' },
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Today', url: 'https://wordsolverx.com/today' },
       { name: 'Worldle Answer Today', url: pageUrl },
     ]),
     generateWebPageSchema('Worldle Answer Today', pageDescription, pageUrl),

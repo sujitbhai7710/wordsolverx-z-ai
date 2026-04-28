@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import PhoodleAnswerCard from '$lib/components/PhoodleAnswerCard.svelte';
   import {
@@ -18,7 +18,7 @@
     '@type': 'WebPage',
     name: pageTitle,
     description: pageDescription,
-    url: 'https://wordsolver.tech/phoodle-answer-today'
+    url: 'https://wordsolverx.com/phoodle-answer-today'
   }));
 </script>
 
@@ -28,15 +28,15 @@
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://wordsolver.tech/phoodle-answer-today" />
+  <meta property="og:url" content="https://wordsolverx.com/phoodle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
-  <meta property="og:image" content="https://wordsolver.tech/images/phoodle-answer-today.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/phoodle-answer-today.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://wordsolver.tech/images/phoodle-answer-today.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/images/phoodle-answer-today.webp" />
   <meta name="news_keywords" content={data.meta?.keywords ?? 'phoodle answer today, phoodle answer, phoodle hint, phoodle hint today'} />
-  <link rel="canonical" href="https://wordsolver.tech/phoodle-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/phoodle-answer-today" />
   {@html `<script type="application/ld+json">${pageSchema}</script>`}
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
@@ -140,7 +140,7 @@
 
       <!-- SEO Content Section -->
       <article class="mt-12 space-y-8">
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
           <h2 class="text-3xl font-bold text-slate-900 mb-6">
             What is Phoodle?
           </h2>
@@ -158,7 +158,7 @@
           </p>
         </section>
 
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
           <h2 class="text-3xl font-bold text-slate-900 mb-6">
             How Phoodle Works
           </h2>
@@ -176,7 +176,7 @@
           </p>
         </section>
 
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
           <h2 class="text-3xl font-bold text-slate-900 mb-6">
             Today&apos;s Phoodle Answer: {data.word.toUpperCase()}
           </h2>
@@ -191,7 +191,7 @@
           </p>
         </section>
 
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
           <h2 class="text-3xl font-bold text-slate-900 mb-6">
             How to Get Better at Phoodle
           </h2>
@@ -249,7 +249,7 @@
           </div>
         </section>
 
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
           <h2 class="text-3xl font-bold text-slate-900 mb-6">
             Common Phoodle Words to Know
           </h2>
@@ -286,7 +286,7 @@
           </div>
         </section>
 
-        <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
           <h2 class="text-3xl font-bold text-slate-900 mb-6">
             Phoodle vs Other Word Games
           </h2>

@@ -190,8 +190,8 @@
         { name: 'Review the paths', text: 'Up to 5 shortest paths appear as letter grids. Green tiles show letters that match the target word at that position.' },
       ]),
       generateBreadcrumbSchema([
-        { name: 'Home', url: 'https://wordsolver.tech' },
-        { name: 'Weaver Solver', url: 'https://wordsolver.tech/weaver-solver' },
+        { name: 'Home', url: 'https://wordsolverx.com' },
+        { name: 'Weaver Solver', url: 'https://wordsolverx.com/weaver-solver' },
       ]),
     ],
   });
@@ -201,13 +201,13 @@
   <title>Weaver Solver - Word Ladder Helper</title>
   <meta name="description" content="Solve any Weaver word ladder puzzle with our free solver. Find the shortest path between two words by changing one letter at a time." />
   <meta name="keywords" content="Weaver Solver, Word Ladder, Weaver Game, Weaver Answer, Word Puzzle Solver" />
-  <link rel="canonical" href="https://wordsolver.tech/weaver-solver" />
+  <link rel="canonical" href="https://wordsolverx.com/weaver-solver" />
   <meta property="og:title" content="Weaver Solver - Word Ladder Helper" />
   <meta property="og:description" content="Find the shortest word ladder path between any two words." />
-  <meta property="og:url" content="https://wordsolver.tech/weaver-solver" />
+  <meta property="og:url" content="https://wordsolverx.com/weaver-solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://wordsolver.tech/images/weaver-solver.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/weaver-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Weaver Solver" />
   <meta name="twitter:description" content="Solve Weaver word ladder puzzles instantly." />

@@ -24,7 +24,7 @@
 	}
 
 	const MAX_GUESSES = 6;
-	const PAGE_URL = 'https://wordsolver.tech/wordle-analyzer';
+	const PAGE_URL = 'https://wordsolverx.com/wordle-analyzer';
 	const INPUT_LABELS = ['Guess 1', 'Guess 2', 'Guess 3', 'Guess 4', 'Guess 5', 'Guess 6', 'Answer'];
 	const EXAMPLE_INPUTS = ['slate', 'crane', '', '', '', '', 'trace'];
 

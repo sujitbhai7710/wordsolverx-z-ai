@@ -51,7 +51,7 @@
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${seoTitle} | WordSolverX`} />
         <meta name="twitter:description" content={config.description} />
-        <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+        <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
         <link rel="canonical" href={config.pageUrl} />
         {@html `<script type="application/ld+json">${structuredData}</script>`}
 </svelte:head>

@@ -14,17 +14,17 @@
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
   <meta name="news_keywords" content={data.meta.keywords ?? 'globle answer today, globle answer, globle hint, globle hint today'} />
-  <link rel="canonical" href="https://wordsolver.tech/globle-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/globle-answer-today" />
   <meta property="og:title" content={data.meta.title} />
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://wordsolver.tech/globle-answer-today" />
-  <meta property="og:image" content={data.meta.featuredImage ?? 'https://wordsolver.tech/images/globle-answer-today.webp'} />
+  <meta property="og:url" content="https://wordsolverx.com/globle-answer-today" />
+  <meta property="og:image" content={data.meta.featuredImage ?? 'https://wordsolverx.com/images/globle-answer-today.webp'} />
   <meta property="og:image:alt" content={`Globle hints and answer for ${data.formattedDate}`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
-  <meta name="twitter:image" content={data.meta.featuredImage ?? 'https://wordsolver.tech/images/globle-answer-today.webp'} />
+  <meta name="twitter:image" content={data.meta.featuredImage ?? 'https://wordsolverx.com/images/globle-answer-today.webp'} />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
@@ -95,7 +95,7 @@
     <!-- Comprehensive SEO Article -->
     <article class="mt-12 space-y-8">
       <!-- What is Globle? -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           What Is Globle?
         </h2>
@@ -114,7 +114,7 @@
       </section>
 
       <!-- How Globle Works -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           How Globle Works: Rules, Hints, and the Daily Cycle
         </h2>
@@ -166,7 +166,7 @@
       </section>
 
       <!-- Past Globle Answers -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Past Globle Answers: Patterns in the Country Selection
         </h2>
@@ -182,7 +182,7 @@
       </section>
 
       <!-- Tips for Globle -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Globle Strategy: Tips from Experienced Players
         </h2>
@@ -227,7 +227,7 @@
       </section>
 
       <!-- Globle Statistics -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Globle Statistics: Geography by the Numbers
         </h2>
@@ -264,7 +264,7 @@
       </section>
 
       <!-- FAQ -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Globle FAQ: Questions Geography Fans Ask
         </h2>

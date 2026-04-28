@@ -12,16 +12,16 @@
 <svelte:head>
   <title>Countryle Archive - Daily Country Answers History | WordSolverX</title>
   <meta name="description" content="Browse the Countryle archive by date and review past countries, continents, populations, coordinates, and map links from the saved static dataset." />
-  <link rel="canonical" href="https://wordsolver.tech/countryle-archive" />
+  <link rel="canonical" href="https://wordsolverx.com/countryle-archive" />
   <meta property="og:title" content="Countryle Archive - Daily Country Answers History" />
   <meta property="og:description" content="Look up previous Countryle answers with a static archive of countries and date-based puzzle entries." />
-  <meta property="og:url" content="https://wordsolver.tech/countryle-archive" />
+  <meta property="og:url" content="https://wordsolverx.com/countryle-archive" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Countryle Archive" />
   <meta name="twitter:description" content="Search the saved Countryle answer archive by date." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
 </svelte:head>
 
 <div class="min-h-screen py-10">

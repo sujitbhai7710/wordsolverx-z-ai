@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import WaffleAnswerCard from '$lib/components/WaffleAnswerCard.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
@@ -17,7 +17,7 @@
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
   <meta name="news_keywords" content={data.meta.keywords ?? 'waffle answer today, waffle answer, waffle hint, waffle hint today'} />
-  <link rel="canonical" href="https://wordsolver.tech/waffle-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/waffle-answer-today" />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
@@ -116,7 +116,7 @@
 
   <!-- SEO Content Section -->
   <article class="space-y-8 mb-12">
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+    <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
       <h2 class="text-3xl font-bold text-slate-900 mb-6">
         What is Waffle?
       </h2>
@@ -134,7 +134,7 @@
       </p>
     </section>
 
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+    <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
       <h2 class="text-3xl font-bold text-slate-900 mb-6">
         How to Play Waffle
       </h2>
@@ -175,7 +175,7 @@
       </div>
     </section>
 
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+    <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
       <h2 class="text-3xl font-bold text-slate-900 mb-6">
         Today's Waffle Answer — What You See on This Page
       </h2>
@@ -192,7 +192,7 @@
       </div>
     </section>
 
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+    <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
       <h2 class="text-3xl font-bold text-slate-900 mb-6">
         Strategy Tips for Solving Waffle Faster
       </h2>
@@ -238,7 +238,7 @@
       </div>
     </section>
 
-    <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+    <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
       <h2 class="text-3xl font-bold text-slate-900 mb-6">
         Waffle vs Other Daily Word Games
       </h2>

@@ -27,7 +27,7 @@
                         'Browse stored Nerdle answers by date for all modes: Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant.',
                 keywords:
                         'nerdle archive, nerdle all modes archive, nerdle classic micro mini midi maxi quad speed instant answers, nerdle previous answers',
-                canonical: 'https://wordsolver.tech/nerdle-archive'
+                canonical: 'https://wordsolverx.com/nerdle-archive'
         };
         const SCHEMAS = JSON.stringify([
                 {
@@ -41,8 +41,8 @@
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolver.tech' },
-                                { '@type': 'ListItem', position: 2, name: 'Archive', item: 'https://wordsolver.tech/archive' },
+                                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolverx.com' },
+                                { '@type': 'ListItem', position: 2, name: 'Archive', item: 'https://wordsolverx.com/archive' },
                                 { '@type': 'ListItem', position: 3, name: 'Nerdle Archive', item: META.canonical }
                         ]
                 }
@@ -263,11 +263,11 @@
         <meta property="og:url" content={META.canonical} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="WordSolverX" />
-        <meta property="og:image" content="https://wordsolver.tech/wordsolverx.webp" />
+        <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={META.title} />
         <meta name="twitter:description" content={META.description} />
-        <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+        <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
         {@html `<script type="application/ld+json">${SCHEMAS}</script>`}
 </svelte:head>
 

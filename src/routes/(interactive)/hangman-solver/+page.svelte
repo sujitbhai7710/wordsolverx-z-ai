@@ -13,7 +13,7 @@
   const pageTitle = 'Hangman Solver - Free Online Word Finder & Hint Tool | WordSolverX';
   const pageDescription =
     'Use this Hangman solver to enter your pattern, wrong letters, and included letters, then get the best next guess, ranked answers, and entropy-based letter suggestions.';
-  const pageUrl = 'https://wordsolver.tech/hangman-solver';
+  const pageUrl = 'https://wordsolverx.com/hangman-solver';
 
   const faqs = [
     {
@@ -60,8 +60,8 @@
       keywords: ['hangman solver', 'hangman helper', 'hangman word finder']
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
       { name: 'Hangman Solver', url: pageUrl }
     ]),
     generateWebPageSchema('Hangman Solver', pageDescription, pageUrl)
@@ -80,7 +80,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
   <link rel="canonical" href={pageUrl} />
-  <meta property="og:image" content="https://wordsolver.tech/images/hangman-solver.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/hangman-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
@@ -194,7 +194,7 @@
       </p>
     </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-lg">
+    <section class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-8 shadow-lg">
       <h2 class="text-3xl font-bold text-slate-900 mb-5">When to Trust the Solver and When to Trust Your Gut</h2>
       <p class="text-slate-600 leading-relaxed mb-4">
         The solver is always mathematically optimal for the information you've given it. But it can't see the board. If you're playing against a person who picks obscure words from specific categories (chemistry terms, brand names, place names), the solver's dictionary might not contain the answer at all.

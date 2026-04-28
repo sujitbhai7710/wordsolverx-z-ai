@@ -30,40 +30,52 @@
       { '@type': 'Question', name: 'When does Smashdle reset?', acceptedAnswer: { '@type': 'Answer', text: 'Smashdle resets daily at midnight UTC.' } },
       { '@type': 'Question', name: 'Is Smashdle free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Smashdle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'Smashdle Answer Today', description: 'Get the confirmed Smashdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/smashdle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/images/smashdle-answer-today.webp' } } },
+    { '@type': 'Article', headline: 'Smashdle Answer Today', description: 'Get the confirmed Smashdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/smashdle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/auther-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/smashdle-answer-today.webp' } } },
   ]};
 </script>
 
 <GameDleAnswerPage gameKey="smashdle" gameTitle="Smashdle" apiGame="smashdle" {modes} {modeConfig} {gridCols} {regions} {crossLinks} {schemas} {data}>
   {#snippet seoContent()}
     <article class="space-y-8">
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">What is Smashdle?</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          Smashdle is a free daily guessing game created for fans of Super Smash Bros., Nintendo's legendary crossover fighting game franchise. The series, created by Masahiro Sakurai and developed by Sora Ltd. and Bandai Namco Entertainment, brings together characters from dozens of different video game franchises into a single fighting game. The most recent entry, Super Smash Bros. Ultimate, features a roster of 89 playable fighters drawn from over 35 different game series, making it the largest crossover fighting game roster in history. Smashdle challenges players to identify mystery fighters from this massive roster using a variety of creative clues and puzzle modes.
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Smashdle is a free daily guessing game created for fans of Super Smash Bros., Nintendo's legendary crossover fighting game franchise. The series, created by Masahiro Sakurai and developed by Sora Ltd. and Bandai Namco Entertainment, brings together characters from dozens of different video game franchises into a single fighting game. The most recent entry, Super Smash Bros.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          The Super Smash Bros. franchise has a rich history spanning over two decades. The original Super Smash Bros. launched on the Nintendo 64 in 1999 with just 12 characters. Super Smash Bros. Melee (2001) for the GameCube expanded the roster to 26 and became a competitive fighting game phenomenon that is still played in tournaments today. Super Smash Bros. Brawl (2008) for the Wii introduced 39 characters and the Subspace Emissary story mode. Super Smash Bros. for Nintendo 3DS and Wii U (2014) featured 58 characters, and Super Smash Bros. Ultimate (2018) for the Nintendo Switch brought together "everyone is here" — every fighter from the entire series history — for a grand total of 89 fighters, with additional fighters added through downloadable content. This incredible historical depth is what makes Smashdle such a rich guessing experience, as the roster spans the entire history of console gaming.
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Ultimate, features a roster of 89 playable fighters drawn from over 35 different game series, making it the largest crossover fighting game roster in history. Smashdle challenges players to identify mystery fighters from this massive roster using a variety of creative clues and puzzle modes.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          What makes Smashdle particularly special within the "-dle" character guessing game genre — alongside LoLdle, Dotadle, Narutodle, Pokedle, and OnePiecedle — is the diversity of its character roster. Unlike games that draw from a single franchise, Smashdle features characters from entirely different gaming worlds. A single game of Smashdle might involve characters from Mario, The Legend of Zelda, Pokémon, Metroid, Fire Emblem, Animal Crossing, Street Fighter, Final Fantasy, Metal Gear Solid, Castlevania, Persona, and many more. This means that to truly excel at Smashdle, you need not just deep knowledge of one franchise, but broad familiarity with the history of video games as a whole. It is a celebration of gaming culture in its purest form.
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          The Super Smash Bros. franchise has a rich history spanning over two decades. The original Super Smash Bros. launched on the Nintendo 64 in 1999 with just 12 characters. Super Smash Bros. Melee (2001) for the GameCube expanded the roster to 26 and became a competitive fighting game phenomenon that is still played in tournaments today. Super Smash Bros. Brawl (2008) for the Wii introduced 39 characters and the Subspace Emissary story mode.
         </p>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Super Smash Bros. for Nintendo 3DS and Wii U (2014) featured 58 characters, and Super Smash Bros. Ultimate (2018) for the Nintendo Switch brought together "everyone is here" — every fighter from the entire series history — for a grand total of 89 fighters, with additional fighters added through downloadable content. This incredible historical depth is what makes Smashdle such a rich guessing experience, as the roster spans the entire history of console gaming.
+        </p>
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          What makes Smashdle particularly special within the "-dle" character guessing game genre — alongside LoLdle, Dotadle, Narutodle, Pokedle, and OnePiecedle — is the diversity of its character roster. Unlike games that draw from a single franchise, Smashdle features characters from entirely different gaming worlds. A single game of Smashdle might involve characters from Mario, The Legend of Zelda, Pokémon, Metroid, Fire Emblem, Animal Crossing, Street Fighter, Final Fantasy, Metal Gear Solid, Castlevania, Persona, and many more.
+        </p>
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          This means that to truly excel at Smashdle, you need not just deep knowledge of one franchise, but broad familiarity with the history of video games as a whole. It is a celebration of gaming culture in its purest form.
+        </p>
+        <p class="text-base text-slate-600 leading-relaxed">
           Smashdle was created by a fan of the Super Smash Bros. series and is not affiliated with Nintendo, Masahiro Sakurai, Sora Ltd., or Bandai Namco. Like other fan-made "-dle" games, it exists as a tribute to the franchise and a way for the global Smash community to engage with the game they love in a new format. The game has attracted a passionate following among Smash players of all types — from competitive tournament veterans to casual party-game enthusiasts — and has become a regular part of the daily routine for many members of the Smash community.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">How Smashdle Works</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           Smashdle operates on a daily puzzle cycle, refreshing all five of its game modes at midnight UTC each day. Like several other "-dle" games in this genre, Smashdle supports separate answer pools for different regions — specifically, America and Europe. This means that players in different parts of the world may encounter different fighters on the same day, and this page tracks both regional variants. The five game modes each test a different dimension of Smash knowledge, providing the most varied daily challenge of any "-dle" game in the genre.
         </p>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
             <h3 class="text-xl font-bold text-yellow-700 mb-3 flex items-center gap-2">👑 Classic Mode</h3>
-            <p class="text-slate-600">
-              Classic mode is the attribute-based guessing experience at the core of Smashdle. You make guesses by typing fighter names and receive color-coded feedback on multiple attributes. These typically include the fighter's game series of origin (Mario, Zelda, Pokémon, Fire Emblem, etc.), the year they first appeared in a Smash Bros. game, their weight class (light, medium, or heavy), and their movement speed category. Using these clues systematically, you can narrow down from the full 89-fighter roster. The game series clue is particularly powerful, as it immediately eliminates all fighters from other franchises. If you know the series is Fire Emblem, you only need to consider fighters like Marth, Ike, Roy, Lucina, Robin, Corrin, Byleth, and Chrom.
-            </p>
+                    <p class="text-slate-600">
+          Classic mode is the attribute-based guessing experience at the core of Smashdle. You make guesses by typing fighter names and receive color-coded feedback on multiple attributes. These typically include the fighter's game series of origin (Mario, Zelda, Pokémon, Fire Emblem, etc.), the year they first appeared in a Smash Bros. game, their weight class (light, medium, or heavy), and their movement speed category. Using these clues systematically, you can narrow down from the full 89-fighter roster.
+        </p>
+        <p class="text-slate-600">
+          The game series clue is particularly powerful, as it immediately eliminates all fighters from other franchises. If you know the series is Fire Emblem, you only need to consider fighters like Marth, Ike, Roy, Lucina, Robin, Corrin, Byleth, and Chrom.
+        </p>
           </div>
           <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100">
             <h3 class="text-xl font-bold text-pink-700 mb-3 flex items-center gap-2">😀 Emoji Mode</h3>
@@ -85,30 +97,33 @@
           </div>
           <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100">
             <h3 class="text-xl font-bold text-pink-700 mb-3 flex items-center gap-2">🩷 Kirby Copy Mode</h3>
-            <p class="text-slate-600">
-              Kirby Copy mode is one of the most unique and delightful puzzle mechanics in any "-dle" game. In the Super Smash Bros. series, Kirby's special ability is to inhale opponents and copy their powers, gaining a distinctive "copy ability hat" that visually represents the absorbed fighter. In this mode, you are shown the hat that Kirby wears after absorbing the mystery fighter, and you must identify which fighter Kirby copied. Each of the 89 fighters produces a unique Kirby hat design, ranging from the obvious (Mario's cap and mustache) to the more obscure (the specific headwear of less recognizable fighters). This mode is a love letter to one of the most charming mechanics in the Smash Bros. series.
-            </p>
+                    <p class="text-slate-600">
+          Kirby Copy mode is one of the most unique and delightful puzzle mechanics in any "-dle" game. In the Super Smash Bros. series, Kirby's special ability is to inhale opponents and copy their powers, gaining a distinctive "copy ability hat" that visually represents the absorbed fighter. In this mode, you are shown the hat that Kirby wears after absorbing the mystery fighter, and you must identify which fighter Kirby copied.
+        </p>
+        <p class="text-slate-600">
+          Each of the 89 fighters produces a unique Kirby hat design, ranging from the obvious (Mario's cap and mustache) to the more obscure (the specific headwear of less recognizable fighters). This mode is a love letter to one of the most charming mechanics in the Smash Bros. series.
+        </p>
           </div>
         </div>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600 leading-relaxed">
           The difficulty of Smashdle varies depending on which fighter has been selected for the day. Days featuring iconic characters like Mario, Link, Pikachu, or Samus tend to be accessible to virtually anyone who has ever played a video game. Days featuring third-party characters from less widely-played franchises, or Echo Fighters with subtle differences from their base fighters, can be significantly more challenging. The five-mode structure means that even if you struggle with one mode, you may find another mode much more intuitive based on your particular gaming background and experience.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Today's Smashdle Answer — Tracking Daily Solutions</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           This page provides the verified Smashdle answer for today across all five game modes and both regional variants (America and Europe). The answers are updated daily and sourced directly from the game, ensuring accuracy and reliability. Whether you have already completed the puzzle and want to confirm your guess, or you want to see the solution right away, this is the most comprehensive resource for today's Smashdle answers.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           Smashdle answers are randomly selected from the complete Super Smash Bros. Ultimate roster of 89 fighters. There is no publicly known pattern or schedule for which fighters appear on which days, making it impossible to predict upcoming answers. Each of the five modes independently selects its own fighter, so the Classic, Emoji, Silhouette, Final Smash, and Kirby Copy answers will all be different characters on any given day. The regional system adds another layer of variety, as American and European players may face entirely different fighters on the same calendar date.
         </p>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600 leading-relaxed">
           It is worth noting that the Smashdle roster is fixed at the Super Smash Bros. Ultimate roster, as that is the most recent entry in the series. Unlike games tied to ongoing franchises like LoLdle or Pokedle, Smashdle's character pool does not expand with new releases. However, the existing roster of 89 fighters provides more than enough variety for daily puzzles — you could play for months without seeing the same fighter repeated in the same mode. The fixed roster also means that players can systematically improve their knowledge over time by studying the characters they encounter.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Strategy Tips for Smashdle</h2>
         <div class="space-y-4 text-lg text-slate-600">
           <p class="leading-relaxed">
@@ -134,13 +149,16 @@
           <p class="leading-relaxed">
             The five-mode structure of Smashdle is the most varied of any "-dle" game in the genre, and this variety is a big part of its appeal. Some days you might breeze through Classic mode because you immediately recognize the game series, while Emoji mode challenges you to think creatively about visual symbolism. Other days, Silhouette mode clicks instantly while Final Smash mode stumps you. This ever-shifting balance of strengths and weaknesses keeps the game feeling fresh and prevents the kind of monotony that can set in with single-mode puzzle games.
           </p>
-          <p class="leading-relaxed">
-            The Smash community has always been one of the most passionate and engaged in all of gaming, with a competitive tournament scene that has thrived for over two decades, a massive content creation ecosystem on YouTube and Twitch, and active discussion communities on Reddit, Discord, and social media. Smashdle has naturally integrated into this ecosystem as a shared daily experience. Sharing results, comparing guess counts, and debating particularly clever Emoji puzzles has become a routine part of the Smash social experience. The game brings the community together in the same way that the game itself does — by celebrating the characters and franchises that players love.
-          </p>
+                  <p class="leading-relaxed">
+          The Smash community has always been one of the most passionate and engaged in all of gaming, with a competitive tournament scene that has thrived for over two decades, a massive content creation ecosystem on YouTube and Twitch, and active discussion communities on Reddit, Discord, and social media. Smashdle has naturally integrated into this ecosystem as a shared daily experience.
+        </p>
+        <p class="leading-relaxed">
+          Sharing results, comparing guess counts, and debating particularly clever Emoji puzzles has become a routine part of the Smash social experience. The game brings the community together in the same way that the game itself does — by celebrating the characters and franchises that players love.
+        </p>
         </div>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Frequently Asked Questions About Smashdle</h2>
         <div class="space-y-6 text-lg text-slate-600">
           <div>

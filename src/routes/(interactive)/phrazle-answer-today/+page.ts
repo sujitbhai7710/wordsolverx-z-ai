@@ -85,7 +85,7 @@ export const load = () => {
 	const webPageSchema = generateWebPageSchema(
 		pageTitle,
 		pageDescription,
-		'https://wordsolver.tech/phrazle-answer-today'
+		'https://wordsolverx.com/phrazle-answer-today'
 	);
 
 	return {

@@ -94,16 +94,16 @@
 <svelte:head>
   <title>Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX</title>
   <meta name="description" content="Free puzzle solver tools for 3 to 11 letter Wordle, Canuckle, Quordle, Betweenle, Phoodle, Waffle, Colordle, and more with fast clue-based filtering." />
-  <link rel="canonical" href="https://wordsolver.tech/solver" />
+  <link rel="canonical" href="https://wordsolverx.com/solver" />
   <meta property="og:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
   <meta property="og:description" content="Use free solver tools for 3 to 11 letter Wordle, Canuckle, Betweenle, Worldle, Quordle, Phoodle, Waffle, Colordle, and more daily puzzle games." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolver.tech/solver" />
+  <meta property="og:url" content="https://wordsolverx.com/solver" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Puzzle Solver Tools - Wordle, Betweenle, Quordle & More | WordSolverX" />
   <meta name="twitter:description" content="Find the right puzzle solver fast with WordSolverX's full collection of free clue-based tools for Wordle, Canuckle, Quordle, and more." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -111,13 +111,13 @@
         '@type': 'CollectionPage',
         'name': 'Puzzle Solver Tools',
         'description': 'Advanced solver tools for word puzzles',
-        'url': 'https://wordsolver.tech/solver'
+        'url': 'https://wordsolverx.com/solver'
       },
       {
         '@type': 'WebPage',
         'name': 'Puzzle Solver Tools',
         'description': 'Directory of solver tools for word and puzzle games.',
-        'url': 'https://wordsolver.tech/solver'
+        'url': 'https://wordsolverx.com/solver'
       },
       {
         '@type': 'FAQPage',
@@ -183,7 +183,7 @@
     data-empty-scope="solvers"
   >
     No solver tools matched your search.
-  </p>
+  
 
   <!-- ═══════════════════════════════════════════════════
        SEO ARTICLE CONTENT — 1500+ words
@@ -195,82 +195,82 @@
 
       <p>
         A puzzle solver takes the partial information you've already figured out and uses it to find the answer faster than brute-force guessing. You tell the tool what you know — which letters are green, yellow, or gray in Wordle, for instance — and it filters through every possible answer, eliminating anything that conflicts with your clues. The remaining words get ranked by how commonly they appear in English, so the most likely answers show up first.
-      </p>
+      
       <p>
         The underlying math is straightforward. A standard 5-letter Wordle answer list contains around 2,300 words. After your first guess of "CRANE" with one green and two yellows, that list typically drops to somewhere between 50 and 150 candidates. After a second guess, it's usually under 10. The solver makes this filtering instant so you can focus on choosing which remaining word to try next rather than mentally checking hundreds of possibilities.
-      </p>
+      
       <p>
         This isn't cheating any more than using a calculator is cheating at math. The puzzle is still there, still solvable. The solver just handles the tedious part — the elimination — so you can spend your mental energy on the interesting part, which is picking the right next guess from a short, curated list.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Wordle Solvers: 3 Letters Through 11 Letters</h2>
 
       <p>
         The standard Wordle solver handles 5-letter words, but that's just the starting point. Wordle variants have popped up for nearly every word length, and each one needs its own word list. A 3-letter solver works with a completely different dictionary than an 11-letter solver — not just shorter words, but different words entirely.
-      </p>
+      
       <p>
         Each length-specific solver on this page uses the correct dictionary for that variant. The 3-letter solver uses the Thirdle word list. The 5-letter solver uses the official Wordle answer list. The 6-letter solver uses the Canuckle dictionary. The 8-letter solver works with the longer Wordle variant lists. This matters because using the wrong word list would suggest answers that aren't even valid guesses in the game you're playing.
-      </p>
+      
       <p>
         All the Wordle-length solvers share the same interface: enter a guess, mark each letter as correct (green), misplaced (yellow), or absent (gray), and watch the candidate list update in real time. The filtering runs entirely in your browser using WebAssembly, so there's no server delay. On a modern phone, filtering 2,300 words takes under 5 milliseconds.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Multi-Board Solvers: Quordle, Octordle, Dordle</h2>
 
       <p>
         Multi-board puzzles change the problem fundamentally. Instead of filtering one word list, the solver needs to find words that are valid across multiple boards simultaneously. A guess in Quordle applies to all four boards, so the ideal guess is one that makes progress on as many boards as possible.
-      </p>
+      
       <p>
         Our Quordle solver lets you enter clues for all four boards on the same page. After entering a guess, you mark the colors for each board independently — board 1 might show green-gray-yellow-gray-green while board 2 shows all grays. The solver then finds words that are consistent with at least one board's constraints and ranks them by how many boards they help.
-      </p>
+      
       <p>
         Octordle follows the same pattern at eight boards. Dordle works with two. The shared-guess mechanic is what makes these puzzles interesting strategically, and the solver helps you think about it by showing exactly how many valid words remain on each board.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Non-Word Solvers: Nerdle, Colordle, Minesweeper</h2>
 
       <p>
         Not every puzzle is about letters. Nerdle is about equations. You enter your equation guess and mark each character as correct, misplaced, or absent — the same mechanic as Wordle but with digits and operators instead of letters. The Nerdle solver handles all five modes (Micro, Mini, Midi, Classic, Maxi) and validates that suggestions are mathematically correct equations.
-      </p>
+      
       <p>
         Colordle asks you to guess a color. The solver works with hex values and RGB feedback — if the game tells you you're "too red," the solver adjusts the candidate colors accordingly. It's a different type of filtering (numerical ranges instead of letter positions) but the same principle: constrain the possibilities until the answer is obvious.
-      </p>
+      
       <p>
         The Minesweeper solver takes a different approach entirely. Instead of filtering a list, it analyzes the board state to determine which cells are definitely safe and which are definitely mines. It uses constraint satisfaction — the numbers on revealed cells tell you exactly how many mines are adjacent, and the solver combines all these constraints to find logically deducible cells. When pure logic isn't enough, it calculates mine probability for each remaining cell.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Character Guessing Solvers</h2>
 
       <p>
         Games like LoLdle, Pokedle, and Smashdle give you attribute-based clues — release year, genre, element type, weight class — and you narrow down from hundreds or thousands of possible characters. These solvers work as attribute filters: you tell the tool "the character was released before 2015" or "the character is a fire type" and it eliminates every character that doesn't match.
-      </p>
+      
       <p>
         The effectiveness of these solvers depends on the data. Our Pokedle solver, for example, has type, generation, height, weight, and evolution stage for every Pokemon. The LoLdle solver has role, region, release year, gender, and resource type for every League champion. More data points mean faster elimination. After three or four well-chosen filters, you're typically down to under 10 candidates from a starting pool of 150+.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Word Ladder and Boggle Solvers</h2>
 
       <p>
         Word ladder puzzles (Weaver, Word Ladder Solver) ask you to transform one word into another by changing one letter at a time, with every intermediate step being a valid word. The solver uses a breadth-first search through a graph of words connected by single-letter differences. Finding the shortest path is a classic graph algorithm — simple in concept but computationally expensive when the word list is large, which is why the search runs in a Web Worker to keep the UI responsive.
-      </p>
+      
       <p>
         Boggle is a different beast entirely. Given a grid of letters, find every valid word that can be formed by a path of adjacent cells without reusing any cell. The solver builds a trie from the dictionary and walks every possible path on the board simultaneously. For a 5x5 grid, that's up to 12 million paths — the trie pruning is what makes it fast enough to run in real time.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Tips for Using Solvers Effectively</h2>
 
       <p>
         The most common mistake people make with solvers is entering clues incorrectly. One wrong color mark can throw off the entire filter, producing a list that excludes the actual answer. Double-check each letter before submitting. If the solver says "zero words match your clues," you almost certainly marked something wrong.
-      </p>
+      
       <p>
         Second, don't just pick the first word the solver suggests. Look at the top 5-10 suggestions and think about which one would give you the most information if it's wrong. Sometimes the second or third suggestion is strategically better than the first because it tests more unconfirmed letters.
-      </p>
+      
       <p>
         Third, use the solver as a learning tool. When you see words on the suggestion list that you've never heard of, look them up. "ADIEU" shows up constantly in Wordle solvers not because it's a common word but because it tests five vowels in one guess. Understanding why certain words rank highly teaches you patterns you can use without the solver.
-      </p>
+      
       <p>
         Finally, try to solve at least the first two guesses on your own before opening the solver. The early-game decisions are where most of the strategy lives. Using the solver for the endgame — when you're down to two or three possibilities and can't decide — is where it provides the most value.
-      </p>
+      
     </div>
 
     <div class="mt-12">

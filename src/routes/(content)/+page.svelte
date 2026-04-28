@@ -56,8 +56,8 @@
   ];
 
   const jsonLd = JSON.stringify([
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolver.tech' },
-    { '@context': 'https://schema.org', '@type': 'WebPage', name: 'WordSolverX Homepage', description: 'Daily puzzle answers, solver tools, and Wordle resources for popular word and trivia games.', url: 'https://wordsolver.tech' },
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolverx.com' },
+    { '@context': 'https://schema.org', '@type': 'WebPage', name: 'WordSolverX Homepage', description: 'Daily puzzle answers, solver tools, and Wordle resources for popular word and trivia games.', url: 'https://wordsolverx.com' },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
       { '@type': 'Question', name: 'What is WordSolverX?', acceptedAnswer: { '@type': 'Answer', text: 'WordSolverX is your ultimate companion for word puzzle games like Wordle, Quordle, Phoodle, and more.' } },
       { '@type': 'Question', name: 'When are the answers updated?', acceptedAnswer: { '@type': 'Answer', text: 'All game answers are updated daily at midnight.' } },
@@ -69,16 +69,16 @@
 <svelte:head>
   <title>WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools</title>
   <meta name="description" content="Get daily puzzle answers, smart solver tools, archives, and practice modes for Wordle, Betweenle, Worldle, Quordle, Phoodle, Colordle, and more on WordSolverX." />
-  <link rel="canonical" href="https://wordsolver.tech/" />
+  <link rel="canonical" href="https://wordsolverx.com/" />
   <meta property="og:title" content="WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools" />
   <meta property="og:description" content="Find daily answers, puzzle solvers, archives, and free practice tools for Wordle and dozens of popular daily games." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolver.tech/" />
+  <meta property="og:url" content="https://wordsolverx.com/" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="WordSolverX | Daily Puzzle Answers, Solvers & Wordle Tools" />
   <meta name="twitter:description" content="Daily answers, archives, and free solver tools for Wordle, Betweenle, Quordle, Phoodle, and more." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
@@ -111,7 +111,7 @@
         <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 via-teal-500 to-cyan-500 dark:from-teal-400 dark:via-teal-300 dark:to-cyan-400">Answer Station</span>
       </h1>
 
-      <p class="max-w-2xl mx-auto text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
+      <p class="max-w-2xl mx-auto text-base sm:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
         Verified answers for Wordle, Quordle, Phoodle, and 20+ more daily games. Plus smart solvers when you need a hand.
       </p>
 
@@ -325,94 +325,94 @@
 
       <p>
         WordSolverX is a single site that handles three things puzzle players need: daily answers, solver tools, and answer archives. Instead of Googling "Wordle answer today" and landing on a site with six pop-ups and a 900-word essay before the actual answer, you get the information upfront, clean and fast.
-      </p>
+      
       <p>
         Right now we cover 24 daily puzzle games. That includes the obvious ones — Wordle, Quordle, Nerdle — but also niche titles like Phrazle, Spotle, Searchle, Worgle, and Dotadle. Each game gets its own answer-today page, its own archive (where available), and in most cases a dedicated solver tool that lets you work through the puzzle step by step instead of just reading the answer.
-      </p>
+      
       <p>
         The site updates automatically at midnight based on each game's own puzzle window. Wordle's answer, for example, resets at midnight Eastern. Some games like Betweenle and Worgle roll over at different times, so we adjust for that too. The date you see on each page reflects the actual puzzle date, not just the calendar date where you happen to be sitting.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Daily Answers: How They Work</h2>
 
       <p>
         Every answer-today page follows the same structure. You land on the page, and the answer is right there — no click-through, no "watch this ad first" gate. If you want hints before seeing the answer, we provide a progressive hint system on the supported games. Start with a category clue, then a letter reveal, then the full answer. You decide how much help you want.
-      </p>
+      
       <p>
         The answer data comes directly from each game's source. For Wordle, that means we decode the official answer list. For Nerdle, we pull the equation data. For geography games like Worldle and Globle, we track the daily country selections. This isn't scraped from some random forum — it's sourced from the puzzle data itself, which means it's accurate and it's fast.
-      </p>
+      
       <p>
         We also attach a daily article to most answer pages. These are generated with the puzzle date and game context baked in, so if you landed on a Wordle answer page from Google, you'd see a write-up about that specific puzzle number, what the word means, and some context around it. The article is below the fold — you never have to scroll past it if you just want the answer.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Solver Tools: More Than Just Answer Lookup</h2>
 
       <p>
         Here's where WordSolverX separates itself from the dozen other "wordle answer" sites out there. Our solver tools actually let you play along.
-      </p>
+      
       <p>
         Take the 5-Letter Wordle Solver as an example. You enter your first guess, mark which letters came back green, yellow, or gray, and the solver filters its dictionary in real time. It ranks remaining words by frequency — the words most people actually use appear at the top. So you're not just getting "one possible answer," you're getting the most likely answers in order.
-      </p>
+      
       <p>
         We have solvers for 3-letter Wordle variants all the way up to 11-letter boards. That covers Thirdle, the standard 5-letter game, 6-letter variants like Canuckle, and the extended lengths that some spin-off games use. Each solver uses the correct word list for that length — the same dictionary the game itself uses — so the suggestions are always valid guesses.
-      </p>
+      
       <p>
         Beyond Wordle, the Quordle solver handles all four boards simultaneously. The Betweenle solver accounts for the upper and lower bounds the game gives you. The Waffle solver works with the grid mechanics. The Nerdle solver handles every mode from Micro to Maxi. And for non-word puzzles, we have solvers for Colordle (color guessing), Countryle and Worldle (geography), Minesweeper, Kanoodle, Lights Out, and even Hangman with entropy-based letter suggestions.
-      </p>
+      
       <p>
         The point of all these tools isn't to hand you the answer on a silver platter (though you can absolutely use them that way). It's to give you a structured way to think through the puzzle. Seeing the filtered word list after two guesses teaches you more about letter patterns than staring at the board for five minutes would.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Archives: Going Back in Time</h2>
 
       <p>
         Missed a day? Need to verify an old answer for an argument with a friend? The archive section is the place. Each game with available archive data gets its own page with a calendar-style date picker or a scrollable history. You pick the date, you see the answer. No paging through 300 results or guessing at URLs.
-      </p>
+      
       <p>
         Wordle's archive goes all the way back to June 2021 when Josh Wardle first launched the game. Quordle, Nerdle, Phoodle, and most of the other games have similarly deep histories. We maintain this data because puzzle players actually use it — for streak verification, pattern analysis, or just satisfying curiosity about what the answer was on that random Tuesday three months ago.
-      </p>
+      
       <p>
         Archive pages are structured as permanent, navigable resources rather than thin one-URL-per-date pages. This is better for both humans (easier browsing) and search engines (clear site architecture). Instead of 1,500 separate Wordle archive URLs, you get one clean archive page with a date selector.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Guides: Actually Useful Strategy Content</h2>
 
       <p>
         Most "strategy guides" for Wordle are six paragraphs of fluff followed by a list of starting words you already knew. Our guides page takes a different approach. Each game gets a breakdown of how it actually works under the hood, what patterns to exploit, and where most players go wrong.
-      </p>
+      
       <p>
         For Wordle specifically, the strategy comes down to information theory. Every guess is worth a fixed amount of information — the question is whether you're using that information efficiently. A good first guess like "CRANE" or "SLATE" tests five common letters across five positions. A bad first guess like "FJORD" tests rare letters that narrow the field much less. The math behind this is straightforward but most players never think about it, which is why our guides walk through specific examples.
-      </p>
+      
       <p>
         For games like Quordle, the strategy flips entirely. You're not trying to solve one puzzle efficiently — you're trying to not lose on any of four puzzles. That means playing defensively with your early guesses, spreading information across all boards, and only committing to solve individual boards once you have enough constraints. It's a fundamentally different mental model.
-      </p>
+      
       <p>
         The guides page links directly to the relevant solver tools, so you can read the strategy and then immediately practice it. That feedback loop — read, try, adjust — is how players actually improve, not by memorizing a list of "best starting words."
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">The Technical Side (For the Curious)</h2>
 
       <p>
         WordSolverX is built on SvelteKit and deployed on Cloudflare Pages. The interactive solver tools run client-side using WebAssembly for the heavy computation — the 5-letter Wordle solver, for instance, compiles the entire filtering algorithm to WASM so it runs in your browser without any server round-trips. This makes the tools fast regardless of your connection speed.
-      </p>
+      
       <p>
         Daily answer pages are statically generated at build time, which means they load essentially instantly. The puzzle date calculation happens at build time too, so the date shown on each page is always accurate for that specific puzzle. We don't rely on client-side JavaScript to figure out "what day is it" — the HTML itself contains the correct date.
-      </p>
+      
       <p>
         For games where the answer source is an API or requires real-time computation (like Squaredle, which generates a new puzzle board daily), we use edge functions that run close to the user. This keeps the response times under 100ms in most regions.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">What's Next</h2>
 
       <p>
         We add new games as they gain traction. If a puzzle game reaches a certain threshold of daily players and starts showing up in search queries, it goes on the list. Recent additions include Dotadle (Dota 2 hero guessing), Soundmap (music artist identification), and Onepiecedle (One Piece character puzzles).
-      </p>
+      
       <p>
         Solver improvements happen continuously. We track which tools get the most use and prioritize those for performance and feature updates. The Wordle Analyzer — a tool that replays a completed Wordle game and compares your guesses to the optimal line — was built because players kept asking "could I have solved that faster?" Now they can check.
-      </p>
+      
       <p>
         If there's a game we don't cover yet, or a tool that would make your daily puzzle routine easier, the contact page is the fastest way to reach us. We read everything and we prioritize based on how many players would benefit.
-      </p>
+      
     </div>
 
     <!-- CTA footer -->

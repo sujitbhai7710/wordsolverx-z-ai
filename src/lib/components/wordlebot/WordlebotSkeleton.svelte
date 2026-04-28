@@ -63,17 +63,26 @@
 </script>
 
 {#if isCanucklePanel}
-	<div class="canuckle-plain">
-		<h2 class="canuckle-h2">Puzzle #---</h2>
-		<p class="canuckle-date skeleton-pulse">Loading date...</p>
+	<main class="solver-page">
+		<div class="solver-container canuckle-daily-container">
+			<div class="canuckle-plain">
+				<h2 class="canuckle-h2">Puzzle #---</h2>
+				<p class="canuckle-date skeleton-pulse">Loading date...</p>
 
-		<h3 class="canuckle-h3">Answer</h3>
-		<p class="canuckle-word skeleton-pulse">-----</p>
+				<h3 class="canuckle-h3">Answer</h3>
+				<details class="canuckle-answer-reveal">
+					<summary class="skeleton-pulse">-----</summary>
+					<p class="canuckle-answer-note skeleton-pulse">Puzzle #--- · Loading...</p>
+				</details>
 
-		<h3 class="canuckle-h3">Canadian Fact</h3>
-		<p class="canuckle-fact-line"></p>
-		<p class="canuckle-fact-line short"></p>
-	</div>
+				<h3 class="canuckle-h3">Canadian Fact</h3>
+				<div class="canuckle-fact-text">
+					<p class="canuckle-fact-line"></p>
+					<p class="canuckle-fact-line short"></p>
+				</div>
+			</div>
+		</div>
+	</main>
 {:else}
 	<!-- Solver Grid Skeleton -->
 	<div

@@ -121,16 +121,16 @@
                 name="description"
                 content="Solve Spotle faster with our Spotify artist solver. Match rank, debut year, genre, country, and more using precise feedback filters."
         />
-        <link rel="canonical" href="https://wordsolver.tech/spotle-solver" />
+        <link rel="canonical" href="https://wordsolverx.com/spotle-solver" />
         <meta property="og:title" content="Spotle Solver - Spotify Artist Guess Helper" />
         <meta
                 property="og:description"
                 content="Use smart feedback filters to narrow Spotle answers by rank, debut year, genre, country, group size, and gender."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wordsolver.tech/spotle-solver" />
+        <meta property="og:url" content="https://wordsolverx.com/spotle-solver" />
         <meta property="og:site_name" content="WordSolverX" />
-        <meta property="og:image" content="https://wordsolver.tech/images/spotle-solver.webp" />
+        <meta property="og:image" content="https://wordsolverx.com/images/spotle-solver.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         {@html `<script type="application/ld+json">${JSON.stringify({
                 '@context': 'https://schema.org',
@@ -139,7 +139,7 @@
                                 '@type': 'WebPage',
                                 name: 'Spotle Solver',
                                 description: 'Solve Spotle faster with real-time artist filtering by rank, debut year, genre, country, group size, and gender.',
-                                url: 'https://wordsolver.tech/spotle-solver'
+                                url: 'https://wordsolverx.com/spotle-solver'
                         },
                         {
                                 '@type': 'WebApplication',
@@ -166,9 +166,9 @@
                                 ]
                         },
                         generateBreadcrumbSchema([
-                                { name: 'Home', url: 'https://wordsolver.tech' },
-                                { name: 'Solver', url: 'https://wordsolver.tech/solver' },
-                                { name: 'Spotle Solver', url: 'https://wordsolver.tech/spotle-solver' }
+                                { name: 'Home', url: 'https://wordsolverx.com' },
+                                { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+                                { name: 'Spotle Solver', url: 'https://wordsolverx.com/spotle-solver' }
                         ])
                 ]
         })}</script>`}

@@ -13,15 +13,16 @@ export const prerender = true;
 export const load = () => {
   const targetDateKey = getMainDailyDateKey();
   let entries = getTodayFramedEntries(targetDateKey);
-  let hasExactEntries = entries.length === 4;
 
   // Fallback: if today's date has no data, use the latest available date
   let displayDateKey = targetDateKey;
+  let hasExactEntries = entries.length === 4;
   if (!hasExactEntries) {
     const latestKey = getLatestFramedDateKey();
     if (latestKey) {
       displayDateKey = latestKey;
       entries = getTodayFramedEntries(latestKey);
+      hasExactEntries = entries.length === 4;
     }
   }
 
@@ -33,7 +34,7 @@ export const load = () => {
   const pageDescription = hasExactEntries
     ? `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from the saved dataset.`
     : `Check whether the Framed answers for ${formattedDate} are ready yet, then use the archive if you need older saved movie titles.`;
-  const pageUrl = 'https://wordsolver.tech/framed-answer-today';
+  const pageUrl = 'https://wordsolverx.com/framed-answer-today';
 
   const schemas = JSON.stringify([
     generateWebPageSchema('Framed Answers Today', pageDescription, pageUrl),
@@ -44,8 +45,8 @@ export const load = () => {
       { name: 'Verify after playing', text: 'Use the title cards to confirm your guesses once you are done playing Framed.' }
     ]),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Today', url: 'https://wordsolver.tech/today' },
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Today', url: 'https://wordsolverx.com/today' },
       { name: 'Framed Answers Today', url: pageUrl }
     ]),
     generateFAQSchema([

@@ -262,7 +262,7 @@
                                 name: 'Boggle Solver',
                                 description:
                                         'Find every valid word in a 3x3 to 10x10 Boggle board using the same trie and DFS logic as the source project.',
-                                url: 'https://wordsolver.tech/boggle-solver',
+                                url: 'https://wordsolverx.com/boggle-solver',
                                 applicationCategory: 'GameApplication',
                                 offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
                         },
@@ -273,9 +273,9 @@
                                 { name: 'Click Solve', text: 'The solver finds every valid word and shows them grouped by length, with scores and clickable paths.' }
                         ]),
                         generateBreadcrumbSchema([
-                                { name: 'Home', url: 'https://wordsolver.tech' },
-                                { name: 'Solver', url: 'https://wordsolver.tech/solver' },
-                                { name: 'Boggle Solver', url: 'https://wordsolver.tech/boggle-solver' }
+                                { name: 'Home', url: 'https://wordsolverx.com' },
+                                { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+                                { name: 'Boggle Solver', url: 'https://wordsolverx.com/boggle-solver' }
                         ])
                 ]
         });
@@ -308,15 +308,15 @@
                 name="description"
                 content="A light-theme Boggle Solver for 3x3 to 10x10 boards using the same trie and DFS algorithm as the original source project."
         />
-        <link rel="canonical" href="https://wordsolver.tech/boggle-solver" />
+        <link rel="canonical" href="https://wordsolverx.com/boggle-solver" />
         <meta property="og:title" content="Boggle Solver" />
         <meta
                 property="og:description"
                 content="Solve any Boggle board, highlight paths, filter by starting cell, and share board URLs."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wordsolver.tech/boggle-solver" />
-        <meta property="og:image" content="https://wordsolver.tech/images/boggle-solver.webp" />
+        <meta property="og:url" content="https://wordsolverx.com/boggle-solver" />
+        <meta property="og:image" content="https://wordsolverx.com/images/boggle-solver.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Boggle Solver" />
         <meta

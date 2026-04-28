@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import QuordleAnswerCard from '$lib/components/QuordleAnswerCard.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
@@ -16,7 +16,7 @@
   <title>{data.meta.title}</title>
   <meta name="description" content={data.meta.description} />
   <meta name="news_keywords" content={data.meta.keywords ?? 'quordle answer today, quordle answer, quordle hint, quordle hint today'} />
-  <link rel="canonical" href="https://wordsolver.tech/quordle-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/quordle-answer-today" />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
@@ -93,7 +93,7 @@
     <!-- Comprehensive SEO Article -->
     <article class="mt-12 space-y-8">
       <!-- What is Quordle? -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           What Is Quordle?
         </h2>
@@ -112,7 +112,7 @@
       </section>
 
       <!-- How Quordle Works -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           How Quordle Works: Mechanics, Rules, and the Daily Cycle
         </h2>
@@ -144,7 +144,7 @@
       </section>
 
       <!-- Past Quordle Answers -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Past Quordle Answers: Archives and Word Patterns
         </h2>
@@ -160,7 +160,7 @@
       </section>
 
       <!-- Quordle Game Modes Explained -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Quordle Game Modes Explained
         </h2>
@@ -208,7 +208,7 @@
       </section>
 
       <!-- Tips for Quordle -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Quordle Strategy: How to Win Consistently
         </h2>
@@ -247,7 +247,7 @@
       </section>
 
       <!-- Quordle Statistics -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Quordle Statistics: What the Numbers Say
         </h2>
@@ -284,7 +284,7 @@
       </section>
 
       <!-- FAQ -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
+      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Quordle FAQ: Common Questions Answered
         </h2>

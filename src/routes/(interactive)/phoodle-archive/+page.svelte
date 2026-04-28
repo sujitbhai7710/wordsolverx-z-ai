@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -76,18 +76,18 @@
 <svelte:head>
   <title>Phoodle Archive - Complete Food Word Answer History | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Phoodle food word answers. Calendar view with search and direct links to every past food puzzle solution." />
-  <link rel="canonical" href="https://wordsolver.tech/phoodle-archive" />
+  <link rel="canonical" href="https://wordsolverx.com/phoodle-archive" />
   <meta property="og:title" content="Phoodle Archive - All Past Food Word Answers" />
   <meta property="og:description" content="Complete history of every Phoodle food word answer. Browse by calendar or search." />
-  <meta property="og:url" content="https://wordsolver.tech/phoodle-archive" />
+  <meta property="og:url" content="https://wordsolverx.com/phoodle-archive" />
   <meta property="og:type" content="website" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Phoodle Archive",
     "description": "Complete archive of all Phoodle daily food word answers.",
-    "url": "https://wordsolver.tech/phoodle-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
+    "url": "https://wordsolverx.com/phoodle-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
   })}</script>`}
 </svelte:head>
 

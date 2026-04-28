@@ -53,13 +53,13 @@
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
         <meta name="keywords" content={meta.keywords ?? 'spotle answer today, spotle answer, spotle hint, spotle artist today'} />
-        <link rel="canonical" href="https://wordsolver.tech/spotle-answer-today" />
+        <link rel="canonical" href="https://wordsolverx.com/spotle-answer-today" />
         <meta property="og:title" content={meta.title} />
         <meta property="og:description" content={meta.description} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wordsolver.tech/spotle-answer-today" />
+        <meta property="og:url" content="https://wordsolverx.com/spotle-answer-today" />
         <meta property="og:site_name" content="WordSolverX" />
-        <meta property="og:image" content="https://wordsolver.tech/images/spotle-answer-today.webp" />
+        <meta property="og:image" content="https://wordsolverx.com/images/spotle-answer-today.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
@@ -258,149 +258,224 @@
                 </div>
 
                 <article class="mt-10 space-y-8">
-                        <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">What is Spotle?</h2>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        Spotle is a daily music guessing game where the answer is always a musical artist or band. Each day, the game selects an artist from its database — currently {stats.totalArtists} artists spanning {stats.totalAnswers} puzzle days — and you have a limited number of guesses to identify them. Unlike word-based daily games, Spotle tests your knowledge of the music landscape: genres, countries, debut years, and popular tracks.
-                                </p>
+          Spotle is a daily music guessing game where the answer is always a musical artist or band. Each day, the game selects an artist from its database — currently {stats.totalArtists} artists spanning {stats.totalAnswers} puzzle days — and you have a limited number of guesses to identify them.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          Unlike word-based daily games, Spotle tests your knowledge of the music landscape: genres, countries, debut years, and popular tracks.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        The game was inspired by Heardle, which became a viral hit after The New York Times acquired it. Spotle takes the same core concept but builds its own artist database with richer metadata. Each artist entry includes country of origin, genre, debut album year, group size, gender, and a featured track. That data enables a much more informative gameplay experience — you are not just guessing names, you are narrowing down based on real biographical information.
-                                </p>
+          The game was inspired by Heardle, which became a viral hit after The New York Times acquired it. Spotle takes the same core concept but builds its own artist database with richer metadata. Each artist entry includes country of origin, genre, debut album year, group size, gender, and a featured track.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          That data enables a much more informative gameplay experience — you are not just guessing names, you are narrowing down based on real biographical information.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        Spotle has a smaller player base than Heardle but a more dedicated one. Music fans — particularly people who follow charts, discover new artists on Spotify, or watch live music — tend to stick with Spotle because the game rewards real music knowledge rather than surface-level familiarity. If you know which country an artist is from or what decade they debuted, you can solve most puzzles in two or three guesses.
-                                </p>
+          Spotle has a smaller player base than Heardle but a more dedicated one. Music fans — particularly people who follow charts, discover new artists on Spotify, or watch live music — tend to stick with Spotle because the game rewards real music knowledge rather than surface-level familiarity.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          If you know which country an artist is from or what decade they debuted, you can solve most puzzles in two or three guesses.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        What makes Spotle unique among daily puzzle games is its structured metadata approach. Most music games give you audio clips or images. Spotle gives you data points — country, genre, debut year, group size, gender. That structure makes the game feel more like a detective investigation than a pop quiz. You start with broad categories and narrow down systematically, which is deeply satisfying for players who enjoy logical deduction applied to a subject they care about.
-                                </p>
+          What makes Spotle unique among daily puzzle games is its structured metadata approach. Most music games give you audio clips or images. Spotle gives you data points — country, genre, debut year, group size, gender. That structure makes the game feel more like a detective investigation than a pop quiz.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          You start with broad categories and narrow down systematically, which is deeply satisfying for players who enjoy logical deduction applied to a subject they care about.
+        </p>
                         </section>
 
-                        <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">How Spotle Works</h2>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        Each day, Spotle selects one artist from its ranked database. The artist appears at a specific rank in the database (this page shows the rank), and your job is to identify them before you run out of guesses. The game progressively reveals clues — first the country, then the genre, then more specific details like group size and debut year.
-                                </p>
+          Each day, Spotle selects one artist from its ranked database. The artist appears at a specific rank in the database (this page shows the rank), and your job is to identify them before you run out of guesses.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The game progressively reveals clues — first the country, then the genre, then more specific details like group size and debut year.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        The daily cycle resets at midnight. Each puzzle is assigned a sequential day number. Today is Day #{todayAnswer?.dayNumber}, and the answer is <strong class="text-slate-900">{todayArtist?.artist ?? 'not available'}</strong>. This page tracks the current day&apos;s answer and shows the artist&apos;s full profile: country, genre, debut year, group size, gender, and featured track. When available, links to SoundCloud and Spotify profiles are included so you can listen to the artist&apos;s music directly from the answer page.
-                                </p>
+          The daily cycle resets at midnight. Each puzzle is assigned a sequential day number. Today is Day #{todayAnswer?.dayNumber}, and the answer is <strong class="text-slate-900">{todayArtist?.artist ?? 'not available'}</strong>. This page tracks the current day&apos;s answer and shows the artist&apos;s full profile: country, genre, debut year, group size, gender, and featured track.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          When available, links to SoundCloud and Spotify profiles are included so you can listen to the artist&apos;s music directly from the answer page.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        The dataset is synced periodically from the source, so the last-sync timestamp shown in the stats card tells you how fresh the data is. With {stats.totalArtists} artists in the database, the answer pool is large enough that repeat answers are infrequent, which keeps the game interesting over long play sessions. The database covers artists from every continent and every major genre, so the daily variety is substantial.
-                                </p>
+          The dataset is synced periodically from the source, so the last-sync timestamp shown in the stats card tells you how fresh the data is. With {stats.totalArtists} artists in the database, the answer pool is large enough that repeat answers are infrequent, which keeps the game interesting over long play sessions.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The database covers artists from every continent and every major genre, so the daily variety is substantial.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        After identifying the artist (or using this page to check the answer), you can listen to their featured track via the SoundCloud link when available. This adds a musical discovery element that most other daily puzzle games lack — even if you already knew the artist, you might discover a track you had never heard. That combination of trivia and music discovery is what keeps Spotle players coming back every day.
-                                </p>
+          After identifying the artist (or using this page to check the answer), you can listen to their featured track via the SoundCloud link when available. This adds a musical discovery element that most other daily puzzle games lack — even if you already knew the artist, you might discover a track you had never heard.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          That combination of trivia and music discovery is what keeps Spotle players coming back every day.
+        </p>
                         </section>
 
-                        <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Spotle Answer Today: {todayFormatted}</h2>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        The Spotle answer for {todayFormatted} is <strong class="text-slate-900">{todayArtist?.artist ?? 'not available'}</strong>, appearing as Day #{todayAnswer?.dayNumber} in the Spotle database. The artist ranks #{todayArtist?.index !== undefined ? todayArtist.index + 1 : 'N/A'} overall and hails from {todayArtist ? (labels.countryNames[todayArtist.country] ?? todayArtist.country.toUpperCase()) : 'N/A'}, performing in the {todayArtist?.genre ?? 'N/A'} genre.
-                                </p>
+          The Spotle answer for {todayFormatted} is <strong class="text-slate-900">{todayArtist?.artist ?? 'not available'}</strong>, appearing as Day #{todayAnswer?.dayNumber} in the Spotle database.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The artist ranks #{todayArtist?.index !== undefined ? todayArtist.index + 1 : 'N/A'} overall and hails from {todayArtist ? (labels.countryNames[todayArtist.country] ?? todayArtist.country.toUpperCase()) : 'N/A'}, performing in the {todayArtist?.genre ?? 'N/A'} genre.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        {todayArtist ? `The artist ${todayArtist.group_size === 1 ? 'is a solo act' : `has ${todayArtist.group_size} members`} and debuted with their first album in ${todayArtist.debut_album_year}.` : ''} The full profile with all metadata is shown in the answer card at the top of this page. If a SoundCloud link is available, you can listen to the featured track directly. The Spotify profile link lets you explore the artist&apos;s full discography.
-                                </p>
+          {todayArtist ? `The artist ${todayArtist.group_size === 1 ? 'is a solo act' : `has ${todayArtist.group_size} members`} and debuted with their first album in ${todayArtist.debut_album_year}.` : ''} The full profile with all metadata is shown in the answer card at the top of this page.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          If a SoundCloud link is available, you can listen to the featured track directly. The Spotify profile link lets you explore the artist&apos;s full discography.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        For previous Spotle answers, scroll through the recent answers list above or visit the Spotle archive page. The archive contains the complete history of Spotle answers with full artist metadata, searchable by date and day number. It is also an excellent tool for studying artist metadata — after a few days of browsing, you will start recognizing which countries and genres dominate the database.
-                                </p>
+          For previous Spotle answers, scroll through the recent answers list above or visit the Spotle archive page. The archive contains the complete history of Spotle answers with full artist metadata, searchable by date and day number.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          It is also an excellent tool for studying artist metadata — after a few days of browsing, you will start recognizing which countries and genres dominate the database.
+        </p>
                         </section>
 
-                        <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Strategy Tips for Spotle</h2>
                                 <div class="mt-6 space-y-6">
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Start with country and continent</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        The country clue is usually the first major hint you get. If the country is revealed as Japan, you can immediately eliminate artists from the United States, United Kingdom, Brazil, and other non-Japanese markets. With roughly 195 countries in the world, the continent clue alone eliminates 80% of the database. Pay attention to the country flags and country names in the clues — Spotle sometimes uses unexpected national associations for artists who became famous in a different country than they were born in.
-                                                </p>
+          The country clue is usually the first major hint you get. If the country is revealed as Japan, you can immediately eliminate artists from the United States, United Kingdom, Brazil, and other non-Japanese markets. With roughly 195 countries in the world, the continent clue alone eliminates 80% of the database.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Pay attention to the country flags and country names in the clues — Spotle sometimes uses unexpected national associations for artists who became famous in a different country than they were born in.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Use genre to narrow further</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Once you know the country, the genre clue is the next most powerful filter. If the artist is from South Korea and the genre is K-pop, your guess list narrows to maybe 20-30 artists instead of hundreds. If the genre is indie rock from Australia, you are looking at an even smaller pool. Genre familiarity — knowing which artists belong to which genres — is the single most valuable skill for Spotle.
-                                                </p>
+          Once you know the country, the genre clue is the next most powerful filter. If the artist is from South Korea and the genre is K-pop, your guess list narrows to maybe 20-30 artists instead of hundreds.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          If the genre is indie rock from Australia, you are looking at an even smaller pool. Genre familiarity — knowing which artists belong to which genres — is the single most valuable skill for Spotle.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Check the debut year</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        The debut year tells you the era the artist started in. If the debut is 2015 or later, you are looking at relatively recent artists. If it is 2000-2010, you are in the indie/MySpace era. Before 2000 is classic territory — think classic rock, early hip-hop, and legendary pop acts. Combining country, genre, and debut year usually narrows the field to fewer than 10 candidates.
-                                                </p>
+          The debut year tells you the era the artist started in. If the debut is 2015 or later, you are looking at relatively recent artists. If it is 2000-2010, you are in the indie/MySpace era. Before 2000 is classic territory — think classic rock, early hip-hop, and legendary pop acts.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Combining country, genre, and debut year usually narrows the field to fewer than 10 candidates.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Solo vs group matters</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        The group size clue tells you whether you are looking for a solo artist or a band. Solo artists with one member tend to be easier to identify because the name is a person&apos;s name. Groups can be trickier because band names are more varied — they might be abstract (COLDPLAY), geographic (ARCTIC MONKEYS), or unrelated words (FOO FIGHTERS). If the answer is a group, think about iconic bands from the country and genre you have identified.
-                                                </p>
+          The group size clue tells you whether you are looking for a solo artist or a band. Solo artists with one member tend to be easier to identify because the name is a person&apos;s name. Groups can be trickier because band names are more varied — they might be abstract (COLDPLAY), geographic (ARCTIC MONKEYS), or unrelated words (FOO FIGHTERS).
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          If the answer is a group, think about iconic bands from the country and genre you have identified.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Listen to the featured track</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        When this page includes a SoundCloud link, use it. Listening to 30 seconds of the artist&apos;s music is often enough to recognize them, even if you cannot place the name. The featured track is usually one of their most popular songs — the one Spotify puts first on their artist page. Audio recognition is faster and more reliable than trying to recall an artist from metadata alone.
-                                                </p>
+          When this page includes a SoundCloud link, use it. Listening to 30 seconds of the artist&apos;s music is often enough to recognize them, even if you cannot place the name. The featured track is usually one of their most popular songs — the one Spotify puts first on their artist page.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Audio recognition is faster and more reliable than trying to recall an artist from metadata alone.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Pay attention to gender clues</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        The gender metadata can eliminate half the candidates in some genres. If the clue indicates a female artist in country music from the United States, your list narrows from hundreds to maybe 30-40 names. In K-pop, gender classification is especially useful because boy groups and girl groups are separate categories with entirely different artist pools. Always factor gender into your deduction process.
-                                                </p>
+          The gender metadata can eliminate half the candidates in some genres. If the clue indicates a female artist in country music from the United States, your list narrows from hundreds to maybe 30-40 names.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          In K-pop, gender classification is especially useful because boy groups and girl groups are separate categories with entirely different artist pools. Always factor gender into your deduction process.
+        </p>
                                         </div>
                                 </div>
                         </section>
 
-                        <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Spotle vs Similar Music Games</h2>
                                 <div class="mt-6 grid gap-6 sm:grid-cols-2">
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Spotle vs Heardle</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Heardle plays a short audio clip and you guess the song. Spotle reveals biographical clues about the artist. Heardle tests song recognition; Spotle tests artist identification. Heardle rewards people who listen to a lot of music; Spotle rewards people who know artist biographies and music industry details. Both are great for music fans, but they exercise completely different types of musical knowledge.
-                                                </p>
+          Heardle plays a short audio clip and you guess the song. Spotle reveals biographical clues about the artist. Heardle tests song recognition; Spotle tests artist identification. Heardle rewards people who listen to a lot of music; Spotle rewards people who know artist biographies and music industry details.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Both are great for music fans, but they exercise completely different types of musical knowledge.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Spotle vs Framed</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Framed shows you a movie frame and you guess the film. Spotle reveals artist details and you guess the musician. Both are identification games applied to entertainment, but Framed covers cinema while Spotle covers music. The deduction process is similar — start broad, use clues to narrow, make an educated guess — but the domain knowledge required is completely different.
-                                                </p>
+          Framed shows you a movie frame and you guess the film. Spotle reveals artist details and you guess the musician. Both are identification games applied to entertainment, but Framed covers cinema while Spotle covers music.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          The deduction process is similar — start broad, use clues to narrow, make an educated guess — but the domain knowledge required is completely different.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Spotle vs Globle</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Globle covers all countries and topics. Spotle focuses specifically on music artists. Globle is broader but shallower; Spotle is narrower but deeper. If you are a music specialist, Spotle will feel more satisfying because it draws from your area of expertise rather than the entire knowledge base. Globle tests general knowledge; Spotle tests specialized knowledge.
-                                                </p>
+          Globle covers all countries and topics. Spotle focuses specifically on music artists. Globle is broader but shallower; Spotle is narrower but deeper. If you are a music specialist, Spotle will feel more satisfying because it draws from your area of expertise rather than the entire knowledge base.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Globle tests general knowledge; Spotle tests specialized knowledge.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Why Spotle works well for music fans</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        The game rewards deep music knowledge rather than surface-level familiarity. Knowing an artist&apos;s country, genre, debut year, and group size means you are the kind of person who reads artist bios, follows music blogs, and knows the difference between indie pop and dream pop. That specificity is what makes Spotle more engaging for serious music fans than broader trivia games.
-                                                </p>
+          The game rewards deep music knowledge rather than surface-level familiarity. Knowing an artist&apos;s country, genre, debut year, and group size means you are the kind of person who reads artist bios, follows music blogs, and knows the difference between indie pop and dream pop.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          That specificity is what makes Spotle more engaging for serious music fans than broader trivia games.
+        </p>
                                         </div>
                                 </div>
                         </section>
 
-                        <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">What Makes Spotle Challenging</h2>
                                 <div class="mt-6 space-y-6">
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">The database is enormous</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        With {stats.totalArtists} artists, Spotle&apos;s answer pool is much larger than most daily puzzle games. Wordle has about 2,300 answers. Nerdle has maybe a few thousand valid equations. Spotle has {stats.totalArtists} possible answers across every genre, country, and era. That scale means you cannot brute-force your way to a solution — you need genuine music knowledge to narrow the field efficiently.
-                                                </p>
+          With {stats.totalArtists} artists, Spotle&apos;s answer pool is much larger than most daily puzzle games. Wordle has about 2,300 answers. Nerdle has maybe a few thousand valid equations. Spotle has {stats.totalArtists} possible answers across every genre, country, and era.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          That scale means you cannot brute-force your way to a solution — you need genuine music knowledge to narrow the field efficiently.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Artists from unfamiliar genres and countries</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Spotle does not limit itself to mainstream Western pop. The database includes artists from Africa, Asia, South America, and Eastern Europe — genres and markets that many English-speaking players know nothing about. On days when the answer is a Japanese rock band or a Nigerian Afrobeats artist, players who only know Western pop will struggle. That global scope is what makes Spotle educational — you learn about music from cultures you might never encounter otherwise.
-                                                </p>
+          Spotle does not limit itself to mainstream Western pop. The database includes artists from Africa, Asia, South America, and Eastern Europe — genres and markets that many English-speaking players know nothing about. On days when the answer is a Japanese rock band or a Nigerian Afrobeats artist, players who only know Western pop will struggle.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          That global scope is what makes Spotle educational — you learn about music from cultures you might never encounter otherwise.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Metadata can be misleading</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Some artists have genre classifications that do not match public perception. An artist you think of as rock might be classified as alternative or indie. An artist from one country might have debuted in another. These metadata surprises can throw off your deduction if you rely too heavily on assumptions. Always consider that the database might classify an artist differently than you would expect.
-                                                </p>
+          Some artists have genre classifications that do not match public perception. An artist you think of as rock might be classified as alternative or indie. An artist from one country might have debuted in another.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          These metadata surprises can throw off your deduction if you rely too heavily on assumptions. Always consider that the database might classify an artist differently than you would expect.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900">Multiple valid guesses at each stage</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Even after narrowing by country, genre, and debut year, you might still have 5-10 candidates. At that point, the game becomes a test of how many artists you actually know in that specific niche. Players with broad but shallow music knowledge often get stuck at this stage because they can narrow the field but cannot make the final identification. Deep, specialized knowledge of specific genres is what separates good Spotle players from great ones.
-                                                </p>
+          Even after narrowing by country, genre, and debut year, you might still have 5-10 candidates. At that point, the game becomes a test of how many artists you actually know in that specific niche. Players with broad but shallow music knowledge often get stuck at this stage because they can narrow the field but cannot make the final identification.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Deep, specialized knowledge of specific genres is what separates good Spotle players from great ones.
+        </p>
                                         </div>
                                 </div>
                         </section>

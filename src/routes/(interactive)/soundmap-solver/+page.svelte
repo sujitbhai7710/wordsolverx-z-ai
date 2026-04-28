@@ -276,8 +276,8 @@
                                 { name: 'Use the best next guess', text: 'If you have added at least one guess, the solver recommends the best next artist to maximize information. Click Use Guess to auto-fill it.' },
                         ]),
                 generateBreadcrumbSchema([
-                        { name: 'Home', url: 'https://wordsolver.tech' },
-                        { name: 'Soundmap Solver', url: 'https://wordsolver.tech/soundmap-solver' },
+                        { name: 'Home', url: 'https://wordsolverx.com' },
+                        { name: 'Soundmap Solver', url: 'https://wordsolverx.com/soundmap-solver' },
                 ]),
                 ],
         });
@@ -300,9 +300,9 @@
                 content="Use smart feedback filters to narrow Soundmap answers and get the best next guess instantly."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wordsolver.tech/soundmap-solver" />
+        <meta property="og:url" content="https://wordsolverx.com/soundmap-solver" />
         <meta property="og:site_name" content="WordSolverX" />
-        <meta property="og:image" content="https://wordsolver.tech/images/soundmap-solver.webp" />
+        <meta property="og:image" content="https://wordsolverx.com/images/soundmap-solver.webp" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
                 name="twitter:title"
@@ -312,7 +312,7 @@
                 name="twitter:description"
                 content="Free Soundmap solver with best-guess recommendations and instant candidate filtering."
         />
-        <link rel="canonical" href="https://wordsolver.tech/soundmap-solver" />
+        <link rel="canonical" href="https://wordsolverx.com/soundmap-solver" />
         {@html `<script type="application/ld+json">${jsonLdSchema}</script>`}
 </svelte:head>
 
@@ -410,7 +410,7 @@
                                         <div class="relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 p-3">
                                                 {#if guideActive === 'debut'}
                                                         <div class="absolute -top-2 right-3 flex items-center gap-1">
-                                                                <span class="inline-flex h-5 px-2 rounded-full bg-slate-900 text-white text-[10px] items-center shadow-lg animate-pulse">
+                                                                <span class="inline-flex h-5 px-2 rounded-full bg-teal-600 text-white text-[10px] items-center shadow-lg animate-pulse">
                                                                         Click
                                                                 </span>
                                                                 <span class="relative flex h-3 w-3">
@@ -440,7 +440,7 @@
                                         <div class="relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 p-3">
                                                 {#if guideActive === 'popularity'}
                                                         <div class="absolute -top-2 right-3 flex items-center gap-1">
-                                                                <span class="inline-flex h-5 px-2 rounded-full bg-slate-900 text-white text-[10px] items-center shadow-lg animate-pulse">
+                                                                <span class="inline-flex h-5 px-2 rounded-full bg-teal-600 text-white text-[10px] items-center shadow-lg animate-pulse">
                                                                         Click
                                                                 </span>
                                                                 <span class="relative flex h-3 w-3">
@@ -470,7 +470,7 @@
                                         <div class="relative rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 p-3">
                                                 {#if guideActive === 'country'}
                                                         <div class="absolute -top-2 right-3 flex items-center gap-1">
-                                                                <span class="inline-flex h-5 px-2 rounded-full bg-slate-900 text-white text-[10px] items-center shadow-lg animate-pulse">
+                                                                <span class="inline-flex h-5 px-2 rounded-full bg-teal-600 text-white text-[10px] items-center shadow-lg animate-pulse">
                                                                         Click
                                                                 </span>
                                                                 <span class="relative flex h-3 w-3">

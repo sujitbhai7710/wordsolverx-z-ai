@@ -14,7 +14,7 @@ export const load: PageServerLoad = async () => {
 
     const { country, formattedDate, date } = data;
     const currentMonth = format(today, 'MMMM');
-    const featuredImage = 'https://wordsolver.tech/images/globle-answer-today.webp';
+    const featuredImage = 'https://wordsolverx.com/images/globle-answer-today.webp';
     const pageTitle = `Globle Answer Today - ${currentMonth} - Updated`;
     const pageDescription = `Get Globle hints and the confirmed Globle answer for ${formattedDate}. The country is ${country.name}, with continent, subregion, flag, and map clues plus the full Globle answer for ${formattedDate}.`;
     const pageKeywords = `globle answer today, globle answer, globle hint, globle hint today, globle answer for ${formattedDate}`;
@@ -32,11 +32,11 @@ export const load: PageServerLoad = async () => {
             headline: pageTitle,
             datePublished: new Date(date).toISOString(),
             dateModified: new Date(date).toISOString(),
-            author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' },
+            author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/auther-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' },
             publisher: { '@type': 'Organization', name: 'WordSolverX' },
             description: pageDescription,
             image: [featuredImage],
-            mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/globle-answer-today' }
+            mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/globle-answer-today' }
         }
     ]);
 

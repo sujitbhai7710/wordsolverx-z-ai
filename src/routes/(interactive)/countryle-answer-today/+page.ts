@@ -33,7 +33,7 @@ export const load = () => {
   const pageDescription = today
     ? `Get today's Countryle answer for ${formattedDate}. See the country, continent, hemisphere, population, coordinates, and direct links to the archive and Countryle solver.`
     : 'Get today\'s Countryle answer, archive access, and the Countryle solver.';
-  const pageUrl = 'https://wordsolver.tech/countryle-answer-today';
+  const pageUrl = 'https://wordsolverx.com/countryle-answer-today';
 
   const schemas = JSON.stringify([
     generateWebPageSchema('Countryle Answer Today', pageDescription, pageUrl),
@@ -44,8 +44,8 @@ export const load = () => {
       { name: 'Use the solver first', text: 'Open the solver if you want to narrow the country before revealing today\'s answer.' }
     ]),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Today', url: 'https://wordsolver.tech/today' },
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Today', url: 'https://wordsolverx.com/today' },
       { name: 'Countryle Answer Today', url: pageUrl }
     ]),
     generateFAQSchema([

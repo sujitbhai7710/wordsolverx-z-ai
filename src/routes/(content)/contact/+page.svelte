@@ -8,14 +8,14 @@
     name="description"
     content="Contact WordSolverX for support, corrections, feedback, partnerships, or questions about our puzzle answer pages and solver tools."
   />
-  <link rel="canonical" href="https://wordsolver.tech/contact" />
+  <link rel="canonical" href="https://wordsolverx.com/contact" />
   <meta property="og:title" content="Contact WordSolverX | Support, Feedback, and Corrections" />
   <meta
     property="og:description"
     content="Reach WordSolverX by email for site updates, corrections, support, and business inquiries."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolver.tech/contact" />
+  <meta property="og:url" content="https://wordsolverx.com/contact" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Contact WordSolverX | Support, Feedback, and Corrections" />
@@ -23,14 +23,14 @@
     name="twitter:description"
     content="Get in touch with WordSolverX for support, feedback, and puzzle site updates."
   />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify([
     {
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
       name: 'Contact WordSolverX',
       description: 'Contact page for WordSolverX support, feedback, and business inquiries.',
-      url: 'https://wordsolver.tech/contact',
+      url: 'https://wordsolverx.com/contact',
       email: 'wordsolverx@gmail.com'
     },
     {
@@ -38,7 +38,7 @@
       '@type': 'WebPage',
       name: 'Contact WordSolverX',
       description: 'Contact WordSolverX for support, corrections, feedback, and business questions.',
-      url: 'https://wordsolver.tech/contact'
+      url: 'https://wordsolverx.com/contact'
     }
   ])}</script>`}
 </svelte:head>
@@ -123,13 +123,13 @@
     <div class="prose prose-slate dark:prose-invert max-w-none text-sm">
       <p>
         Including the page URL, game name, and date helps us review your message faster. If you're reporting a solver issue, describe what you entered (letters and colors) and what result you expected versus what you got. Screenshots help, but plain text is usually enough — we can reproduce most issues from a description of the inputs.
-      </p>
+      
       <p>
         For new game requests, tell us the game name, the URL where it's played, and roughly how many daily players it has. We prioritize games with established player bases because those benefit the most people. That said, we add niche games too if they're well-built and have a consistent daily cycle.
-      </p>
+      
       <p>
         We read every message. Response time varies — simple corrections are usually fixed within a day, while feature requests take longer because they require development work. If you don't hear back within a week, send a follow-up.
-      </p>
+      
     </div>
   </div>
 
@@ -139,13 +139,13 @@
       <h2 class="text-slate-900 dark:text-slate-50">How We Handle Feedback</h2>
       <p>
         Every message we receive goes into a queue and gets reviewed by a real person. We don't use automated responses or chatbots — if you email us, you'll get a human-written reply. For corrections specifically, we try to verify the issue against the game's source data before making changes. Sometimes what looks like a wrong answer is actually correct but unexpected (like when Wordle uses a obscure word), so verification prevents us from "fixing" things that aren't broken.
-      </p>
+      
       <p>
         Feature requests are tracked in a backlog. We can't promise timelines, but we can tell you whether a request is likely to be implemented. High-impact features — things that benefit a large number of players — get prioritized. If your request is niche but well-thought-out, it might still happen, just not immediately.
-      </p>
+      
       <p>
         Business and media inquiries get routed separately. If you're a journalist writing about puzzle culture, a game developer who wants your game covered, or an advertiser interested in the site, use the same email but mention your context in the subject line. It helps us route the message to the right person.
-      </p>
+      
     </div>
   </div>
 </div>

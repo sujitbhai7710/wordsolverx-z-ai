@@ -164,17 +164,22 @@ export function mixColors(colorIndices: number[], mode = 0): RGB {
 }
 
 export function getPuzzleNumber(date: Date = new Date()): number {
-  const offsetDelta = 60 * (date.getTimezoneOffset() - LAUNCH_DATE.getTimezoneOffset()) * 1000;
-  const diffMs = date.getTime() - LAUNCH_DATE.getTime() - offsetDelta;
+  // Normalize both dates to UTC for consistent calculation regardless of build server timezone
+  const utcMs = date.getTime() + date.getTimezoneOffset() * 60000;
+  const launchUtcMs = LAUNCH_DATE.getTime() + LAUNCH_DATE.getTimezoneOffset() * 60000;
+  const diffMs = utcMs - launchUtcMs;
   return Math.floor(diffMs / 86400000);
 }
 
 function getSeedString(date: Date, mode = 0): string {
-  const reset = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17);
-  if (reset < date) {
-    reset.setDate(reset.getDate() + 1);
+  // Colorfle resets at midnight JST = 15:00 UTC
+  const utcMs = date.getTime() + date.getTimezoneOffset() * 60000;
+  const utc = new Date(utcMs);
+  const reset = new Date(Date.UTC(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate(), 15));
+  if (utcMs >= reset.getTime()) {
+    reset.setUTCDate(reset.getUTCDate() + 1);
   }
-  return `${mode} ${reset.getDate()} ${reset.getMonth()} ${reset.getFullYear()}`;
+  return `${mode} ${reset.getUTCDate()} ${reset.getUTCMonth()} ${reset.getUTCFullYear()}`;
 }
 
 export function getPuzzleAnswer(date: Date = new Date(), mode = 0): PuzzleAnswer {
@@ -219,11 +224,14 @@ export function colorSimilarityYCC(color1: RGB, color2: RGB): number {
 }
 
 export function getNextResetTime(date: Date = new Date()): number {
-  const next = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 17);
-  if (next <= date) {
-    next.setDate(next.getDate() + 1);
+  // Colorfle resets at midnight JST = 15:00 UTC
+  const utcMs = date.getTime() + date.getTimezoneOffset() * 60000;
+  const utc = new Date(utcMs);
+  const next = new Date(Date.UTC(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate(), 15));
+  if (utcMs >= next.getTime()) {
+    next.setUTCDate(next.getUTCDate() + 1);
   }
-  return next.getTime();
+  return next.getTime() - date.getTimezoneOffset() * 60000;
 }
 
 export function generateAllCombinations(mode = 0): number[][] {

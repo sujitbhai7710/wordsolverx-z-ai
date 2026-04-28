@@ -177,17 +177,17 @@ const faqs = [
   <title>Colorfle Solver - Free Colorfle Helper Tool | WordSolverX</title>
   <meta name="description" content="Use the Colorfle solver to match target hex colors, test Colorfle feedback, and narrow the correct three-color combination fast." />
   <meta name="keywords" content="colorfle solver, colorfle helper, colorfle answer, colorfle color solver" />
-  <link rel="canonical" href="https://wordsolver.tech/colorfle-solver" />
+  <link rel="canonical" href="https://wordsolverx.com/colorfle-solver" />
   <meta property="og:title" content="Colorfle Solver - Free Colorfle Helper Tool" />
   <meta property="og:description" content="Match Colorfle target hex values or refine guesses with Colorfle-style feedback filtering." />
-  <meta property="og:url" content="https://wordsolver.tech/colorfle-solver" />
+  <meta property="og:url" content="https://wordsolverx.com/colorfle-solver" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
-  <meta property="og:image" content="https://wordsolver.tech/images/colorfle-solver.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/colorfle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Colorfle Solver" />
   <meta name="twitter:description" content="A static Colorfle solver for target hex matching and feedback-based elimination." />
-  <meta name="twitter:image" content="https://wordsolver.tech/images/colorfle-solver.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/images/colorfle-solver.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -195,7 +195,7 @@ const faqs = [
         '@type': 'WebPage',
         name: 'Colorfle Solver',
         description: 'Solve Colorfle with target hex matching and combination elimination.',
-        url: 'https://wordsolver.tech/colorfle-solver'
+        url: 'https://wordsolverx.com/colorfle-solver'
       },
       {
         '@type': 'WebApplication',
@@ -206,9 +206,9 @@ const faqs = [
       },
       generateFAQSchema(faqs),
       generateBreadcrumbSchema([
-        { name: 'Home', url: 'https://wordsolver.tech' },
-        { name: 'Solver', url: 'https://wordsolver.tech/solver' },
-        { name: 'Colorfle Solver', url: 'https://wordsolver.tech/colorfle-solver' }
+        { name: 'Home', url: 'https://wordsolverx.com' },
+        { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+        { name: 'Colorfle Solver', url: 'https://wordsolverx.com/colorfle-solver' }
       ]),
       generateHowToSchema('How to use the Colorfle solver', [
         { name: 'Enter the target hex', text: 'Type or paste the target hex code from Colorfle into the input field, or use the color picker to select it visually.' },

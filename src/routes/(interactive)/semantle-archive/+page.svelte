@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -80,18 +80,18 @@
 <svelte:head>
   <title>Semantle Archive - Complete Secret Word Answer History | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Semantle secret word answers. Calendar view with search and direct links to every past semantic puzzle solution." />
-  <link rel="canonical" href="https://wordsolver.tech/semantle-archive" />
+  <link rel="canonical" href="https://wordsolverx.com/semantle-archive" />
   <meta property="og:title" content="Semantle Archive - All Past Secret Word Answers" />
   <meta property="og:description" content="Complete history of every Semantle secret word. Browse by calendar or search." />
-  <meta property="og:url" content="https://wordsolver.tech/semantle-archive" />
+  <meta property="og:url" content="https://wordsolverx.com/semantle-archive" />
   <meta property="og:type" content="website" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Semantle Archive",
     "description": "Complete archive of all Semantle daily secret word answers.",
-    "url": "https://wordsolver.tech/semantle-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
+    "url": "https://wordsolverx.com/semantle-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
   })}</script>`}
 </svelte:head>
 

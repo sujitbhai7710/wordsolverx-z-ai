@@ -19,11 +19,11 @@
   <meta name="description" content={data.meta?.description ?? ''} />
   <meta name="robots" content="index, follow, max-snippet:-1" />
   <meta name="news_keywords" content={data.meta?.keywords ?? 'canuckle answer today, canuckle hint, daily canadian puzzle'} />
-  <link rel="canonical" href="https://wordsolver.tech/canuckle-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/canuckle-answer-today" />
   <meta property="og:title" content={data.meta?.title ?? 'Canuckle Answer Today'} />
   <meta property="og:description" content={data.meta?.description ?? ''} />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://wordsolver.tech/canuckle-answer-today" />
+  <meta property="og:url" content="https://wordsolverx.com/canuckle-answer-today" />
   <meta property="og:image" content={data.meta?.featuredImage} />
   <meta property="og:image:alt" content={`Canuckle daily word solution for ${formattedDate}`} />
   <meta property="og:site_name" content="WordSolverX" />
@@ -80,22 +80,15 @@
               {formattedDate}
             </span>
           </div>
-          <h1 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Canuckle Answer Today</h1>
+          <h1 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Canuckle Answer Today ({formattedDate})</h1>
           <p class="mt-3 max-w-2xl text-base sm:text-lg text-teal-50/80 leading-relaxed">
-            Verified answer, puzzle number, and Canadian fact for today&apos;s Canuckle puzzle. The answer stays hidden until you choose to reveal it.
+            Verified answer, puzzle number, and Canadian fact for today's Canuckle puzzle.
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
-            <a
-              href="#today-answer-reveal"
-              class="inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-teal-700 shadow-md hover:bg-teal-50 transition-all hover:shadow-lg"
-            >
-              <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-              Reveal Answer
-            </a>
-            <a href="/canuckle-solver" class="inline-flex items-center rounded-lg border border-white/25 bg-white/10 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm hover:bg-white/20 transition-colors">
+            <a href="/canuckle-solver" class="inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-teal-700 shadow-md hover:bg-teal-50 transition-all hover:shadow-lg">
               Open Solver
             </a>
-            <a href="/canuckle-archive" class="inline-flex items-center rounded-lg border border-white/15 bg-transparent px-5 py-2.5 text-sm font-medium text-teal-50/70 hover:bg-white/10 hover:text-white transition-colors">
+            <a href="/canuckle-archive" class="inline-flex items-center rounded-lg border border-white/25 bg-white/10 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm hover:bg-white/20 transition-colors">
               Browse Archive
             </a>
           </div>
@@ -142,30 +135,8 @@
         </div>
       </section>
 
-      <!-- Reveal Section — Premium White Card with Teal Border Accent -->
       <section id="today-answer-reveal">
-        <div class="relative rounded-2xl bg-white border border-slate-200 shadow-lg overflow-hidden">
-          <!-- Top accent bar -->
-          <div class="h-1 bg-gradient-to-r from-teal-500 via-teal-400 to-emerald-400"></div>
-          <div class="p-6 sm:p-8">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 border border-teal-100">
-                <svg class="h-5 w-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-              </div>
-              <div>
-                <p class="text-sm font-bold text-teal-700 uppercase tracking-wider">Today&apos;s Answer</p>
-                <p class="text-xs text-slate-500">Puzzle #{data.todayPuzzle.index} &middot; {formattedDate}</p>
-              </div>
-              <div class="ml-auto hidden sm:flex items-center gap-1.5">
-                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-xs font-medium text-slate-500">Live</span>
-              </div>
-            </div>
-            <!-- Subtle divider -->
-            <div class="mb-6 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-            <WordlebotWasmClient config={{ pageType: 'canuckle-daily', visibleDateKey: data.visibleDateKey }} />
-          </div>
-        </div>
+        <WordlebotWasmClient config={{ pageType: 'canuckle-daily', visibleDateKey: data.visibleDateKey }} />
       </section>
 
       <!-- Yesterday's Answer — Light Info Card -->
@@ -195,7 +166,7 @@
       <article class="space-y-6">
 
         <!-- About Today's Puzzle -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
           <div class="flex items-start gap-3 mb-4">
             <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-teal-50">
               <svg class="h-4 w-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -204,7 +175,7 @@
           </div>
           <div class="space-y-4 text-slate-600 leading-relaxed">
             <p>
-              We verify the Canuckle puzzle every day and keep this page updated with the correct puzzle number, fact, and archive links. For today, that is puzzle <strong class="text-slate-800">#{data.todayPuzzle.index}</strong>. The answer itself stays hidden inside the reveal card above, so you can land on this page for hints and navigation without getting spoiled immediately. Once you have played your daily game, come back and click the reveal button to confirm your guess and read the Canadian fact that ships with today&apos;s answer.
+              We verify the Canuckle puzzle every day and keep this page updated with the correct puzzle number, answer, fact, and archive links. For today, that is puzzle <strong class="text-slate-800">#{data.todayPuzzle.index}</strong> on <strong class="text-slate-800">{formattedDate}</strong>. The answer and Canadian fact are displayed in the card above, so you can confirm your guess and read the fact right away.
             </p>
             <p>
               Canuckle resets at midnight Eastern Time every day, which is the same schedule as Wordle for most North American players. If you are visiting from Europe or Asia, the new puzzle may not have released yet in your timezone. The puzzle number increments sequentially from the game&apos;s original launch date, so you can use the number to cross-reference with the archive and check historical answers.
@@ -213,7 +184,7 @@
         </section>
 
         <!-- What is Canuckle? -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
           <div class="flex items-start gap-3 mb-4">
             <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-amber-50">
               <svg class="h-4 w-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -234,7 +205,7 @@
         </section>
 
         <!-- How to Play Canuckle -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
           <div class="flex items-start gap-3 mb-5">
             <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50">
               <svg class="h-4 w-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -303,7 +274,7 @@
         </section>
 
         <!-- Canuckle Tips and Strategy -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
           <div class="flex items-start gap-3 mb-4">
             <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-violet-50">
               <svg class="h-4 w-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
@@ -342,7 +313,7 @@
         </section>
 
         <!-- Canuckle vs Wordle -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
           <div class="flex items-start gap-3 mb-5">
             <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-blue-50">
               <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
@@ -378,7 +349,7 @@
         </section>
 
         <!-- FAQ Section -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
           <div class="flex items-start gap-3 mb-5">
             <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-orange-50">
               <svg class="h-4 w-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -392,7 +363,7 @@
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                Use the reveal card at the top of this page. It keeps today&apos;s Canuckle answer hidden until you choose to open it, so you can check for hints and facts without getting spoiled. The verified answer is puzzle #{data.todayPuzzle.index}.
+                For {formattedDate}, the Canuckle answer is <strong class="text-slate-800">{data.todayPuzzle.answer.toUpperCase()}</strong> (puzzle #{data.todayPuzzle.index}). The answer card and Canadian fact are shown at the top of this page.
               </div>
             </details>
             {#if data.yesterdayData}
@@ -456,7 +427,7 @@
 
         <!-- Recent 30-Day Answers -->
         {#if data.last30 && data.last30.length > 0}
-          <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+          <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
             <div class="flex items-start gap-3 mb-2">
               <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-slate-100">
                 <svg class="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>

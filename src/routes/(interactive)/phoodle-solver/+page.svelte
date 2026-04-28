@@ -13,7 +13,7 @@
   const pageTitle = 'Phoodle Solver - Solver within 3 attempts';
   const pageDescription =
     'Use the Phoodle solver to enter your guesses, match the feedback colors, and get the best next food-word suggestions with the original WASM solver logic.';
-  const pageUrl = 'https://wordsolver.tech/phoodle-solver';
+  const pageUrl = 'https://wordsolverx.com/phoodle-solver';
 
   const faqs = [
     {
@@ -65,8 +65,8 @@
       keywords: ['phoodle solver', 'phoodle helper', 'food word solver']
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
       { name: 'Phoodle Solver', url: pageUrl }
     ]),
     generateWebPageSchema('Phoodle Solver', pageDescription, pageUrl)
@@ -82,7 +82,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
   <link rel="canonical" href={pageUrl} />
-  <meta property="og:image" content="https://wordsolver.tech/images/phoodle-solver.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/phoodle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />

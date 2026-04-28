@@ -63,16 +63,16 @@
 <svelte:head>
   <title>Framed Archive - Past Framed Answers by Date | WordSolverX</title>
   <meta name="description" content="Browse the Framed archive by date and reveal the saved answers for Framed Classic, One Frame, Titleshot, and Poster from the static dataset." />
-  <link rel="canonical" href="https://wordsolver.tech/framed-archive" />
+  <link rel="canonical" href="https://wordsolverx.com/framed-archive" />
   <meta property="og:title" content="Framed Archive - Past Framed Answers by Date" />
   <meta property="og:description" content="Search saved Framed movie title answers by date for all supported Framed modes." />
-  <meta property="og:url" content="https://wordsolver.tech/framed-archive" />
+  <meta property="og:url" content="https://wordsolverx.com/framed-archive" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Framed Archive" />
   <meta name="twitter:description" content="Browse static Framed answer history by date." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
 </svelte:head>
 
 <div class="min-h-screen py-10">

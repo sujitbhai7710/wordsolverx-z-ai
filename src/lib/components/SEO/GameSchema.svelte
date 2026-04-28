@@ -3,7 +3,7 @@
     name,
     description,
     url,
-    image = 'https://wordsolver.tech/wordsolverx.webp',
+    image = 'https://wordsolverx.com/wordsolverx.webp',
     authorName = 'Wordle Solver',
     datePublished = '2026-01-01',
     genre = ['Puzzle', 'Word Game'],

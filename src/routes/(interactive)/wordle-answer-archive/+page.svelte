@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -81,23 +81,23 @@
 <svelte:head>
   <title>Wordle Answer Archive - Complete History of All Solutions | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Wordle answers by date. Calendar view with search, daily puzzle numbers, and direct links to every past solution since June 2021." />
-  <link rel="canonical" href="https://wordsolver.tech/wordle-answer-archive" />
+  <link rel="canonical" href="https://wordsolverx.com/wordle-answer-archive" />
   <meta property="og:title" content="Wordle Answer Archive - All Past Solutions" />
   <meta property="og:description" content="Complete history of every Wordle answer. Browse by calendar or search by date." />
-  <meta property="og:url" content="https://wordsolver.tech/wordle-answer-archive" />
+  <meta property="og:url" content="https://wordsolverx.com/wordle-answer-archive" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://wordsolver.tech/images/wordle-answer-archive.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/wordle-answer-archive.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Wordle Answer Archive - All Past Solutions | WordSolverX" />
   <meta name="twitter:description" content="Complete history of every Wordle answer with calendar view." />
-  <meta name="twitter:image" content="https://wordsolver.tech/images/wordle-answer-archive.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/images/wordle-answer-archive.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Wordle Answer Archive",
     "description": "Complete archive of all New York Times Wordle answers and solutions from June 2021 to present.",
-    "url": "https://wordsolver.tech/wordle-answer-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
+    "url": "https://wordsolverx.com/wordle-answer-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
   })}</script>`}
 </svelte:head>
 

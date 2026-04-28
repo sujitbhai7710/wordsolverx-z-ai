@@ -1689,7 +1689,7 @@ function buildSolverChips(game: WordlebotGameConfig, wordLength?: number) {
 
 export function getWordleLengthPageConfig(wordLength: number): WordlebotPageConfig {
 	const game = getWordlebotGame('wordle');
-	const pageUrl = `https://wordsolver.tech${getWordleLengthSolverPath(wordLength)}`;
+	const pageUrl = `https://wordsolverx.com${getWordleLengthSolverPath(wordLength)}`;
 	const title = `${wordLength}-Letter Wordle Solver`;
 	const description = `Use the ${wordLength}-letter Wordle solver to filter clues, rank next guesses, and solve custom-length Wordle boards faster.`;
 
@@ -1727,7 +1727,7 @@ export function getVariantSolverPageConfig(variant: WordlebotVariantRouteSlug): 
 	const gameSlug = getGameForVariantRoute(variant);
 	const game = getWordlebotGame(gameSlug);
 	const routePath = `/${variant}-solver`;
-	const pageUrl = `https://wordsolver.tech${routePath}`;
+	const pageUrl = `https://wordsolverx.com${routePath}`;
 	const title = game.slug === 'spotle' ? 'Spotle Wordle Solver' : `${sentenceCaseGame(game)} Solver`;
 	const description =
 		game.slug === 'canuckle'
@@ -1782,7 +1782,7 @@ export function getCanuckleTodayPageConfig(): WordlebotPageConfig {
 		eyebrow: 'Daily Canuckle answer, fact, and puzzle number',
 		description:
 			"See the Canuckle answer today, check the current puzzle number, and read the matching Canadian fact with quick links to the archive and solver.",
-		pageUrl: `https://wordsolver.tech${getCanucklePagePath('today')}`,
+		pageUrl: `https://wordsolverx.com${getCanucklePagePath('today')}`,
 		keywords: [
 			'canuckle answer today',
 			'canuckle today',
@@ -1847,7 +1847,7 @@ export function getCanuckleArchivePageConfig(): WordlebotPageConfig {
 		eyebrow: 'Search past Canuckle answers by date or puzzle number',
 		description:
 			'Browse the Canuckle archive with puzzle numbers, dates, answers, and Canadian facts in one searchable page built for quick lookups.',
-		pageUrl: 'https://wordsolver.tech/canuckle-archive',
+		pageUrl: 'https://wordsolverx.com/canuckle-archive',
 		keywords: [
 			'canuckle archive',
 			'canuckle answers',
@@ -1918,15 +1918,15 @@ export function getWordlebotStructuredData(config: WordlebotPageConfig) {
 			generateCollectionPageSchema(config.title, config.description, config.pageUrl, [
 				{
 					name: 'Canuckle Answer Today',
-					url: `https://wordsolver.tech${getCanucklePagePath('today')}`
+					url: `https://wordsolverx.com${getCanucklePagePath('today')}`
 				},
 				{
 					name: 'Canuckle Archive',
-					url: `https://wordsolver.tech${getCanucklePagePath('archive')}`
+					url: `https://wordsolverx.com${getCanucklePagePath('archive')}`
 				},
 				{
 					name: 'Canuckle Solver',
-					url: `https://wordsolver.tech${getCanucklePagePath('solver')}`
+					url: `https://wordsolverx.com${getCanucklePagePath('solver')}`
 				}
 			]),
 			generateFAQSchema(config.faqs),

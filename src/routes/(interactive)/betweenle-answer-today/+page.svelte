@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
@@ -73,7 +73,7 @@
         headline: data.meta.title,
         description: data.meta.description,
         mainEntityOfPage: data.meta.canonical,
-        image: 'https://wordsolver.tech/images/betweenle-answer-today.webp',
+        image: 'https://wordsolverx.com/images/betweenle-answer-today.webp',
         keywords: data.meta.keywords,
         datePublished: `${data.todayAnswer.date}T00:00:00Z`,
         dateModified: `${data.todayAnswer.date}T00:00:00Z`,
@@ -86,13 +86,13 @@
           name: 'WordSolverX',
           logo: {
             '@type': 'ImageObject',
-            url: 'https://wordsolver.tech/images/betweenle-answer-today.webp',
+            url: 'https://wordsolverx.com/images/betweenle-answer-today.webp',
           },
         },
       },
       generateBreadcrumbSchema([
-        { name: 'Home', url: 'https://wordsolver.tech' },
-        { name: 'Today', url: 'https://wordsolver.tech/today' },
+        { name: 'Home', url: 'https://wordsolverx.com' },
+        { name: 'Today', url: 'https://wordsolverx.com/today' },
         { name: 'Betweenle Answer Today', url: data.meta.canonical },
       ]),
       generateWebPageSchema(data.meta.title, data.meta.description, data.meta.canonical),
@@ -122,12 +122,12 @@
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content={data.meta.canonical} />
-  <meta property="og:image" content="https://wordsolver.tech/images/betweenle-answer-today.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/betweenle-answer-today.webp" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
-  <meta name="twitter:image" content="https://wordsolver.tech/images/betweenle-answer-today.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/images/betweenle-answer-today.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 
@@ -194,7 +194,7 @@
 
         {#if !showAnswer}
           <button
-            class="mt-5 inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800 dark:bg-amber-600 dark:hover:bg-amber-500"
+            class="mt-5 inline-flex items-center justify-center rounded-2xl bg-teal-600 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-teal-500  "
             onclick={() => (showAnswer = true)}
             type="button"
           >
@@ -246,7 +246,7 @@
       <div class="mt-8 grid gap-3 sm:grid-cols-3">
         <a
           href="/betweenle-solver"
-          class="rounded-2xl bg-slate-900 px-5 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-slate-800 dark:bg-amber-600 dark:hover:bg-amber-500"
+          class="rounded-2xl bg-teal-600 px-5 py-4 text-center text-sm font-bold text-white transition-colors hover:bg-teal-500  "
         >
           Betweenle Solver
         </a>
@@ -270,21 +270,30 @@
     <FAQSection {faqs} title="Betweenle Answer FAQs" />
   </section>
 
-  <article class="mx-auto max-w-4xl space-y-8 px-4 sm:px-6 lg:px-8">
-    <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+  <article class="space-y-8">
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
       <h2 class="text-3xl font-black tracking-tight text-slate-900">What is Betweenle?</h2>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-        Betweenle is a daily word puzzle where the game picks a secret word from a predefined list and shows you two boundary words — one that comes just before it alphabetically and one that comes just after it. Your job is to figure out the word that sits between those two boundaries. It sounds simple at first, but once you realize how many words share the same alphabetical neighborhood, the challenge becomes real.
-      </p>
+          Betweenle is a daily word puzzle where the game picks a secret word from a predefined list and shows you two boundary words — one that comes just before it alphabetically and one that comes just after it. Your job is to figure out the word that sits between those two boundaries.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          It sounds simple at first, but once you realize how many words share the same alphabetical neighborhood, the challenge becomes real.
+        </p>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-        The game was created as a spin on the Wordle formula, but instead of letter-by-letter deduction, Betweenle tests your vocabulary and your sense of where words sit in the dictionary. You do not get color tiles telling you which letters are correct. You get two anchor words and the gap between them — and the answer is hiding somewhere in that gap.
-      </p>
+          The game was created as a spin on the Wordle formula, but instead of letter-by-letter deduction, Betweenle tests your vocabulary and your sense of where words sit in the dictionary.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          You do not get color tiles telling you which letters are correct. You get two anchor words and the gap between them — and the answer is hiding somewhere in that gap.
+        </p>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-        Betweenle has built a steady following since launch, partly because the daily format keeps players coming back, and partly because the game is genuinely hard in a satisfying way. There is no substitute for actually knowing words and understanding alphabetical ordering. You cannot brute-force your way through it the way you can with some other word games.
-      </p>
+          Betweenle has built a steady following since launch, partly because the daily format keeps players coming back, and partly because the game is genuinely hard in a satisfying way. There is no substitute for actually knowing words and understanding alphabetical ordering.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          You cannot brute-force your way through it the way you can with some other word games.
+        </p>
     </section>
 
-    <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
       <h2 class="text-3xl font-black tracking-tight text-slate-900">How Betweenle Works</h2>
       <p class="mt-4 text-lg leading-8 text-slate-600">
         Each day, Betweenle selects one word from its answer list. The game then identifies the two words that sit immediately before and after the answer in alphabetical order. Those boundary words are displayed on screen, and you have to type the word that fits between them.
@@ -293,27 +302,36 @@
         The daily cycle resets at midnight, matching the standard Wordle schedule for most players. There is one puzzle per day, which keeps the format focused and prevents binge-playing. Every puzzle is assigned a sequential puzzle number, so you can track how far along you are in the archive.
       </p>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-        Unlike games where you submit multiple guesses and get feedback after each one, Betweenle is more of a single-shot challenge. You see the boundaries, you think about what word could fit, and you submit your answer. The feedback is binary — right or wrong. That means preparation and vocabulary knowledge matter more than raw guessing speed.
-      </p>
+          Unlike games where you submit multiple guesses and get feedback after each one, Betweenle is more of a single-shot challenge. You see the boundaries, you think about what word could fit, and you submit your answer.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The feedback is binary — right or wrong. That means preparation and vocabulary knowledge matter more than raw guessing speed.
+        </p>
       <p class="mt-4 text-lg leading-8 text-slate-600">
         The answer pool is drawn from common English words, typically between five and eight letters. The boundaries themselves are real words from the same pool, which means the gap you are trying to fill is always a real alphabetical space in the dictionary, not an artificial puzzle construction.
       </p>
     </section>
 
-    <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
       <h2 class="text-3xl font-black tracking-tight text-slate-900">Today&apos;s Betweenle Answer — How This Page Works</h2>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-        This page tracks the daily Betweenle puzzle automatically. The clue cards at the top show you the word length, first letter, last letter, vowel count, and whether the answer has repeating letters — all without revealing the word itself. That is enough information to make an educated guess if you want to try solving it yourself before looking at the answer.
-      </p>
+          This page tracks the daily Betweenle puzzle automatically. The clue cards at the top show you the word length, first letter, last letter, vowel count, and whether the answer has repeating letters — all without revealing the word itself.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          That is enough information to make an educated guess if you want to try solving it yourself before looking at the answer.
+        </p>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-        Puzzle numbers increment daily, starting from the game&apos;s launch. If today is puzzle #{data.todayAnswer.puzzleNumber}, yesterday was #{data.todayAnswer.puzzleNumber - 1} and tomorrow will be #{data.todayAnswer.puzzleNumber + 1}. The archive section on this page shows the five most recent answers in reverse chronological order, so you can spot patterns or check whether a word you were thinking of has appeared recently.
-      </p>
+          Puzzle numbers increment daily, starting from the game&apos;s launch. If today is puzzle #{data.todayAnswer.puzzleNumber}, yesterday was #{data.todayAnswer.puzzleNumber - 1} and tomorrow will be #{data.todayAnswer.puzzleNumber + 1}.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The archive section on this page shows the five most recent answers in reverse chronological order, so you can spot patterns or check whether a word you were thinking of has appeared recently.
+        </p>
       <p class="mt-4 text-lg leading-8 text-slate-600">
         The Betweenle solver link at the top of the page opens a separate tool where you can enter the boundary words and filter the answer list. That is useful when you want to narrow down candidates without just reading the answer here.
       </p>
     </section>
 
-    <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
       <h2 class="text-3xl font-black tracking-tight text-slate-900">Strategy Tips for Betweenle</h2>
       <div class="mt-6 space-y-6">
         <div class="rounded-2xl bg-slate-50 p-6">
@@ -331,8 +349,11 @@
         <div class="rounded-2xl bg-slate-50 p-6">
           <h3 class="text-xl font-bold text-slate-900">Count the letters in the gap</h3>
           <p class="mt-2 text-base leading-7 text-slate-600">
-            If the left boundary is APPLE and the right boundary is APPLY, there is exactly one word that fits (APPLQ is not a word, but APPLY already tells you the answer length). When the gap is wide — say, between DANCE and DRAKE — you need to think about all five- and six-letter words starting with D that fall between those two endpoints alphabetically.
-          </p>
+          If the left boundary is APPLE and the right boundary is APPLY, there is exactly one word that fits (APPLQ is not a word, but APPLY already tells you the answer length).
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          When the gap is wide — say, between DANCE and DRAKE — you need to think about all five- and six-letter words starting with D that fall between those two endpoints alphabetically.
+        </p>
         </div>
         <div class="rounded-2xl bg-slate-50 p-6">
           <h3 class="text-xl font-bold text-slate-900">Think about prefixes and suffixes</h3>
@@ -355,14 +376,17 @@
       </div>
     </section>
 
-    <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
       <h2 class="text-3xl font-black tracking-tight text-slate-900">Betweenle vs Similar Word Games</h2>
       <div class="mt-6 grid gap-6 sm:grid-cols-2">
         <div class="rounded-2xl bg-slate-50 p-6">
           <h3 class="text-lg font-bold text-slate-900">Betweenle vs Wordle</h3>
           <p class="mt-2 text-base leading-7 text-slate-600">
-            Wordle gives you six guesses with letter-by-letter color feedback. Betweenle gives you two boundary words and no intermediate feedback. Wordle rewards pattern recognition and letter frequency analysis. Betweenle rewards vocabulary depth and alphabetical awareness. If you are good at Wordle, Betweenle will still challenge you because the skill set is different.
-          </p>
+          Wordle gives you six guesses with letter-by-letter color feedback. Betweenle gives you two boundary words and no intermediate feedback. Wordle rewards pattern recognition and letter frequency analysis.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Betweenle rewards vocabulary depth and alphabetical awareness. If you are good at Wordle, Betweenle will still challenge you because the skill set is different.
+        </p>
         </div>
         <div class="rounded-2xl bg-slate-50 p-6">
           <h3 class="text-lg font-bold text-slate-900">Betweenle vs Absurdle</h3>

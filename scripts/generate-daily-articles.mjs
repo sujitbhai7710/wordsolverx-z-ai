@@ -567,7 +567,7 @@ function buildWordlePrompt(skillText, context) {
     '- Use concrete observations from the word itself and the recent answers provided.',
     '- Keep the first 5 hints spoiler-safe. Do not reveal the answer before the reveal section.',
     '- Use straightforward American English.',
-    '- Keep links internal to wordsolver.tech only when you actually need a link.',
+    '- Keep links internal to wordsolverx.com only when you actually need a link.',
     '- Avoid fake etymology or dictionary trivia unless you are highly confident from general knowledge.',
     '',
     'Required exact section order inside `contentGuideHtml`:',

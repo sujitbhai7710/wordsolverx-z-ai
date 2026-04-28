@@ -76,9 +76,9 @@
       { name: 'Add clue and review results', text: 'Click Add Clue to filter. The remaining countries are ranked by how well they match all your clues.' }
     ]),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
-      { name: 'Countryle Solver', url: 'https://wordsolver.tech/countryle-solver' }
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+      { name: 'Countryle Solver', url: 'https://wordsolverx.com/countryle-solver' }
     ])
   ]);
 
@@ -132,17 +132,17 @@
   <title>Countryle Solver - Free Country Clue Helper | WordSolverX</title>
   <meta name="description" content="Use the Countryle solver to filter countries by continent, hemisphere, temperature, population, and direction clues from the daily Countryle game." />
   <meta name="keywords" content="countryle solver, countryle helper, countryle country solver, countryle clues" />
-  <link rel="canonical" href="https://wordsolver.tech/countryle-solver" />
+  <link rel="canonical" href="https://wordsolverx.com/countryle-solver" />
   <meta property="og:title" content="Countryle Solver - Free Country Clue Helper" />
   <meta property="og:description" content="Filter countries by Countryle clue feedback and narrow the correct answer quickly." />
-  <meta property="og:url" content="https://wordsolver.tech/countryle-solver" />
+  <meta property="og:url" content="https://wordsolverx.com/countryle-solver" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
-  <meta property="og:image" content="https://wordsolver.tech/images/countryle-solver.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/countryle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Countryle Solver" />
   <meta name="twitter:description" content="A static Countryle solver with exact clue filtering and ranked matches." />
-  <meta name="twitter:image" content="https://wordsolver.tech/images/countryle-solver.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/images/countryle-solver.webp" />
   {@html `<script type="application/ld+json">${schemas}</script>`}
 </svelte:head>
 

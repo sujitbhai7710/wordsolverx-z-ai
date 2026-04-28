@@ -23,6 +23,7 @@ export const TODAY_STATIC_ROUTES = [
   '/spotle-answer-today',
   '/worgle-answer-today',
   '/waffle-answer-today',
+  '/wordle-answer-today',
   '/worldle-answer-today'
 ];
 

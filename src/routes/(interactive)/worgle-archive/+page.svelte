@@ -89,7 +89,7 @@
 <svelte:head>
         <title>Worgle Archive - All Past Answers | WordSolverX</title>
         <meta name="description" content="Browse the Worgle archive by date with puzzle numbers and direct answer lookups." />
-        <link rel="canonical" href="https://wordsolver.tech/worgle-archive" />
+        <link rel="canonical" href="https://wordsolverx.com/worgle-archive" />
 </svelte:head>
 
 <ArchiveCalendar

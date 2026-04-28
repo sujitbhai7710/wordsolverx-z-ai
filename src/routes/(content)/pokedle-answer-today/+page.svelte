@@ -28,40 +28,52 @@
       { '@type': 'Question', name: 'When does Pokedle reset?', acceptedAnswer: { '@type': 'Answer', text: 'Pokedle resets daily at midnight UTC with new puzzles for all modes.' } },
       { '@type': 'Question', name: 'Is Pokedle free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Pokedle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'Pokedle Answer Today', description: 'Get the confirmed Pokedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/pokedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/images/pokedle-answer-today.webp' } } },
+    { '@type': 'Article', headline: 'Pokedle Answer Today', description: 'Get the confirmed Pokedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/pokedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/auther-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/pokedle-answer-today.webp' } } },
   ]};
 </script>
 
 <GameDleAnswerPage gameKey="pokedle" gameTitle="Pokedle" apiGame="pokedle" {modes} {modeConfig} {regions} {crossLinks} {schemas} {data}>
   {#snippet seoContent()}
     <article class="space-y-8">
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">What is Pokedle?</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          Pokedle is a free daily guessing game created for fans of Pokémon, the highest-grossing media franchise in history. Originally conceived by Satoshi Tajiri and Ken Sugimori and developed by Game Freak, Pokémon began with the release of Pokémon Red and Green in Japan in 1996 for the Nintendo Game Boy. The franchise has since expanded to include over 1,000 unique Pokémon species across nine generations of core games, along with a globally beloved animated television series, blockbuster films, the Pokémon Trading Card Game, and countless spin-off titles. Pokedle transforms this enormous universe of creatures into a daily puzzle experience that challenges players to identify a mystery Pokémon using a variety of clues.
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Pokedle is a free daily guessing game created for fans of Pokémon, the highest-grossing media franchise in history. Originally conceived by Satoshi Tajiri and Ken Sugimori and developed by Game Freak, Pokémon began with the release of Pokémon Red and Green in Japan in 1996 for the Nintendo Game Boy.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          The scale of the Pokémon franchise is staggering. With over 1,000 Pokémon species spanning nine generations of core RPG games — from the original 151 in Red and Blue (Generation 1) to the latest additions in Pokémon Scarlet and Violet (Generation 9) — the franchise offers an incredibly deep pool of characters for Pokedle to draw from. Each Pokémon has a unique combination of attributes: type (there are now 18 types, from Fire and Water to Fairy and Steel), height, weight, evolution stage, generation of introduction, and distinctive physical design. Many Pokémon also have regional variants (like Alolan, Galarian, Hisuian, and Paldean forms) and multiple evolutionary forms, adding further complexity to the guessing experience.
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          The franchise has since expanded to include over 1,000 unique Pokémon species across nine generations of core games, along with a globally beloved animated television series, blockbuster films, the Pokémon Trading Card Game, and countless spin-off titles. Pokedle transforms this enormous universe of creatures into a daily puzzle experience that challenges players to identify a mystery Pokémon using a variety of clues.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          Pokedle sits within the broader "-dle" character guessing game genre alongside titles like LoLdle (League of Legends), Dotadle (Dota 2), Narutodle (Naruto), Smashdle (Super Smash Bros.), and OnePiecedle (One Piece). What distinguishes Pokedle within this genre is the sheer familiarity of its subject matter. Pokémon is one of the most widely recognized franchises on the planet, with fans spanning every age group and geographic region. Even people who have never played a Pokémon game can often identify Pikachu, Charizard, and a handful of other iconic species. But Pokedle's true depth emerges in its more challenging puzzles, which draw from the full roster of over 1,000 species — many of which are known only to dedicated fans who have followed the franchise across multiple generations.
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          The scale of the Pokémon franchise is staggering. With over 1,000 Pokémon species spanning nine generations of core RPG games — from the original 151 in Red and Blue (Generation 1) to the latest additions in Pokémon Scarlet and Violet (Generation 9) — the franchise offers an incredibly deep pool of characters for Pokedle to draw from.
         </p>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Each Pokémon has a unique combination of attributes: type (there are now 18 types, from Fire and Water to Fairy and Steel), height, weight, evolution stage, generation of introduction, and distinctive physical design. Many Pokémon also have regional variants (like Alolan, Galarian, Hisuian, and Paldean forms) and multiple evolutionary forms, adding further complexity to the guessing experience.
+        </p>
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Pokedle sits within the broader "-dle" character guessing game genre alongside titles like LoLdle (League of Legends), Dotadle (Dota 2), Narutodle (Naruto), Smashdle (Super Smash Bros.), and OnePiecedle (One Piece). What distinguishes Pokedle within this genre is the sheer familiarity of its subject matter. Pokémon is one of the most widely recognized franchises on the planet, with fans spanning every age group and geographic region.
+        </p>
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Even people who have never played a Pokémon game can often identify Pikachu, Charizard, and a handful of other iconic species. But Pokedle's true depth emerges in its more challenging puzzles, which draw from the full roster of over 1,000 species — many of which are known only to dedicated fans who have followed the franchise across multiple generations.
+        </p>
+        <p class="text-base text-slate-600 leading-relaxed">
           The game was created by a fan of the Pokémon franchise and operates independently of The Pokémon Company, Nintendo, or Game Freak. Like other community-made "-dle" games, Pokedle is a celebration of the source material. It provides a daily ritual for Pokémon fans that engages their knowledge of the creatures they have spent years (or decades) learning about, catching, training, and battling with. The game has become especially popular among fans who grew up with the original games and appreciate the opportunity to test their encyclopedic Pokémon knowledge in a structured, competitive format.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">How Pokedle Works</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           Pokedle refreshes all four of its game modes daily at midnight UTC, giving every player around the world the same set of puzzles on the same calendar day. Similar to LoLdle and OnePiecedle, Pokedle also supports separate answer pools for different regions — specifically, America and Europe. This regional system means that players in different parts of the world may see different Pokémon on the same day, and this page tracks both regional answers. The four modes test different types of Pokémon knowledge, ensuring a varied and comprehensive daily challenge.
         </p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
             <h3 class="text-xl font-bold text-yellow-700 mb-3 flex items-center gap-2">👑 Classic Mode</h3>
-            <p class="text-slate-600">
-              Classic mode is the attribute-based core of Pokedle. You guess Pokémon by name and receive color-coded feedback on multiple attributes after each attempt. The typical clues include the Pokémon's type (or types, for dual-type Pokémon), the generation it was introduced in, its height range, its weight range, and its evolution stage (basic, Stage 1, Stage 2, or no evolution). The type clue is particularly powerful because the 18-type system creates dramatically different possibilities. A Fire-type narrows the field significantly, while a dual-type like Fire/Ground eliminates most other possibilities. The generation clue helps you place the Pokémon in a specific era — Generation 1 includes the beloved original 151, while later generations introduce hundreds of new species with increasingly creative designs.
-            </p>
+                    <p class="text-slate-600">
+          Classic mode is the attribute-based core of Pokedle. You guess Pokémon by name and receive color-coded feedback on multiple attributes after each attempt. The typical clues include the Pokémon's type (or types, for dual-type Pokémon), the generation it was introduced in, its height range, its weight range, and its evolution stage (basic, Stage 1, Stage 2, or no evolution). The type clue is particularly powerful because the 18-type system creates dramatically different possibilities.
+        </p>
+        <p class="text-slate-600">
+          A Fire-type narrows the field significantly, while a dual-type like Fire/Ground eliminates most other possibilities. The generation clue helps you place the Pokémon in a specific era — Generation 1 includes the beloved original 151, while later generations introduce hundreds of new species with increasingly creative designs.
+        </p>
           </div>
           <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100">
             <h3 class="text-xl font-bold text-purple-700 mb-3 flex items-center gap-2">👤 Silhouette Mode</h3>
@@ -71,36 +83,42 @@
           </div>
           <div class="bg-teal-50 p-6 rounded-2xl border border-teal-100">
             <h3 class="text-xl font-bold text-teal-700 mb-3 flex items-center gap-2">📖 Flavor Text Mode</h3>
-            <p class="text-slate-600">
-              Flavor Text mode presents you with a Pokédex entry — the in-universe encyclopedia description of a Pokémon species — and asks you to identify which Pokémon it describes. The Pokédex has been a core element of the Pokémon games since the very beginning, with each species having a unique (and often surprisingly dark or poetic) description. These entries vary between game versions, with different generations and regions sometimes featuring different text for the same Pokémon. Some Pokédex entries include unmistakable identifiers — a description of a Pokémon that "burns with the intensity of the sun" clearly points to a Fire-type — while others require more careful reading and deduction. This mode is a favorite among fans who have spent time reading through the Pokédex and appreciating the world-building behind each species.
-            </p>
+                    <p class="text-slate-600">
+          Flavor Text mode presents you with a Pokédex entry — the in-universe encyclopedia description of a Pokémon species — and asks you to identify which Pokémon it describes. The Pokédex has been a core element of the Pokémon games since the very beginning, with each species having a unique (and often surprisingly dark or poetic) description. These entries vary between game versions, with different generations and regions sometimes featuring different text for the same Pokémon.
+        </p>
+        <p class="text-slate-600">
+          Some Pokédex entries include unmistakable identifiers — a description of a Pokémon that "burns with the intensity of the sun" clearly points to a Fire-type — while others require more careful reading and deduction. This mode is a favorite among fans who have spent time reading through the Pokédex and appreciating the world-building behind each species.
+        </p>
           </div>
           <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
             <h3 class="text-xl font-bold text-blue-700 mb-3 flex items-center gap-2">🃏 Card Mode</h3>
-            <p class="text-slate-600">
-              Card mode displays a cropped section of a Pokémon Trading Card Game card and asks you to identify the Pokémon depicted on it. The Pokémon TCG has been in continuous production since 1996 and has produced thousands of unique card designs featuring different artwork, holofoil patterns, and layout styles across multiple generations of card sets. The cropped sections may show distinctive elements like the Pokémon's illustration style, a portion of the card's border, energy requirements, or attack names. This mode is particularly rewarding for players who are also Pokémon TCG collectors or who have been exposed to card art through the physical game or the digital Pokémon TCG Live app.
-            </p>
+                    <p class="text-slate-600">
+          Card mode displays a cropped section of a Pokémon Trading Card Game card and asks you to identify the Pokémon depicted on it. The Pokémon TCG has been in continuous production since 1996 and has produced thousands of unique card designs featuring different artwork, holofoil patterns, and layout styles across multiple generations of card sets. The cropped sections may show distinctive elements like the Pokémon's illustration style, a portion of the card's border, energy requirements, or attack names.
+        </p>
+        <p class="text-slate-600">
+          This mode is particularly rewarding for players who are also Pokémon TCG collectors or who have been exposed to card art through the physical game or the digital Pokémon TCG Live app.
+        </p>
           </div>
         </div>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600 leading-relaxed">
           The difficulty of Pokedle depends entirely on which Pokémon has been selected for the day's puzzle. Days featuring Generation 1 Pokémon like Pikachu, Bulbasaur, or Mewtwo tend to be accessible to even casual fans, as these original 151 species are deeply embedded in global pop culture. Days featuring Pokémon from later generations — especially species from Generations 7, 8, or 9 that newer fans may be more familiar with — can be surprisingly challenging for players whose Pokémon knowledge is rooted in the earlier games. This cross-generational variety ensures that Pokedle remains interesting for fans of every era.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Today's Pokedle Answer — How Solutions Work</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           This page provides the verified Pokedle answer for today across all four game modes and both regional variants (America and Europe). The answers are updated daily and sourced directly from the game, so you can trust their accuracy. Whether you have already attempted the puzzle and want to verify your guess, or you prefer to skip straight to the solution, this page has everything you need.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           Pokedle answers are randomly selected from the complete Pokémon database, which spans all nine generations of core games. The selection process does not follow any publicly known pattern or schedule, making it impossible to predict which Pokémon will appear on any given day. Each mode independently selects its own mystery Pokémon, so the Classic, Silhouette, Flavor Text, and Card answers will all be different species. The regional split means American and European players may face different puzzles on the same day.
         </p>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600 leading-relaxed">
           As new Pokémon games are released and new generations are introduced, the Pokedle database is expanded to include the latest species. This means the game evolves alongside the franchise itself, always staying current with the latest additions to the Pokémon world. If you encounter a Pokémon you do not immediately recognize, it may be a newer species from a generation you have not yet explored or a regional variant that differs from the form you are familiar with.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Strategy Tips for Pokedle</h2>
         <div class="space-y-4 text-lg text-slate-600">
           <p class="leading-relaxed">
@@ -132,7 +150,7 @@
         </div>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Frequently Asked Questions About Pokedle</h2>
         <div class="space-y-6 text-lg text-slate-600">
           <div>

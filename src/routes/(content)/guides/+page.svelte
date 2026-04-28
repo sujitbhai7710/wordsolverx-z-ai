@@ -80,16 +80,16 @@
 <svelte:head>
   <title>Guides & Strategies - Expert Tips for Word Puzzles | WordSolverX</title>
   <meta name="description" content="Expert guides and strategies for Wordle, Quordle, Phoodle, Waffle, Colordle, and Semantle. Learn the best techniques to improve your puzzle-solving skills." />
-  <link rel="canonical" href="https://wordsolver.tech/guides" />
+  <link rel="canonical" href="https://wordsolverx.com/guides" />
   <meta property="og:title" content="Guides & Strategies - Expert Tips for Word Puzzles | WordSolverX" />
   <meta property="og:description" content="Read practical puzzle guides, strategy tips, and improvement advice for Wordle, Quordle, Phoodle, Waffle, Colordle, and Semantle." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolver.tech/guides" />
+  <meta property="og:url" content="https://wordsolverx.com/guides" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Guides & Strategies - Expert Tips for Word Puzzles | WordSolverX" />
   <meta name="twitter:description" content="Improve your puzzle solving with practical guides and strategy breakdowns from WordSolverX." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -97,13 +97,13 @@
         '@type': 'CollectionPage',
         'name': 'Puzzle Guides & Strategies',
         'description': 'Expert guides for word puzzle games',
-        'url': 'https://wordsolver.tech/guides'
+        'url': 'https://wordsolverx.com/guides'
       },
       {
         '@type': 'WebPage',
         'name': 'Puzzle Guides & Strategies',
         'description': 'Strategy articles and learning content for daily puzzle fans.',
-        'url': 'https://wordsolver.tech/guides'
+        'url': 'https://wordsolverx.com/guides'
       }
     ]
   })}</script>`}
@@ -164,100 +164,100 @@
 
       <p>
         Word games look simple from the outside. Guess a word, get some colored tiles, guess again. But underneath that simplicity is a pure information theory problem: you have a fixed number of guesses to identify one correct answer out of thousands of possibilities. Every guess you make either eliminates possibilities or wastes a turn. The difference between a strategic player and a random guesser isn't intelligence — it's understanding how much information each guess provides.
-      </p>
+      
       <p>
         A player who starts every Wordle with "FJORD" is mathematically disadvantaged compared to a player who starts with "CRANE," even if both players are equally smart. The first guess tests four uncommon letters. The second tests five common letters across five positions. After one guess, the "CRANE" player has dramatically narrowed the field while the "FJORD" player has learned almost nothing. Strategy is about maximizing information gain per guess, not about being clever or creative.
-      </p>
+      
       <p>
         This page collects our best strategies for each game. The goal isn't to memorize a list of starting words — it's to understand the underlying principles so you can adapt when games change, when new variants appear, or when a particular puzzle breaks the usual patterns.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">The Universal Principle: Information Density</h2>
 
       <p>
         Every word puzzle has the same core mechanic: you make a guess, you receive feedback, you use that feedback to make a better guess. The feedback varies — colored tiles in Wordle, distance numbers in Worldle, similarity scores in Semantle — but the structure is identical. The question is always: "how efficiently did this guess reduce my uncertainty?"
-      </p>
+      
       <p>
         Information density is the metric that matters. A guess with high information density eliminates a large fraction of remaining possibilities. A guess with low information density eliminates very few. The math gets complex, but the intuition is simple: if your guess could match 500 possible answers, it's probably a bad guess. If it could only match 20, it's probably a good one — assuming those 20 are well-distributed across different answer patterns.
-      </p>
+      
       <p>
         This principle applies regardless of the game. In Wordle, it means choosing starting words with common, well-distributed letters. In Quordle, it means choosing guesses that provide useful information across all four boards simultaneously. In Colordle, it means picking colors that split the remaining color space roughly in half. In every case, the goal is the same: make the biggest dent in the possibility space with each guess.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Wordle-Specific Strategy</h2>
 
       <p>
         Wordle is the most analyzed puzzle game in history, and the strategic consensus has mostly settled around a few key ideas. First, your opening guess should test five different common letters. "CRANE," "SLATE," "TRACE," "CRATE," and "STARE" all score well because they contain R, A, T, E, and at least one of C/S/L — all among the most frequent letters in the Wordle answer list.
-      </p>
+      
       <p>
         Second, avoid repeating letters in your first two guesses. If you guess "CRANE" and get nothing, guessing "STARE" wastes a turn because you're retesting R and A. A better second guess would be something like "LINTY" or "GHOST" that covers completely new territory. The fewer letters you retest, the more information you gain.
-      </p>
+      
       <p>
         Third, in the mid-game (guesses 3-4), switch from information-gathering mode to elimination mode. You have enough clues by this point to start ruling out large categories of words. If you know the word ends in "CK," there are only about 20 possible answers. If you also know the third letter is "A," you're down to maybe 5. At that point, you're not gathering information anymore — you're hunting for the specific word.
-      </p>
+      
       <p>
         The most common Wordle mistake is guessing a word that retests letters you already know are wrong. The solver tool eliminates this error by filtering out every word that conflicts with your existing clues. Using it as a learning tool teaches you to think in terms of constraints rather than vibes.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Quordle: A Completely Different Mental Model</h2>
 
       <p>
         Quordle's strategy is almost the opposite of Wordle's. In Wordle, you want every guess to be a valid candidate answer (because any guess could be correct). In Quordle, your first three or four guesses should almost never be attempts to solve any individual board. They should be pure information-gathering plays that spread clues across all four boards.
-      </p>
+      
       <p>
         A good Quordle opening is something like "CRANE" followed by "SLIME" or "GHOST." These two guesses together test 9-10 different letters across all positions. After both guesses, you'll have color feedback on all four boards, which is usually enough to start solving individual puzzles. With nine total guesses and four puzzles, you have an average of 2.25 guesses per puzzle after the opening. That's tight, which is why efficiency in the early game matters so much.
-      </p>
+      
       <p>
         The biggest Quordle mistake is "falling in love" with one board. You see green letters on board two, get excited, and spend three guesses solving it while boards one, three, and four sit untouched. Now you have six guesses left for three puzzles — doable but stressful. Solve the easiest boards first (the ones with the most green letters after your opening), and leave the hardest for last when you have the fewest constraints but also the fewest remaining possibilities.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Phoodle: The Power of Domain Knowledge</h2>
 
       <p>
         Phoodle restricts answers to food-related words, which means strategy is less about letter frequency and more about food vocabulary. If you cook regularly, you have an advantage. If you don't, building a mental catalog of food terms — ingredients, cooking methods, cuisines, kitchen equipment — will improve your game dramatically.
-      </p>
+      
       <p>
         Common Phoodle answers include ingredients like "OLIVE," "BASIL," "SUGAR," and "FLOUR"; cooking methods like "GRILL," "BAKE," "ROAST," and "STEAM"; dishes like "PASTA," "CURRY," "SUSHI," and "SALAD"; and kitchen tools like "KNIFE," "WHISK," "SPOON," and "PLATE." Most daily Phoodle answers come from a pool of roughly 500-600 food words, which is much smaller than Wordle's 2,300+ pool.
-      </p>
+      
       <p>
         Because the answer pool is smaller and more specialized, Phoodle rewards vocabulary depth over pure letter strategy. Knowing that "THYME" is a valid food word but "THEME" isn't saves you a guess. The Phoodle solver tool is particularly useful here because it only considers food words — so the suggestions it makes are always valid Phoodle guesses.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Colordle and Waffle: Non-Letter Strategies</h2>
 
       <p>
         Colordle is fundamentally a binary search problem. Each guess tells you whether the target color is more red, more green, or more blue than your guess. The optimal strategy is to choose colors that are evenly spaced across the color space — start with a mid-range color, then halve the remaining range with each guess.
-      </p>
+      
       <p>
         Learning hex codes helps enormously. The hex color system is intuitive once you understand it: #FF0000 is pure red, #00FF00 is pure green, #0000FF is pure blue. Colors are mixed by adjusting each pair of hex digits. Knowing that #FF8800 is orange (high red, medium green, no blue) lets you make informed guesses about warm colors. Similarly, #008888 is teal (medium green, medium blue, no red).
-      </p>
+      
       <p>
         Waffle is a spatial reasoning puzzle. You're given all the correct letters but in the wrong positions, and you need to swap rows and columns to fix them. The key insight is that you should identify which letters are already in the correct position (the green ones) and never move them. Then focus on the remaining letters and figure out which single swap fixes the most cells. Solving a waffle in the minimum number of moves (10 swaps, minus 1 for each swap that fixes two cells simultaneously) requires planning, not trial and error.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Semantle: Thinking in Concepts, Not Letters</h2>
 
       <p>
         Semantle breaks all the rules that other word games teach you. Letter position doesn't matter. Common letters don't matter. What matters is meaning — how close your guess is to the answer in semantic space, measured by a word embedding model.
-      </p>
+      
       <p>
         The strategy for Semantle is to start with extremely common words: "RUN," "GO," "BE," "HAVE," "MAKE," "SAY." These words have many semantic connections, so at least one of them will score reasonably high and point you in the right direction. A high score (above 50) means you're very close. A moderate score (20-50) means you're in the right conceptual neighborhood. A low score (below 10) means you're in the wrong area entirely.
-      </p>
+      
       <p>
         Once you have a warm word, explore related concepts. If "HAPPY" scores 40, try "SAD" (opposite), "JOY" (synonym), "SMILE" (related action), "LAUGH" (related action). The model clusters related concepts, so moving through semantic neighborhoods systematically is more efficient than random guessing.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Getting Better: The Feedback Loop</h2>
 
       <p>
         Reading strategy guides is a good start, but improvement comes from deliberate practice with feedback. Here's the loop: play a game, use the solver to see what you could have done differently, identify the specific decision where you lost efficiency, and adjust your approach for the next game.
-      </p>
+      
       <p>
         The Wordle Analyzer tool on this site is designed for exactly this purpose. You enter your completed game (the sequence of guesses you made), and it compares each guess to the mathematically optimal choice. If you took four guesses but could have solved it in three, it shows you which guess was suboptimal and what you should have guessed instead. Over time, patterns emerge — you'll notice that you consistently waste guesses on letter combinations that look reasonable but provide less information than the alternatives.
-      </p>
+      
       <p>
         The same approach works for every game. After a Quordle session, review which boards took the most guesses and why. After a Semantle round, look at the scores of your guesses and trace the path you took through semantic space. The specific game doesn't matter — the principle is the same: practice with awareness, identify inefficiencies, fix them.
-      </p>
+      
     </div>
 
     <div class="mt-12">

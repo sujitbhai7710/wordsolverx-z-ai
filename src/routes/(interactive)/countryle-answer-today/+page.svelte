@@ -37,11 +37,11 @@
   <meta property="og:url" content={data.meta.canonical} />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="WordSolverX" />
-  <meta property="og:image" content={`https://wordsolver.tech${data.meta.featuredImage}`} />
+  <meta property="og:image" content={`https://wordsolverx.com${data.meta.featuredImage}`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={data.meta.title} />
   <meta name="twitter:description" content={data.meta.description} />
-  <meta name="twitter:image" content={`https://wordsolver.tech${data.meta.featuredImage}`} />
+  <meta name="twitter:image" content={`https://wordsolverx.com${data.meta.featuredImage}`} />
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
 
@@ -256,43 +256,61 @@
     {/if}
 
     <article class="mt-8 space-y-8">
-      <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
         <h2 class="text-3xl font-black tracking-tight text-slate-900">What is Countryle?</h2>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          Countryle is a daily geography guessing game where a mystery country is selected each day and you try to identify it using directional clues and comparative data. You type a country name, and the game tells you how close your guess is by showing the distance in kilometers, the compass direction, and a proximity percentage. It follows the same one-puzzle-per-day format that made Wordle famous, but replaces word deduction with geographic reasoning.
+          Countryle is a daily geography guessing game where a mystery country is selected each day and you try to identify it using directional clues and comparative data. You type a country name, and the game tells you how close your guess is by showing the distance in kilometers, the compass direction, and a proximity percentage.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          The game was inspired directly by Worldle — the silhouette-based country guessing game that launched in early 2022. Countryle takes a different approach. Instead of showing you a country outline, it gives you quantitative clues: continent, hemisphere, average temperature, population, and surface area. Each clue comes with an up or down arrow indicating whether the target country is higher or lower than your guess. That combination of data points makes it possible to narrow down the answer logically, even if you do not recognize the country by sight.
+          It follows the same one-puzzle-per-day format that made Wordle famous, but replaces word deduction with geographic reasoning.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The game was inspired directly by Worldle — the silhouette-based country guessing game that launched in early 2022. Countryle takes a different approach. Instead of showing you a country outline, it gives you quantitative clues: continent, hemisphere, average temperature, population, and surface area.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          Each clue comes with an up or down arrow indicating whether the target country is higher or lower than your guess. That combination of data points makes it possible to narrow down the answer logically, even if you do not recognize the country by sight.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           Geography enthusiasts picked up the game quickly, and it has maintained a dedicated following of roughly 50,000 daily players. The audience skews toward people who enjoy maps, travel trivia, and country comparison data — a slightly different demographic than the word-game crowd, though there is significant overlap.
         </p>
       </section>
 
-      <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
         <h2 class="text-3xl font-black tracking-tight text-slate-900">How Countryle Works</h2>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          Each day, Countryle picks one country from its database of approximately 195 recognized nations. The puzzle resets at midnight in the game&apos;s local timezone, and each puzzle is assigned a sequential game number. The game presents you with a text input field — no map, no image, just a blank box waiting for a country name.
+          Each day, Countryle picks one country from its database of approximately 195 recognized nations. The puzzle resets at midnight in the game&apos;s local timezone, and each puzzle is assigned a sequential game number.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          When you submit a guess, the game returns a row of data comparing your guess to the target. The comparison includes: the continent (matching or not), the hemisphere (northern, southern, or both), the population with an arrow showing whether the target is larger or smaller, the average temperature with a directional arrow, the surface area in square kilometers, and a distance/proximity percentage indicating how close geographically your guess was to the target.
+          The game presents you with a text input field — no map, no image, just a blank box waiting for a country name.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          The population and surface area clues are particularly powerful. If you guess India (population 1.4 billion) and the arrow points down, you know the target has fewer people — but it could still be a large country like the United States or Brazil. Combine that with the temperature arrow and the continent filter, and you can usually narrow the field to five or six candidates within two or three guesses.
+          When you submit a guess, the game returns a row of data comparing your guess to the target.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The comparison includes: the continent (matching or not), the hemisphere (northern, southern, or both), the population with an arrow showing whether the target is larger or smaller, the average temperature with a directional arrow, the surface area in square kilometers, and a distance/proximity percentage indicating how close geographically your guess was to the target.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          The population and surface area clues are particularly powerful. If you guess India (population 1.4 billion) and the arrow points down, you know the target has fewer people — but it could still be a large country like the United States or Brazil.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          Combine that with the temperature arrow and the continent filter, and you can usually narrow the field to five or six candidates within two or three guesses.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           There is no hard guess limit, but the game tracks how many guesses you used. Getting the answer in three guesses or fewer is considered excellent. Most players solve it in four to six guesses with practice.
         </p>
       </section>
 
-      <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
         <h2 class="text-3xl font-black tracking-tight text-slate-900">Strategy Tips for Countryle</h2>
         <div class="mt-6 space-y-6">
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-xl font-bold text-slate-900">Start with a large country from a central continent</h3>
             <p class="mt-2 text-base leading-7 text-slate-600">
-              Your first guess should be a country you know well from a continent that splits the world roughly in half. Brazil, the United States, or Russia are good openers because they are large enough that the population and area arrows will be informative regardless of whether the target is bigger or smaller. If you guess Brazil and the arrow points down on population, the target has fewer than 215 million people — which eliminates about 50 countries immediately.
-            </p>
+          Your first guess should be a country you know well from a continent that splits the world roughly in half. Brazil, the United States, or Russia are good openers because they are large enough that the population and area arrows will be informative regardless of whether the target is bigger or smaller.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          If you guess Brazil and the arrow points down on population, the target has fewer than 215 million people — which eliminates about 50 countries immediately.
+        </p>
           </div>
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-xl font-bold text-slate-900">Prioritize the continent clue</h3>
@@ -303,8 +321,11 @@
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-xl font-bold text-slate-900">Use temperature to distinguish latitude</h3>
             <p class="mt-2 text-base leading-7 text-slate-600">
-              Average temperature correlates strongly with distance from the equator. If the temperature clue shows 25°C or higher, you are probably looking at a tropical or equatorial country. If it shows 5°C or lower, the target is likely in northern Europe, Canada, or the southern tip of South America. This helps narrow latitude when the continent clue alone is not enough.
-            </p>
+          Average temperature correlates strongly with distance from the equator. If the temperature clue shows 25°C or higher, you are probably looking at a tropical or equatorial country. If it shows 5°C or lower, the target is likely in northern Europe, Canada, or the southern tip of South America.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          This helps narrow latitude when the continent clue alone is not enough.
+        </p>
           </div>
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-xl font-bold text-slate-900">Cross-reference population and area</h3>
@@ -321,20 +342,26 @@
         </div>
       </section>
 
-      <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
         <h2 class="text-3xl font-black tracking-tight text-slate-900">Countryle vs Similar Geography Games</h2>
         <div class="mt-6 grid gap-6 sm:grid-cols-2">
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-lg font-bold text-slate-900">Countryle vs Worldle</h3>
             <p class="mt-2 text-base leading-7 text-slate-600">
-              Worldle shows you a country silhouette and you guess based on shape recognition. Countryle gives you data points instead — population, area, temperature. Worldle tests visual geography memory; Countryle tests quantitative reasoning. Some people are much better at one than the other, depending on whether they remember country shapes or country statistics better.
-            </p>
+          Worldle shows you a country silhouette and you guess based on shape recognition. Countryle gives you data points instead — population, area, temperature. Worldle tests visual geography memory; Countryle tests quantitative reasoning.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Some people are much better at one than the other, depending on whether they remember country shapes or country statistics better.
+        </p>
           </div>
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-lg font-bold text-slate-900">Countryle vs Globle</h3>
             <p class="mt-2 text-base leading-7 text-slate-600">
-              Globle uses an interactive world map where you click to guess and the map highlights how close you were. Countryle uses no map at all — just text comparisons. Globle is more visual and intuitive; Countryle is more analytical. Both track distance, but Countryle adds the population and temperature dimensions that Globle lacks.
-            </p>
+          Globle uses an interactive world map where you click to guess and the map highlights how close you were. Countryle uses no map at all — just text comparisons. Globle is more visual and intuitive; Countryle is more analytical.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          Both track distance, but Countryle adds the population and temperature dimensions that Globle lacks.
+        </p>
           </div>
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-lg font-bold text-slate-900">Countryle vs Flagle</h3>
@@ -345,8 +372,11 @@
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-lg font-bold text-slate-900">Which geography game should you play daily?</h3>
             <p class="mt-2 text-base leading-7 text-slate-600">
-              If you enjoy maps and spatial reasoning, Worldle or Globle. If you enjoy data and statistics, Countryle. If you know your flags, Flagle. They are different enough that playing two or three per day does not feel repetitive. This page covers Countryle specifically, but the WordSolverX archive hub links to answer pages for all four games.
-            </p>
+          If you enjoy maps and spatial reasoning, Worldle or Globle. If you enjoy data and statistics, Countryle. If you know your flags, Flagle. They are different enough that playing two or three per day does not feel repetitive.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          This page covers Countryle specifically, but the WordSolverX archive hub links to answer pages for all four games.
+        </p>
           </div>
         </div>
       </section>

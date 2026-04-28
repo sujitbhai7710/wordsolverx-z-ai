@@ -56,12 +56,12 @@
         <title>{data.meta.title}</title>
         <meta name="description" content={data.meta.description} />
         <meta name="keywords" content={data.meta.keywords ?? 'worgle answer today, worgle archive'} />
-        <link rel="canonical" href="https://wordsolver.tech/worgle-answer-today" />
+        <link rel="canonical" href="https://wordsolverx.com/worgle-answer-today" />
         <meta property="og:title" content={data.meta.title} />
         <meta property="og:description" content={data.meta.description} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://wordsolver.tech/worgle-answer-today" />
-        <meta property="og:image" content="https://wordsolver.tech/images/worgle-answer-today.webp" />
+        <meta property="og:url" content="https://wordsolverx.com/worgle-answer-today" />
+        <meta property="og:image" content="https://wordsolverx.com/images/worgle-answer-today.webp" />
 </svelte:head>
 
 <div class="min-h-screen bg-slate-50 px-4 py-10 sm:px-6 lg:px-8">
@@ -77,7 +77,7 @@
                         <div class="mt-7 flex flex-wrap gap-3">
                                 <a
                                         href="#worgle-answer-card"
-                                        class="inline-flex items-center rounded-full bg-slate-900 px-6 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
+                                        class="inline-flex items-center rounded-full bg-teal-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-teal-500"
                                 >
                                         Jump to Answer
                                 </a>
@@ -102,7 +102,7 @@
                                         {#if revealed}
                                                 <div class="flex flex-wrap gap-2">
                                                         {#each data.todayEntry.word.toUpperCase().split('') as letter}
-                                                                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-lg font-black text-white">
+                                                                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-600 text-lg font-black text-white">
                                                                         {letter}
                                                                 </div>
                                                         {/each}
@@ -124,7 +124,7 @@
                                                 </div>
                                                 <button
                                                         type="button"
-                                                        class="mt-5 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+                                                        class="mt-5 rounded-full bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-500"
                                                         onclick={() => (revealed = true)}
                                                 >
                                                         Reveal answer
@@ -187,70 +187,103 @@
 
                 <!-- SEO Article -->
                 <article class="mt-10 space-y-8">
-                        <section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">What is Worgle?</h2>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        Worgle is a daily word-guessing puzzle where you have six attempts to identify a hidden five-letter word. It follows the same core loop that made Wordle a global phenomenon — type a guess, get color-coded feedback, and narrow down the answer from there. The twist is that Worgle runs on its own independent answer list and daily cycle, which resets at midnight Indian Standard Time (IST). That timing difference means Worgle often uses different words than Wordle on any given day, giving regular word-game players a second daily challenge to solve.
-                                </p>
+          Worgle is a daily word-guessing puzzle where you have six attempts to identify a hidden five-letter word. It follows the same core loop that made Wordle a global phenomenon — type a guess, get color-coded feedback, and narrow down the answer from there. The twist is that Worgle runs on its own independent answer list and daily cycle, which resets at midnight Indian Standard Time (IST).
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          That timing difference means Worgle often uses different words than Wordle on any given day, giving regular word-game players a second daily challenge to solve.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        The game launched during the early-2022 Wordle boom when dozens of spinoffs flooded the market. Most of those clones died within weeks, but Worgle survived because it offered something simple and reliable: a clean interface, a deterministic answer list, and a timezone that appealed to a massive South Asian player base. While Wordle resets at midnight UTC, Worgle resets at midnight IST — a 5.5-hour difference that means a Worgle puzzle covers a full day for hundreds of millions of players across India, Pakistan, Bangladesh, Sri Lanka, and Nepal.
-                                </p>
+          The game launched during the early-2022 Wordle boom when dozens of spinoffs flooded the market. Most of those clones died within weeks, but Worgle survived because it offered something simple and reliable: a clean interface, a deterministic answer list, and a timezone that appealed to a massive South Asian player base.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          While Wordle resets at midnight UTC, Worgle resets at midnight IST — a 5.5-hour difference that means a Worgle puzzle covers a full day for hundreds of millions of players across India, Pakistan, Bangladesh, Sri Lanka, and Nepal.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        Worgle uses a curated list of common five-letter English words. The list is smaller than Wordle's — roughly {data.stats.totalSolutions} words in rotation — which means answers repeat on a predictable cycle. Once you have played long enough, you start recognizing patterns and remembering which words have appeared recently. That familiarity is part of what makes Worgle addictive for daily players. The smaller pool also means you are less likely to encounter obscure or frustrating words that nobody has heard of.
-                                </p>
+          Worgle uses a curated list of common five-letter English words. The list is smaller than Wordle's — roughly {data.stats.totalSolutions} words in rotation — which means answers repeat on a predictable cycle. Once you have played long enough, you start recognizing patterns and remembering which words have appeared recently.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          That familiarity is part of what makes Worgle addictive for daily players. The smaller pool also means you are less likely to encounter obscure or frustrating words that nobody has heard of.
+        </p>
                         </section>
 
-                        <section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">How Worgle Works</h2>
                                 <div class="mt-6 space-y-6">
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900 mb-2">The Color Feedback System</h3>
                                                 <p class="text-base leading-7 text-slate-600">
-                                                        After each guess, Worgle highlights every letter in one of three ways. Letters in the correct position turn teal (green). Letters that are in the word but in the wrong position turn yellow/amber. Letters that are not in the word at all turn gray. This is the standard Wordle-style feedback system, and it is extremely efficient at narrowing down possibilities. A single good guess can eliminate dozens of potential answers.
-                                                </p>
+          After each guess, Worgle highlights every letter in one of three ways. Letters in the correct position turn teal (green). Letters that are in the word but in the wrong position turn yellow/amber. Letters that are not in the word at all turn gray.
+        </p>
+        <p class="text-base leading-7 text-slate-600">
+          This is the standard Wordle-style feedback system, and it is extremely efficient at narrowing down possibilities. A single good guess can eliminate dozens of potential answers.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900 mb-2">Six Guesses, Five Letters</h3>
                                                 <p class="text-base leading-7 text-slate-600">
-                                                        Every Worgle puzzle uses a five-letter word, and you get exactly six attempts to find it. Your guess must be a valid English word — nonsense strings like "AERTY" will not be accepted. With six guesses and smart letter elimination, a skilled player almost always solves the puzzle. The real challenge is doing it in as few guesses as possible.
-                                                </p>
+          Every Worgle puzzle uses a five-letter word, and you get exactly six attempts to find it. Your guess must be a valid English word — nonsense strings like "AERTY" will not be accepted.
+        </p>
+        <p class="text-base leading-7 text-slate-600">
+          With six guesses and smart letter elimination, a skilled player almost always solves the puzzle. The real challenge is doing it in as few guesses as possible.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900 mb-2">Daily Reset at Midnight IST</h3>
                                                 <p class="text-base leading-7 text-slate-600">
-                                                        This is the feature that separates Worgle from most other daily word games. The puzzle resets at 00:00 IST, not midnight UTC. The countdown timer on this page tracks that exact window. If you are in India, the new puzzle drops at midnight local time. If you are in New York, it drops at 2:30 PM Eastern the previous day. The IST timezone makes Worgle the go-to word game for players in South Asia and anyone looking for a second daily puzzle that does not overlap with Wordle.
-                                                </p>
+          This is the feature that separates Worgle from most other daily word games. The puzzle resets at 00:00 IST, not midnight UTC. The countdown timer on this page tracks that exact window. If you are in India, the new puzzle drops at midnight local time.
+        </p>
+        <p class="text-base leading-7 text-slate-600">
+          If you are in New York, it drops at 2:30 PM Eastern the previous day. The IST timezone makes Worgle the go-to word game for players in South Asia and anyone looking for a second daily puzzle that does not overlap with Wordle.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-xl font-bold text-slate-900 mb-2">Deterministic Answer List</h3>
                                                 <p class="text-base leading-7 text-slate-600">
-                                                        Worgle does not randomize its answers. It uses a fixed, sequential list — puzzle #{data.todayEntry.puzzle} always corresponds to the same word, regardless of who is playing or where they are. This page stays in sync with that list by using the same IST date logic the game itself uses. That means the answer shown here is always the current, active Worgle answer. No guesswork, no mismatched dates.
-                                                </p>
+          Worgle does not randomize its answers. It uses a fixed, sequential list — puzzle #{data.todayEntry.puzzle} always corresponds to the same word, regardless of who is playing or where they are. This page stays in sync with that list by using the same IST date logic the game itself uses.
+        </p>
+        <p class="text-base leading-7 text-slate-600">
+          That means the answer shown here is always the current, active Worgle answer. No guesswork, no mismatched dates.
+        </p>
                                         </div>
                                 </div>
                         </section>
 
-                        <section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Today's Worgle Answer — How This Page Works</h2>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        This page shows the current Worgle answer for puzzle #{data.todayEntry.puzzle}, dated {data.formattedDate}. The answer is hidden behind a reveal button so you can decide whether you want to see it immediately or try solving the puzzle yourself first. Below the answer, you will find the previous day's solution and a scrollable list of the last 30 Worgle answers for reference.
-                                </p>
+          This page shows the current Worgle answer for puzzle #{data.todayEntry.puzzle}, dated {data.formattedDate}. The answer is hidden behind a reveal button so you can decide whether you want to see it immediately or try solving the puzzle yourself first.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          Below the answer, you will find the previous day's solution and a scrollable list of the last 30 Worgle answers for reference.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        The archive section is particularly useful for spotting patterns. Because Worgle uses a fixed answer list of {data.stats.totalSolutions} words, the answers eventually cycle. If you pay attention to the recent archive, you can sometimes predict whether a word has already appeared and eliminate it from your guess pool. This is not cheating — it is just good pattern recognition, the same skill that helps in crossword puzzles and Sudoku.
-                                </p>
+          The archive section is particularly useful for spotting patterns. Because Worgle uses a fixed answer list of {data.stats.totalSolutions} words, the answers eventually cycle. If you pay attention to the recent archive, you can sometimes predict whether a word has already appeared and eliminate it from your guess pool.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          This is not cheating — it is just good pattern recognition, the same skill that helps in crossword puzzles and Sudoku.
+        </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-                                        The stats panel on this page shows the total number of solutions in rotation, how many are archived on our site, and the most recent stored date. We archive every Worgle answer as it goes live, so the archive grows by one entry per day. Over time, this builds into a complete historical record of every Worgle puzzle ever published.
-                                </p>
+          The stats panel on this page shows the total number of solutions in rotation, how many are archived on our site, and the most recent stored date. We archive every Worgle answer as it goes live, so the archive grows by one entry per day.
+        </p>
+        <p class="mt-4 text-lg leading-8 text-slate-600">
+          Over time, this builds into a complete historical record of every Worgle puzzle ever published.
+        </p>
                         </section>
 
-                        <section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Strategy Tips for Worgle</h2>
                                 <div class="mt-6 grid gap-6 sm:grid-cols-2">
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Open with a vowel-heavy word</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Your first guess should maximize vowel coverage. Words like "ADIEU," "AUDIO," or "ARISE" hit three or four vowels in a single guess. Vowels are the most restrictive letters in English — once you know which vowels the answer contains, your guess pool shrinks dramatically. A strong opener makes the rest of the puzzle significantly easier.
-                                                </p>
+          Your first guess should maximize vowel coverage. Words like "ADIEU," "AUDIO," or "ARISE" hit three or four vowels in a single guess. Vowels are the most restrictive letters in English — once you know which vowels the answer contains, your guess pool shrinks dramatically.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          A strong opener makes the rest of the puzzle significantly easier.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Avoid repeating letters early</h3>
@@ -273,19 +306,25 @@
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Position matters more than letters</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Knowing that a letter is in the word is only half the battle. Knowing where it goes is the real challenge. If you have three correct letters but they are all in the wrong positions, do not just shuffle randomly — think about common English patterns. "TH" almost never appears at the end of a word. "QU" is almost always followed by a vowel. These rules eliminate bad placements fast.
-                                                </p>
+          Knowing that a letter is in the word is only half the battle. Knowing where it goes is the real challenge. If you have three correct letters but they are all in the wrong positions, do not just shuffle randomly — think about common English patterns.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          "TH" almost never appears at the end of a word. "QU" is almost always followed by a vowel. These rules eliminate bad placements fast.
+        </p>
                                         </div>
                                         <div class="rounded-2xl bg-slate-50 p-6">
                                                 <h3 class="text-lg font-bold text-slate-900">Keep a mental list of hard-mode traps</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Words that share four letters with another word are the hardest puzzles. If you know the answer is "_ATCH" and you have A, T, C, H locked in, it could be "MATCH," "CATCH," "PATCH," "BATCH," "HATCH," "LATCH," or "WATCH." Seven possibilities with one guess left is brutal. The earlier you eliminate consonants, the less likely you are to hit this trap.
-                                                </p>
+          Words that share four letters with another word are the hardest puzzles. If you know the answer is "_ATCH" and you have A, T, C, H locked in, it could be "MATCH," "CATCH," "PATCH," "BATCH," "HATCH," "LATCH," or "WATCH." Seven possibilities with one guess left is brutal.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          The earlier you eliminate consonants, the less likely you are to hit this trap.
+        </p>
                                         </div>
                                 </div>
                         </section>
 
-                        <section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Worgle vs Wordle — What Is Different?</h2>
                                 <div class="mt-6 grid gap-6 sm:grid-cols-2">
                                         <div class="rounded-2xl bg-slate-50 p-6">
@@ -315,14 +354,17 @@
                                 </div>
                         </section>
 
-                        <section class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+                        <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Frequently Asked Questions About Worgle</h2>
                                 <div class="mt-6 space-y-6">
                                         <div>
                                                 <h3 class="text-lg font-bold text-slate-900">What time does Worgle reset?</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Worgle resets at midnight IST (Indian Standard Time), which is 18:30 UTC the previous day. The countdown timer on this page tracks the exact time remaining until the next puzzle. If you are in India, the new puzzle is available at 12:00 AM local time. If you are in London, it drops at 6:30 PM. In New York, it drops at 1:30 PM Eastern.
-                                                </p>
+          Worgle resets at midnight IST (Indian Standard Time), which is 18:30 UTC the previous day. The countdown timer on this page tracks the exact time remaining until the next puzzle.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          If you are in India, the new puzzle is available at 12:00 AM local time. If you are in London, it drops at 6:30 PM. In New York, it drops at 1:30 PM Eastern.
+        </p>
                                         </div>
                                         <div>
                                                 <h3 class="text-lg font-bold text-slate-900">Can I play old Worgle puzzles?</h3>
@@ -339,14 +381,20 @@
                                         <div>
                                                 <h3 class="text-lg font-bold text-slate-900">Does Worgle have a hard mode?</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Most Worgle implementations follow the standard Wordle rules with six guesses and full color feedback. Hard mode — where revealed hints must be used in subsequent guesses — depends on which version of Worgle you are playing. The core puzzle experience is the same either way: identify the five-letter word using logic and elimination.
-                                                </p>
+          Most Worgle implementations follow the standard Wordle rules with six guesses and full color feedback. Hard mode — where revealed hints must be used in subsequent guesses — depends on which version of Worgle you are playing.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          The core puzzle experience is the same either way: identify the five-letter word using logic and elimination.
+        </p>
                                         </div>
                                         <div>
                                                 <h3 class="text-lg font-bold text-slate-900">Is the answer on this page always correct?</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Yes. This page uses the same IST-based date calculation that Worgle itself uses, and we cross-reference the answer against the deterministic answer list. The word shown for puzzle #{data.todayEntry.puzzle} is the exact word the game uses for that date. If you see a discrepancy, it is most likely a timezone issue on your device — check that your system clock matches IST.
-                                                </p>
+          Yes. This page uses the same IST-based date calculation that Worgle itself uses, and we cross-reference the answer against the deterministic answer list. The word shown for puzzle #{data.todayEntry.puzzle} is the exact word the game uses for that date.
+        </p>
+        <p class="mt-2 text-base leading-7 text-slate-600">
+          If you see a discrepancy, it is most likely a timezone issue on your device — check that your system clock matches IST.
+        </p>
                                         </div>
                                 </div>
                         </section>

@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -80,18 +80,18 @@
 <svelte:head>
   <title>Globle Archive - Complete Country Answer History | WordSolverX</title>
   <meta name="description" content="Browse the complete archive of all Globle country answers. Calendar view with search and direct links to every past geography puzzle solution." />
-  <link rel="canonical" href="https://wordsolver.tech/globle-archive" />
+  <link rel="canonical" href="https://wordsolverx.com/globle-archive" />
   <meta property="og:title" content="Globle Archive - All Past Country Answers" />
   <meta property="og:description" content="Complete history of every Globle country answer. Browse by calendar or search." />
-  <meta property="og:url" content="https://wordsolver.tech/globle-archive" />
+  <meta property="og:url" content="https://wordsolverx.com/globle-archive" />
   <meta property="og:type" content="website" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Globle Archive",
     "description": "Complete archive of all Globle daily country answers.",
-    "url": "https://wordsolver.tech/globle-archive",
-    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
+    "url": "https://wordsolverx.com/globle-archive",
+    "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
   })}</script>`}
 </svelte:head>
 

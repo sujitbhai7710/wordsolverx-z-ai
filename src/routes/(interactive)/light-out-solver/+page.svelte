@@ -13,7 +13,7 @@
   const pageTitle = 'Light Out Solver - Get detailed solutions';
   const pageDescription =
     'Use this Light Out solver online to build any 2x2 to 5x5 puzzle, switch between linked and edit modes, and generate the exact optimal solve path in your browser.';
-  const pageUrl = 'https://wordsolver.tech/light-out-solver';
+  const pageUrl = 'https://wordsolverx.com/light-out-solver';
 
   const faqs = [
     {
@@ -60,8 +60,8 @@
       keywords: ['light out solver', 'lights out solver', 'lights out puzzle solver']
     },
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://wordsolver.tech' },
-      { name: 'Solver', url: 'https://wordsolver.tech/solver' },
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Solver', url: 'https://wordsolverx.com/solver' },
       { name: 'Light Out Solver', url: pageUrl }
     ]),
     generateWebPageSchema('Light Out Solver', pageDescription, pageUrl)
@@ -80,7 +80,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content={pageUrl} />
   <link rel="canonical" href={pageUrl} />
-  <meta property="og:image" content="https://wordsolver.tech/images/light-out-solver.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/light-out-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />

@@ -29,79 +29,109 @@
       { '@type': 'Question', name: 'Does OnePiecedle cover the entire One Piece series?', acceptedAnswer: { '@type': 'Answer', text: 'OnePiecedle draws from characters across the entire One Piece manga and anime, from East Blue to the latest arcs.' } },
       { '@type': 'Question', name: 'Is OnePiecedle free to play?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, OnePiecedle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'OnePiecedle Answer Today', description: 'Get the confirmed OnePiecedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolver.tech/onepiecedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolver.tech/auther-wordsolverx.webp', url: 'https://wordsolver.tech/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolver.tech/images/onepiecedle-answer-today.webp' } } },
+    { '@type': 'Article', headline: 'OnePiecedle Answer Today', description: 'Get the confirmed OnePiecedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/onepiecedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/auther-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/onepiecedle-answer-today.webp' } } },
   ]};
 </script>
 
 <GameDleAnswerPage gameKey="onepiecedle" gameTitle="OnePiecedle" apiGame="onepiecedle" {modes} {modeConfig} {regions} {crossLinks} {schemas} {data}>
   {#snippet seoContent()}
     <article class="space-y-8">
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">What is OnePiecedle?</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          OnePiecedle is a free daily guessing game created for fans of One Piece, the legendary manga and anime series written and illustrated by Eiichiro Oda. First serialized in Weekly Shonen Jump in July 1997, One Piece has grown into the best-selling manga in history, with over 500 million copies in circulation worldwide. The story follows Monkey D. Luffy and his pirate crew, the Straw Hat Pirates, on their quest to find the ultimate treasure known as the "One Piece" and become the Pirate King. OnePiecedle transforms this vast and beloved fictional universe into a daily puzzle experience, challenging fans to identify characters using clues drawn from every corner of the One Piece world.
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          OnePiecedle is a free daily guessing game created for fans of One Piece, the legendary manga and anime series written and illustrated by Eiichiro Oda. First serialized in Weekly Shonen Jump in July 1997, One Piece has grown into the best-selling manga in history, with over 500 million copies in circulation worldwide. The story follows Monkey D.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          One Piece is renowned for having one of the most extensive and detailed character rosters in all of fiction. Over more than 25 years of serialization and over 1,000 manga chapters, Eiichiro Oda has introduced hundreds of named characters spanning multiple story arcs that take place across a sprawling oceanic world. From the early days of the East Blue saga to the current events in the Egghead arc and beyond, the series has built an incredibly deep tapestry of pirates, marines, revolutionaries, world nobles, and citizens. Characters belong to pirate crews (the Straw Hats, the Four Emperors' crews, the Seven Warlords of the Sea), military organizations (the Marines, Cipher Pol), and various kingdoms and factions. This extraordinary breadth of character design is what makes OnePiecedle such a uniquely challenging and rewarding guessing game.
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          Luffy and his pirate crew, the Straw Hat Pirates, on their quest to find the ultimate treasure known as the "One Piece" and become the Pirate King. OnePiecedle transforms this vast and beloved fictional universe into a daily puzzle experience, challenging fans to identify characters using clues drawn from every corner of the One Piece world.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
-          OnePiecedle is part of the character guessing game genre that emerged from the global Wordle phenomenon. Alongside games like LoLdle (League of Legends), Dotadle (Dota 2), Narutodle (Naruto), Pokedle (Pokémon), and Smashdle (Super Smash Bros.), OnePiecedle offers fans a daily ritual that celebrates their knowledge of a specific fictional universe. What makes OnePiecedle particularly special within this genre is the sheer creative richness of the One Piece world. The series' unique power system (Devil Fruits), its iconic visual language (Wanted Posters), and its distinctive character humor (each character has their own signature laugh) provide puzzle designers with an incredibly diverse set of clues to work with, resulting in a game that feels fresh and surprising every single day.
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          One Piece is renowned for having one of the most extensive and detailed character rosters in all of fiction. Over more than 25 years of serialization and over 1,000 manga chapters, Eiichiro Oda has introduced hundreds of named characters spanning multiple story arcs that take place across a sprawling oceanic world.
         </p>
-        <p class="text-lg text-slate-600 leading-relaxed">
-          The game is a fan-made creation and is not officially affiliated with Eiichiro Oda, Shueisha, Toei Animation, or any other entity involved in the production of the One Piece franchise. Like other community-created "-dle" games, it exists as a tribute to the source material and a way for the global One Piece fandom to engage with the series in a fresh, interactive format. The game has attracted a dedicated following among One Piece enthusiasts worldwide, from fans who have been reading the manga since its earliest chapters to newer fans who discovered the series through the anime's international distribution on streaming platforms.
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          From the early days of the East Blue saga to the current events in the Egghead arc and beyond, the series has built an incredibly deep tapestry of pirates, marines, revolutionaries, world nobles, and citizens. Characters belong to pirate crews (the Straw Hats, the Four Emperors' crews, the Seven Warlords of the Sea), military organizations (the Marines, Cipher Pol), and various kingdoms and factions.
+        </p>
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          This extraordinary breadth of character design is what makes OnePiecedle such a uniquely challenging and rewarding guessing game.
+        </p>
+                <p class="text-base text-slate-600  leading-relaxed mb-4">
+          OnePiecedle is part of the character guessing game genre that emerged from the global Wordle phenomenon. Alongside games like LoLdle (League of Legends), Dotadle (Dota 2), Narutodle (Naruto), Pokedle (Pokémon), and Smashdle (Super Smash Bros.), OnePiecedle offers fans a daily ritual that celebrates their knowledge of a specific fictional universe. What makes OnePiecedle particularly special within this genre is the sheer creative richness of the One Piece world.
+        </p>
+        <p class="text-base text-slate-600  leading-relaxed mb-4">
+          The series' unique power system (Devil Fruits), its iconic visual language (Wanted Posters), and its distinctive character humor (each character has their own signature laugh) provide puzzle designers with an incredibly diverse set of clues to work with, resulting in a game that feels fresh and surprising every single day.
+        </p>
+                <p class="text-base text-slate-600 leading-relaxed">
+          The game is a fan-made creation and is not officially affiliated with Eiichiro Oda, Shueisha, Toei Animation, or any other entity involved in the production of the One Piece franchise. Like other community-created "-dle" games, it exists as a tribute to the source material and a way for the global One Piece fandom to engage with the series in a fresh, interactive format.
+        </p>
+        <p class="text-base text-slate-600 leading-relaxed">
+          The game has attracted a dedicated following among One Piece enthusiasts worldwide, from fans who have been reading the manga since its earliest chapters to newer fans who discovered the series through the anime's international distribution on streaming platforms.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">How OnePiecedle Works</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           OnePiecedle follows the daily puzzle format common to all "-dle" games, resetting all four of its game modes at midnight UTC each day. Like LoLdle, OnePiecedle also operates with separate answer pools for different regions — specifically, America and Europe. This means that on the same calendar day, players in different regions may encounter different characters, and this page tracks both regional variants to ensure everyone finds the correct answer. The four modes each explore a different facet of the One Piece universe, providing a comprehensive and varied daily challenge.
         </p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
             <h3 class="text-xl font-bold text-yellow-700 mb-3 flex items-center gap-2">👑 Classic Mode</h3>
-            <p class="text-slate-600">
-              Classic mode is the attribute-based guessing experience at the heart of OnePiecedle. You make guesses by typing character names and receive color-coded feedback on multiple attributes. These typically include the character's gender, their affiliation (Straw Hat Pirate, Marine, Revolutionary, Warlord, Yonko crew member, etc.), their bounty amount range, the type of Haki they can use (Observation, Armament, Conqueror's, or none), and their first appearance in the series. Using these clues systematically, you can narrow down from the enormous One Piece cast to identify the correct character. The affiliation clue is particularly powerful, as it can immediately eliminate huge categories of characters. If you know a character is a Straw Hat, you only need to consider a small set of possibilities; if they are a Marine, the field narrows to a different subset entirely.
-            </p>
+                    <p class="text-slate-600">
+          Classic mode is the attribute-based guessing experience at the heart of OnePiecedle. You make guesses by typing character names and receive color-coded feedback on multiple attributes. These typically include the character's gender, their affiliation (Straw Hat Pirate, Marine, Revolutionary, Warlord, Yonko crew member, etc.), their bounty amount range, the type of Haki they can use (Observation, Armament, Conqueror's, or none), and their first appearance in the series.
+        </p>
+        <p class="text-slate-600">
+          Using these clues systematically, you can narrow down from the enormous One Piece cast to identify the correct character. The affiliation clue is particularly powerful, as it can immediately eliminate huge categories of characters. If you know a character is a Straw Hat, you only need to consider a small set of possibilities; if they are a Marine, the field narrows to a different subset entirely.
+        </p>
           </div>
           <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
             <h3 class="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">🍎 Devil Fruit Mode</h3>
-            <p class="text-slate-600">
-              Devil Fruit mode presents you with a Devil Fruit and asks you to identify which character ate it. Devil Fruits are one of the most iconic elements of the One Piece power system — mysterious fruits that grant supernatural abilities at the cost of the user's ability to swim. Devil Fruits are classified into three main categories: Paramecia (which grant a wide variety of superhuman abilities), Zoan (which allow the user to transform into an animal or a hybrid form), and Logia (which allow the user to create, control, and transform into a natural element). Knowing which character ate which Devil Fruit requires deep familiarity with the series' power dynamics. Some are obvious — Luffy's Hito Hito no Mi (Gum-Gum Fruit) is known to every fan — while others belong to supporting characters or villains who appeared in specific arcs.
-            </p>
+                    <p class="text-slate-600">
+          Devil Fruit mode presents you with a Devil Fruit and asks you to identify which character ate it. Devil Fruits are one of the most iconic elements of the One Piece power system — mysterious fruits that grant supernatural abilities at the cost of the user's ability to swim.
+        </p>
+        <p class="text-slate-600">
+          Devil Fruits are classified into three main categories: Paramecia (which grant a wide variety of superhuman abilities), Zoan (which allow the user to transform into an animal or a hybrid form), and Logia (which allow the user to create, control, and transform into a natural element). Knowing which character ate which Devil Fruit requires deep familiarity with the series' power dynamics.
+        </p>
+        <p class="text-slate-600">
+          Some are obvious — Luffy's Hito Hito no Mi (Gum-Gum Fruit) is known to every fan — while others belong to supporting characters or villains who appeared in specific arcs.
+        </p>
           </div>
           <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100">
             <h3 class="text-xl font-bold text-pink-700 mb-3 flex items-center gap-2">😆 Laugh Mode</h3>
-            <p class="text-slate-600">
-              Laugh mode is perhaps the most uniquely "One Piece" of all the OnePiecedle modes. In the One Piece universe, every character has a distinctive, often eccentric laugh that follows specific phonetic patterns. Luffy laughs "Shishishi," Brook laughs "Yohohoho," Whitebeard laughs "Gurararara," Doflamingo laughs "Fuffuffuffu," and Buggy laughs "Gyahahaha." These laughs are not random — they typically incorporate elements of the character's name, personality, or appearance. This mode presents you with a character's laugh and asks you to identify who it belongs to. It is a delightful and genuinely unique puzzle mechanic that you will not find in any other "-dle" game, and it perfectly captures the whimsical humor that is such a defining characteristic of the One Piece series.
-            </p>
+                    <p class="text-slate-600">
+          Laugh mode is perhaps the most uniquely "One Piece" of all the OnePiecedle modes. In the One Piece universe, every character has a distinctive, often eccentric laugh that follows specific phonetic patterns. Luffy laughs "Shishishi," Brook laughs "Yohohoho," Whitebeard laughs "Gurararara," Doflamingo laughs "Fuffuffuffu," and Buggy laughs "Gyahahaha." These laughs are not random — they typically incorporate elements of the character's name, personality, or appearance.
+        </p>
+        <p class="text-slate-600">
+          This mode presents you with a character's laugh and asks you to identify who it belongs to. It is a delightful and genuinely unique puzzle mechanic that you will not find in any other "-dle" game, and it perfectly captures the whimsical humor that is such a defining characteristic of the One Piece series.
+        </p>
           </div>
           <div class="bg-orange-50 p-6 rounded-2xl border border-orange-100">
             <h3 class="text-xl font-bold text-orange-700 mb-3 flex items-center gap-2">📜 Wanted Mode</h3>
-            <p class="text-slate-600">
-              Wanted mode displays a Wanted Poster — the iconic bounty notices that are issued by the World Government for pirates in the One Piece world — and asks you to identify the character. Wanted Posters are one of the most recognizable visual elements of the series. They feature a photograph or illustration of the pirate along with their bounty amount (typically displayed in Berries, the series' currency). Some Wanted Posters are shown in their entirety, while others are cropped or partially obscured, requiring you to identify the character from a limited visual fragment. The bounty amount itself is also a valuable clue — bounties in One Piece follow a clear hierarchy that reflects a character's threat level and significance in the story. East Blue pirates had bounties in the millions, while the most powerful pirates in the New World command bounties in the billions.
-            </p>
+                    <p class="text-slate-600">
+          Wanted mode displays a Wanted Poster — the iconic bounty notices that are issued by the World Government for pirates in the One Piece world — and asks you to identify the character. Wanted Posters are one of the most recognizable visual elements of the series. They feature a photograph or illustration of the pirate along with their bounty amount (typically displayed in Berries, the series' currency).
+        </p>
+        <p class="text-slate-600">
+          Some Wanted Posters are shown in their entirety, while others are cropped or partially obscured, requiring you to identify the character from a limited visual fragment. The bounty amount itself is also a valuable clue — bounties in One Piece follow a clear hierarchy that reflects a character's threat level and significance in the story. East Blue pirates had bounties in the millions, while the most powerful pirates in the New World command bounties in the billions.
+        </p>
           </div>
         </div>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600 leading-relaxed">
           The difficulty of OnePiecedle varies considerably depending on which character is featured. Days with main Straw Hat crew members or legendary figures like Shanks, Whitebeard, or Gol D. Roger tend to be easier for most fans. Days featuring supporting characters from specific arcs — like the Skypeia priests, the Dressrosa gladiators, or the Whole Cake Island combatants — can be significantly more challenging, even for fans who have followed the series for years. This variability is part of what makes the game so engaging over time.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Today's OnePiecedle Answer — Tracking Solutions</h2>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           This page provides the verified OnePiecedle answer for today across all four game modes and both regional variants (America and Europe). The answers are updated daily and sourced directly from the game to ensure accuracy. Whether you want to confirm a guess after completing the puzzle or see the solution immediately, this is the definitive resource for today's OnePiecedle answers.
         </p>
-        <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+        <p class="text-base text-slate-600 mb-4 leading-relaxed">
           OnePiecedle answers are selected from the massive One Piece character database, which spans the entire manga and anime from the first chapter in East Blue to the most recent story developments. The selection appears to use a randomized process with no predictable pattern or schedule. Each of the four modes independently selects its own character, so the Classic, Devil Fruit, Laugh, and Wanted answers will all be different characters on any given day. The regional split adds another layer of variety, as American and European players may face entirely different puzzles on the same calendar date.
         </p>
-        <p class="text-lg text-slate-600 leading-relaxed">
+        <p class="text-base text-slate-600 leading-relaxed">
           As the One Piece manga continues its narrative and new characters are introduced, the OnePiecedle database is updated to include them. This means the game stays current with the ongoing story and continues to provide fresh challenges even for the most dedicated fans who have been following the series for decades. If you encounter a character you do not recognize, it may be a newer addition or a character from an arc you have not yet reached.
         </p>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Strategy Tips for OnePiecedle</h2>
         <div class="space-y-4 text-lg text-slate-600">
           <p class="leading-relaxed">
@@ -133,7 +163,7 @@
         </div>
       </section>
 
-      <section class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+      <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
         <h2 class="text-3xl font-bold text-slate-900 mb-6">Frequently Asked Questions About OnePiecedle</h2>
         <div class="space-y-6 text-lg text-slate-600">
           <div>

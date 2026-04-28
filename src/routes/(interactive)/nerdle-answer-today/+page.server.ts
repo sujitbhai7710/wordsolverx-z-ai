@@ -79,7 +79,7 @@ export const load: PageServerLoad = async ({ setHeaders, platform, fetch }) => {
                         description: pageDescription,
                         datePublished: `${answerData.date}T00:00:00+09:00`,
                         dateModified: `${answerData.date}T00:00:00+09:00`,
-                        mainEntityOfPage: 'https://wordsolver.tech/nerdle-answer-today',
+                        mainEntityOfPage: 'https://wordsolverx.com/nerdle-answer-today',
                         author: {
                                 '@type': 'Organization',
                                 name: 'WordSolverX'
@@ -89,7 +89,7 @@ export const load: PageServerLoad = async ({ setHeaders, platform, fetch }) => {
                                 name: 'WordSolverX',
                                 logo: {
                                         '@type': 'ImageObject',
-                                        url: 'https://wordsolver.tech/images/nerdle-answer-today.webp'
+                                        url: 'https://wordsolverx.com/images/nerdle-answer-today.webp'
                                 }
                         }
                 },
@@ -97,13 +97,13 @@ export const load: PageServerLoad = async ({ setHeaders, platform, fetch }) => {
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: [
-                                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolver.tech' },
-                                { '@type': 'ListItem', position: 2, name: 'Today', item: 'https://wordsolver.tech/today' },
+                                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wordsolverx.com' },
+                                { '@type': 'ListItem', position: 2, name: 'Today', item: 'https://wordsolverx.com/today' },
                                 {
                                         '@type': 'ListItem',
                                         position: 3,
                                         name: 'Nerdle Answer Today',
-                                        item: 'https://wordsolver.tech/nerdle-answer-today'
+                                        item: 'https://wordsolverx.com/nerdle-answer-today'
                                 }
                         ]
                 },
@@ -129,7 +129,7 @@ export const load: PageServerLoad = async ({ setHeaders, platform, fetch }) => {
                         title: pageTitle,
                         description: pageDescription,
                         keywords: `nerdle answer today, nerdle all modes answer, nerdle classic micro mini midi maxi quad speed instant, nerdle archive, nerdle answer ${formattedDate}`,
-                        canonical: 'https://wordsolver.tech/nerdle-answer-today'
+                        canonical: 'https://wordsolverx.com/nerdle-answer-today'
                 },
                 schemas
         };

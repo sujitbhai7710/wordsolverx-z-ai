@@ -8,4 +8,4 @@ Disallow: /admin/
 Disallow: /private/
 
 # Primary XML sitemap
-Sitemap: https://wordsolver.tech/sitemap.xml
+Sitemap: https://wordsolverx.com/sitemap.xml

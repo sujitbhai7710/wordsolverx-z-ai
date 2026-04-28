@@ -320,11 +320,11 @@
     content="Enter the Searchle prompt and get the best autocomplete guesses ranked by entropy."
   />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolver.tech/searchle-solver" />
+  <meta property="og:url" content="https://wordsolverx.com/searchle-solver" />
   <meta property="og:site_name" content="WordSolverX" />
-  <meta property="og:image" content="https://wordsolver.tech/images/searchle-solver.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/searchle-solver.webp" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://wordsolver.tech/searchle-solver" />
+  <link rel="canonical" href="https://wordsolverx.com/searchle-solver" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -332,7 +332,7 @@
         '@type': 'WebPage',
         name: 'Searchle Solver',
         description: 'Solve Searchle with entropy-ranked autocomplete guesses and feedback tracking.',
-        url: 'https://wordsolver.tech/searchle-solver'
+        url: 'https://wordsolverx.com/searchle-solver'
       },
       {
         '@type': 'WebApplication',
@@ -359,9 +359,9 @@
         ]
       },
       generateBreadcrumbSchema([
-        { name: 'Home', url: 'https://wordsolver.tech' },
-        { name: 'Solver', url: 'https://wordsolver.tech/solver' },
-        { name: 'Searchle Solver', url: 'https://wordsolver.tech/searchle-solver' }
+        { name: 'Home', url: 'https://wordsolverx.com' },
+        { name: 'Solver', url: 'https://wordsolverx.com/solver' },
+        { name: 'Searchle Solver', url: 'https://wordsolverx.com/searchle-solver' }
       ])
     ]
   })}</script>`}

@@ -24,7 +24,8 @@ export type PuzzleGame =
 	| 'onepiecedle'
 	| 'pokedle'
 	| 'smashdle'
-	| 'nerdle';
+	| 'nerdle'
+	| 'colorfle';
 
 export interface PuzzleWindow {
 	group: string;
@@ -211,6 +212,14 @@ export const PUZZLE_WINDOW_CONFIG: Record<PuzzleGame, PuzzleWindowConfig> = {
 		sourceReadiness: 'latest-payload',
 		boundaryHourUtc: 6,
 		boundaryMinuteUtc: 2
+	},
+	colorfle: {
+		group: 'main',
+		timezone: 'worker-latest',
+		sourceReadiness: 'deterministic',
+		boundaryHourUtc: 15,
+		boundaryMinuteUtc: 0,
+		visibleDateOffsetDays: 1
 	}
 };
 

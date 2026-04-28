@@ -120,18 +120,18 @@
 <svelte:head>
         <title>Spotle Archive - Complete Artist Answer History | WordSolverX</title>
         <meta name="description" content="Browse the full Spotle archive by date, with artist details and stored music metadata for past answers." />
-        <link rel="canonical" href="https://wordsolver.tech/spotle-archive" />
+        <link rel="canonical" href="https://wordsolverx.com/spotle-archive" />
         <meta property="og:title" content="Spotle Archive - All Past Artist Answers" />
         <meta property="og:description" content="Complete history of Spotle answers with artist details, music metadata, and date-based browsing." />
-        <meta property="og:url" content="https://wordsolver.tech/spotle-archive" />
+        <meta property="og:url" content="https://wordsolverx.com/spotle-archive" />
         <meta property="og:type" content="website" />
         {@html `<script type="application/ld+json">${JSON.stringify({
                 '@context': 'https://schema.org',
                 '@type': 'CollectionPage',
                 name: 'Spotle Archive',
                 description: 'Complete archive of all Spotle daily artist answers.',
-                url: 'https://wordsolver.tech/spotle-archive',
-                isPartOf: { '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolver.tech' }
+                url: 'https://wordsolverx.com/spotle-archive',
+                isPartOf: { '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolverx.com' }
         })}</script>`}
 </svelte:head>
 

@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
   import {
@@ -107,7 +107,7 @@
     generateWebPageSchema(
       metaTitle,
       pageDescription,
-      'https://wordsolver.tech/contexto-answer-today'
+      'https://wordsolverx.com/contexto-answer-today'
     )
   );
 </script>
@@ -119,13 +119,13 @@
   <meta property="og:title" content={metaTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://wordsolver.tech/contexto-answer-today" />
+  <meta property="og:url" content="https://wordsolverx.com/contexto-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
-  <meta property="og:image" content="https://wordsolver.tech/images/contexto-answer-today.webp" />
+  <meta property="og:image" content="https://wordsolverx.com/images/contexto-answer-today.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={metaTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <link rel="canonical" href="https://wordsolver.tech/contexto-answer-today" />
+  <link rel="canonical" href="https://wordsolverx.com/contexto-answer-today" />
   {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
@@ -233,7 +233,7 @@
     <!-- Comprehensive SEO Article -->
     <article class="mt-12 space-y-8 max-w-5xl mx-auto">
       <!-- What is Contexto? -->
-      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8">
+      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           What Is Contexto?
         </h2>
@@ -252,7 +252,7 @@
       </section>
 
       <!-- How Contexto Works -->
-      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8">
+      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           How Contexto Works: The Mechanics Behind Semantic Guessing
         </h2>
@@ -287,7 +287,7 @@
       </section>
 
       <!-- Past Contexto Answers -->
-      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8">
+      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Past Contexto Answers: Archives and Word Patterns
         </h2>
@@ -303,7 +303,7 @@
       </section>
 
       <!-- Tips for Contexto -->
-      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8">
+      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Contexto Strategy: How to Solve Puzzles Faster
         </h2>
@@ -342,7 +342,7 @@
       </section>
 
       <!-- Contexto Statistics -->
-      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-8">
+      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
           Contexto Statistics: What We Know
         </h2>

@@ -26,23 +26,23 @@
     '@type': 'ListItem',
     position: index + 1,
     name: `${archive.name} Archive`,
-    url: `https://wordsolver.tech${archive.href}`
+    url: `https://wordsolverx.com${archive.href}`
   }));
 </script>
 
 <svelte:head>
   <title>Puzzle Answer Archives | WordSolverX</title>
   <meta name="description" content="Browse archive pages for Wordle, Canuckle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
-  <link rel="canonical" href="https://wordsolver.tech/archive" />
+  <link rel="canonical" href="https://wordsolverx.com/archive" />
   <meta property="og:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
   <meta property="og:description" content="Browse full answer history, archive calendars, and past solutions for Wordle, Canuckle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle." />
-  <meta property="og:url" content="https://wordsolver.tech/archive" />
+  <meta property="og:url" content="https://wordsolverx.com/archive" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Puzzle Answer Archive - All Solutions | WordSolverX" />
   <meta name="twitter:description" content="Explore complete answer archives and calendar lookups for Wordle, Canuckle, and the most popular daily puzzle games." />
-  <meta name="twitter:image" content="https://wordsolver.tech/wordsolverx.webp" />
+  <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
   {@html `<script type="application/ld+json">${JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
@@ -50,14 +50,14 @@
         "@type": "CollectionPage",
         "name": "Puzzle Answer Archive",
         "description": "Browse answer archives for Wordle, Canuckle, Quordle, Colordle, Semantle, Phoodle, Globle, Waffle, Worldle, Nerdle, Searchle, Contexto, Phrazle, and Spotle.",
-        "url": "https://wordsolver.tech/archive",
-        "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolver.tech" }
+        "url": "https://wordsolverx.com/archive",
+        "isPartOf": { "@type": "WebSite", "name": "WordSolverX", "url": "https://wordsolverx.com" }
       },
       {
         "@type": "WebPage",
         "name": "Puzzle Answer Archive",
         "description": "Archive hub for past puzzle answers, history pages, and answer calendars.",
-        "url": "https://wordsolver.tech/archive"
+        "url": "https://wordsolverx.com/archive"
       },
       {
         "@type": "ItemList",
@@ -132,88 +132,88 @@
 
       <p>
         Daily puzzle games are inherently ephemeral. Today's Wordle is tomorrow's old news, and if you miss a day there's no built-in way to go back and see what the answer was. That's where archives come in. They preserve the history of each game so you can look up any past puzzle by date, verify your memory, or settle an argument about what the answer was on that specific Tuesday three weeks ago.
-      </p>
+      
       <p>
         Archives also serve a practical purpose for players trying to improve. Looking back at past answers reveals patterns — letter frequencies, common word structures, game-specific quirks. If you notice that Wordle uses words ending in "CK" more often than you'd expect, you can adjust your guessing strategy accordingly. You can't spot those patterns without access to historical data.
-      </p>
+      
       <p>
         Beyond strategy, archives are a matter of record. Streak verification, statistical analysis, and casual curiosity all require looking up past answers. Some players maintain spreadsheets of their performance over time. Others just want to know what they missed while on vacation. Whatever the reason, the archive is the fastest path to the answer.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">How Each Archive Works</h2>
 
       <p>
         Every archive page on WordSolverX follows the same structure. You land on a calendar-style interface (or a scrollable list for games that don't use calendar dates). Pick the date you want, and the answer loads immediately. No page reloads for each date — the data is either embedded in the page or fetched in the background so browsing between dates feels instant.
-      </p>
+      
       <p>
         For Wordle specifically, the archive goes all the way back to puzzle #1 on June 19, 2021 (answer: "CIGAR"). The original Wordle answer list contains 2,315 words, and every one of them is indexed by both date and puzzle number. So if you know the puzzle number — maybe you screenshotted your result grid — you can jump directly to that answer without needing to figure out the date.
-      </p>
+      
       <p>
         Quordle's archive works similarly but shows all four daily words. The Quordle answer sequence is independent from Wordle's, so you'll find different words on the same date. Canuckle's archive adds an extra layer: each day's answer comes with a Canadian trivia fact, so the archive is useful for more than just the word itself.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Wordle Archive: The Deepest History</h2>
 
       <p>
         The Wordle archive is by far the most-used archive on this site, and for good reason. Wordle has been running since mid-2021 with no gaps, which means there are over 1,500 puzzles in the history. The New York Times, which acquired Wordle in early 2022, has occasionally modified the answer list (removing words deemed insensitive), so the archive also serves as a record of these changes.
-      </p>
+      
       <p>
         Each Wordle archive entry shows the puzzle number, the date, the answer word, and the number of letters. That's it — no fluff. If you want context, the daily article attached to each answer-today page provides that, but the archive is built for speed. You want to know what Wordle #847 was? It's right there. No scrolling, no searching, no guessing at URLs.
-      </p>
+      
       <p>
         The Wordle archive is particularly useful for players who joined after the NYT acquisition. The early puzzles (pre-acquisition) used a different answer list than the current one, and some of those early words have been permanently removed from the active rotation. The archive preserves them all.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Multi-Word Archives: Quordle, Phrazle, Octordle</h2>
 
       <p>
         Archives for multi-word puzzles show every word for a given date. Quordle displays four words, Phrazle displays two phrases (morning and afternoon), and Octordle shows eight words. The archive pages lay these out clearly so you can see at a glance whether your memory of "that day when all four Quordle words were short" matches reality.
-      </p>
+      
       <p>
         Multi-word archives are also useful for a different kind of analysis: difficulty trends. Some days the Quordle words are all common English words. Other days, one or two of them are obscure. By browsing the archive, you can get a sense of which days were genuinely hard versus which days just felt hard because you got unlucky with your starting words.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Geography and Trivia Archives</h2>
 
       <p>
         Worldle, Globle, and Countryle all have country-based archives. These are particularly interesting because you can track geographic patterns. Did Worldle use African countries more often in 2023 than 2024? Are small island nations becoming more common? The archive lets you answer these questions by browsing chronologically.
-      </p>
+      
       <p>
         Framed's movie archive is sorted by date and shows the film title, release year, and director. Spotle's archive lists the artist and their most-played track. These archives turn each game's history into a browsable cultural catalog — part puzzle resource, part discovery tool for new movies and music.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Semantic and Word Game Archives</h2>
 
       <p>
         Semantle and Contexto archives are the most unusual because the answers aren't just words — they're words with associated similarity scores. The archive shows not just what the secret word was, but how it related to common guesses. A day where the answer was "BANK" and the top guess was "MONEY" tells you something about how the semantic model clusters these concepts.
-      </p>
+      
       <p>
         Searchle's archive is similarly distinctive because it records Google autocomplete suggestions over time. Autocomplete changes as the web changes — a phrase that auto-completed one way in 2023 might not exist in 2024. The Searchle archive is a minor but real snapshot of how people were searching at different points in time.
-      </p>
+      
       <p>
         Worgle's archive is deterministic — the same date always produces the same answer, based on the game's internal algorithm. This makes the archive perfectly reliable: if you look up a date, the answer is always the same. Some other games have changed their answer sources over time, which can create ambiguity. Worgle doesn't have this problem.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Technical Architecture of the Archives</h2>
 
       <p>
         Each archive page is built as a permanent, navigable resource. Instead of generating a separate URL for every single date (which would create thousands of nearly-identical pages), we build one archive page per game with embedded data and client-side navigation. This approach is better for site performance, better for search engine crawling, and better for users who want to browse multiple dates without bouncing between URLs.
-      </p>
+      
       <p>
         The archive data is stored in JSON files that get bundled at build time. For a game with 1,500 historical entries, the JSON file is typically under 50KB — small enough to load instantly but comprehensive enough to cover the entire history. The client-side code handles date selection, display formatting, and any filtering the user wants to do.
-      </p>
+      
       <p>
         Some games (like Betweenle and Worgle) use puzzle numbers instead of calendar dates. The archive pages for these games provide both the puzzle number and the corresponding calendar date, so you can cross-reference either way. This matters because Betweenle's puzzle window doesn't align with midnight — a puzzle numbered "382" might correspond to different calendar dates depending on your time zone.
-      </p>
+      
 
       <h2 class="text-slate-900 dark:text-slate-50">Using Archives for Pattern Analysis</h2>
 
       <p>
         If you're the type of player who likes to optimize, the archives are a goldmine. You can track letter frequency over time, identify words that the game has already used (and therefore won't repeat), and spot trends in difficulty. Wordle, for example, has been getting moderately harder over time as the NYT curates the answer list more aggressively.
-      </p>
+      
       <p>
         The archive also helps with a specific strategic question: "has this word already been an answer?" If you're considering guessing "CRANE" and want to know if it was a past Wordle answer (which would mean it won't appear again), the archive tells you immediately. Not all puzzle games have this constraint — some do repeat words — but for those that don't, the archive eliminates an entire class of wasted guesses.
-      </p>
+      
     </div>
 
     <!-- CTA -->
