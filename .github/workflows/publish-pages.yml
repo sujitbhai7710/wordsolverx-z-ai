@@ -70,7 +70,7 @@ jobs:
       WORKFLOW_MODE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_mode || 'deploy' }}
       ARTICLE_SCOPE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.article_scope || 'disabled' }}
       SOURCE_NAME: ${{ github.event.client_payload.source || github.event.inputs.source || (github.event_name == 'push' && format('push:{0}', github.ref_name)) || github.event.action || 'manual' }}
-      PREVIEW_BASE_URL: https://wordsolverx-svelte.pages.dev
+      PREVIEW_BASE_URL: https://wordsolverx-z-ai.pages.dev
       PUBLIC_BASE_URL: https://wordsolverx.com
       NVIDIA_API_KEYS: ${{ secrets.NVIDIA_API_KEYS }}
       NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}

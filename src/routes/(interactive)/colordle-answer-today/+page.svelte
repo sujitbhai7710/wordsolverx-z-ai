@@ -17,6 +17,7 @@
   const requestedDateLabel = $derived(data.requestedFormattedDate ?? data.formattedDate ?? 'today');
   const answerDateLabel = $derived(data.formattedDate ?? requestedDateLabel);
   const generatedArticle = $derived(data.generatedArticle ?? null);
+  const hasGeneratedArticle = $derived(Boolean(generatedArticle?.articleHtml));
   const generatedBonusHints = $derived(generatedArticle?.bonusHints ?? []);
 
   const filteredHistory = $derived.by(() => {
@@ -222,46 +223,38 @@
             <p class="text-sm font-bold uppercase tracking-[0.25em] text-white/90">Jump to section</p>
           </div>
           <div class="grid gap-1 p-5 sm:grid-cols-2">
-            <a href="#today-article" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-indigo-50 hover:text-indigo-600">
-              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100 text-xs font-bold text-indigo-600">1</span>
-              Today&apos;s article
-            </a>
+            {#if hasGeneratedArticle}
+              <a href="#today-article" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-indigo-50 hover:text-indigo-600">
+                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100 text-xs font-bold text-indigo-600">1</span>
+                Today&apos;s article
+              </a>
+            {/if}
             <a href="#frequently-asked-questions" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-fuchsia-50 hover:text-fuchsia-600">
-              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-fuchsia-100 text-xs font-bold text-fuchsia-600">2</span>
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-fuchsia-100 text-xs font-bold text-fuchsia-600">{hasGeneratedArticle ? '2' : '1'}</span>
               FAQs
             </a>
             <a href="#recent-daily-colors" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-pink-50 hover:text-pink-600">
-              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-pink-100 text-xs font-bold text-pink-600">3</span>
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-pink-100 text-xs font-bold text-pink-600">{hasGeneratedArticle ? '3' : '2'}</span>
               Recent colors
             </a>
             <a href="/colordle-solver" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-teal-50 hover:text-teal-600">
-              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-100 text-xs font-bold text-teal-600">4</span>
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-100 text-xs font-bold text-teal-600">{hasGeneratedArticle ? '4' : '3'}</span>
               Open solver
             </a>
           </div>
         </nav>
 
-        <section id="today-article" class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600">Daily write-up</p>
-          <h2 class="mt-2 text-3xl font-bold text-slate-900">
-            {generatedArticle?.title ?? `Colordle notes for ${answerDateLabel}`}
-          </h2>
-
-          {#if generatedArticle?.articleHtml}
+        {#if hasGeneratedArticle}
+          <section id="today-article" class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600">Daily write-up</p>
+            <h2 class="mt-2 text-3xl font-bold text-slate-900">
+              {generatedArticle?.title ?? `Colordle notes for ${answerDateLabel}`}
+            </h2>
             <div class="prose prose-lg mt-6 max-w-none prose-headings:scroll-mt-28 prose-h2:text-slate-900 prose-h3:text-slate-900 prose-p:text-slate-600 prose-li:text-slate-600 prose-a:text-indigo-600">
               {@html generatedArticle.articleHtml}
             </div>
-          {:else}
-            <div class="mt-6 space-y-5 text-lg leading-8 text-slate-600">
-              <p>
-                The daily article for {answerDateLabel} has not been generated yet, so this page is falling back to the deterministic clue logic and the verified answer card.
-              </p>
-              <p>
-                You can still use the clue panel, the guess trail, and the searchable history below to work through the puzzle in a practical way. Once the article bundle is refreshed, this section will swap in the longer human-written write-up automatically.
-              </p>
-            </div>
-          {/if}
-        </section>
+          </section>
+        {/if}
 
         <section id="frequently-asked-questions" class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
           <h2 class="text-3xl font-bold text-slate-900 mb-6">Frequently asked questions</h2>

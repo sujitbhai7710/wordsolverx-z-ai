@@ -19,7 +19,7 @@
 		"build": "node scripts/build-cloudflare.mjs",
 		"build:pages": "node scripts/build-pages.mjs",
 		"deploy": "npm run data:update && npm run articles:generate && npm run build && wrangler deploy --config wrangler.jsonc",
-		"deploy:pages": "npm run data:update && npm run articles:generate && npm run build:pages && wrangler pages deploy build/pages --project-name wordsolverx-svelte",
+		"deploy:pages": "npm run data:update && npm run articles:generate && npm run build:pages && wrangler pages deploy build/pages --project-name wordsolverx-z-ai",
 		"preview": "vite preview",
 		"preview:cf": "npm run build && wrangler dev --config wrangler.jsonc",
 		"pagespeed:capture:before": "node scripts/pagespeed-capture-before.mjs",

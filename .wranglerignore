@@ -1,2 +1,9 @@
 # Exclude worker subprojects from Cloudflare bundle
 narutodle-worker/
+
+# Local artifacts
+*.log
+*.tsbuildinfo
+.cf-profile
+.cache/
+.opencode/
