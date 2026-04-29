@@ -19,8 +19,8 @@
         import type { TodayArticleKey } from '$lib/daily-article-content';
 
         let { children } = $props();
-        let pageContentEl: HTMLElement | null = null;
-        let generatedArticleEl: HTMLDivElement | null = null;
+        let pageContentEl = $state<HTMLElement | null>(null);
+        let generatedArticleEl = $state<HTMLDivElement | null>(null);
         const handledInline = new Set(['wordle-answer-today', 'colordle-answer-today']);
         const mainScheduleRoutes = new Set([
                 'canuckle-answer-today',

@@ -73,7 +73,7 @@
     {
       question: 'Where does the data come from?',
       answer:
-        'Searchle answers come from the game's official daily puzzle list.'
+        "Searchle answers come from the game's official daily puzzle list."
     }
   ];
 
