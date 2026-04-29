@@ -1,7 +1,8 @@
 <script lang="ts">
         import { onMount } from 'svelte';
         import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
-        import AuthorCard from '$lib/components/AuthorCard.svelte';
+        import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
         import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
 
         let { data }: {
@@ -198,7 +199,7 @@
           That timing difference means Worgle often uses different words than Wordle on any given day, giving regular word-game players a second daily challenge to solve.
         </p>
                                 <p class="mt-4 text-lg leading-8 text-slate-600">
-          The game launched during the early-2022 Wordle boom when dozens of spinoffs flooded the market. Most of those clones died within weeks, but Worgle survived because it offered something simple and reliable: a clean interface, a deterministic answer list, and a timezone that appealed to a massive South Asian player base.
+          The game launched during the early-2022 Wordle boom when dozens of spinoffs flooded the market. Most of those clones died within weeks, but Worgle survived because it offered something simple and reliable: a clean interface, a fixed daily answer schedule, and a timezone that appealed to a massive South Asian player base.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           While Wordle resets at midnight UTC, Worgle resets at midnight IST — a 5.5-hour difference that means a Worgle puzzle covers a full day for hundreds of millions of players across India, Pakistan, Bangladesh, Sri Lanka, and Nepal.
@@ -363,7 +364,7 @@
                                         <div>
                                                 <h3 class="text-lg font-bold text-slate-900">Is the answer on this page always correct?</h3>
                                                 <p class="mt-2 text-base leading-7 text-slate-600">
-          Yes. This page uses the same IST-based date calculation that Worgle itself uses, and we cross-reference the answer against the deterministic answer list. The word shown for puzzle #{data.todayEntry.puzzle} is the exact word the game uses for that date.
+          Yes. This page uses the same IST-based date calculation that Worgle itself uses, and we cross-reference the answer against the official Worgle answer list. The word shown for puzzle #{data.todayEntry.puzzle} is the exact word the game uses for that date.
         </p>
         <p class="mt-2 text-base leading-7 text-slate-600">
           If you see a discrepancy, it is most likely a timezone issue on your device — check that your system clock matches IST.
@@ -379,6 +380,8 @@
                                 image={PRESTON_HAYES_AUTHOR_IMAGE}
                                 description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
                         />
+
+      <InternalLinkSection currentGame="Worgle" />
                 </div>
         </div>
 </div>

@@ -91,7 +91,7 @@
   );
   let pageDescription = $derived(
     data?.meta?.description ??
-      `Get ${gameTitle} hints and the confirmed ${gameTitle} answers for today${seoDate ? `, ${seoDate}` : ''}. Check every available mode and region in one place.`
+      `Today's ${gameTitle} answers for every mode and region${seoDate ? ` — ${seoDate}` : ''}. View the answer or jump to the solver.`
   );
   let pageKeywords = $derived(
     data?.meta?.keywords ??

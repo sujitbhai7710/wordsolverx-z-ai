@@ -192,7 +192,7 @@
         Waffle presents a grid of letters where some are in correct positions and others need to be swapped to form valid words. The grid contains three across words and three down words that intersect, similar to a crossword but with a more constrained structure. Players swap letters between positions to transform the scrambled grid into the solved state where all six words read correctly in both directions.
       </p>
       <p>
-        The answer for each date includes the complete puzzle grid, the solved solution, the list of all six words, and their dictionary definitions. The deterministic puzzle system means each date maps to exactly one puzzle, and the archive records this mapping completely. The word list is drawn from common English vocabulary, ensuring all solutions use words that most players would recognize.
+        The answer for each date includes the complete puzzle grid, the solved solution, the list of all six words, and their dictionary definitions. Each date has exactly one puzzle, and the archive records this mapping completely. The word list is drawn from common English vocabulary, ensuring all solutions use words that most players would recognize.
       </p>
       <p>
         Waffle puzzles vary in difficulty based on how many letters are already in their correct positions and how many swaps are needed to reach the solution. Easier puzzles have more pre-placed letters and fewer required swaps, while harder puzzles require more moves and more creative thinking about which letters could be swapped to form valid words in both the across and down directions.

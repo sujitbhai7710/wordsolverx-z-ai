@@ -554,7 +554,7 @@ import AuthorCard from '$lib/components/AuthorCard.svelte';
                 <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
                         <h2 class="text-3xl font-bold text-slate-900 mb-5">How Our Spotle Solver Works</h2>
                         <p class="text-slate-600 leading-relaxed mb-4">
-                                The solver loads the full Spotle artist dataset when the page opens. When you add a guess with feedback, it runs the filter function across every artist in the pool and removes any that contradict your clues. The remaining candidates are displayed as ranked suggestions.
+                                The solver loads the full Spotle artist list when the page opens. When you add a guess with feedback, it runs the filter function across every artist in the pool and removes any that contradict your clues. The remaining candidates are displayed as ranked suggestions.
                         </p>
                         <p class="text-slate-600 leading-relaxed mb-4">
                                 Each attribute is checked independently. For green feedback, the candidate must match that attribute exactly. For yellow, the candidate must be within the proximity threshold the game uses. For gray, the candidate must fall outside that threshold. Arrows add directional constraints — a "higher" arrow on rank means the mystery artist's rank number is larger than your guess's rank.

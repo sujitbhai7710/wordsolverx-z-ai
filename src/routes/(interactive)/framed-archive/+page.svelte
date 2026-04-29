@@ -64,7 +64,7 @@ import AuthorCard from '$lib/components/AuthorCard.svelte';
 
 <svelte:head>
   <title>Framed Archive - Past Framed Answers by Date | WordSolverX</title>
-  <meta name="description" content="Browse the Framed archive by date and reveal the saved answers for Framed Classic, One Frame, Titleshot, and Poster from the static dataset." />
+  <meta name="description" content="Browse the Framed archive by date and reveal the saved answers for Framed Classic, One Frame, Titleshot, and Poster from our verified answer records." />
   <link rel="canonical" href="https://wordsolverx.com/framed-archive" />
   <meta property="og:title" content="Framed Archive - Past Framed Answers by Date" />
   <meta property="og:description" content="Search saved Framed movie title answers by date for all supported Framed modes." />

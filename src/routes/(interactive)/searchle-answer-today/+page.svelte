@@ -1,5 +1,6 @@
 <script lang="ts">
   import FAQSection from '$lib/components/FAQSection.svelte';
+  import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import type { SearchleDailyPuzzle } from '$lib/searchle/daily';
   import {
@@ -47,7 +48,7 @@
   const metaTitle = $derived(`Searchle Answer Today - ${currentMonth} - Updated`);
   const pageTitle = $derived(`Searchle Answer Today (${todayLabel})`);
   const pageDescription = $derived(
-    `Get Searchle hints and the confirmed Searchle answer for today, ${todayLabel}. Use the dedicated archive page for older Searchle prompts and answers.`
+    `Today's Searchle autocomplete answer revealed. See the prompt, copy the answer, and browse past puzzles in the archive, ${todayLabel}. Use the dedicated archive page for older Searchle prompts and answers.`
   );
   const pageKeywords = $derived(
     `searchle answer today, searchle answer, searchle hint, searchle hint today, searchle answer for ${todayLabel}`
@@ -72,7 +73,7 @@
     {
       question: 'Where does the data come from?',
       answer:
-        'The answer list is based on the real Searchle puzzle dataset.'
+        'Searchle answers come from the game's official daily puzzle list.'
     }
   ];
 
@@ -193,6 +194,8 @@
         image={PRESTON_HAYES_AUTHOR_IMAGE}
         description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
       />
+
+      <InternalLinkSection currentGame="Searchle" />
     </div>
 
     <article class="mx-auto max-w-5xl px-4 pb-12 space-y-8">
@@ -214,7 +217,7 @@
           Searchle launched in 2022 during the daily puzzle boom. It has a smaller player base than Wordle or Nerdle, but its audience is notably engaged — the game appeals to people who spend time on the internet, understand how autocomplete works, and enjoy the detective-like process of reverse-engineering search behavior.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          With {totalPuzzles.toLocaleString('en-US')} puzzles in the dataset, there is plenty of archival material to study.
+          With {totalPuzzles.toLocaleString('en-US')} past puzzles available, there is plenty of archival material to study.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           What makes Searchle particularly interesting is that it is not testing knowledge in the traditional sense. A trivia game asks whether you know a fact. Searchle asks whether you can predict what millions of people are searching for. That distinction matters — the answer is not &quot;correct&quot; in any academic sense, but it is &quot;correct&quot; in terms of human behavior.
@@ -227,13 +230,13 @@
       <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
         <h2 class="text-3xl font-black tracking-tight text-slate-900">How Searchle Works</h2>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          Each day, Searchle selects one puzzle from its dataset of {totalPuzzles.toLocaleString('en-US')} entries. The puzzle consists of a Google search prompt — a partial sentence or question with a blank where the autocomplete word goes.
+          Each day, Searchle picks one puzzle from its collection of {totalPuzzles.toLocaleString('en-US')} past prompts. The puzzle consists of a Google search prompt — a partial sentence or question with a blank where the autocomplete word goes.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           Your job is to type the word that completes the prompt. The prompt for today ({todayLabel}) is shown above, and you can reveal the answer using the answer card.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          The daily cycle resets at midnight. Each puzzle is mapped to a specific date, so the answer on any given day is deterministic. This page tracks the current day&apos;s puzzle and displays the prompt and answer together, along with a copy button and links to the archive and solver.
+          The daily cycle resets at midnight. Each puzzle is mapped to a specific date, so the answer on any given day is always the same. This page tracks the current day&apos;s puzzle and displays the prompt and answer together, along with a copy button and links to the archive and solver.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           The archive lets you browse every past puzzle by date, and the solver can help you narrow down possible answers if you want to work through the deduction process.
@@ -248,7 +251,7 @@
           Google autocomplete is influenced by search volume, geographic location, trending topics, and algorithmic adjustments. That means Searchle answers can shift over time even for the same prompt — what autocomplete suggests today might differ from what it suggested six months ago.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          The Searchle dataset captures the autocomplete state at the time each puzzle was created, so the answers reflect a specific moment in search behavior.
+          The Searchle answer list captures the autocomplete state at the time each puzzle was created, so the answers reflect a specific moment in search behavior.
         </p>
       </section>
 
@@ -322,7 +325,7 @@
           <div class="rounded-2xl bg-slate-50 p-6">
             <h3 class="text-xl font-bold text-slate-900">Think about emotions and common complaints</h3>
             <p class="mt-2 text-base leading-7 text-slate-600">
-          A huge percentage of Google searches are complaints, curiosities, or emotional questions. Prompts like &quot;Why do I always feel ___&quot; or &quot;Why is my ___ so ___&quot; dominate the Searchle dataset. Common completions include TIRED, ANXIOUS, STRESSED, SAD, and LONELY for emotional prompts.
+          A huge percentage of Google searches are complaints, curiosities, or emotional questions. Prompts like &quot;Why do I always feel ___&quot; or &quot;Why is my ___ so ___&quot; dominate the Searchle answer pool. Common completions include TIRED, ANXIOUS, STRESSED, SAD, and LONELY for emotional prompts.
         </p>
         <p class="mt-2 text-base leading-7 text-slate-600">
           Understanding that people use Google to process negative emotions more than positive ones gives you a significant edge.

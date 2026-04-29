@@ -9,6 +9,49 @@
 
   let { currentGame = '' }: { currentGame?: string } = $props();
 
+  const GAME_CLUSTERS: Record<string, string[]> = {
+    // Word Puzzle cluster
+    wordle: ['quordle', 'nerdle', 'phoodle', 'phrazle', 'waffle', 'canuckle', 'worgle', 'betweenle'],
+    quordle: ['wordle', 'nerdle', 'phoodle', 'phrazle', 'waffle', 'canuckle'],
+    nerdle: ['wordle', 'quordle', 'phoodle', 'betweenle'],
+    phoodle: ['wordle', 'quordle', 'waffle', 'canuckle'],
+    phrazle: ['wordle', 'quordle', 'waffle'],
+    waffle: ['wordle', 'quordle', 'phoodle', 'phrazle'],
+    canuckle: ['wordle', 'quordle', 'phoodle', 'worgle'],
+    worgle: ['wordle', 'canuckle', 'phoodle'],
+    betweenle: ['wordle', 'nerdle', 'quordle'],
+    // Geography cluster
+    worldle: ['globle', 'countryle'],
+    globle: ['worldle', 'countryle'],
+    countryle: ['worldle', 'globle'],
+    // Character Guessing cluster
+    loldle: ['dotadle', 'narutodle', 'onepiecedle', 'pokedle', 'smashdle'],
+    dotadle: ['loldle', 'narutodle', 'onepiecedle', 'pokedle', 'smashdle'],
+    narutodle: ['loldle', 'dotadle', 'onepiecedle', 'pokedle', 'smashdle'],
+    onepiecedle: ['loldle', 'dotadle', 'narutodle', 'pokedle', 'smashdle'],
+    pokedle: ['loldle', 'dotadle', 'narutodle', 'onepiecedle', 'smashdle'],
+    smashdle: ['loldle', 'dotadle', 'narutodle', 'onepiecedle', 'pokedle'],
+    // Logic & Semantic cluster
+    contexto: ['semantle', 'searchle'],
+    semantle: ['contexto', 'searchle'],
+    searchle: ['contexto', 'semantle'],
+    // Visual & Color cluster
+    colordle: ['colorfle', 'framed', 'spotle'],
+    colorfle: ['colordle', 'framed', 'spotle'],
+    framed: ['colordle', 'colorfle', 'spotle'],
+    spotle: ['colordle', 'colorfle', 'framed'],
+  };
+
+  const GAME_DISPLAY_NAMES: Record<string, string> = {
+    wordle: 'Wordle', quordle: 'Quordle', nerdle: 'Nerdle', phoodle: 'Phoodle',
+    phrazle: 'Phrazle', waffle: 'Waffle', canuckle: 'Canuckle', worgle: 'Worgle',
+    betweenle: 'Betweenle', worldle: 'Worldle', globle: 'Globle', countryle: 'Countryle',
+    loldle: 'LoLdle', dotadle: 'Dotadle', narutodle: 'Narutodle', onepiecedle: 'Onepiecedle',
+    pokedle: 'Pokedle', smashdle: 'Smashdle', contexto: 'Contexto', semantle: 'Semantle',
+    searchle: 'Searchle', colordle: 'Colordle', colorfle: 'Colorfle', framed: 'Framed',
+    spotle: 'Spotle',
+  };
+
   const todayIconMap: Record<string, string> = {
     Wordle: 'Wd',
     Canuckle: 'Ca',
@@ -89,6 +132,14 @@
     })
     .filter((link) => link.name.split(' ')[0] !== currentGame)
     .slice(0, 10);
+
+  const currentGameKey = currentGame.toLowerCase().replace(/\s+/g, '');
+  const relatedGameKeys = (GAME_CLUSTERS[currentGameKey] ?? []).slice(0, 5);
+  const relatedGames = relatedGameKeys.map((key) => ({
+    name: GAME_DISPLAY_NAMES[key] ?? key,
+    href: `/${key}-answer-today`,
+    icon: (GAME_DISPLAY_NAMES[key] ?? key).slice(0, 2)
+  }));
 </script>
 
 <section class="mt-16 border-t border-slate-200 dark:border-slate-700 pt-12 max-w-4xl mx-auto px-4">
@@ -131,6 +182,25 @@
       </div>
     </div>
   </div>
+
+  {#if relatedGames.length > 0}
+    <div class="mt-12">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2">
+        <span class="text-2xl">RG</span> Related Games
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        {#each relatedGames as rg}
+          <a
+            href={rg.href}
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-teal-400 dark:hover:border-teal-600 hover:shadow-sm transition-all"
+          >
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-slate-100 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">{rg.icon}</span>
+            {rg.name}
+          </a>
+        {/each}
+      </div>
+    </div>
+  {/if}
 
   <div class="mt-12 text-center p-6 bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/10 dark:to-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
     <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">

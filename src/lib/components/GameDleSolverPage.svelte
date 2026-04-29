@@ -46,6 +46,7 @@
         const pageTitle = $derived(seoContent.title);
         const pageDescription = $derived(seoContent.description);
         const pageKeywords = $derived(config.keywords.join(', '));
+        const solverOgImage = $derived(`https://wordsolverx.com/og/${config.key}-solver.svg`);
 
         const faqSchema = $derived(generateFAQSchema(seoContent.faqs));
         const breadcrumbSchema = $derived(
@@ -489,14 +490,14 @@
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:site_name" content="WordSolverX" />
-        <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+        <meta property="og:image" content={solverOgImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={`${config.name} Solver Tool`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
-        <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+        <meta name="twitter:image" content={solverOgImage} />
         {@html `<script type="application/ld+json">${JSON.stringify({
                 '@context': 'https://schema.org',
                 '@graph': [webPageSchema, webApplicationSchema, softwareSchema, breadcrumbSchema, faqSchema, howToSchema]

@@ -1,6 +1,23 @@
 import { PRERENDER_ENTRIES } from '$lib/route-registry';
 
 const workerApiUrl = 'https://api.wordsolverx.workers.dev/sitemap.xml';
+const BLOCKED_URL_PATTERNS = ['/create-custom-wordle', '/custom-wordle', '/admin', '/api/', '/private'];
+
+function escapeRegex(str: string): string {
+	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function filterSitemapUrls(xml: string): string {
+	let filtered = xml;
+	for (const pattern of BLOCKED_URL_PATTERNS) {
+		const regex = new RegExp(
+			`<url>\\s*<loc>[^<]*${escapeRegex(pattern)}[^<]*<\\/loc>[\\s\\S]*?<\\/url>`,
+			'g'
+		);
+		filtered = filtered.replace(regex, '');
+	}
+	return filtered;
+}
 
 function generateFallbackSitemap(): string {
 	const today = new Date().toISOString().split('T')[0];
@@ -38,8 +55,9 @@ export async function GET() {
 
 		const xml = await response.text();
 		const fixedXml = xml.replace(/wordsolver\.tech/g, 'wordsolverx.com');
-		if (fixedXml.includes('<urlset') || fixedXml.includes('<sitemapindex')) {
-			cachedSitemapXml = fixedXml;
+		const filteredXml = filterSitemapUrls(fixedXml);
+		if (filteredXml.includes('<urlset') || filteredXml.includes('<sitemapindex')) {
+			cachedSitemapXml = filteredXml;
 		}
 
 		return new Response(cachedSitemapXml, {

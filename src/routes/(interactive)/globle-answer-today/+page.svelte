@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import GlobleCluesSection from '$lib/components/GlobleCluesSection.svelte';
   import {
@@ -92,182 +93,74 @@
       </div>
     </GlobleCluesSection>
 
-    <!-- Comprehensive SEO Article -->
     <article class="mt-12 space-y-8">
-      <!-- What is Globle? -->
       <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          What Is Globle?
+          How to Read the Globle Clues
         </h2>
         <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Globle is a daily geography game that presents you with a blank 3D globe and challenges you to identify a mystery country. There are no letter clues, no word lists, no spelling requirements — just a spinning globe and a text input where you type country names. Each guess lights up a country on the globe with a color that indicates how close you are. The game launched in early 2022 and has maintained a steady player base of geography enthusiasts and casual puzzle solvers alike.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          The game uses Haversine distance — the shortest distance between two points on a sphere — to calculate proximity. When you guess a country, Globle measures the distance between the center of your guessed country and the center of the mystery country. The color scale runs from deep red (within ~500 km) through orange, yellow, and beige to pale white (on the opposite side of the world). This color system is intuitive in a way that pure numbers aren't — you can see at a glance whether you're "hot" or "cold."
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Globle teaches geography through repetition. You might start the game barely able to point to Mongolia on a map, but after a few weeks of daily play, you'll have an intuitive sense of where hundreds of countries are located. The game covers all 195 UN-recognized sovereign states, so you'll encounter countries you've never heard of. Players regularly report learning the locations of countries like Burundi, Timor-Leste, and Suriname — places they might never have thought about otherwise.
+          Today's Globle country is revealed above. Here's how to read the color clues and zero in on the answer faster when you play on your own.
         </p>
         <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          The game was created by an independent developer and runs entirely in the browser. There's no app to download, no account to create, and no paywall. The daily puzzle resets at midnight based on the server's timezone, and each day's mystery country is randomly selected from the full list of world countries.
+          Each guess lights up on the globe with a color that shows how close you are. Deep red means you're right next door — under 500 km away. Orange means a few thousand kilometers. Yellow means same continent or nearby. White means you're on the wrong side of the world. The shade shifts gradually as you get closer, so two oranges aren't always equal — the darker one is the better guess.
         </p>
       </section>
 
-      <!-- How Globle Works -->
       <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          How Globle Works: Rules, Hints, and the Daily Cycle
+          Three Quick Tips
         </h2>
         <div class="space-y-6 text-base sm:text-lg text-slate-600 dark:text-slate-400">
-          <p class="leading-relaxed">
-            Globle's rules are minimal, which is part of its appeal:
-          </p>
           <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Step 1: Make your first guess</h3>
-            <p class="leading-relaxed">
-              Type any country name into the search box. Globle accepts common names, formal names, and most alternate names (e.g., both "United States" and "USA" work, both "Burma" and "Myanmar" work). Many experienced players start with a large country in a central location — the United States, Russia, Brazil, or China — because these give you useful distance information no matter where the actual answer is.
-            </p>
-          </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Step 2: Read the color-coded distance</h3>
-            <p class="leading-relaxed">
-              After each guess, the country lights up on the globe. Deep red means very close (typically under 500 km). Orange means you're within a few thousand kilometers. Yellow means moderate distance. Pale beige or white means you're far away — potentially on the wrong continent entirely. The color scale is continuous, so slight shade differences between guesses can tell you if you're moving in the right direction.
-            </p>
-          </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Step 3: Triangulate the region</h3>
-            <p class="leading-relaxed">
-              Use 2-3 strategic guesses to narrow down the continent and region. If a guess in Western Europe lights up orange but a guess in East Asia lights up white, the answer is almost certainly in Europe or nearby. Once you know the general area, start guessing countries within that region. Each subsequent guess refines your search.
-            </p>
-          </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Step 4: Identify the country</h3>
-            <p class="leading-relaxed">
-              Once you've isolated the region, systematically guess countries within it. If you're getting red results in West Africa, start with Nigeria, Ghana, Ivory Coast, Senegal — the better-known countries first, then the smaller ones. When you guess correctly, the game confirms it and shows your guess count. There's no guess limit, so you can take as many attempts as you need.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Today's Globle Answer -->
-      <section class="bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800/40 rounded-xl p-6 sm:p-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Today's Globle Answer: How to Find It
-        </h2>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Today's Globle answer is displayed above in the clues section. Use the "Reveal Answer" button to see the country name, flag, coordinates, continent, and subregion. The answer card also shows the country's two-letter code and the number of letters in its name — all useful hints if you want to guess before revealing.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          We fetch the daily answer from our internal database, which is synchronized with Globle's official puzzle schedule. The data includes the country's geographic coordinates, continent, subregion, and ISO country code. If you want to try the puzzle yourself before seeing the answer, use the clue cards above — they give you hints like the continent, name length, first letter, and subregion without revealing the specific country.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          For past Globle answers, our archive page covers every daily puzzle. You can browse by date and see the country, flag, and coordinates for each day. The archive is useful for studying patterns — for example, which continents appear most frequently as answers (Africa and Asia tend to appear more often than North America or Oceania, simply because they have more countries).
-        </p>
-      </section>
-
-      <!-- Past Globle Answers -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Past Globle Answers
-        </h2>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Globle picks from all 195 UN-recognized countries. Africa (54) and Asia (49) show up more often just because they have more countries. Small nations like San Marino, Liechtenstein, and Singapore are the real curveballs — they're nearly invisible on a globe. If you're getting "warm" in a region but can't nail it, try the tiny ones first.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          The <a href="/globle-archive" class="font-semibold text-teal-600 underline underline-offset-2 hover:text-teal-500">Globle archive</a> has every past answer with coordinates and continent data.
-        </p>
-      </section>
-
-      <!-- Tips for Globle -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Globle Strategy: Tips from Experienced Players
-        </h2>
-        <div class="grid md:grid-cols-2 gap-6 text-base sm:text-lg text-slate-600 dark:text-slate-400">
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
             <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Start with spread-out guesses</h3>
             <p class="leading-relaxed">
-              Your first 2-3 guesses should cover different continents. Guess one country in Africa, one in Europe, and one in Asia. This immediately tells you which hemisphere and which continent the answer is on. From there, you can focus your remaining guesses on that region.
+              Your first 2-3 guesses should hit different continents. Try Brazil, Turkey, and India — that covers South America, Europe, and Asia. The color feedback immediately narrows the entire globe to one region.
             </p>
           </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
+          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
             <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Learn your small countries</h3>
             <p class="leading-relaxed">
-              The smallest countries by area — Vatican City, Monaco, Nauru, Tuvalu, San Marino — appear as mystery answers regularly. These are the hardest to find because they're nearly invisible on a globe. Spend time memorizing where they are and you'll save yourself dozens of wasted guesses over time.
+              Vatican City, Monaco, Nauru, San Marino — these tiny nations show up as answers and they're nearly invisible on the globe. Memorizing where the smallest countries sit saves you from burning five guesses on the wrong neighborhood.
             </p>
           </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
+          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
             <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Use borders as clues</h3>
             <p class="leading-relaxed">
-              If you guess a country and it lights up deep red, the mystery country borders it or is very nearby. Think about which countries border your red guess and try those next. For example, if Brazil is red, try Uruguay, Paraguay, Bolivia, Colombia, Venezuela, Guyana, Suriname, or French Guiana.
-            </p>
-          </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Watch color shade changes</h3>
-            <p class="leading-relaxed">
-              Don't just look at the color category — pay attention to the exact shade. If one guess is dark orange and another is light orange, the dark orange guess is closer. These subtle differences help you triangulate more precisely than the broad color categories alone.
-            </p>
-          </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Know your island nations</h3>
-            <p class="leading-relaxed">
-              Island countries are particularly tricky because there's nothing nearby to triangulate against. Learn the major island groups: the Caribbean, Pacific Islands, Southeast Asian archipelagos, and the Mediterranean islands. When the game gives you a red result near an ocean, think islands.
-            </p>
-          </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Don't guess the same country twice</h3>
-            <p class="leading-relaxed">
-              Globle won't accept duplicate guesses for the same puzzle. Plan your guesses strategically — each one should give you new information. If you've already tested a country in a region, move to the next one rather than re-guessing the same spot.
+              When a guess lights up deep red, the answer is right next to it. Think about which countries share a border and try those. If Poland goes red, guess Czechia, Germany, Ukraine, Belarus, Lithuania, Slovakia, or Russia next.
             </p>
           </div>
         </div>
       </section>
 
-
-      <!-- FAQ -->
       <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Globle FAQ: Questions Geography Fans Ask
+          Globle FAQ
         </h2>
         <div class="space-y-6 text-base text-slate-600 dark:text-slate-400">
           <div>
             <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">Does Globle use all countries?</h3>
             <p class="leading-relaxed">
-              Yes. Globle draws from all 195 UN-recognized sovereign states. This includes microstates like Monaco and Vatican City, large nations like Russia and Canada, and every country in between. Dependent territories and territories with disputed status (like Taiwan or Kosovo) may or may not appear depending on how Globle classifies them.
+              Yes — all 195 UN-recognized sovereign states, including tiny ones like Monaco and Vatican City. Africa and Asia show up most often because they simply have more countries.
             </p>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">How does Globle calculate distance?</h3>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">How does the distance color work?</h3>
             <p class="leading-relaxed">
-              Globle uses the Haversine formula to calculate the great-circle distance between the geographic centers of two countries. The distance is measured in kilometers, then mapped to a color scale. This means the distance is "as the crow flies" — it doesn't account for political borders, bodies of water, or travel routes.
+              Closer = warmer colors. Deep red means neighboring, orange means a few thousand km, yellow means moderate, and white means far away. The shade is continuous — darker orange beats lighter orange.
             </p>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">Can I play Globle on my phone?</h3>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">What are the hardest countries to guess?</h3>
             <p class="leading-relaxed">
-              Yes. Globle works in any mobile browser and is fully responsive. The 3D globe renders well on both iOS and Android devices. There is no official Globle app — the game runs entirely on the web. Bookmark the Globle website for easy daily access.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">What time does Globle reset?</h3>
-            <p class="leading-relaxed">
-              Globle resets at midnight based on its server's timezone. The exact local time depends on where you are. Check the date displayed on the game to confirm which day's puzzle you're currently solving. Our answer page synchronizes with Globle's server schedule.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">Why does the same country keep appearing?</h3>
-            <p class="leading-relaxed">
-              It doesn't — or at least, it shouldn't. Globle's daily country selection is random from the full pool. If you feel like you're seeing the same continent repeatedly, that's because some continents have more countries (Africa: 54, Asia: 49) and thus statistically appear more often. The specific countries should not repeat within any reasonable timeframe.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">What are the hardest Globle countries?</h3>
-            <p class="leading-relaxed">
-              The hardest countries are the smallest ones: Vatican City, Monaco, Nauru, Tuvalu, San Marino, Liechtenstein, Marshall Islands, and Saint Kitts and Nevis. These are so small on the globe that even neighboring countries light up as only moderately warm. Players who can identify these countries quickly are in the top tier of Globle solvers.
+              The smallest ones: Vatican City, Monaco, Nauru, Tuvalu, San Marino, Liechtenstein, and Marshall Islands. They're so small on the globe that even neighbors only glow moderately warm. Players who can identify these quickly are in the top tier.
             </p>
           </div>
         </div>
       </section>
+
+      <p class="text-center text-sm text-slate-500">
+        Browse every past answer in the <a href="/globle-archive" class="font-semibold text-teal-600 underline underline-offset-2 hover:text-teal-500">Globle archive</a>.
+      </p>
     </article>
 
     <div class="mt-12">
@@ -276,6 +169,8 @@
         image={PRESTON_HAYES_AUTHOR_IMAGE}
         description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
       />
+
+      <InternalLinkSection currentGame="Globle" />
     </div>
   </div>
 </div>

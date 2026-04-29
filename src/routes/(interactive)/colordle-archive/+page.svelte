@@ -161,7 +161,7 @@
         Each Colordle puzzle presents players with a target color and challenges them to guess its name through a series of clues. The game provides feedback on each guess, indicating how close the guessed color is to the target in terms of hue, saturation, and brightness. Players typically have a limited number of guesses to identify the correct color name from the game's curated answer list.
       </p>
       <p>
-        The answer list in Colordle consists of named colors with corresponding hex codes. Each daily puzzle selects one color from this pool, and the archive records both the name and the hex code for every past solution. The deterministic nature of the puzzle system means that each date maps to exactly one answer, making the archive a reliable and complete reference that players can trust.
+        The answer list in Colordle consists of named colors with corresponding hex codes. Each daily puzzle selects one color from this pool, and the archive records both the name and the hex code for every past solution. Because each date always has the same answer means that each date maps to exactly one answer, making the archive a reliable and complete reference that players can trust.
       </p>
       <p>
         Colordle draws from standardized color naming conventions, including CSS named colors, X11 color names, and extended color vocabularies used in design tools. Some answers correspond to well-known colors that most people would recognize immediately, while others test deeper knowledge of niche color terminology. The archive shows the full range of this spectrum, from the obvious to the obscure.

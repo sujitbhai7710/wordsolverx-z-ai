@@ -172,264 +172,65 @@
         <div class="flex-1 h-px bg-slate-200"></div>
       </div>
 
-      <!-- Article Content -->
       <article class="space-y-6">
 
-        <!-- About Today's Puzzle -->
         <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
-          <div class="flex items-start gap-3 mb-4">
-            <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-teal-50">
-              <svg class="h-4 w-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">About Today&apos;s Canuckle Puzzle</h2>
-          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-4">Quick Tips for Canuckle</h2>
           <div class="space-y-4 text-slate-600 leading-relaxed">
             <p>
-              We verify the Canuckle puzzle every day and keep this page updated with the correct puzzle number, answer, fact, and archive links. For today, that is puzzle <strong class="text-slate-800">#{data.todayPuzzle.index}</strong> on <strong class="text-slate-800">{formattedDate}</strong>. The answer and Canadian fact are displayed in the card above, so you can confirm your guess and read the fact right away.
+              Canuckle is Wordle with a Canadian twist — every answer has a connection to Canada. The answer card above shows today's word, puzzle number, and a Canadian fact. It resets at midnight Eastern Time.
             </p>
-            <p>
-              Canuckle resets at midnight Eastern Time every day, which is the same schedule as Wordle for most North American players. If you are visiting from Europe or Asia, the new puzzle may not have released yet in your timezone. The puzzle number increments sequentially from the game&apos;s original launch date, so you can use the number to cross-reference with the archive and check historical answers.
-            </p>
-          </div>
-        </section>
-
-        <!-- What is Canuckle? -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
-          <div class="flex items-start gap-3 mb-4">
-            <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-amber-50">
-              <svg class="h-4 w-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">What is Canuckle?</h2>
-          </div>
-          <div class="space-y-4 text-slate-600 leading-relaxed">
-            <p>
-              Canuckle is a daily word-guessing game made by Canadian developers, hosted at canucklegame.github.io. It follows the same basic format as Wordle: you get six attempts to guess a hidden 5-letter word, and each guess reveals which letters are in the right spot, which are in the word but misplaced, and which are not in the word at all. The twist is that every answer has a Canadian connection. Some are obviously Canadian like TOQUE, MAPLE, and LOONIE, while others are more subtle words that happen to appear in the Canadian answer pool.
-            </p>
-            <p>
-              Another difference you will notice immediately is the feedback colors. Instead of the gray, yellow, and green scheme Wordle uses, Canuckle goes with red, yellow, and green. Red means the letter is not in the word (same as Wordle&apos;s gray), yellow means the letter is there but in a different position, and green means the correct letter in the correct spot. It takes a game or two to adjust if you are used to Wordle&apos;s colors, but after that it feels natural. The game also includes a short Canadian fact after each puzzle, which is a nice touch that sets it apart from the dozens of other Wordle clones.
-            </p>
-            <p>
-              If you grew up in Canada or have spent any time there, you will have a real edge because you can guess words that a purely American or British player might never think of. The Canadian answer pool is smaller than Wordle&apos;s, which actually makes it easier to narrow things down once you get a few letters confirmed. Over 1,500 puzzles have been published since the game launched, and the WordSolverX archive tracks every single one.
-            </p>
-          </div>
-        </section>
-
-        <!-- How to Play Canuckle -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
-          <div class="flex items-start gap-3 mb-5">
-            <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50">
-              <svg class="h-4 w-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">How to Play Canuckle</h2>
-              <p class="mt-1 text-sm text-slate-500">The gameplay is straightforward if you have played any Wordle variant before, but there are a few Canuckle-specific things worth knowing.</p>
-            </div>
-          </div>
-          <div class="space-y-4">
-            <div class="rounded-lg bg-slate-50/80 p-5 border border-slate-100">
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">1</span>
-                <h3 class="font-semibold text-slate-900">Open the game and look at the empty grid</h3>
+            <div class="grid gap-4 sm:grid-cols-3">
+              <div class="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
+                <h3 class="font-semibold text-slate-900 mb-2">Think Canadian first</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Words like TOQUE, POUTINE, MAPLE, LOONIE, MOOSE, and SYRUP are all fair game. Once you have a few letters locked in, reach for Canadian vocabulary before generic English words.
+                </p>
               </div>
-              <p class="text-sm text-slate-600 leading-relaxed ml-8.5">
-                You will see six rows of five empty tiles, just like Wordle. The goal is to fill in the correct 5-letter word before you run out of rows. There is no timer and no competitive leaderboard: your streak and stats are tracked locally in your browser.
-              </p>
-            </div>
-            <div class="rounded-lg bg-slate-50/80 p-5 border border-slate-100">
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">2</span>
-                <h3 class="font-semibold text-slate-900">Type your first guess</h3>
+              <div class="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
+                <h3 class="font-semibold text-slate-900 mb-2">Open with ABOUT</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  ABOUT tests four vowels plus B and T — letters that show up constantly in Canadian answers. It's the best single opener for this game specifically.
+                </p>
               </div>
-              <p class="text-sm text-slate-600 leading-relaxed ml-8.5">
-                Use a strong starter word with common vowels and consonants. CRANE, SLATE, and TRACE are popular choices. Do not forget that the answer might be a Canadian-specific word, so if you have a hunch about something like IGLOO or LOONIE, that is worth considering early on. ABOUT is a particularly strong opener because it tests four vowels plus B and T, which appear frequently in Canadian answers.
-              </p>
-            </div>
-            <div class="rounded-lg bg-slate-50/80 p-5 border border-slate-100">
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">3</span>
-                <h3 class="font-semibold text-slate-900">Read the color feedback</h3>
+              <div class="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
+                <h3 class="font-semibold text-slate-900 mb-2">Check recent answers</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Canuckle rarely repeats within a month. Scan the recent answers grid below before guessing to avoid wasting a try on a word that already came up.
+                </p>
               </div>
-              <p class="text-sm text-slate-600 leading-relaxed ml-8.5">
-                Green means the letter is in the right spot: lock it in. Yellow means the letter is in the word but somewhere else. Red means the letter is not in the word at all, so cross it off your mental list. The red-yellow-green scheme works exactly like Wordle&apos;s gray-yellow-green, just with different colors.
-              </p>
-            </div>
-            <div class="rounded-lg bg-slate-50/80 p-5 border border-slate-100">
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">4</span>
-                <h3 class="font-semibold text-slate-900">Narrow it down with each guess</h3>
-              </div>
-              <p class="text-sm text-slate-600 leading-relaxed ml-8.5">
-                Use the letters you have confirmed (green and yellow) to construct your next guess. Try to avoid letters that came back red. If you have a yellow letter, shuffle it into a different position. The smaller Canadian answer pool means you can eliminate unlikely candidates faster than in regular Wordle.
-              </p>
-            </div>
-            <div class="rounded-lg bg-slate-50/80 p-5 border border-slate-100">
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">5</span>
-                <h3 class="font-semibold text-slate-900">Think Canadian</h3>
-              </div>
-              <p class="text-sm text-slate-600 leading-relaxed ml-8.5">
-                Once you have a few letters confirmed, start thinking about Canadian words that fit. If you have _O_IE, think MOOSE (no, too many letters), LOONIE, or TOQUE. The Canadian answer pool includes place names, cultural references, slang, and everyday Canadian English words that you will not find in the standard Wordle list.
-              </p>
-            </div>
-            <div class="rounded-lg bg-slate-50/80 p-5 border border-slate-100">
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">6</span>
-                <h3 class="font-semibold text-slate-900">Read the fact after you finish</h3>
-              </div>
-              <p class="text-sm text-slate-600 leading-relaxed ml-8.5">
-                Every Canuckle answer comes with a Canadian fact. It is a small reward for solving the puzzle and a fun way to learn something new about Canada each day. The facts cover geography, history, culture, wildlife, and notable Canadians.
-              </p>
             </div>
           </div>
         </section>
 
-        <!-- Canuckle Tips and Strategy -->
         <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
-          <div class="flex items-start gap-3 mb-4">
-            <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-violet-50">
-              <svg class="h-4 w-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-            </div>
-            <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Canuckle Tips and Strategy</h2>
-              <p class="mt-1 text-sm text-slate-500">Beyond the basics, a few Canuckle-specific strategies can shave a guess or two off your daily average.</p>
-            </div>
-          </div>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div class="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Use a vowel-heavy opener</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Words like ADIEU, AUDIO, or ABOUT are strong openers because they test four of the five vowels in one guess. In Canuckle specifically, ABOUT is a great choice because it also tests B and T, which show up in many Canadian answers like TOQUE, BACON, OTTER, and CABIN.
-              </p>
-            </div>
-            <div class="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Keep a mental list of Canadian words</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                After playing for a few weeks, you will start noticing that Canuckle draws from a relatively small, distinctive pool. Words like POUTINE, SYRUP, RCMP, BLIZZ, and FJORD are all fair game. Building a mental library of Canadian 5-letter words gives you a significant advantage.
-              </p>
-            </div>
-            <div class="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Exploit the smaller answer pool</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Canuckle has roughly 2,300 possible answers compared to Wordle&apos;s 2,309, but many of those are Canadian-specific. Once you have two or three letters confirmed, the number of valid Canadian words that fit is often much smaller than you would expect.
-              </p>
-            </div>
-            <div class="rounded-lg border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Check the archive for recently used answers</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Canuckle rarely repeats answers within a short window. If you scan the WordSolverX Canuckle archive for the past month, you can safely eliminate recent answers from your candidate list. This is especially useful in the later guesses.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Canuckle vs Wordle -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
-          <div class="flex items-start gap-3 mb-5">
-            <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-blue-50">
-              <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-            </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Canuckle vs Wordle</h2>
-          </div>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div class="rounded-lg border border-slate-100 bg-slate-50/50 p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Answer pool</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Wordle draws from a curated list of common English words. Canuckle uses a Canadian-focused list, so words like TOQUE, POUTINE, and MOOSE are valid answers that would never appear in Wordle. If you know Canadian English well, you have a built-in advantage.
-              </p>
-            </div>
-            <div class="rounded-lg border border-slate-100 bg-slate-50/50 p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Color scheme</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Wordle uses gray for absent letters, yellow for misplaced, and green for correct. Canuckle uses red instead of gray. The meaning is identical: red in Canuckle equals gray in Wordle. It takes one or two games to stop reflexively treating red as a warning color.
-              </p>
-            </div>
-            <div class="rounded-lg border border-slate-100 bg-slate-50/50 p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Canadian facts</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Every Canuckle puzzle includes a Canadian fact about the answer word. Wordle has no equivalent feature. These facts cover everything from geography and wildlife to history and pop culture, making each puzzle a mini learning opportunity.
-              </p>
-            </div>
-            <div class="rounded-lg border border-slate-100 bg-slate-50/50 p-5">
-              <h3 class="font-semibold text-slate-900 mb-2">Difficulty</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Canuckle is generally considered slightly easier than Wordle because the Canadian answer pool is smaller and more predictable. Experienced players can often solve Canuckle in three or four guesses once they learn the common answer patterns.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section class="rounded-xl bg-white border border-slate-200 p-6 sm:p-5 sm:p-8 shadow-sm">
-          <div class="flex items-start gap-3 mb-5">
-            <div class="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-orange-50">
-              <svg class="h-4 w-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Canuckle Answer FAQs</h2>
-          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-5">Canuckle FAQ</h2>
           <div class="space-y-3">
             <details class="group rounded-lg border border-slate-200 bg-white transition-all hover:border-slate-300">
               <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-semibold text-slate-900 select-none">
-                What is the Canuckle answer for today, {formattedDate}?
+                What time does Canuckle reset?
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                For {formattedDate}, the Canuckle answer is <strong class="text-slate-800">{data.todayPuzzle.answer.toUpperCase()}</strong> (puzzle #{data.todayPuzzle.index}). The answer card and Canadian fact are shown at the top of this page.
-              </div>
-            </details>
-            {#if data.yesterdayData}
-              <details class="group rounded-lg border border-slate-200 bg-white transition-all hover:border-slate-300">
-                <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-semibold text-slate-900 select-none">
-                  What was yesterday&apos;s Canuckle answer?
-                  <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </summary>
-                <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                  The previous Canuckle answer was <strong class="text-slate-800">{data.yesterdayData.answer.toUpperCase()}</strong> (puzzle #{data.yesterdayData.index}). You can also check the amber callout box above for yesterday&apos;s answer at a glance.
-                </div>
-              </details>
-            {/if}
-            <details class="group rounded-lg border border-slate-200 bg-white transition-all hover:border-slate-300">
-              <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-semibold text-slate-900 select-none">
-                How do you play Canuckle?
-                <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-              </summary>
-              <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                Canuckle is a Wordle-style game with a Canadian twist. You guess 5-letter words and get color feedback: green for correct position, yellow for wrong position, red for not in the word. The answer pool uses Canadian-themed words, and each puzzle comes with a Canadian fact.
+                Midnight Eastern Time, same as Wordle for North American players. If you're in Europe or Asia, the new puzzle appears in your early morning hours.
               </div>
             </details>
             <details class="group rounded-lg border border-slate-200 bg-white transition-all hover:border-slate-300">
               <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-semibold text-slate-900 select-none">
-                How is Canuckle different from Wordle?
+                What does the red feedback mean?
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                Canuckle uses a Canadian-focused answer list, so words like MAPLE, TOQUE, and MOOSE are fair game. It also includes a Canadian fact with each daily answer, and the feedback colors are red instead of gray for absent letters. The answer pool is smaller, which generally makes it slightly easier.
+                Red is Canuckle's version of Wordle's gray — the letter isn't in the answer. Yellow means it's in the word but in a different spot. Green means correct spot.
               </div>
             </details>
             <details class="group rounded-lg border border-slate-200 bg-white transition-all hover:border-slate-300">
               <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-semibold text-slate-900 select-none">
-                When does the new Canuckle puzzle release?
+                How do I browse earlier answers?
                 <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </summary>
               <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                A new Canuckle puzzle goes live every day at midnight Eastern Time (ET). That is the same schedule as Wordle for most North American players. European players will see the new puzzle in the early morning hours.
-              </div>
-            </details>
-            <details class="group rounded-lg border border-slate-200 bg-white transition-all hover:border-slate-300">
-              <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-semibold text-slate-900 select-none">
-                What does the red feedback mean in Canuckle?
-                <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-              </summary>
-              <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                Red tiles in Canuckle work the same way as gray tiles in Wordle: the letter is not in the answer at all. Yellow means the letter is in the word but in a different position, and green means the correct letter in the correct position.
-              </div>
-            </details>
-            <details class="group rounded-lg border border-slate-200 bg-white transition-all hover:border-slate-300">
-              <summary class="flex cursor-pointer items-center justify-between p-4 text-sm font-semibold text-slate-900 select-none">
-                How can I browse earlier Canuckle answers?
-                <svg class="h-4 w-4 flex-shrink-0 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-              </summary>
-              <div class="px-4 pb-4 text-sm text-slate-600 leading-relaxed">
-                Use the recent answers table below to scan the last 30 days, or visit the full Canuckle archive for a searchable history of all past puzzles. The archive tracks every puzzle from the game&apos;s launch.
+                The recent answers grid below covers the last 30 days. For the full history, visit the <a href="/canuckle-archive" class="font-semibold text-teal-600 underline underline-offset-2 hover:text-teal-500">Canuckle archive</a>.
               </div>
             </details>
           </div>

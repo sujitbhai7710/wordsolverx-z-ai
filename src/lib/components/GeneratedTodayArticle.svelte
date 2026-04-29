@@ -21,6 +21,10 @@
 {#if article?.articleHtml}
   <section class="mt-12 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
     <p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600">{eyebrow}</p>
+    <p class="text-xs text-slate-400 mt-1">
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse mr-1.5 align-middle"></span>
+      Updated {articleDate}
+    </p>
     <h2 class="mt-2 text-3xl font-bold text-slate-900">
       {article.title || fallbackTitle}
     </h2>

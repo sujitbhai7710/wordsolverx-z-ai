@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
   import {
@@ -170,6 +171,8 @@
         image={PRESTON_HAYES_AUTHOR_IMAGE}
         description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
       />
+
+      <InternalLinkSection currentGame="Phrazle" />
     </div>
 
     <article class="mx-auto max-w-5xl px-4 pb-12 space-y-8">
@@ -219,7 +222,7 @@
           This page displays both today&apos;s phrases directly — the morning answer is shown in the amber card and the afternoon answer in the indigo card above. Each phrase is shown with a reveal/hide toggle and a copy button for sharing.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          If you want to browse older phrases, the Phrazle archive page has the complete historical dataset searchable by date and phrase number.
+          If you want to browse older phrases, the Phrazle archive page has the complete phrase history searchable by date and phrase number.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           The phrase library of {data.totalPhrases.toLocaleString('en-US')} entries is the backbone of Phrazle. It includes a wide range of phrase types: common idioms (BREAK A LEG, PIECE OF CAKE), famous quotes (TO BE OR NOT), song lyrics (YESTERDAY ONCE MORE), movie titles, TV catchphrases, and everyday expressions (GOOD MORNING, NICE TO MEET).

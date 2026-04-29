@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
@@ -318,6 +319,8 @@
         image={PRESTON_HAYES_AUTHOR_IMAGE}
         description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
       />
+
+      <InternalLinkSection currentGame="Betweenle" />
     </div>
 </main>
 

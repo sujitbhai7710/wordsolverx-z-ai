@@ -28,7 +28,7 @@
       { '@type': 'Question', name: 'Does LoLdle have different answers for different regions?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, LoLdle has separate daily answers for the America and Europe regions.' } },
       { '@type': 'Question', name: 'Is LoLdle free to play?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, LoLdle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'LoLdle Answer Today', description: 'Get the confirmed LoLdle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/loldle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/loldle-answer-today.webp' } } },
+    { '@type': 'Article', headline: 'LoLdle Answer Today', description: "Today's LoLdle champion revealed — Classic, Ability, Splash, Quote, and Emoji mode answers all in one place. Updated daily.", mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/loldle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/loldle-answer-today.webp' } } },
   ]};
 </script>
 

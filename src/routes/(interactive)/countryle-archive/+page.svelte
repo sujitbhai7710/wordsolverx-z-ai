@@ -13,7 +13,7 @@
 
 <svelte:head>
   <title>Countryle Archive - Daily Country Answers History | WordSolverX</title>
-  <meta name="description" content="Browse the Countryle archive by date and review past countries, continents, populations, coordinates, and map links from the saved static dataset." />
+  <meta name="description" content="Browse the Countryle archive by date and review past countries, continents, populations, coordinates, and map links from our verified answer records." />
   <link rel="canonical" href="https://wordsolverx.com/countryle-archive" />
   <meta property="og:title" content="Countryle Archive - Daily Country Answers History" />
   <meta property="og:description" content="Look up previous Countryle answers with a static archive of countries and date-based puzzle entries." />
@@ -34,7 +34,7 @@
       <p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600 dark:text-teal-400">Countryle Archive</p>
       <h1 class="mt-3 text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-50">Past Countryle Answers</h1>
       <p class="mt-4 max-w-3xl text-lg text-slate-600 dark:text-slate-300">
-        Search the archived Countryle dataset by date and review the saved country details for each puzzle.
+        Search the Countryle answer archive by date and review the saved country details for each puzzle.
       </p>
     </section>
 

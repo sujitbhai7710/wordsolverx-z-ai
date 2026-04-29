@@ -178,7 +178,7 @@
             <div class="mt-8 rounded-3xl border border-slate-100 bg-slate-50 p-6">
               <p class="text-sm uppercase tracking-[0.24em] text-slate-500">Guess trail</p>
               <p class="mt-2 text-base leading-7 text-slate-600">
-                Today&apos;s puzzle was <strong class="text-slate-900">{data.gameNarrative.difficultyLabel}</strong>. The path below is generated from the page&apos;s own deterministic color logic, based on contrast, hue family, and the same scoring the page already uses.
+                Today&apos;s puzzle was <strong class="text-slate-900">{data.gameNarrative.difficultyLabel}</strong>. The path below is generated from the page&apos;s own the game's color-matching rules, based on contrast, hue family, and the same scoring the page already uses.
               </p>
               <div class="mt-6 space-y-4">
                 {#each data.gameNarrative.guesses as guess, i}

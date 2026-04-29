@@ -127,7 +127,7 @@
                                 <div class="rounded-xl bg-gradient-to-br from-teal-600 to-teal-700 p-6 text-white">
                                         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-teal-100">Archive note</p>
                                         <p class="mt-4 text-sm leading-7 text-teal-100">
-                                                Worgle is deterministic, so the archive doubles as a date-by-date lookup table and a puzzle-number history.
+                                                Worgle uses a fixed daily answer, so the archive doubles as a date-by-date lookup table and a puzzle-number history.
                                         </p>
                                 </div>
                         </div>

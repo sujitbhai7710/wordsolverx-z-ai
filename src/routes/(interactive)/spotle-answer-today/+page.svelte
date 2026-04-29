@@ -1,5 +1,6 @@
 <script lang="ts">
-	import AuthorCard from '$lib/components/AuthorCard.svelte';
+	import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import FAQSection from '$lib/components/FAQSection.svelte';
 	import {
@@ -171,14 +172,14 @@
 					</div>
 				{:else}
 					<p class="mt-4 text-base leading-7 text-slate-600">
-						Today's Spotle artist isn't available in the stored dataset yet. The archive page will still help you browse older dates while the next refresh lands.
+						Today's Spotle artist hasn't been posted yet. The archive page will still help you browse older dates while the next refresh lands.
 					</p>
 				{/if}
 			</div>
 
 			<div class="space-y-6">
 				<div class="rounded-[2rem] bg-gradient-to-br from-teal-600 to-teal-700 p-6 text-white shadow-lg shadow-teal-500/25">
-					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-teal-100">Dataset status</p>
+					<p class="text-xs font-semibold uppercase tracking-[0.2em] text-teal-100">Data status</p>
 					<div class="mt-5 space-y-3 text-sm">
 						<div class="flex items-center justify-between gap-4">
 							<span>Total Artists</span>
@@ -310,6 +311,8 @@
 				image={PRESTON_HAYES_AUTHOR_IMAGE}
 				description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
 			/>
+
+      <InternalLinkSection currentGame="Spotle" />
 		</div>
 	</div>
 </div>

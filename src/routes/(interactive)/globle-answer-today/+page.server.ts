@@ -16,7 +16,7 @@ export const load: PageServerLoad = async () => {
     const currentMonth = format(today, 'MMMM');
     const featuredImage = 'https://wordsolverx.com/images/globle-answer-today.webp';
     const pageTitle = `Globle Answer Today - ${currentMonth} - Updated`;
-    const pageDescription = `Get Globle hints and the confirmed Globle answer for ${formattedDate}. The country is ${country.name}, with continent, subregion, flag, and map clues plus the full Globle answer for ${formattedDate}.`;
+    const pageDescription = `Today's Globle country revealed — ${formattedDate}. Use the color feedback, continent, subregion, and flag hints to narrow it down, or check the answer directly.`;
     const pageKeywords = `globle answer today, globle answer, globle hint, globle hint today, globle answer for ${formattedDate}`;
     const faqItems = [
         { '@type': 'Question', name: `What is the Globle answer for ${formattedDate}?`, acceptedAnswer: { '@type': 'Answer', text: `The Globle answer for ${formattedDate} is ${country.name}.` } },

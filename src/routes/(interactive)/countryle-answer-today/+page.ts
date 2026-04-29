@@ -59,7 +59,7 @@ export const load = () => {
       },
       {
         question: 'Can I check older Countryle answers?',
-        answer: 'Yes. Use the Countryle archive page to look up previous dates and countries from the saved archive dataset.'
+        answer: 'Yes. Use the Countryle archive page to look up previous dates and countries from the complete answer archive.'
       }
     ])
   ]);

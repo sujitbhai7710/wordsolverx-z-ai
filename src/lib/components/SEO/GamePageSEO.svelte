@@ -13,7 +13,7 @@
   let canonical = $derived(`https://wordsolverx.com/${wordLength}-letter-wordle`);
   let ogTitle = $derived(`${wordLength} Letter Wordle - Free Daily Puzzle`);
   let ogDescription = $derived(`Play a free daily ${wordLength}-letter Wordle puzzle with instant clues, clean feedback, and unlimited replay on WordSolverX.`);
-  let ogImage = $derived('https://wordsolverx.com/wordsolverx.webp');
+  let ogImage = $derived(`https://wordsolverx.com/og/wordle-${wordLength}-solver.svg`);
 </script>
 
 <svelte:head>

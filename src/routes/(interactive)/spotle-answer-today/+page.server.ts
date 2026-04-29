@@ -72,7 +72,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 			question: `What is the Spotle answer for ${format(displayDateObject, 'MMMM d, yyyy')}?`,
 			answer: todayAnswer
 				? `The Spotle answer for ${format(displayDateObject, 'MMMM d, yyyy')} is ${todayAnswer.artist}. This is Day #${todayAnswer.dayNumber}.`
-				: `The Spotle answer for ${format(displayDateObject, 'MMMM d, yyyy')} has not been stored in the dataset yet.`
+			: `The Spotle answer for ${format(displayDateObject, 'MMMM d, yyyy')} has not been posted yet.`
 		},
 		{
 			question: 'Where can I check older Spotle answers?',

@@ -24,7 +24,7 @@
       { '@type': 'Question', name: 'Can I play Dotadle on mobile?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Dotadle is a browser-based game that works on mobile devices and desktop browsers.' } },
       { '@type': 'Question', name: 'Does Dotadle cost money?', acceptedAnswer: { '@type': 'Answer', text: 'No, Dotadle is completely free to play.' } },
     ]},
-    { '@type': 'Article', headline: 'Dotadle Answer Today', description: 'Get the confirmed Dotadle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/dotadle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/dotadle-answer-today.webp' } } },
+    { '@type': 'Article', headline: 'Dotadle Answer Today', description: "Today's Dotadle hero revealed — Classic, Ability, Item, and Quote mode answers. Check your guess or jump to the solver.", mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/dotadle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/dotadle-answer-today.webp' } } },
   ]};
 </script>
 

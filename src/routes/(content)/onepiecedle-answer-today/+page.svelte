@@ -29,7 +29,7 @@
       { '@type': 'Question', name: 'Does OnePiecedle cover the entire One Piece series?', acceptedAnswer: { '@type': 'Answer', text: 'OnePiecedle draws from characters across the entire One Piece manga and anime, from East Blue to the latest arcs.' } },
       { '@type': 'Question', name: 'Is OnePiecedle free to play?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, OnePiecedle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'OnePiecedle Answer Today', description: 'Get the confirmed OnePiecedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/onepiecedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/onepiecedle-answer-today.webp' } } },
+    { '@type': 'Article', headline: 'OnePiecedle Answer Today', description: "Today's Onepiecedle character revealed — Character, Devil Fruit, and Wanted Poster mode answers. Updated daily.", mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/onepiecedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/onepiecedle-answer-today.webp' } } },
   ]};
 </script>
 

@@ -32,7 +32,7 @@ export const load = () => {
     ? `Framed Answer Today (${formattedDate}) | Archive`
     : `Framed Answer Today - ${currentMonth} - Updated`;
   const pageDescription = hasExactEntries
-    ? `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from the saved dataset.`
+    ? `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from our verified answer records.`
     : `Check whether the Framed answers for ${formattedDate} are ready yet, then use the archive if you need older saved movie titles.`;
   const pageUrl = 'https://wordsolverx.com/framed-answer-today';
 
@@ -54,7 +54,7 @@ export const load = () => {
         question: `What are the Framed answers for ${formattedDate}?`,
         answer: hasExactEntries
           ? `The page lists today's saved Framed answers for ${entries.map((entry) => entry.game.label).join(', ')}.`
-          : 'Today\'s exact Framed answers are not stored in the dataset yet. Check back shortly or use the archive for older saved dates.'
+          : 'Today\'s exact Framed answers are not available yet. Check back shortly or use the archive for older saved dates.'
       },
       {
         question: 'Which Framed modes are included?',

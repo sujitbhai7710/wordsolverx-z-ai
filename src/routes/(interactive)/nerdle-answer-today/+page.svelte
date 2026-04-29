@@ -1,5 +1,6 @@
 <script lang="ts">
-        import AuthorCard from '$lib/components/AuthorCard.svelte';
+        import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
         import type { NerdleModeData } from '$lib/nerdle-answers';
         import {
                 PRESTON_HAYES_AUTHOR_DESCRIPTION,
@@ -181,6 +182,8 @@
                                 image={PRESTON_HAYES_AUTHOR_IMAGE}
                                 description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
                         />
+
+      <InternalLinkSection currentGame="Nerdle" />
 
                         <article class="space-y-8">
                                 <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">

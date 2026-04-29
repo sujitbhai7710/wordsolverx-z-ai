@@ -28,7 +28,7 @@
       { '@type': 'Question', name: 'When does Pokedle reset?', acceptedAnswer: { '@type': 'Answer', text: 'Pokedle resets daily at midnight UTC with new puzzles for all modes.' } },
       { '@type': 'Question', name: 'Is Pokedle free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, Pokedle is completely free to play in your browser.' } },
     ]},
-    { '@type': 'Article', headline: 'Pokedle Answer Today', description: 'Get the confirmed Pokedle answer for today.', mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/pokedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/pokedle-answer-today.webp' } } },
+    { '@type': 'Article', headline: 'Pokedle Answer Today', description: "Today's Pokedle Pokemon revealed — Classic, Type, and Generation mode answers. Check your guess or browse the archive.", mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/pokedle-answer-today' }, author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' }, publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/images/pokedle-answer-today.webp' } } },
   ]};
 </script>
 
