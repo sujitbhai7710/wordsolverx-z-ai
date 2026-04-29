@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { getPrestonHayesAuthorSchema } from '$lib/authors';
+
   let {
     name,
     description,
@@ -24,7 +26,7 @@
     "description": description,
     "url": url,
     "image": image,
-    "author": { "@type": "Organization", "name": authorName },
+    "author": getPrestonHayesAuthorSchema(),
     "datePublished": datePublished,
     "genre": genre,
     "applicationCategory": "Game",

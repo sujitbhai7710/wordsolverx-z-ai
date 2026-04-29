@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -150,78 +152,29 @@
 </section>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
   <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
-    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Wordle Answer Archive Matters</h2>
+    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Wordle Archive Matters</h2>
     <div class="prose prose-slate dark:prose-invert max-w-none">
-      <p>
-        The Wordle answer archive is one of the most valuable resources for dedicated daily puzzle solvers. Since The New York Times acquired Wordle in early 2022, millions of players around the world have made the five-letter guessing game a daily ritual. However, maintaining a perfect streak requires consistency, and sometimes life gets in the way. Whether you missed a day because of travel, a busy work schedule, or simply forgot to open the browser, the archive ensures you never lose track of what happened.
-      </p>
-      <p>
-        Beyond casual catch-up, the Wordle answer archive serves as a powerful analytical tool. Pattern recognition is a key skill in Wordle, and studying the complete history of past answers reveals fascinating trends. You can observe which letters appear most frequently as starting letters, which vowel patterns recur, and how the difficulty fluctuates over time. Some weeks cluster challenging words together, while others offer easier solutions. By reviewing the archive, players can develop more effective opening strategies and improve their average guess count.
-      </p>
-      <p>
-        The archive also helps players understand the curated answer list that The New York Times uses. Not every valid five-letter English word appears as a Wordle solution. The NYT editors maintain a carefully selected answer list of roughly 2,300 words, chosen to avoid obscure or offensive terms. Studying the archive gives you insight into the types of words that make the cut, including common nouns, simple adjectives, and everyday verbs that most English speakers would recognize immediately.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Wordle Answers Work</h3>
-      <p>
-        Every Wordle puzzle operates on a simple but elegant system. Each day at midnight in your local time zone, a new five-letter word is served to every player simultaneously. The answer is deterministic, meaning every player in the world sees the same word on the same day. This shared experience is what makes Wordle such a cultural phenomenon and drives the social sharing behavior that popularized the game.
-      </p>
-      <p>
-        The answer list is pre-determined and stored in the game's source code. When Josh Wardle originally created Wordle, he hand-picked the solutions from a list of common five-letter words. After the NYT takeover, the editorial team occasionally made small adjustments, removing words they deemed inappropriate or too obscure. The list cycles in a fixed order, so once you know the starting date, you can calculate any future or past answer by counting days. This predictability is exactly what makes the Wordle archive possible and reliable.
-      </p>
-      <p>
-        Wordle uses a clever feedback system with colored tiles. Green tiles indicate a correct letter in the correct position, yellow tiles show a correct letter in the wrong position, and gray tiles mean the letter is not in the word at all. This color-coded system gives players up to six attempts to narrow down the possibilities. The mathematical beauty of Wordle lies in its information theory foundation: each guess should ideally eliminate as many remaining words as possible, and optimal play can theoretically solve any puzzle in about 3.4 guesses on average.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Wordle Answers</h3>
-      <p>
-        Over the years, certain Wordle answers have sparked widespread discussion and frustration among players. Some of the most memorable include words with unusual letter patterns, repeated letters, or uncommon letter combinations that challenged even experienced solvers. Words ending in less common suffixes, those featuring tricky consonant clusters, and answers with double letters in unexpected positions have all caused difficulty spikes.
-      </p>
-      <p>
-        The archive reveals that certain letter frequencies in Wordle answers differ from general English language statistics. For example, the letter S appears less often at the end of Wordle answers than you might expect, because the NYT tends to avoid plural forms. Similarly, words ending in Y are quite common, and words starting with C, S, and B appear frequently. Understanding these patterns by studying the archive can give you a meaningful edge in your daily solves.
-      </p>
-      <p>
-        Streak data from the broader Wordle community shows that most players maintain streaks of 30 to 100 days, with elite players reaching into the hundreds. The archive is essential for streak verification, allowing you to confirm answers for any date you might have missed and retroactively fill in your score history.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Wordle Archive</h3>
-      <p>
-        Using the Wordle archive on WordSolverX is straightforward. Navigate to the calendar view above and click on any date from June 19, 2021 onwards. The selected answer will load directly on this page without redirecting you to a separate URL, keeping your browsing experience smooth and efficient. Each entry includes the solution word, the puzzle number, the formatted date, and occasionally additional context like content guides or social images.
-      </p>
-      <p>
-        To improve your Wordle skills using the archive, consider these strategies. First, review the answers from the past month and note any patterns in letter distribution. Second, pay attention to words that gave you trouble and analyze why they were difficult. Third, compare your own starting word against the optimal mathematical choices and see how your approach stacks up. Fourth, use the archive to study letter frequency data and refine your guess elimination strategy over time.
-      </p>
-      <p>
-        Teachers and educators can also use the Wordle archive as a classroom resource. The daily puzzle format encourages vocabulary development, strategic thinking, and healthy competition. By pulling past answers from the archive, teachers can create themed word lists, vocabulary quizzes, or classroom challenges that align with their curriculum goals.
-      </p>
+      <p>Every Wordle answer since the game started. Search by date or browse chronologically.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Wordle Works</h3>
+      <p>Six guesses to find a five-letter word. Green means right letter right spot, yellow means right letter wrong spot, gray means it's not in the word. One puzzle per day, same word for everyone. The answer list is finite — Wordle has about 2,300 possible answers in the original pool.</p>
 
       <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How far back does the Wordle archive go?</h4>
-      <p>
-        The Wordle archive on WordSolverX covers every answer from the very first puzzle on June 19, 2021 through the present day. Josh Wardle created the original game and released it to the public on that date, and the archive includes every single solution since then, including the pre-NYT era and all post-acquisition answers.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are the archive answers guaranteed to be correct?</h4>
-      <p>
-        Yes. The Wordle answers in our archive are sourced directly from the official Wordle answer list maintained by The New York Times. Each entry is cross-referenced with the deterministic answer sequence, so you can trust that every solution displayed here matches exactly what appeared in the official game on that date.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can I use the archive to see future Wordle answers?</h4>
-      <p>
-        The archive only displays answers for dates that have already occurred. Future answers are not shown, preserving the daily challenge and surprise that makes Wordle enjoyable. We believe in maintaining the integrity of the puzzle experience while still providing a useful reference tool for past solutions.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the NYT ever change or remove Wordle answers?</h4>
-      <p>
-        On rare occasions, The New York Times has substituted a planned Wordle answer with an alternative word, typically because the original choice was deemed potentially offensive or too closely associated with a sensitive current event. When this happens, the archive reflects the answer that players actually received on that day, not the originally planned word.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How does this archive differ from other Wordle answer sites?</h4>
-      <p>
-        WordSolverX provides a clean, calendar-based interface that loads answers inline without redirecting you to separate dated pages. This means you can quickly browse multiple dates without losing your place. The archive also includes additional metadata like puzzle numbers, formatted dates, and contextual information that many other sites lack.
-      </p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How many Wordle answers are there?</h4>
+      <p>About 2,309 in the original answer list. The game cycles through them in order, so once you know the pattern, you can predict future answers too.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are Wordle answers the same worldwide?</h4>
+      <p>Yes — one word per day, globally. The archive reflects the universal answer for each date.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can the archive help me get better?</h4>
+      <p>Browsing past answers helps you see which letter patterns and word types come up most. Over time, you'll start opening with words that cover the most common letters in the pool.</p>
     </div>
   </div>
-</article>
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>

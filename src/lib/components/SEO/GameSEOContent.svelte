@@ -29,8 +29,8 @@
   <section class="mb-12">
     <h1 class="text-4xl font-black text-slate-900 dark:text-slate-50 mb-6">Play {wordLength} Letter Wordle Daily</h1>
     <p class="lead text-xl text-slate-600 dark:text-slate-300">
-      Challenge your vocabulary and logic skills with our free <strong>{wordLength}-letter word puzzle</strong>. 
-      Whether you are a wordsmith or just looking for a fun daily brain teaser, our {wordLength}-letter variant offers the perfect level of difficulty!
+      Challenge your vocabulary and logic skills with our free <strong>{wordLength}-letter word puzzle</strong>.
+      Our {wordLength}-letter variant sits right in that sweet spot — not too easy, not impossible.
     </p>
   </section>
 
@@ -66,7 +66,7 @@
       <span class="text-3xl">💡</span> Strategy and Tips
     </h2>
     <p class="text-slate-700 dark:text-slate-300 mb-4">
-      Mastering the {wordLength}-letter Wordle requires a mix of strategy and a good vocabulary. Here are some tips to help you maintain your winning streak:
+      The {wordLength}-letter version rewards smart opener choices and a decent vocabulary. Here are some tips to help you maintain your winning streak:
     </p>
     <ul class="space-y-2 text-slate-700 dark:text-slate-300">
       <li><strong>Start strong:</strong> Begin with a word that has many vowels (A, E, I, O, U) and common consonants (R, S, T, L, N).</li>

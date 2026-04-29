@@ -129,6 +129,8 @@
       
       <p>
         We read every message. Response time varies — simple corrections are usually fixed within a day, while feature requests take longer because they require development work. If you don't hear back within a week, send a follow-up.
+      <p>
+        You can also review our <a href="/editorial-policy">Editorial Policy</a> for verification and correction standards.
       
     </div>
   </div>
@@ -149,3 +151,5 @@
     </div>
   </div>
 </div>
+
+

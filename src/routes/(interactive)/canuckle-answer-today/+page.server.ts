@@ -208,7 +208,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
                         author: {
                                 '@type': 'Person',
                                 name: 'Preston Hayes',
-                                image: 'https://wordsolverx.com/auther-wordsolverx.webp',
+                                image: 'https://wordsolverx.com/author-wordsolverx.webp',
                                 url: 'https://wordsolverx.com/about#preston-hayes'
                         },
                         publisher: { '@type': 'Organization', name: 'WordSolverX' },
@@ -244,3 +244,4 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
                 }
         };
 };
+

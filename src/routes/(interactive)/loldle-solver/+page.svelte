@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import GameDleSolverPage from '$lib/components/GameDleSolverPage.svelte';
 </script>
 
@@ -27,7 +29,15 @@
       <p class="text-slate-600 leading-relaxed">
         Range style splits champions into Melee or Ranged. This one is less dramatic since roughly 40% of the roster is ranged, but it still eliminates a significant chunk when confirmed. The region attribute spans places like Ionia, Demacia, Noxus, Piltover & Zaun, Shurima, Freljord, Bilgewater, the Void, Runeterra (for champs not tied to one place), and a few others. Ionia is the most crowded region with over 40 champions, so a green match on Ionia still leaves you with plenty of candidates. A match on Bandle City, however, narrows to under ten.
       </p>
-    </article>
+    
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>
 
     <article class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8">
       <h2 class="text-2xl font-bold text-slate-900 mb-4">Why Loldle Is Harder Than It Looks</h2>

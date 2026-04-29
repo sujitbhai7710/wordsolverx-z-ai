@@ -165,6 +165,8 @@
     
     <p>
       Solver tools can also produce incorrect results if the word list is outdated or if a game has changed its rules. If a solver suggests words that aren't valid guesses in the game you're playing, that's a bug we need to fix. Same process: contact page, details about what went wrong, and we'll investigate.
+    <p>
+      For full details on our publishing and corrections process, see the <a href="/editorial-policy">Editorial Policy</a>.
     
 
     <section id="preston-hayes" class="scroll-mt-20">

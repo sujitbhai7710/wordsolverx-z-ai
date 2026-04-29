@@ -1,6 +1,8 @@
 <script lang="ts">
         import { onMount } from 'svelte';
         import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+        import AuthorCard from '$lib/components/AuthorCard.svelte';
+        import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
 
         let { data }: {
                 data: {
@@ -95,7 +97,7 @@
                                 <p class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Puzzle #{data.todayEntry.puzzle}</p>
                                 <h2 class="mt-2 text-3xl font-black text-slate-900">Today&apos;s Worgle answer</h2>
                                 <p class="mt-3 text-base leading-7 text-slate-600">
-                                        Worgle follows a deterministic answer list, so this page stays in sync with the current IST puzzle window and the local archive.
+                                        This page stays in sync with the daily Worgle puzzle, which resets at midnight IST.
                                 </p>
 
                                 <div class="mt-6 rounded-3xl border border-slate-200 bg-slate-50 p-6">
@@ -324,35 +326,6 @@
                                 </div>
                         </section>
 
-                        <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-                                <h2 class="text-3xl font-black tracking-tight text-slate-900">Worgle vs Wordle — What Is Different?</h2>
-                                <div class="mt-6 grid gap-6 sm:grid-cols-2">
-                                        <div class="rounded-2xl bg-slate-50 p-6">
-                                                <h3 class="text-lg font-bold text-slate-900">Timezone</h3>
-                                                <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Wordle resets at midnight UTC. Worgle resets at midnight IST. That 5.5-hour gap means the two games almost always have different answers on any given calendar date. For players in India, Worgle feels like "their" Wordle because the reset aligns with their local midnight.
-                                                </p>
-                                        </div>
-                                        <div class="rounded-2xl bg-slate-50 p-6">
-                                                <h3 class="text-lg font-bold text-slate-900">Answer List Size</h3>
-                                                <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Wordle has roughly 2,300 answers in its rotation. Worgle has {data.stats.totalSolutions}. The smaller list means Worgle answers repeat more frequently, which benefits long-term players who build pattern memory. It also means fewer obscure words and less frustration overall.
-                                                </p>
-                                        </div>
-                                        <div class="rounded-2xl bg-slate-50 p-6">
-                                                <h3 class="text-lg font-bold text-slate-900">Gameplay Mechanics</h3>
-                                                <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        The core mechanics are identical: five letters, six guesses, color feedback. If you can play Wordle, you can play Worgle without learning anything new. The strategies transfer directly, which is why most Worgle players also play Wordle — it is the same skill applied to a different daily puzzle.
-                                                </p>
-                                        </div>
-                                        <div class="rounded-2xl bg-slate-50 p-6">
-                                                <h3 class="text-lg font-bold text-slate-900">Community</h3>
-                                                <p class="mt-2 text-base leading-7 text-slate-600">
-                                                        Worgle has a smaller, more regional community compared to Wordle's global player base. The IST reset naturally attracts players from South Asia. Sharing results on social media happens in the same format — colored emoji grids — but the conversation tends to happen in different time zones and different online circles.
-                                                </p>
-                                        </div>
-                                </div>
-                        </section>
 
                         <section class="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
                                 <h2 class="text-3xl font-black tracking-tight text-slate-900">Frequently Asked Questions About Worgle</h2>
@@ -399,5 +372,13 @@
                                 </div>
                         </section>
                 </article>
+
+                <div class="mt-12">
+                        <AuthorCard
+                                name={PRESTON_HAYES_AUTHOR_NAME}
+                                image={PRESTON_HAYES_AUTHOR_IMAGE}
+                                description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+                        />
+                </div>
         </div>
 </div>

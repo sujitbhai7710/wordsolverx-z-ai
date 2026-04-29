@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import GameDleSolverPage from '$lib/components/GameDleSolverPage.svelte';
 </script>
 
@@ -27,7 +29,15 @@
       <p class="text-slate-600 leading-relaxed">
         Jump count is a quirky attribute that catches people off guard. Most fighters have 2 jumps, but several have 3 (Kirby, Meta Knight, King Dedede), 4 or more (Pit, Dark Pit, Palutena), or 5+ (Jigglypuff). If the mystery fighter has 5 jumps, you are looking at a very short list. If they have 2 jumps, you are looking at most of the roster — but the information still helps when combined with other attributes.
       </p>
-    </article>
+    
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>
 
     <article class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8">
       <h2 class="text-2xl font-bold text-slate-900 mb-4">Why Smashdle Is Deceptively Difficult</h2>

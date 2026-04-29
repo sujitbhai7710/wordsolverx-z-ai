@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import { getColorfleArchiveEntries } from '$lib/colorfle';
 
@@ -147,65 +149,12 @@
       </article>
     </section>
 
-    <!-- SEO Article Section -->
-    <article class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
-      <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Colorfle Archive Matters</h2>
-      <div class="prose prose-slate dark:prose-invert max-w-none">
-        <p>
-          The Colorfle archive is an essential resource for players who want to understand the science and art behind daily color puzzles. Unlike word-based games that rely on vocabulary and language skills, Colorfle challenges players to understand color theory, hexadecimal notation, and the relationships between different hues, saturations, and brightness levels. The archive provides a complete record of every past puzzle, including the source colors, intermediate blending steps, and final target hex codes that players were asked to identify.
-        </p>
-        <p>
-          Studying the Colorfle archive reveals important patterns in how the game constructs its daily challenges. You can observe which regions of the color space appear more frequently as targets, how source colors are selected to create varying difficulty levels, and which color transitions tend to confuse players the most. This kind of pattern analysis is invaluable for improving your color perception skills and developing more systematic approaches to each daily puzzle.
-        </p>
-        <p>
-          The archive is also a fascinating resource for designers, artists, and anyone who works with color professionally. Each archived puzzle represents a carefully constructed color challenge that tests understanding of the RGB color model and hex notation. Over time, regular archive review can sharpen your ability to estimate hex values mentally, recognize subtle color differences, and understand how different color channels combine to create the final result.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Colorfle Answers Work</h3>
-        <p>
-          Colorfle presents players with a daily color-mixing challenge. Each puzzle provides source colors in hex format and asks players to determine or blend toward a specific target color. The game operates on the RGB color model, where every color is expressed as a six-character hexadecimal code representing the intensity of red, green, and blue channels. Understanding this system is key to solving Colorfle puzzles efficiently.
-        </p>
-        <p>
-          Each daily puzzle in the archive includes the initial source colors and the target hex code that players needed to reach. The difficulty of a given puzzle depends on several factors: the distance between source and target in the color space, whether the transition involves primarily hue shifts or brightness changes, and whether the target falls in a region of the color spectrum that is harder to distinguish visually. Some puzzles present subtle shifts between similar colors, while others require dramatic transformations across the entire color wheel.
-        </p>
-        <p>
-          The Colorfle answer system is deterministic, meaning each date maps to a specific set of colors. This makes the archive a perfect historical record that can be used for study, practice, or simply satisfying curiosity about past puzzles. The archive preserves both the visual color data and the precise hex values for every puzzle.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Colorfle Answers</h3>
-        <p>
-          The Colorfle archive contains many memorable puzzles that challenged players in creative ways. Particularly difficult entries often involve colors in the teal-to-cyan range, where the green and blue channels are closely balanced, making it harder to distinguish the exact hex values. Past puzzles featuring neon-bright colors, deep jewel tones, and near-grayscale neutrals have all generated discussion in the Colorfle community.
-        </p>
-        <p>
-          Seasonal color themes are visible throughout the archive. Puzzle difficulty and color choices tend to shift subtly with the calendar, with warmer tones appearing more frequently during certain periods and cooler tones during others. Recognizing these broader patterns can help players develop expectations about the types of challenges they might face on any given day.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Colorfle Archive</h3>
-        <p>
-          Navigate the Colorfle archive using the date picker and list view above. Select any past date to view the complete puzzle data, including source colors, target hex code, and the puzzle number. Use the filter buttons to view the last 30, 90, or 365 days of puzzles. The visual color swatches displayed for each entry make it easy to scan and compare past challenges at a glance.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What is a hex code in Colorfle?</h4>
-        <p>
-          A hex code is a six-character alphanumeric code used in web design and digital graphics to represent colors. In the RGB model, the first two characters represent red intensity, the middle two represent green, and the last two represent blue, each ranging from 00 (none) to FF (maximum).
-        </p>
-
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How often does Colorfle update?</h4>
-        <p>
-          Colorfle releases a new color puzzle every day, typically refreshing at midnight based on a set time zone. Each new puzzle appears in the archive as it becomes available.
-        </p>
-
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can the archive help me improve at Colorfle?</h4>
-        <p>
-          Yes. Studying past puzzles helps you develop a better intuitive sense of hex values and color relationships. Regular review of archived puzzles trains your eye to recognize color patterns and estimate hex codes more accurately over time.
-        </p>
-
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How many Colorfle puzzles are in the archive?</h4>
-        <p>
-          The archive currently contains up to 365 past Colorfle puzzles, with new entries added daily. The complete history is searchable and viewable through the calendar and list interface on this page.
-        </p>
-      </div>
-    </article>
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
   </div>
 </div>

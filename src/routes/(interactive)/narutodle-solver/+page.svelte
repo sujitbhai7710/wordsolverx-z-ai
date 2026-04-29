@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import GameDleSolverPage from '$lib/components/GameDleSolverPage.svelte';
 </script>
 
@@ -27,7 +29,15 @@
       <p class="text-slate-600 leading-relaxed">
         Kekkei genkai (bloodline limit) is a yes-or-no style attribute. Does the character have a hereditary ability? The Uchiha clan's Sharingan, the Hyuga clan's Byakugan, Haku's Ice Release, and Kimimaro's Bone Manipulation all count. If you get a "no" on kekkei genkai, you eliminate all clan-based characters, which is a surprisingly large chunk of the roster.
       </p>
-    </article>
+    
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>
 
     <article class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8">
       <h2 class="text-2xl font-bold text-slate-900 mb-4">Why Narutodle Stumps Even Dedicated Fans</h2>

@@ -4,7 +4,7 @@
   let {
     articleKey,
     articleDate,
-    eyebrow = 'Daily article',
+    eyebrow = "Today's notes",
     fallbackTitle = "Today's notes",
     fallbackSummary = ''
   }: {

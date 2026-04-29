@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import { browser } from '$app/environment';
         import { onMount } from 'svelte';
         import { fetchArchivePayload } from '$lib/archive-client';
@@ -246,69 +248,29 @@
 </section>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
-                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Spotle Archive Matters</h2>
-                <div class="prose prose-slate dark:prose-invert max-w-none">
-                        <p>
-                                The Spotle archive is a comprehensive database of music artist answers from the daily Spotle puzzle game, complete with rich metadata including genre, country of origin, debut year, and featured tracks. For music enthusiasts, the archive serves as both a practical puzzle reference and a curated journey through the world of popular music, spanning genres, eras, and global regions.
-                        </p>
-                        <p>
-                                What sets the Spotle archive apart from simpler puzzle answer databases is the depth of metadata preserved for each entry. Every archived artist includes their genre classification, country of origin, debut album year, gender, and when available, links to their music on streaming platforms. This makes the archive a genuine music discovery tool where browsing past answers can introduce you to new artists, genres, and musical traditions you might not have encountered otherwise.
-                        </p>
-                        <p>
-                                Studying the archive reveals patterns in how Spotle selects its daily artists. You can observe which genres appear most frequently, which countries are well-represented in the answer pool, and how the game balances mainstream global superstars with independent and regional artists. This pattern analysis not only improves your puzzle performance but also broadens your musical knowledge and appreciation for the diversity of the global music landscape.
-                        </p>
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
+  <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
+    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Spotle Archive Matters</h2>
+    <div class="prose prose-slate dark:prose-invert max-w-none">
+      <p>Every Spotle artist since launch, with genre, debut year, and country of origin.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Spotle Works</h3>
+      <p>You guess a music artist and get feedback on genre, debut year, group size, gender, and nationality. The trick is narrowing genre and decade first, then using the specific attributes to zero in. A first guess from a genre you know well saves you more guesses than a random pick.</p>
 
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Spotle Answers Work</h3>
-                        <p>
-                                Spotle challenges players to identify a mystery music artist based on a series of clues revealed with each guess. The game draws from a curated pool of artists that spans multiple genres, countries, and eras. Each daily puzzle selects one artist, and players receive progressively more revealing clues as they make incorrect guesses, including hints about the artist's genre, nationality, debut decade, and other characteristics.
-                        </p>
-                        <p>
-                                The answer for each date is predetermined and stored in the game's dataset. Each entry includes the artist's name, a featured track when available, and detailed metadata covering genre, country, debut year, and gender. The deterministic selection process means the archive is perfectly reliable, and every answer displayed here matches exactly what players encountered on that date in the official game.
-                        </p>
-                        <p>
-                                Spotle's curated approach means that the answer pool reflects a thoughtful selection of artists from across the music spectrum. The game avoids obscure artists that no reasonable player would know while still including enough variety to keep the puzzles challenging. The archive captures this balanced approach, with entries spanning pop, rock, hip-hop, electronic, classical, country, R&B, and many other genres from artists around the world.
-                        </p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How far back does the archive go?</h4>
+      <p>Since Spotle launched. Every artist is stored with date, genre, debut year, and country.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are the artists all well-known?</h4>
+      <p>Mix of mainstream and niche. Some days you'll get a household name, other days you'll discover someone new.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does genre help narrow it down fast?</h4>
+      <p>Genre is the strongest first filter — it cuts the pool by 80% or more. Start there, then use debut year to narrow further.</p>
+    </div>
+  </div>
 
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Spotle Answers</h3>
-                        <p>
-                                The Spotle archive contains answers from some of the world's most recognizable music artists alongside lesser-known performers who provide genuinely challenging puzzles. Particularly memorable entries include artists whose genre classification might surprise players, artists from countries with thriving but internationally overlooked music scenes, and veteran performers whose debut years might not match their widespread fame.
-                        </p>
-                        <p>
-                                Genre diversity is a hallmark of the Spotle archive, with entries spanning virtually every major musical genre and many niche traditions. Players who study the archive develop a broader understanding of how genres are defined and how artists cross genre boundaries, which directly improves their ability to deduce artist identities from the clue categories that Spotle provides.
-                        </p>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Spotle Archive</h3>
-                        <p>
-                                Navigate the archive using the calendar above to view any past Spotle artist answer. Each entry displays the artist name, day number, featured track, and detailed metadata including genre, country, debut year, and gender. When available, streaming platform links allow you to listen to the artist's music directly from the archive page.
-                        </p>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What genres of artists appear in Spotle?</h4>
-                        <p>
-                                Spotle draws from a wide range of musical genres including pop, rock, hip-hop, electronic, R&B, country, jazz, classical, metal, indie, folk, and many others. The archive reflects this genre diversity, with entries spanning virtually every major musical tradition from around the world.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the archive include streaming links?</h4>
-                        <p>
-                                When available, the archive includes links to the artist's SoundCloud and Spotify profiles. These links allow you to listen to the featured track and explore the artist's full catalog directly from the archive page.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can the archive help me discover new music?</h4>
-                        <p>
-                                Absolutely. Browsing past Spotle answers is an excellent way to discover new artists and genres. Each entry includes enough metadata to understand the artist's background, and the streaming links make it easy to sample their music immediately.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are Spotle artists from all countries represented?</h4>
-                        <p>
-                                Spotle draws artists from many countries around the world, though the distribution naturally reflects the global popularity of different music markets. The archive includes country metadata for every entry, allowing you to see which nations are represented and explore artists from different musical traditions.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How can I use the archive to improve at Spotle?</h4>
-                        <p>
-                                Study the metadata patterns to develop intuition about which genres, countries, and debut eras are most common. Pay attention to artists you didn't recognize and learn about their music. Over time, this broadens your musical knowledge and directly improves your ability to identify mystery artists from limited clues.
-                        </p>
-                </div>
-        </div>
-</article>
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>

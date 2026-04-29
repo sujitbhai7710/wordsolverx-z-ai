@@ -32,7 +32,7 @@ export const load: PageServerLoad = async () => {
             headline: pageTitle,
             datePublished: new Date(date).toISOString(),
             dateModified: new Date(date).toISOString(),
-            author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/auther-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' },
+            author: { '@type': 'Person', name: 'Preston Hayes', image: 'https://wordsolverx.com/author-wordsolverx.webp', url: 'https://wordsolverx.com/about#preston-hayes' },
             publisher: { '@type': 'Organization', name: 'WordSolverX' },
             description: pageDescription,
             image: [featuredImage],
@@ -64,3 +64,4 @@ async function getLatestAvailableGlobleData(baseDate: Date) {
 
     return null;
 }
+

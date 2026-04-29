@@ -82,7 +82,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
         headline: `Wordle Hints and Answer for Today (${formattedDate})`,
         datePublished: new Date(normalizedWordleData?.date || today).toISOString(),
         dateModified: new Date(normalizedWordleData?.date || today).toISOString(),
-        author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolverx.com/about#preston-hayes', 'https://wordsolverx.com/auther-wordsolverx.webp'),
+        author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolverx.com/about#preston-hayes', 'https://wordsolverx.com/author-wordsolverx.webp'),
         publisher: { '@type': 'Organization', name: 'WordSolverX', logo: { '@type': 'ImageObject', url: 'https://wordsolverx.com/wordsolverx.webp' } },
         description: `Get Wordle hints and the confirmed Wordle answer for today, ${formattedDate}. Hints, clues, and the solution for Wordle #${wordleNumber}.`,
         mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/wordle-answer-today' },
@@ -153,3 +153,4 @@ async function getWordleDataWithFallback(todayKey: string, fallbackNumber: numbe
 
     return null;
 }
+

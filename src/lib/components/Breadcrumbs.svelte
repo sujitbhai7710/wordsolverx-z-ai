@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import FiHome from '$lib/components/icons/FiHome.svelte';
 	import FiChevronRight from '$lib/components/icons/FiChevronRight.svelte';
+	let { hideSchema = false }: { hideSchema?: boolean } = $props();
 
 	let pathname = $derived($page.url.pathname);
 	let pathSegments = $derived(pathname.split('/').filter((segment: string) => segment !== ''));
@@ -44,7 +45,7 @@
 </script>
 
 <svelte:head>
-	{#if pathname !== '/'}
+	{#if pathname !== '/' && !hideSchema}
 		{@html `<script type="application/ld+json">${schemaJson}</script>`}
 	{/if}
 </svelte:head>

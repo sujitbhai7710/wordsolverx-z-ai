@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -142,69 +144,29 @@
 </section>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
   <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
     <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Phoodle Archive Matters</h2>
     <div class="prose prose-slate dark:prose-invert max-w-none">
-      <p>
-        The Phoodle archive is a unique and delicious puzzle reference that captures the complete history of food-themed word challenges. Unlike standard Wordle, which draws from a general English vocabulary, Phoodle restricts its answers to food-related words, creating a specialized puzzle experience that rewards culinary knowledge alongside standard word-guessing skills. The archive preserves every past solution along with descriptions and recipe references, making it both a puzzle tool and a culinary exploration resource.
-      </p>
-      <p>
-        For food enthusiasts and home cooks, the Phoodle archive doubles as an educational vocabulary builder. Each answer represents a food-related term, and many entries include descriptions that explain the word's culinary significance. By browsing the archive regularly, players expand their food vocabulary, discover new ingredients, learn cooking terminology, and develop a richer understanding of global cuisine. This makes the archive particularly valuable for culinary students, food bloggers, and anyone who wants to deepen their gastronomic knowledge.
-      </p>
-      <p>
-        The archive also reveals patterns in Phoodle's answer selection. Studying past answers helps players identify which types of food words appear most frequently, whether certain cuisines are overrepresented, and how the game balances common terms like "bread" and "sauce" with more specialized vocabulary like "ramekin" or "bisque." This pattern analysis directly translates to improved puzzle performance and a more enjoyable daily solving experience.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Phoodle Answers Work</h3>
-      <p>
-        Phoodle follows the Wordle format but limits its answer pool to food-related five-letter words. Players have six attempts to guess the daily food word, with the standard green, yellow, and gray feedback indicating correct letters in correct positions, correct letters in wrong positions, and absent letters. The game operates on a daily cycle with one new puzzle per day, and every player worldwide receives the same answer on the same date.
-      </p>
-      <p>
-        The answer list is curated by the Phoodle development team, who maintain a carefully selected pool of food-related terms. This list includes ingredients, cooking methods, kitchen equipment, culinary techniques, dish names, and food descriptors from various world cuisines. Each archive entry records the answer word, the date, and often includes a brief description and an associated recipe name that connects the word to a specific dish or preparation.
-      </p>
-      <p>
-        Phoodle answers are deterministic and assigned in sequence. Each date maps to exactly one answer from the curated food word list, ensuring the archive is perfectly reliable. The available dates section tracks which dates have corresponding answers, allowing the calendar to show only valid puzzle dates.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Phoodle Answers</h3>
-      <p>
-        The Phoodle archive contains many answers that delighted food lovers and stumped word puzzle enthusiasts. Unusual ingredients from specific culinary traditions, specialized cooking equipment terms, and words borrowed from other languages through food culture have all appeared as memorable Phoodle solutions. Entries with strong recipe associations tend to generate extra excitement, as players enjoy the direct connection between the puzzle word and an actual dish they can prepare.
-      </p>
-      <p>
-        Seasonal patterns are visible in the archive, with certain food terms appearing more frequently during relevant times of year. Holiday-related ingredients, seasonal produce, and weather-appropriate dishes tend to cluster around their natural calendar positions, creating a subtle thematic rhythm that attentive players can leverage when approaching their daily solve.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Phoodle Archive</h3>
-      <p>
-        Use the calendar interface above to navigate to any date and view the Phoodle answer for that day. Each entry includes the food word, a description, and often an associated recipe. Browse past entries to build your food vocabulary, discover new recipes, or simply check answers you might have missed. The archive is an excellent companion for anyone who enjoys both word games and cooking.
-      </p>
+      <p>Every Phoodle answer since launch. All food words, all in one place.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Phoodle Works</h3>
+      <p>Same mechanics as Wordle — six guesses, color feedback — but every answer is food-related. Cooking terms, ingredients, cuisines, kitchen tools, and dishes. The answer pool is narrower than Wordle, so food vocabulary pays off here more than general word-guessing skills.</p>
 
       <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What types of words does Phoodle use?</h4>
-      <p>
-        Phoodle uses five-letter words related to food and cooking. This includes ingredients, cooking methods, kitchen tools, dish names, culinary terms, and food descriptors from various world cuisines. The curated answer list ensures all words are recognizable to food enthusiasts while still providing a challenging puzzle experience.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the Phoodle archive include recipe information?</h4>
-      <p>
-        Many archive entries include a brief description of the food word and an associated recipe name. This extra culinary context makes the Phoodle archive uniquely informative compared to other puzzle answer databases, turning each entry into a mini cooking lesson.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can studying the archive help me cook better?</h4>
-      <p>
-        Indirectly, yes. Regular exposure to food terminology through the archive expands your culinary vocabulary and introduces you to ingredients and techniques you might not encounter in your everyday cooking. Many players report discovering new dishes and ingredients through Phoodle that they later incorporate into their own cooking.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Is Phoodle harder than regular Wordle?</h4>
-      <p>
-        Phoodle can be more challenging for players without strong food vocabulary, but easier for those who cook regularly. The restricted answer pool actually provides a strategic advantage because the possible solutions are more predictable than in standard Wordle. Studying the archive helps level the playing field by familiarizing all players with the food word pool.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How far back does the Phoodle archive go?</h4>
-      <p>
-        The archive covers every Phoodle answer from the game's launch date to the present day. New entries are added daily as new puzzles are released, maintaining a complete and current record of all past solutions.
-      </p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How narrow is the answer pool?</h4>
+      <p>Narrower than Wordle by a lot. Food terms, cooking verbs, and ingredient names make up most of the answers.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Do answers ever repeat?</h4>
+      <p>Not within the main answer sequence. Each day's word is unique in the rotation.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What's the best opening word?</h4>
+      <p>Something with common food letters. "BREAD" covers B, R, E, A, D — all frequent in cooking vocabulary. "SAUCE" and "FLOUR" are solid too.</p>
     </div>
   </div>
-</article>
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>

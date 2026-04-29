@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import GameDleSolverPage from '$lib/components/GameDleSolverPage.svelte';
 </script>
 
@@ -27,7 +29,15 @@
       <p class="text-slate-600 leading-relaxed">
         Origin sea tracks where the character first appeared in the story: East Blue, Grand Line, or New World. East Blue has the most familiar faces from the early chapters. Grand Line covers characters introduced between the Baratie arc and the time skip. New World characters are post-time-skip, which includes the Emperors, their crews, and most of the current-era power players.
       </p>
-    </article>
+    
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>
 
     <article class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8">
       <h2 class="text-2xl font-bold text-slate-900 mb-4">Why Onepiecedle Is Harder Than You Think</h2>

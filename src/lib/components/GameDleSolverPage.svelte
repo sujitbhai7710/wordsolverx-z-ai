@@ -489,21 +489,23 @@
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:site_name" content="WordSolverX" />
+        <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={`${config.name} Solver Tool`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
         <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
-        {@html `<script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>`}
-        {@html `<script type="application/ld+json">${JSON.stringify(webApplicationSchema)}</script>`}
-        {@html `<script type="application/ld+json">${JSON.stringify(softwareSchema)}</script>`}
-        {@html `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`}
-        {@html `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`}
-        {@html `<script type="application/ld+json">${JSON.stringify(howToSchema)}</script>`}
+        {@html `<script type="application/ld+json">${JSON.stringify({
+                '@context': 'https://schema.org',
+                '@graph': [webPageSchema, webApplicationSchema, softwareSchema, breadcrumbSchema, faqSchema, howToSchema]
+        })}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <Breadcrumbs />
+                <Breadcrumbs hideSchema={true} />
 
                 <section class="rounded-3xl bg-white border border-slate-200 shadow-lg p-6 md:p-8 mb-8">
                         <div class="flex flex-wrap items-center justify-between gap-4 mb-5">

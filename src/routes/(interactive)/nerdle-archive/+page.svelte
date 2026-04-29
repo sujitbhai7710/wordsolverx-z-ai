@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import { onMount } from 'svelte';
         import { fetchArchivePayload } from '$lib/archive-client';
         import { getNerdleTodayDateKey } from '$lib/nerdle';
@@ -482,72 +484,32 @@
                         </div>
                 </div>
         </div>
-</main>
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </main>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 pt-8">
-        <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
-                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Nerdle Archive Matters</h2>
-                <div class="prose prose-slate dark:prose-invert max-w-none">
-                        <p>
-                                The Nerdle archive is a comprehensive resource for math-based puzzle enthusiasts, covering every daily equation answer across all available game modes since January 2022. Unlike word-based puzzle games, Nerdle challenges players to guess a valid mathematical equation within a limited number of attempts, combining arithmetic skills with logical deduction. The archive preserves answers for Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant modes, making it the most complete Nerdle reference available anywhere online.
-                        </p>
-                        <p>
-                                Studying the Nerdle archive reveals important patterns in equation construction. You can observe which mathematical operations appear most frequently in solutions, how the difficulty varies across different modes, and which number patterns tend to recur. For the Classic mode, which uses eight-character equations, the archive shows how the game balances simple arithmetic like addition and subtraction with more complex expressions involving multiplication and division. Understanding these patterns helps players develop more effective opening strategies and improve their solve rates across all modes.
-                        </p>
-                        <p>
-                                The archive is also valuable for educators and parents who use Nerdle as a teaching tool. Each daily equation represents a valid mathematical statement, and reviewing past answers provides a library of arithmetic problems that can reinforce concepts like order of operations, commutative properties, and number sense. The multi-mode format means there are equations appropriate for every skill level, from the shorter Mini mode to the more complex Maxi equations.
-                        </p>
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
+  <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
+    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Nerdle Archive Matters</h2>
+    <div class="prose prose-slate dark:prose-invert max-w-none">
+      <p>Every Nerdle equation across all modes, from Classic to Instant, since January 2022.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Nerdle Works</h3>
+      <p>Each day, you guess a mathematical equation — digits, operators, and an equals sign. Green means right position, yellow means right element wrong spot, gray means it's not in the equation at all. Classic Nerdle has 8 cells. Mini has 6. The other modes change the grid shape or count.</p>
 
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Nerdle Answers Work</h3>
-                        <p>
-                                Nerdle follows the familiar Wordle format but substitutes mathematical equations for words. Players guess equations that must be mathematically valid and use the standard operations of addition, subtraction, multiplication, and division. The equation must contain exactly one equals sign, and the solution side must evaluate to a single number. After each guess, the game provides color-coded feedback: green for correct characters in correct positions, purple for correct characters in wrong positions, and black for characters not present in the solution.
-                        </p>
-                        <p>
-                                Each Nerdle mode has different length requirements. Classic uses eight characters, Micro uses five, Mini uses six, Midi uses seven, and Maxi uses ten. The Mini Bi and Quad modes provide additional variations on the standard format. The Speed and Instant modes offer timed or limited-attempt challenges that add urgency to the mathematical deduction process. The archive records answers for every mode on every available date.
-                        </p>
-                        <p>
-                                Nerdle answers are deterministic and predetermined. The game launched on January 20, 2022, and each subsequent date maps to a specific equation for each mode. This deterministic system ensures the archive is perfectly reliable, and every answer displayed here matches exactly what players encountered on that date in the official game.
-                        </p>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Nerdle Answers</h3>
-                        <p>
-                                The Nerdle archive contains many memorable equations that challenged players in different ways. Solutions featuring large numbers, multiple operations, or unusual order-of-operations requirements tend to be the most difficult. Equations where the equals sign appears in an unexpected position, or where the solution involves a long chain of operations, frequently generate discussion in the Nerdle community and provide excellent learning opportunities for players studying the archive.
-                        </p>
-                        <p>
-                                Patterns in the archive show that certain operation types appear more frequently in solutions. Addition equations tend to be more common than those involving division, and equations with single-digit operands appear more frequently than those using double-digit numbers. These frequency patterns, visible through archive study, can inform players' opening guess strategies and improve their overall performance.
-                        </p>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Nerdle Archive</h3>
-                        <p>
-                                Navigate the archive using the calendar interface or the Previous and Next buttons. Select any date to view the equation answers for all available modes. Use the mode tabs to switch between Classic, Micro, Mini, and other game variants. The copy buttons allow you to quickly save any answer to your clipboard. Use the archive to study equation patterns, verify past answers, or practice your mathematical deduction skills against known solutions.
-                        </p>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What is the difference between Nerdle modes?</h4>
-                        <p>
-                                Nerdle offers multiple modes with different equation lengths and challenge types. Classic uses eight-character equations, Micro uses five, Mini uses six, Midi uses seven, and Maxi uses ten. The Mini Bi mode adds bilingual elements, Quad provides four simultaneous puzzles, and Speed and Instant modes add time pressure or limited attempts.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the Nerdle archive cover all game modes?</h4>
-                        <p>
-                                Yes. The archive on WordSolverX includes answers for every available Nerdle mode on each date, giving you complete coverage across the full range of mathematical puzzle challenges the game offers.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can I use the archive to improve my Nerdle strategy?</h4>
-                        <p>
-                                Absolutely. Study the archive to identify which types of equations appear most frequently, which operations are most common in solutions, and how the difficulty varies across modes. This pattern analysis helps you develop better opening guesses and more efficient deduction strategies.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are Nerdle equations always mathematically valid?</h4>
-                        <p>
-                                Yes. Every Nerdle solution is a mathematically valid equation that evaluates correctly. The game enforces strict rules about equation structure, including exactly one equals sign and a valid solution side. The archive reflects these valid equations exactly as they appeared in the game.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How can educators use the Nerdle archive?</h4>
-                        <p>
-                                Teachers can use archived Nerdle equations as daily warm-up exercises, arithmetic practice problems, or enrichment activities. The variety of modes provides equations at different difficulty levels, making the archive suitable for students from elementary through middle school and beyond.
-                        </p>
-                </div>
-        </div>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the archive cover all modes?</h4>
+      <p>Yes — Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant. Each mode has its own column in the archive table.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can I search by equation?</h4>
+      <p>You can browse by date. If you remember roughly when a puzzle ran, scroll to that date and you'll find it.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are equations reused across modes?</h4>
+      <p>Each mode gets its own equation every day. They rarely repeat, but the underlying math patterns can feel similar over time.</p>
+    </div>
+  </div>
 </article>

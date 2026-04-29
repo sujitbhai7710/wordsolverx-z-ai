@@ -550,12 +550,101 @@ async function getColordleContext(targetDate) {
   };
 }
 
+const BANNED_PHRASES = [
+  'welcome to today',
+  'welcome to the',
+  'your daily guide',
+  "if you're here, you've probably",
+  "if you're landing on this page",
+  "that's exactly what this page is for",
+  "let's get you sorted",
+  "let's dive in",
+  "you're in the right place",
+  "this page is built to",
+  "this page is designed to",
+  "whether you're a",
+  "here's what you need to know",
+  "here's the thing:",
+  'furthermore',
+  'moreover',
+  'it is worth noting',
+  'in conclusion',
+  'resonates deeply',
+  'resonates powerfully',
+  'cultural touchstone',
+  'shared daily experience',
+  'one of the most unique',
+  'one of the most popular',
+  'one of the most beloved',
+  'one of the most comprehensive',
+  'fascinating dataset',
+  'fascinating window',
+  'fascinating resource',
+  'fascinating patterns',
+  'incredible depth',
+  'incredible breadth',
+  'incredible historical depth',
+  'ai-powered',
+  'ai-assisted',
+  'machine learning',
+  'language model',
+  'mastering the',
+  'what makes this game distinctive',
+  'not officially affiliated'
+];
+
+function containsBannedPhrases(html) {
+  const lower = String(html ?? '').toLowerCase();
+  for (const phrase of BANNED_PHRASES) {
+    if (lower.includes(phrase)) {
+      return phrase;
+    }
+  }
+  return null;
+}
+
+const BANNED_PHRASE_LIST_LINES = [
+  'BANNED PHRASES — never use any of these, even paraphrased:',
+  '- "Welcome to today\'s..." or "Welcome to [game]..."',
+  '- "Your daily guide to..."',
+  '- "If you\'re here, you\'ve probably..." or "If you\'re landing on this page..."',
+  '- "That\'s exactly what this page is for"',
+  '- "Let\'s get you sorted" or "Let\'s dive in"',
+  '- "Either way, you\'re in the right place"',
+  '- "This page is built/designed to help you..."',
+  '- "Whether you\'re a [X] or a [Y]..."',
+  '- "Here\'s what you need to know"',
+  '- "Here\'s the thing:"',
+  '- "Furthermore", "Moreover", "Additionally", "It is worth noting", "In conclusion"',
+  '- "resonates [deeply/powerfully] with"',
+  '- "cultural touchstone", "shared daily experience"',
+  '- "one of the most [unique/popular/beloved/comprehensive]"',
+  '- "fascinating [dataset/window/resource/patterns]"',
+  '- "incredible [depth/breadth/historical depth]"',
+  '- "Master/Mastering [Game]" as a phrase',
+  '- "AI-powered", "AI-assisted", "machine learning", "language model"',
+  '- Any sentence that could appear on a different game\'s page with just the name swapped',
+  '',
+  'REQUIRED WRITING STYLE:',
+  '- Start directly with something specific about today\'s puzzle or answer. No warm-up paragraph.',
+  '- Write like you played the game today and have an opinion about it.',
+  '- Vary sentence length: some short and punchy, some longer and explanatory.',
+  '- Include at least one specific, opinionated observation per section.',
+  '- End sections with a useful tip or next step, not a summary.',
+  '- Never repeat the same information in multiple sections.',
+  '- Do not write encyclopedic background about the game — the reader already plays it.',
+  '- Do not write a "Why fans love this game" section — that is filler.',
+  '- Vary paragraph structure. Not every paragraph should be 3 sentences.'
+];
+
 function buildWordlePrompt(skillText, context) {
   return [
     'You are writing a daily Wordle answer page for a real site. Return JSON only.',
     '',
     'Human writing rules to follow:',
     skillText,
+    '',
+    ...BANNED_PHRASE_LIST_LINES,
     '',
     'Output shape:',
     '{',
@@ -566,7 +655,7 @@ function buildWordlePrompt(skillText, context) {
     '}',
     '',
     'Critical rules:',
-    '- `contentGuideHtml` must be at least 1100 words after HTML tags are stripped.',
+    '- `contentGuideHtml` must be 900-1300 words after HTML tags are stripped.',
     '- Do not use markdown fences.',
     '- Do not sound like generic AI or SEO filler.',
     '- Do not invent personal stories, test results, or private knowledge.',
@@ -609,6 +698,8 @@ function buildColordlePrompt(skillText, context) {
     'Human writing rules to follow:',
     skillText,
     '',
+    ...BANNED_PHRASE_LIST_LINES,
+    '',
     'Output shape:',
     '{',
     '  "title": "string",',
@@ -618,7 +709,7 @@ function buildColordlePrompt(skillText, context) {
     '}',
     '',
     'Critical rules:',
-    '- `articleHtml` must be at least 1100 words after HTML tags are stripped.',
+    '- `articleHtml` must be 900-1300 words after HTML tags are stripped.',
     '- Do not use markdown fences.',
     '- Do not invent first-hand gameplay or made-up scoring data.',
     '- The site already has logic-based color clues and a logic-based guess path. Your job is to write the surrounding human article text only.',
@@ -645,24 +736,123 @@ function buildColordlePrompt(skillText, context) {
   ].join('\n');
 }
 
+function getGameGroup(key) {
+  if (key.startsWith('loldle') || key.startsWith('dotadle') || key.startsWith('narutodle') ||
+      key.startsWith('onepiecedle') || key.startsWith('pokedle') || key.startsWith('smashdle')) {
+    return 'gamedle';
+  }
+  if (key.startsWith('globle') || key.startsWith('worldle') || key.startsWith('countryle')) {
+    return 'geography';
+  }
+  if (key.startsWith('phoodle') || key.startsWith('phrazle') || key.startsWith('semantle') ||
+      key.startsWith('contexto') || key.startsWith('searchle') || key.startsWith('quordle')) {
+    return 'word';
+  }
+  if (key.startsWith('framed') || key.startsWith('colordle') || key.startsWith('colorfle') ||
+      key.startsWith('waffle') || key.startsWith('spotle')) {
+    return 'visual';
+  }
+  return 'other';
+}
+
+const temperatureMap = {
+  wordle: 0.55,
+  colordle: 0.6,
+  gamedle: 0.65,
+  geography: 0.6,
+  word: 0.55,
+  visual: 0.6,
+  other: 0.6
+};
+
+function getGenericSections(entry) {
+  const sectionSets = {
+    geography: [
+      "<h2>Where in the world is today's answer?</h2>",
+      "<h2>Reading the directional clues</h2>",
+      "<h2>Mistakes that waste guesses</h2>",
+      "<h2>Questions players keep asking</h2> with at least 4 <h3> question headings"
+    ],
+    word: [
+      "<h2>Today's [GAME] at a glance</h2>",
+      "<h2>What the clues are telling you</h2>",
+      "<h2>When to guess vs when to think</h2>",
+      "<h2>Questions players keep asking</h2> with at least 4 <h3> question headings"
+    ],
+    visual: [
+      "<h2>What you're looking at today</h2>",
+      "<h2>How to read the visual hints</h2>",
+      "<h2>Common wrong approaches</h2>",
+      "<h2>Questions players keep asking</h2> with at least 4 <h3> question headings"
+    ],
+    gamedle: [
+      "<h2>Today's puzzle in context</h2>",
+      "<h2>Which attributes matter most today</h2>",
+      "<h2>When the solver saves you time</h2>",
+      "<h2>Questions players keep asking</h2> with at least 4 <h3> question headings"
+    ],
+    other: [
+      "<h2>Today's [GAME] at a glance</h2>",
+      "<h2>What to pay attention to</h2>",
+      "<h2>Mistakes that cost guesses</h2>",
+      "<h2>Questions players keep asking</h2> with at least 4 <h3> question headings"
+    ]
+  };
+
+  const group = getGameGroup(entry.key);
+  const sections = sectionSets[group] || sectionSets.other;
+  return sections.map(s => s.replace('[GAME]', entry.gameName));
+}
+
+const GAME_CUSTOM_INSTRUCTIONS = {
+  'loldle-answer-today': 'Focus on champion attributes (gender, position, species). League has 170+ champions — emphasize how the solver helps narrow from that massive pool.',
+  'dotadle-answer-today': 'Dota 2 heroes have flexible lane assignments and primary attributes. Mention Strength/Agility/Intelligence/Universal hero differences.',
+  'nerdle-answer-today': 'Nerdle uses equations, not words. Focus on digit coverage, operator placement, and equals sign positioning. Give specific equation-building advice.',
+  'quordle-answer-today': 'Quordle is four Wordle boards sharing guesses. Key insight: guesses must serve all four boards simultaneously.',
+  'worldle-answer-today': 'Worldle shows country silhouettes with directional/percentage hints. Discuss how continent knowledge beats raw geography trivia.',
+  'canuckle-answer-today': 'Canadian-themed words. Answer pool is smaller than Wordle (~2,300 words). Canadian geography, slang, and bilingual terms show up often.',
+  'contexto-answer-today': 'Contexto ranks by semantic similarity, not letter matching. Think about word associations and categories, not letter positions.',
+  'semantle-answer-today': 'Semantle uses Word2vec similarity scores 0-100. The 1000th-closest word usually scores ~10-15. If you hit 30+, you are getting warm.',
+  'betweenle-answer-today': 'Betweenle tells you if the answer comes before or after your guess alphabetically. Treat it like a binary search.',
+  'searchle-answer-today': 'Searchle shows Google autocomplete predictions. Pop culture, current events, and evergreen questions dominate.',
+  'framed-answer-today': 'Framed shows movie stills one frame at a time. Genre recognition matters more than specific film knowledge early on.',
+  'spotle-answer-today': 'Spotle gives clues about a music artist — genre, debut year, group size, gender, nationality.',
+  'colorfle-answer-today': 'Guess the three RGB colors that mix to create a target. Understanding additive color mixing (not paint mixing) is key.',
+  'countryle-answer-today': 'Hints about continent, hemisphere, population, area, temperature, and coordinates. Continent is your strongest first filter.',
+  'globle-answer-today': 'Heat map shows how close your guess is. Start with a central country on each continent to triangulate.',
+  'phoodle-answer-today': 'Food-related words only. Think cooking terms, ingredients, cuisines, and kitchen tools.',
+  'phrazle-answer-today': 'Guess a phrase, not a single word. Common idioms, proverbs, and pop culture quotes dominate.',
+  'waffle-answer-today': 'Rearrange letters into crossing words. Focus on the green (correct) letters first to anchor your solve.',
+  'worgle-answer-today': 'Welsh-language Wordle. W, Y, and DD are very common in Welsh vocabulary.',
+  'colordle-answer-today': 'Guess a named color. Score reflects perceptual distance in color space. Knowing color families narrows faster than random guessing.',
+  'pokedle-answer-today': 'Pokemon answers. Generation, type, evolution stage, and habitat are the key attributes.',
+  'narutodle-answer-today': 'Naruto characters. Village, rank, chakra nature, and debut arc are the strongest filters.',
+  'onepiecedle-answer-today': 'One Piece characters. Crew affiliation, bounty range, devil fruit status, and haki type are key discriminators.',
+  'smashdle-answer-today': 'Smash Bros fighters. Universe, weight class, and jump count are the most reliable filters.',
+  'sportle-answer-today': 'Sports-themed words. Think equipment, positions, venues, and sports terminology.'
+};
+
 function buildGenericPrompt(skillText, entry, targetDate) {
   const formattedDate = formatLongDate(targetDate);
+  const customInstruction = GAME_CUSTOM_INSTRUCTIONS[entry.key];
 
-  return [
+  const lines = [
     'You are writing a daily answer-page article for a real puzzle website. Return JSON only.',
     '',
     'Human writing rules to follow:',
     skillText,
     '',
+    ...BANNED_PHRASE_LIST_LINES,
+    '',
     'Output shape:',
     '{',
     '  "title": "string",',
     '  "summary": "40-70 words",',
-    '  "articleHtml": "valid HTML fragment"',
+    '  "articleHtml": "valid HTML fragment" ',
     '}',
     '',
     'Critical rules:',
-    '- `articleHtml` must be at least 1000 words after HTML tags are stripped.',
+    '- `articleHtml` must be 800-1200 words after HTML tags are stripped.',
     '- Do not use markdown fences.',
     '- Do not mention AI, prompts, models, or automation.',
     '- Do not make up private stats, fake test runs, or first-hand experiences.',
@@ -670,12 +860,8 @@ function buildGenericPrompt(skillText, entry, targetDate) {
     '- Make the article feel like a real daily update tied to the current date and the page purpose.',
     '- Keep the tone natural, specific, and non-corporate.',
     '',
-    'Required section order inside `articleHtml`:',
-    `1. <h2>Today\\'s ${entry.gameName} page at a glance</h2>`,
-    `2. <h2>What to pay attention to in today\\'s ${entry.gameName} puzzle</h2>`,
-    `3. <h2>How to use this page without spoiling more than you want</h2>`,
-    `4. <h2>Common mistakes players make on ${entry.gameName}</h2>`,
-    `5. <h2>Questions players keep asking about ${entry.gameName}</h2> with at least 4 <h3> question headings`,
+    'Required sections inside `articleHtml` (use these exact headings):',
+    ...getGenericSections(entry).map((s, i) => `${i + 1}. ${s}`),
     '',
     'Page facts:',
     `- Game: ${entry.gameName}`,
@@ -684,7 +870,17 @@ function buildGenericPrompt(skillText, entry, targetDate) {
     `- Page notes: ${entry.notes}`,
     '',
     'Keep the copy useful for someone landing on an "answer today" page. Mention hints, reveal behavior, archive links, or solver links when that makes sense for the page type.'
-  ].join('\n');
+  ];
+
+  if (customInstruction) {
+    lines.push(
+      '',
+      'Game-specific writing guidance (use this to make the article feel genuinely tied to this game, not a template):',
+      customInstruction
+    );
+  }
+
+  return lines.join('\n');
 }
 
 function extractMessageContent(choice) {
@@ -725,7 +921,7 @@ function extractMessageContent(choice) {
   return '';
 }
 
-async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
+async function callChatCompletion({ baseUrl, apiKey, model, prompt, temperature = 0.6 }) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS);
 
@@ -738,9 +934,9 @@ async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
         Accept: 'application/json',
         'User-Agent': 'WordSolverX Daily Article Builder'
       },
-      body: JSON.stringify({
+        body: JSON.stringify({
         model,
-        temperature: 0.6,
+        temperature,
         max_tokens: MAX_OUTPUT_TOKENS,
         response_format: {
           type: 'json_object'
@@ -749,7 +945,7 @@ async function callChatCompletion({ baseUrl, apiKey, model, prompt }) {
           {
             role: 'system',
             content:
-              'You write high-signal website copy and must return strictly valid JSON that matches the requested shape.'
+              'You write for a puzzle answer site run by daily players. No fluff, no filler, no corporate speak, no "welcome to" intros. Write like a friend who plays these games every day and is sharing notes, not like a content mill or AI assistant. You must return strictly valid JSON matching the requested shape.'
           },
           {
             role: 'user',
@@ -822,8 +1018,15 @@ function validateArticlePayload(game, payload, targetDate) {
     if (!html.includes(targetDate) && !html.includes(formatLongDate(targetDate))) {
       throw new Error('Wordle HTML does not include the target date.');
     }
-    if (countWords(html) < 1000) {
-      throw new Error('Wordle HTML did not reach the minimum word count.');
+    if (countWords(html) < 900) {
+      throw new Error('Wordle HTML did not reach the minimum word count (900).');
+    }
+    if (countWords(html) > 1300) {
+      throw new Error('Wordle HTML exceeded the maximum word count (1300).');
+    }
+    const bannedPhrase = containsBannedPhrases(html);
+    if (bannedPhrase) {
+      throw new Error(`Wordle HTML contains banned phrase: "${bannedPhrase}".`);
     }
     return {
       title: String(payload.title ?? ''),
@@ -836,8 +1039,15 @@ function validateArticlePayload(game, payload, targetDate) {
   const html = String(payload.articleHtml ?? '');
 
   if (game === 'generic') {
-    if (countWords(html) < 1000) {
-      throw new Error('Generic article HTML did not reach the minimum word count.');
+    if (countWords(html) < 800) {
+      throw new Error('Generic article HTML did not reach the minimum word count (800).');
+    }
+    if (countWords(html) > 1200) {
+      throw new Error('Generic article HTML exceeded the maximum word count (1200).');
+    }
+    const bannedPhrase = containsBannedPhrases(html);
+    if (bannedPhrase) {
+      throw new Error(`Generic article HTML contains banned phrase: "${bannedPhrase}".`);
     }
     return {
       title: String(payload.title ?? ''),
@@ -857,8 +1067,15 @@ function validateArticlePayload(game, payload, targetDate) {
   if (!html.includes(targetDate) && !html.includes(formatLongDate(targetDate))) {
     throw new Error('Colordle HTML does not include the target date.');
   }
-  if (countWords(html) < 1000) {
-    throw new Error('Colordle HTML did not reach the minimum word count.');
+  if (countWords(html) < 900) {
+    throw new Error('Colordle HTML did not reach the minimum word count (900).');
+  }
+  if (countWords(html) > 1300) {
+    throw new Error('Colordle HTML exceeded the maximum word count (1300).');
+  }
+  const bannedPhrase = containsBannedPhrases(html);
+  if (bannedPhrase) {
+    throw new Error(`Colordle HTML contains banned phrase: "${bannedPhrase}".`);
   }
   return {
     title: String(payload.title ?? ''),
@@ -906,8 +1123,10 @@ function takeProviderKeyOrder(provider) {
   return rotateList(provider.apiKeys, startOffset);
 }
 
-async function generateWithProviders({ game, prompt, targetDate, providers, routeKey, laneIndex }) {
+async function generateWithProviders({ game, prompt, targetDate, providers, routeKey, laneIndex, entryKey }) {
   const failures = [];
+  const gameGroup = game === 'wordle' ? 'wordle' : game === 'colordle' ? 'colordle' : getGameGroup(entryKey || '');
+  const temperature = temperatureMap[gameGroup] ?? 0.6;
 
   for (const provider of providers) {
     const rotatedKeys = takeProviderKeyOrder(provider);
@@ -926,7 +1145,8 @@ async function generateWithProviders({ game, prompt, targetDate, providers, rout
               baseUrl: provider.baseUrl,
               apiKey: apiKeyEntry.value,
               model,
-              prompt
+              prompt,
+              temperature
             });
             const parsed = sanitizeModelJson(raw);
             const validated = validateArticlePayload(game, parsed, targetDate);

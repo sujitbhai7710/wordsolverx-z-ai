@@ -13,10 +13,22 @@ export const AUTHORS = [
 
 export const PRESTON_HAYES_AUTHOR_NAME = 'Preston Hayes';
 export const PRESTON_HAYES_AUTHOR_URL = 'https://wordsolverx.com/about#preston-hayes';
-export const PRESTON_HAYES_AUTHOR_IMAGE = '/auther-wordsolverx.webp';
-export const PRESTON_HAYES_AUTHOR_IMAGE_URL = 'https://wordsolverx.com/auther-wordsolverx.webp';
+export const PRESTON_HAYES_AUTHOR_IMAGE = '/author-wordsolverx.webp';
+export const PRESTON_HAYES_AUTHOR_IMAGE_URL = 'https://wordsolverx.com/author-wordsolverx.webp';
 export const PRESTON_HAYES_AUTHOR_DESCRIPTION =
-    'Preston Hayes writes clear daily answer guides and archive pages for WordSolverX, helping readers find the right solution quickly.';
+    'Preston Hayes has been solving and analyzing daily word puzzles since Wordle launched in October 2021. He maintains a daily solving streak across Wordle, Quordle, and Nerdle, and has written over 500 daily puzzle guides. His approach focuses on statistical letter frequency and strategic elimination rather than guessing — the same logic that powers the solvers on this site.';
+export const PRESTON_HAYES_AUTHOR_JOB_TITLE = 'Word Puzzle Analyst';
+export const PRESTON_HAYES_AUTHOR_KNOWS_ABOUT = [
+    'Wordle',
+    'Word Puzzles',
+    'Daily Puzzle Answers',
+    'Puzzle Solver Tools',
+    'Information Theory'
+];
+export const PRESTON_HAYES_AUTHOR_SAME_AS = [
+    'https://www.facebook.com/wordsolverx/',
+    'https://t.me/wordsolverx'
+];
 
 // Deterministically assign an author to a game based on its name character codes
 export function getAuthorForGame(gameName: string): string {
@@ -35,6 +47,9 @@ export function getPrestonHayesAuthorSchema() {
     return generatePersonAuthorSchema(
         PRESTON_HAYES_AUTHOR_NAME,
         PRESTON_HAYES_AUTHOR_URL,
-        PRESTON_HAYES_AUTHOR_IMAGE_URL
+        PRESTON_HAYES_AUTHOR_IMAGE_URL,
+        PRESTON_HAYES_AUTHOR_JOB_TITLE,
+        PRESTON_HAYES_AUTHOR_KNOWS_ABOUT,
+        PRESTON_HAYES_AUTHOR_SAME_AS
     );
 }

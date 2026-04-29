@@ -35,7 +35,7 @@ export const load: PageServerLoad = async () => {
                 headline: pageTitle,
                 datePublished: new Date(today).toISOString(),
                 dateModified: new Date(today).toISOString(),
-                author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolverx.com/about#preston-hayes', 'https://wordsolverx.com/auther-wordsolverx.webp'),
+                author: generatePersonAuthorSchema('Preston Hayes', 'https://wordsolverx.com/about#preston-hayes', 'https://wordsolverx.com/author-wordsolverx.webp'),
                 publisher: { '@type': 'Organization', name: 'WordSolverX' },
                 description: pageDescription,
                 mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://wordsolverx.com/quordle-answer-today' },
@@ -57,3 +57,4 @@ export const load: PageServerLoad = async () => {
         },
     };
 };
+

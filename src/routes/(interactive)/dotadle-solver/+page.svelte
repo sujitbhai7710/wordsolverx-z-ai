@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import GameDleSolverPage from '$lib/components/GameDleSolverPage.svelte';
 </script>
 
@@ -27,7 +29,15 @@
       <p class="text-slate-600 leading-relaxed">
         Release year tracks when the hero was added to Dota 2. The game has heroes dating back to the original Defense of the Ancients mod from the 2000s, but in terms of Dota 2 specifically, release years span from 2013 (the official launch) to the present. Heroes like Anti-Mage and Pudge have been around since the beginning, while heroes like Primal Beast and Ringmaster are recent additions. Release year gives you a timeline to binary search.
       </p>
-    </article>
+    
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>
 
     <article class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8">
       <h2 class="text-2xl font-bold text-slate-900 mb-4">Why Dotadle Stumps League Players</h2>

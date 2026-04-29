@@ -32,7 +32,7 @@
   <div class="container mx-auto px-4 py-8 max-w-4xl">
     <div class="text-center mb-12">
       <h1 class="text-4xl font-extrabold text-slate-900 dark:text-slate-50 mb-4">{data.meta.title}</h1>
-      <p class="text-lg text-slate-600 dark:text-slate-400">Verified Globle hints and the solution for {data.formattedDate}</p>
+      <p class="text-lg text-slate-600 dark:text-slate-400">Today's Globle country and hints for {data.formattedDate}</p>
     </div>
 
     <GlobleCluesSection country={data.country} date={data.formattedDate}>
@@ -168,16 +168,13 @@
       <!-- Past Globle Answers -->
       <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Past Globle Answers: Patterns in the Country Selection
+          Past Globle Answers
         </h2>
         <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Globle selects its daily mystery country from all 195 UN-recognized sovereign states. The selection appears random — there's no discernible pattern linking consecutive days or favoring particular regions. However, because Africa has 54 countries and Asia has 49, these continents naturally appear as answers more frequently than Oceania (14 countries) or North America (23 countries).
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Small countries appear as mystery answers more often than you'd expect. Nations like San Marino, Liechtenstein, and Singapore show up regularly, which makes the game challenging — these countries are easy to overlook on a globe. If you're systematically guessing and keep getting "warm" results in a region but can't find the exact country, try the small ones first.
+          Globle picks from all 195 UN-recognized countries. Africa (54) and Asia (49) show up more often just because they have more countries. Small nations like San Marino, Liechtenstein, and Singapore are the real curveballs — they're nearly invisible on a globe. If you're getting "warm" in a region but can't nail it, try the tiny ones first.
         </p>
         <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          Our Globle archive tracks every daily answer with full geographic metadata. You can use it to study which countries have appeared as answers, how frequently each continent shows up, and which countries are the most common "stumpers" — the ones that take the most guesses on average.
+          The <a href="/globle-archive" class="font-semibold text-teal-600 underline underline-offset-2 hover:text-teal-500">Globle archive</a> has every past answer with coordinates and continent data.
         </p>
       </section>
 
@@ -226,42 +223,6 @@
         </div>
       </section>
 
-      <!-- Globle Statistics -->
-      <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Globle Statistics: Geography by the Numbers
-        </h2>
-        <div class="space-y-4 text-base sm:text-lg text-slate-600 dark:text-slate-400">
-          <div class="grid sm:grid-cols-2 gap-6 my-6">
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">195</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Possible mystery countries</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">All UN-recognized sovereign states</p>
-            </div>
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">~6-12</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Average guesses to solve</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Varies widely by geographic knowledge</p>
-            </div>
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">54</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">African countries</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">The continent with the most countries — appears often</p>
-            </div>
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">Unlimited</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Guesses per puzzle</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No guess limit — take your time</p>
-            </div>
-          </div>
-          <p class="leading-relaxed">
-            By continent, Africa has the most countries (54), followed by Asia (49), Europe (44), North America (23), South America (12), and Oceania (14). This distribution means African and Asian countries appear as mystery answers more frequently than countries from smaller continents. Russia is the largest country by area (17.1 million km²) while Vatican City is the smallest (0.44 km²).
-          </p>
-          <p class="leading-relaxed">
-            Experienced Globle players typically solve each puzzle in 6-12 guesses. New players often need 15-25 guesses, especially when the mystery country is a small nation in Africa or the Pacific Islands. The most commonly missed countries are small island nations (e.g., São Tomé and Príncipe, Comoros, Tonga) and landlocked countries in Central Asia (e.g., Tajikistan, Kyrgyzstan).
-          </p>
-        </div>
-      </section>
 
       <!-- FAQ -->
       <section class="bg-white dark:bg-slate-800 rounded-xl p-6 sm:p-5 sm:p-8 shadow-[0_1px_3px_rgb(0_0_0/0.04)] border border-slate-200 dark:border-slate-700">

@@ -9,3 +9,19 @@ Disallow: /private/
 
 # Primary XML sitemap
 Sitemap: https://wordsolverx.com/sitemap.xml
+
+# AI crawlers
+User-agent: GPTBot
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Disallow: /api/
+
+User-agent: CCBot
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /

@@ -143,8 +143,8 @@
         Betweenle Hints and Answer Today ({data.todaySeoDate})
       </h1>
       <p class="mt-5 max-w-3xl text-base leading-8 text-slate-600">
-        Check the clue cards first, then reveal the official Betweenle answer for puzzle
-        <strong class="font-bold text-slate-900">#{data.todayAnswer.puzzleNumber}</strong> when you are ready.
+        Clues first, answer second. Reveal
+        <strong class="font-bold text-slate-900">#{data.todayAnswer.puzzleNumber}</strong> when you're ready.
       </p>
 
       <div class="mt-6 grid gap-4 sm:grid-cols-3">
@@ -272,138 +272,40 @@
 
   <article class="space-y-8">
     <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-      <h2 class="text-3xl font-black tracking-tight text-slate-900">What is Betweenle?</h2>
+      <h2 class="text-3xl font-black tracking-tight text-slate-900">How Betweenle Actually Works</h2>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-          Betweenle is a daily word puzzle where the game picks a secret word from a predefined list and shows you two boundary words — one that comes just before it alphabetically and one that comes just after it. Your job is to figure out the word that sits between those two boundaries.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          It sounds simple at first, but once you realize how many words share the same alphabetical neighborhood, the challenge becomes real.
-        </p>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-          The game was created as a spin on the Wordle formula, but instead of letter-by-letter deduction, Betweenle tests your vocabulary and your sense of where words sit in the dictionary.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          You do not get color tiles telling you which letters are correct. You get two anchor words and the gap between them — and the answer is hiding somewhere in that gap.
-        </p>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-          Betweenle has built a steady following since launch, partly because the daily format keeps players coming back, and partly because the game is genuinely hard in a satisfying way. There is no substitute for actually knowing words and understanding alphabetical ordering.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          You cannot brute-force your way through it the way you can with some other word games.
-        </p>
-    </section>
-
-    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-      <h2 class="text-3xl font-black tracking-tight text-slate-900">How Betweenle Works</h2>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-        Each day, Betweenle selects one word from its answer list. The game then identifies the two words that sit immediately before and after the answer in alphabetical order. Those boundary words are displayed on screen, and you have to type the word that fits between them.
+        Two boundary words appear on screen. You type the word that fits alphabetically between them. No color tiles, no partial credit — right or wrong. The answer pool is common English words, five to eight letters, and the boundaries are real dictionary neighbors of the answer.
       </p>
       <p class="mt-4 text-lg leading-8 text-slate-600">
-        The daily cycle resets at midnight, matching the standard Wordle schedule for most players. There is one puzzle per day, which keeps the format focused and prevents binge-playing. Every puzzle is assigned a sequential puzzle number, so you can track how far along you are in the archive.
-      </p>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-          Unlike games where you submit multiple guesses and get feedback after each one, Betweenle is more of a single-shot challenge. You see the boundaries, you think about what word could fit, and you submit your answer.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          The feedback is binary — right or wrong. That means preparation and vocabulary knowledge matter more than raw guessing speed.
-        </p>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-        The answer pool is drawn from common English words, typically between five and eight letters. The boundaries themselves are real words from the same pool, which means the gap you are trying to fill is always a real alphabetical space in the dictionary, not an artificial puzzle construction.
+        Today's page gives you clue cards (length, first/last letter, vowel count, repeats) so you can try before revealing. The solver link at the top filters candidates when the gap is wide.
       </p>
     </section>
 
     <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-      <h2 class="text-3xl font-black tracking-tight text-slate-900">Today&apos;s Betweenle Answer — How This Page Works</h2>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-          This page tracks the daily Betweenle puzzle automatically. The clue cards at the top show you the word length, first letter, last letter, vowel count, and whether the answer has repeating letters — all without revealing the word itself.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          That is enough information to make an educated guess if you want to try solving it yourself before looking at the answer.
-        </p>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-          Puzzle numbers increment daily, starting from the game&apos;s launch. If today is puzzle #{data.todayAnswer.puzzleNumber}, yesterday was #{data.todayAnswer.puzzleNumber - 1} and tomorrow will be #{data.todayAnswer.puzzleNumber + 1}.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          The archive section on this page shows the five most recent answers in reverse chronological order, so you can spot patterns or check whether a word you were thinking of has appeared recently.
-        </p>
-      <p class="mt-4 text-lg leading-8 text-slate-600">
-        The Betweenle solver link at the top of the page opens a separate tool where you can enter the boundary words and filter the answer list. That is useful when you want to narrow down candidates without just reading the answer here.
-      </p>
-    </section>
-
-    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-      <h2 class="text-3xl font-black tracking-tight text-slate-900">Strategy Tips for Betweenle</h2>
-      <div class="mt-6 space-y-6">
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-xl font-bold text-slate-900">Memorize common alphabetical neighbors</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            Most Betweenle answers come from common words. If you see CRANE and CREATE as boundaries, the answer is CREAM — and that kind of pattern shows up often. The more you play, the more you will recognize recurring gaps. Keep a mental list of three-letter middle sections that fill common alphabetical spaces.
+      <h2 class="text-3xl font-black tracking-tight text-slate-900">Tips That Actually Help</h2>
+      <div class="mt-6 space-y-4">
+        <div class="rounded-2xl bg-slate-50 p-5">
+          <h3 class="font-bold text-slate-900">Look at the shared prefix first</h3>
+          <p class="mt-2 text-sm leading-7 text-slate-600">
+            If both boundaries start with the same three letters, so does the answer. The clue card tells you first and last letter directly — that usually cuts the possibilities to a handful.
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-xl font-bold text-slate-900">Start with the first and last letters</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            The boundary words share either the same starting letters or sit very close together. If both boundaries start with the same three letters, the answer almost certainly starts with those three letters too. The clue card on this page tells you the first and last letter directly, which narrows the search dramatically.
+        <div class="rounded-2xl bg-slate-50 p-5">
+          <h3 class="font-bold text-slate-900">Recognize recurring gaps</h3>
+          <p class="mt-2 text-sm leading-7 text-slate-600">
+            CRANE → CREAM → CREATE shows up a lot. So do patterns around common five-letter words. The more you play, the more you recognize which alphabetical neighborhoods the game favors.
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-xl font-bold text-slate-900">Count the letters in the gap</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-          If the left boundary is APPLE and the right boundary is APPLY, there is exactly one word that fits (APPLQ is not a word, but APPLY already tells you the answer length).
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          When the gap is wide — say, between DANCE and DRAKE — you need to think about all five- and six-letter words starting with D that fall between those two endpoints alphabetically.
-        </p>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-xl font-bold text-slate-900">Think about prefixes and suffixes</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            Many Betweenle answers share a prefix or suffix with one of the boundary words. If the boundaries are PLAYING and POINTED, the answer likely starts with PL or PO and shares the -ING or -ED ending structure. Pay attention to the morphological patterns, not just the raw alphabetical order.
+        <div class="rounded-2xl bg-slate-50 p-5">
+          <h3 class="font-bold text-slate-900">Think about word endings</h3>
+          <p class="mt-2 text-sm leading-7 text-slate-600">
+            Boundaries often share suffixes. PLAYING and POINTED — the answer probably ends in -ING or -ED and starts with PL or PO. Morphological patterns matter as much as raw alphabetical order.
           </p>
         </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-xl font-bold text-slate-900">Use the solver for hard puzzles</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            When the gap between the two boundary words is large and you cannot think of anything that fits, the Betweenle solver on WordSolverX can filter candidates by letter count, starting letter, and alphabetical position. It is faster than scrolling through a dictionary and teaches you which words sit in common gaps.
-          </p>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-xl font-bold text-slate-900">Check recent answers for repeats</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            Betweenle&apos;s answer pool is finite, so words do eventually repeat. The recent answers section on this page shows the last five days. If you have been playing for a while, you may recognize a pattern — certain words like CREAM, GRAPE, and FLAME show up more often than you would expect.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-      <h2 class="text-3xl font-black tracking-tight text-slate-900">Betweenle vs Similar Word Games</h2>
-      <div class="mt-6 grid gap-6 sm:grid-cols-2">
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-lg font-bold text-slate-900">Betweenle vs Wordle</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-          Wordle gives you six guesses with letter-by-letter color feedback. Betweenle gives you two boundary words and no intermediate feedback. Wordle rewards pattern recognition and letter frequency analysis.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Betweenle rewards vocabulary depth and alphabetical awareness. If you are good at Wordle, Betweenle will still challenge you because the skill set is different.
-        </p>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-lg font-bold text-slate-900">Betweenle vs Absurdle</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            Absurdle actively works against you, changing the target word as you guess. Betweenle is more straightforward — the target word is fixed from the start, and the boundaries do not change. Absurdle can feel adversarial, while Betweenle feels like a fair puzzle where the challenge comes from the word itself.
-          </p>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-lg font-bold text-slate-900">Betweenle vs Contexto</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            Contexto uses word embeddings to show you how semantically close your guesses are to the target. Betweenle uses pure alphabetical ordering. Contexto is about meaning; Betweenle is about spelling order. Both are daily games, but they test completely different mental skills.
-          </p>
-        </div>
-        <div class="rounded-2xl bg-slate-50 p-6">
-          <h3 class="text-lg font-bold text-slate-900">Betweenle vs Weaver</h3>
-          <p class="mt-2 text-base leading-7 text-slate-600">
-            Weaver gives you a starting word and a target word, and you change one letter at a time to get from one to the other. Betweenle instead gives you two adjacent words and asks you to find what sits between them. Weaver is about letter transformation chains; Betweenle is about alphabetical proximity and vocabulary.
+        <div class="rounded-2xl bg-slate-50 p-5">
+          <h3 class="font-bold text-slate-900">Use the solver when the gap is wide</h3>
+          <p class="mt-2 text-sm leading-7 text-slate-600">
+            When boundaries are far apart (DANCE → DRAKE), you need to think through all words starting with D in that range. The solver does this instantly — faster than scrolling a dictionary.
           </p>
         </div>
       </div>

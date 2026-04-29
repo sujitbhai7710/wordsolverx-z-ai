@@ -25,6 +25,8 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://wordsolverx.com/canuckle-answer-today" />
   <meta property="og:image" content={data.meta?.featuredImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content={`Canuckle daily word solution for ${formattedDate}`} />
   <meta property="og:site_name" content="WordSolverX" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -34,6 +36,14 @@
   {#if data.schemas}
     {@html `<script type="application/ld+json">${data.schemas}</script>`}
   {/if}
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: data.meta?.title ?? 'Canuckle Answer Today',
+    description: data.meta?.description ?? '',
+    url: 'https://wordsolverx.com/canuckle-answer-today',
+    dateModified: data.todayPuzzle?.date || new Date().toISOString().split('T')[0]
+  })}</script>`}
 </svelte:head>
 
 {#if data.error || !data.todayPuzzle}
@@ -45,7 +55,7 @@
       <p class="text-sm font-semibold uppercase tracking-widest text-teal-600">Canuckle</p>
       <h1 class="mt-2 text-2xl font-bold text-slate-900">Data is temporarily unavailable</h1>
       <p class="mt-3 text-slate-500">
-        We could not load a verified Canuckle answer for {formattedDate} right now. You can still browse the archive or use the solver while the latest data refreshes.
+        Today's Canuckle answer isn't available yet. Browse the archive or try the solver while you wait.
       </p>
       <div class="mt-6 flex flex-wrap justify-center gap-3">
         <a href="/canuckle-archive" class="inline-flex items-center rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-teal-700 transition-colors">

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -148,69 +150,29 @@
 </section>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
   <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
     <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Searchle Archive Matters</h2>
     <div class="prose prose-slate dark:prose-invert max-w-none">
-      <p>
-        The Searchle archive captures a unique form of daily puzzle entertainment based on Google autocomplete predictions. Unlike traditional word or number games, Searchle challenges players to guess what Google's autocomplete algorithm suggests for a given search prompt. This makes each puzzle a window into collective search behavior and popular culture, and the archive preserves this fascinating data for retrospective study and analysis.
-      </p>
-      <p>
-        The archive is valuable because Searchle answers reflect real-time trends in what people search for online. Each past answer represents the most popular autocomplete suggestion at the time the puzzle was created, providing a snapshot of cultural interests, trending topics, and collective curiosity. Over time, the archive becomes a chronological record of how search trends evolve, making it interesting not just for puzzle enthusiasts but also for anyone curious about internet culture and information-seeking behavior.
-      </p>
-      <p>
-        For regular Searchle players, the archive helps develop an intuitive understanding of how autocomplete algorithms work. By studying past prompt-answer pairs, players learn to anticipate which completions Google tends to favor, which categories of suggestions appear most frequently, and how the autocomplete system handles ambiguous or open-ended prompts. This pattern recognition skill directly translates to improved performance on future daily puzzles.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Searchle Answers Work</h3>
-      <p>
-        Searchle presents players with a partial search prompt, typically a phrase that could be completed in multiple ways. The challenge is to guess what Google's autocomplete feature suggests as the most likely completion. Players have a limited number of guesses, and the game provides feedback to help narrow down the possibilities. The correct answer is the autocomplete suggestion that Google's algorithm ranks highest for the given prompt.
-      </p>
-      <p>
-        The answer for each day is captured at the time the puzzle is created and remains fixed for that date. Google's autocomplete suggestions can change over time as search trends evolve, but the Searchle archive preserves the answer that was correct on the specific day the puzzle was active. This temporal accuracy makes the archive a genuine historical record rather than a real-time reflection of current autocomplete behavior.
-      </p>
-      <p>
-        Each archive entry records both the prompt and the confirmed answer. The prompt gives context for what players were asked to predict, while the answer shows what Google's autocomplete actually suggested. This paired format makes the archive self-contained and informative even without access to the live game interface.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Searchle Answers</h3>
-      <p>
-        The Searchle archive contains many memorable prompt-answer pairs that surprised players with unexpected or amusing autocomplete suggestions. Puzzles with ambiguous prompts that could plausibly complete in multiple directions tend to be the most challenging, as players must predict which direction Google's algorithm will favor. Answers that reveal surprising popular search trends or unexpected cultural preferences often generate the most community discussion.
-      </p>
-      <p>
-        Seasonal and event-driven patterns are visible throughout the archive. During holidays, sporting events, or cultural moments, the autocomplete suggestions tend to shift to reflect the topics people are actively searching for. This temporal variation makes the archive a unique record of how collective attention flows across different topics throughout the year.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Searchle Archive</h3>
-      <p>
-        Navigate the archive using the calendar above to view any past Searchle prompt and its corresponding autocomplete answer. Each entry displays the full prompt text and the confirmed answer. Study the archive to develop a sense for how Google autocomplete tends to complete various types of prompts, and use this knowledge to improve your prediction accuracy on future puzzles.
-      </p>
+      <p>Every Searchle prompt and answer since launch. See what people are searching for.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Searchle Works</h3>
+      <p>You see a Google autocomplete prompt and guess what people actually search for. The answers reflect real search trends — pop culture, current events, and evergreen questions dominate. There's no letter-matching or color feedback like Wordle. You either know what people search for or you don't.</p>
 
       <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How does Searchle get its autocomplete answers?</h4>
-      <p>
-        Searchle captures Google's autocomplete suggestions at the time each puzzle is created. The answers reflect what Google's algorithm predicted as the most likely search completion for the given prompt on that specific date.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Do Searchle answers change over time?</h4>
-      <p>
-        The archive records the answer that was correct on the specific day the puzzle was active. Google's actual autocomplete suggestions may change over time, but the archived answer remains fixed, making it a historical record of what was correct when the puzzle was live.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can I use the archive to predict future Searchle answers?</h4>
-      <p>
-        You can use the archive to understand patterns in autocomplete behavior, but Searchle answers are ultimately determined by real-time search trends that are difficult to predict. The archive is best used to develop general intuition about autocomplete rather than as a prediction tool for specific future puzzles.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What makes Searchle different from other daily puzzle games?</h4>
-      <p>
-        Searchle uniquely tests knowledge of internet culture and search behavior rather than vocabulary, math, or geography. The answers reflect collective online behavior rather than fixed answer lists, making each puzzle a small window into what the internet is thinking about.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How far back does the Searchle archive go?</h4>
-      <p>
-        The archive covers Searchle answers from the game's launch in June 2023 through the present day. New entries are added daily as new puzzles are released.
-      </p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Are the prompts based on real Google data?</h4>
+      <p>Yes — the prompts and answers come from actual Google autocomplete predictions.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can I search the archive by prompt?</h4>
+      <p>You can browse by date. If you remember the rough timeframe, you'll find the prompt and answer for that day.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Why are some answers surprising?</h4>
+      <p>Because what people actually search for and what you think they search for are often different things. That's the whole fun of the game.</p>
     </div>
   </div>
-</article>
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -169,69 +171,29 @@
 </section>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
   <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
     <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Globle Archive Matters</h2>
     <div class="prose prose-slate dark:prose-invert max-w-none">
-      <p>
-        The Globle archive preserves the complete history of daily country-guessing challenges from January 2022 to the present. Globle distinguishes itself from other geography puzzle games through its interactive map-based feedback system, where players guess countries and see a color-coded proximity indicator that reveals how close their guess is to the correct answer. The archive captures not just the daily answer but also the geographical context, including continent, subregion, country code, and precise coordinates.
-      </p>
-      <p>
-        For geography enthusiasts, the archive is an extraordinary learning resource. Each entry represents a country with its full geographical metadata, and browsing through past answers is like taking a guided tour of the world's nations in chronological order. The archive reveals how Globle balances its country selection across continents and regions, ensuring players encounter the full diversity of global geography over time. This balanced approach makes the archive particularly valuable for identifying gaps in your own geographical knowledge.
-      </p>
-      <p>
-        The interactive clues section available for each archive entry provides additional context beyond the raw answer. Players can review not just which country was the answer, but understand the geographical reasoning that would lead to that answer. This transforms the archive from a simple answer list into a genuine geography learning tool that builds spatial awareness and factual knowledge simultaneously.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Globle Answers Work</h3>
-      <p>
-        Globle presents players with a blank world map and challenges them to identify a mystery country. After each guess, the guessed country is colored on the map based on its proximity to the answer: warmer colors like red and orange indicate countries that are close, while cooler colors indicate greater distance. This visual feedback system allows players to use geographical reasoning to narrow down the answer through successive guesses.
-      </p>
-      <p>
-        The answer pool includes all recognized sovereign nations. Each daily puzzle selects one country deterministically, and the archive records this selection along with full geographical metadata. The continent, subregion, and coordinates stored with each entry help players understand not just what the answer was, but where it sits in the broader context of world geography.
-      </p>
-      <p>
-        Globle's proximity-based feedback system means that players with strong geographical intuition can often solve the puzzle in just a few guesses by starting with a strategically located country and reading the color gradients to determine the direction and approximate distance to the answer. The archive allows players to replay past puzzles mentally and evaluate whether their strategy would have worked.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Globle Answers</h3>
-      <p>
-        The Globle archive contains answers from every inhabited continent, with particularly interesting entries including small island nations, landlocked countries in complex regions, and nations with unusual geographical characteristics. Countries that are geographically isolated or located in regions with many small neighboring states tend to produce the most challenging puzzles and the most educational archive entries.
-      </p>
-      <p>
-        The archive shows that Globle provides good coverage of all world regions, with entries from Africa, Asia, Europe, the Americas, and Oceania appearing regularly. This geographic diversity ensures that dedicated archive browsers develop a well-rounded understanding of global geography over time.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Globle Archive</h3>
-      <p>
-        Use the calendar above to navigate to any date and view the Globle answer for that day. Each entry displays the country name, continent, subregion, country code, and coordinates. The clues section provides additional geographical context. Study the archive regularly to build familiarity with countries you might not encounter in daily life.
-      </p>
+      <p>Every Globle country since launch. Practice your geography with past answers.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Globle Works</h3>
+      <p>You guess a country and see how close it is on a heat map. Closer guesses turn warmer (red/orange), farther guesses stay cooler (blue/green). No word puzzles here — it's pure geography. Start with a central country on each continent to triangulate the region fast.</p>
 
       <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How does Globle's color-coded proximity system work?</h4>
-      <p>
-        After each guess, Globle colors the guessed country on the world map based on its distance from the correct answer. Red indicates very close proximity, orange and yellow indicate moderate distance, and blue and green indicate that the guess is far from the answer. This gradient system gives players visual guidance for their next guess.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Is the Globle archive different from the Worldle or Countryle archives?</h4>
-      <p>
-        Yes. While all three games involve country guessing, Globle uses a unique map-based proximity feedback system. The Globle archive preserves the specific geographical metadata and clue structure unique to Globle's gameplay format, distinguishing it from the other geography puzzle archives.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the archive include coordinates for every answer?</h4>
-      <p>
-        Yes. Every entry in the Globle archive includes the latitude and longitude coordinates of the answer country's geographic center. This allows players to locate each country precisely on a map and understand its spatial relationship to neighboring nations.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can I use the archive to practice my Globle strategy?</h4>
-      <p>
-        Absolutely. Review past answers and think about what your opening guess would have been and how the color feedback would have guided your subsequent guesses. This mental rehearsal helps refine your strategic approach and improves your geographical reasoning skills.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How far back does the Globle archive go?</h4>
-      <p>
-        The archive covers Globle answers from January 2022 to the present day, providing a complete record of the game's entire history. New entries are added daily as new puzzles are released.
-      </p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How far back does the archive go?</h4>
+      <p>Since Globle launched. Every country is stored with its date.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does Globle use distance or direction?</h4>
+      <p>Distance only, shown as a color gradient. Unlike Worldle, there's no directional arrow — you have to read the heat map.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Which countries come up most?</h4>
+      <p>Browse the archive to see. Larger countries and well-known nations appear more often than tiny island states.</p>
     </div>
   </div>
-</article>
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>

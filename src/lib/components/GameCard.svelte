@@ -44,7 +44,7 @@
 				{/if}
 			</div>
 
-			<h2 class="text-lg font-bold text-slate-900 dark:text-slate-50 mb-1.5 tracking-tight">{name}</h2>
+			<h3 class="text-lg font-bold text-slate-900 dark:text-slate-50 mb-1.5 tracking-tight">{name}</h3>
 			<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
 				{description}
 			</p>

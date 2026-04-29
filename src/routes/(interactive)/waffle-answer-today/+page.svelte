@@ -238,39 +238,6 @@
       </div>
     </section>
 
-    <section class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-slate-100">
-      <h2 class="text-3xl font-bold text-slate-900 mb-6">
-        Waffle vs Other Daily Word Games
-      </h2>
-      <div class="space-y-6 text-lg text-slate-600">
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
-            <h3 class="text-xl font-bold text-slate-900 mb-3">Waffle vs Wordle</h3>
-            <p class="text-slate-600">
-              Wordle gives you a blank slate and asks you to guess a single five-letter word in six tries. Waffle gives you a scrambled grid and asks you to rearrange letters into six words in 15 swaps. Wordle tests vocabulary and letter-pattern recognition. Waffle tests spatial reasoning and planning. Both are daily, both are addictive, but they exercise different cognitive skills entirely.
-            </p>
-          </div>
-          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
-            <h3 class="text-xl font-bold text-slate-900 mb-3">Waffle vs Crossword Puzzles</h3>
-            <p class="text-slate-600">
-              Traditional crosswords give you clues and you fill in words from scratch. Waffle gives you all the letters and you rearrange them. Crosswords test general knowledge and vocabulary breadth. Waffle tests logical thinking and pattern recognition. A strong crossword solver might struggle with Waffle at first because the skill set is different — you are not recalling words, you are deducing placements.
-            </p>
-          </div>
-          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
-            <h3 class="text-xl font-bold text-slate-900 mb-3">Waffle vs Spelling Bee</h3>
-            <p class="text-slate-600">
-              Spelling Bee asks you to find as many words as possible from a set of seven letters. Waffle asks you to arrange a specific set of letters into exactly six predetermined words. Spelling Bee is open-ended and creative. Waffle is closed-ended and analytical. If you enjoy the satisfaction of finding order in chaos, Waffle delivers that feeling more reliably.
-            </p>
-          </div>
-          <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
-            <h3 class="text-xl font-bold text-slate-900 mb-3">Who Is Waffle Best For?</h3>
-            <p class="text-slate-600">
-              Waffle appeals most to people who enjoy puzzles with clear, deterministic solutions. If you like Sudoku, chess puzzles, or logic grids, Waffle will feel right at home in your daily routine. It does not reward luck or wide vocabulary — it rewards careful analysis and efficient planning. That makes it one of the most skill-based daily word games available right now.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-3xl p-8 border border-amber-100">
       <h2 class="text-3xl font-bold text-slate-900 mb-6">

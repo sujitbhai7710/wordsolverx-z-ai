@@ -1,5 +1,6 @@
 <script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import { formatPopulation, formatTemperature } from '$lib/countryle';
@@ -342,51 +343,13 @@
         </div>
       </section>
 
-      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-        <h2 class="text-3xl font-black tracking-tight text-slate-900">Countryle vs Similar Geography Games</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-2">
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Countryle vs Worldle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Worldle shows you a country silhouette and you guess based on shape recognition. Countryle gives you data points instead — population, area, temperature. Worldle tests visual geography memory; Countryle tests quantitative reasoning.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Some people are much better at one than the other, depending on whether they remember country shapes or country statistics better.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Countryle vs Globle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Globle uses an interactive world map where you click to guess and the map highlights how close you were. Countryle uses no map at all — just text comparisons. Globle is more visual and intuitive; Countryle is more analytical.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Both track distance, but Countryle adds the population and temperature dimensions that Globle lacks.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Countryle vs Flagle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-              Flagle shows you a flag and you guess the country. The skill is recognizing national flags from partial reveals. Countryle does not use flags at all — the clues are entirely numerical and categorical. Flagle tests flag knowledge; Countryle tests statistical knowledge about countries.
-            </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Which geography game should you play daily?</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          If you enjoy maps and spatial reasoning, Worldle or Globle. If you enjoy data and statistics, Countryle. If you know your flags, Flagle. They are different enough that playing two or three per day does not feel repetitive.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          This page covers Countryle specifically, but the WordSolverX archive hub links to answer pages for all four games.
-        </p>
-          </div>
-        </div>
-      </section>
     </article>
 
     <div class="mt-8">
       <AuthorCard
-        name="Preston Hayes"
-        image="/auther-wordsolverx.webp"
-        description="Preston Hayes reviews WordSolverX geography answer pages and solver behavior so daily country pages stay accurate, readable, and easy to verify."
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
       />
     </div>
 
@@ -395,3 +358,4 @@
     </div>
   </div>
 </div>
+

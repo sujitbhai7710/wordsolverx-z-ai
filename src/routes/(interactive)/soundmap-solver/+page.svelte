@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import { onMount } from 'svelte';
         import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
         import { browser } from '$app/environment';
@@ -790,7 +792,15 @@
                                         />
                                 </label>
                         </div>
-                </main>
+                
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </main>
 
                 <div class="max-w-6xl mx-auto px-4 pb-12">
                         <div class="rounded-3xl border border-slate-200 bg-white p-2 shadow-xl"><FAQSection {faqs} /></div>

@@ -39,6 +39,7 @@ export const EVERGREEN_STATIC_ROUTES = [
   '/countryle-solver',
   '/disclaimer',
   '/dotadle-solver',
+  '/editorial-policy',
   '/guides',
   '/hangman-solver',
   '/kanoodle-solver',

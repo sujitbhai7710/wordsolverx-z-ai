@@ -91,7 +91,7 @@
     author: generatePersonAuthorSchema(
       'Preston Hayes',
       'https://wordsolverx.com/about#preston-hayes',
-      'https://wordsolverx.com/auther-wordsolverx.webp'
+      'https://wordsolverx.com/author-wordsolverx.webp'
     )
   });
 </script>
@@ -168,7 +168,7 @@
     <div class="bg-white border border-slate-200 rounded-2xl shadow-lg p-6 mb-8">
       <h2 class="text-xl font-bold text-slate-900">Need an older Searchle answer?</h2>
       <p class="mt-3 text-slate-600">
-        Older Searchle prompts and answers now live on the dedicated archive page instead of this today page.
+        Looking for an older Searchle answer? Head to the archive.
       </p>
       <div class="mt-5 flex flex-wrap gap-3">
         <a
@@ -416,3 +416,4 @@
 
   <FAQSection {faqs} />
 </div>
+

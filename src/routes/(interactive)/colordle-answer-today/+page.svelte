@@ -100,7 +100,7 @@
           Colordle Answer Today ({answerDateLabel})
         </h1>
         <p class="mx-auto max-w-3xl text-lg leading-8 text-slate-600">
-          Verified Colordle hints, the exact color name, and the matching hex code for <span class="font-semibold text-indigo-600">{answerDateLabel}</span>.
+          Today's Colordle color, hex code, and hints for <span class="font-semibold text-indigo-600">{answerDateLabel}</span>.
         </p>
       </header>
 
@@ -116,7 +116,7 @@
               <h2 class="mt-2 text-2xl font-bold text-slate-900">Fresh nudges before you peek</h2>
             </div>
             <p class="max-w-xl text-sm leading-6 text-slate-500">
-              These are AI-written helper hints layered on top of the logic-based clue card above. They do not replace the puzzle math.
+              Extra hints from our editorial team to nudge you in the right direction.
             </p>
           </div>
           <div class="mt-6 grid gap-3 md:grid-cols-2">
@@ -161,7 +161,7 @@
               <h2 class="mt-2 text-3xl font-bold text-slate-900">How the existing guess logic narrows today&apos;s color</h2>
               <p class="mt-3 text-lg leading-8 text-slate-600">
                 {generatedArticle?.summary ??
-                  `The clue card above handles the logical side of the puzzle. Below that, we keep a real-world solve path based on contrast, hue family, and the same score math the page already uses.`}
+                  `The clue card above handles the logical side of the puzzle. Below is a solve path based on contrast, hue family, and the same scoring the page already uses.`}
               </p>
             </div>
             <div class="rounded-3xl border border-indigo-100 bg-indigo-50 px-5 py-4 text-sm text-indigo-900 shadow-sm lg:w-72">
@@ -178,7 +178,7 @@
             <div class="mt-8 rounded-3xl border border-slate-100 bg-slate-50 p-6">
               <p class="text-sm uppercase tracking-[0.24em] text-slate-500">Guess trail</p>
               <p class="mt-2 text-base leading-7 text-slate-600">
-                Today&apos;s puzzle was <strong class="text-slate-900">{data.gameNarrative.difficultyLabel}</strong>. The path below is generated from the page&apos;s own deterministic color logic, not from the AI article text.
+                Today&apos;s puzzle was <strong class="text-slate-900">{data.gameNarrative.difficultyLabel}</strong>. The path below is generated from the page&apos;s own deterministic color logic, based on contrast, hue family, and the same scoring the page already uses.
               </p>
               <div class="mt-6 space-y-4">
                 {#each data.gameNarrative.guesses as guess, i}
@@ -295,15 +295,7 @@
               </div>
             </details>
 
-            <details class="group rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
-              <summary class="flex cursor-pointer items-center justify-between p-5 font-semibold text-slate-900">
-                <span>Why keep the logic-based hints separate from the AI article?</span>
-                <FiChevronDown class="text-slate-500 transition-transform group-open:rotate-180" />
-              </summary>
-              <div class="px-5 pb-5 text-slate-600 leading-7">
-                The clue card and the guess trail come from deterministic color math already built into the site. The article text is there to explain and humanize the page, not to replace the underlying scoring logic.
-              </div>
-            </details>
+            
 
             <details class="group rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
               <summary class="flex cursor-pointer items-center justify-between p-5 font-semibold text-slate-900">
@@ -321,58 +313,19 @@
           <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600">Game overview</p>
           <h2 class="mt-2 text-3xl font-bold text-slate-900">What is Colordle?</h2>
           <p class="mt-4 text-lg leading-8 text-slate-600">
-          Colordle is a daily color-guessing game where you try to identify a secret color in as few guesses as possible.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          Each day, the game picks a target color from a large palette of named colors, and you submit guesses by typing color names like "crimson," "sky blue," or "sage." After each guess, the game returns a percentage score indicating how perceptually close your guess is to the target — 100% means an exact match, while lower scores tell you how far off you are in terms of hue, saturation, and lightness.
-        </p>
+            Colordle picks a named color each day and you guess what it is. Type color names like "crimson" or "sage" and get back a percentage showing how perceptually close your guess is. The pool is roughly 150-200 named colors from the CSS spec — everything from "red" to "cerulean" to "gainsboro."
+          </p>
           <p class="mt-4 text-lg leading-8 text-slate-600">
-          The game launched in 2022 during the wave of Wordle-inspired daily puzzle games. While most clones stuck to word-guessing mechanics, Colordle carved out its own niche by turning color perception into a competitive daily challenge.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          The color pool draws from named colors in the CSS specification and extended palettes — roughly 150 to 200 distinct colors ranging from everyday names like "red" and "blue" to more specific shades like "burnt sienna," "cerulean," and "chartreuse."
-        </p>
-          <p class="mt-4 text-lg leading-8 text-slate-600">
-          Colordle attracts a different audience than word games. Designers, artists, photographers, and anyone who works with color professionally tend to perform well because they already have a trained eye for hue differences and naming precision.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          The game has built a steady player base of roughly 30,000 daily players, and the community around it shares strategies about which guess colors provide the most useful feedback — a concept called "entropy maximizing" that mirrors the same theory Wordle players use for starter words.
-        </p>
-          <p class="mt-4 text-lg leading-8 text-slate-600">
-          What makes Colordle uniquely addictive is that the difficulty varies enormously from day to day. Some targets are obvious — "olive" or "lavender" have distinctive hues that experienced players can nail in two or three guesses.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          Other days, the answer is a subtle shade like "misty rose" or "gainsboro" that sits very close to multiple other colors on the spectrum, forcing you to make careful distinctions between near-identical candidates.
-        </p>
+            Some days the answer is obvious ("olive" in two guesses). Other days it's a subtle shade like "misty rose" that sits near multiple other colors. That variance is what keeps it interesting.
+          </p>
         </section>
 
         <section id="how-colordle-works" class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
           <p class="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600">Rules and mechanics</p>
           <h2 class="mt-2 text-3xl font-bold text-slate-900">How Colordle Works</h2>
           <p class="mt-4 text-lg leading-8 text-slate-600">
-          Each day at midnight, Colordle selects one target color from its palette and assigns it a sequential puzzle number. When you visit the game, you see a color input field and a guess history area.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          You type a color name, submit it, and the game calculates a perceptual similarity score using an algorithm based on CIELAB color distance — the same mathematical model that scientists use to quantify how different two colors look to the human eye.
-        </p>
-          <p class="mt-4 text-lg leading-8 text-slate-600">
-          The scoring system is not based on hex code proximity. Two colors can have very different hex values but look nearly identical to the eye (depending on your monitor calibration), while two colors with similar hex values can look quite different in saturation or lightness.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          Colordle accounts for this by using perceptual color distance, which is why a guess of "navy" might score 85% against "dark blue" even though the hex values are far apart.
-        </p>
-          <p class="mt-4 text-lg leading-8 text-slate-600">
-          The answer format is always a color name paired with a hex code. Today&apos;s answer, for example, is <strong class="text-slate-900">{data.color.name}</strong> with the hex value <span class="font-mono text-indigo-600">{data.color.hex}</span>. The puzzle number for today is <strong class="text-slate-900">#{data.dayNum}</strong>, and each puzzle number increments by one daily from the game&apos;s original launch date.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          The reset happens at midnight in the game&apos;s server timezone, which aligns with UTC for most players.
-        </p>
-          <p class="mt-4 text-lg leading-8 text-slate-600">
-          There is no hard guess limit, but the game tracks your performance based on how many guesses you needed. Most players solve the daily color in three to six guesses.
-        </p>
-        <p class="mt-4 text-lg leading-8 text-slate-600">
-          Getting it in one or two guesses is considered excellent and usually means the target was a common, distinctive color that is easy to identify from a distance on the color spectrum.
-        </p>
+            Type a color name, get back a perceptual similarity score. The scoring uses CIELAB color distance — not hex proximity. That means "navy" can score 85% against "dark blue" even with very different hex values. Today's answer is <strong class="text-slate-900">{data.color.name}</strong> (<span class="font-mono text-indigo-600">{data.color.hex}</span>), puzzle #{data.dayNum}. Resets at midnight UTC. No guess limit, but most people solve in 3-6 guesses.
+          </p>
         </section>
 
         <section id="colordle-strategy" class="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">

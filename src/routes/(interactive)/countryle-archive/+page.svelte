@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import { formatPopulation, formatTemperature } from '$lib/countryle';
   import { getCountryleArchive, getCountryleArchiveDates } from '$lib/countryle-data';
@@ -97,65 +99,12 @@
       </article>
     </section>
 
-    <!-- SEO Article Section -->
-    <article class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
-      <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Countryle Archive Matters</h2>
-      <div class="prose prose-slate dark:prose-invert max-w-none">
-        <p>
-          The Countryle archive is an indispensable resource for geography enthusiasts and daily puzzle players who want to deepen their knowledge of world countries. Each entry in the archive contains not just the country name, but rich geographical data including continent, hemisphere, population, surface area, average temperature, and precise coordinates. This makes the archive far more than a simple answer list; it is a comprehensive geographical reference tool that pairs perfectly with the daily puzzle experience.
-        </p>
-        <p>
-          Studying the archive reveals patterns in how Countryle selects its daily answers. The game draws from all recognized countries and territories, giving players exposure to the full diversity of the world's nations. By reviewing past answers, players can identify which continents and regions appear most frequently, learn about lesser-known countries they might not encounter in everyday life, and build a mental map of global geography that improves both their puzzle performance and their real-world knowledge.
-        </p>
-        <p>
-          The archive is particularly valuable for students and educators. Geography teachers can use the archive to create daily warm-up exercises, quiz students on country facts, or design lessons around the diverse countries that appear in the puzzle rotation. The detailed metadata for each entry, including population figures and temperature data, provides ready-made lesson material that connects puzzle-solving with curriculum objectives.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Countryle Answers Work</h3>
-        <p>
-          Countryle challenges players to guess a mystery country based on geographical clues provided after each guess. After each attempt, the game reveals how far the guessed country is from the answer in terms of distance, direction, and sometimes additional metrics like population comparison. This feedback system allows players to narrow down the possibilities geographically, using their knowledge of world geography to triangulate the correct answer.
-        </p>
-        <p>
-          The answer pool includes all internationally recognized countries and some territories. Each daily puzzle selects one country from this pool, and the archive records the complete dataset for each entry including the country name, continent, hemisphere classification, population, surface area, average temperature, and GPS coordinates. This deterministic selection process means the archive is a complete and reliable record of every past puzzle solution.
-        </p>
-        <p>
-          The game operates on a daily cycle with a fixed mapping between dates and answers. Every player worldwide receives the same country on the same date, and the archive preserves this shared experience. The geographic metadata stored with each entry makes the archive uniquely informative compared to simpler puzzle answer databases.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Countryle Answers</h3>
-        <p>
-          The Countryle archive features a wide range of countries spanning every continent and region of the world. Particularly memorable entries often include smaller or lesser-known nations that surprise players who are more familiar with major world countries. Island nations, landlocked countries, and nations with unique geographical characteristics tend to generate the most interesting puzzle experiences and the most educational archive entries.
-        </p>
-        <p>
-          Patterns in the archive show that the game provides balanced coverage across continents, ensuring players encounter countries from Africa, Asia, Europe, North America, South America, and Oceania over time. This geographic diversity is one of Countryle's greatest strengths as a learning tool, and the archive makes this diversity visible and explorable.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Countryle Archive</h3>
-        <p>
-          Use the date picker and country list above to navigate the archive. Select any past date to view the complete country profile for that day's puzzle, including all geographical metadata. The Google Maps link on each entry allows you to explore the country visually, deepening your geographic understanding of each answer.
-        </p>
-
-        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How does Countryle calculate distance between guesses?</h4>
-        <p>
-          Countryle uses the great-circle distance between the capital or geographic center of the guessed country and the target country. The direction clue helps players understand which way to "move" their next guess on the map.
-        </p>
-
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the archive include all geographical metadata?</h4>
-        <p>
-          Yes. Each archive entry includes the country name, continent, hemisphere, population, surface area, average temperature, coordinates, and a direct Google Maps link. This makes the archive a comprehensive geographical reference.
-        </p>
-
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can the archive help me improve at geography?</h4>
-        <p>
-          Absolutely. Regular review of past answers, especially the geographical metadata, helps build mental models of world geography. Paying attention to population figures, surface areas, and temperature data reinforces factual knowledge that translates directly to improved puzzle performance.
-        </p>
-
-        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Is the Countryle archive different from the Worldle or Globle archives?</h4>
-        <p>
-          Yes. While all three games involve guessing countries, they use different clue mechanisms and display different metadata. The Countryle archive specifically preserves the distance-based clue system and detailed statistics unique to Countryle's gameplay format.
-        </p>
-      </div>
-    </article>
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
   </div>
 </div>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import { fetchArchivePayload } from '$lib/archive-client';
@@ -157,69 +159,29 @@
 </section>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
   <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
     <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Phrazle Archive Matters</h2>
     <div class="prose prose-slate dark:prose-invert max-w-none">
-      <p>
-        The Phrazle archive is a comprehensive record of phrase-guessing puzzle answers, uniquely offering two daily challenges with separate morning and afternoon solutions. This dual-puzzle format makes the Phrazle archive particularly rich, as each date contains two distinct phrase answers that test different aspects of language knowledge, from common idioms and proverbs to pop culture references and well-known quotations.
-      </p>
-      <p>
-        Studying the Phrazle archive helps players understand the types of phrases that appear most frequently in the game's answer pool. Unlike word-based puzzles where individual letters are the focus, Phrazle challenges players to think at the phrase level, considering word patterns, common collocations, and the structural conventions of idiomatic English. The archive reveals which categories of phrases recur, helping players develop better intuition for their daily guesses.
-      </p>
-      <p>
-        The archive is also a valuable language learning resource. Each entry represents a recognized phrase in the English language, and browsing through past answers exposes players to idiomatic expressions, common sayings, and familiar quotations they might not encounter in everyday conversation. This makes the archive useful for English language learners, writers seeking inspiration, and anyone who appreciates the richness of phrase-based communication.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Phrazle Answers Work</h3>
-      <p>
-        Phrazle extends the Wordle concept to full phrases and idioms. Instead of guessing individual words letter by letter, players guess entire phrases, receiving color-coded feedback on each letter of each word. Green indicates a correct letter in the correct position, yellow shows a correct letter in the wrong position, and gray means the letter is not in the phrase at all. This creates a more complex deduction challenge that requires thinking about multiple words simultaneously.
-      </p>
-      <p>
-        Each Phrazle date features two separate puzzles: a morning phrase and an afternoon phrase. Both are drawn from the game's curated phrase pool and are independent of each other, meaning they test different phrases and provide twice the daily challenge. The archive records both answers for each date, along with the phrase index number that tracks the sequence of all phrases used in the game's history.
-      </p>
-      <p>
-        The answer pool includes idioms, proverbs, common expressions, famous quotations, and well-known phrases from literature, media, and everyday language. Each phrase is selected deterministically from this pool, ensuring the archive is a complete and reliable record of every past solution. The dual-puzzle format means the archive contains approximately twice as many entries as a standard daily puzzle archive.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Phrazle Answers</h3>
-      <p>
-        The Phrazle archive contains many memorable phrases that sparked recognition and enjoyment among players. Classic idioms like "a penny saved is a penny earned" and "the early bird catches the worm" appear alongside more modern expressions and pop culture references. The variety of phrase types keeps the game fresh and ensures that players encounter diverse linguistic challenges as they browse the archive.
-      </p>
-      <p>
-        Particularly challenging entries often involve phrases with unusual spelling, uncommon words, or non-standard grammar structures. Phrases borrowed from other languages, archaic expressions, and regionally specific idioms can stump even experienced players, making these entries both frustrating and educational in equal measure.
-      </p>
-
-      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Phrazle Archive</h3>
-      <p>
-        Navigate to any date using the calendar above to view both the morning and afternoon Phrazle answers. Each entry displays the complete phrase and its index number. Study the archive to build familiarity with common phrase patterns, discover idioms you didn't know, and improve your phrase-guessing intuition for future daily puzzles.
-      </p>
+      <p>Every Phrazle phrase since launch — morning and afternoon, two per day.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Phrazle Works</h3>
+      <p>You guess an entire phrase, not a single word. Common idioms, proverbs, song lyrics, and pop culture quotes dominate the answer pool. The letter feedback works like Wordle — green, yellow, gray — but you're solving across multiple words at once. Phrase length and word positions matter a lot more than individual letters.</p>
 
       <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Why does Phrazle have two puzzles per day?</h4>
-      <p>
-        Phrazle offers a morning puzzle and an afternoon puzzle to double the daily challenge and provide variety. The two puzzles are independently selected from the answer pool, so they test completely different phrases. This dual format gives players two chances to solve each day and makes the archive especially rich.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What types of phrases appear in Phrazle?</h4>
-      <p>
-        Phrazle draws from a curated pool that includes idioms, proverbs, common sayings, famous quotations, and well-known expressions from various sources. The archive reflects this diversity, with entries spanning literary quotes, colloquial expressions, and familiar cultural references.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the archive include both morning and afternoon answers?</h4>
-      <p>
-        Yes. Every date in the archive shows both the morning and afternoon phrase answers, along with their respective phrase index numbers. This complete coverage ensures you can check either puzzle for any past date.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can the Phrazle archive help me learn English idioms?</h4>
-      <p>
-        Absolutely. The archive is an excellent resource for English language learners because it exposes you to a wide variety of idiomatic expressions in context. Browsing past answers and looking up unfamiliar phrases is a natural and engaging way to expand your knowledge of English idioms and common sayings.
-      </p>
-
-      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How does Phrazle's feedback system differ from Wordle?</h4>
-      <p>
-        Phrazle applies the same green-yellow-gray letter feedback as Wordle, but across entire phrases with multiple words. This means you need to consider letter positions across word boundaries, making the deduction process more complex. The phrase index numbers in the archive help track the sequence of all solutions.
-      </p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Two puzzles a day?</h4>
+      <p>Yes — a morning phrase and an afternoon phrase. Both are in the archive.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What kinds of phrases show up?</h4>
+      <p>Idioms, proverbs, song titles, movie quotes, and common sayings. If it's a phrase people use regularly, it could be a Phoodle answer.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Is the archive useful for strategy?</h4>
+      <p>Browsing past answers helps you build intuition about phrase structure and common word patterns in the answer pool.</p>
     </div>
   </div>
-</article>
+
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>

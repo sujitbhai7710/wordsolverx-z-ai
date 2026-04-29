@@ -141,7 +141,7 @@
         Contexto Answer Today ({activeLabel})
       </h1>
       <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-        A focused today page for the current Contexto answer, with archive lookups moved to the dedicated archive page.
+        Today's Contexto answer and hints. Need an older one? The archive has every past puzzle.
       </p>
     </div>
 
@@ -198,7 +198,7 @@
               <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/50 p-5">
                 <h2 class="text-base font-semibold mb-3 text-slate-900 dark:text-slate-100">Need an older Contexto answer?</h2>
                 <p class="text-sm text-slate-600 dark:text-slate-400">
-                  Older Contexto dates and game-number lookups now live on the dedicated archive page.
+                  Looking for a past Contexto answer? Check the archive.
                 </p>
                 <a
                   href="/contexto-archive"
@@ -230,151 +230,74 @@
 
     <FAQSection title="Contexto Answer FAQ" {faqs} class="pb-0" />
 
-    <!-- Comprehensive SEO Article -->
+    <!-- SEO Article -->
     <article class="mt-12 space-y-8 max-w-5xl mx-auto">
-      <!-- What is Contexto? -->
       <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          What Is Contexto?
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+          How Contexto Actually Works
         </h2>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Contexto is a daily word game that measures meaning, not spelling. You guess words and the game tells you how semantically close your guess is to the secret word using a numerical ranking system. Rank 1 means you found it. Rank 500 means you're in the right general area. Rank 10,000 means you're conceptually miles away. There are no letter clues, no color tiles, no word-length hints — just pure semantic similarity.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          The game launched in 2022 and was developed by an independent creator who built it around word embedding models — the same technology that powers language AI systems like GPT. Word embeddings map every word to a point in a high-dimensional space where words with similar meanings cluster together. "Dog" and "puppy" are close neighbors. "Dog" and "stock market" are far apart. Contexto uses these spatial relationships to rank your guesses.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Contexto has attracted a dedicated player base among people who find letter-based word games too constraining. In Wordle, you need spelling knowledge. In Contexto, you need vocabulary breadth and an intuitive sense of how concepts relate. The game appeals to language enthusiasts, puzzle solvers, and anyone who enjoys exploring the hidden structure of meaning in language.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          The game has no official mobile app — it runs as a web app at contexto.me. Each day's puzzle gets a game number that increments by one, and the game has been running continuously since launch. As of mid-2025, the game numbers are well into the hundreds, reflecting hundreds of daily puzzles.
+        <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+          Contexto ranks every guess by how semantically close it is to the answer. Rank 1 = you found it. Rank 200 = right neighborhood. Rank 10,000 = completely off. No letter clues, no tiles, just a number. The game uses word embeddings — the same tech behind language models — to measure meaning distance. It has been running since 2022 at contexto.me.
         </p>
       </section>
 
-      <!-- How Contexto Works -->
       <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          How Contexto Works: The Mechanics Behind Semantic Guessing
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+          Strategy That Cuts Your Guess Count
         </h2>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          When you type a guess into Contexto, the game compares it against every word in its vocabulary using a pre-computed word embedding model. The model assigns each word a numerical vector — a list of hundreds of numbers that capture the word's meaning. Words with similar meanings have vectors that point in similar directions. The game calculates the distance between your guess's vector and the secret word's vector, then ranks all possible words by that distance.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          The ranking system is intuitive: a lower number means closer. Rank 1 is the answer itself. The top 500 words are typically strong synonyms or directly related concepts. Words ranked 500-2,000 share a general category or domain with the answer. Words ranked above 5,000 are usually only tangentially related — they might share a grammatical category or a very loose association.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Contexto has no guess limit. You can guess as many times as you want. The daily puzzle resets based on the server's timezone. Unlike Wordle, which resets at midnight local time, Contexto follows a fixed server-side schedule. This means the new puzzle appears at the same universal time for everyone, regardless of their location.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          One important mechanic: Contexto ranks the top 15,000+ words in its vocabulary, not just a curated answer list. This means you can guess common words ("happy," "water," "run") or obscure words ("sesquipedalian," "syzygy") and get a meaningful ranking for both. The game accepts essentially any English word in its dictionary.
-        </p>
-      </section>
-
-      <!-- Today's Contexto Answer -->
-      <section class="bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800/40 rounded-xl p-6 sm:p-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Today's Contexto Answer: How to Find It
-        </h2>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          The current Contexto answer is displayed at the top of this page. Click the "Reveal Answer" button to see it, or use the "Hide Answer" button if you changed your mind. The answer card shows the game number and date so you know exactly which puzzle you're looking at.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          We fetch the answer from the official Contexto API, so it's always accurate and synchronized with the game. If the API is temporarily unavailable, the page will show an error message and you can try again in a few minutes. The game number and date are calculated from Contexto's own numbering system, which has been counting up since the game launched.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          For older puzzles, visit our Contexto Archive page. The archive lets you browse by date or game number and reveal the answer for any historical puzzle. We maintain a complete record of every Contexto puzzle since the game's early days.
-        </p>
-      </section>
-
-      <!-- Past Contexto Answers -->
-      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Past Contexto Answers: Archives and Word Patterns
-        </h2>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Contexto answers span the full range of English vocabulary — from common words like "happy," "dog," and "money" to more abstract concepts like "silence," "justice," and "possibility." Unlike Wordle, which restricts answers to a curated 2,300-word list, Contexto can theoretically use any word in its vocabulary as a daily answer.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-          Looking at historical Contexto answers, there's a noticeable bias toward concrete nouns and common adjectives. Abstract concepts appear regularly but not as frequently as tangible things. Verbs are less common as answers compared to Wordle, where every answer is a verb-able word. This pattern reflects the word embedding model's training data — words that appear frequently in diverse contexts tend to be more "central" in the semantic space and thus more likely to be selected.
-        </p>
-        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-          Our Contexto archive is the most comprehensive collection of historical answers available. You can use it to study which types of words appear most frequently, or just to look up a puzzle you missed. The archive is searchable by both date and game number.
-        </p>
-      </section>
-
-      <!-- Tips for Contexto -->
-      <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Contexto Strategy: How to Solve Puzzles Faster
-        </h2>
-        <div class="space-y-6 text-base sm:text-lg text-slate-600 dark:text-slate-400">
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Start with broad categories</h3>
-            <p class="leading-relaxed">
-              Your first 3-5 guesses should be broad category words: "person," "place," "thing," "action," "feeling," "animal," "food," "color." These give you a rapid survey of the semantic landscape. If "animal" ranks 200 and "feeling" ranks 8,000, you know the answer is likely related to living things, not emotions. This narrows your search space dramatically.
-            </p>
+        <div class="space-y-4 text-base text-slate-600 dark:text-slate-400">
+          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-5">
+            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-2">Start with category words</h3>
+            <p class="text-sm leading-6">Your first 5 guesses should be broad: "person," "animal," "place," "feeling," "food." If "animal" ranks 200 and "feeling" ranks 8,000, you know the domain immediately.</p>
           </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Follow the semantic trail</h3>
-            <p class="leading-relaxed">
-              When a word ranks well (under 1,000), explore its semantic neighborhood. If "music" ranks 300, try "song," "instrument," "melody," "rhythm," "band," "concert." Each follow-up guess either moves you closer or tells you you've gone down the wrong branch. This systematic exploration is more effective than random guessing.
-            </p>
+          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-5">
+            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-2">Follow the trail when a guess ranks under 1,000</h3>
+            <p class="text-sm leading-6">Explore that word's neighbors. If "music" ranks 300, try "song," "melody," "instrument," "rhythm." Each follow-up either moves you closer or rules out a branch.</p>
           </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Pay attention to ranking jumps</h3>
-            <p class="leading-relaxed">
-              If your ranking drops from 5,000 to 200 in a single guess, you've found a major semantic landmark. That word and the answer share a strong conceptual connection. Use that word as a springboard for your next guesses. If the jump is small (say, 5,000 to 4,800), you're moving in the right direction but haven't found the right domain yet.
-            </p>
+          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-5">
+            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-2">Big ranking jumps = semantic landmarks</h3>
+            <p class="text-sm leading-6">Dropping from 5,000 to 200 in one guess means you found a strong connection. Use that word as your pivot for the next few guesses.</p>
           </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Think about word relationships, not just synonyms</h3>
-            <p class="leading-relaxed">
-              Contexto understands more than synonyms. Antonyms ("hot" and "cold"), category members ("apple" and "orange"), associated concepts ("doctor" and "hospital"), and even cultural associations ("football" and "Sunday") all influence the ranking. If you're stuck, try guessing words that are related to the answer by association rather than similarity.
-            </p>
-          </div>
-          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-6">
-            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">Consider word frequency and concreteness</h3>
-            <p class="leading-relaxed">
-              Contexto answers tend to be relatively common words. Obscure scientific terms, archaic words, and highly technical jargon are unlikely to be the answer. If you've narrowed the domain to "medical terms" but none of your medical guesses rank well, the answer might be a more common health-related word like "pain" or "sleep" rather than a specific condition.
-            </p>
+          <div class="bg-slate-50 dark:bg-slate-700/50 rounded-2xl p-5">
+            <h3 class="font-bold text-slate-900 dark:text-slate-100 mb-2">Think associations, not just synonyms</h3>
+            <p class="text-sm leading-6">Contexto understands antonyms, category members, and cultural associations. "Doctor" and "hospital" are close. "Hot" and "cold" are close. If pure synonyms aren't working, try related concepts.</p>
           </div>
         </div>
       </section>
 
-      <!-- Contexto Statistics -->
       <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] p-6 sm:p-5 sm:p-8">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-50 mb-6">
-          Contexto Statistics: What We Know
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-4">
+          Contexto FAQ
         </h2>
-        <div class="space-y-4 text-base sm:text-lg text-slate-600 dark:text-slate-400">
-          <div class="grid sm:grid-cols-2 gap-6 my-6">
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">Unlimited</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Guesses allowed per puzzle</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No guess limit means difficulty is purely conceptual</p>
-            </div>
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">~15,000+</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Words ranked per puzzle</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Every guess gets a position in the ranked list</p>
-            </div>
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">~30-100</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Average guesses to solve</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Varies widely by player experience and word difficulty</p>
-            </div>
-            <div class="bg-teal-50 dark:bg-teal-900/20 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/40">
-              <p class="text-3xl font-black text-teal-700 dark:text-teal-300 mb-1">~60%</p>
-              <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Concrete nouns in answers</p>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Tangible things appear more often than abstract concepts</p>
-            </div>
-          </div>
-          <p class="leading-relaxed">
-            Contexto doesn't publish official player statistics, but community data from Reddit and Discord suggests that the average player solves each puzzle in 30-100 guesses. Experienced players who know the system well can often solve in under 30 guesses by starting with efficient category words. The hardest puzzles tend to be abstract concepts like "silence," "nothing," or "time" — words that are semantically connected to many different domains but don't belong strongly to any single one.
-          </p>
-          <p class="leading-relaxed">
-            The word embedding model that Contexto uses is trained on large-scale text corpora. This means the model reflects common usage patterns in English. Words that appear frequently in similar contexts (like "coffee" and "morning") will rank close to each other. Words that appear in very different contexts (like "quantum" and "recipe") will rank far apart. Understanding these patterns is the key to improving your Contexto game.
-          </p>
+        <div class="divide-y divide-slate-200 dark:divide-slate-700 text-base text-slate-600 dark:text-slate-400">
+          <details class="group py-4 first:pt-0 last:pb-0">
+            <summary class="flex cursor-pointer items-center justify-between font-bold text-slate-900 dark:text-slate-100">
+              How many guesses does it usually take?
+              <svg class="h-5 w-5 shrink-0 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </summary>
+            <p class="mt-2 text-sm leading-6">30-100 for most players. Experienced solvers who start with category words can finish under 30. Abstract answers like "silence" or "time" tend to take longer.</p>
+          </details>
+          <details class="group py-4 first:pt-0 last:pb-0">
+            <summary class="flex cursor-pointer items-center justify-between font-bold text-slate-900 dark:text-slate-100">
+              Is there a guess limit?
+              <svg class="h-5 w-5 shrink-0 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </summary>
+            <p class="mt-2 text-sm leading-6">No. Guess as many times as you need. The challenge is conceptual, not about running out of attempts.</p>
+          </details>
+          <details class="group py-4 first:pt-0 last:pb-0">
+            <summary class="flex cursor-pointer items-center justify-between font-bold text-slate-900 dark:text-slate-100">
+              What types of words are usually the answer?
+              <svg class="h-5 w-5 shrink-0 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </summary>
+            <p class="mt-2 text-sm leading-6">Mostly concrete nouns and common adjectives. Abstract concepts appear but less frequently. Technical jargon and archaic words are rare.</p>
+          </details>
+          <details class="group py-4 first:pt-0 last:pb-0">
+            <summary class="flex cursor-pointer items-center justify-between font-bold text-slate-900 dark:text-slate-100">
+              Can I find past Contexto answers?
+              <svg class="h-5 w-5 shrink-0 text-slate-400 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </summary>
+            <p class="mt-2 text-sm leading-6">The <a href="/contexto-archive" class="font-semibold text-teal-600 dark:text-teal-400 underline underline-offset-2 hover:text-teal-500">Contexto archive</a> has every past answer searchable by date or game number.</p>
+          </details>
         </div>
       </section>
     </article>

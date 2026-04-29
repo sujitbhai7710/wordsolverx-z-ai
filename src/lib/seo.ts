@@ -128,6 +128,7 @@ export interface SchemaPerson {
     jobTitle?: string;
     description?: string;
     knowsAbout?: string[];
+    sameAs?: string[];
 }
 
 export interface SchemaArticle {
@@ -375,7 +376,8 @@ export function generatePersonAuthorSchema(
     url?: string,
     image?: string,
     jobTitle?: string,
-    knowsAbout?: string[]
+    knowsAbout?: string[],
+    sameAs?: string[]
 ): SchemaPerson {
     return {
         '@context': 'https://schema.org',
@@ -385,6 +387,7 @@ export function generatePersonAuthorSchema(
         ...(image && { image }),
         ...(jobTitle && { jobTitle }),
         ...(knowsAbout && { knowsAbout }),
+        ...(sameAs && { sameAs }),
     };
 }
 

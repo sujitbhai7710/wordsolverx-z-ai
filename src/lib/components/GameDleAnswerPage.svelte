@@ -1,12 +1,13 @@
 <script lang="ts">
   import { type Snippet } from 'svelte';
   import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import {
     PRESTON_HAYES_AUTHOR_DESCRIPTION,
     PRESTON_HAYES_AUTHOR_IMAGE,
     PRESTON_HAYES_AUTHOR_NAME
   } from '$lib/authors';
-  import { generatePersonAuthorSchema } from '$lib/seo';
+  import { generateBreadcrumbSchema, generatePersonAuthorSchema } from '$lib/seo';
 
   interface ModeConfig {
     name: string;
@@ -98,6 +99,13 @@
   );
   let pageImage = $derived(data?.meta?.featuredImage ?? 'https://wordsolverx.com/wordsolverx.webp');
   let crossLinkColsClass = $derived(crossLinks.length > 4 ? 'md:grid-cols-5' : 'md:grid-cols-4');
+  let breadcrumbSchemaData = $derived(
+    generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://wordsolverx.com' },
+      { name: 'Today', url: 'https://wordsolverx.com/today' },
+      { name: `${gameTitle} Answer Today`, url: canonicalUrl }
+    ])
+  );
 
   function normalizeStructuredData(input: unknown): unknown {
     if (typeof input === 'string' || input == null) {
@@ -195,11 +203,18 @@
     author: generatePersonAuthorSchema(
       'Preston Hayes',
       'https://wordsolverx.com/about#preston-hayes',
-      'https://wordsolverx.com/auther-wordsolverx.webp'
+      'https://wordsolverx.com/author-wordsolverx.webp'
     ),
     publisher: {
       '@type': 'Organization',
-      name: 'WordSolverX'
+      name: 'WordSolverX',
+      url: 'https://wordsolverx.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://wordsolverx.com/wordsolverx.webp',
+        width: 1200,
+        height: 630
+      }
     },
     image: pageImage,
     ...(publishedDate
@@ -234,6 +249,8 @@
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content="WordSolverX" />
   <meta property="og:image" content={pageImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content={`${gameTitle} hints and answers for today`} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
@@ -244,9 +261,13 @@
     {@html `<script type="application/ld+json">${JSON.stringify(articleSchema)}</script>`}
   {/if}
   {@html `<script type="application/ld+json">${resolvedSchemaJson}</script>`}
+  {@html `<script type="application/ld+json">${JSON.stringify(breadcrumbSchemaData)}</script>`}
 </svelte:head>
 
 <div class="min-h-screen bg-slate-100">
+  <div class="max-w-6xl mx-auto px-3 sm:px-4 pt-6">
+    <Breadcrumbs hideSchema={true} />
+  </div>
   <div class="bg-white shadow-sm">
     <div class="max-w-6xl mx-auto px-3 sm:px-4 py-10">
       <h1 class="text-4xl font-extrabold text-slate-900">{pageHeading}</h1>

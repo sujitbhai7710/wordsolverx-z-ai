@@ -75,7 +75,7 @@
         Phrazle Answer Today ({data.todayLabel})
       </h1>
       <p class="text-slate-600 max-w-xl mx-auto">
-        Two puzzles every day, with archive browsing moved to the dedicated Phrazle archive page.
+        Two phrases every day — morning and afternoon. Need an older one? Check the archive.
       </p>
     </div>
 
@@ -311,86 +311,6 @@
         </div>
       </section>
 
-      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-        <h2 class="text-3xl font-black tracking-tight text-slate-900">Phrazle vs Similar Word Games</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-2">
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Phrazle vs Wordle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Wordle tests five-letter words; Phrazle tests multi-word phrases. The feedback mechanism is the same, but Phrazle adds the complexity of word boundaries and spaces. Wordle is about vocabulary; Phrazle is about phrase familiarity and structural reasoning.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          A strong Wordle player will not necessarily be a strong Phrazle player — the skills overlap less than you might think.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Phrazle vs Quordle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Quordle makes you solve four words simultaneously. Phrazle makes you solve one phrase. Quordle tests parallel processing; Phrazle tests phrase-level thinking. Both are harder than Wordle, but in different ways.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Quordle is about managing four independent deduction threads; Phrazle is about managing one deduction thread with extra structural complexity.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Phrazle vs Contexto</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Contexto uses word associations and proximity scores. Phrazle uses letter-by-letter deduction. Contexto is about semantics; Phrazle is about spelling. They are both daily puzzle games but exercise completely different cognitive skills.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Contexto rewards broad knowledge; Phrazle rewards precise knowledge of common English phrases.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Why Phrazle is harder than most daily games</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          The space problem alone makes Phrazle significantly harder than Wordle. In Wordle, every letter is in a known position within a five-character string. In Phrazle, guessing the wrong number of words means every subsequent guess produces misleading feedback.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          This cascading uncertainty is what makes Phrazle feel punishing even to experienced word-game players.
-        </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-        <h2 class="text-3xl font-black tracking-tight text-slate-900">Types of Phrazle Answers You Will Encounter</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-2">
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Common Idioms</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Phrazle loves idioms — expressions that native English speakers use without thinking about their literal meaning. Examples include PIECE OF CAKE, HIT THE ROAD, UNDER THE WEATHER, and BACK TO SQUARE ONE.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          If you are a native speaker, you already know hundreds of these. If English is your second language, idioms are worth studying specifically because they appear so often in Phrazle.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Movie and TV References</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Famous movie lines and TV catchphrases show up regularly. MAY THE FORCE, I WILL BE BACK, and HERE IS LOOKING are all the right length for Phrazle grids. If you watch a lot of movies or TV, you will recognize these instantly.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          The game tends to favor well-known lines over obscure ones, so mainstream pop culture knowledge carries you a long way.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Song Lyrics</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-              Famous song snippets appear in the answer pool too. Bohemian Rhapsody alone probably contributed a dozen Phrazle answers. If you listen to popular music across decades — 60s rock, 80s pop, modern hip-hop — you will have a significant advantage. Music fans often solve these puzzles faster than non-music fans.
-            </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Everyday Expressions</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Not every Phrazle answer is dramatic. Simple conversational phrases like GOOD MORNING, THANK YOU, NICE DAY, and SEE YOU SOON appear regularly.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          These are the easiest answers if you recognize them, but they can be frustrating if you are overthinking and looking for something more complex. Sometimes the simplest guess is the right one.
-        </p>
-          </div>
-        </div>
-      </section>
     </article>
   </main>
 

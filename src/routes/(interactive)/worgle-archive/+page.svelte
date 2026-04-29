@@ -1,4 +1,6 @@
 <script lang="ts">
+  import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
         import { browser } from '$app/environment';
         import { onMount } from 'svelte';
         import ArchiveCalendar from '$lib/components/ArchiveCalendar.svelte';
@@ -149,69 +151,29 @@
 </section>
 
 <!-- SEO Article Section -->
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
-                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Worgle Archive Matters</h2>
-                <div class="prose prose-slate dark:prose-invert max-w-none">
-                        <p>
-                                The Worgle archive is a comprehensive record of Welsh-language Wordle-style puzzle answers, preserving every daily solution along with corresponding puzzle numbers since the game's launch. As a Welsh-language variant of the original Wordle, Worgle provides a unique window into the vocabulary and word patterns of the Welsh language, making the archive valuable not only for puzzle enthusiasts but also for Welsh language learners and speakers who want to explore the language through an engaging daily challenge format.
-                        </p>
-                        <p>
-                                Because Worgle is deterministic, each date maps to exactly one answer, and the puzzle number increments sequentially from the game's start date. This makes the archive both a historical record and a practical lookup tool that works in two directions: you can search by date to find the answer, or search by puzzle number to find the corresponding date. This dual-functionality makes the archive particularly useful for players tracking their solve history or verifying streaks across different date ranges.
-                        </p>
-                        <p>
-                                The archive is also an educational resource for anyone interested in the Welsh language. Each past answer represents a Welsh word, and studying the archive exposes readers to common Welsh vocabulary, letter frequency patterns, and the structural conventions of the language. For learners, the archive provides a curated daily word list that builds vocabulary naturally through the context of a familiar and engaging puzzle format.
-                        </p>
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-16">
+  <div class="rounded-xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-700 dark:bg-slate-800">
+    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-50 mb-6">Why the Worgle Archive Matters</h2>
+    <div class="prose prose-slate dark:prose-invert max-w-none">
+      <p>Every Worgle answer since launch. All Welsh words, all in one place.</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Worgle Works</h3>
+      <p>It's Wordle in Welsh. Six guesses, five letters, same color feedback. But Welsh has a different alphabet and letter frequency — W, Y, and DD are very common. English letter patterns will mislead you here. If you don't speak Welsh, the archive is your best teacher for what kinds of words show up.</p>
 
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How Worgle Answers Work</h3>
-                        <p>
-                                Worgle follows the same basic gameplay as the original Wordle but uses Welsh words instead of English. Players have six attempts to guess a Welsh word, receiving color-coded feedback that indicates correct letters in correct positions, correct letters in wrong positions, and absent letters. The answer list is drawn from a curated pool of Welsh words that would be recognizable to Welsh speakers.
-                        </p>
-                        <p>
-                                The deterministic nature of Worgle means that each date since the game's launch on June 19, 2021 maps to exactly one Welsh word. The puzzle number increments by one each day, providing a sequential reference system alongside the calendar date. The archive records both the date and the puzzle number for every entry, allowing for flexible lookup by either reference point.
-                        </p>
-                        <p>
-                                Welsh word patterns differ significantly from English, and the archive reveals these differences clearly. The Welsh language uses different letter frequency distributions, different common word structures, and different spelling conventions than English. Studying the archive helps players and language learners understand these patterns and develop better guessing strategies that account for the unique characteristics of Welsh vocabulary.
-                        </p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Do I need to speak Welsh?</h4>
+      <p>It helps, but plenty of non-Welsh speakers enjoy it. The archive teaches you which letter combinations are valid Welsh words over time.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Which letters should I prioritize?</h4>
+      <p>W, Y, DD, LL, CH, and RH are all common in Welsh. Start with words that include these to cover the most ground.</p>
+      <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Does the archive go back to launch?</h4>
+      <p>Yes — every Worgle answer since the game started is stored here.</p>
+    </div>
+  </div>
 
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Notable Past Worgle Answers</h3>
-                        <p>
-                                The Worgle archive contains many Welsh words that showcase the beauty and diversity of the language. Words with characteristic Welsh letter combinations, mutations, and diacritical marks appear throughout the archive, providing a natural introduction to the orthographic features that distinguish Welsh from English and other languages.
-                        </p>
-                        <p>
-                                The archive also reveals patterns in letter frequency for Welsh, which differ from English patterns. Letters that are common in Welsh may be rare in English and vice versa, and understanding these differences through archive study directly improves puzzle performance. Over time, regular archive browsers develop an intuitive sense for likely Welsh letter patterns that makes their daily solves faster and more efficient.
-                        </p>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">How to Use the Worgle Archive</h3>
-                        <p>
-                                Navigate the archive using the calendar above to view any past Worgle answer. Each entry displays the Welsh word, the puzzle number, and the formatted date. Use the archive to catch up on missed days, study Welsh vocabulary patterns, or verify puzzle numbers for streak tracking purposes.
-                        </p>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-slate-50 mt-10 mb-4">Frequently Asked Questions</h3>
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">What language does Worgle use?</h4>
-                        <p>
-                                Worgle is a Welsh-language Wordle variant. All answers are Welsh words that would be recognized by Welsh speakers. The puzzle interface and feedback system follow the same format as the original English Wordle but operate entirely in the Welsh language.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Can I use the archive to learn Welsh?</h4>
-                        <p>
-                                Yes. The archive provides a daily curated list of Welsh words that builds vocabulary naturally over time. Each entry represents a common Welsh word, and regular exposure through the archive helps learners internalize Welsh letter patterns, common word structures, and vocabulary.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How are puzzle numbers calculated?</h4>
-                        <p>
-                                Puzzle numbers increment sequentially from the game's start date of June 19, 2021. Each subsequent day receives the next puzzle number, making the number system a reliable alternative to calendar dates for referencing specific puzzles.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">Is Worgle the same as Welsh Wordle?</h4>
-                        <p>
-                                Worgle is an independent Welsh-language Wordle-style game. While the gameplay mechanics are similar to the original Wordle, Worgle has its own curated answer list of Welsh words, its own puzzle numbering system, and its own community of players.
-                        </p>
-
-                        <h4 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-6 mb-2">How can I improve at Worgle?</h4>
-                        <p>
-                                Study the archive to understand Welsh letter frequency patterns and common word structures. Pay attention to which letters appear most frequently in solutions and develop opening guesses that maximize information gain using common Welsh letter combinations. Over time, this pattern recognition will dramatically improve your solve rates.
-                        </p>
-                </div>
-        </div>
-</article>
+    <div class="mt-12">
+      <AuthorCard
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
+      />
+    </div>
+  </article>

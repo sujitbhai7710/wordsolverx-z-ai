@@ -68,6 +68,7 @@
 					<li><a href="/archive" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Answer Archives</a></li>
 					<li><a href="/about" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About</a></li>
 					<li><a href="/contact" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contact</a></li>
+					<li><a href="/editorial-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Editorial Policy</a></li>
 					<li><a href="/privacy-policy" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Privacy</a></li>
 					<li><a href="/terms-of-service" class="text-sm text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Terms</a></li>
 				</ul>

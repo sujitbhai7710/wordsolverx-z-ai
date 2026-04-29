@@ -1,5 +1,6 @@
 <script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
+  import { PRESTON_HAYES_AUTHOR_NAME, PRESTON_HAYES_AUTHOR_IMAGE, PRESTON_HAYES_AUTHOR_DESCRIPTION } from '$lib/authors';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
   import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import { getContrastColor } from '$lib/colorfle';
@@ -299,156 +300,13 @@
         </div>
       </section>
 
-      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-        <h2 class="text-3xl font-black tracking-tight text-slate-900">Colorfle vs Similar Color Games</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-2">
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Colorfle vs Colordle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Colordle shows you a target color and you guess its name — it is about naming precision. Colorfle shows you a target color and you identify the component colors that create it — it is about understanding how colors mix.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Colordle tests vocabulary; Colorfle tests perception. Both are daily color games, but they exercise different cognitive skills.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Colorfle vs Wordle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-              Wordle operates in language; Colorfle operates in visual perception. Wordle rewards letter patterns and English vocabulary. Colorfle rewards color sensitivity and mixing intuition. Some players are naturally strong at one and weak at the other — the two games test genuinely different mental abilities.
-            </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Colorfle vs Flagle</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-              Flagle shows you a flag and you guess the country. Colorfle shows you a mixed color and you identify its components. Flagle tests geography knowledge; Colorfle tests color theory. Both use visual input, but the underlying skill is completely different.
-            </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Who is Colorfle best for?</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-              Designers, artists, photographers, and UI/UX developers tend to perform well because they work with color professionally. If you regularly pick palettes or adjust color values in your work, Colorfle will feel natural. If you struggle to tell navy from royal blue, it will be humbling — but also educational.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-        <h2 class="text-3xl font-black tracking-tight text-slate-900">Today&apos;s Colorfle Answer — Reading the Display</h2>
-        <div class="mt-6 space-y-4 text-lg leading-8 text-slate-600">
-          <p>
-            The answer section at the top of this page shows three pieces of information for puzzle #{data.answer.puzzleNumber}: the target color (the blurred circle that reveals when you click it), the three component colors that mix to produce the target, and the weight percentages for each component. The weight tells you how much each color contributes to the final mix.
-          </p>
-          <p>
-            When one component carries 60% or more weight, it dominates the target color. You should be able to see that color&apos;s hue clearly in the result. If the weights are more evenly split — like 40/35/25 — the result tends to be a more complex, harder-to-identify color because no single component overwhelms the others. These balanced mixes are the hardest Colorfle puzzles to solve.
-          </p>
-          <p>
-            The hex code and RGB values are shown alongside each color. Hex codes are the standard format used in web development (e.g., #4A90D9), while RGB values break the color into red, green, and blue channels on a 0-255 scale. If you work in design or front-end development, these values will be immediately useful. If you do not, they still serve as a precise reference that removes any ambiguity about what the answer looks like.
-          </p>
-          <p>
-            The recent archive grid below the answer shows the last several Colorfle puzzles with their target colors and components. Browsing the archive is one of the best ways to improve at Colorfle because you start internalizing which color combinations produce which results. After a week of checking the archive daily, you will recognize common pairings like "orange + brown = warm tan" or "blue + teal + white = muted sky."
-          </p>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-        <h2 class="text-3xl font-black tracking-tight text-slate-900">Understanding Color Mixing for Colorfle</h2>
-        <div class="mt-6 space-y-6">
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Additive vs Subtractive Mixing</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Colorfle uses an additive RGB mixing model, which is how screens produce color. Red, green, and blue light combine to create white. This is different from subtractive mixing (paint), where combining all primary colors produces dark brown or black.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          If you are thinking about Colorfle in terms of paint, your instincts will lead you astray. Think in terms of light and screens instead — the results will make much more sense.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">The Role of White and Black</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          White lightens a color (raises brightness) while darkening or desaturating a color often involves mixing in a darker component. In the Colorfle palette, white and near-white colors are critical for producing pastels. If the target looks pastel — soft pink, pale blue, mint green — one of your three components is almost certainly a light or white color.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          If the target looks dark and rich, expect darker components like dark slate or navy.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Weight Changes Everything</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Three colors with equal 33% weights produce a neutral average. Three colors with 70/20/10 weights produce something that looks almost entirely like the dominant color with subtle undertones. Pay close attention to how much each component contributes — the same three colors can produce wildly different results depending on the weight distribution.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          A small shift in one weight can push the target across a hue boundary.
-        </p>
-          </div>
-          <div class="rounded-2xl bg-slate-50 p-6">
-            <h3 class="text-lg font-bold text-slate-900">Common Colorfle Patterns</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          After playing Colorfle for a few weeks, you start noticing recurring patterns. Muted greens often come from mixing a bright green with a gray or brown. Warm beiges typically combine yellow, light brown, and white.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Dusty roses pair pink with a touch of gray or purple. These patterns are not rules, but they are reliable heuristics that speed up your solving process significantly.
-        </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-8 shadow-sm">
-        <h2 class="text-3xl font-black tracking-tight text-slate-900">Frequently Asked Questions About Colorfle</h2>
-        <div class="mt-6 space-y-6">
-          <div>
-            <h3 class="text-lg font-bold text-slate-900">What time does Colorfle reset?</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Colorfle resets at midnight based on the game&apos;s server timezone. Each puzzle carries a sequential number, so puzzle #{data.answer.puzzleNumber} follows #{data.answer.puzzleNumber - 1}.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          The exact reset time depends on where the Colorfle servers are hosted, but the puzzle number makes it easy to verify you are looking at the correct day&apos;s answer.
-        </p>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900">How many guesses do I get in Colorfle?</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          There is no strict guess limit in Colorfle. You can submit component combinations until you find the exact match or decide to reveal the answer. Most players solve the puzzle in three to five attempts once they understand the mixing system.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          The challenge is not the guess count — it is identifying the right combination of colors and weights.
-        </p>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900">Where does Colorfle get its color palette?</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Colorfle draws component colors from a curated set of named CSS colors — the same standardized palette that web browsers recognize. Colors like DarkKhaki, CadetBlue, IndianRed, and Coral are all part of this set.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          There are roughly 150 named colors in the CSS specification, and Colorfle uses a subset of them as its component pool. Learning this palette is one of the fastest ways to improve at the game.
-        </p>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900">Can I use a color picker to solve Colorfle?</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Technically yes — you could sample the target color with a digital color picker and reverse-engineer the components. But that defeats the purpose. The game is about training your eye and building color intuition, not about using tools to bypass the challenge.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          If you want the answer without solving, this page provides it directly.
-        </p>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-slate-900">Does Colorfle improve real-world color skills?</h3>
-            <p class="mt-2 text-base leading-7 text-slate-600">
-          Absolutely. Regular Colorfle play measurably improves your ability to identify hues, judge saturation levels, and estimate color mixing outcomes. Designers and front-end developers who play daily report that they pick better palettes and spot color mismatches faster.
-        </p>
-        <p class="mt-2 text-base leading-7 text-slate-600">
-          Even casual players develop a sharper eye for the colors around them — from sunsets to store displays to the paint section at the hardware store.
-        </p>
-          </div>
-        </div>
-      </section>
     </article>
 
     <div class="mt-8">
       <AuthorCard
-        name="Preston Hayes"
-        image="/auther-wordsolverx.webp"
-        description="Preston Hayes reviews daily puzzle answer pages, archive accuracy, and solver logic at WordSolverX so each page stays useful, fast, and easy to verify."
+        name={PRESTON_HAYES_AUTHOR_NAME}
+        image={PRESTON_HAYES_AUTHOR_IMAGE}
+        description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
       />
     </div>
 
@@ -457,3 +315,4 @@
     </div>
   </div>
 </div>
+

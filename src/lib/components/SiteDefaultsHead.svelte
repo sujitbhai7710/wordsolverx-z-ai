@@ -11,6 +11,10 @@
         <meta property="og:site_name" content="WordSolverX" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="WordSolverX - Daily Puzzle Answers and Solver Tools" />
+        <meta name="twitter:site" content="@WordSolverX" />
         <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="apple-touch-icon" href="/wordsolverx-favicon.webp" />

@@ -26,6 +26,9 @@
   <meta property="og:title" content={data.meta.title} />
   <meta property="og:description" content={data.meta.description} />
   <meta property="og:image" content={data.meta.socialImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={`Wordle Answer for ${data.formattedDate}`} />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://wordsolverx.com/wordle-answer-today" />
   <meta property="og:site_name" content="WordSolverX" />
@@ -38,7 +41,8 @@
     '@type': 'WebPage',
     name: data.meta.title,
     description: data.meta.description,
-    url: 'https://wordsolverx.com/wordle-answer-today'
+    url: 'https://wordsolverx.com/wordle-answer-today',
+    dateModified: data.wordleData?.date || new Date().toISOString().split('T')[0]
   })}</script>`}
   {@html `<script type="application/ld+json">${data.schemas}</script>`}
 </svelte:head>
@@ -56,6 +60,21 @@
       socialImage={data.directSocialImage}
       youtubeVideoUrl={data.wordleData?.youtube_video_url}
     />
+
+    {#if data.generatedArticle?.articleHtml}
+      <section class="mt-12 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600">Today's notes</p>
+        <h2 class="mt-2 text-3xl font-bold text-slate-900">
+          {data.generatedArticle.title || "Today's Wordle Breakdown"}
+        </h2>
+        {#if data.generatedArticle.summary}
+          <p class="mt-4 text-lg leading-8 text-slate-600">{data.generatedArticle.summary}</p>
+        {/if}
+        <div class="prose prose-lg mt-6 max-w-none">
+          {@html data.generatedArticle.articleHtml}
+        </div>
+      </section>
+    {/if}
 
     {#if data.recentAnswers.length > 1}
       <section class="mt-12 bg-white rounded-3xl p-8 shadow-xl border border-gray-100 overflow-hidden">

@@ -56,7 +56,20 @@
   ];
 
   const jsonLd = JSON.stringify([
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'WordSolverX', url: 'https://wordsolverx.com' },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'WordSolverX',
+      url: 'https://wordsolverx.com',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://wordsolverx.com/?q={search_term_string}'
+        },
+        'query-input': 'required name=search_term_string'
+      }
+    },
     { '@context': 'https://schema.org', '@type': 'WebPage', name: 'WordSolverX Homepage', description: 'Daily puzzle answers, solver tools, and Wordle resources for popular word and trivia games.', url: 'https://wordsolverx.com' },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: [
       { '@type': 'Question', name: 'What is WordSolverX?', acceptedAnswer: { '@type': 'Answer', text: 'WordSolverX is your ultimate companion for word puzzle games like Wordle, Quordle, Phoodle, and more.' } },
@@ -107,8 +120,8 @@
 
       <!-- Main heading -->
       <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 mb-6 leading-[1.08]">
-        Your Daily Puzzle<br />
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 via-teal-500 to-cyan-500 dark:from-teal-400 dark:via-teal-300 dark:to-cyan-400">Answer Station</span>
+        Daily Puzzle Answers,<br />
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 via-teal-500 to-cyan-500 dark:from-teal-400 dark:via-teal-300 dark:to-cyan-400">Solvers & Wordle Tools</span>
       </h1>
 
       <p class="max-w-2xl mx-auto text-base sm:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
