@@ -1,6 +1,7 @@
 <script lang="ts">
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import FAQSection from '$lib/components/FAQSection.svelte';
+  import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import {
     formatContextoDate,
     getContextoGameNumber,
@@ -49,8 +50,7 @@
     data.initialAnswer?.gameNumber ?? getContextoGameNumber(new Date(`${activeDate}T12:00:00`))
   );
 
-  const currentMonth = $derived(new Date(`${activeDate}T12:00:00`).toLocaleDateString('en-US', { month: 'long' }));
-  let metaTitle = $derived(`Contexto Answer Today - ${currentMonth} - Updated`);
+  let metaTitle = $derived(`Contexto Answer Today (${activeLabel}) - Hints and Answer`);
   let pageTitle = $derived(`Contexto Answer Today (${activeLabel})`);
   let pageDescription = $derived(
     `Get Contexto hints and the confirmed Contexto answer for today, ${activeLabel}. Use the dedicated archive page when you need an older Contexto answer.`
@@ -143,6 +143,10 @@
       <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
         Today's Contexto answer and hints. Need an older one? The archive has every past puzzle.
       </p>
+      <div class="inline-flex items-center gap-1.5 text-xs text-slate-500 mt-2">
+        <span class="h-2 w-2 rounded-full bg-teal-500 animate-pulse"></span>
+        Updated Daily
+      </div>
     </div>
 
     <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_1px_3px_rgb(0_0_0/0.04)] overflow-hidden mb-10">
@@ -309,5 +313,7 @@
         description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
       />
     </div>
+
+    <InternalLinkSection currentGame="Contexto" />
   </main>
 </div>

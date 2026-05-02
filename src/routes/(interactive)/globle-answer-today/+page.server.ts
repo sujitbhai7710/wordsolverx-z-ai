@@ -13,9 +13,8 @@ export const load: PageServerLoad = async () => {
     }
 
     const { country, formattedDate, date } = data;
-    const currentMonth = format(today, 'MMMM');
     const featuredImage = 'https://wordsolverx.com/images/globle-answer-today.webp';
-    const pageTitle = `Globle Answer Today - ${currentMonth} - Updated`;
+    const pageTitle = `Globle Answer Today (${formattedDate}) - Country Answer and Hints`;
     const pageDescription = `Today's Globle country revealed — ${formattedDate}. Use the color feedback, continent, subregion, and flag hints to narrow it down, or check the answer directly.`;
     const pageKeywords = `globle answer today, globle answer, globle hint, globle hint today, globle answer for ${formattedDate}`;
     const faqItems = [

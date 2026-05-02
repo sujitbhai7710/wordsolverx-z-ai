@@ -27,10 +27,9 @@ export const load = () => {
   }
 
   const formattedDate = formatFramedDate(new Date(`${displayDateKey}T00:00:00Z`));
-  const currentMonth = new Date(`${displayDateKey}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
   const pageTitle = hasExactEntries
-    ? `Framed Answer Today (${formattedDate}) | Archive`
-    : `Framed Answer Today - ${currentMonth} - Updated`;
+    ? `Framed Answer Today (${formattedDate}) - Movie Answers for All Modes`
+    : `Framed Answer Today (${formattedDate}) - Latest Saved Movie Answers`;
   const pageDescription = hasExactEntries
     ? `Get today's Framed answers for ${formattedDate}, including Framed Classic, One Frame, Titleshot, and Poster puzzle titles from our verified answer records.`
     : `Check whether the Framed answers for ${formattedDate} are ready yet, then use the archive if you need older saved movie titles.`;

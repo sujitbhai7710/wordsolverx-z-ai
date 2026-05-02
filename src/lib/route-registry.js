@@ -117,8 +117,17 @@ export const API_RUNTIME_ROUTES = [
   '/sitemap.xml'
 ];
 
+export const SITEMAP_EXCLUDED_ROUTES = [
+  '/canuckle',
+  '/wordle-solver'
+];
+
 export const PAGES_FUNCTION_INCLUDE_ROUTES = [...new Set([...API_RUNTIME_ROUTES])];
 
 export const PRERENDER_ENTRIES = [
   ...new Set([...EVERGREEN_STATIC_ROUTES, ...TODAY_STATIC_ROUTES, ...ARCHIVE_STATIC_ROUTES])
 ];
+
+export const SITEMAP_ENTRIES = PRERENDER_ENTRIES.filter(
+  (route) => !SITEMAP_EXCLUDED_ROUTES.includes(route)
+);

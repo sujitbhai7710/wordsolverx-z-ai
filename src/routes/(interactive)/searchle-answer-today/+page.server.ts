@@ -5,5 +5,8 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = () => ({
 	totalPuzzles: SEARCHLE_PUZZLES.length,
-	todayPuzzle: getSearchlePuzzleForDate(getPuzzleDateForGame('searchle'))
+	todayPuzzle: getSearchlePuzzleForDate(getPuzzleDateForGame('searchle')),
+	meta: {
+		description: `Today's Searchle autocomplete answer revealed. See the prompt, copy the answer, and browse ${SEARCHLE_PUZZLES.length.toLocaleString('en-US')} past puzzles in the archive.`
+	}
 });

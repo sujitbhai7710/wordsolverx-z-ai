@@ -19,6 +19,9 @@
     data: {
       totalPuzzles: number;
       todayPuzzle: SearchleDailyPuzzle;
+      meta?: {
+        description?: string;
+      };
     };
   }>();
 
@@ -44,11 +47,11 @@
   }
 
   const todayLabel = $derived(formatDisplayDate(data.todayPuzzle.date));
-  const currentMonth = $derived(new Date(`${data.todayPuzzle.date}T12:00:00`).toLocaleDateString('en-US', { month: 'long' }));
-  const metaTitle = $derived(`Searchle Answer Today - ${currentMonth} - Updated`);
+  const metaTitle = $derived(`Searchle Answer Today (${todayLabel}) - Prompt and Answer`);
   const pageTitle = $derived(`Searchle Answer Today (${todayLabel})`);
   const pageDescription = $derived(
-    `Today's Searchle autocomplete answer revealed. See the prompt, copy the answer, and browse past puzzles in the archive, ${todayLabel}. Use the dedicated archive page for older Searchle prompts and answers.`
+    data.meta?.description ??
+      `Today's Searchle autocomplete answer revealed. See the prompt, copy the answer, and browse ${totalPuzzles.toLocaleString('en-US')} past puzzles in the archive.`
   );
   const pageKeywords = $derived(
     `searchle answer today, searchle answer, searchle hint, searchle hint today, searchle answer for ${todayLabel}`
@@ -125,6 +128,10 @@
       <p class="text-slate-600 max-w-xl mx-auto">
         Today&apos;s Searchle prompt and answer, with a dedicated archive page for older puzzles.
       </p>
+      <div class="inline-flex items-center gap-1.5 text-xs text-slate-500 mt-2">
+        <span class="h-2 w-2 rounded-full bg-teal-500 animate-pulse"></span>
+        Updated Daily
+      </div>
     </div>
 
     <div class="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden mb-8">
@@ -248,7 +255,7 @@
           Some players love this no-feedback format because it feels more like a pure test of intuition and internet awareness.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
-          Google autocomplete is influenced by search volume, geographic location, trending topics, and algorithmic adjustments. That means Searchle answers can shift over time even for the same prompt — what autocomplete suggests today might differ from what it suggested six months ago.
+          Google autocomplete is influenced by search volume, geographic location, trending topics, and changes to the search algorithm. That means Searchle answers can shift over time even for the same prompt — what autocomplete suggests today might differ from what it suggested six months ago.
         </p>
         <p class="mt-4 text-lg leading-8 text-slate-600">
           The Searchle answer list captures the autocomplete state at the time each puzzle was created, so the answers reflect a specific moment in search behavior.

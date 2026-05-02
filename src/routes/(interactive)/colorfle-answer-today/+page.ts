@@ -27,8 +27,7 @@ export const load = () => {
   const answer = buildColorfleAnswerPayload(today, 0);
   const recentEntries = getColorfleArchiveEntries(10, today).slice(1);
 
-  const currentMonth = today.toLocaleDateString('en-US', { month: 'long' });
-  const pageTitle = `Colorfle Answer Today - ${currentMonth} - Updated`;
+  const pageTitle = `Colorfle Answer Today (${formattedDate}) - Color Answer and Hex`;
   const pageDescription = `Get today's Colorfle answer for ${formattedDate}. Colorfle shows a target color and you guess the three colors that mix to create it. See the exact answer hex, source colors, and weights.`;
   const pageUrl = 'https://wordsolverx.com/colorfle-answer-today';
 

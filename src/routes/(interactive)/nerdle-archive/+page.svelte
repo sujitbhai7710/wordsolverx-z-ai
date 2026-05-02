@@ -265,11 +265,11 @@
         <meta property="og:url" content={META.canonical} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="WordSolverX" />
-        <meta property="og:image" content="https://wordsolverx.com/wordsolverx.webp" />
+        <meta property="og:image" content="https://wordsolverx.com/og/nerdle-archive.svg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={META.title} />
         <meta name="twitter:description" content={META.description} />
-        <meta name="twitter:image" content="https://wordsolverx.com/wordsolverx.webp" />
+        <meta name="twitter:image" content="https://wordsolverx.com/og/nerdle-archive.svg" />
         {@html `<script type="application/ld+json">${SCHEMAS}</script>`}
 </svelte:head>
 

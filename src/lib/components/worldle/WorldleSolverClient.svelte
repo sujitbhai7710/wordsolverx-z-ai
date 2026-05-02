@@ -292,7 +292,7 @@
             {#if countriesLoaded}
               The solver is ready with {countries.length} countries.
             {:else}
-              Loading the country dataset for the solver...
+              Loading country data for the solver...
             {/if}
           </p>
         </div>

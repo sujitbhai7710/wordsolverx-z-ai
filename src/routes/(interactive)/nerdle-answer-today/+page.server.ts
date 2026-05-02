@@ -49,8 +49,7 @@ export const load: PageServerLoad = async ({ setHeaders, platform, fetch }) => {
                         : `public, max-age=0, s-maxage=${fallbackCacheTtlSeconds}, stale-while-revalidate=300`
         });
 
-        const currentMonth = new Date(`${answerData.date}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
-        const pageTitle = `Nerdle Answer Today - ${currentMonth} - Updated`;
+        const pageTitle = `Nerdle Answer Today (${formattedDate}) - All Modes and Hints`;
         const pageDescription = `Get all Nerdle answers for ${formattedDate}: Classic, Micro, Mini, Midi, Maxi, Mini Bi, Quad, Speed, and Instant.`;
         const faqItems = [
                 {

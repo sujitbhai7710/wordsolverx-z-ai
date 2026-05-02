@@ -17,25 +17,40 @@ const colordleDataPath = path.join(projectRoot, 'static', 'colordle_data.json');
 const WORDLE_API_BASE_URL =
   process.env.WORDLE_API_BASE_URL ?? 'https://api.wordsolverx.workers.dev';
 const NVIDIA_BASE_URL = 'https://integrate.api.nvidia.com/v1';
-const AGENT_ROUTER_BASE_URL = 'https://agentrouter.org/v1';
-const DEFAULT_TIMEOUT_MS = Number.parseInt(process.env.ARTICLE_REQUEST_TIMEOUT_MS ?? '120000', 10);
+const DEFAULT_TIMEOUT_MS = Number.parseInt(process.env.ARTICLE_REQUEST_TIMEOUT_MS ?? '300000', 10);
 const MAX_REQUEST_ATTEMPTS = Math.max(
   1,
   Number.parseInt(process.env.ARTICLE_MAX_ATTEMPTS ?? '3', 10) || 3
 );
 const MAX_CONCURRENCY = Math.max(
   1,
-  Number.parseInt(process.env.ARTICLE_MAX_CONCURRENCY ?? '4', 10) || 4
+  Number.parseInt(process.env.ARTICLE_MAX_CONCURRENCY ?? '6', 10) || 6
 );
 const MAX_OUTPUT_TOKENS = Math.max(
   512,
-  Number.parseInt(process.env.ARTICLE_MAX_OUTPUT_TOKENS ?? '3200', 10) || 3200
+  Number.parseInt(process.env.ARTICLE_MAX_OUTPUT_TOKENS ?? '8192', 10) || 8192
+);
+const RATE_LIMIT_DELAY_MS = Math.max(
+  0,
+  Number.parseInt(process.env.ARTICLE_RATE_LIMIT_DELAY_MS ?? '2500', 10) || 2500
+);
+const STATUS_POLL_INTERVAL_MS = Math.max(
+  250,
+  Number.parseInt(process.env.ARTICLE_STATUS_POLL_INTERVAL_MS ?? '2500', 10) || 2500
 );
 const MAX_STORED_DATES_PER_ROUTE = Math.max(
   1,
   Number.parseInt(process.env.ARTICLE_MAX_STORED_DATES_PER_ROUTE ?? '45', 10) || 45
 );
 const LOG_SNIPPET_LIMIT = 220;
+const PRIMARY_MODEL = 'deepseek-ai/deepseek-v4-pro';
+const NVIDIA_MODEL_CHAIN = [
+  PRIMARY_MODEL,
+  'qwen/qwen3.5-397b-a17b',
+  'moonshotai/kimi-k2.6',
+  'z-ai/glm4.7'
+];
+const BATCH_GROUPS = ['site', 'gamedle', 'waffle'];
 
 const TODAY_ARTICLE_REGISTRY = [
   {
@@ -351,7 +366,34 @@ function shouldGenerateArticles() {
 }
 
 function getSelectedEntries(groupName) {
+  if (groupName === 'all-current-windows') {
+    const selectedKeys = new Set();
+    return TODAY_ARTICLE_REGISTRY.filter((entry) => {
+      const matchesBatchWindow = BATCH_GROUPS.some((group) => entry.groups.includes(group));
+      if (!matchesBatchWindow || selectedKeys.has(entry.key)) {
+        return false;
+      }
+
+      selectedKeys.add(entry.key);
+      return true;
+    });
+  }
+
   return TODAY_ARTICLE_REGISTRY.filter((entry) => entry.groups.includes(groupName));
+}
+
+function getEntryGenerationGroup(entry) {
+  if (entry.groups.includes('waffle')) {
+    return 'waffle';
+  }
+  if (entry.groups.includes('gamedle')) {
+    return 'gamedle';
+  }
+  if (entry.groups.includes('site') || entry.groups.includes('main')) {
+    return 'site';
+  }
+
+  return entry.groups[0] ?? 'site';
 }
 
 function shuffleList(items) {
@@ -756,13 +798,13 @@ function getGameGroup(key) {
 }
 
 const temperatureMap = {
-  wordle: 0.55,
-  colordle: 0.6,
-  gamedle: 0.65,
-  geography: 0.6,
-  word: 0.55,
-  visual: 0.6,
-  other: 0.6
+  wordle: 0.7,
+  colordle: 0.7,
+  gamedle: 0.75,
+  geography: 0.7,
+  word: 0.7,
+  visual: 0.7,
+  other: 0.7
 };
 
 function getGenericSections(entry) {
@@ -921,53 +963,96 @@ function extractMessageContent(choice) {
   return '';
 }
 
-async function callChatCompletion({ baseUrl, apiKey, model, prompt, temperature = 0.6 }) {
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function parseRetryAfter(headerValue) {
+  if (!headerValue) {
+    return null;
+  }
+
+  const deltaSeconds = Number.parseInt(headerValue, 10);
+  if (!Number.isNaN(deltaSeconds) && deltaSeconds > 0 && deltaSeconds < 3600) {
+    return deltaSeconds * 1000;
+  }
+
+  const dateValue = new Date(headerValue);
+  if (Number.isNaN(dateValue.getTime())) {
+    return null;
+  }
+
+  const delayMs = dateValue.getTime() - Date.now();
+  return delayMs > 0 ? delayMs : null;
+}
+
+function extractAsyncRequestId(response, payload) {
+  const headerRequestId =
+    response.headers.get('nvcf-reqid') ??
+    response.headers.get('x-request-id') ??
+    response.headers.get('request-id');
+
+  if (headerRequestId) {
+    return headerRequestId;
+  }
+
+  if (payload && typeof payload === 'object') {
+    return payload.requestId ?? payload.request_id ?? payload.id ?? null;
+  }
+
+  return null;
+}
+
+function buildModelRequestSettings(model) {
+  const normalizedModel = String(model ?? '').toLowerCase();
+
+  if (normalizedModel.includes('deepseek-v4-pro')) {
+    return {
+      reasoning_effort: 'none'
+    };
+  }
+
+  if (normalizedModel.includes('qwen3.5-397b-a17b')) {
+    return {
+      chat_template_kwargs: {
+        enable_thinking: false
+      }
+    };
+  }
+
+  if (normalizedModel.includes('kimi-k2.6')) {
+    return {
+      chat_template_kwargs: {
+        thinking: false
+      }
+    };
+  }
+
+  if (normalizedModel.includes('glm4.7')) {
+    return {
+      chat_template_kwargs: {
+        enable_thinking: false
+      }
+    };
+  }
+
+  return {};
+}
+
+async function fetchWithDeadline(url, init, deadlineAt) {
+  const remainingMs = deadlineAt - Date.now();
+  if (remainingMs <= 0) {
+    throw new Error(`Request timed out after ${DEFAULT_TIMEOUT_MS}ms.`);
+  }
+
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS);
+  const timeout = setTimeout(() => controller.abort(), remainingMs);
 
   try {
-    const response = await fetch(`${baseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'User-Agent': 'WordSolverX Daily Article Builder'
-      },
-        body: JSON.stringify({
-        model,
-        temperature,
-        max_tokens: MAX_OUTPUT_TOKENS,
-        response_format: {
-          type: 'json_object'
-        },
-        messages: [
-          {
-            role: 'system',
-            content:
-              'You write for a puzzle answer site run by daily players. No fluff, no filler, no corporate speak, no "welcome to" intros. Write like a friend who plays these games every day and is sharing notes, not like a content mill or AI assistant. You must return strictly valid JSON matching the requested shape.'
-          },
-          {
-            role: 'user',
-            content: prompt
-          }
-        ]
-      }),
+    return await fetch(url, {
+      ...init,
       signal: controller.signal
     });
-
-    const raw = await response.text();
-    if (!response.ok) {
-      throw new Error(`${response.status} ${raw}`);
-    }
-
-    const payload = JSON.parse(raw);
-    const content = extractMessageContent(payload?.choices?.[0]?.message?.content);
-    if (content) {
-      return content;
-    }
-
-    throw new Error('Model response did not include a usable message content field.');
   } catch (error) {
     if (error?.name === 'AbortError') {
       throw new Error(`Request timed out after ${DEFAULT_TIMEOUT_MS}ms.`);
@@ -976,6 +1061,142 @@ async function callChatCompletion({ baseUrl, apiKey, model, prompt, temperature 
     throw error;
   } finally {
     clearTimeout(timeout);
+  }
+}
+
+function extractCompletionText(raw) {
+  const payload = JSON.parse(raw);
+  const content = extractMessageContent(payload?.choices?.[0]?.message?.content);
+  if (content) {
+    return content;
+  }
+
+  throw new Error('Model response did not include a usable message content field.');
+}
+
+async function pollPendingChatCompletion({ baseUrl, apiKey, requestId, deadlineAt }) {
+  const statusUrl = `${baseUrl}/status/${requestId}`;
+
+  while (Date.now() < deadlineAt) {
+    await delay(Math.min(STATUS_POLL_INTERVAL_MS, Math.max(250, deadlineAt - Date.now())));
+
+    const response = await fetchWithDeadline(
+      statusUrl,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          Accept: 'application/json',
+          'User-Agent': 'WordSolverX Daily Article Builder'
+        }
+      },
+      deadlineAt
+    );
+
+    const raw = await response.text();
+
+    if (response.status === 202) {
+      continue;
+    }
+
+    if (response.status === 429) {
+      const retryAfterMs =
+        parseRetryAfter(response.headers.get('retry-after')) ?? STATUS_POLL_INTERVAL_MS;
+      await delay(Math.min(retryAfterMs, Math.max(250, deadlineAt - Date.now())));
+      continue;
+    }
+
+    if (!response.ok) {
+      throw new Error(`Status polling failed for ${requestId}: ${response.status} ${raw}`);
+    }
+
+    return extractCompletionText(raw);
+  }
+
+  throw new Error(`Request timed out after ${DEFAULT_TIMEOUT_MS}ms.`);
+}
+
+async function callChatCompletion({ baseUrl, apiKey, model, prompt, temperature = 0.6 }) {
+  if (RATE_LIMIT_DELAY_MS > 0) {
+    await delay(RATE_LIMIT_DELAY_MS);
+  }
+
+  const deadlineAt = Date.now() + DEFAULT_TIMEOUT_MS;
+
+  try {
+    const requestBody = {
+      model,
+      temperature,
+      max_tokens: MAX_OUTPUT_TOKENS,
+      response_format: {
+        type: 'json_object'
+      },
+      messages: [
+        {
+          role: 'system',
+          content:
+            'You write for a puzzle answer site run by daily players. No fluff, no filler, no corporate speak, no "welcome to" intros. Write like a friend who plays these games every day and is sharing notes, not like a content mill or AI assistant. You must return strictly valid JSON matching the requested shape.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      ...buildModelRequestSettings(model)
+    };
+
+    const response = await fetchWithDeadline(
+      `${baseUrl}/chat/completions`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'User-Agent': 'WordSolverX Daily Article Builder'
+        },
+        body: JSON.stringify(requestBody)
+      },
+      deadlineAt
+    );
+
+    const raw = await response.text();
+
+    if (response.status === 202) {
+      let pendingPayload = null;
+      try {
+        pendingPayload = JSON.parse(raw);
+      } catch {
+        pendingPayload = null;
+      }
+
+      const requestId = extractAsyncRequestId(response, pendingPayload);
+      if (!requestId) {
+        throw new Error('Model request was accepted for async processing but no request ID was returned.');
+      }
+
+      return pollPendingChatCompletion({
+        baseUrl,
+        apiKey,
+        requestId,
+        deadlineAt
+      });
+    }
+
+    if (response.status === 429) {
+      const retryAfterMs =
+        parseRetryAfter(response.headers.get('retry-after')) ?? RATE_LIMIT_DELAY_MS * 3;
+      await delay(Math.min(retryAfterMs, Math.max(250, deadlineAt - Date.now())));
+      throw new Error(`Rate limited (429). Retry after ${retryAfterMs}ms.`);
+    }
+
+    if (!response.ok) {
+      throw new Error(`${response.status} ${raw}`);
+    }
+
+    return extractCompletionText(raw);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -1086,31 +1307,25 @@ function validateArticlePayload(game, payload, targetDate) {
 }
 
 function buildProviderConfigs() {
+  const nvidiaKeys = parseKeyList(process.env.NVIDIA_API_KEYS, process.env.NVIDIA_API_KEY);
+  if (!nvidiaKeys.length) {
+    return [];
+  }
+
   return [
     {
       provider: 'nvidia',
       baseUrl: NVIDIA_BASE_URL,
-      models: ['minimaxai/minimax-m2.7', 'z-ai/glm4.7'],
-      apiKeys: parseKeyList(process.env.NVIDIA_API_KEYS, process.env.NVIDIA_API_KEY)
-    },
-    {
-      provider: 'agentrouter',
-      baseUrl: AGENT_ROUTER_BASE_URL,
-      models: ['glm-4.6'],
-      apiKeys: parseKeyList(process.env.AGENT_ROUTER_TOKENS, process.env.AGENT_ROUTER_TOKEN)
-    }
-  ]
-    .filter((provider) => provider.apiKeys.length > 0)
-    .map((provider) => ({
-      ...provider,
+      models: NVIDIA_MODEL_CHAIN,
       apiKeys: shuffleList(
-        provider.apiKeys.map((value, index) => ({
+        nvidiaKeys.map((value, index) => ({
           value,
           label: `key${index + 1}`
         }))
       ),
-      keyCursor: provider.apiKeys.length > 0 ? randomInt(provider.apiKeys.length) : 0
-    }));
+      keyCursor: randomInt(nvidiaKeys.length)
+    }
+  ];
 }
 
 function takeProviderKeyOrder(provider) {
@@ -1162,7 +1377,7 @@ async function generateWithProviders({ game, prompt, targetDate, providers, rout
               meta: {
                 provider: provider.provider,
                 model,
-                fallbackUsed: provider.provider !== 'nvidia' || model !== 'minimaxai/minimax-m2.7',
+                fallbackUsed: model !== PRIMARY_MODEL,
                 generatedAt: new Date().toISOString(),
                 wordCount: countWords(validated.contentGuideHtml ?? validated.articleHtml ?? '')
               }
@@ -1399,7 +1614,20 @@ async function runConcurrent(entries, concurrency, worker) {
 async function main() {
   const groupName = getGenerationGroupName();
   const selectedEntries = getSelectedEntries(groupName);
-  const targetDate = getTargetDate(groupName);
+  const targetDatesByGroup = {
+    site: getTargetDate('site'),
+    main: getTargetDate('site'),
+    gamedle: getTargetDate('gamedle'),
+    waffle: getTargetDate('waffle')
+  };
+  const targetDate =
+    groupName === 'all-current-windows'
+      ? targetDatesByGroup.site
+      : targetDatesByGroup[groupName] ?? getTargetDate(groupName);
+  const requestedDateLabel =
+    groupName === 'all-current-windows'
+      ? `site=${targetDatesByGroup.site}, gamedle=${targetDatesByGroup.gamedle}, waffle=${targetDatesByGroup.waffle}`
+      : targetDate;
   const existingBundle = await readExistingBundle();
   const routeStores = await readAllRouteStores();
   const seededCount = await seedRouteStoresFromBundle(existingBundle, routeStores);
@@ -1422,11 +1650,11 @@ async function main() {
     return;
   }
 
-  console.log(`Preparing daily articles for group ${groupName} using target date ${targetDate}.`);
+  console.log(`Preparing daily articles for group ${groupName} using target date ${requestedDateLabel}.`);
 
   const providers = buildProviderConfigs();
   if (!providers.length) {
-    console.warn('No NVIDIA or AgentRouter keys were provided. Kept previously persisted per-route daily articles.');
+    console.warn('No NVIDIA keys were provided. Kept previously persisted per-route daily articles.');
     if (!buildBundleFromRouteStores(routeStores).generatedAt) {
       console.warn('No existing article bundle was found yet. The frontend will fall back to built-in content.');
     }
@@ -1440,7 +1668,7 @@ async function main() {
   }
 
   console.log(
-    `Article generation settings: concurrency=${MAX_CONCURRENCY}, timeoutMs=${DEFAULT_TIMEOUT_MS}, maxAttempts=${MAX_REQUEST_ATTEMPTS}, maxOutputTokens=${MAX_OUTPUT_TOKENS}.`
+    `Article generation settings: concurrency=${MAX_CONCURRENCY}, timeoutMs=${DEFAULT_TIMEOUT_MS}, maxAttempts=${MAX_REQUEST_ATTEMPTS}, maxOutputTokens=${MAX_OUTPUT_TOKENS}, rateLimitDelayMs=${RATE_LIMIT_DELAY_MS}, statusPollIntervalMs=${STATUS_POLL_INTERVAL_MS}, keys=${providers[0]?.apiKeys?.length ?? 0}, models=${providers[0]?.models?.join(' -> ') ?? 'none'}.`
   );
   console.log(`Configured providers: ${summarizeProviders(providers)}`);
   console.log(
@@ -1449,26 +1677,27 @@ async function main() {
 
   let wordleContext = null;
   let colordleContext = null;
+  const siteTargetDate = targetDatesByGroup.site;
 
   if (selectedEntries.some((entry) => entry.mode === 'wordle')) {
     try {
-      wordleContext = await getWordleContext(targetDate);
+      wordleContext = await getWordleContext(siteTargetDate);
       console.log(
-        `Prepared Wordle context for requested date ${targetDate}: answer=${wordleContext.solutionUpper}, puzzle=${wordleContext.wordleNumber ?? 'unknown'}, recentAnswers=${wordleContext.recentAnswers.length}.`
+        `Prepared Wordle context for requested date ${siteTargetDate}: answer=${wordleContext.solutionUpper}, puzzle=${wordleContext.wordleNumber ?? 'unknown'}, recentAnswers=${wordleContext.recentAnswers.length}.`
       );
     } catch (error) {
-      console.warn(`Unable to prepare Wordle article context for ${targetDate}:`, error);
+      console.warn(`Unable to prepare Wordle article context for ${siteTargetDate}:`, error);
     }
   }
 
   if (selectedEntries.some((entry) => entry.mode === 'colordle')) {
     try {
-      colordleContext = await getColordleContext(targetDate);
+      colordleContext = await getColordleContext(siteTargetDate);
       console.log(
-        `Prepared Colordle context for requested date ${targetDate}: actualDate=${colordleContext.date}, exactMatch=${colordleContext.exactMatch}, fallbackReason=${colordleContext.fallbackReason ?? 'none'}, color=${colordleContext.colorName} ${colordleContext.colorHex}.`
+        `Prepared Colordle context for requested date ${siteTargetDate}: actualDate=${colordleContext.date}, exactMatch=${colordleContext.exactMatch}, fallbackReason=${colordleContext.fallbackReason ?? 'none'}, color=${colordleContext.colorName} ${colordleContext.colorHex}.`
       );
     } catch (error) {
-      console.warn(`Unable to prepare Colordle article context for ${targetDate}:`, error);
+      console.warn(`Unable to prepare Colordle article context for ${siteTargetDate}:`, error);
     }
   }
 
@@ -1486,10 +1715,14 @@ async function main() {
   await runConcurrent(selectedEntries, concurrency, async (entry, laneIndex) => {
     try {
       let article;
-      let articleDate = targetDate;
+      const entryTargetDate =
+        groupName === 'all-current-windows'
+          ? targetDatesByGroup[getEntryGenerationGroup(entry)] ?? targetDate
+          : targetDate;
+      let articleDate = entryTargetDate;
 
       console.log(
-        `[lane ${laneIndex + 1}] [${entry.key}] Starting route generation (mode=${entry.mode}, requestedDate=${targetDate}).`
+        `[lane ${laneIndex + 1}] [${entry.key}] Starting route generation (mode=${entry.mode}, requestedDate=${entryTargetDate}).`
       );
 
       if (entry.mode === 'wordle') {
@@ -1500,7 +1733,7 @@ async function main() {
         article = await generateWithProviders({
           game: 'wordle',
           prompt: buildWordlePrompt(skillText, wordleContext),
-          targetDate,
+          targetDate: entryTargetDate,
           providers,
           routeKey: entry.key,
           laneIndex
@@ -1509,7 +1742,7 @@ async function main() {
         const routeArticle = {
           articleKey: entry.key,
           game: 'wordle',
-          date: targetDate,
+          date: entryTargetDate,
           articleHtml: article.contentGuideHtml,
           ...article
         };
@@ -1548,8 +1781,8 @@ async function main() {
       } else {
         article = await generateWithProviders({
           game: 'generic',
-          prompt: buildGenericPrompt(skillText, entry, targetDate),
-          targetDate,
+          prompt: buildGenericPrompt(skillText, entry, entryTargetDate),
+          targetDate: entryTargetDate,
           providers,
           routeKey: entry.key,
           laneIndex
@@ -1557,7 +1790,7 @@ async function main() {
 
         const routeArticle = {
           articleKey: entry.key,
-          date: targetDate,
+          date: entryTargetDate,
           title: article.title,
           summary: article.summary,
           articleHtml: article.articleHtml,
@@ -1594,7 +1827,7 @@ async function main() {
 
   if (failedEntries.length > 0) {
     console.warn(
-      `Daily article generation finished with ${failedEntries.length} skipped route(s). The site will still deploy and those pages will simply hide the article block for ${targetDate}.`
+      `Daily article generation finished with ${failedEntries.length} skipped route(s). The site will still deploy and those pages will simply hide the article block for the requested date window.`
     );
     for (const line of failedEntries) {
       console.warn(`- ${line}`);
@@ -1602,7 +1835,7 @@ async function main() {
   }
 
   console.log(
-    `Daily articles ready for ${targetDate} across ${selectedEntries.length - failedEntries.length}/${selectedEntries.length} routes in group ${groupName}.`
+    `Daily articles ready for ${requestedDateLabel} across ${selectedEntries.length - failedEntries.length}/${selectedEntries.length} routes in group ${groupName}.`
   );
 }
 

@@ -191,7 +191,7 @@
         Searchle's archive is similarly distinctive because it records Google autocomplete suggestions over time. Autocomplete changes as the web changes — a phrase that auto-completed one way in 2023 might not exist in 2024. The Searchle archive is a minor but real snapshot of how people were searching at different points in time.
       
       <p>
-        Worgle's archive is deterministic — the same date always produces the same answer, based on the game's internal algorithm. This makes the archive perfectly reliable: if you look up a date, the answer is always the same. Some other games have changed their answer sources over time, which can create ambiguity. Worgle doesn't have this problem.
+        Worgle's archive is reliable — the same date always produces the same answer. Unlike some games that have changed their answer sources over time, Worgle doesn't have this problem.
       
 
       <h2 class="text-slate-900 dark:text-slate-50">Technical Architecture of the Archives</h2>
@@ -200,7 +200,7 @@
         Each archive page is built as a permanent, navigable resource. Instead of generating a separate URL for every single date (which would create thousands of nearly-identical pages), we build one archive page per game with embedded data and client-side navigation. This approach is better for site performance, better for search engine crawling, and better for users who want to browse multiple dates without bouncing between URLs.
       
       <p>
-        The archive data is stored in JSON files that get bundled at build time. For a game with 1,500 historical entries, the JSON file is typically under 50KB — small enough to load instantly but comprehensive enough to cover the entire history. The client-side code handles date selection, display formatting, and any filtering the user wants to do.
+        The archive data is stored in JSON files that get bundled at build time. For a game with 1,500 historical entries, the JSON file is typically under 50KB — small enough to load instantly but complete enough to cover the entire history. The client-side code handles date selection, display formatting, and any filtering the user wants to do.
       
       <p>
         Some games (like Betweenle and Worgle) use puzzle numbers instead of calendar dates. The archive pages for these games provide both the puzzle number and the corresponding calendar date, so you can cross-reference either way. This matters because Betweenle's puzzle window doesn't align with midnight — a puzzle numbered "382" might correspond to different calendar dates depending on your time zone.

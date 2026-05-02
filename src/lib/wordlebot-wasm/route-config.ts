@@ -1772,13 +1772,12 @@ export function getCanuckleTodayPageConfig(): WordlebotPageConfig {
 	const targetDate = getMainDailyDate();
 	const visibleDateKey = getMainDailyDateKey(targetDate);
 	const displayDate = getMainDailyDateLabel(targetDate);
-	const currentMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(targetDate);
 
 	return {
 		appConfig: { pageType: 'canuckle-daily', visibleDateKey },
 		title: 'Canuckle Answer Today',
 		displayTitle: `Canuckle Answer Today (${displayDate})`,
-		metaTitle: `Canuckle Answer Today - ${currentMonth} - Updated`,
+		metaTitle: `Canuckle Answer Today (${displayDate}) - Answer and Canadian Fact`,
 		eyebrow: 'Daily Canuckle answer, fact, and puzzle number',
 		description:
 			"See the Canuckle answer today, check the current puzzle number, and read the matching Canadian fact with quick links to the archive and solver.",

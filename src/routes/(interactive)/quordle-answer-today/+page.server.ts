@@ -14,8 +14,7 @@ export const load: PageServerLoad = async () => {
         const date = subDays(today, i + 1);
         return getQuordleDataForDate(date);
     }).filter(Boolean);
-    const currentMonth = format(today, 'MMMM');
-    const pageTitle = `Quordle Answer Today - ${currentMonth} - Updated`;
+    const pageTitle = `Quordle Answer Today (${formattedDate}) - All Modes and Answers`;
     const pageDescription = `Get Quordle hints and the confirmed Quordle answers for today, ${formattedDate}. Check Classic, Chill, Extreme, Sequence, Rescue, and Weekly solutions in one place.`;
     const pageKeywords = `quordle answer today, quordle answer, quordle hint, quordle hint today, quordle answer for ${formattedDate}`;
 

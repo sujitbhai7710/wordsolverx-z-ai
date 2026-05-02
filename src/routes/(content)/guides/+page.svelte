@@ -53,6 +53,116 @@
     },
   ];
 
+  const clusterSections = [
+    {
+      title: 'Geography Puzzle Variants',
+      cards: [
+        {
+          game: 'Worldle',
+          description: 'Guess countries from their outlines and use distance feedback to narrow each attempt.',
+          links: [
+            { href: '/worldle-answer-today', label: "Today's answer" },
+            { href: '/worldle-solver', label: 'Solver' }
+          ]
+        },
+        {
+          game: 'Globle',
+          description: 'Guess countries on a globe where warmer colors mean your guess is getting closer.',
+          links: [{ href: '/globle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Countryle',
+          description: 'Use continent, area, and population clues to identify the daily country faster.',
+          links: [
+            { href: '/countryle-answer-today', label: "Today's answer" },
+            { href: '/countryle-solver', label: 'Solver' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Character Guessing Games',
+      cards: [
+        {
+          game: 'LoLdle',
+          description: 'Identify League of Legends champions using quote, ability, and splash clues.',
+          links: [{ href: '/loldle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Dotadle',
+          description: 'Daily Dota character challenge with mode-based hints and region-specific answers.',
+          links: [{ href: '/dotadle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Narutodle',
+          description: 'Guess Naruto characters by quote and art clues with daily rotating answers.',
+          links: [{ href: '/narutodle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Onepiecedle',
+          description: 'One Piece character guessing with clue modes that test memory and recognition.',
+          links: [{ href: '/onepiecedle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Pokedle',
+          description: 'Pokemon-themed daily guessing puzzle for types, forms, and iconic clues.',
+          links: [{ href: '/pokedle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Smashdle',
+          description: 'Guess Smash characters with fighter clues and daily updated answer pools.',
+          links: [{ href: '/smashdle-answer-today', label: "Today's answer" }]
+        }
+      ]
+    },
+    {
+      title: 'Logic & Visual Puzzle Variants',
+      cards: [
+        {
+          game: 'Contexto',
+          description: 'Find the target word by semantic closeness instead of letter-by-letter hints.',
+          links: [{ href: '/contexto-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Semantle',
+          description: 'Use word similarity ranks to move toward the hidden word in semantic space.',
+          links: [{ href: '/semantle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Searchle',
+          description: 'Predict Google autocomplete completions from real query prompts and trends.',
+          links: [
+            { href: '/searchle-answer-today', label: "Today's answer" },
+            { href: '/searchle-solver', label: 'Solver' }
+          ]
+        },
+        {
+          game: 'Colordle',
+          description: 'Guess the daily color using RGB and hex-distance style feedback clues.',
+          links: [
+            { href: '/colordle-answer-today', label: "Today's answer" },
+            { href: '/colordle-solver', label: 'Solver' }
+          ]
+        },
+        {
+          game: 'Colorfle',
+          description: 'Color-based puzzle variant with daily answer tracking and archive support.',
+          links: [{ href: '/colorfle-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Framed',
+          description: 'Guess the movie from still frames with one new visual clue per guess.',
+          links: [{ href: '/framed-answer-today', label: "Today's answer" }]
+        },
+        {
+          game: 'Spotle',
+          description: 'Music and artist guessing puzzle with clue progression and archive lookup.',
+          links: [{ href: '/spotle-answer-today', label: "Today's answer" }]
+        }
+      ]
+    }
+  ];
+
   const faqs = [
     {
       question: 'What\'s the best Wordle starting word?',
@@ -153,6 +263,27 @@
       </div>
     {/each}
   </div>
+
+  {#each clusterSections as section}
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-6">{section.title}</h2>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {#each section.cards as card}
+          <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-5">
+            <h3 class="font-bold text-slate-900 dark:text-slate-50 mb-2">{card.game}</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{card.description}</p>
+            <div class="flex flex-wrap gap-3 text-sm">
+              {#each card.links as link}
+                <a href={link.href} class="font-semibold text-teal-600 dark:text-teal-400 hover:underline">
+                  {link.label}
+                </a>
+              {/each}
+            </div>
+          </div>
+        {/each}
+      </div>
+    </section>
+  {/each}
 
   <!-- ═══════════════════════════════════════════════════
        SEO ARTICLE CONTENT — 1500+ words

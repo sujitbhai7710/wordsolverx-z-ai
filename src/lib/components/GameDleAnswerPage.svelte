@@ -2,6 +2,7 @@
   import { type Snippet } from 'svelte';
   import AuthorCard from '$lib/components/AuthorCard.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
+  import InternalLinkSection from '$lib/components/InternalLinkSection.svelte';
   import {
     PRESTON_HAYES_AUTHOR_DESCRIPTION,
     PRESTON_HAYES_AUTHOR_IMAGE,
@@ -273,6 +274,10 @@
       <h1 class="text-4xl font-extrabold text-slate-900">{pageHeading}</h1>
       {#if dateStr}
         <p class="mt-2 text-lg text-slate-600">{dateStr}</p>
+        <div class="inline-flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+          <span class="h-2 w-2 rounded-full bg-teal-500 animate-pulse"></span>
+          Updated Daily
+        </div>
       {/if}
     </div>
   </div>
@@ -370,6 +375,8 @@
           description={PRESTON_HAYES_AUTHOR_DESCRIPTION}
         />
       </div>
+
+      <InternalLinkSection currentGame={gameTitle} />
     {/if}
   </div>
 

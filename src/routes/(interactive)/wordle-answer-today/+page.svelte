@@ -15,6 +15,17 @@
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   }
+
+  function normalizeHtml(html: string | null | undefined): string {
+    return (html ?? '').replace(/\s+/g, ' ').trim();
+  }
+
+  const distinctGeneratedArticle = $derived(
+    data.generatedArticle?.articleHtml &&
+      normalizeHtml(data.generatedArticle.articleHtml) !== normalizeHtml(data.wordleData?.content_guide)
+      ? data.generatedArticle
+      : null
+  );
 </script>
 
 <svelte:head>
@@ -61,17 +72,17 @@
       youtubeVideoUrl={data.wordleData?.youtube_video_url}
     />
 
-    {#if data.generatedArticle?.articleHtml}
+    {#if distinctGeneratedArticle}
       <section class="mt-12 rounded-3xl border border-slate-100 bg-white p-8 shadow-lg">
         <p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-600">Today's notes</p>
         <h2 class="mt-2 text-3xl font-bold text-slate-900">
-          {data.generatedArticle.title || "Today's Wordle Breakdown"}
+          {distinctGeneratedArticle.title || "Today's Wordle Breakdown"}
         </h2>
-        {#if data.generatedArticle.summary}
-          <p class="mt-4 text-lg leading-8 text-slate-600">{data.generatedArticle.summary}</p>
+        {#if distinctGeneratedArticle.summary}
+          <p class="mt-4 text-lg leading-8 text-slate-600">{distinctGeneratedArticle.summary}</p>
         {/if}
         <div class="prose prose-lg mt-6 max-w-none">
-          {@html data.generatedArticle.articleHtml}
+          {@html distinctGeneratedArticle.articleHtml}
         </div>
       </section>
     {/if}

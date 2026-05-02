@@ -97,8 +97,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 	};
 
 	const todayFormatted = format(displayDateObject, 'MMMM d, yyyy');
-	const currentMonth = format(displayDateObject, 'MMMM');
-	const metaTitle = `Spotle Answer Today - ${currentMonth} - Updated`;
+	const metaTitle = `Spotle Answer Today (${todayFormatted}) - Artist Answer and Clues`;
 	const metaDescription =
 		`Get the Spotle answer for ${todayFormatted}${todayArtist ? `, including artist details for ${todayArtist.artist}` : ''}${todayAnswer?.track ? ` and the featured track ${todayAnswer.track}` : ''}.`;
 	const metaKeywords =

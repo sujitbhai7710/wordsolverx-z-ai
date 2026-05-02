@@ -143,6 +143,10 @@
 </script>
 
 <section class="mt-16 border-t border-slate-200 dark:border-slate-700 pt-12 max-w-4xl mx-auto px-4">
+  <div class="mb-6 inline-flex items-center gap-1.5 text-xs text-slate-500">
+    <span class="h-2 w-2 rounded-full bg-teal-500 animate-pulse"></span>
+    Updated Daily
+  </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
     <div>
       <h2 class="text-xl font-bold text-slate-900 dark:text-slate-50 mb-6 flex items-center gap-2">

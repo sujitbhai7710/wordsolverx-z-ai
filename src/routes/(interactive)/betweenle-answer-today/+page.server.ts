@@ -15,8 +15,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     month: 'long',
     day: 'numeric',
   });
-  const currentMonth = parseDateKey(todayAnswer.date).toLocaleDateString('en-US', { month: 'long' });
-  const pageTitle = `Betweenle Answer Today - ${currentMonth} - Updated`;
+  const pageTitle = `Betweenle Answer Today (${todaySeoDate}) - Hints and Answer`;
   const pageDescription = `Check Betweenle hints and reveal the official Betweenle answer for today, ${todaySeoDate}. Includes clue cards, puzzle number, recent previous answers, and quick links to the solver and archive hub.`;
   const pageKeywords = [
     'betweenle answer today',

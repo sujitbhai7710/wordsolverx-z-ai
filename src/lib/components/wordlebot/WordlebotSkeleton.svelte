@@ -20,6 +20,16 @@
 	let boardCount = $derived(game.boards);
 	let isCanuckle = $derived(gameSlug === 'canuckle');
 	let maxGuesses = $derived(game.defaultMax);
+	let solverHeading = $derived(
+		config.pageType === 'solver' && config.game === 'wordle'
+			? `${wordLength}-Letter Wordle Solver`
+			: `${game.name} Solver`
+	);
+	let solverDescription = $derived(
+		boardCount > 1
+			? 'Type a guess, match the clue tiles on each board, then review the ranked answers.'
+			: 'Type a guess, match the clue tiles to your puzzle, then review the ranked answers.'
+	);
 
 	// Sample guess word per length (first N letters used)
 	const SAMPLE_WORDS: Record<number, string> = {
@@ -90,6 +100,13 @@
 		class:skeleton-wrap--canuckle={isCanuckle}
 		style="--word-length: {wordLength}; --board-count: {boardCount};"
 	>
+		<div class="skeleton-copy">
+			<h2 class="skeleton-title">{solverHeading}</h2>
+			<p class="skeleton-description">{solverDescription}</p>
+			<noscript>
+				<p class="skeleton-noscript">This solver needs JavaScript turned on.</p>
+			</noscript>
+		</div>
 		<div class="skeleton-boards">
 			{#each Array(boardCount) as _, boardIndex}
 				<div class="skeleton-board">
@@ -145,6 +162,37 @@
 	.skeleton-wrap--canuckle {
 		--skeleton-correct: rgb(220, 38, 38);
 		--skeleton-present: rgb(239, 68, 68);
+	}
+
+	.skeleton-copy {
+		width: 100%;
+		padding: 18px 18px 6px;
+		border-radius: 20px;
+		border: 1px solid rgba(122, 92, 46, 0.08);
+		background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(250,248,243,0.98));
+		text-align: center;
+	}
+
+	.skeleton-title {
+		margin: 0;
+		font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.9rem);
+		font-weight: 800;
+		color: #0f172a;
+	}
+
+	.skeleton-description {
+		margin: 10px auto 0;
+		max-width: 32rem;
+		font-size: 0.98rem;
+		line-height: 1.65;
+		color: var(--skeleton-muted);
+	}
+
+	.skeleton-noscript {
+		margin: 12px 0 0;
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: #b45309;
 	}
 
 	.skeleton-boards {

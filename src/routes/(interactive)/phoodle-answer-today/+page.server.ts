@@ -22,8 +22,7 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
     });
 
     const last10Days = summary.recent;
-    const currentMonth = format(data.date, 'MMMM');
-    const pageTitle = `Phoodle Answer Today - ${currentMonth} - Updated`;
+    const pageTitle = `Phoodle Answer Today (${formattedDate}) - Food Word and Hints`;
     const pageDescription = `Get Phoodle hints and the confirmed Phoodle answer for today, ${formattedDate}. Today's food word is ${upperWord}, with recent answers and recipe context.`;
     const pageKeywords = `phoodle answer today, phoodle answer, phoodle hint, phoodle hint today, phoodle answer for ${formattedDate}`;
 

@@ -144,7 +144,7 @@
         Hints work in three tiers. First, a broad category clue — something like "a common household item" or "a verb you'd use at work." Second, two letter positions are revealed (but not which positions they occupy). Third, the full word. You can stop at any tier. If you just wanted to confirm a letter you were stuck on, the second tier might be enough.
       
       <p>
-        The Wordle answer list is deterministic — the game cycles through a fixed sequence of words. That means our answer is always correct, always in sync with the official game. There's no guessing, no scraping, no room for error. If Wordle says the answer for puzzle #1247 is "FLAME," that's exactly what our page shows.
+        The Wordle answer list is fixed — the game cycles through a fixed sequence of words. That means our answer is always correct, always in sync with the official game. There's no guessing, no scraping, no room for error. If Wordle says the answer for puzzle #1247 is "FLAME," that's exactly what our page shows.
       
 
       <h2 class="text-slate-900 dark:text-slate-50">Quordle, Octordle, and Multi-Board Puzzles</h2>
