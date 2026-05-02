@@ -361,6 +361,11 @@ function getGenerationGroupName() {
   return raw || 'site';
 }
 
+function getArticleScope() {
+  const raw = String(process.env.ARTICLE_SCOPE ?? 'current-group').trim().toLowerCase();
+  return raw || 'current-group';
+}
+
 function shouldGenerateArticles() {
   return String(process.env.ENABLE_DAILY_ARTICLE_GENERATION ?? 'false').toLowerCase() === 'true';
 }
@@ -1323,7 +1328,8 @@ function buildProviderConfigs() {
           label: `key${index + 1}`
         }))
       ),
-      keyCursor: randomInt(nvidiaKeys.length)
+      keyCursor: randomInt(nvidiaKeys.length),
+      modelCursor: 0
     }
   ];
 }
@@ -1338,19 +1344,68 @@ function takeProviderKeyOrder(provider) {
   return rotateList(provider.apiKeys, startOffset);
 }
 
+function classifyProviderError(message) {
+  const normalized = String(message).toLowerCase();
+  if (
+    normalized.includes('rate limited') ||
+    normalized.includes('too many requests') ||
+    normalized.includes('429')
+  ) {
+    return 'rate_limit';
+  }
+
+  return 'hard_failure';
+}
+
+function advanceProviderModel(provider, modelIndex, routeKey, laneIndex, reason) {
+  const currentIndex = provider.modelCursor ?? 0;
+  if (modelIndex !== currentIndex) {
+    return false;
+  }
+
+  if (currentIndex >= provider.models.length - 1) {
+    console.warn(
+      `[lane ${laneIndex + 1}] [${routeKey}] ${provider.provider}:${provider.models[currentIndex]} hit a hard failure, but no further fallback models remain.`
+    );
+    return false;
+  }
+
+  const nextIndex = currentIndex + 1;
+  provider.modelCursor = nextIndex;
+  console.warn(
+    `[lane ${laneIndex + 1}] [${routeKey}] Promoting ${provider.provider} from ${provider.models[currentIndex]} to ${provider.models[nextIndex]} for the rest of this run because of a hard failure: ${truncateForLog(reason, 160)}`
+  );
+  return true;
+}
+
 async function generateWithProviders({ game, prompt, targetDate, providers, routeKey, laneIndex, entryKey }) {
   const failures = [];
   const gameGroup = game === 'wordle' ? 'wordle' : game === 'colordle' ? 'colordle' : getGameGroup(entryKey || '');
   const temperature = temperatureMap[gameGroup] ?? 0.6;
 
   for (const provider of providers) {
-    const rotatedKeys = takeProviderKeyOrder(provider);
+    for (let modelIndex = provider.modelCursor ?? 0; modelIndex < provider.models.length; ) {
+      if ((provider.modelCursor ?? 0) > modelIndex) {
+        modelIndex = provider.modelCursor;
+        continue;
+      }
 
-    for (const model of provider.models) {
+      const rotatedKeys = takeProviderKeyOrder(provider);
+      const model = provider.models[modelIndex];
+
       for (const apiKeyEntry of rotatedKeys) {
+        if ((provider.modelCursor ?? 0) > modelIndex) {
+          break;
+        }
+
         const keyLabel = `${provider.provider}:${model}:${apiKeyEntry.label}`;
+        let hardFailureTriggered = false;
 
         for (let attempt = 1; attempt <= MAX_REQUEST_ATTEMPTS; attempt += 1) {
+          if ((provider.modelCursor ?? 0) > modelIndex) {
+            break;
+          }
+
           const startedAt = Date.now();
           try {
             console.log(
@@ -1388,9 +1443,26 @@ async function generateWithProviders({ game, prompt, targetDate, providers, rout
             console.warn(
               `[lane ${laneIndex + 1}] [${routeKey}] Failed with ${keyLabel} (attempt ${attempt}/${MAX_REQUEST_ATTEMPTS}): ${message}`
             );
+
+            if (classifyProviderError(message) === 'hard_failure') {
+              advanceProviderModel(provider, modelIndex, routeKey, laneIndex, message);
+              hardFailureTriggered = true;
+              break;
+            }
           }
         }
+
+        if (hardFailureTriggered || (provider.modelCursor ?? 0) > modelIndex) {
+          break;
+        }
       }
+
+      if ((provider.modelCursor ?? 0) > modelIndex) {
+        modelIndex = provider.modelCursor;
+        continue;
+      }
+
+      modelIndex += 1;
     }
   }
 
@@ -1613,7 +1685,8 @@ async function runConcurrent(entries, concurrency, worker) {
 
 async function main() {
   const groupName = getGenerationGroupName();
-  const selectedEntries = getSelectedEntries(groupName);
+  const requestedGroupName = getArticleScope() === 'all-current-windows' ? 'all-current-windows' : groupName;
+  const selectedEntries = getSelectedEntries(requestedGroupName);
   const targetDatesByGroup = {
     site: getTargetDate('site'),
     main: getTargetDate('site'),
@@ -1621,11 +1694,11 @@ async function main() {
     waffle: getTargetDate('waffle')
   };
   const targetDate =
-    groupName === 'all-current-windows'
+    requestedGroupName === 'all-current-windows'
       ? targetDatesByGroup.site
-      : targetDatesByGroup[groupName] ?? getTargetDate(groupName);
+      : targetDatesByGroup[requestedGroupName] ?? getTargetDate(requestedGroupName);
   const requestedDateLabel =
-    groupName === 'all-current-windows'
+    requestedGroupName === 'all-current-windows'
       ? `site=${targetDatesByGroup.site}, gamedle=${targetDatesByGroup.gamedle}, waffle=${targetDatesByGroup.waffle}`
       : targetDate;
   const existingBundle = await readExistingBundle();
@@ -1640,17 +1713,19 @@ async function main() {
 
   if (!shouldGenerateArticles()) {
     console.log(
-      `Daily article generation skipped because ENABLE_DAILY_ARTICLE_GENERATION is false for group ${groupName}. Rebuilt bundle from persisted route files.`
+      `Daily article generation skipped because ENABLE_DAILY_ARTICLE_GENERATION is false for group ${requestedGroupName}. Rebuilt bundle from persisted route files.`
     );
     return;
   }
 
   if (!selectedEntries.length) {
-    console.log(`No daily article entries are assigned to group ${groupName}.`);
+    console.log(`No daily article entries are assigned to group ${requestedGroupName}.`);
     return;
   }
 
-  console.log(`Preparing daily articles for group ${groupName} using target date ${requestedDateLabel}.`);
+  console.log(
+    `Preparing daily articles for workflow group ${groupName} using article scope ${requestedGroupName} and target date ${requestedDateLabel}.`
+  );
 
   const providers = buildProviderConfigs();
   if (!providers.length) {
@@ -1672,7 +1747,7 @@ async function main() {
   );
   console.log(`Configured providers: ${summarizeProviders(providers)}`);
   console.log(
-    `Selected ${selectedEntries.length} route(s) for group ${groupName}: ${selectedEntries.map((entry) => entry.key).join(', ')}`
+    `Selected ${selectedEntries.length} route(s) for group ${requestedGroupName}: ${selectedEntries.map((entry) => entry.key).join(', ')}`
   );
 
   let wordleContext = null;
@@ -1716,7 +1791,7 @@ async function main() {
     try {
       let article;
       const entryTargetDate =
-        groupName === 'all-current-windows'
+        requestedGroupName === 'all-current-windows'
           ? targetDatesByGroup[getEntryGenerationGroup(entry)] ?? targetDate
           : targetDate;
       let articleDate = entryTargetDate;
@@ -1835,7 +1910,7 @@ async function main() {
   }
 
   console.log(
-    `Daily articles ready for ${requestedDateLabel} across ${selectedEntries.length - failedEntries.length}/${selectedEntries.length} routes in group ${groupName}.`
+    `Daily articles ready for ${requestedDateLabel} across ${selectedEntries.length - failedEntries.length}/${selectedEntries.length} routes in scope ${requestedGroupName}.`
   );
 }
 

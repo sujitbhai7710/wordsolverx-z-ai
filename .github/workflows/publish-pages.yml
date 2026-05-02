@@ -74,7 +74,7 @@ jobs:
       GROUP_NAME: ${{ github.event.client_payload.group || github.event.inputs.group || ((github.event_name == 'push' || github.event_name == 'schedule') && 'site') || 'manual' }}
       TARGET_DATE: ${{ github.event.client_payload.target_date || github.event.inputs.target_date || '' }}
       WORKFLOW_MODE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_mode || 'deploy' }}
-      ARTICLE_SCOPE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.article_scope || 'disabled' }}
+      ARTICLE_SCOPE: ${{ (github.event_name == 'push' && 'all-current-windows') || (github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_mode == 'generate-articles-only' && github.event.inputs.article_scope) || 'current-group' }}
       SOURCE_NAME: ${{ github.event.client_payload.source || github.event.inputs.source || (github.event_name == 'push' && format('push:{0}', github.ref_name)) || github.event.action || 'manual' }}
       PREVIEW_BASE_URL: https://wordsolverx-z-ai.pages.dev
       PUBLIC_BASE_URL: https://wordsolverx.com
@@ -82,11 +82,12 @@ jobs:
       NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
       AGENT_ROUTER_TOKENS: ${{ secrets.AGENT_ROUTER_TOKENS }}
       AGENT_ROUTER_TOKEN: ${{ secrets.AGENT_ROUTER_TOKEN }}
-      ENABLE_DAILY_ARTICLE_GENERATION: ${{ github.event_name == 'repository_dispatch' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.generate_articles == 'true') }}
-      ARTICLE_MAX_CONCURRENCY: 4
+      ENABLE_DAILY_ARTICLE_GENERATION: ${{ github.event_name == 'push' || github.event_name == 'repository_dispatch' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.generate_articles == 'true') }}
+      ARTICLE_MAX_CONCURRENCY: 6
       ARTICLE_MAX_ATTEMPTS: 3
-      ARTICLE_REQUEST_TIMEOUT_MS: 120000
-      ARTICLE_MAX_OUTPUT_TOKENS: 3200
+      ARTICLE_REQUEST_TIMEOUT_MS: 300000
+      ARTICLE_MAX_OUTPUT_TOKENS: 8192
+      ARTICLE_RATE_LIMIT_DELAY_MS: 2500
       INDEXING_ARTIFACT_DIR: artifacts/indexing
       INDEXING_REQUEST_TIMEOUT_MS: 10000
       SITEMAP_URL: https://wordsolverx.com/sitemap.xml
@@ -245,7 +246,7 @@ jobs:
         run: npm run deploy:pages
 
       - name: Persist Generated Daily Articles
-        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true' && (github.event_name == 'repository_dispatch' || github.event_name == 'schedule')
+        if: env.WORKFLOW_MODE != 'generate-articles-only' && steps.canary.outputs.skip != 'true' && (github.event_name == 'push' || github.event_name == 'repository_dispatch' || github.event_name == 'schedule')
         shell: bash
         run: |
           if git diff --quiet -- src/lib/generated/daily-articles.json src/lib/generated/artiples; then
